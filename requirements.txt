@@ -1,0 +1,4 @@
+# Minivaatimukset kehitykseen, päivitä projektin edetessä
+pytest
+mypy
+ruff

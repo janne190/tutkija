@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        run: pipx install uv
+
+      - name: Install dependencies
+        run: |
+          uv venv
+          . .venv/bin/activate
+          uv pip install -r requirements.txt || true
+          uv pip install pytest mypy ruff
+
+      - name: Lint
+        run: |
+          . .venv/bin/activate
+          ruff check .
+          mypy --ignore-missing-imports .
+
+      - name: Test
+        run: |
+          . .venv/bin/activate
+          pytest -q

@@ -1,0 +1,25 @@
+[llm]
+provider = "openai"
+model = "gpt-4o"
+temperature = 0.2
+
+[search]
+sources = ["openalex", "arxiv", "pubmed"]
+year_min = 2018
+language = ["en", "fi"]
+
+[screening]
+use_asreview = true
+recall_target = 0.9
+
+[pdf]
+grobid_url = "http://localhost:8070"
+
+[rag]
+vector_store = "chroma"
+chunk_size = 1200
+chunk_overlap = 200
+
+[report]
+engine = "quarto"
+csl = "vancouver.csl"

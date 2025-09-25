@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual env
+.venv/
+venv/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Project data
+data/
+cache/
+output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# dotenv
+.env
