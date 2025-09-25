@@ -1,0 +1,21 @@
+[project]
+name = "tutkija"
+version = "0.0.1"
+description = "Moniagenttinen kirjallisuuskatsaus, Tutkija"
+readme = "README.md"
+authors = [{ name = "Tutkija-tiimi" }]
+requires-python = ">=3.11"
+dependencies = [
+  "typer>=0.12"
+]
+
+[project.scripts]
+la = "la_pkg.cli:app"
+
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

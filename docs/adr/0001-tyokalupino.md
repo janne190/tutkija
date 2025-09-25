@@ -1,20 +1,22 @@
 # ADR 0001, Työkalupino
 
-Päiväys, YYYY MM DD  
-Status, hyväksytty
+Päiväys, 2025-09-25
+Status, Hyväksytty
 
 Konteksti
-, Tarvitsemme yhteisen pinon kehitykseen ja jatkuvaan integraatioon
+- Tarvitsemme yhteisen pinon paikalliseen kehitykseen ja CI-putkeen
 
 Päätös
-, Python 3.11, uv tai poetry ylläpitoon  
-, Ruff ja mypy, lint ja tyyppitarkistus  
-, Pytest, testit  
-, Pre commit, paikalliset tarkistukset  
-, GitHub Actions, CI
+- Python 3.11, hallinta `uv`:lla tai Poetrylla tilanteen mukaan
+- Lint ja tyyppitarkistus: Ruff + MyPy
+- Testaus: Pytest
+- Paikalliset tarkistukset: pre-commit (Ruff, mypy, perushooks)
+- CI: GitHub Actions (lint, testit, savutesti)
 
 Seuraukset
-, Yhdenmukainen kehitys, nopea palaute
+- Yhdenmukainen kehitysympäristö ja nopea palaute virheistä
+- Työkalupino ohjaa commit- ja PR-käytänteet automaattisiksi
 
 Linkit
-, docs/pelisaannot.md
+- docs/pelisaannot.md
+- .github/workflows/
