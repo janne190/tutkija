@@ -27,6 +27,7 @@ jobs:
           . .venv/bin/activate
           uv pip install -r requirements.txt || true
           uv pip install pytest mypy ruff
+          uv pip install -e .
 
       - name: Lint
         run: |
