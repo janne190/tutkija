@@ -7,6 +7,8 @@ on:
 jobs:
   audit:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +24,7 @@ jobs:
           uv venv
           .\.venv\Scripts\Activate.ps1
           uv pip install ruff mypy pytest
+          uv pip install -e .
       - name: Run audit script
         shell: pwsh
         run: |
