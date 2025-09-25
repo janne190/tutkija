@@ -1,6 +1,6 @@
 # scripts/audit.ps1
-# Tarkoitus, tarkista ettÃ¤ Tutkija projektissa on tehty yhteiset pelisÃ¤Ã¤nnÃ¶t ja vaihe 0
-# Aja PowerShellissÃ¤ projektin juuressa
+# Tarkoitus, tarkista että Tutkija projektissa on tehty yhteiset pelisäännöt ja vaihe 0
+# Aja PowerShellissä projektin juuressa
 
 $ErrorActionPreference = "Stop"
 
@@ -21,7 +21,7 @@ function Check-FileContains($path, $pattern, $desc) {
     $txt = Get-Content -Raw -Encoding UTF8 $path
     if ($txt -match $pattern) { Ok $desc }
     else {
-      Fail "$desc, ei lÃ¤pÃ¤issyt haun, $pattern"
+      Fail "$desc, ei läpäissyt haun, $pattern"
       $script:fail += "$desc pattern $pattern"
     }
   } else {
@@ -34,7 +34,7 @@ $script:GhCommand = $null
 try {
   $script:GhCommand = (Get-Command gh -ErrorAction Stop).Source
 } catch {
-  $defaultGh = 'C:\\Program Files\\GitHub CLI\\gh.exe'
+  $defaultGh = 'C:\Program Files\GitHub CLI\gh.exe'
   if (Test-Path $defaultGh) {
     $script:GhCommand = $defaultGh
   }
@@ -47,63 +47,63 @@ function Has-Gh {
 function Invoke-Gh {
   param([Parameter(ValueFromRemainingArguments = $true)][string[]]$Args)
   if (-not (Has-Gh)) {
-    throw 'gh CLI ei ole kÃ¤ytettÃ¤vissÃ¤'
+    throw 'gh CLI ei ole käytettävissä'
   }
   & $script:GhCommand @Args
 }
 
 Write-Host "== Tutkija audit =="
 
-# 0, peruspolut ja tyÃ¶kalut
-Check-True (Test-Path ".git") "git repo lÃ¶ytyi" "git repo puuttuu, aja git init"
+# 0, peruspolut ja työkalut
+Check-True (Test-Path ".git") "git repo löytyi" "git repo puuttuu, aja git init"
 Check-True ((git rev-parse --abbrev-ref HEAD 2>$null) -eq "main") "oletushaara on main" "oletushaara ei ole main"
-Check-True (Test-Path ".venv/Scripts/Activate.ps1") ".venv lÃ¶ytyy" ".venv puuttuu, luo virtuaaliympÃ¤ristÃ¶"
+Check-True (Test-Path ".venv/Scripts/Activate.ps1") ".venv löytyy" ".venv puuttuu, luo virtuaaliympäristö"
 
-# 1, yhteiset pelisÃ¤Ã¤nnÃ¶t, yksi totuuden lÃ¤hde
+# 1, yhteiset pelisäännöt, yksi totuuden lähde
 Check-True (Test-Path "docs") "docs kansio on olemassa" "docs kansio puuttuu"
-Check-True (Test-Path "docs/ARCHITECTURE.md") "arkkitehtuuri yhteenveto lÃ¶ytyy" "docs/ARCHITECTURE.md puuttuu"
-Check-True (Test-Path "docs/pelisaannot.md") "pelisÃ¤Ã¤nnÃ¶t dokumentti lÃ¶ytyy" "docs/pelisaannot.md puuttuu"
-Check-True (Test-Path "docs/mittarit.md") "mittarit dokumentti lÃ¶ytyy" "docs/mittarit.md puuttuu"
-Check-True (Test-Path "docs/adr") "ADR kansio lÃ¶ytyy" "docs/adr kansio puuttuu"
-Check-True (Test-Path "docs/adr/0001-tyokalupino.md") "ADR 0001, tyÃ¶kalupino lÃ¶ytyy" "ADR 0001 puuttuu"
+Check-True (Test-Path "docs/ARCHITECTURE.md") "arkkitehtuuri yhteenveto löytyy" "docs/ARCHITECTURE.md puuttuu"
+Check-True (Test-Path "docs/pelisaannot.md") "pelisäännöt dokumentti löytyy" "docs/pelisaannot.md puuttuu"
+Check-True (Test-Path "docs/mittarit.md") "mittarit dokumentti löytyy" "docs/mittarit.md puuttuu"
+Check-True (Test-Path "docs/adr") "ADR kansio löytyy" "docs/adr kansio puuttuu"
+Check-True (Test-Path "docs/adr/0001-tyokalupino.md") "ADR 0001, työkalupino löytyy" "ADR 0001 puuttuu"
 
-# 2, tyÃ¶tavat
-Check-FileContains "docs/pelisaannot.md" "trunk|feature|PR|squash|semanttiset|Conventional" "pelisÃ¤Ã¤nnÃ¶t kuvaavat trunk based ja PR kÃ¤ytÃ¤nnÃ¶t"
-Check-FileContains "docs/pelisaannot.md" "Definition of Ready|DoR|Definition of Done|DoD" "pelisÃ¤Ã¤nnÃ¶issÃ¤ on DoR ja DoD kuvaukset"
+# 2, työtavat
+Check-FileContains "docs/pelisaannot.md" "trunk|feature|PR|squash|semanttiset|Conventional" "pelisäännöt kuvaavat trunk based ja PR käytännöt"
+Check-FileContains "docs/pelisaannot.md" "Definition of Ready|DoR|Definition of Done|DoD" "pelisäännöissä on DoR ja DoD kuvaukset"
 
 # 3, CI, lint ja testit
-Check-True (Test-Path ".github/workflows/ci.yml") "CI workflow lÃ¶ytyy" "CI workflow puuttuu, .github/workflows/ci.yml"
-Check-True (Test-Path ".pre-commit-config.yaml") "pre-commit asetukset lÃ¶ytyvÃ¤t" "pre-commit asetukset puuttuvat"
+Check-True (Test-Path ".github/workflows/ci.yml") "CI workflow löytyy" "CI workflow puuttuu, .github/workflows/ci.yml"
+Check-True (Test-Path ".pre-commit-config.yaml") "pre-commit asetukset löytyvät" "pre-commit asetukset puuttuvat"
 $ruff = Get-Command ruff -ErrorAction SilentlyContinue
 $mypy = Get-Command mypy -ErrorAction SilentlyContinue
 $pytest = Get-Command pytest -ErrorAction SilentlyContinue
-if (-not $ruff) { $script:warn += "ruff ei ole komentopolussa, varmistetaan requirements ja pyproject"; Warn "ruff ei ole komentopolussa, varmistetaan requirements ja pyproject" } else { Ok "ruff lÃ¶ytyy" }
-if (-not $mypy) { $script:warn += "mypy ei ole komentopolussa"; Warn "mypy ei ole komentopolussa" } else { Ok "mypy lÃ¶ytyy" }
-if (-not $pytest) { $script:warn += "pytest ei ole komentopolussa"; Warn "pytest ei ole komentopolussa" } else { Ok "pytest lÃ¶ytyy" }
+if (-not $ruff) { $script:warn += "ruff ei ole komentopolussa, varmistetaan requirements ja pyproject"; Warn "ruff ei ole komentopolussa, varmistetaan requirements ja pyproject" } else { Ok "ruff löytyy" }
+if (-not $mypy) { $script:warn += "mypy ei ole komentopolussa"; Warn "mypy ei ole komentopolussa" } else { Ok "mypy löytyy" }
+if (-not $pytest) { $script:warn += "pytest ei ole komentopolussa"; Warn "pytest ei ole komentopolussa" } else { Ok "pytest löytyy" }
 
-# 4, artefaktit pois gitistÃ¤
-Check-True (Test-Path ".gitignore") ".gitignore lÃ¶ytyy" ".gitignore puuttuu"
+# 4, artefaktit pois gitistä
+Check-True (Test-Path ".gitignore") ".gitignore löytyy" ".gitignore puuttuu"
 if (Test-Path ".gitignore") {
   $gi = Get-Content -Raw -Encoding UTF8 .gitignore
   foreach ($must in @("data/", "cache/", "output/")) {
     if ($gi -notmatch [regex]::Escape($must)) {
-      Fail ".gitignore ei sisÃ¤llÃ¤ $must"
+      Fail ".gitignore ei sisällä $must"
       $script:fail += ".gitignore missing $must"
     } else {
-      Ok ".gitignore sisÃ¤ltÃ¤Ã¤ $must"
+      Ok ".gitignore sisältää $must"
     }
   }
 }
 
 # 5, peruskonffit ja templatet
-Check-True (Test-Path ".env.example") ".env.example lÃ¶ytyy" ".env.example puuttuu"
-Check-True (Test-Path "config.example.toml") "config.example.toml lÃ¶ytyy" "config.example.toml puuttuu"
+Check-True (Test-Path ".env.example") ".env.example löytyy" ".env.example puuttuu"
+Check-True (Test-Path "config.example.toml") "config.example.toml löytyy" "config.example.toml puuttuu"
 
 # 6, lyhyt arkkitehtuuri ja dataflow
-Check-FileContains "docs/ARCHITECTURE.md" "Komponentit|Dataflow" "arkkitehtuuri, sisÃ¤ltÃ¤Ã¤ komponentti ja dataflow osiot"
+Check-FileContains "docs/ARCHITECTURE.md" "Komponentit|Dataflow" "arkkitehtuuri, sisältää komponentti ja dataflow osiot"
 
 # 7, CLI hello
-Check-True (Test-Path "src/la_pkg/cli.py") "CLI lÃ¤hde lÃ¶ytyy" "src/la_pkg/cli.py puuttuu"
+Check-True (Test-Path "src/la_pkg/cli.py") "CLI lähde löytyy" "src/la_pkg/cli.py puuttuu"
 try {
   $laPath = Join-Path ".venv/Scripts" "la.exe"
   if (Test-Path $laPath) {
@@ -114,46 +114,46 @@ try {
   if ($LASTEXITCODE -eq 0 -and $hello -match "Tutkija" -and $hello -match "OPENAI_API_KEY") {
     Ok "la hello toimii ja tulostaa .env.example mallin"
   } else {
-    Fail "la hello ei tulostanut odotettua sisÃ¤ltÃ¶Ã¤"
+    Fail "la hello ei tulostanut odotettua sisältöä"
     $script:fail += "la hello output"
   }
 } catch {
-  Fail "la hello ei kÃ¤ynnisty, $_"
+  Fail "la hello ei käynnisty, $_"
   $script:fail += "la hello crash"
 }
 
-# 8, CI vihreÃ¤nÃ¤
+# 8, CI vihreänä
 if (Has-Gh) {
   try {
-    $runsJson = Invoke-Gh run list --limit 1 --json 'status,conclusion,name' -q '.[0]'
+    $runsJson = Invoke-Gh run list --limit 1 --json status,conclusion,name -q '.[0]'
     if ($runsJson) {
       $obj = $runsJson | ConvertFrom-Json
       if ($obj.status -eq "completed" -and $obj.conclusion -eq "success") {
-        Ok "viimeisin GitHub Actions ajo on vihreÃ¤"
+        Ok "viimeisin GitHub Actions ajo on vihreä"
       } else {
-        Warn "viimeisin GitHub Actions ajo ei ole vihreÃ¤, status, $($obj.status), conclusion, $($obj.conclusion)"
+        Warn "viimeisin GitHub Actions ajo ei ole vihreä, status, $($obj.status), conclusion, $($obj.conclusion)"
         $script:warn += "CI not green"
       }
     } else {
-      Warn "ei lÃ¶ytynyt Actions ajoja, puske main tai avaa PR"
+      Warn "ei löytynyt Actions ajoja, puske main tai avaa PR"
       $script:warn += "no CI runs"
     }
   } catch {
-    Warn "gh run list epÃ¤onnistui, ohitetaan CI tarkistus"
+    Warn "gh run list epäonnistui, ohitetaan CI tarkistus"
     $script:warn += "gh error"
   }
 } else {
-  Warn "gh CLI ei ole kÃ¤ytettÃ¤vissÃ¤, CI tarkistus ohitetaan"
+  Warn "gh CLI ei ole käytettävissä, CI tarkistus ohitetaan"
   $script:warn += "no gh"
 }
 
 # 9, README, asennus ja testi
 if (Test-Path "README.md") {
   $rd = Get-Content -Raw -Encoding UTF8 README.md
-  if ($rd -match "Asennus|Installation|setup|make setup|uv venv") { Ok "README sisÃ¤ltÃ¤Ã¤ asennusohjeen" }
-  else { Warn "README ei kuvaa asennusta, lisÃ¤Ã¤ pikaohje"; $script:warn += "readme install" }
-  if ($rd -match "la hello") { Ok "README sisÃ¤ltÃ¤Ã¤ nopean testin" }
-  else { Warn "README ei sisÃ¤llÃ¤ nopeaa testiÃ¤, lisÃ¤Ã¤ la hello esimerkki"; $script:warn += "readme quicktest" }
+  if ($rd -match "Asennus|Installation|setup|make setup|uv venv") { Ok "README sisältää asennusohjeen" }
+  else { Warn "README ei kuvaa asennusta, lisää pikaohje"; $script:warn += "readme install" }
+  if ($rd -match "la hello") { Ok "README sisältää nopean testin" }
+  else { Warn "README ei sisällä nopeaa testiä, lisää la hello esimerkki"; $script:warn += "readme quicktest" }
 } else {
   Fail "README.md puuttuu"
   $script:fail += "readme missing"
@@ -164,16 +164,19 @@ if (Has-Gh) {
   try {
     $originUrl = git remote get-url origin 2>$null
     if ($originUrl) {
-      $ownerRepo = $originUrl -replace '.*github.com[:/](.*)\.git','$1'
+      $ownerRepo = $null
+      if ($originUrl -match 'github.com[:/](.+?)(?:\\.git)?$') {
+        $ownerRepo = $matches[1]
+      }
       if ($ownerRepo) {
         $prot = Invoke-Gh api repos/$ownerRepo/branches/main/protection -H "Accept: application/vnd.github+json" 2>$null
         if ($prot) {
           Ok "branch protection on asetettu main haaralle"
           $ctx = ($prot | ConvertFrom-Json).required_status_checks.contexts
           if ($ctx -and $ctx.Count -gt 0) {
-            Ok "required status checks on mÃ¤Ã¤ritelty, $($ctx -join ', ')"
+            Ok "required status checks on määritelty, $($ctx -join ', ')"
           } else {
-            Warn "required status checks puuttuu, lisÃ¤Ã¤ build, ruff, mypy, pytest"
+            Warn "required status checks puuttuu, lisää build, audit"
             $script:warn += "no required checks"
           }
         } else {
@@ -189,17 +192,17 @@ if (Has-Gh) {
       $script:warn += "no origin"
     }
   } catch {
-    Warn "branch protection tarkistus epÃ¤onnistui, $_"
+    Warn "branch protection tarkistus epäonnistui, $_"
     $script:warn += "bp error"
   }
 } else {
-  Warn "gh CLI ei ole kÃ¤ytettÃ¤vissÃ¤, branch protection tarkistus ohitetaan"
+  Warn "gh CLI ei ole käytettävissä, branch protection tarkistus ohitetaan"
   $script:warn += "no gh"
 }
 
 Write-Host ""
 if ($fail.Count -eq 0) { Ok "Audit, pakolliset kohdat kunnossa" }
 else { Fail "Audit, pakollisia puutteita, $($fail.Count) kohtaa" }
-if ($warn.Count -gt 0) { Warn "Huomioita, $($warn.Count), nÃ¤mÃ¤ eivÃ¤t estÃ¤ etenemistÃ¤ mutta suositellaan korjattavaksi" }
+if ($warn.Count -gt 0) { Warn "Huomioita, $($warn.Count), nämä eivät estä etenemistä mutta suositellaan korjattavaksi" }
 
 if ($fail.Count -gt 0) { exit 1 } else { exit 0 }
