@@ -15,3 +15,6 @@ Tutkija on projektipohja moniagenttiselle kirjallisuuskatsaukselle. Repossa mÃ�
 - Vaihe 2: laajennettu seulonta, PDF-jÃ¤sentÃ¤minen ja raportointi automatisoituna
 
 Aja `make setup` (tai toteuta vastaavat komennot kÃ¤sin) ennen ensimmÃ¤istÃ¤ muutosta ja varmista pre-commit-koukut komennolla `pre-commit run --all-files`.
+
+## Julkaisu
+Tagaa versio muodossa vX.Y.Z, esimerkki, v0.0.1. CI rakentaa paketit ja tekee GitHub releasen automaattisesti.
