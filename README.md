@@ -1,16 +1,17 @@
+[![CI](https://github.com/janne190/tutkija/actions/workflows/ci.yml/badge.svg)](https://github.com/janne190/tutkija/actions/workflows/ci.yml)
 # Tutkija
 
-Tutkija on projektipohja moniagenttiselle kirjallisuuskatsaukselle. Repossa määritellään yhteiset pelisäännöt, kehitystyökalut ja vaiheittainen etenemissuunnitelma ennen varsinaista toteutusta.
+Tutkija on projektipohja moniagenttiselle kirjallisuuskatsaukselle. Repossa mÃ¤Ã¤ritellÃ¤Ã¤n yhteiset pelisÃ¤Ã¤nnÃ¶t, kehitystyÃ¶kalut ja vaiheittainen etenemissuunnitelma ennen varsinaista toteutusta.
 
 ## Dokumentaatio
-- `docs/pelisaannot.md` – tiimin yhteiset käytännöt ja DoR/DoD
-- `docs/ARCHITECTURE.md` – arkkitehtuurin yksi sivu
-- `docs/mittarit.md` – valvottavat mittarit ja kynnysarvot
-- `docs/adr/` – arkkitehtuuripäätösten loki
+- `docs/pelisaannot.md` â€“ tiimin yhteiset kÃ¤ytÃ¤nnÃ¶t ja DoR/DoD
+- `docs/ARCHITECTURE.md` â€“ arkkitehtuurin yksi sivu
+- `docs/mittarit.md` â€“ valvottavat mittarit ja kynnysarvot
+- `docs/adr/` â€“ arkkitehtuuripÃ¤Ã¤tÃ¶sten loki
 
 ## Kehitysvaiheet
 - Vaihe 0: perusta ja CLI-rungon savutesti (`la hello`)
 - Vaihe 1: haku + metatieto tuotantokunnolla, golden snapshot ja mittarit
-- Vaihe 2: laajennettu seulonta, PDF-jäsentäminen ja raportointi automatisoituna
+- Vaihe 2: laajennettu seulonta, PDF-jÃ¤sentÃ¤minen ja raportointi automatisoituna
 
-Aja `make setup` (tai toteuta vastaavat komennot käsin) ennen ensimmäistä muutosta ja varmista pre-commit-koukut komennolla `pre-commit run --all-files`.
+Aja `make setup` (tai toteuta vastaavat komennot kÃ¤sin) ennen ensimmÃ¤istÃ¤ muutosta ja varmista pre-commit-koukut komennolla `pre-commit run --all-files`.
