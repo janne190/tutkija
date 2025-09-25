@@ -55,8 +55,10 @@ function Invoke-Gh {
 Write-Host "== Tutkija audit =="
 
 # 0, peruspolut ja työkalut
+$branch = git rev-parse --abbrev-ref HEAD 2>$null
+$onPr = [bool]$env:GITHUB_HEAD_REF
+Check-True ($branch -eq 'main' -or $onPr) "oletushaara on main" "oletushaara ei ole main"
 Check-True (Test-Path ".git") "git repo löytyi" "git repo puuttuu, aja git init"
-Check-True ((git rev-parse --abbrev-ref HEAD 2>$null) -eq "main") "oletushaara on main" "oletushaara ei ole main"
 Check-True (Test-Path ".venv/Scripts/Activate.ps1") ".venv löytyy" ".venv puuttuu, luo virtuaaliympäristö"
 
 # 1, yhteiset pelisäännöt, yksi totuuden lähde
@@ -125,7 +127,7 @@ try {
 # 8, CI vihreänä
 if (Has-Gh) {
   try {
-    $runsJson = Invoke-Gh run list --limit 1 --json status,conclusion,name -q '.[0]'
+    $runsJson = Invoke-Gh run list --limit 1 --json status --json conclusion --json name --jq '.[0]'
     if ($runsJson) {
       $obj = $runsJson | ConvertFrom-Json
       if ($obj.status -eq "completed" -and $obj.conclusion -eq "success") {
@@ -169,7 +171,13 @@ if (Has-Gh) {
         $ownerRepo = $matches[1]
       }
       if ($ownerRepo) {
-        $prot = Invoke-Gh api repos/$ownerRepo/branches/main/protection -H "Accept: application/vnd.github+json" 2>$null
+        try {
+          $prot = Invoke-Gh api repos/$ownerRepo/branches/main/protection -H "Accept: application/vnd.github+json" 2>$null
+        } catch {
+          $prot = $null
+          Warn "branch protection tarkistus epäonnistui, $_"
+          $script:warn += "bp error"
+        }
         if ($prot) {
           Ok "branch protection on asetettu main haaralle"
           $ctx = ($prot | ConvertFrom-Json).required_status_checks.contexts
@@ -179,9 +187,6 @@ if (Has-Gh) {
             Warn "required status checks puuttuu, lisää build, audit"
             $script:warn += "no required checks"
           }
-        } else {
-          Warn "branch protection ei palauttanut tietoja, varmista oikeudet tai aseta suojaus"
-          $script:warn += "no branch protection"
         }
       } else {
         Warn "origin remote osoitetta ei tunnistettu, ohitetaan suojauksen tarkistus"
