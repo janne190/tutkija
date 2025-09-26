@@ -162,8 +162,25 @@ def _score_with_scikit(
 
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
+    # Count records excluded by rules
+    excluded_rules = len(frame[frame["reasons"].str.len() > 0])
+    metadata["excluded_rules"] = excluded_rules
+
     frame["probability"] = prob_series
     frame["label"] = np.where(prob_series >= threshold, INCLUDED, EXCLUDED)
+
+    # Set label to EXCLUDED for records with reasons
+    frame.loc[frame["reasons"].str.len() > 0, "label"] = EXCLUDED
+
+    # Add stats to metadata
+    excluded_rules = int(frame["reasons"].str.len().gt(0).sum())
+    metadata.update(
+        {
+            "excluded_rules": excluded_rules,
+            "identified": len(frame),
+            "screened": len(frame),
+        }
+    )
 
     return ScreeningResult(
         frame=frame, threshold=float(threshold), engine=engine_name, metadata=metadata
