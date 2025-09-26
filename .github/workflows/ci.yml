@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
       - name: Check commit message
         if: github.event_name == 'pull_request'
         run: |
-          msg="$(jq -r '.pull_request.title' < `$GITHUB_EVENT_PATH)"
+          msg="$(jq -r '.pull_request.title' < "$GITHUB_EVENT_PATH")"
           echo "PR title, $msg"
           if echo "$msg" | grep -Eiq '^(feat|fix|chore|docs|ci|refactor|test|perf)(\(.+\))?: '; then
             echo ok

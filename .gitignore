@@ -16,6 +16,8 @@ build/
 
 # Project data
 data/
+!tests/data/
+
 cache/
 output/
 

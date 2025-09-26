@@ -1,20 +1,36 @@
 [![CI](https://github.com/janne190/tutkija/actions/workflows/ci.yml/badge.svg)](https://github.com/janne190/tutkija/actions/workflows/ci.yml)
+
 # Tutkija
 
-Tutkija on projektipohja moniagenttiselle kirjallisuuskatsaukselle. Repossa mÃ¤Ã¤ritellÃ¤Ã¤n yhteiset pelisÃ¤Ã¤nnÃ¶t, kehitystyÃ¶kalut ja vaiheittainen etenemissuunnitelma ennen varsinaista toteutusta.
+Tutkija is a starter template for a multi-agent literature review workflow. The repository documents shared working practices, developer tooling and a phased delivery plan before feature work starts.
 
-## Dokumentaatio
-- `docs/pelisaannot.md` â€“ tiimin yhteiset kÃ¤ytÃ¤nnÃ¶t ja DoR/DoD
-- `docs/ARCHITECTURE.md` â€“ arkkitehtuurin yksi sivu
-- `docs/mittarit.md` â€“ valvottavat mittarit ja kynnysarvot
-- `docs/adr/` â€“ arkkitehtuuripÃ¤Ã¤tÃ¶sten loki
+## Documentation
+- `docs/pelisaannot.md` contains the team working agreement plus DoR/DoD
+- `docs/ARCHITECTURE.md` summarises the system on a single page
+- `docs/mittarit.md` lists the metrics and guard-rails
+- `docs/adr/` tracks architectural decisions
 
-## Kehitysvaiheet
-- Vaihe 0: perusta ja CLI-rungon savutesti (`la hello`)
-- Vaihe 1: haku + metatieto tuotantokunnolla, golden snapshot ja mittarit
-- Vaihe 2: laajennettu seulonta, PDF-jÃ¤sentÃ¤minen ja raportointi automatisoituna
+## Quick start
+```powershell
+# set up the environment
+. .\.venv\Scripts\Activate.ps1
+uv pip install -e .
 
-Aja `make setup` (tai toteuta vastaavat komennot kÃ¤sin) ennen ensimmÃ¤istÃ¤ muutosta ja varmista pre-commit-koukut komennolla `pre-commit run --all-files`.
+# configuration smoke test
+la hello
 
-## Julkaisu
-Tagaa versio muodossa vX.Y.Z, esimerkki, v0.0.1. CI rakentaa paketit ja tekee GitHub releasen automaattisesti.
+# OpenAlex metadata search (tries language fallbacks automatically)
+la search "genomic screening" --out data\cache\search.parquet
+la search --topic "genominen seulonta sy\u00f6v\u00e4ss\u00e4" --lang auto --out data\cache\search.parquet
+```
+> Windows: wrap the topic in quotes so UTF-8 characters survive.
+
+## Delivery phases
+- Phase 0: foundation, CLI smoke test (`la hello`)
+- Phase 1: search + metadata with golden snapshot tests and metrics
+- Phase 2: screening, PDF handling and automated reporting
+
+Always run `make setup` (or the equivalent commands) before your first change and verify the pre-commit hooks via `pre-commit run --all-files`.
+
+## Release
+Tag versions as `vX.Y.Z`, for example `v0.0.1`. The Release workflow builds artifacts and publishes a GitHub Release automatically.

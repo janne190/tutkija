@@ -1,0 +1,38 @@
+[
+  {
+    "id": "https://openalex.org/W1111",
+    "title": "Genomic screening for cancer",
+    "abstract": "Genomic screening for cancer",
+    "authors": ["Alice Smith", "Carol Doe"],
+    "year": 2024,
+    "venue": "Journal of Screening",
+    "doi": "10.123/abc",
+    "url": "https://doi.org/10.123/abc",
+    "source": "openalex",
+    "score": 55.5
+  },
+  {
+    "id": "https://openalex.org/W4444",
+    "title": "Efficient pipelines for genomic analysis",
+    "abstract": "Overview of pipelines.",
+    "authors": ["Dana Lee"],
+    "year": 2023,
+    "venue": "Genomics World",
+    "doi": "10.999/xyz",
+    "url": "https://oa.example/pipeline",
+    "source": "openalex",
+    "score": 48.0
+  },
+  {
+    "id": "https://openalex.org/W5555",
+    "title": "Data stewardship in genomic programs",
+    "abstract": null,
+    "authors": [],
+    "year": 2021,
+    "venue": "Data Journal",
+    "doi": null,
+    "url": "https://data.example/article",
+    "source": "openalex",
+    "score": 42.0
+  }
+]
