@@ -48,6 +48,8 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
             venue="Test Venue",
             doi="10.1/a1",
             url="https://example.org/a1",
+            language="en",
+            type="article",
             source="openalex",
         ),
         Paper(
@@ -59,6 +61,8 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
             doi="",
             url="https://example.org/a2",
             source="openalex",
+            language="en",
+            type="article",
         ),
     ]
     metrics = SearchMetrics(
@@ -146,6 +150,8 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="10.1/demo",
             url="https://example.org/oa",
             source="openalex",
+            language="en",
+            type="article",
         ),
     ]
     oa_result = OpenAlexSearchResult(papers=oa_papers, metrics=oa_metrics)
@@ -162,6 +168,8 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="",
             url="https://pubmed.ncbi.nlm.nih.gov/pm-1/",
             source="pubmed",
+            language="en",
+            type="article",
         ),
     ]
 
@@ -177,6 +185,8 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="",
             url="https://arxiv.org/abs/ax-1",
             source="arxiv",
+            language="en",
+            type="article",
         ),
     ]
 
@@ -246,6 +256,8 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="10.1/p1",
             url="https://example.org/pm",
             source="pubmed",
+            language="en",
+            type="article",
         )
     ]
     ax_papers = [
@@ -259,6 +271,8 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="10.1/ax1",
             url="https://example.org/ax",
             source="arxiv",
+            language="en",
+            type="article",
         )
     ]
     papers = oa_papers + pm_papers + ax_papers

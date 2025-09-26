@@ -56,7 +56,6 @@ class Paper(BaseModel):
 
     model_config = {
         "validate_assignment": True,
-        "exclude_none": True,
         "json_schema_extra": {"additionalProperties": False},
     }
 
