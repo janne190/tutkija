@@ -61,17 +61,26 @@ def apply_rules(
     """Apply conservative heuristics and return annotated DataFrame and rule counts."""
 
     result = df.copy()
-    if "reasons" in result.columns:
-        result["reasons"] = result["reasons"].apply(_normalize_reasons)
-    else:
+    if "reasons" not in result.columns:
         result["reasons"] = [[] for _ in range(len(result))]
+    else:
+        # Ensure reasons are lists, not something else
+        result["reasons"] = result["reasons"].apply(
+            lambda x: _normalize_reasons(x) if not isinstance(x, list) else x
+        )
 
-    counts: dict[str, int] = {"language": 0, "year": 0, "type": 0}
+    counts: dict[str, int] = {
+        _LANGUAGE_REASON: 0,
+        _YEAR_REASON: 0,
+        _TYPE_REASON: 0,
+    }
 
+    # Rule: Language filter
     if allowed_lang and "language" in result.columns:
         allowed = {lang.lower() for lang in allowed_lang}
-        for idx, value in result["language"].items():
-            if value in (None, ""):
+        for idx, row in result.iterrows():
+            value = row.get("language")
+            if value in (None, "") or pd.isna(value):
                 continue
             normalized = str(value).strip().lower()
             if not normalized:
@@ -80,10 +89,12 @@ def apply_rules(
                 reasons = result.at[idx, "reasons"]
                 if _LANGUAGE_REASON not in reasons:
                     reasons.append(_LANGUAGE_REASON)
-                    counts["language"] += 1
+                    counts[_LANGUAGE_REASON] += 1
 
+    # Rule: Year filter
     if year_min is not None and "year" in result.columns:
-        for idx, value in result["year"].items():
+        for idx, row in result.iterrows():
+            value = row.get("year")
             parsed_year = _to_int(value)
             if parsed_year is None:
                 continue
@@ -91,27 +102,22 @@ def apply_rules(
                 reasons = result.at[idx, "reasons"]
                 if _YEAR_REASON not in reasons:
                     reasons.append(_YEAR_REASON)
-                    counts["year"] += 1
+                    counts[_YEAR_REASON] += 1
 
+    # Rule: Type filter for non-research articles
     type_col = next((col for col in _TYPE_COLUMNS if col in result.columns), None)
     if drop_non_research and type_col:
-        for idx, value in result[type_col].items():
+        for idx, row in result.iterrows():
+            value = row.get(type_col)
             flagged = False
             for entry in _normalize_iterable(value):
-                normalized = entry.strip().lower()
-                if not normalized:
-                    continue
-                base = normalized.split()[0]
-                if base in _NON_RESEARCH_TYPES or normalized in _NON_RESEARCH_TYPES:
-                    flagged = True
-                    break
-                if normalized.startswith("news"):
+                if entry.lower() in _NON_RESEARCH_TYPES:
                     flagged = True
                     break
             if flagged:
                 reasons = result.at[idx, "reasons"]
                 if _TYPE_REASON not in reasons:
                     reasons.append(_TYPE_REASON)
-                    counts["type"] += 1
+                    counts[_TYPE_REASON] += 1
 
     return result, counts

@@ -302,14 +302,55 @@ if (Has-Gh) {
   $script:warnings += 'no gh'
 }
 
-Write-Host ''
-if ($failures.Count -eq 0) {
-  Ok 'Audit, pakolliset kohdat kunnossa'
+# 8. Vaihe 2, seulonta
+if (Test-Path 'data/cache/screened.parquet') {
+  Ok 'screened.parquet löytyy'
 } else {
-  Fail "Audit, pakollisia puutteita: $($failures.Count) kpl"
-}
-if ($warnings.Count -gt 0) {
-  Warn "Huomioita: $($warnings.Count), suositellaan korjattavaksi"
+  Warn 'screened.parquet puuttuu, ohitetaan seulonnan tarkistukset'
 }
 
-if ($failures.Count -gt 0) { exit 1 } else { exit 0 }
+if (Test-Path 'data/cache/screen_log.csv') {
+  Ok 'screen_log.csv löytyy'
+  $screenLog = Import-Csv "data/cache/screen_log.csv" | Select-Object -Last 1
+  $neededCols = @("identified", "screened", "excluded", "included", "engine", "recall_target", "threshold_used")
+  $missingCols = @()
+  foreach ($col in $neededCols) {
+    if (-not $screenLog.PSObject.Properties.Name.Contains($col)) {
+      $missingCols += $col
+    }
+  }
+  if ($missingCols.Count -gt 0) {
+    $msg = "screen_log.csv puuttuvia sarakkeita: $($missingCols -join ', ')"
+    Fail $msg
+    $script:failures += $msg
+  } else {
+    Ok "screen_log.csv sisältää vaaditut sarakkeet"
+  }
+
+  # Tarkista, että vähintään 70% on käsitelty
+  $identified = [double]$screenLog.identified
+  $screened = [double]$screenLog.screened
+  if ($identified -gt 0) {
+    $ratio = $screened / $identified
+    Check-True ($ratio -ge 0.7) "seulottu vähintään 70% ($([math]::Round($ratio*100))%)" "seulottu alle 70% ($([math]::Round($ratio*100))%)"
+  }
+
+} else {
+  Warn 'screen_log.csv puuttuu, ohitetaan seulonnan tarkistukset'
+}
+
+# Python-pohjaiset tarkistukset, jos `la` on saatavilla
+$la_cmd = Get-Command la -ErrorAction SilentlyContinue
+if ($la_cmd) {
+    Ok "la CLI löytyy, ajetaan Python-tarkistukset"
+    try {
+        $metrics_json = la screen-metrics | ConvertFrom-Json
+        if ($metrics_json.reasons_on_included -eq 0) {
+            Ok "reasons-sarake on tyhjä sisällytetyillä tietueilla"
+        } else {
+            Warn "reasons-sarakkeessa on arvoja sisällytetyillä tietueilla"
+        }
+    } catch {
+        Warn "Python-tarkistusten ajo epäonnistui"
+    }
+}

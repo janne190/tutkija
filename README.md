@@ -26,6 +26,9 @@ la search --topic "genominen seulonta sy\u00f6v\u00e4ss\u00e4" --lang auto --out
 # Multisource merge and metrics
 la search-all --topic "genomic screening cancer" --out data\cache\merged.parquet --save-single
 
+# Screening
+la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --recall 0.9 --engine scikit
+
 # Live smoke verification (hits OpenAlex, PubMed, arXiv)
 la search-all --topic "genomic screening cancer" --limit 40
 # expected: per_source, dup_doi, dup_title, filtered, final all report values > 0
@@ -34,7 +37,13 @@ la search-all --topic "genomic screening cancer" --limit 40
 
 `la search-all` performs live HTTP requests to OpenAlex (`https://api.openalex.org/works`), PubMed (`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`) and arXiv (`https://export.arxiv.org/api/query`). No API keys are required. Set the optional `TUTKIJA_CONTACT_EMAIL` environment variable to add a polite User-Agent/`mailto` to the calls.
 
-Running `la search` appends a row to `data\cache\search_log.csv`. `la search-all` writes the merged Parquet plus an audit row in `data\cache\merge_log.csv` so you can track sources, duplicates and counts per topic.
+Running `la search` appends a row to `data\cache\search_log.csv`. `la search-all` writes the merged Parquet plus an audit row in `data\cache\merge_log.csv` so you can track sources, duplicates and counts per topic. `la screen` produces `screened.parquet` and a `screen_log.csv` with screening metrics.
+
+The optional ASReview screening engine can be enabled with `uv pip install asreview` or `pip install tutkija[asreview]`. If you know a few relevant papers in advance, you can pass their IDs as seeds to improve the model's accuracy:
+
+```powershell
+la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --engine asreview --seeds "doi:10.1234/..." "pmid:56789"
+```
 
 ## CLI metrics
 The multisource command reports the same statistics that land in the merge log. These guard-rails help keep the dataset healthy when the pipeline evolves.

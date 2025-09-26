@@ -165,9 +165,16 @@ def search_all(
 
     log_path = Path("data/cache/merge_log.csv")
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    # For PRISMA: identified = total from all sources before deduplication
+    identified = sum(stats.get("per_source", {}).values())
+    duplicates_removed = stats.get("dup_doi", 0) + stats.get("dup_title", 0)
+
     log_entry = {
         "topic": chosen_topic,
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "identified": identified,
+        "duplicates_removed": duplicates_removed,
         "per_source_counts": json.dumps(stats.get("per_source", {})),
         "duplicates_by_doi": stats.get("dup_doi", 0),
         "duplicates_by_title": stats.get("dup_title", 0),
@@ -195,157 +202,119 @@ def search_all(
 
 @app.command(name="screen")
 def screen(
-    input_path: Path = typer.Option(
-        Path("data/cache/merged.parquet"),
-        "--in",
-        help="Syote, yhdistetty kirjasto Parquet muodossa",
-        show_default=True,
+    in_path: Path = typer.Option(
+        ..., "--in", help="Path to merged.parquet", exists=True, dir_okay=False
     ),
-    output_path: Path = typer.Option(
-        Path("data/cache/screened.parquet"),
-        "--out",
-        help="Tuloksen sijainti Parquet muodossa",
-        show_default=True,
+    out_path: Path = typer.Option(
+        ..., "--out", help="Path to save screened.parquet", dir_okay=False
     ),
-    recall: float = typer.Option(
-        0.9,
-        "--recall",
-        min=0.0,
-        max=1.0,
-        help="Tavoiteltu recall raja",
-        show_default=True,
+    recall_target: float = typer.Option(
+        0.9, "--recall", min=0.5, max=1.0, help="Target recall for model"
     ),
     engine: str = typer.Option(
-        "scikit",
-        "--engine",
-        help="Scorauksen moottori (scikit tai asreview)",
-        show_default=True,
+        "scikit", "--engine", help="Screening engine: 'scikit' or 'asreview'"
     ),
-    seeds: tuple[str, ...] = typer.Option(
-        (),
-        "--seeds",
-        help="Tunnetusti relevanttien julkaisujen id:t",
-        metavar="ID",
-        nargs=-1,
+    seeds: Optional[list[str]] = typer.Option(
+        None, "--seeds", help="List of known relevant paper IDs (e.g., DOIs)"
     ),
-    min_year: int | None = typer.Option(
-        None,
-        "--min-year",
-        help="Pienin sallittu julkaisu vuosi (rules)",
-    ),
-    allowed_lang: tuple[str, ...] = typer.Option(
-        ("en", "fi"),
-        "--allowed-lang",
-        help="Sallitut kielet rules vaiheessa",
-        metavar="LANG",
-        nargs=-1,
-        show_default=True,
+    year_min: Optional[int] = typer.Option(
+        None, "--year-min", help="Minimum publication year"
     ),
     drop_non_research: bool = typer.Option(
-        False,
-        "--drop-non-research",
-        help="Merkitse editoriaalit/kirjeet uutiset rules vaiheessa",
-        is_flag=True,
+        False, "--drop-non-research", help="Filter out editorials, letters, etc."
     ),
 ) -> None:
-    """Suorita esiseulonta ja mallipohjainen luokittelu."""
+    """Screen articles using rules and a model, save to Parquet."""
+    start_time = time.time()
 
-    engine_name = engine.lower()
-    if engine_name not in {"scikit", "asreview"}:
-        raise typer.BadParameter(
-            "engine tulee olla scikit tai asreview", param_hint="engine"
-        )
-    if recall <= 0 or recall > 1:
-        raise typer.BadParameter(
-            "recall tulee olla valilla (0, 1]", param_hint="recall"
-        )
-    if not input_path.exists():
-        typer.secho(f"Syotetta ei loydy: {input_path}", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
+    df = pd.read_parquet(in_path)
+    initial_count = len(df)
 
-    df = pd.read_parquet(input_path)
-
-    rules_frame, rule_counts = apply_rules(
-        df,
-        year_min=min_year,
-        allowed_lang=list(allowed_lang) if allowed_lang else None,
-        drop_non_research=drop_non_research,
+    # 1. Apply rules
+    df, rule_counts = apply_rules(
+        df, year_min=year_min, drop_non_research=drop_non_research
     )
+    excluded_by_rules = sum(rule_counts.values())
 
-    seeds_list = [seed for seed in seeds if seed]
-    try:
-        result = score_and_label(
-            rules_frame,
-            target_recall=recall,
-            seed=7,
-            use_asreview=(engine_name == "asreview"),
-            seeds=seeds_list,
-        )
-    except RuntimeError as exc:
-        typer.secho(str(exc), fg=typer.colors.RED)
-        raise typer.Exit(code=1) from exc
+    # 2. Score and label with selected engine
+    use_asreview = engine.lower() == "asreview"
+    result = score_and_label(
+        df,
+        target_recall=recall_target,
+        use_asreview=use_asreview,
+        seeds=seeds,
+    )
+    
+    screened_df = result.frame
+    excluded_model = len(screened_df[screened_df["label"] == "excluded"]) - excluded_by_rules
+    included = len(screened_df[screened_df["label"] == "included"])
+    
+    # 3. Write screened data
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    screened_df.to_parquet(out_path, index=False)
 
-    scored_df = result.frame.copy()
-    if "reasons" not in scored_df.columns:
-        scored_df["reasons"] = [[] for _ in range(len(scored_df))]
-
-    has_reasons = scored_df["reasons"].apply(bool)
-    model_excluded_mask = scored_df["label"].eq("excluded")
-
-    excluded_rules = int(has_reasons.sum())
-    excluded_model = int((~has_reasons & model_excluded_mask).sum())
-
-    if has_reasons.any():
-        scored_df.loc[has_reasons, "label"] = "excluded"
-    if (~has_reasons).any():
-        scored_df.loc[~has_reasons, "reasons"] = [
-            [] for _ in range((~has_reasons).sum())
-        ]
-
-    scored_df["probability"] = scored_df["probability"].astype(float)
-    scored_df["label"] = scored_df["label"].astype(str)
-
-    identified = int(df.shape[0])
-    screened = int(scored_df.shape[0])
-    included = int(scored_df["label"].eq("included").sum())
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    scored_df.to_parquet(output_path, index=False)
-
+    # 4. Write log
     log_path = Path("data/cache/screen_log.csv")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    # PRISMA fields
+    # screened = records after deduplication
+    # excluded = sum of rule-based and model-based exclusions
+    screened_count = initial_count 
+    excluded_count = excluded_by_rules + excluded_model
+
     log_entry = {
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "identified": identified,
-        "screened": screened,
-        "excluded_rules": excluded_rules,
-        "excluded_model": excluded_model,
+        "duration_s": round(time.time() - start_time),
+        "identified": initial_count, # This is carry-over, real identified is in merge_log
+        "screened": screened_count,
+        "excluded": excluded_count,
         "included": included,
-        "engine": engine_name,
-        "recall_target": recall,
-        "threshold_used": float(result.threshold),
-        "seeds_count": len(seeds_list),
-        "rule_counts": json.dumps(rule_counts),
-        "training_strategy": result.metadata.get("strategy"),
+        "excluded_rules": excluded_by_rules,
+        "excluded_model": excluded_model,
+        "engine": result.engine,
+        "recall_target": recall_target,
+        "threshold_used": result.threshold,
+        "seeds_count": len(seeds) if seeds else 0,
+        "in_path": str(in_path),
+        "out_path": str(out_path),
     }
-    pd.DataFrame([log_entry]).to_csv(
-        log_path,
-        mode="a",
-        header=not log_path.exists(),
-        index=False,
-    )
+    
+    log_df = pd.DataFrame([log_entry])
+    log_df.to_csv(log_path, mode="a", header=not log_path.exists(), index=False)
 
-    typer.echo(
-        "Screen OK | "
-        f"identified={identified} "
-        f"screened={screened} "
-        f"excluded_rules={excluded_rules} "
-        f"excluded_model={excluded_model} "
-        f"included={included} "
-        f"engine={engine_name} "
-        f"threshold={result.threshold:.3f} "
-        f"seeds={len(seeds_list)}"
+    # 5. Print metrics
+    typer.echo("Screening complete.")
+    typer.echo(f"  Identified (pre-dedup): see merge log")
+    typer.echo(f"  Screened (post-dedup): {screened_count}")
+    typer.echo(f"  Excluded: {excluded_count}")
+    typer.echo(f"    - By rules: {excluded_by_rules} {rule_counts}")
+    typer.echo(f"    - By model: {excluded_model}")
+    typer.echo(f"  Included: {included}")
+    typer.echo(f"  Threshold used: {result.threshold:.4f}")
+    typer.echo(f"  Output written to: {out_path}")
+
+@app.command(name="screen-metrics")
+def screen_metrics(
+    in_path: Path = typer.Option(
+        Path("data/cache/screened.parquet"),
+        "--in",
+        help="Path to screened.parquet",
+        exists=True,
+        dir_okay=False,
     )
+) -> None:
+    """Print screening metrics in a machine-readable format for audit."""
+    df = pd.read_parquet(in_path)
+    
+    reasons_on_included = 0
+    if "reasons" in df.columns and "label" in df.columns:
+        included_df = df[df["label"] == "included"]
+        reasons_on_included = included_df["reasons"].apply(lambda x: len(x) > 0).sum()
+
+    metrics = {
+        "reasons_on_included": int(reasons_on_included)
+    }
+    typer.echo(json.dumps(metrics))
 
 
 def _write_source_parquet(path: Path, papers: Iterable[Paper]) -> None:

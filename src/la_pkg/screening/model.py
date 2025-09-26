@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Sequence
+from typing import Any, Sequence
 
 import numpy as np
 import pandas as pd
@@ -92,154 +92,110 @@ def _score_with_scikit(
     engine_name: str = "scikit",
 ) -> ScreeningResult:
     text_series = _combine_text_columns(frame)
-    metadata: dict[str, object] = {"trained": False, "strategy": "uniform"}
+    metadata: dict[str, object] = {"trained": False, "strategy": "default_threshold"}
     if frame.empty:
-        frame["probability"] = []
-        frame["label"] = []
+        frame["probability"] = pd.Series(dtype=float)
+        frame["label"] = pd.Series(dtype=str)
         metadata["strategy"] = "empty"
         return ScreeningResult(
-            frame=frame,
-            threshold=float(DEFAULT_THRESHOLD),
-            engine=engine_name,
-            metadata=metadata,
+            frame=frame, threshold=DEFAULT_THRESHOLD, engine=engine_name, metadata=metadata
         )
 
-    probabilities = np.full(frame.shape[0], DEFAULT_THRESHOLD, dtype=float)
-    threshold = float(DEFAULT_THRESHOLD)
-
-    gold_labels = _extract_gold_labels(frame)
-    pipeline: Pipeline | None = None
-
-    if gold_labels is not None:
-        pipeline = _build_pipeline(seed)
-        train_text = text_series.loc[gold_labels.index]
-        try:
-            pipeline.fit(train_text, gold_labels.to_numpy())
-        except ValueError as exc:
-            logger.warning("Unable to train logistic model with gold labels: %s", exc)
-            pipeline = None
-        else:
-            metadata["trained"] = True
-            metadata["strategy"] = "gold"
-            probabilities = pipeline.predict_proba(text_series)[:, 1]
-            train_probs = pipeline.predict_proba(train_text)[:, 1]
-            threshold = pick_threshold_for_recall(
-                gold_labels.to_numpy(), train_probs, target_recall
-            )
-
-    elif seeds:
-        seeds_set = {str(seed).strip() for seed in seeds if str(seed).strip()}
-        if seeds_set and "id" in frame.columns:
-            id_series = frame["id"].astype(str)
-            positives = id_series.isin(seeds_set)
-            positives_count = int(positives.sum())
-            if 0 < positives_count < frame.shape[0]:
-                pipeline = _build_pipeline(seed)
-                y_train = positives.astype(int).to_numpy()
-                try:
-                    pipeline.fit(text_series, y_train)
-                except ValueError as exc:
-                    logger.warning("Unable to train logistic model with seeds: %s", exc)
-                    pipeline = None
-                else:
-                    metadata["trained"] = True
-                    metadata["strategy"] = "seeds"
-                    probabilities = pipeline.predict_proba(text_series)[:, 1]
-                    threshold = pick_threshold_for_recall(
-                        y_train, probabilities, target_recall
-                    )
-            else:
-                logger.info(
-                    "Seed ids provided but none matched or negatives missing; skipping supervised training."
-                )
-        elif seeds_set:
-            logger.info(
-                "Seeds provided but 'id' column missing; skipping supervised training."
-            )
-
-    if pipeline is None:
-        metadata.setdefault("strategy", "uniform")
-
-    probabilities = np.clip(probabilities, 0.0, 1.0)
-    prob_series = pd.Series(probabilities, index=frame.index, name="probability")
-    frame["probability"] = prob_series
-    frame["label"] = np.where(prob_series >= threshold, INCLUDED, EXCLUDED)
-
-    return ScreeningResult(
-        frame=frame, threshold=float(threshold), engine=engine_name, metadata=metadata
-    )
-
-
-def _build_pipeline(seed: int) -> Pipeline:
-    return Pipeline(
-        steps=[
-            (
-                "tfidf",
-                TfidfVectorizer(
-                    max_features=5000,
-                    ngram_range=(1, 2),
-                    stop_words="english",
-                ),
-            ),
-            (
-                "clf",
-                LogisticRegression(
-                    max_iter=1000,
-                    class_weight="balanced",
-                    random_state=seed,
-                ),
-            ),
+    pipeline = Pipeline(
+        [
+            ("tfidf", TfidfVectorizer()),
+            ("clf", LogisticRegression(random_state=seed, class_weight="balanced")),
         ]
     )
 
+    y_prob: np.ndarray | None = None
+    threshold = DEFAULT_THRESHOLD
 
-def _combine_text_columns(frame: pd.DataFrame) -> pd.Series:
-    title = frame.get("title")
-    if title is None:
-        title_series = pd.Series("", index=frame.index)
-    else:
-        title_series = title.fillna("").astype(str)
-    abstract = frame.get("abstract")
-    if abstract is None:
-        abstract_series = pd.Series("", index=frame.index)
-    else:
-        abstract_series = abstract.fillna("").astype(str)
-    combined = title_series.str.strip().str.cat(abstract_series.str.strip(), sep=" ")
-    combined = combined.str.replace(r"\s+", " ", regex=True).str.strip()
-    return combined
+    if "gold_label" in frame.columns and frame["gold_label"].notna().any():
+        gold_set = frame[frame["gold_label"].notna()].copy()
+        y_true = gold_set["gold_label"].apply(_to_binary_label).values
+        if np.any(y_true == 1):
+            pipeline.fit(
+                _combine_text_columns(gold_set),
+                y_true,
+            )
+            y_prob = pipeline.predict_proba(text_series)[:, 1]
+            threshold = pick_threshold_for_recall(
+                y_true, pipeline.predict_proba(gold_set)[:, 1], target_recall
+            )
+            metadata["trained"] = True
+            metadata["strategy"] = "recall_optimized"
+        else:
+            logger.warning(
+                "Gold set found but contains no positive labels, using default threshold"
+            )
+            # Fall through to pseudo-labels or untrained
+    
+    if y_prob is None:
+        # Pseudo-fit with rules and seeds if available
+        pseudo_labels = _create_pseudo_labels(frame, seeds)
+        if np.any(pseudo_labels == 1):
+            pipeline.fit(text_series, pseudo_labels)
+            y_prob = pipeline.predict_proba(text_series)[:, 1]
+            metadata["trained"] = True
+            metadata["strategy"] = "pseudo_labels"
+        else:
+            # If no positive pseudo-labels, just fit the vectorizer
+            # and use the untrained classifier.
+            logger.warning(
+                "No gold set or positive seeds found. Model is not trained, using default threshold."
+            )
+            # Fit only the vectorizer, then create default probabilities
+            pipeline.named_steps["tfidf"].fit(text_series)
+            y_prob = np.full(len(text_series), 0.5)  # Create a 1D array
+            metadata["trained"] = False
+            metadata["strategy"] = "untrained_default"
+
+    frame["probability"] = y_prob
+    frame["label"] = np.where(
+        frame["probability"] >= threshold, INCLUDED, EXCLUDED
+    ).tolist()
+
+    # Records with reasons are always excluded
+    if "reasons" in frame.columns:
+        has_reasons = frame["reasons"].apply(lambda x: isinstance(x, list) and len(x) > 0)
+        frame.loc[has_reasons, "label"] = EXCLUDED
+
+    return ScreeningResult(
+        frame=frame, threshold=threshold, engine=engine_name, metadata=metadata
+    )
 
 
-def _extract_gold_labels(frame: pd.DataFrame) -> pd.Series | None:
-    if "gold_label" not in frame.columns:
-        return None
-    series = frame["gold_label"].dropna()
-    if series.empty:
-        return None
-    try:
-        converted = series.apply(_label_to_int)
-    except ValueError as exc:
-        logger.warning("Failed to interpret gold labels: %s", exc)
-        return None
-    if converted.nunique() < 2:
-        logger.warning(
-            "Gold labels contain a single class; skipping supervised training."
-        )
-        return None
-    return converted
+def _combine_text_columns(df: pd.DataFrame) -> pd.Series:
+    """Safely combine title and abstract into a single text series."""
+    title = df["title"].fillna("").astype(str)
+    abstract = df["abstract"].fillna("").astype(str)
+    return (title + " " + abstract).str.strip()
 
 
-def _label_to_int(value: object) -> int:
-    if value is None:
-        raise ValueError("gold label cannot be None")
-    if isinstance(value, bool):
-        return int(value)
-    if isinstance(value, (int, np.integer)):
-        if int(value) in (0, 1):
-            return int(value)
-        raise ValueError(f"unsupported gold label value: {value}")
-    text = str(value).strip().lower()
-    if text in _POSITIVE_LABELS:
-        return 1
-    if text in _NEGATIVE_LABELS:
+def _to_binary_label(label: Any) -> int:
+    """Convert a label to a binary 0 or 1."""
+    if pd.isna(label):
         return 0
-    raise ValueError(f"unsupported gold label value: {value}")
+    label_str = str(label).lower().strip()
+    if label_str in _POSITIVE_LABELS:
+        return 1
+    return 0
+
+def _create_pseudo_labels(df: pd.DataFrame, seeds: Sequence[str] | None) -> np.ndarray:
+    """Create pseudo-labels for training based on rules and seeds."""
+    labels = np.zeros(len(df))
+    
+    # Seeds are positive examples
+    if seeds:
+        seed_ids = set(seeds)
+        for idx, row in df.iterrows():
+            if row.get("id") in seed_ids or row.get("doi") in seed_ids:
+                labels[idx] = 1
+
+    # Rule-based exclusions are negative examples
+    if "reasons" in df.columns:
+        has_reasons = df["reasons"].apply(lambda x: isinstance(x, list) and len(x) > 0)
+        labels[has_reasons] = 0 # Explicitly set to 0, even if it was a seed
+
+    return labels
