@@ -1,4 +1,4 @@
-[project]
+﻿[project]
 name = "tutkija"
 version = "0.0.1"
 description = "Moniagenttinen kirjallisuuskatsaus, Tutkija"
@@ -11,7 +11,8 @@ dependencies = [
   "pydantic>=2.8",
   "pandas>=2.2",
   "pyarrow>=16.1",
-  "rapidfuzz>=3.8"
+    "rapidfuzz>=3.8",
+  "feedparser>=6.0"
 ]
 
 [project.scripts]
