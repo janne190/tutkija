@@ -117,31 +117,22 @@ def apply_rules(
     type_col = next((col for col in _TYPE_COLUMNS if col in result.columns), None)
     if drop_non_research and type_col:
         for idx, row in result.iterrows():
+            # Skip if already filtered by other reasons
+            if result.at[idx, "reasons"]:
+                continue
+
             value = row.get(type_col)
             normalized_types = list(_normalize_iterable(value))
-            print(
-                f"\nRow {row['id']}, type={value}, normalized={normalized_types}, current reasons={result.at[idx, 'reasons']}"
-            )
             flagged = False
             for entry in normalized_types:
                 if entry in _NON_RESEARCH_TYPES:
-                    print(f"Found match: {entry} in {_NON_RESEARCH_TYPES}")
                     flagged = True
                     break
             if flagged:
                 reasons = result.at[idx, "reasons"]
                 type_filter = "type filter"
-                # Only count type filter if:
-                # 1. This type hasn't been counted yet AND
-                # 2. The record isn't already manually checked (other filters happen after type)
-                if type_filter not in reasons and "manual check" not in reasons:
-                    print(f"Adding type filter to {row['id']}, counts before: {counts}")
+                if type_filter not in reasons:
                     reasons.append(type_filter)
                     counts[_TYPE_REASON] += 1
-                    print(f"Counts after: {counts}")
-                else:
-                    # Still add the reason but don't increment the counter if already filtered
-                    if type_filter not in reasons:
-                        reasons.append(type_filter)
 
     return result, counts
