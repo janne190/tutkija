@@ -9,6 +9,7 @@ Tutkija is a starter template for a multi-agent literature review workflow. The 
 - `docs/ARCHITECTURE.md` summarises the system on a single page
 - `docs/mittarit.md` lists the metrics and guard-rails
 - `docs/adr/` tracks architectural decisions
+  - [`docs/adr/0003-screening-malli.md`](docs/adr/0003-screening-malli.md) documents the screening engine architecture, including the rule-based pre-screening and model-based ranking approaches, validation metrics, and the ASReview integration.
 
 ## Quick start
 ```powershell

@@ -207,13 +207,22 @@ def _score_with_scikit(
 
     # Records with reasons are always excluded
     if "reasons" in frame.columns:
+        # First check which reasons exist
         has_reasons = frame["reasons"].apply(
             lambda x: isinstance(x, list) and len(x) > 0
         )
         frame.loc[has_reasons, "label"] = EXCLUDED
+
+        # Then count only rule-based exclusions (language, year, type filters)
+        is_rule_based = frame["reasons"].apply(
+            lambda x: isinstance(x, list)
+            and any(
+                r for r in x if "filter" in r.lower()
+            )  # Only count "*_filter" reasons
+        )
     identified = len(frame)
     screened = frame["label"].notna().sum()
-    excluded_rules = 0 if "reasons" not in frame.columns else has_reasons.sum()
+    excluded_rules = 0 if "reasons" not in frame.columns else is_rule_based.sum()
     excluded_model = (frame["label"] == EXCLUDED).sum() - excluded_rules
     included = (frame["label"] == INCLUDED).sum()
 
