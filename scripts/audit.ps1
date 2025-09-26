@@ -130,6 +130,91 @@ try {
   $script:failures += 'la hello crash'
 }
 
+# 7b. hakulogit ja yhdistetyt artefaktit
+Check-True (Test-Path 'data/cache/search_log.csv') 'search_log.csv loytyi' 'data/cache/search_log.csv puuttuu, aja la search'
+
+$mergedPath = 'data/cache/merged.parquet'
+if (Test-Path $mergedPath) {
+  Ok 'data/cache/merged.parquet loytyi'
+} else {
+  $msg = 'data/cache/merged.parquet puuttuu, aja la search-all'
+  Fail $msg
+  $script:failures += $msg
+}
+
+
+
+$mergeLogPath = 'data/cache/merge_log.csv'
+$expectedMergeCols = @('topic', 'time', 'per_source_counts', 'duplicates_by_doi', 'duplicates_by_title', 'filtered_by_rules', 'final_count', 'out_path')
+if (Test-Path $mergeLogPath) {
+  $rows = @()
+  try {
+    $rows = Import-Csv -Path $mergeLogPath
+  } catch {
+    $rows = @()
+  }
+  if ($rows.Count -gt 0) {
+    $first = $rows[0]
+    $headers = $first.PSObject.Properties.Name
+    $missing = @($expectedMergeCols | Where-Object { $headers -notcontains $_ })
+    if ($missing.Count -eq 0) {
+      Ok 'merge_log.csv sarakkeet kunnossa'
+    } else {
+      $msg = "merge_log.csv puuttuu sarakkeet: $($missing -join ', ')"
+      Fail $msg
+      $script:failures += $msg
+    }
+    $last = $rows[-1]
+    $counts = $null
+    try {
+      $counts = $last.per_source_counts | ConvertFrom-Json
+    } catch {
+      $counts = $null
+    }
+    if ($counts) {
+      $countKeys = $counts.PSObject.Properties.Name
+      $requiredSources = @('openalex', 'pubmed', 'arxiv')
+      $missingSources = @($requiredSources | Where-Object { $countKeys -notcontains $_ })
+      if ($missingSources.Count -eq 0) {
+        $hasLiveData = $false
+        foreach ($source in $requiredSources) {
+          $value = $counts.$source
+          if ($value -and [int]$value -gt 0) { $hasLiveData = $true; break }
+        }
+        if ($hasLiveData) {
+          Ok 'merge_log per_source_counts l?ytyi ja sis?lt?? live dataa'
+        } else {
+          $msg = 'per_source_counts kaikki arvot 0, todenn?k?isesti ei live hakua'
+          Fail $msg
+          $script:failures += $msg
+        }
+      } else {
+        $msg = "per_source_counts puuttuu avaimet: $($missingSources -join ', ')"
+        Fail $msg
+        $script:failures += $msg
+      }
+    } else {
+      $msg = 'per_source_counts ei ole kelvollista JSONia'
+      Fail $msg
+      $script:failures += $msg
+    }
+    $outPath = $last.out_path
+    if ($outPath -and (Test-Path $outPath)) {
+      Ok "merge_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
+    } else {
+      $msg = "merge_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
+      Fail $msg
+      $script:failures += $msg
+    }
+  } else {
+    Warn 'merge_log.csv on tyhja, aja la search-all'
+    $script:warnings += 'merge log empty'
+  }
+} else {
+  $msg = 'data/cache/merge_log.csv puuttuu, aja la search-all'
+  Fail $msg
+  $script:failures += $msg
+}
 # 8. viimeisin CI-ajo
 if (Has-Gh) {
   try {
