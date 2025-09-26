@@ -50,9 +50,9 @@ class Paper(BaseModel):
     url: str | None = None
     source: str
     score: float | None = None
-    # Hidden fields that don't appear in serialization
-    language: str | None = Field(None, exclude=True)
-    type: str | None = Field(None, exclude=True)
+    # Hidden fields that don't appear in serialization and are optional
+    language: str | None = Field(default=None, exclude=True)
+    type: str | None = Field(default=None, exclude=True)
 
     model_config = {
         "validate_assignment": True,
