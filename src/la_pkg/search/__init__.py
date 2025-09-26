@@ -1,10 +1,14 @@
-"""Search utilities for Tutkija."""
-
-from .openalex import OpenAlexSearchResult, Paper, append_audit_log, query_openalex
+from .arxiv import query_arxiv
+from .merge import MergeStats, merge_and_filter
+from .openalex import query_openalex
+from .pubmed import query_pubmed
+from .types import Paper
 
 __all__ = [
-    "Paper",
-    "OpenAlexSearchResult",
-    "append_audit_log",
     "query_openalex",
+    "query_pubmed",
+    "query_arxiv",
+    "merge_and_filter",
+    "Paper",
+    "MergeStats",
 ]

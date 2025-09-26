@@ -2,3 +2,4 @@
 pytest
 mypy
 ruff
+pyarrow>=14.0.1  # Schema control for parquet files

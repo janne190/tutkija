@@ -23,3 +23,100 @@ jobs:
         run: |
           . .venv/bin/activate
           la hello | head -n 3
+
+      - name: Live search-all smoke
+        env:
+          TUTKIJA_CONTACT_EMAIL: ci@tutkija.invalid
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la search-all --topic "genomic screening cancer" --limit 40 --out data/cache/nightly-merged.parquet
+          python - <<'PY'
+import csv
+import json
+from pathlib import Path
+
+log_path = Path('data/cache/merge_log.csv')
+if not log_path.exists():
+    raise SystemExit('merge_log.csv puuttuu')
+with log_path.open(encoding='utf-8') as handle:
+    rows = list(csv.DictReader(handle))
+if not rows:
+    raise SystemExit('merge_log.csv tyhja')
+last = rows[-1]
+counts_raw = last.get('per_source_counts')
+if not counts_raw:
+    raise SystemExit('per_source_counts puuttuu')
+counts = json.loads(counts_raw)
+required = {'openalex', 'pubmed', 'arxiv'}
+missing = sorted(required.difference(counts))
+if missing:
+    raise SystemExit(f'per_source_counts puuttuu avaimet: {missing}')
+def _to_int(value):
+    if isinstance(value, (int, float)):
+        return int(value)
+    if isinstance(value, str) and value.strip():
+        try:
+            return int(float(value))
+        except ValueError:
+            return 0
+    return 0
+if not any(_to_int(counts.get(name, 0)) > 0 for name in required):
+    raise SystemExit(f'per_source_counts kaikki arvot 0: {counts}')
+out_path = Path(last.get('out_path', ''))
+if not out_path.exists():
+    raise SystemExit(f'merged parquet puuttuu: {out_path}')
+print('per_source_counts', counts)
+print('merged_path', out_path.as_posix())
+PY
+
+      - name: Screen and verify
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la screen --in data/cache/nightly-merged.parquet --out data/cache/nightly-screened.parquet --recall 0.9 --engine scikit
+          python3 << EOF
+import csv
+import json
+from pathlib import Path
+log_path = Path('data/cache/screen_log.csv')
+if not log_path.exists():
+    raise SystemExit('screen_log.csv puuttuu')
+with log_path.open(encoding='utf-8') as handle:
+    rows = list(csv.DictReader(handle))
+if not rows:
+    raise SystemExit('screen_log.csv tyhja')
+last = rows[-1]
+identified = float(last.get('identified', 0))
+screened = float(last.get('screened', 0))
+if identified == 0:
+    raise SystemExit('identified is 0')
+screen_ratio = screened / identified
+if screen_ratio < 0.7:
+    raise SystemExit(f'screened ratio {screen_ratio:.1%} too low')
+required = ['identified', 'screened', 'excluded_rules', 'excluded_model', 'included',
+           'engine', 'recall_target', 'threshold_used', 'seeds_count', 'version',
+           'random_state', 'fallback']
+for field in required:
+    if field not in last:
+        raise SystemExit(f'Required field missing in screen_log.csv: {field}')
+out_path = last.get('out_path', '')
+if not out_path or not Path(out_path).exists():
+    raise SystemExit(f'screened parquet missing: {out_path}')
+print(f'identified: {int(identified)}')
+print(f'screened: {int(screened)}')
+print(f'screen_ratio: {screen_ratio:.1%}')
+print('required fields: ok')
+EOF
+          PY
+identified = float(last.get('identified', 0))
+screened = float(last.get('screened', 0))
+if identified == 0:
+    raise SystemExit('identified is 0')
+screen_ratio = screened / identified
+if screen_ratio < 0.7:
+    raise SystemExit(f'screened ratio {screen_ratio:.1%} too low')
+print('identified', int(identified))
+print('screened', int(screened))
+print('screen_ratio', f'{screen_ratio:.1%}')
+PY

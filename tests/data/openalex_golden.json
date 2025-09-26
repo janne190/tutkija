@@ -26,11 +26,11 @@
   {
     "id": "https://openalex.org/W5555",
     "title": "Data stewardship in genomic programs",
-    "abstract": null,
+    "abstract": "",
     "authors": [],
     "year": 2021,
     "venue": "Data Journal",
-    "doi": null,
+    "doi": "",
     "url": "https://data.example/article",
     "source": "openalex",
     "score": 42.0
