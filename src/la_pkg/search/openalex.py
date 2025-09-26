@@ -9,13 +9,15 @@ from typing import Any, Optional
 import unicodedata
 
 import httpx
-from pydantic import BaseModel, Field
 from rapidfuzz import fuzz
+
+from . import Paper, clean_text
+from .http_client import apply_contact, create_http_client
 
 try:  # Python 3.11+
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover - only for Python <3.11
-    import tomli as tomllib  # type: ignore[no-redef]
+    import tomli as tomllib  # type: ignore[import-not-found,no-redef]
 
 
 OPENALEX_WORKS_URL = "https://api.openalex.org/works"
@@ -73,23 +75,8 @@ class SearchMetrics:
 class OpenAlexSearchResult:
     """Return structure for an OpenAlex query."""
 
-    papers: list["Paper"]
+    papers: list[Paper]
     metrics: SearchMetrics
-
-
-class Paper(BaseModel):
-    """Normalized representation of a scientific paper."""
-
-    id: str
-    title: str = Field(default="")
-    abstract: Optional[str] = None
-    authors: list[str] = Field(default_factory=list)
-    year: Optional[int] = None
-    venue: Optional[str] = None
-    doi: Optional[str] = None
-    url: Optional[str] = None
-    source: str = Field(default="openalex")
-    score: Optional[float] = None
 
 
 def load_search_config() -> SearchConfig:
@@ -139,7 +126,7 @@ def query_openalex(
 
     cfg = config or load_search_config()
     max_items = limit or cfg.max_results or DEFAULT_MAX_RESULTS
-    http_client = client or httpx.Client(timeout=httpx.Timeout(30.0, connect=10.0))
+    http_client = client or create_http_client()
     close_client = client is None
 
     queries = list(_expand_queries(topic))
@@ -218,6 +205,7 @@ def _collect_works(
         "cursor": "*",
         "sort": "relevance_score:desc",
     }
+    params = apply_contact(params)
     filters: list[str] = []
     if cfg.year_min:
         filters.append(f"from_publication_date:{int(cfg.year_min)}-01-01")
@@ -262,63 +250,25 @@ def _map_work(work: Mapping[str, Any]) -> Paper:
         or work.get("id")
     )
     doi = work.get("doi")
-    return Paper(
+    score = None
+    relevance = work.get("relevance_score")
+    if isinstance(relevance, (int, float)):
+        score = float(relevance)
+    return Paper.from_parts(
         id=str(work.get("id", "")),
-        title=_normalise(work.get("display_name")),
+        title=work.get("display_name"),
         abstract=abstract,
-        authors=[_normalise(author) for author in authors if isinstance(author, str)],
-        year=work.get("publication_year")
-        if isinstance(work.get("publication_year"), int)
-        else None,
-        venue=_normalise(venue),
-        doi=_normalise(doi) if isinstance(doi, str) else None,
-        url=_normalise(url) if isinstance(url, str) else None,
+        authors=authors,
+        year=work.get("publication_year"),
+        venue=venue,
+        doi=doi,
+        url=url,
         source="openalex",
-        score=float(work["relevance_score"])
-        if isinstance(work.get("relevance_score"), (int, float))
-        else None,
+        score=score,
     )
 
 
-def _expand_queries(topic: str) -> Iterable[tuple[str, str]]:
-    cleaned = topic.strip()
-    ascii_version = (
-        unicodedata.normalize("NFKD", cleaned).encode("ascii", "ignore").decode()
-    )
-    tokens = cleaned.lower().split()
-    mapped_tokens = [TERM_MAP.get(token, token) for token in tokens]
-    mapped = " ".join(mapped_tokens)
-
-    yielded: set[str] = set()
-    for label, query in (
-        ("original", cleaned),
-        ("ascii", ascii_version),
-        ("mapped", mapped),
-    ):
-        if query and query not in yielded:
-            yielded.add(query)
-            yield label, query
-
-
-def _resolve_languages(option: str, configured: list[str]) -> list[Optional[str]]:
-    option_lower = option.lower()
-    if option_lower in {"en", "fi"}:
-        return [option_lower]
-    if option_lower == "auto":
-        if configured:
-            return [lang.lower() for lang in configured]
-        return ["en", "fi"]
-    if option_lower == "none":
-        return []
-    return [option_lower]
-
-
-def _format_attempt(label: str, query: str, language: Optional[str]) -> str:
-    lang = language or "any"
-    return f"{label}:{lang}:{query}"
-
-
-def _extract_abstract(work: Mapping[str, Any]) -> Optional[str]:
+def _extract_abstract(work: Mapping[str, Any]) -> str:
     inverted = work.get("abstract_inverted_index")
     if isinstance(inverted, Mapping):
         positions: list[tuple[int, str]] = []
@@ -329,16 +279,13 @@ def _extract_abstract(work: Mapping[str, Any]) -> Optional[str]:
                 if isinstance(index, int):
                     positions.append((index, word))
         ordered = [word for _, word in sorted(positions, key=lambda item: item[0])]
-        text = " ".join(ordered)
-        normalised = _normalise(text)
-        if normalised:
-            return normalised
+        return clean_text(" ".join(ordered))
     summary = work.get("summary")
     if isinstance(summary, str):
-        return _normalise(summary)
+        return clean_text(summary)
     if summary:
-        return _normalise(json.dumps(summary))
-    return None
+        return clean_text(json.dumps(summary))
+    return ""
 
 
 def _deduplicate(papers: Iterable[Paper]) -> list[Paper]:
@@ -378,10 +325,42 @@ def _safe_get(obj: Mapping[str, Any], *path: str) -> Optional[str]:
     return current if isinstance(current, str) else None
 
 
-def _normalise(value: Optional[str]) -> str:
-    if not value:
-        return ""
-    return unicodedata.normalize("NFC", value).strip()
+def _expand_queries(topic: str) -> Iterable[tuple[str, str]]:
+    cleaned = topic.strip()
+    ascii_version = (
+        unicodedata.normalize("NFKD", cleaned).encode("ascii", "ignore").decode()
+    )
+    tokens = cleaned.lower().split()
+    mapped_tokens = [TERM_MAP.get(token, token) for token in tokens]
+    mapped = " ".join(mapped_tokens)
+
+    yielded: set[str] = set()
+    for label, query in (
+        ("original", cleaned),
+        ("ascii", ascii_version),
+        ("mapped", mapped),
+    ):
+        if query and query not in yielded:
+            yielded.add(query)
+            yield label, query
+
+
+def _resolve_languages(option: str, configured: list[str]) -> list[Optional[str]]:
+    option_lower = option.lower()
+    if option_lower in {"en", "fi"}:
+        return [option_lower]
+    if option_lower == "auto":
+        if configured:
+            return [lang.lower() for lang in configured]
+        return ["en", "fi"]
+    if option_lower == "none":
+        return []
+    return [option_lower]
+
+
+def _format_attempt(label: str, query: str, language: Optional[str]) -> str:
+    lang = language or "any"
+    return f"{label}:{lang}:{query}"
 
 
 def append_audit_log(
@@ -428,7 +407,6 @@ def append_audit_log(
 
 
 __all__ = [
-    "Paper",
     "SearchConfig",
     "SearchMetrics",
     "OpenAlexSearchResult",

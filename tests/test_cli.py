@@ -11,7 +11,8 @@ import pandas as pd
 from typer.testing import CliRunner
 
 from la_pkg import cli as cli_module
-from la_pkg.search.openalex import OpenAlexSearchResult, Paper, SearchMetrics
+from la_pkg.search import Paper
+from la_pkg.search.openalex import OpenAlexSearchResult, SearchMetrics
 
 
 def _resolve_cli() -> str:
@@ -38,7 +39,7 @@ def test_la_hello_runs() -> None:
 def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
     runner = CliRunner()
     sample_papers = [
-        Paper(
+        Paper.from_parts(
             id="openalex:A1",
             title="Sample paper one",
             abstract="Example abstract",
@@ -47,18 +48,17 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
             venue="Test Venue",
             doi="10.1/a1",
             url="https://example.org/a1",
-            score=12.5,
+            source="openalex",
         ),
-        Paper(
+        Paper.from_parts(
             id="openalex:A2",
             title="Sample paper two",
-            abstract=None,
             authors=[],
             year=2023,
-            venue=None,
-            doi=None,
+            venue="",
+            doi="",
             url="https://example.org/a2",
-            score=None,
+            source="openalex",
         ),
     ]
     metrics = SearchMetrics(
@@ -85,8 +85,10 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
         recorded["metrics"] = log_metrics
         recorded["output_path"] = output_path
 
-    monkeypatch.setattr(cli_module, "query_openalex", fake_query)
-    monkeypatch.setattr(cli_module, "append_audit_log", fake_append)
+    import la_pkg.search.openalex as openalex_mod
+
+    monkeypatch.setattr(openalex_mod, "query_openalex", fake_query)
+    monkeypatch.setattr(openalex_mod, "append_audit_log", fake_append)
 
     output_path = tmp_path / "search.parquet"
     cli_result = runner.invoke(
@@ -118,3 +120,96 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
 
     assert isinstance(recorded.get("metrics"), SearchMetrics)
     assert recorded.get("output_path") == output_path
+
+
+def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
+    runner = CliRunner()
+
+    oa_metrics = SearchMetrics(
+        topic="demo",
+        found=1,
+        unique=1,
+        with_doi=1,
+        query_used="demo",
+        fallback_used="original",
+        language_used="en",
+        queries_tried=["original:en:demo"],
+    )
+    oa_result = OpenAlexSearchResult(
+        papers=[
+            Paper.from_parts(
+                id="oa-1",
+                title="Paper OA",
+                abstract="",
+                authors=["Alice"],
+                year=2024,
+                venue="Journal",
+                doi="10.1/demo",
+                url="https://example.org/oa",
+                source="openalex",
+            )
+        ],
+        metrics=oa_metrics,
+    )
+
+    def fake_query_openalex(topic: str, *, limit=None, language="auto"):
+        return oa_result
+
+    pubmed_papers = [
+        Paper.from_parts(
+            id="pm-1",
+            title="Paper PM",
+            authors=["Bob"],
+            year=2023,
+            doi="",
+            url="https://pubmed.ncbi.nlm.nih.gov/pm-1/",
+            source="pubmed",
+        )
+    ]
+    arxiv_papers = [
+        Paper.from_parts(
+            id="ax-1",
+            title="Paper AX",
+            authors=["Carol"],
+            year=2022,
+            doi="",
+            url="https://arxiv.org/abs/ax-1",
+            source="arxiv",
+        )
+    ]
+
+    def fake_query_pubmed(topic: str, *, max_results=200):
+        return pubmed_papers
+
+    def fake_query_arxiv(topic: str, *, max_results=200):
+        return arxiv_papers
+
+    def fake_merge_and_filter(oa, pm, ax):
+        df = pd.DataFrame([paper.model_dump() for paper in oa + pm + ax])
+        stats = {
+            "per_source": {"openalex": 1, "pubmed": 1, "arxiv": 1},
+            "dup_doi": 0,
+            "dup_title": 0,
+            "filtered": 0,
+        }
+        return df, stats
+
+    import la_pkg.search.arxiv as arxiv_mod
+    import la_pkg.search.merge as merge_mod
+    import la_pkg.search.openalex as openalex_mod
+    import la_pkg.search.pubmed as pubmed_mod
+
+    monkeypatch.setattr(openalex_mod, "query_openalex", fake_query_openalex)
+    monkeypatch.setattr(pubmed_mod, "query_pubmed", fake_query_pubmed)
+    monkeypatch.setattr(arxiv_mod, "query_arxiv", fake_query_arxiv)
+    monkeypatch.setattr(merge_mod, "merge_and_filter", fake_merge_and_filter)
+    monkeypatch.chdir(tmp_path)
+    out_path = Path("merged.parquet")
+    cli_result = runner.invoke(
+        cli_module.app,
+        ["search-all", "--topic", "demo", "--out", str(out_path), "--save-single"],
+    )
+    assert cli_result.exit_code == 0, cli_result.output
+    assert "Multisource OK" in cli_result.output
+    assert out_path.exists()
+    assert Path("data/cache/merge_log.csv").exists()
