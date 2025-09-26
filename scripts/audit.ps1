@@ -55,7 +55,11 @@ Write-Host '== Tutkija audit =='
 # 0. peruspolut ja työkalut
 $branch = git rev-parse --abbrev-ref HEAD 2>$null
 $onPr = [bool]$env:GITHUB_HEAD_REF
-Check-True (($branch -eq 'main') -or $onPr) 'oletushaara on main' 'oletushaara ei ole main'
+if (($branch -eq 'main') -or $onPr) {
+  Ok 'oletushaara on main'
+} else {
+  Warn "ajo haarassa, $branch, paatestit kohdistuvat mainiin"
+}
 Check-True (Test-Path '.git') 'git repo löytyi' 'git repo puuttuu, aja git init'
 Check-True (Test-Path '.venv/Scripts/Activate.ps1') '.venv löytyy' '.venv puuttuu, luo virtuaaliympäristö'
 

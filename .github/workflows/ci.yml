@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -28,6 +28,17 @@ jobs:
           uv pip install -r requirements.txt || true
           uv pip install pytest mypy ruff
           uv pip install -e .
+
+      - name: Check commit message
+        if: github.event_name == 'pull_request'
+        run: |
+          msg="$(jq -r '.pull_request.title' < "$GITHUB_EVENT_PATH")"
+          echo "PR title, $msg"
+          if echo "$msg" | grep -Eiq '^(feat|fix|chore|docs|ci|refactor|test|perf)(\(.+\))?: '; then
+            echo ok
+          else
+            echo "PR otsikon tulee noudattaa muotoa, tyyppi(scope), viesti" && exit 1
+          fi
 
       - name: Lint
         run: |
