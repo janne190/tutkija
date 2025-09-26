@@ -8,11 +8,15 @@ import pandas as pd
 from typer.testing import CliRunner
 
 from la_pkg import cli as cli_module
+from la_pkg.schema import MERGED_SCHEMA
 
 
 def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
     runner = CliRunner()
     monkeypatch.chdir(tmp_path)
+
+    # Create data/cache directory for logs
+    (tmp_path / "data" / "cache").mkdir(parents=True)
 
     input_path = Path("merged.parquet")
     output_path = Path("screened.parquet")
@@ -23,41 +27,57 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
                 "id": "R1",
                 "title": "Genomic cancer screening",
                 "abstract": "genomic cancer screening improves survival",
-                "language": "en",
+                "authors": ["Author One"],
                 "year": 2022,
-                "type": "article",
-                "gold_label": "included",
+                "venue": "Journal One",
+                "doi": "",
+                "url": "http://example.org/1",
+                "source": "test",
+                "score": 0.9,
+                "reasons": [],
             },
             {
                 "id": "R2",
                 "title": "Manufacturing processes",
                 "abstract": "manufacturing process optimization case study",
-                "language": "en",
+                "authors": ["Author Two"],
                 "year": 2021,
-                "type": "article",
-                "gold_label": "excluded",
+                "venue": "Journal Two",
+                "doi": "",
+                "url": "http://example.org/2",
+                "source": "test",
+                "score": 0.1,
+                "reasons": ["not-relevant"],
             },
             {
                 "id": "R3",
                 "title": "Editorial en espanol",
                 "abstract": "editorial sobre resultados",
-                "language": "es",
+                "authors": ["Author Three"],
                 "year": 2015,
-                "type": "editorial",
-                "gold_label": "excluded",
+                "venue": "Journal Three",
+                "doi": "",
+                "url": "http://example.org/3",
+                "source": "test",
+                "score": 0.2,
+                "reasons": ["not-research"],
             },
             {
                 "id": "R4",
                 "title": "Lung cancer detection",
                 "abstract": "lung cancer screening trial data",
-                "language": "en",
+                "authors": ["Author Four"],
                 "year": 2019,
-                "type": "article",
-                "gold_label": "included",
+                "venue": "Journal Four",
+                "doi": "",
+                "url": "http://example.org/4",
+                "source": "test",
+                "score": 0.8,
+                "reasons": [],
             },
         ]
     )
-    df.to_parquet(input_path, index=False)
+    df.to_parquet(input_path, index=False, schema=MERGED_SCHEMA)
 
     result = runner.invoke(
         cli_module.app,
@@ -69,7 +89,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
             str(output_path),
             "--recall",
             "0.8",
-            "--min-year",
+            "--year-min",
             "2018",
             "--drop-non-research",
         ],
@@ -86,7 +106,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
 
     flagged = screened.loc[screened["id"] == "R3"].iloc[0]
     assert flagged["label"] == "excluded"
-    assert flagged["reasons"]
+    assert len(flagged["reasons"]) > 0
 
     log_path = Path("data/cache/screen_log.csv")
     assert log_path.exists()

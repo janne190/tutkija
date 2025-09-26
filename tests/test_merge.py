@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import pandas as pd
-from typing import TypedDict, Dict, List, cast
-from la_pkg.search import Paper
+from typing import Dict, List, TypedDict, cast
+
 from la_pkg.search.merge import merge_and_filter
+from la_pkg.search.types import Paper
 
 
 class Removal(TypedDict, total=False):
@@ -22,6 +23,32 @@ class Stats(TypedDict):
 
 def _paper(**kwargs) -> Paper:
     return Paper.from_parts(**kwargs)
+
+
+def test_deduplication_doi_empty_and_normalized():
+    # Add test for DOI handling with empty string and case sensitivity
+    df, stats = merge_and_filter(
+        [Paper(id="1", title="Paper 1", source="openalex", doi="10.1234/ABC")],
+        [
+            Paper(id="2", title="Paper 2", source="pubmed", doi=""),
+            Paper(
+                id="3",
+                title="Paper 3",
+                source="pubmed",
+                doi="10.1234/abc",  # Same as first paper but lowercase
+            ),
+        ],
+        None,
+    )
+    # Should have two papers - one with DOI (keeping either case) and one with empty DOI
+    assert len(df) == 2
+    dois = set(df["doi"].tolist())
+    assert len(dois) == 2
+    assert "" in dois  # Empty DOI paper should be kept
+    assert any(
+        doi.lower() == "10.1234/abc" for doi in dois
+    )  # Original or lowercase version kept
+    assert stats["dup_doi"] == 1  # One duplicate found by DOI
 
 
 def test_merge_and_filter_deduplicates_by_doi_and_title() -> None:

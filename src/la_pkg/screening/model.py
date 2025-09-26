@@ -3,8 +3,7 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from typing import Any, Sequence
+from typing import Any, Sequence, TypedDict
 
 import numpy as np
 import pandas as pd
@@ -13,7 +12,18 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import recall_score
 from sklearn.pipeline import Pipeline
 
+
+__all__ = ["score_and_label", "ScreenStats"]
+
 logger = logging.getLogger(__name__)
+
+# Try importing ASReview to check if it's available
+try:
+    import asreview  # noqa
+
+    ASREVIEW_AVAILABLE = True
+except ImportError:
+    ASREVIEW_AVAILABLE = False
 
 INCLUDED = "included"
 EXCLUDED = "excluded"
@@ -22,12 +32,21 @@ _POSITIVE_LABELS = {"included", "relevant", "positive", "1", "true", "yes"}
 _NEGATIVE_LABELS = {"excluded", "irrelevant", "negative", "0", "false", "no"}
 
 
-@dataclass
-class ScreeningResult:
-    frame: pd.DataFrame
-    threshold: float
-    engine: str
-    metadata: dict[str, object] = field(default_factory=dict)
+class ScreenStats(TypedDict):
+    """Statistics about the screening process."""
+
+    identified: int  # Total papers found
+    screened: int  # Papers processed
+    excluded_rules: int  # Pre-filter exclusions
+    excluded_model: int  # Model-based exclusions
+    included: int  # Papers passing both stages
+    engine: str  # "scikit" or "asreview"
+    recall_target: float  # Target recall setting
+    threshold_used: float  # Classification threshold
+    seeds_count: int  # Number of seed papers used
+    version: str  # Version string
+    random_state: int  # Random seed used
+    fallback: str  # Fallback mode used, if any
 
 
 def pick_threshold_for_recall(
@@ -68,19 +87,28 @@ def score_and_label(
     seed: int = 7,
     use_asreview: bool = False,
     seeds: Sequence[str] | None = None,
-) -> ScreeningResult:
+) -> tuple[pd.DataFrame, ScreenStats]:
     """Score records and assign labels using either scikit-learn or ASReview."""
 
     frame = df.copy()
+
     if use_asreview:
+        if not ASREVIEW_AVAILABLE:
+            raise RuntimeError(
+                "ASReview is not installed. Install with 'pip install tutkija[asreview]' "
+                "or 'uv pip install asreview'. Alternatively, use --engine scikit."
+            )
         from .asreview_wrapper import score_with_asreview
 
-        return score_with_asreview(
+        frame, stats = score_with_asreview(
             frame, target_recall=target_recall, seed=seed, seeds=seeds
         )
-    return _score_with_scikit(
+        return frame, stats
+
+    frame, stats = _score_with_scikit(
         frame, target_recall=target_recall, seed=seed, seeds=seeds
     )
+    return frame, stats
 
 
 def _score_with_scikit(
@@ -90,17 +118,8 @@ def _score_with_scikit(
     seed: int,
     seeds: Sequence[str] | None,
     engine_name: str = "scikit",
-) -> ScreeningResult:
+) -> tuple[pd.DataFrame, ScreenStats]:
     text_series = _combine_text_columns(frame)
-    metadata: dict[str, object] = {"trained": False, "strategy": "default_threshold"}
-    if frame.empty:
-        frame["probability"] = pd.Series(dtype=float)
-        frame["label"] = pd.Series(dtype=str)
-        metadata["strategy"] = "empty"
-        return ScreeningResult(
-            frame=frame, threshold=DEFAULT_THRESHOLD, engine=engine_name, metadata=metadata
-        )
-
     pipeline = Pipeline(
         [
             ("tfidf", TfidfVectorizer()),
@@ -108,48 +127,78 @@ def _score_with_scikit(
         ]
     )
 
+    if frame.empty:
+        frame["probability"] = pd.Series(dtype=float)
+        frame["label"] = pd.Series(dtype=str)
+        empty_stats: ScreenStats = {
+            "identified": 0,
+            "screened": 0,
+            "excluded_rules": 0,
+            "excluded_model": 0,
+            "included": 0,
+            "engine": engine_name,
+            "recall_target": target_recall,
+            "threshold_used": DEFAULT_THRESHOLD,
+            "seeds_count": len(seeds or []),
+            "version": asreview.__version__ if ASREVIEW_AVAILABLE else "none",
+            "random_state": seed,
+            "fallback": "none",
+        }
+        return frame, empty_stats
+
     y_prob: np.ndarray | None = None
     threshold = DEFAULT_THRESHOLD
 
+    # Always fit TfidfVectorizer on all text
+    vectorizer = pipeline.named_steps["tfidf"]
+    vectorizer.fit(text_series)
+
+    # Try to get training data from gold labels first
+    y_prob = None
     if "gold_label" in frame.columns and frame["gold_label"].notna().any():
         gold_set = frame[frame["gold_label"].notna()].copy()
         y_true = gold_set["gold_label"].apply(_to_binary_label).values
-        if np.any(y_true == 1):
-            pipeline.fit(
-                _combine_text_columns(gold_set),
-                y_true,
-            )
+        if np.any(y_true == 1) and np.any(y_true == 0):
+            # Only fit classifier if we have both positive and negative examples
+            gold_text = _combine_text_columns(gold_set)
+            pipeline.fit(gold_text, y_true)
             y_prob = pipeline.predict_proba(text_series)[:, 1]
-            threshold = pick_threshold_for_recall(
-                y_true, pipeline.predict_proba(gold_set)[:, 1], target_recall
-            )
-            metadata["trained"] = True
-            metadata["strategy"] = "recall_optimized"
+            # Calculate threshold based on probabilities for gold set
+            gold_probs = pipeline.predict_proba(_combine_text_columns(gold_set))[:, 1]
+            threshold = pick_threshold_for_recall(y_true, gold_probs, target_recall)
         else:
             logger.warning(
-                "Gold set found but contains no positive labels, using default threshold"
+                "Gold set found but contains only one class, using default threshold"
             )
-            # Fall through to pseudo-labels or untrained
-    
+
+    # If no gold labels, try pseudo-labels from rules and seeds
     if y_prob is None:
-        # Pseudo-fit with rules and seeds if available
         pseudo_labels = _create_pseudo_labels(frame, seeds)
         if np.any(pseudo_labels == 1):
-            pipeline.fit(text_series, pseudo_labels)
-            y_prob = pipeline.predict_proba(text_series)[:, 1]
-            metadata["trained"] = True
-            metadata["strategy"] = "pseudo_labels"
+            # Get text features for all papers
+            X = vectorizer.transform(text_series)
+
+            # Identify seed papers to compute similarity with
+            seed_mask = pseudo_labels == 1
+            seed_vectors = X[seed_mask]
+
+            # Compute cosine similarity with seed papers
+            similarities = (X @ seed_vectors.T).toarray()
+            # Take max similarity per paper and rescale
+            max_sim = similarities.max(axis=1)
+            # Scale up similarities to make seeded papers have more influence
+            y_prob = 0.5 + 0.5 * max_sim
         else:
-            # If no positive pseudo-labels, just fit the vectorizer
-            # and use the untrained classifier.
             logger.warning(
-                "No gold set or positive seeds found. Model is not trained, using default threshold."
+                "No gold set or seeds found. Using default probabilities 0.5."
             )
-            # Fit only the vectorizer, then create default probabilities
-            pipeline.named_steps["tfidf"].fit(text_series)
             y_prob = np.full(len(text_series), 0.5)  # Create a 1D array
-            metadata["trained"] = False
-            metadata["strategy"] = "untrained_default"
+
+    # Use higher threshold for untrained model with high recall target
+    if y_prob is None or np.all(y_prob == 0.5):
+        y_prob = np.full(len(frame), 0.5)  # Ensure array for consistent return type
+        # For high recall, use higher threshold to exclude more aggressively
+        threshold = 0.6 if target_recall > 0.8 else 0.5
 
     frame["probability"] = y_prob
     frame["label"] = np.where(
@@ -158,12 +207,33 @@ def _score_with_scikit(
 
     # Records with reasons are always excluded
     if "reasons" in frame.columns:
-        has_reasons = frame["reasons"].apply(lambda x: isinstance(x, list) and len(x) > 0)
+        has_reasons = frame["reasons"].apply(
+            lambda x: isinstance(x, list) and len(x) > 0
+        )
         frame.loc[has_reasons, "label"] = EXCLUDED
+    identified = len(frame)
+    screened = frame["label"].notna().sum()
+    excluded_rules = 0 if "reasons" not in frame.columns else has_reasons.sum()
+    excluded_model = (frame["label"] == EXCLUDED).sum() - excluded_rules
+    included = (frame["label"] == INCLUDED).sum()
 
-    return ScreeningResult(
-        frame=frame, threshold=threshold, engine=engine_name, metadata=metadata
-    )
+    stats: ScreenStats = {
+        "identified": identified,
+        "screened": screened,
+        "excluded_rules": excluded_rules,
+        "excluded_model": excluded_model,
+        "included": included,
+        "engine": engine_name,
+        "recall_target": target_recall,
+        "threshold_used": threshold,
+        "seeds_count": len(seeds or []),
+        "version": asreview.__version__ if ASREVIEW_AVAILABLE else "1.0.0",
+        "random_state": seed,
+        "fallback": "default_prob_0.5"
+        if y_prob is None or np.all(y_prob == 0.5)
+        else "none",
+    }
+    return frame, stats
 
 
 def _combine_text_columns(df: pd.DataFrame) -> pd.Series:
@@ -182,20 +252,29 @@ def _to_binary_label(label: Any) -> int:
         return 1
     return 0
 
+
 def _create_pseudo_labels(df: pd.DataFrame, seeds: Sequence[str] | None) -> np.ndarray:
-    """Create pseudo-labels for training based on rules and seeds."""
-    labels = np.zeros(len(df))
-    
-    # Seeds are positive examples
+    """Create pseudo-labels for training based on rules and seeds.
+
+    Returns:
+        A numpy array where:
+        - 1 indicates a positive example (from seeds)
+        - 0 indicates a negative example (from rules or unlabeled)
+    """
+    labels = np.zeros(len(df), dtype=int)  # Start with all as negative examples
+
+    # First apply seed-based positive examples
     if seeds:
         seed_ids = set(seeds)
         for idx, row in df.iterrows():
-            if row.get("id") in seed_ids or row.get("doi") in seed_ids:
+            doc_id = str(row.get("id", ""))  # Ensure string comparison
+            doc_doi = str(row.get("doi", "")).lower()  # Normalize DOI comparison
+            if doc_id in seed_ids or doc_doi in seed_ids:
                 labels[idx] = 1
 
-    # Rule-based exclusions are negative examples
+    # Then override with rule-based negative examples
     if "reasons" in df.columns:
         has_reasons = df["reasons"].apply(lambda x: isinstance(x, list) and len(x) > 0)
-        labels[has_reasons] = 0 # Explicitly set to 0, even if it was a seed
+        labels[has_reasons] = 0  # Rules override seeds
 
     return labels

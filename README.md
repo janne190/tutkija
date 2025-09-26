@@ -29,6 +29,15 @@ la search-all --topic "genomic screening cancer" --out data\cache\merged.parquet
 # Screening
 la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --recall 0.9 --engine scikit
 
+### Seeds (optional)
+
+You can provide seed papers to help prioritize similar papers, as a comma-separated string.
+Supported ID prefixes: doi:, pmid:, arxiv:.
+
+```powershell
+la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --recall 0.9 --seeds "doi:10.1038/xxxx,pmid:123456,arxiv:2101.01234"
+```
+
 # Live smoke verification (hits OpenAlex, PubMed, arXiv)
 la search-all --topic "genomic screening cancer" --limit 40
 # expected: per_source, dup_doi, dup_title, filtered, final all report values > 0
@@ -39,11 +48,28 @@ la search-all --topic "genomic screening cancer" --limit 40
 
 Running `la search` appends a row to `data\cache\search_log.csv`. `la search-all` writes the merged Parquet plus an audit row in `data\cache\merge_log.csv` so you can track sources, duplicates and counts per topic. `la screen` produces `screened.parquet` and a `screen_log.csv` with screening metrics.
 
-The optional ASReview screening engine can be enabled with `uv pip install asreview` or `pip install tutkija[asreview]`. If you know a few relevant papers in advance, you can pass their IDs as seeds to improve the model's accuracy:
+The screening command supports two engines:
+- `scikit` (default): Built-in engine using scikit-learn, always available
+- `asreview` (optional): ASReview engine, requires additional installation
+
+To use ASReview, install it first with either:
+```powershell
+uv pip install asreview
+# or
+pip install tutkija[asreview]
+```
+
+For both engines, you can provide seed papers to improve the model's accuracy. Seeds are known relevant papers that help train the model. You can provide them as multiple --seeds flags OR as a single comma-separated string:
 
 ```powershell
-la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --engine asreview --seeds "doi:10.1234/..." "pmid:56789"
+# Method 1: Multiple --seeds flags (preferred)
+la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --seeds "doi:10.1234/xyz" --seeds "pmid:56789"
+
+# Method 2: Comma-separated string
+la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --seeds "doi:10.1234/xyz,pmid:56789"
 ```
+
+Each seed must be in the format `doi:...` or `pmid:...`. Both formats are supported with either engine (`scikit` or `asreview`).
 
 ## CLI metrics
 The multisource command reports the same statistics that land in the merge log. These guard-rails help keep the dataset healthy when the pipeline evolves.

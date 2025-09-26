@@ -11,7 +11,8 @@ import pandas as pd  # type: ignore[import-untyped]
 import typer
 
 from .screening import apply_rules, score_and_label
-from .search import Paper
+from .search.types import Paper
+from .schema import SCREENED_SCHEMA, MERGED_SCHEMA
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
@@ -85,7 +86,8 @@ def search(
 
     out.parent.mkdir(parents=True, exist_ok=True)
     frame = pd.DataFrame([paper.model_dump() for paper in result.papers])
-    frame.to_parquet(out, index=False)
+    frame["reasons"] = [[] for _ in range(len(frame))]
+    frame.to_parquet(out, index=False, schema=MERGED_SCHEMA)
 
     append_audit_log(result.metrics, output_path=out)
 
@@ -154,7 +156,7 @@ def search_all(
 
     merged_df, stats = merge_and_filter(oa_result.papers, pubmed_papers, arxiv_papers)
     out.parent.mkdir(parents=True, exist_ok=True)
-    merged_df.to_parquet(out, index=False)
+    merged_df.to_parquet(out, index=False, schema=MERGED_SCHEMA)
 
     if save_single:
         _write_source_parquet(
@@ -165,21 +167,23 @@ def search_all(
 
     log_path = Path("data/cache/merge_log.csv")
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    
+
     # For PRISMA: identified = total from all sources before deduplication
-    identified = sum(stats.get("per_source", {}).values())
-    duplicates_removed = stats.get("dup_doi", 0) + stats.get("dup_title", 0)
+    per_source_stats = stats["per_source"]
+    identified = sum(per_source_stats.values())
+
+    dup_doi = stats["dup_doi"]
+    dup_title = stats["dup_title"]
+    duplicates_removed = dup_doi + dup_title
 
     log_entry = {
         "topic": chosen_topic,
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
         "identified": identified,
         "duplicates_removed": duplicates_removed,
-        "per_source_counts": json.dumps(stats.get("per_source", {})),
-        "duplicates_by_doi": stats.get("dup_doi", 0),
-        "duplicates_by_title": stats.get("dup_title", 0),
-        "filtered_by_rules": stats.get("filtered", 0),
-        "final_count": len(merged_df),
+        "per_source_counts": json.dumps(per_source_stats),
+        "duplicates_by_doi": dup_doi,
+        "duplicates_by_title": dup_title,
         "out_path": str(out),
     }
     pd.DataFrame([log_entry]).to_csv(
@@ -191,10 +195,10 @@ def search_all(
 
     typer.echo(
         "Multisource OK | "
-        f"per_source={stats.get('per_source', {})} "
-        f"dup_doi={stats.get('dup_doi', 0)} "
-        f"dup_title={stats.get('dup_title', 0)} "
-        f"filtered={stats.get('filtered', 0)} "
+        f"per_source={stats['per_source']} "
+        f"dup_doi={stats['dup_doi']} "
+        f"dup_title={stats['dup_title']} "
+        f"filtered={stats['filtered']} "
         f"final={len(merged_df)} "
         f"path={out}"
     )
@@ -214,8 +218,10 @@ def screen(
     engine: str = typer.Option(
         "scikit", "--engine", help="Screening engine: 'scikit' or 'asreview'"
     ),
-    seeds: Optional[list[str]] = typer.Option(
-        None, "--seeds", help="List of known relevant paper IDs (e.g., DOIs)"
+    seeds: Optional[str] = typer.Option(
+        None,
+        "--seeds",
+        help="Comma-separated list of known relevant paper IDs (e.g., DOIs)",
     ),
     year_min: Optional[int] = typer.Option(
         None, "--year-min", help="Minimum publication year"
@@ -227,71 +233,98 @@ def screen(
     """Screen articles using rules and a model, save to Parquet."""
     start_time = time.time()
 
+    # Ensure output directory exists
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Parse seeds string to list
+    seeds_list = []
+    if seeds:
+        for tok in seeds.split(","):
+            s = tok.strip()
+            if s:
+                seeds_list.append(s)
+
     df = pd.read_parquet(in_path)
-    initial_count = len(df)
 
     # 1. Apply rules
     df, rule_counts = apply_rules(
         df, year_min=year_min, drop_non_research=drop_non_research
     )
-    excluded_by_rules = sum(rule_counts.values())
 
     # 2. Score and label with selected engine
     use_asreview = engine.lower() == "asreview"
-    result = score_and_label(
+    screened_df, screening_stats = score_and_label(
         df,
         target_recall=recall_target,
         use_asreview=use_asreview,
-        seeds=seeds,
+        seeds=seeds_list if seeds_list else None,
     )
-    
-    screened_df = result.frame
-    excluded_model = len(screened_df[screened_df["label"] == "excluded"]) - excluded_by_rules
-    included = len(screened_df[screened_df["label"] == "included"])
-    
-    # 3. Write screened data
+
+    # 3. Ensure reasons consistency - empty list for included records
+    # Double check reasons consistency
+    # Verify that included records have empty reasons
+    included_mask = screened_df["label"] == "included"
+    bad_reasons = (
+        screened_df[included_mask]["reasons"]
+        .apply(lambda x: isinstance(x, list) and len(x) > 0)
+        .sum()
+    )
+    if bad_reasons:
+        raise RuntimeError(
+            f"reasons must be empty for included records, found {bad_reasons} violations"
+        )
+
+    # Ensure reasons is list for included records
+    screened_df.loc[screened_df["label"] == "included", "reasons"] = screened_df.loc[
+        screened_df["label"] == "included", "reasons"
+    ].apply(lambda x: [] if isinstance(x, list) else [])
+
+    # Write screened data with schema control
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    screened_df.to_parquet(out_path, index=False)
+    screened_df.to_parquet(out_path, index=False, schema=SCREENED_SCHEMA)
 
     # 4. Write log
     log_path = Path("data/cache/screen_log.csv")
-    
+
     # PRISMA fields
-    # screened = records after deduplication
-    # excluded = sum of rule-based and model-based exclusions
-    screened_count = initial_count 
-    excluded_count = excluded_by_rules + excluded_model
+    excluded_count = (
+        screening_stats["excluded_rules"] + screening_stats["excluded_model"]
+    )
 
     log_entry = {
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
         "duration_s": round(time.time() - start_time),
-        "identified": initial_count, # This is carry-over, real identified is in merge_log
-        "screened": screened_count,
+        "identified": screening_stats["identified"],
+        "screened": screening_stats["screened"],
         "excluded": excluded_count,
-        "included": included,
-        "excluded_rules": excluded_by_rules,
-        "excluded_model": excluded_model,
-        "engine": result.engine,
-        "recall_target": recall_target,
-        "threshold_used": result.threshold,
-        "seeds_count": len(seeds) if seeds else 0,
+        "included": screening_stats["included"],
+        "excluded_rules": screening_stats["excluded_rules"],
+        "excluded_model": screening_stats["excluded_model"],
+        "engine": screening_stats["engine"],
+        "recall_target": screening_stats["recall_target"],
+        "threshold_used": screening_stats["threshold_used"],
+        "seeds_count": screening_stats["seeds_count"],
+        "version": screening_stats["version"],  # Added
+        "random_state": screening_stats["random_state"],  # Added
+        "fallback": screening_stats["fallback"],  # Added
         "in_path": str(in_path),
         "out_path": str(out_path),
     }
-    
+
     log_df = pd.DataFrame([log_entry])
     log_df.to_csv(log_path, mode="a", header=not log_path.exists(), index=False)
 
     # 5. Print metrics
     typer.echo("Screening complete.")
-    typer.echo(f"  Identified (pre-dedup): see merge log")
-    typer.echo(f"  Screened (post-dedup): {screened_count}")
+    typer.echo("  Identified (pre-dedup): see merge log")
+    typer.echo(f"  Screened (post-dedup): {screening_stats['screened']}")
     typer.echo(f"  Excluded: {excluded_count}")
-    typer.echo(f"    - By rules: {excluded_by_rules} {rule_counts}")
-    typer.echo(f"    - By model: {excluded_model}")
-    typer.echo(f"  Included: {included}")
-    typer.echo(f"  Threshold used: {result.threshold:.4f}")
+    typer.echo(f"    - By rules: {screening_stats['excluded_rules']} {rule_counts}")
+    typer.echo(f"    - By model: {screening_stats['excluded_model']}")
+    typer.echo(f"  Included: {screening_stats['included']}")
+    typer.echo(f"  Threshold used: {screening_stats['threshold_used']:.4f}")
     typer.echo(f"  Output written to: {out_path}")
+
 
 @app.command(name="screen-metrics")
 def screen_metrics(
@@ -301,19 +334,17 @@ def screen_metrics(
         help="Path to screened.parquet",
         exists=True,
         dir_okay=False,
-    )
+    ),
 ) -> None:
     """Print screening metrics in a machine-readable format for audit."""
     df = pd.read_parquet(in_path)
-    
+
     reasons_on_included = 0
     if "reasons" in df.columns and "label" in df.columns:
         included_df = df[df["label"] == "included"]
         reasons_on_included = included_df["reasons"].apply(lambda x: len(x) > 0).sum()
 
-    metrics = {
-        "reasons_on_included": int(reasons_on_included)
-    }
+    metrics = {"reasons_on_included": int(reasons_on_included)}
     typer.echo(json.dumps(metrics))
 
 
@@ -322,7 +353,10 @@ def _write_source_parquet(path: Path, papers: Iterable[Paper]) -> None:
     if not records:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(records).to_parquet(path, index=False)
+    df = pd.DataFrame(records)
+    df["reasons"] = [[] for _ in range(len(df))]
+    df["score"] = [0.5 for _ in range(len(df))]
+    df.to_parquet(path, index=False, schema=MERGED_SCHEMA)
 
 
 if __name__ == "__main__":

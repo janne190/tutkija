@@ -11,7 +11,7 @@ from .model import (
     DEFAULT_THRESHOLD,
     EXCLUDED,
     INCLUDED,
-    ScreeningResult,
+    ScreenStats,
     _to_binary_label,
     pick_threshold_for_recall,
 )
@@ -25,7 +25,7 @@ def score_with_asreview(
     target_recall: float,
     seed: int,
     seeds: Sequence[str] | None = None,
-) -> ScreeningResult:
+) -> tuple[pd.DataFrame, ScreenStats]:
     """Dispatch to ASReview engine when available, otherwise raise."""
 
     try:
@@ -49,15 +49,23 @@ def score_with_asreview(
     prior_indices = []
     if seeds:
         seed_ids = set(seeds)
-        prior_indices = frame[frame["id"].isin(seed_ids) | frame["doi"].isin(seed_ids)].index.tolist()
+        prior_indices = frame[
+            frame["id"].isin(seed_ids) | frame["doi"].isin(seed_ids)
+        ].index.tolist()
 
     if not prior_indices and "gold_label" in frame.columns:
-        gold_positives = frame[frame["gold_label"].apply(lambda x: str(x).lower() in {"1", "true", "included"})]
+        gold_positives = frame[
+            frame["gold_label"].apply(
+                lambda x: str(x).lower() in {"1", "true", "included"}
+            )
+        ]
         if not gold_positives.empty:
             prior_indices = gold_positives.index.tolist()
 
     if not prior_indices:
-        logger.warning("ASReview is running without any seed documents. Performance may be suboptimal.")
+        logger.warning(
+            "ASReview is running without any seed documents. Performance may be suboptimal."
+        )
         # Fallback to random sampling if no seeds are found
         sampler = RandomSampler()
     else:
@@ -100,15 +108,34 @@ def score_with_asreview(
         if y_true.sum() > 0:
             threshold = pick_threshold_for_recall(y_true, y_prob_gold, target_recall)
 
-    frame["label"] = (frame["probability"] >= threshold).map({True: INCLUDED, False: EXCLUDED})
+    frame["label"] = (frame["probability"] >= threshold).map(
+        {True: INCLUDED, False: EXCLUDED}
+    )
 
     if "reasons" in frame.columns:
-        has_reasons = frame["reasons"].apply(lambda x: isinstance(x, list) and len(x) > 0)
+        has_reasons = frame["reasons"].apply(
+            lambda x: isinstance(x, list) and len(x) > 0
+        )
         frame.loc[has_reasons, "label"] = EXCLUDED
 
-    return ScreeningResult(
-        frame=frame,
-        threshold=threshold,
-        engine="asreview",
-        metadata={"seeds_found": len(prior_indices)},
-    )
+    identified = len(frame)
+    screened = frame["label"].notna().sum()
+    excluded_rules = 0 if "reasons" not in frame.columns else has_reasons.sum()
+    excluded_model = (frame["label"] == EXCLUDED).sum() - excluded_rules
+    included = (frame["label"] == INCLUDED).sum()
+
+    stats: ScreenStats = {
+        "identified": identified,
+        "screened": screened,
+        "excluded_rules": excluded_rules,
+        "excluded_model": excluded_model,
+        "included": included,
+        "engine": "asreview",
+        "recall_target": target_recall,
+        "threshold_used": threshold,
+        "seeds_count": len(prior_indices),
+        "version": "1.0.0",
+        "random_state": seed,
+        "fallback": "default_prob_0.5" if len(prior_indices) == 0 else "",
+    }
+    return frame, stats

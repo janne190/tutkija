@@ -5,8 +5,8 @@ import xml.etree.ElementTree as ET
 
 import httpx
 
-from . import Paper
 from .http_client import create_http_client
+from .types import Paper
 
 ESEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 EFETCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"

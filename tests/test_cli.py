@@ -39,7 +39,7 @@ def test_la_hello_runs() -> None:
 def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
     runner = CliRunner()
     sample_papers = [
-        Paper.from_parts(
+        Paper(
             id="openalex:A1",
             title="Sample paper one",
             abstract="Example abstract",
@@ -50,7 +50,7 @@ def test_la_search_creates_parquet(tmp_path: Path, monkeypatch) -> None:
             url="https://example.org/a1",
             source="openalex",
         ),
-        Paper.from_parts(
+        Paper(
             id="openalex:A2",
             title="Sample paper two",
             authors=[],
@@ -135,28 +135,26 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
         language_used="en",
         queries_tried=["original:en:demo"],
     )
-    oa_result = OpenAlexSearchResult(
-        papers=[
-            Paper.from_parts(
-                id="oa-1",
-                title="Paper OA",
-                abstract="",
-                authors=["Alice"],
-                year=2024,
-                venue="Journal",
-                doi="10.1/demo",
-                url="https://example.org/oa",
-                source="openalex",
-            )
-        ],
-        metrics=oa_metrics,
-    )
+    oa_papers = [
+        Paper(
+            id="oa-1",
+            title="Paper OA",
+            abstract="",
+            authors=["Alice"],
+            year=2024,
+            venue="Journal",
+            doi="10.1/demo",
+            url="https://example.org/oa",
+            source="openalex",
+        ),
+    ]
+    oa_result = OpenAlexSearchResult(papers=oa_papers, metrics=oa_metrics)
 
     def fake_query_openalex(topic: str, *, limit=None, language="auto"):
         return oa_result
 
     pubmed_papers = [
-        Paper.from_parts(
+        Paper(
             id="pm-1",
             title="Paper PM",
             authors=["Bob"],
@@ -164,10 +162,14 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="",
             url="https://pubmed.ncbi.nlm.nih.gov/pm-1/",
             source="pubmed",
-        )
+        ),
     ]
+
+    def fake_query_pubmed(topic: str, *, max_results=200):
+        return pubmed_papers
+
     arxiv_papers = [
-        Paper.from_parts(
+        Paper(
             id="ax-1",
             title="Paper AX",
             authors=["Carol"],
@@ -175,23 +177,101 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
             doi="",
             url="https://arxiv.org/abs/ax-1",
             source="arxiv",
-        )
+        ),
     ]
-
-    def fake_query_pubmed(topic: str, *, max_results=200):
-        return pubmed_papers
 
     def fake_query_arxiv(topic: str, *, max_results=200):
         return arxiv_papers
 
     def fake_merge_and_filter(oa, pm, ax):
         df = pd.DataFrame([paper.model_dump() for paper in oa + pm + ax])
+        df["reasons"] = [[] for _ in range(len(df))]
+        df["score"] = [0.5 for _ in range(len(df))]
+        stats = {
+            "per_source": {"openalex": 1, "pubmed": 1, "arxiv": 1},
+            "dup_doi": 0,
+            "dup_title": 0,
+            "filtered": 0,
+            "removed": [],
+        }
+        return df, stats
+
+    import la_pkg.search.arxiv as arxiv_mod
+    import la_pkg.search.merge as merge_mod
+    import la_pkg.search.openalex as openalex_mod
+    import la_pkg.search.pubmed as pubmed_mod
+
+    monkeypatch.setattr(openalex_mod, "query_openalex", fake_query_openalex)
+    monkeypatch.setattr(pubmed_mod, "query_pubmed", fake_query_pubmed)
+    monkeypatch.setattr(arxiv_mod, "query_arxiv", fake_query_arxiv)
+    monkeypatch.setattr(merge_mod, "merge_and_filter", fake_merge_and_filter)
+    monkeypatch.chdir(tmp_path)
+    out_path = Path("merged.parquet")
+    cli_result = runner.invoke(
+        cli_module.app,
+        ["search-all", "--topic", "demo", "--out", str(out_path), "--save-single"],
+    )
+    assert cli_result.exit_code == 0, cli_result.output
+    assert "Multisource OK" in cli_result.output
+    assert out_path.exists()
+    assert Path("data/cache/merge_log.csv").exists()
+
+    import la_pkg.search.arxiv as arxiv_mod
+    import la_pkg.search.merge as merge_mod
+    import la_pkg.search.openalex as openalex_mod
+    import la_pkg.search.pubmed as pubmed_mod
+
+    monkeypatch.setattr(openalex_mod, "query_openalex", fake_query_openalex)
+    monkeypatch.setattr(pubmed_mod, "query_pubmed", fake_query_pubmed)
+    monkeypatch.setattr(arxiv_mod, "query_arxiv", fake_query_arxiv)
+    monkeypatch.setattr(merge_mod, "merge_and_filter", fake_merge_and_filter)
+    monkeypatch.chdir(tmp_path)
+    out_path = Path("merged.parquet")
+    cli_result = runner.invoke(
+        cli_module.app,
+        ["search-all", "--topic", "demo", "--out", str(out_path), "--save-single"],
+    )
+    assert cli_result.exit_code == 0, cli_result.output
+    assert "Multisource OK" in cli_result.output
+    assert out_path.exists()
+    assert Path("data/cache/merge_log.csv").exists()
+    pm_papers = [
+        Paper(
+            id="pubmed:P1",
+            title="PubMed paper",
+            abstract="PubMed abstract",
+            authors=["Bob"],
+            year=2024,
+            venue="PubMed Venue",
+            doi="10.1/p1",
+            url="https://example.org/pm",
+            source="pubmed",
+        )
+    ]
+    ax_papers = [
+        Paper(
+            id="arxiv:2401.1234",
+            title="arXiv paper",
+            abstract="arXiv abstract",
+            authors=["Carol"],
+            year=2024,
+            venue="arXiv cs.AI",
+            doi="10.1/ax1",
+            url="https://example.org/ax",
+            source="arxiv",
+        )
+    ]
+    papers = oa_papers + pm_papers + ax_papers
+    df = pd.DataFrame([paper.model_dump() for paper in papers])
+
+    def merge_fn(out_path: Path):
         stats = {
             "per_source": {"openalex": 1, "pubmed": 1, "arxiv": 1},
             "dup_doi": 0,
             "dup_title": 0,
             "filtered": 0,
         }
+        return df, stats
         return df, stats
 
     import la_pkg.search.arxiv as arxiv_mod

@@ -5,8 +5,8 @@ from typing import Optional
 import feedparser  # type: ignore[import-untyped]
 import httpx
 
-from . import Paper
 from .http_client import create_http_client
+from .types import Paper
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
 

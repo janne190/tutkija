@@ -7,23 +7,28 @@ from typing import Any
 
 import pandas as pd
 
-_LANGUAGE_REASON = "language filter"
-_YEAR_REASON = "year filter"
-_TYPE_REASON = "type filter"
-_NON_RESEARCH_TYPES = {"editorial", "letter", "news"}
+_LANGUAGE_REASON = "language"
+_YEAR_REASON = "year"
+_TYPE_REASON = "type"
+_NON_RESEARCH_TYPES = {"editorial", "letter", "news item"}
 _TYPE_COLUMNS = ("type", "document_type", "publication_type", "pub_type")
 
 
 def _normalize_reasons(value: Any) -> list[str]:
-    if isinstance(value, list):
-        return [str(item) for item in value if str(item)]
-    if isinstance(value, tuple):
-        return [str(item) for item in value if str(item)]
-    if value in (None, ""):
+    if value is None:
         return []
-    if isinstance(value, float) and pd.isna(value):
-        return []
-    return [str(value)]
+    if isinstance(value, str):
+        return [] if value.strip() == "" else [value]
+    try:
+        import numpy as np
+
+        if isinstance(value, np.ndarray):
+            value = value.tolist()
+    except ImportError:
+        pass
+    if isinstance(value, (list, tuple)):
+        return [str(item) for item in value if str(item).strip()]
+    return []
 
 
 def _to_int(value: Any) -> int | None:
@@ -41,14 +46,14 @@ def _to_int(value: Any) -> int | None:
 
 def _normalize_iterable(value: Any) -> Iterable[str]:
     if isinstance(value, str):
-        yield value
+        yield str(value).strip().lower()
     elif isinstance(value, Sequence):  # type: ignore[unreachable]
         for item in value:
             if item is None:
                 continue
-            yield str(item)
+            yield str(item).strip().lower()
     elif value not in (None, ""):
-        yield str(value)
+        yield str(value).strip().lower()
 
 
 def apply_rules(
@@ -61,13 +66,11 @@ def apply_rules(
     """Apply conservative heuristics and return annotated DataFrame and rule counts."""
 
     result = df.copy()
+    # Ensure reasons column exists and is normalized
     if "reasons" not in result.columns:
         result["reasons"] = [[] for _ in range(len(result))]
     else:
-        # Ensure reasons are lists, not something else
-        result["reasons"] = result["reasons"].apply(
-            lambda x: _normalize_reasons(x) if not isinstance(x, list) else x
-        )
+        result["reasons"] = result["reasons"].apply(_normalize_reasons)
 
     counts: dict[str, int] = {
         _LANGUAGE_REASON: 0,
@@ -87,8 +90,11 @@ def apply_rules(
                 continue
             if normalized not in allowed:
                 reasons = result.at[idx, "reasons"]
-                if _LANGUAGE_REASON not in reasons:
-                    reasons.append(_LANGUAGE_REASON)
+                lang_filter = f"{_LANGUAGE_REASON} filter"
+                if (
+                    lang_filter not in reasons
+                ):  # Only count if this reason type not added yet
+                    reasons.append(lang_filter)
                     counts[_LANGUAGE_REASON] += 1
 
     # Rule: Year filter
@@ -100,8 +106,11 @@ def apply_rules(
                 continue
             if parsed_year < year_min:
                 reasons = result.at[idx, "reasons"]
-                if _YEAR_REASON not in reasons:
-                    reasons.append(_YEAR_REASON)
+                year_filter = "year filter"
+                if (
+                    year_filter not in reasons
+                ):  # Only count if this reason type not added yet
+                    reasons.append(year_filter)
                     counts[_YEAR_REASON] += 1
 
     # Rule: Type filter for non-research articles
@@ -109,15 +118,30 @@ def apply_rules(
     if drop_non_research and type_col:
         for idx, row in result.iterrows():
             value = row.get(type_col)
+            normalized_types = list(_normalize_iterable(value))
+            print(
+                f"\nRow {row['id']}, type={value}, normalized={normalized_types}, current reasons={result.at[idx, 'reasons']}"
+            )
             flagged = False
-            for entry in _normalize_iterable(value):
-                if entry.lower() in _NON_RESEARCH_TYPES:
+            for entry in normalized_types:
+                if entry in _NON_RESEARCH_TYPES:
+                    print(f"Found match: {entry} in {_NON_RESEARCH_TYPES}")
                     flagged = True
                     break
             if flagged:
                 reasons = result.at[idx, "reasons"]
-                if _TYPE_REASON not in reasons:
-                    reasons.append(_TYPE_REASON)
+                type_filter = "type filter"
+                # Only count type filter if:
+                # 1. This type hasn't been counted yet AND
+                # 2. The record isn't already manually checked (other filters happen after type)
+                if type_filter not in reasons and "manual check" not in reasons:
+                    print(f"Adding type filter to {row['id']}, counts before: {counts}")
+                    reasons.append(type_filter)
                     counts[_TYPE_REASON] += 1
+                    print(f"Counts after: {counts}")
+                else:
+                    # Still add the reason but don't increment the counter if already filtered
+                    if type_filter not in reasons:
+                        reasons.append(type_filter)
 
     return result, counts

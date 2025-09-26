@@ -32,6 +32,50 @@ function Check-FileContains($path, $pattern, $description) {
   }
 }
 
+function Check-ScreeningOutputs {
+  # Check screening output files exist
+  Check-True (Test-Path "data/cache/screened.parquet") "screened.parquet löytyy" "screened.parquet puuttuu"
+  Check-True (Test-Path "data/cache/screen_log.csv") "screen_log.csv löytyy" "screen_log.csv puuttuu"
+
+  # Check screening log fields
+  if (Test-Path "data/cache/screen_log.csv") {
+    $log = Import-Csv "data/cache/screen_log.csv" | Select-Object -Last 1
+    $required_fields = @(
+      "identified", "screened", "excluded_rules", "excluded_model",
+      "included", "engine", "recall_target", "threshold_used"
+    )
+    foreach ($field in $required_fields) {
+      Check-True ($null -ne $log.$field) "screen_log.csv sisältää kentän $field" "screen_log.csv kenttä $field puuttuu"
+    }
+
+    # Check screening completion ratio
+    if ([double]$log.screened / [double]$log.identified -ge 0.7) {
+      Ok "screened osuus vähintään 70 prosenttia"
+    } else {
+      Fail "screened osuus alle 70 prosenttia"
+    }
+  }
+
+  # Check reasons invariance
+  if (Test-Path "data/cache/screened.parquet") {
+    # This requires la screen-metrics if it exists, otherwise show a warning
+    if (Get-Command la -ErrorAction SilentlyContinue) {
+      try {
+        $metrics = & la screen-metrics 2>$null
+        if ($metrics -match "reasons inconsistent") {
+          Fail "included riveillä reasons ei ole tyhjä lista"
+        } else {
+          Ok "included riveillä reasons on tyhjä lista"
+        }
+      } catch {
+        Warn "la screen-metrics ei saatavilla, reasons tarkistus ohitettu"
+      }
+    } else {
+      Warn "la komentoa ei löydy, reasons tarkistus ohitettu"
+    }
+  }
+}
+
 $script:GhBinary = $null
 try {
   $script:GhBinary = (Get-Command gh -ErrorAction Stop).Source
@@ -303,54 +347,4 @@ if (Has-Gh) {
 }
 
 # 8. Vaihe 2, seulonta
-if (Test-Path 'data/cache/screened.parquet') {
-  Ok 'screened.parquet löytyy'
-} else {
-  Warn 'screened.parquet puuttuu, ohitetaan seulonnan tarkistukset'
-}
-
-if (Test-Path 'data/cache/screen_log.csv') {
-  Ok 'screen_log.csv löytyy'
-  $screenLog = Import-Csv "data/cache/screen_log.csv" | Select-Object -Last 1
-  $neededCols = @("identified", "screened", "excluded", "included", "engine", "recall_target", "threshold_used")
-  $missingCols = @()
-  foreach ($col in $neededCols) {
-    if (-not $screenLog.PSObject.Properties.Name.Contains($col)) {
-      $missingCols += $col
-    }
-  }
-  if ($missingCols.Count -gt 0) {
-    $msg = "screen_log.csv puuttuvia sarakkeita: $($missingCols -join ', ')"
-    Fail $msg
-    $script:failures += $msg
-  } else {
-    Ok "screen_log.csv sisältää vaaditut sarakkeet"
-  }
-
-  # Tarkista, että vähintään 70% on käsitelty
-  $identified = [double]$screenLog.identified
-  $screened = [double]$screenLog.screened
-  if ($identified -gt 0) {
-    $ratio = $screened / $identified
-    Check-True ($ratio -ge 0.7) "seulottu vähintään 70% ($([math]::Round($ratio*100))%)" "seulottu alle 70% ($([math]::Round($ratio*100))%)"
-  }
-
-} else {
-  Warn 'screen_log.csv puuttuu, ohitetaan seulonnan tarkistukset'
-}
-
-# Python-pohjaiset tarkistukset, jos `la` on saatavilla
-$la_cmd = Get-Command la -ErrorAction SilentlyContinue
-if ($la_cmd) {
-    Ok "la CLI löytyy, ajetaan Python-tarkistukset"
-    try {
-        $metrics_json = la screen-metrics | ConvertFrom-Json
-        if ($metrics_json.reasons_on_included -eq 0) {
-            Ok "reasons-sarake on tyhjä sisällytetyillä tietueilla"
-        } else {
-            Warn "reasons-sarakkeessa on arvoja sisällytetyillä tietueilla"
-        }
-    } catch {
-        Warn "Python-tarkistusten ajo epäonnistui"
-    }
-}
+Check-ScreeningOutputs
