@@ -51,6 +51,11 @@ function Invoke-Gh {
 }
 
 Write-Host '== Tutkija audit =='
+$IsCI = ($env:GITHUB_ACTIONS -eq 'true') -or ($env:CI -eq 'true')
+function FailOrWarn($message) {
+  if ($IsCI) { Warn $message; $script:warnings += $message }
+  else { Fail $message; $script:failures += $message }
+}
 
 # 0. peruspolut ja työkalut
 $branch = git rev-parse --abbrev-ref HEAD 2>$null
@@ -130,6 +135,193 @@ try {
   $script:failures += 'la hello crash'
 }
 
+# 7b. hakulogit ja yhdistetyt artefaktit
+if (Test-Path 'data/cache/search_log.csv') {
+  Ok 'search_log.csv loytyi'
+} else {
+  if ($env:GITHUB_ACTIONS -eq 'true') {
+    Warn 'data/cache/search_log.csv puuttuu CI-ajossa (skippaa live-haun)'
+    $script:warnings += 'search log missing'
+  } else {
+    $msg = 'data/cache/search_log.csv puuttuu, aja la search'
+    Fail $msg
+    $script:failures += $msg
+  }
+}
+
+$mergedPath = 'data/cache/merged.parquet'
+if (Test-Path $mergedPath) {
+  Ok 'data/cache/merged.parquet loytyi'
+} else {
+  $msg = 'data/cache/merged.parquet puuttuu, aja la search-all'
+  FailOrWarn $msg
+
+}
+
+$screenedPath = 'data/cache/screened.parquet'
+if (Test-Path $screenedPath) {
+  Ok 'data/cache/screened.parquet loytyi'
+} else {
+  $msg = 'data/cache/screened.parquet puuttuu, aja la screen'
+  FailOrWarn $msg
+
+}
+
+
+
+$mergeLogPath = 'data/cache/merge_log.csv'
+$expectedMergeCols = @('topic', 'time', 'per_source_counts', 'duplicates_by_doi', 'duplicates_by_title', 'filtered_by_rules', 'final_count', 'out_path')
+if (Test-Path $mergeLogPath) {
+  $rows = @()
+  try {
+    $rows = Import-Csv -Path $mergeLogPath
+  } catch {
+    $rows = @()
+  }
+  if ($rows.Count -gt 0) {
+    $first = $rows[0]
+    $headers = $first.PSObject.Properties.Name
+    $missing = @($expectedMergeCols | Where-Object { $headers -notcontains $_ })
+    if ($missing.Count -eq 0) {
+      Ok 'merge_log.csv sarakkeet kunnossa'
+    } else {
+      $msg = "merge_log.csv puuttuu sarakkeet: $($missing -join ', ')"
+      FailOrWarn $msg
+
+    }
+    $last = $rows[-1]
+    $counts = $null
+    try {
+      $counts = $last.per_source_counts | ConvertFrom-Json
+    } catch {
+      $counts = $null
+    }
+    if ($counts) {
+      $countKeys = $counts.PSObject.Properties.Name
+      $requiredSources = @('openalex', 'pubmed', 'arxiv')
+      $missingSources = @($requiredSources | Where-Object { $countKeys -notcontains $_ })
+      if ($missingSources.Count -eq 0) {
+        $hasLiveData = $false
+        foreach ($source in $requiredSources) {
+          $value = $counts.$source
+          if ($value -and [int]$value -gt 0) { $hasLiveData = $true; break }
+        }
+        if ($hasLiveData) {
+          Ok 'merge_log per_source_counts l?ytyi ja sis?lt?? live dataa'
+        } else {
+          $msg = 'per_source_counts kaikki arvot 0, todenn?k?isesti ei live hakua'
+          FailOrWarn $msg
+
+        }
+      } else {
+        $msg = "per_source_counts puuttuu avaimet: $($missingSources -join ', ')"
+        FailOrWarn $msg
+
+      }
+    } else {
+      $msg = 'per_source_counts ei ole kelvollista JSONia'
+      FailOrWarn $msg
+
+    }
+    $outPath = $last.out_path
+    if ($outPath -and (Test-Path $outPath)) {
+      Ok "merge_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
+    } else {
+      $msg = "merge_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
+      FailOrWarn $msg
+
+    }
+  } else {
+    Warn 'merge_log.csv on tyhja, aja la search-all'
+    $script:warnings += 'merge log empty'
+  }
+} else {
+  $msg = 'data/cache/merge_log.csv puuttuu, aja la search-all'
+  FailOrWarn $msg
+
+}
+
+$screenLogPath = 'data/cache/screen_log.csv'
+$expectedScreenCols = @('time','identified','screened','excluded_rules','excluded_model','included','engine','recall_target','threshold_used','seeds_count','version','random_state','fallback','out_path')
+if (Test-Path $screenLogPath) {
+  $rows = @()
+  try {
+    $rows = Import-Csv -Path $screenLogPath
+  } catch {
+    $rows = @()
+  }
+  if ($rows.Count -gt 0) {
+    $last = $rows[-1]
+    $headers = $last.PSObject.Properties.Name
+    $missing = @($expectedScreenCols | Where-Object { $headers -notcontains $_ })
+    if ($missing.Count -eq 0) {
+      Ok 'screen_log.csv sarakkeet kunnossa'
+    } else {
+      $msg = "screen_log.csv puuttuu sarakkeet: $($missing -join ', ')"
+      FailOrWarn $msg
+
+    }
+
+    $identified = 0.0
+    $screened = 0.0
+    [double]::TryParse($last.identified, [ref]$identified) | Out-Null
+    [double]::TryParse($last.screened, [ref]$screened) | Out-Null
+    if ($identified -gt 0) {
+      $ratio = 0.0
+      if ($identified -ne 0) { $ratio = $screened / $identified }
+      if ($ratio -ge 0.7) {
+        Ok "screened/identified suhde kunnossa ($([math]::Round($ratio,2)))"
+      } else {
+        $msg = "screened/identified liian pieni: $([math]::Round($ratio,2))"
+        FailOrWarn $msg
+
+      }
+    } else {
+      $msg = 'screen_log identified ei ole positiivinen'
+      FailOrWarn $msg
+
+    }
+
+    $outPath = $last.out_path
+    if ($outPath -and (Test-Path $outPath)) {
+      Ok "screen_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
+    } else {
+      $msg = "screen_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
+      FailOrWarn $msg
+
+    }
+  } else {
+    $msg = 'screen_log.csv on tyhja, aja la screen'
+    FailOrWarn $msg
+
+  }
+} else {
+  $msg = 'data/cache/screen_log.csv puuttuu, aja la screen'
+  FailOrWarn $msg
+
+}
+
+if (Test-Path $screenedPath) {
+  try {
+    $py = @'
+import pandas as pd
+
+df = pd.read_parquet("data/cache/screened.parquet")
+mask = df["label"].astype(str).str.lower() == "included"
+bad = int(((mask) & (df["reasons"].astype(str) != "[]")).sum())
+if bad:
+    raise SystemExit(bad)
+'@
+
+    $py | python -
+    if ($LASTEXITCODE -ne 0) { throw "python exited with code $LASTEXITCODE" }
+    Ok 'screened.parquet reasons invariant kunnossa'
+  } catch {
+    $msg = "screened.parquet reasons invariant rikkoutuu: $_"
+    FailOrWarn $msg
+
+  }
+}
 # 8. viimeisin CI-ajo
 if (Has-Gh) {
   try {
