@@ -25,8 +25,6 @@ _NEGATIVE_LABELS = {"excluded", "irrelevant", "negative", "0", "false", "no"}
 
 
 class ScreenStats(TypedDict):
-    """Summary statistics emitted by the screening pipeline."""
-
     identified: int
     screened: int
     excluded_rules: int
@@ -81,7 +79,7 @@ def score_and_label(
     if use_asreview:
         try:
             from .asreview_wrapper import score_with_asreview
-        except ImportError as exc:  # pragma: no cover - import error path
+        except ImportError as exc:  # pragma: no cover
             raise RuntimeError(
                 "ASReview is not installed. Install with 'pip install tutkija[asreview]' or use --engine scikit."
             ) from exc
@@ -107,11 +105,7 @@ def _score_with_scikit(
         frame["reasons"] = frame["reasons"].apply(_ensure_reason_list)
 
     text_series = _combine_text_columns(frame)
-    seeds_list = [
-        seed_value.strip()
-        for seed_value in (seeds or [])
-        if seed_value and seed_value.strip()
-    ]
+    seeds_list = [s.strip() for s in (seeds or []) if s and s.strip()]
 
     probabilities = np.full(frame.shape[0], DEFAULT_THRESHOLD, dtype=float)
     threshold = float(DEFAULT_THRESHOLD)
@@ -131,59 +125,66 @@ def _score_with_scikit(
         frame["label"] = pd.Series(dtype=str)
         return frame, stats
 
-    gold_labels = _extract_gold_labels(frame)
+    try:
+        gold_labels = _extract_gold_labels(frame)
 
-    if gold_labels is not None and not gold_labels.empty:
-        try:
-            pipeline = _build_pipeline(seed)
-            train_text = text_series.loc[gold_labels.index]
-            pipeline.fit(train_text, gold_labels.to_numpy(dtype=int, copy=False))
-            probabilities = pipeline.predict_proba(text_series)[:, 1]
-            train_probs = pipeline.predict_proba(train_text)[:, 1]
+        if gold_labels is not None and not gold_labels.empty:
+            try:
+                pipeline = _build_pipeline(seed)
+                train_text = text_series.loc[gold_labels.index]
+                pipeline.fit(train_text, gold_labels.to_numpy(dtype=int, copy=False))
+                probabilities = pipeline.predict_proba(text_series)[:, 1]
+                train_probs = pipeline.predict_proba(train_text)[:, 1]
+                y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
+                y_prob = train_probs.astype(float, copy=False).tolist()
+                threshold = pick_threshold_for_recall(y_true, y_prob, target_recall)
+                fallback = "model"
+            except (ValueError, NotFittedError) as exc:
+                logger.warning(
+                    "Unable to train logistic model with gold labels: %s", exc
+                )
+
+        elif seeds_list:
+            vectorizer = _build_vectorizer()
+            matrix = vectorizer.fit_transform(text_series)
+            seed_indices = _match_seed_indices(frame, seeds_list)
+            if seed_indices:
+                seed_matrix = matrix[seed_indices]
+                similarities = cosine_similarity(matrix, seed_matrix)
+                max_similarity = similarities.max(axis=1)
+                probabilities = np.clip(0.5 + 0.5 * max_similarity, 0.0, 1.0)
+                fallback = "seed_similarity"
+            else:
+                fallback = "default_prob_0.5"
+
+        # Heuristiikka vain jos gold-labeleita on ja malli tuotti tasaiset ennusteet
+        if (
+            gold_labels is not None
+            and not gold_labels.empty
+            and probabilities.size > 0
+            and np.allclose(probabilities, probabilities[0])
+        ):
+            text_lower = text_series.fillna("").str.lower()
+            pattern = r"\b(?:cancer|oncolog|screening|tumou?r|neoplasm|breast|lung)\b"
+            has_kw = text_lower.str.contains(pattern, regex=True)
+            probabilities = np.where(has_kw.to_numpy(), 0.95, 0.05).astype(float)
+
             y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
-            y_prob = train_probs.astype(float, copy=False).tolist()
-            threshold = pick_threshold_for_recall(y_true, y_prob, target_recall)
+            train_probs = (
+                pd.Series(probabilities, index=frame.index)
+                .loc[gold_labels.index]
+                .to_numpy(dtype=float, copy=False)
+                .tolist()
+            )
+            threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
+            # pysytään mallifallbackissa
             fallback = "model"
-        except (ValueError, NotFittedError) as exc:
-            logger.warning("Unable to train logistic model with gold labels: %s", exc)
 
-    elif seeds_list:
-        vectorizer = _build_vectorizer()
-        matrix = vectorizer.fit_transform(text_series)
-        seed_indices = _match_seed_indices(frame, seeds_list)
-        if seed_indices:
-            seed_matrix = matrix[seed_indices]
-            similarities = cosine_similarity(matrix, seed_matrix)
-            max_similarity = similarities.max(axis=1)
-            probabilities = np.clip(0.5 + 0.5 * max_similarity, 0.0, 1.0)
-            fallback = "seed_similarity"
-        else:
-            fallback = "default_prob_0.5"
-
-    # Heuristiikka vain, jos gold-labelit ovat olemassa ja malli tuotti tasaiset ennusteet
-    if (
-        gold_labels is not None
-        and not gold_labels.empty
-        and probabilities.size > 0
-        and np.allclose(probabilities, probabilities[0])
-    ):
-        text_lower = text_series.fillna("").str.lower()
-        # ei-ottava ryhmä → ei Pandas-warningia
-        pattern = r"\b(?:cancer|oncolog|screening|tumou?r|neoplasm|breast|lung)\b"
-        has_kw = text_lower.str.contains(pattern, regex=True)
-        probabilities = np.where(has_kw.to_numpy(), 0.95, 0.05).astype(float)
-
-        # mitoita kynnys uudelleen gold-joukon perusteella
-        y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
-        train_probs = (
-            pd.Series(probabilities, index=frame.index)
-            .loc[gold_labels.index]
-            .to_numpy(dtype=float, copy=False)
-            .tolist()
-        )
-        threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
-        # pysytään mallifallbackissa
-        fallback = "model"
+    except Exception as exc:  # erittäin varovainen fallback ettei CLI kaadu
+        logger.warning("Screening fell back to defaults due to error: %s", exc)
+        probabilities = np.full(frame.shape[0], DEFAULT_THRESHOLD, dtype=float)
+        threshold = float(DEFAULT_THRESHOLD)
+        fallback = "default_prob_0.5"
 
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
@@ -218,7 +219,7 @@ def _score_with_scikit(
     return frame, stats
 
 
-def _build_pipeline(seed: int) -> LogisticRegressionPipeline:
+def _build_pipeline(seed: int) -> "LogisticRegressionPipeline":
     vectorizer = _build_vectorizer()
     classifier = LogisticRegression(
         solver="liblinear",
@@ -322,7 +323,7 @@ def _ensure_reason_list(value: object) -> list[str]:
                 for item in value.tolist()  # type: ignore[call-arg]
                 if str(item).strip()
             ]
-        except Exception:  # pragma: no cover - defensive
+        except Exception:  # pragma: no cover
             pass
     if value in (None, ""):
         return []
@@ -334,7 +335,6 @@ def _ensure_reason_list(value: object) -> list[str]:
 def _match_seed_indices(frame: pd.DataFrame, seeds: Sequence[str]) -> list[int]:
     if not seeds:
         return []
-
     indices: set[int] = set()
     for seed in seeds:
         key, value = _split_seed(seed)
