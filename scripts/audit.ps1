@@ -296,7 +296,9 @@ bad = int(((mask) & (df["reasons"].astype(str) != "[]")).sum())
 if bad:
     raise SystemExit(bad)
 '@
-    python - <<$py
+
+    $py | python -
+    if ($LASTEXITCODE -ne 0) { throw "python exited with code $LASTEXITCODE" }
     Ok 'screened.parquet reasons invariant kunnossa'
   } catch {
     $msg = "screened.parquet reasons invariant rikkoutuu: $_"
