@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 import pytest
 
-from la_pkg.search import Paper
+from la_pkg.search.types import Paper
 from la_pkg.search.pubmed import query_pubmed
 
 

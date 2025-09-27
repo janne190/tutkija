@@ -18,8 +18,7 @@ def test_no_gold_no_seeds() -> None:
         }
     )
 
-    result = score_and_label(df, target_recall=0.9)
-    df_result = result.frame
+    df_result, stats = score_and_label(df, target_recall=0.9)
 
     # Check default probabilities
     assert "probability" in df_result.columns
@@ -29,6 +28,7 @@ def test_no_gold_no_seeds() -> None:
     assert set(df_result["label"].unique()) == {
         EXCLUDED
     }  # All excluded with 0.9 recall target
+    assert stats["fallback"] == "default_prob_0.5"
 
 
 def test_single_class_gold() -> None:
@@ -43,15 +43,14 @@ def test_single_class_gold() -> None:
         }
     )
 
-    result = score_and_label(df, target_recall=0.9)
-    df_result = result.frame
+    df_result, stats = score_and_label(df, target_recall=0.9)
 
     # Should not fail and return reasonable probabilities
     assert "probability" in df_result.columns
     assert all(df_result["probability"] == 0.5)  # Default when untrained
-    assert result.engine == "scikit"
-    # With target_recall > 0.8, we use threshold 0.6 for more exclusions
-    assert result.threshold == 0.5
+    assert stats["engine"] == "scikit"
+    assert stats["threshold_used"] == 0.5
+    assert stats["fallback"] == "default_prob_0.5"
 
 
 def test_seeds_increase_nearby_inclusion() -> None:
@@ -81,13 +80,11 @@ def test_seeds_increase_nearby_inclusion() -> None:
     )
 
     # First run without seeds
-    result1 = score_and_label(df, target_recall=0.9)
-    df_no_seeds = result1.frame
+    df_no_seeds, stats_default = score_and_label(df, target_recall=0.9)
     no_seeds_probs = df_no_seeds["probability"].tolist()
 
     # Then run with first paper as seed
-    result2 = score_and_label(df, target_recall=0.9, seeds=["0"])
-    df_with_seeds = result2.frame
+    df_with_seeds, stats_seed = score_and_label(df, target_recall=0.9, seeds=["id:0"])
     with_seeds_probs = df_with_seeds["probability"].tolist()
 
     # The second paper (similar to seed) should get higher probability with seeds
@@ -95,6 +92,8 @@ def test_seeds_increase_nearby_inclusion() -> None:
     # The unrelated papers should get lower probabilities
     assert with_seeds_probs[2] < with_seeds_probs[1]
     assert with_seeds_probs[3] < with_seeds_probs[1]
+    assert stats_default["fallback"] == "default_prob_0.5"
+    assert stats_seed["fallback"] == "seed_similarity"
 
 
 def test_rules_override_reasons() -> None:
@@ -108,9 +107,7 @@ def test_rules_override_reasons() -> None:
         }
     )
 
-    result = score_and_label(df, target_recall=0.9)
-    df_result = result.frame
-    stats = result.metadata
+    df_result, stats = score_and_label(df, target_recall=0.9)
 
     # Check that records with reasons are always excluded
     assert df_result.loc[df_result["reasons"].str.len() > 0, "label"].eq(EXCLUDED).all()

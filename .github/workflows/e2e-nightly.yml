@@ -30,42 +30,62 @@ jobs:
         run: |
           set -euo pipefail
           . .venv/bin/activate
-          la search-all --topic "genomic screening cancer" --limit 40 --out data/cache/nightly-merged.parquet
+          la search-all --topic "genomic screening cancer" --out data/cache/merged.parquet
+
+      - name: Live screen smoke
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la screen --in data/cache/merged.parquet --out data/cache/screened.parquet --recall 0.9
           python - <<'PY'
 import csv
-import json
 from pathlib import Path
 
-log_path = Path('data/cache/merge_log.csv')
+log_path = Path('data/cache/screen_log.csv')
 if not log_path.exists():
-    raise SystemExit('merge_log.csv puuttuu')
-with log_path.open(encoding='utf-8') as handle:
-    rows = list(csv.DictReader(handle))
+    raise SystemExit('screen_log.csv puuttuu')
+
+rows = list(csv.DictReader(log_path.open(encoding='utf-8')))
 if not rows:
-    raise SystemExit('merge_log.csv tyhja')
+    raise SystemExit('screen_log.csv tyhja')
+
 last = rows[-1]
-counts_raw = last.get('per_source_counts')
-if not counts_raw:
-    raise SystemExit('per_source_counts puuttuu')
-counts = json.loads(counts_raw)
-required = {'openalex', 'pubmed', 'arxiv'}
-missing = sorted(required.difference(counts))
+required = [
+    'identified',
+    'screened',
+    'excluded_rules',
+    'excluded_model',
+    'included',
+    'engine',
+    'recall_target',
+    'threshold_used',
+    'seeds_count',
+    'version',
+    'random_state',
+    'fallback',
+    'out_path',
+]
+missing = [field for field in required if field not in last]
 if missing:
-    raise SystemExit(f'per_source_counts puuttuu avaimet: {missing}')
-def _to_int(value):
-    if isinstance(value, (int, float)):
-        return int(value)
-    if isinstance(value, str) and value.strip():
-        try:
-            return int(float(value))
-        except ValueError:
-            return 0
-    return 0
-if not any(_to_int(counts.get(name, 0)) > 0 for name in required):
-    raise SystemExit(f'per_source_counts kaikki arvot 0: {counts}')
-out_path = Path(last.get('out_path', ''))
+    raise SystemExit(f'screen_log viimeinen rivi puuttuu kentat: {missing}')
+
+def _as_float(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+identified = _as_float(last['identified'])
+screened = _as_float(last['screened'])
+if identified <= 0:
+    raise SystemExit('identified oltava positiivinen')
+ratio = screened / identified
+if ratio < 0.7:
+    raise SystemExit(f'screened/identified liian pieni: {ratio:.2f}')
+
+out_path = Path(last['out_path'])
 if not out_path.exists():
-    raise SystemExit(f'merged parquet puuttuu: {out_path}')
-print('per_source_counts', counts)
-print('merged_path', out_path.as_posix())
+    raise SystemExit(f'out_path ei osoita tiedostoon: {out_path}')
+
+print('screen_log viimeinen rivi OK', last)
 PY

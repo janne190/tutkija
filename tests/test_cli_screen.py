@@ -96,7 +96,27 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
     assert log_path.exists()
     log_df = pd.read_csv(log_path)
     last = log_df.iloc[-1]
+    expected_cols = {
+        "time",
+        "identified",
+        "screened",
+        "excluded_rules",
+        "excluded_model",
+        "included",
+        "engine",
+        "recall_target",
+        "threshold_used",
+        "seeds_count",
+        "version",
+        "random_state",
+        "fallback",
+        "out_path",
+    }
+    assert expected_cols.issubset(log_df.columns)
     assert int(last["identified"]) == len(df)
     assert last["engine"] == "scikit"
     assert 0.0 <= float(last["threshold_used"]) <= 1.0
     assert int(last["excluded_rules"]) == 1
+    assert float(last["screened"]) / float(last["identified"]) >= 0.7
+    assert last["fallback"] in {"model", "default_prob_0.5", "seed_similarity"}
+    assert Path(last["out_path"]).exists()

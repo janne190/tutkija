@@ -11,7 +11,7 @@ import pandas as pd
 from typer.testing import CliRunner
 
 from la_pkg import cli as cli_module
-from la_pkg.search import Paper
+from la_pkg.search.types import Paper
 from la_pkg.search.openalex import OpenAlexSearchResult, SearchMetrics
 
 

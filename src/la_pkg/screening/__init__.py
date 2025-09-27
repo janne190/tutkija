@@ -5,7 +5,7 @@ from __future__ import annotations
 from .model import (
     EXCLUDED,
     INCLUDED,
-    ScreeningResult,
+    ScreenStats,
     pick_threshold_for_recall,
     score_and_label,
 )
@@ -15,7 +15,7 @@ __all__ = [
     "apply_rules",
     "pick_threshold_for_recall",
     "score_and_label",
-    "ScreeningResult",
+    "ScreenStats",
     "EXCLUDED",
     "INCLUDED",
 ]

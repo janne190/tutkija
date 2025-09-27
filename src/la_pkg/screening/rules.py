@@ -10,20 +10,49 @@ import pandas as pd
 _LANGUAGE_REASON = "language filter"
 _YEAR_REASON = "year filter"
 _TYPE_REASON = "type filter"
+_MANUAL_REASON = "manual check"
+_ALLOWED_REASONS = {_LANGUAGE_REASON, _YEAR_REASON, _TYPE_REASON, _MANUAL_REASON}
 _NON_RESEARCH_TYPES = {"editorial", "letter", "news"}
 _TYPE_COLUMNS = ("type", "document_type", "publication_type", "pub_type")
 
 
+def _reason_list(val: Any) -> list[str]:
+    if isinstance(val, list):
+        return [str(x) for x in val if str(x).strip()]
+    return []
+
+
+def _add_reason_if_missing(df: pd.DataFrame, idx: Any, reason: str) -> bool:
+    lst = _reason_list(df.loc[idx, "reasons"])
+    if reason not in lst:
+        lst.append(str(reason))
+        df.loc[idx, "reasons"] = lst
+        return True
+    return False
+
+
 def _normalize_reasons(value: Any) -> list[str]:
+    raw: list[str]
     if isinstance(value, list):
-        return [str(item) for item in value if str(item)]
-    if isinstance(value, tuple):
-        return [str(item) for item in value if str(item)]
-    if value in (None, ""):
+        raw = [str(item) for item in value if str(item)]
+    elif isinstance(value, tuple):
+        raw = [str(item) for item in value if str(item)]
+    elif value in (None, ""):
         return []
-    if isinstance(value, float) and pd.isna(value):
+    elif isinstance(value, float) and pd.isna(value):
         return []
-    return [str(value)]
+    else:
+        raw = [str(value)]
+
+    normalised: list[str] = []
+    for item in raw:
+        text = item.strip()
+        if not text:
+            continue
+        reason = text if text in _ALLOWED_REASONS else _MANUAL_REASON
+        if reason not in normalised:
+            normalised.append(reason)
+    return normalised
 
 
 def _to_int(value: Any) -> int | None:
@@ -42,12 +71,14 @@ def _to_int(value: Any) -> int | None:
 def _normalize_iterable(value: Any) -> Iterable[str]:
     if isinstance(value, str):
         yield value.strip()
-    elif isinstance(value, Sequence):  # type: ignore[unreachable]
+        return
+    if isinstance(value, Sequence):
         for item in value:
             if item is None:
                 continue
             yield str(item).strip()
-    elif value not in (None, ""):
+        return
+    if value not in (None, ""):
         yield str(value).strip()
 
 
@@ -64,24 +95,18 @@ def apply_rules(
     if "reasons" not in result.columns:
         result["reasons"] = [[] for _ in range(len(result))]
     else:
-        result["reasons"] = result["reasons"].apply(
-            lambda x: list(x) if isinstance(x, (list, tuple)) else []
-        )
+        result["reasons"] = result["reasons"].apply(_normalize_reasons)
 
     counts: dict[str, int] = {"language": 0, "year": 0, "type": 0}
 
     if allowed_lang and "language" in result.columns:
-        allowed = {lang.lower() for lang in allowed_lang}
+        allowed = {str(lang).lower() for lang in allowed_lang}
         for idx, value in result["language"].items():
-            if value in (None, ""):
-                continue
-            normalized = str(value).strip().lower()
+            normalized = str(value).strip().lower() if value is not None else ""
             if not normalized:
                 continue
             if normalized not in allowed:
-                reasons = result.at[idx, "reasons"]
-                if _LANGUAGE_REASON not in reasons:
-                    reasons.append(_LANGUAGE_REASON)
+                if _add_reason_if_missing(result, idx, _LANGUAGE_REASON):
                     counts["language"] += 1
 
     if year_min is not None and "year" in result.columns:
@@ -90,9 +115,7 @@ def apply_rules(
             if parsed_year is None:
                 continue
             if parsed_year < year_min:
-                reasons = result.at[idx, "reasons"]
-                if _YEAR_REASON not in reasons:
-                    reasons.append(_YEAR_REASON)
+                if _add_reason_if_missing(result, idx, _YEAR_REASON):
                     counts["year"] += 1
 
     type_col = next((col for col in _TYPE_COLUMNS if col in result.columns), None)
@@ -100,7 +123,7 @@ def apply_rules(
         for idx, value in result[type_col].items():
             flagged = False
             for entry in _normalize_iterable(value):
-                normalized = entry.lower()
+                normalized = str(entry).strip().lower()
                 if not normalized:
                     continue
                 words = normalized.split()
@@ -111,9 +134,7 @@ def apply_rules(
                     flagged = True
                     break
             if flagged:
-                reasons = result.at[idx, "reasons"]
-                if _TYPE_REASON not in reasons:
-                    reasons.append(_TYPE_REASON)
+                if _add_reason_if_missing(result, idx, _TYPE_REASON):
                     counts["type"] += 1
 
     return result, counts

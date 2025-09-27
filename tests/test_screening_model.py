@@ -57,8 +57,7 @@ def test_scikit_model_reaches_target_recall_and_auc() -> None:
         )
 
     df = pd.DataFrame.from_records(records)
-    result = score_and_label(df, target_recall=0.9, seed=11)
-    scored = result.frame
+    scored, stats = score_and_label(df, target_recall=0.9, seed=11)
 
     y_true = scored["gold_label"].eq("included").astype(int)
     y_prob = scored["probability"]
@@ -66,5 +65,5 @@ def test_scikit_model_reaches_target_recall_and_auc() -> None:
 
     assert recall_score(y_true, y_pred) >= 0.9
     assert roc_auc_score(y_true, y_prob) >= 0.8
-    assert 0.0 <= result.threshold <= 1.0
-    assert result.metadata.get("strategy") == "gold"
+    assert 0.0 <= stats["threshold_used"] <= 1.0
+    assert stats["fallback"] == "model"

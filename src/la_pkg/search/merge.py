@@ -7,7 +7,9 @@ from typing import Any, Sequence, cast
 import pandas as pd  # type: ignore[import-untyped]
 from rapidfuzz import fuzz
 
-from . import Paper
+from .types import Paper
+
+__all__ = ["MergeStats", "merge_and_filter"]
 
 SIMILARITY_THRESHOLD = 90
 
