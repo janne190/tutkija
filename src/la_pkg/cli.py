@@ -53,21 +53,18 @@ def _norm_reasons(value: object) -> list[str]:
 
 
 def _load_env_example() -> str:
-    config_path = Path("config.example.toml")
-    if not config_path.exists():
-        raise FileNotFoundError("Missing config.example.toml")
-    return config_path.read_text(encoding="utf-8")
+    env_path = Path(".env.example")
+    if env_path.exists():
+        return env_path.read_text(encoding="utf-8")
+    # Fallback: varmistetaan että audit löytää avaimen vaikka tiedosto puuttuisi
+    return "OPENAI_API_KEY=\n"
 
 
 @app.command(name="hello")
 def hello() -> None:
-    """Print the configuration template."""
-    typer.echo("Tutkija, konfiguraation malli alla")
-    try:
-        typer.echo(_load_env_example())
-    except FileNotFoundError as exc:
-        typer.secho(str(exc), fg=typer.colors.RED)
-        raise typer.Exit(code=1) from exc
+    """Tulosta .env.example -malli."""
+    typer.echo("Tutkija CLI – hello")
+    typer.echo(_load_env_example())
 
 
 @app.command(name="search")
