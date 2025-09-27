@@ -11,7 +11,7 @@ import pandas as pd  # type: ignore[import-untyped]
 import typer
 
 from .screening import apply_rules, score_and_label
-from .search import Paper
+from .search.types import Paper
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
@@ -19,6 +19,40 @@ app = typer.Typer(add_completion=False, no_args_is_help=True)
 @app.callback()
 def main() -> None:
     """Tutkija CLI commands."""
+
+
+def _parse_seed_option(seeds: str | None) -> list[str]:
+    return [s.strip() for s in (seeds or "").split(",") if s.strip()]
+
+
+def _norm_reasons(value: object) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(item) for item in value if str(item).strip()]
+    if isinstance(value, str):
+        text = value.strip()
+        return [] if not text else [text]
+    try:  # Lazy import to avoid hard dependency at runtime
+        import numpy as np  # type: ignore[import-untyped]
+
+        if isinstance(value, np.ndarray):
+            return [
+                str(item)
+                for item in value.tolist()
+                if str(item).strip()
+            ]
+    except Exception:  # pragma: no cover - best effort normalisation
+        pass
+    if isinstance(value, tuple):
+        return [str(item) for item in value if str(item).strip()]
+    if hasattr(value, "tolist"):
+        try:
+            items = value.tolist()  # type: ignore[call-arg]
+            return [str(item) for item in items if str(item).strip()]
+        except Exception:  # pragma: no cover - defensive
+            pass
+    return [str(value)] if str(value).strip() else []
 
 
 def _load_env_example() -> str:
@@ -221,10 +255,10 @@ def screen(
         help="Scorauksen moottori (scikit tai asreview)",
         show_default=True,
     ),
-    seeds: list[str] = typer.Option(
-        [],
+    seeds: str | None = typer.Option(
+        None,
         "--seeds",
-        help="Tunnetusti relevanttien julkaisujen id:t",
+        help="Tunnetusti relevanttien julkaisujen id:t (pilkuilla eroteltu)",
     ),
     min_year: int | None = typer.Option(
         None,
@@ -269,9 +303,9 @@ def screen(
         drop_non_research=drop_non_research,
     )
 
-    seeds_list = [seed for seed in seeds if seed]
+    seeds_list = _parse_seed_option(seeds)
     try:
-        result = score_and_label(
+        scored_df, stats = score_and_label(
             rules_frame,
             target_recall=recall,
             seed=7,
@@ -282,53 +316,57 @@ def screen(
         typer.secho(str(exc), fg=typer.colors.RED)
         raise typer.Exit(code=1) from exc
 
-    scored_df = result.frame.copy()
+    scored_df = scored_df.copy()
     if "reasons" not in scored_df.columns:
         scored_df["reasons"] = [[] for _ in range(len(scored_df))]
 
-    has_reasons = scored_df["reasons"].apply(lambda x: len(x) > 0)
-    model_excluded_mask = scored_df["label"].eq("excluded")
-
-    excluded_rules = int(has_reasons.sum())
-    excluded_model = int((~has_reasons & model_excluded_mask).sum())
-
-    if has_reasons.any():
-        scored_df.loc[has_reasons, "label"] = "excluded"
-    if (~has_reasons).any():
-        # Create a list of empty lists with the correct length
-        empty_reasons: list[list] = [[] for _ in range((~has_reasons).sum())]
-        # Assign the list of empty lists to the 'reasons' column
-        scored_df.loc[~has_reasons, "reasons"] = pd.Series(
-            empty_reasons, index=scored_df.index[~has_reasons]
-        )
+    scored_df["reasons"] = scored_df["reasons"].apply(_norm_reasons)
+    included_mask = scored_df["label"].astype(str).str.lower().eq("included")
+    scored_df.loc[included_mask, "reasons"] = scored_df.loc[
+        included_mask, "reasons"
+    ].apply(lambda _: [])
+    bad = int(
+        ((scored_df["label"].astype(str).str.lower() == "included")
+         & (scored_df["reasons"].astype(str) != "[]")).sum()
+    )
+    if bad:
+        raise RuntimeError(f"reasons must be empty for included, found {bad}")
 
     scored_df["probability"] = scored_df["probability"].astype(float)
     scored_df["label"] = scored_df["label"].astype(str)
 
-    identified = int(df.shape[0])
-    screened = int(scored_df.shape[0])
-    included = int(scored_df["label"].eq("included").sum())
-
     output_path.parent.mkdir(parents=True, exist_ok=True)
     scored_df.to_parquet(output_path, index=False)
 
+    stats["identified"] = int(df.shape[0])
+    stats["screened"] = int(scored_df.shape[0])
+    stats["engine"] = engine_name
+    stats["recall_target"] = float(recall)
+    stats["seeds_count"] = len(seeds_list)
+    stats["out_path"] = str(output_path)
+
     log_path = Path("data/cache/screen_log.csv")
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    log_entry = {
-        "time": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "identified": identified,
-        "screened": screened,
-        "excluded_rules": excluded_rules,
-        "excluded_model": excluded_model,
-        "included": included,
-        "engine": engine_name,
-        "recall_target": recall,
-        "threshold_used": float(result.threshold),
-        "seeds_count": len(seeds_list),
-        "rule_counts": json.dumps(rule_counts),
-        "training_strategy": result.metadata.get("strategy"),
-    }
-    pd.DataFrame([log_entry]).to_csv(
+    log_columns = [
+        "time",
+        "identified",
+        "screened",
+        "excluded_rules",
+        "excluded_model",
+        "included",
+        "engine",
+        "recall_target",
+        "threshold_used",
+        "seeds_count",
+        "version",
+        "random_state",
+        "fallback",
+        "out_path",
+    ]
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    log_row = {"time": timestamp}
+    log_row.update({key: stats[key] for key in log_columns[1:]})
+    pd.DataFrame([[log_row[col] for col in log_columns]], columns=log_columns).to_csv(
         log_path,
         mode="a",
         header=not log_path.exists(),
@@ -337,14 +375,16 @@ def screen(
 
     typer.echo(
         "Screen OK | "
-        f"identified={identified} "
-        f"screened={screened} "
-        f"excluded_rules={excluded_rules} "
-        f"excluded_model={excluded_model} "
-        f"included={included} "
-        f"engine={engine_name} "
-        f"threshold={result.threshold:.3f} "
-        f"seeds={len(seeds_list)}"
+        f"identified={stats['identified']} "
+        f"screened={stats['screened']} "
+        f"excluded_rules={stats['excluded_rules']} "
+        f"excluded_model={stats['excluded_model']} "
+        f"included={stats['included']} "
+        f"engine={stats['engine']} "
+        f"threshold={stats['threshold_used']:.3f} "
+        f"seeds={stats['seeds_count']} "
+        f"fallback={stats['fallback']} "
+        f"rules={json.dumps(rule_counts)}"
     )
 
 

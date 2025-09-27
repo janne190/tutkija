@@ -142,6 +142,15 @@ if (Test-Path $mergedPath) {
   $script:failures += $msg
 }
 
+$screenedPath = 'data/cache/screened.parquet'
+if (Test-Path $screenedPath) {
+  Ok 'data/cache/screened.parquet loytyi'
+} else {
+  $msg = 'data/cache/screened.parquet puuttuu, aja la screen'
+  Fail $msg
+  $script:failures += $msg
+}
+
 
 
 $mergeLogPath = 'data/cache/merge_log.csv'
@@ -214,6 +223,86 @@ if (Test-Path $mergeLogPath) {
   $msg = 'data/cache/merge_log.csv puuttuu, aja la search-all'
   Fail $msg
   $script:failures += $msg
+}
+
+$screenLogPath = 'data/cache/screen_log.csv'
+$expectedScreenCols = @('time','identified','screened','excluded_rules','excluded_model','included','engine','recall_target','threshold_used','seeds_count','version','random_state','fallback','out_path')
+if (Test-Path $screenLogPath) {
+  $rows = @()
+  try {
+    $rows = Import-Csv -Path $screenLogPath
+  } catch {
+    $rows = @()
+  }
+  if ($rows.Count -gt 0) {
+    $last = $rows[-1]
+    $headers = $last.PSObject.Properties.Name
+    $missing = @($expectedScreenCols | Where-Object { $headers -notcontains $_ })
+    if ($missing.Count -eq 0) {
+      Ok 'screen_log.csv sarakkeet kunnossa'
+    } else {
+      $msg = "screen_log.csv puuttuu sarakkeet: $($missing -join ', ')"
+      Fail $msg
+      $script:failures += $msg
+    }
+
+    $identified = 0.0
+    $screened = 0.0
+    [double]::TryParse($last.identified, [ref]$identified) | Out-Null
+    [double]::TryParse($last.screened, [ref]$screened) | Out-Null
+    if ($identified -gt 0) {
+      $ratio = 0.0
+      if ($identified -ne 0) { $ratio = $screened / $identified }
+      if ($ratio -ge 0.7) {
+        Ok "screened/identified suhde kunnossa ($([math]::Round($ratio,2)))"
+      } else {
+        $msg = "screened/identified liian pieni: $([math]::Round($ratio,2))"
+        Fail $msg
+        $script:failures += $msg
+      }
+    } else {
+      $msg = 'screen_log identified ei ole positiivinen'
+      Fail $msg
+      $script:failures += $msg
+    }
+
+    $outPath = $last.out_path
+    if ($outPath -and (Test-Path $outPath)) {
+      Ok "screen_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
+    } else {
+      $msg = "screen_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
+      Fail $msg
+      $script:failures += $msg
+    }
+  } else {
+    $msg = 'screen_log.csv on tyhja, aja la screen'
+    Fail $msg
+    $script:failures += $msg
+  }
+} else {
+  $msg = 'data/cache/screen_log.csv puuttuu, aja la screen'
+  Fail $msg
+  $script:failures += $msg
+}
+
+if (Test-Path $screenedPath) {
+  try {
+    $py = @'
+import pandas as pd
+
+df = pd.read_parquet("data/cache/screened.parquet")
+mask = df["label"].astype(str).str.lower() == "included"
+bad = int(((mask) & (df["reasons"].astype(str) != "[]")).sum())
+if bad:
+    raise SystemExit(bad)
+'@
+    python - <<$py
+    Ok 'screened.parquet reasons invariant kunnossa'
+  } catch {
+    $msg = "screened.parquet reasons invariant rikkoutuu: $_"
+    Fail $msg
+    $script:failures += $msg
+  }
 }
 # 8. viimeisin CI-ajo
 if (Has-Gh) {
