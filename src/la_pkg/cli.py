@@ -63,7 +63,7 @@ def _load_env_example() -> str:
 @app.command(name="hello")
 def hello() -> None:
     """Tulosta .env.example -malli."""
-    typer.echo("Tutkija CLI – hello")
+    typer.echo("Tutkija, konfiguraation malli alla")
     typer.echo(_load_env_example())
 
 

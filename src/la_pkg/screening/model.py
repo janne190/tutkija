@@ -167,7 +167,7 @@ def _score_with_scikit(
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
     frame["probability"] = prob_series
-    frame["label"] = np.where(prob_series > threshold, INCLUDED, EXCLUDED)
+    frame["label"] = np.where(prob_series >= threshold, INCLUDED, EXCLUDED)
 
     has_reasons = frame["reasons"].apply(len).gt(0)
     frame.loc[has_reasons, "label"] = EXCLUDED
