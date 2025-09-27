@@ -5,6 +5,8 @@ import unicodedata
 
 from pydantic import BaseModel, Field
 
+__all__ = ["Paper", "clean_text", "parse_year"]
+
 
 def clean_text(value: str | None) -> str:
     """Normalize whitespace and Unicode for textual metadata."""

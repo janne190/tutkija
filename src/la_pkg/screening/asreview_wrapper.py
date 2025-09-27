@@ -7,7 +7,7 @@ from typing import Sequence
 
 import pandas as pd
 
-from .model import ScreeningResult, _score_with_scikit
+from .model import ScreenStats, _score_with_scikit
 
 logger = logging.getLogger(__name__)
 
@@ -18,14 +18,14 @@ def score_with_asreview(
     target_recall: float,
     seed: int,
     seeds: Sequence[str] | None = None,
-) -> ScreeningResult:
+) -> tuple[pd.DataFrame, ScreenStats]:
     """Dispatch to ASReview engine when available, otherwise raise."""
 
     try:
         import asreview  # type: ignore[import-not-found, unused-import]
     except ImportError as exc:  # pragma: no cover - exercised when ASReview missing
         raise RuntimeError(
-            "ASReview support not installed. Install with 'pip install tutkija[asreview]'."
+            "ASReview is not installed. Install with 'pip install tutkija[asreview]' or use --engine scikit."
         ) from exc
 
     logger.info("ASReview >= %s detected", getattr(asreview, "__version__", "unknown"))

@@ -10,20 +10,34 @@ import pandas as pd
 _LANGUAGE_REASON = "language filter"
 _YEAR_REASON = "year filter"
 _TYPE_REASON = "type filter"
+_MANUAL_REASON = "manual check"
+_ALLOWED_REASONS = {_LANGUAGE_REASON, _YEAR_REASON, _TYPE_REASON, _MANUAL_REASON}
 _NON_RESEARCH_TYPES = {"editorial", "letter", "news"}
 _TYPE_COLUMNS = ("type", "document_type", "publication_type", "pub_type")
 
 
 def _normalize_reasons(value: Any) -> list[str]:
+    raw: list[str]
     if isinstance(value, list):
-        return [str(item) for item in value if str(item)]
-    if isinstance(value, tuple):
-        return [str(item) for item in value if str(item)]
-    if value in (None, ""):
+        raw = [str(item) for item in value if str(item)]
+    elif isinstance(value, tuple):
+        raw = [str(item) for item in value if str(item)]
+    elif value in (None, ""):
         return []
-    if isinstance(value, float) and pd.isna(value):
+    elif isinstance(value, float) and pd.isna(value):
         return []
-    return [str(value)]
+    else:
+        raw = [str(value)]
+
+    normalised: list[str] = []
+    for item in raw:
+        text = item.strip()
+        if not text:
+            continue
+        reason = text if text in _ALLOWED_REASONS else _MANUAL_REASON
+        if reason not in normalised:
+            normalised.append(reason)
+    return normalised
 
 
 def _to_int(value: Any) -> int | None:
@@ -64,9 +78,7 @@ def apply_rules(
     if "reasons" not in result.columns:
         result["reasons"] = [[] for _ in range(len(result))]
     else:
-        result["reasons"] = result["reasons"].apply(
-            lambda x: list(x) if isinstance(x, (list, tuple)) else []
-        )
+        result["reasons"] = result["reasons"].apply(_normalize_reasons)
 
     counts: dict[str, int] = {"language": 0, "year": 0, "type": 0}
 

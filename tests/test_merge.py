@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pandas as pd
 from typing import TypedDict, Dict, List, cast
-from la_pkg.search import Paper
+from la_pkg.search.types import Paper
 from la_pkg.search.merge import merge_and_filter
 
 
