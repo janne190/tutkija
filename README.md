@@ -29,6 +29,9 @@ la search-all --topic "genomic screening cancer" --out data\cache\merged.parquet
 # Live smoke verification (hits OpenAlex, PubMed, arXiv)
 la search-all --topic "genomic screening cancer" --limit 40
 # expected: per_source, dup_doi, dup_title, filtered, final all report values > 0
+
+# Screening workflow
+la screen --in-file data/cache/merged.parquet --out-file data/cache/screened.parquet --seeds "W4232776569,W4296128508"
 ```
 > Windows: wrap the topic in quotes so UTF-8 characters survive.
 

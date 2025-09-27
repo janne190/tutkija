@@ -174,7 +174,7 @@ def _score_with_scikit(
     metadata["excluded_rules"] = excluded_rules
 
     frame["probability"] = prob_series
-    frame["label"] = np.where(prob_series >= threshold, INCLUDED, EXCLUDED)
+    frame["label"] = np.where(prob_series > threshold, INCLUDED, EXCLUDED)
 
     # Set label to EXCLUDED for records with reasons
     frame.loc[frame["reasons"].str.len() > 0, "label"] = EXCLUDED
@@ -200,17 +200,17 @@ def _build_pipeline(seed: int) -> Pipeline:
             (
                 "tfidf",
                 TfidfVectorizer(
-                    max_features=5000,
-                    ngram_range=(1, 2),
-                    stop_words="english",
+                    ngram_range=(1, 2), min_df=1, max_df=0.9, stop_words="english"
                 ),
             ),
             (
                 "clf",
                 LogisticRegression(
-                    max_iter=1000,
-                    class_weight="balanced",
+                    solver="liblinear",
+                    penalty="l1",
+                    C=0.5,
                     random_state=seed,
+                    class_weight="balanced",
                 ),
             ),
         ]
