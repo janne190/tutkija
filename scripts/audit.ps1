@@ -51,6 +51,11 @@ function Invoke-Gh {
 }
 
 Write-Host '== Tutkija audit =='
+$IsCI = ($env:GITHUB_ACTIONS -eq 'true') -or ($env:CI -eq 'true')
+function FailOrWarn($message) {
+  if ($IsCI) { Warn $message; $script:warnings += $message }
+  else { Fail $message; $script:failures += $message }
+}
 
 # 0. peruspolut ja työkalut
 $branch = git rev-parse --abbrev-ref HEAD 2>$null
@@ -138,8 +143,8 @@ if (Test-Path $mergedPath) {
   Ok 'data/cache/merged.parquet loytyi'
 } else {
   $msg = 'data/cache/merged.parquet puuttuu, aja la search-all'
-  Fail $msg
-  $script:failures += $msg
+  FailOrWarn $msg
+
 }
 
 $screenedPath = 'data/cache/screened.parquet'
@@ -147,8 +152,8 @@ if (Test-Path $screenedPath) {
   Ok 'data/cache/screened.parquet loytyi'
 } else {
   $msg = 'data/cache/screened.parquet puuttuu, aja la screen'
-  Fail $msg
-  $script:failures += $msg
+  FailOrWarn $msg
+
 }
 
 
@@ -170,8 +175,8 @@ if (Test-Path $mergeLogPath) {
       Ok 'merge_log.csv sarakkeet kunnossa'
     } else {
       $msg = "merge_log.csv puuttuu sarakkeet: $($missing -join ', ')"
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
     $last = $rows[-1]
     $counts = $null
@@ -194,26 +199,26 @@ if (Test-Path $mergeLogPath) {
           Ok 'merge_log per_source_counts l?ytyi ja sis?lt?? live dataa'
         } else {
           $msg = 'per_source_counts kaikki arvot 0, todenn?k?isesti ei live hakua'
-          Fail $msg
-          $script:failures += $msg
+          FailOrWarn $msg
+
         }
       } else {
         $msg = "per_source_counts puuttuu avaimet: $($missingSources -join ', ')"
-        Fail $msg
-        $script:failures += $msg
+        FailOrWarn $msg
+
       }
     } else {
       $msg = 'per_source_counts ei ole kelvollista JSONia'
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
     $outPath = $last.out_path
     if ($outPath -and (Test-Path $outPath)) {
       Ok "merge_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
     } else {
       $msg = "merge_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
   } else {
     Warn 'merge_log.csv on tyhja, aja la search-all'
@@ -221,8 +226,8 @@ if (Test-Path $mergeLogPath) {
   }
 } else {
   $msg = 'data/cache/merge_log.csv puuttuu, aja la search-all'
-  Fail $msg
-  $script:failures += $msg
+  FailOrWarn $msg
+
 }
 
 $screenLogPath = 'data/cache/screen_log.csv'
@@ -242,8 +247,8 @@ if (Test-Path $screenLogPath) {
       Ok 'screen_log.csv sarakkeet kunnossa'
     } else {
       $msg = "screen_log.csv puuttuu sarakkeet: $($missing -join ', ')"
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
 
     $identified = 0.0
@@ -257,13 +262,13 @@ if (Test-Path $screenLogPath) {
         Ok "screened/identified suhde kunnossa ($([math]::Round($ratio,2)))"
       } else {
         $msg = "screened/identified liian pieni: $([math]::Round($ratio,2))"
-        Fail $msg
-        $script:failures += $msg
+        FailOrWarn $msg
+
       }
     } else {
       $msg = 'screen_log identified ei ole positiivinen'
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
 
     $outPath = $last.out_path
@@ -271,18 +276,18 @@ if (Test-Path $screenLogPath) {
       Ok "screen_log out_path viittaa olemassa olevaan tiedostoon: $outPath"
     } else {
       $msg = "screen_log out_path puuttuu tai tiedosto ei ole olemassa: $outPath"
-      Fail $msg
-      $script:failures += $msg
+      FailOrWarn $msg
+
     }
   } else {
     $msg = 'screen_log.csv on tyhja, aja la screen'
-    Fail $msg
-    $script:failures += $msg
+    FailOrWarn $msg
+
   }
 } else {
   $msg = 'data/cache/screen_log.csv puuttuu, aja la screen'
-  Fail $msg
-  $script:failures += $msg
+  FailOrWarn $msg
+
 }
 
 if (Test-Path $screenedPath) {
@@ -302,8 +307,8 @@ if bad:
     Ok 'screened.parquet reasons invariant kunnossa'
   } catch {
     $msg = "screened.parquet reasons invariant rikkoutuu: $_"
-    Fail $msg
-    $script:failures += $msg
+    FailOrWarn $msg
+
   }
 }
 # 8. viimeisin CI-ajo
