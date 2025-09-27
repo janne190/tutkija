@@ -136,7 +136,18 @@ try {
 }
 
 # 7b. hakulogit ja yhdistetyt artefaktit
-Check-True (Test-Path 'data/cache/search_log.csv') 'search_log.csv loytyi' 'data/cache/search_log.csv puuttuu, aja la search'
+if (Test-Path 'data/cache/search_log.csv') {
+  Ok 'search_log.csv loytyi'
+} else {
+  if ($env:GITHUB_ACTIONS -eq 'true') {
+    Warn 'data/cache/search_log.csv puuttuu CI-ajossa (skippaa live-haun)'
+    $script:warnings += 'search log missing'
+  } else {
+    $msg = 'data/cache/search_log.csv puuttuu, aja la search'
+    Fail $msg
+    $script:failures += $msg
+  }
+}
 
 $mergedPath = 'data/cache/merged.parquet'
 if (Test-Path $mergedPath) {
