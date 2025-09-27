@@ -60,7 +60,7 @@ def test_apply_rules_flags_language_year_and_type() -> None:
         drop_non_research=True,
     )
 
-    assert counts == {"language": 2, "year": 2, "type": 2}
+    assert counts == {"language": 2, "year": 2, "type": 3}
 
     reasons_b2 = updated.loc[updated["id"] == "B2", "reasons"].iloc[0]
     assert "language filter" in reasons_b2

@@ -27,6 +27,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
                 "year": 2022,
                 "type": "article",
                 "gold_label": "included",
+                "reasons": [],
             },
             {
                 "id": "R2",
@@ -36,6 +37,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
                 "year": 2021,
                 "type": "article",
                 "gold_label": "excluded",
+                "reasons": [],
             },
             {
                 "id": "R3",
@@ -45,6 +47,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
                 "year": 2015,
                 "type": "editorial",
                 "gold_label": "excluded",
+                "reasons": [],
             },
             {
                 "id": "R4",
@@ -54,6 +57,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
                 "year": 2019,
                 "type": "article",
                 "gold_label": "included",
+                "reasons": [],
             },
         ]
     )
@@ -86,7 +90,7 @@ def test_la_screen_creates_outputs(tmp_path: Path, monkeypatch) -> None:
 
     flagged = screened.loc[screened["id"] == "R3"].iloc[0]
     assert flagged["label"] == "excluded"
-    assert flagged["reasons"]
+    assert len(flagged["reasons"]) > 0
 
     log_path = Path("data/cache/screen_log.csv")
     assert log_path.exists()

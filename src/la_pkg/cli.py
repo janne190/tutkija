@@ -22,10 +22,10 @@ def main() -> None:
 
 
 def _load_env_example() -> str:
-    env_path = Path(".env.example")
-    if not env_path.exists():
-        raise FileNotFoundError("Missing .env.example")
-    return env_path.read_text(encoding="utf-8")
+    config_path = Path("config.example.toml")
+    if not config_path.exists():
+        raise FileNotFoundError("Missing config.example.toml")
+    return config_path.read_text(encoding="utf-8")
 
 
 @app.command(name="hello")
@@ -119,7 +119,7 @@ def search_all(
         help="Polku johon yhdistetty Parquet tallennetaan",
         show_default=True,
     ),
-    limit: Optional[int] = typer.Option(
+    limit: int | None = typer.Option(
         None,
         "--limit",
         min=1,
@@ -221,24 +221,21 @@ def screen(
         help="Scorauksen moottori (scikit tai asreview)",
         show_default=True,
     ),
-    seeds: tuple[str, ...] = typer.Option(
-        (),
+    seeds: list[str] = typer.Option(
+        [],
         "--seeds",
         help="Tunnetusti relevanttien julkaisujen id:t",
-        metavar="ID",
-        nargs=-1,
     ),
     min_year: int | None = typer.Option(
         None,
         "--min-year",
         help="Pienin sallittu julkaisu vuosi (rules)",
     ),
-    allowed_lang: tuple[str, ...] = typer.Option(
-        ("en", "fi"),
+    allowed_lang: list[str] = typer.Option(
+        ["en", "fi"],
         "--allowed-lang",
         help="Sallitut kielet rules vaiheessa",
         metavar="LANG",
-        nargs=-1,
         show_default=True,
     ),
     drop_non_research: bool = typer.Option(
@@ -289,7 +286,7 @@ def screen(
     if "reasons" not in scored_df.columns:
         scored_df["reasons"] = [[] for _ in range(len(scored_df))]
 
-    has_reasons = scored_df["reasons"].apply(bool)
+    has_reasons = scored_df["reasons"].apply(lambda x: len(x) > 0)
     model_excluded_mask = scored_df["label"].eq("excluded")
 
     excluded_rules = int(has_reasons.sum())
@@ -298,9 +295,12 @@ def screen(
     if has_reasons.any():
         scored_df.loc[has_reasons, "label"] = "excluded"
     if (~has_reasons).any():
-        scored_df.loc[~has_reasons, "reasons"] = [
-            [] for _ in range((~has_reasons).sum())
-        ]
+        # Create a list of empty lists with the correct length
+        empty_reasons: list[list] = [[] for _ in range((~has_reasons).sum())]
+        # Assign the list of empty lists to the 'reasons' column
+        scored_df.loc[~has_reasons, "reasons"] = pd.Series(
+            empty_reasons, index=scored_df.index[~has_reasons]
+        )
 
     scored_df["probability"] = scored_df["probability"].astype(float)
     scored_df["label"] = scored_df["label"].astype(str)

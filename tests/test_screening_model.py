@@ -42,6 +42,7 @@ def test_scikit_model_reaches_target_recall_and_auc() -> None:
                 "title": f"Cancer screening study {idx}",
                 "abstract": text,
                 "gold_label": "included",
+                "reasons": [],
             }
         )
     for idx, text in enumerate(negative_texts, start=len(positive_texts) + 1):
@@ -51,6 +52,7 @@ def test_scikit_model_reaches_target_recall_and_auc() -> None:
                 "title": f"Background research {idx}",
                 "abstract": text,
                 "gold_label": "excluded",
+                "reasons": [],
             }
         )
 

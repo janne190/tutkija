@@ -41,14 +41,14 @@ def _to_int(value: Any) -> int | None:
 
 def _normalize_iterable(value: Any) -> Iterable[str]:
     if isinstance(value, str):
-        yield value
+        yield value.strip()
     elif isinstance(value, Sequence):  # type: ignore[unreachable]
         for item in value:
             if item is None:
                 continue
-            yield str(item)
+            yield str(item).strip()
     elif value not in (None, ""):
-        yield str(value)
+        yield str(value).strip()
 
 
 def apply_rules(
@@ -61,10 +61,12 @@ def apply_rules(
     """Apply conservative heuristics and return annotated DataFrame and rule counts."""
 
     result = df.copy()
-    if "reasons" in result.columns:
-        result["reasons"] = result["reasons"].apply(_normalize_reasons)
-    else:
+    if "reasons" not in result.columns:
         result["reasons"] = [[] for _ in range(len(result))]
+    else:
+        result["reasons"] = result["reasons"].apply(
+            lambda x: list(x) if isinstance(x, (list, tuple)) else []
+        )
 
     counts: dict[str, int] = {"language": 0, "year": 0, "type": 0}
 
@@ -98,14 +100,14 @@ def apply_rules(
         for idx, value in result[type_col].items():
             flagged = False
             for entry in _normalize_iterable(value):
-                normalized = entry.strip().lower()
+                normalized = entry.lower()
                 if not normalized:
                     continue
-                base = normalized.split()[0]
-                if base in _NON_RESEARCH_TYPES or normalized in _NON_RESEARCH_TYPES:
+                words = normalized.split()
+                if any(word in _NON_RESEARCH_TYPES for word in words):
                     flagged = True
                     break
-                if normalized.startswith("news"):
+                if normalized in _NON_RESEARCH_TYPES:
                     flagged = True
                     break
             if flagged:

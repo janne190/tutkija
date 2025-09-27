@@ -91,6 +91,13 @@ def _score_with_scikit(
     seeds: Sequence[str] | None,
     engine_name: str = "scikit",
 ) -> ScreeningResult:
+    if "reasons" not in frame.columns:
+        frame["reasons"] = [[] for _ in range(len(frame))]
+    else:
+        frame["reasons"] = frame["reasons"].apply(
+            lambda x: x if isinstance(x, list) else []
+        )
+
     text_series = _combine_text_columns(frame)
     metadata: dict[str, object] = {"trained": False, "strategy": "uniform"}
     if frame.empty:
@@ -110,7 +117,7 @@ def _score_with_scikit(
     gold_labels = _extract_gold_labels(frame)
     pipeline: Pipeline | None = None
 
-    if gold_labels is not None:
+    if gold_labels is not None and not gold_labels.empty:
         pipeline = _build_pipeline(seed)
         train_text = text_series.loc[gold_labels.index]
         try:
