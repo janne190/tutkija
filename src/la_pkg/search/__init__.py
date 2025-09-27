@@ -1,10 +1,6 @@
-"""Search utilities for Tutkija."""
+"""Search package public exports."""
 
-from .openalex import OpenAlexSearchResult, Paper, append_audit_log, query_openalex
+from .types import Paper, clean_text, parse_year
+from .merge import MergeStats
 
-__all__ = [
-    "Paper",
-    "OpenAlexSearchResult",
-    "append_audit_log",
-    "query_openalex",
-]
+__all__ = ["Paper", "clean_text", "parse_year", "MergeStats"]

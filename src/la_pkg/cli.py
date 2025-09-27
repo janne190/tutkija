@@ -2,12 +2,17 @@
 
 from __future__ import annotations
 
+import json
+import time
 from pathlib import Path
-from typing import Optional
+from typing import Iterable, Optional, Any, Mapping, cast
 
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]
 import typer
 
-from .search import OpenAlexSearchResult, append_audit_log, query_openalex
+from .screening import apply_rules, score_and_label
+from .search.types import Paper
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
@@ -17,36 +22,80 @@ def main() -> None:
     """Tutkija CLI commands."""
 
 
+def is_empty(x: Any) -> bool:
+    """Check if a value is empty, handling None, pandas/numpy objects, and sequences."""
+    if x is None:
+        return True
+    if hasattr(x, "empty"):  # DataFrame/Series
+        return x.empty
+    if hasattr(x, "size"):  # ndarray
+        return x.size == 0
+    try:
+        return len(x) == 0  # list, tuple, etc.
+    except TypeError:
+        return False
+
+
+def has_reasons(v: Any) -> bool:
+    """Check if a value contains any reasons, handling numpy arrays and other types."""
+    if isinstance(v, np.ndarray):
+        return v.size > 0
+    try:
+        return len(v) > 0
+    except TypeError:
+        return bool(v)
+
+
+def _parse_seed_option(seeds: str | None) -> list[str]:
+    return [s.strip() for s in (seeds or "").split(",") if s.strip()]
+
+
+def _norm_reasons(value: object) -> list[str]:
+    if is_empty(value):
+        return []
+    if isinstance(value, list):
+        return [str(item) for item in value if not is_empty(str(item).strip())]
+    if isinstance(value, str):
+        text = value.strip()
+        return [] if is_empty(text) else [text]
+    if isinstance(value, np.ndarray):
+        return [str(item) for item in value.tolist() if not is_empty(str(item).strip())]
+    if isinstance(value, tuple):
+        return [str(item) for item in value if not is_empty(str(item).strip())]
+    if hasattr(value, "tolist"):
+        try:
+            items = value.tolist()  # type: ignore[call-arg]
+            return [str(item) for item in items if not is_empty(str(item).strip())]
+        except Exception:  # pragma: no cover - defensive
+            pass
+    return [str(value)] if not is_empty(str(value).strip()) else []
+
+
 def _load_env_example() -> str:
     env_path = Path(".env.example")
-    if not env_path.exists():
-        raise FileNotFoundError("Missing .env.example")
-    return env_path.read_text(encoding="utf-8")
+    if env_path.exists():
+        return env_path.read_text(encoding="utf-8")
+    # Fallback: varmistetaan että audit löytää avaimen vaikka tiedosto puuttuisi
+    return "OPENAI_API_KEY=\n"
 
 
 @app.command(name="hello")
 def hello() -> None:
-    """Print the configuration template."""
+    """Tulosta .env.example -malli."""
     typer.echo("Tutkija, konfiguraation malli alla")
-    try:
-        typer.echo(_load_env_example())
-    except FileNotFoundError as exc:
-        typer.secho(str(exc), fg=typer.colors.RED)
-        raise typer.Exit(code=1) from exc
+    typer.echo(_load_env_example())
 
 
 @app.command(name="search")
 def search(
-    topic_arg: Optional[str] = typer.Argument(
+    topic: str | None = typer.Argument(
         None,
-        help="Hakusana OpenAlexille",
-        metavar="TOPIC",
+        help="Hakusana OpenAlexille (tai anna --topic optiolla)",
     ),
-    topic_option: Optional[str] = typer.Option(
+    topic_option: str | None = typer.Option(
         None,
         "--topic",
-        "-t",
-        help="Hakusana OpenAlexille",
+        help="Vaihtoehtoinen tapa antaa hakusana",
     ),
     out: Path = typer.Option(
         Path("data/cache/search.parquet"),
@@ -67,20 +116,19 @@ def search(
     ),
 ) -> None:
     """Hae OpenAlexista ja tallenna Parquet tiedostona."""
-    topic = topic_option or topic_arg
-    if not topic:
+
+    selected_topic = topic_option or topic
+    if not selected_topic:
         typer.secho(
             "Anna hakusana argumenttina tai --topic optiolla", fg=typer.colors.RED
         )
         raise typer.Exit(code=1)
 
-    result: OpenAlexSearchResult = query_openalex(topic, limit=limit, language=language)
+    from .search.openalex import OpenAlexSearchResult, append_audit_log, query_openalex
 
-    try:
-        import pandas as pd
-    except ImportError as exc:  # pragma: no cover - guards CLI in broken envs
-        typer.secho("pandas ei ole asennettu", fg=typer.colors.RED)
-        raise typer.Exit(code=1) from exc
+    result: OpenAlexSearchResult = query_openalex(
+        selected_topic, limit=limit, language=language
+    )
 
     out.parent.mkdir(parents=True, exist_ok=True)
     frame = pd.DataFrame([paper.model_dump() for paper in result.papers])
@@ -99,6 +147,273 @@ def search(
         f"lang={result.metrics.language_used} "
         f"queries_tried={len(result.metrics.queries_tried)}"
     )
+
+
+@app.command(name="search-all")
+def search_all(
+    topic: str | None = typer.Argument(
+        None,
+        help="Hakusana kaikille tietolahteille",
+    ),
+    topic_option: str | None = typer.Option(
+        None,
+        "--topic",
+        help="Vaihtoehtoinen tapa antaa hakusana",
+    ),
+    out: Path = typer.Option(
+        Path("data/cache/merged.parquet"),
+        "--out",
+        help="Polku johon yhdistetty Parquet tallennetaan",
+        show_default=True,
+    ),
+    limit: int | None = typer.Option(
+        None,
+        "--limit",
+        min=1,
+        help="Kuinka monta tulosta haetaan lahteittain (oletus configista)",
+    ),
+    save_single: bool = typer.Option(
+        False,
+        "--save-single",
+        help="Tallenna myos yksittaisen lahteen tulokset",
+    ),
+    language: str = typer.Option(
+        "auto",
+        "--lang",
+        help="OpenAlexin kielipreferenssi (auto|en|fi)",
+    ),
+) -> None:
+    """Hae OpenAlex, PubMed ja arXiv, yhdista ja dedupoi."""
+
+    chosen_topic = topic_option or topic
+    if not chosen_topic:
+        typer.secho("Anna hakusana argumenttina", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    from .search.arxiv import query_arxiv
+    from .search.merge import merge_and_filter
+    from .search.openalex import query_openalex
+    from .search.pubmed import query_pubmed
+
+    oa_result = query_openalex(chosen_topic, limit=limit, language=language)
+    pubmed_papers = query_pubmed(chosen_topic, max_results=limit or 200)
+    arxiv_papers = query_arxiv(chosen_topic, max_results=limit or 200)
+
+    merged_df, stats = merge_and_filter(oa_result.papers, pubmed_papers, arxiv_papers)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    merged_df.to_parquet(out, index=False)
+
+    if save_single:
+        _write_source_parquet(
+            Path("data/cache/search_openalex.parquet"), oa_result.papers
+        )
+        _write_source_parquet(Path("data/cache/search_pubmed.parquet"), pubmed_papers)
+        _write_source_parquet(Path("data/cache/search_arxiv.parquet"), arxiv_papers)
+
+    log_path = Path("data/cache/merge_log.csv")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_entry = {
+        "topic": chosen_topic,
+        "time": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "per_source_counts": json.dumps(stats.get("per_source", {})),
+        "duplicates_by_doi": stats.get("dup_doi", 0),
+        "duplicates_by_title": stats.get("dup_title", 0),
+        "filtered_by_rules": stats.get("filtered", 0),
+        "final_count": len(merged_df),
+        "out_path": str(out),
+    }
+    pd.DataFrame([log_entry]).to_csv(
+        log_path,
+        mode="a",
+        header=not log_path.exists(),
+        index=False,
+    )
+
+    typer.echo(
+        "Multisource OK | "
+        f"per_source={stats.get('per_source', {})} "
+        f"dup_doi={stats.get('dup_doi', 0)} "
+        f"dup_title={stats.get('dup_title', 0)} "
+        f"filtered={stats.get('filtered', 0)} "
+        f"final={len(merged_df)} "
+        f"path={out}"
+    )
+
+
+@app.command(name="screen")
+def screen(
+    input_path: Path = typer.Option(
+        Path("data/cache/merged.parquet"),
+        "--in",
+        help="Syote, yhdistetty kirjasto Parquet muodossa",
+        show_default=True,
+    ),
+    output_path: Path = typer.Option(
+        Path("data/cache/screened.parquet"),
+        "--out",
+        help="Tuloksen sijainti Parquet muodossa",
+        show_default=True,
+    ),
+    recall: float = typer.Option(
+        0.9,
+        "--recall",
+        min=0.0,
+        max=1.0,
+        help="Tavoiteltu recall raja",
+        show_default=True,
+    ),
+    engine: str = typer.Option(
+        "scikit",
+        "--engine",
+        help="Scorauksen moottori (scikit tai asreview)",
+        show_default=True,
+    ),
+    seeds: str | None = typer.Option(
+        None,
+        "--seeds",
+        help="Tunnetusti relevanttien julkaisujen id:t (pilkuilla eroteltu)",
+    ),
+    min_year: int | None = typer.Option(
+        None,
+        "--min-year",
+        help="Pienin sallittu julkaisu vuosi (rules)",
+    ),
+    allowed_lang: list[str] = typer.Option(
+        ["en", "fi"],
+        "--allowed-lang",
+        help="Sallitut kielet rules vaiheessa",
+        metavar="LANG",
+        show_default=True,
+    ),
+    drop_non_research: bool = typer.Option(
+        False,
+        "--drop-non-research",
+        help="Merkitse editoriaalit/kirjeet uutiset rules vaiheessa",
+        is_flag=True,
+    ),
+) -> None:
+    """Suorita esiseulonta ja mallipohjainen luokittelu."""
+
+    engine_name = engine.lower()
+    if engine_name not in {"scikit", "asreview"}:
+        raise typer.BadParameter(
+            "engine tulee olla scikit tai asreview", param_hint="engine"
+        )
+    if recall <= 0 or recall > 1:
+        raise typer.BadParameter(
+            "recall tulee olla valilla (0, 1]", param_hint="recall"
+        )
+    if not input_path.exists():
+        typer.secho(f"Syotetta ei loydy: {input_path}", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    df = pd.read_parquet(input_path)
+
+    rules_frame, rule_counts = apply_rules(
+        df,
+        year_min=min_year,
+        allowed_lang=list(allowed_lang) if allowed_lang else None,
+        drop_non_research=drop_non_research,
+    )
+
+    seeds_list = _parse_seed_option(seeds)
+    try:
+        scored_df, stats = score_and_label(
+            rules_frame,
+            target_recall=recall,
+            seed=7,
+            use_asreview=(engine_name == "asreview"),
+            seeds=seeds_list,
+        )
+    except RuntimeError as exc:
+        typer.secho(str(exc), fg=typer.colors.RED)
+        raise typer.Exit(code=1) from exc
+
+    scored_df = scored_df.copy()
+    if "reasons" not in scored_df.columns:
+        scored_df["reasons"] = [[] for _ in range(len(scored_df))]
+
+    # Normaali muoto: lista merkkijonoja
+    scored_df["reasons"] = scored_df["reasons"].apply(_norm_reasons)
+
+    # Aseta included-riveille tyhjä lista rivikohtaisesti (.at)
+    included_mask = scored_df["label"].astype(str).str.lower().eq("included")
+    if getattr(included_mask, "any", None) and included_mask.any():
+        for idx in scored_df.index[included_mask]:
+            scored_df.at[idx, "reasons"] = []
+
+    # Varmista ilman merkkijonovertailuja
+    if getattr(included_mask, "any", None) and included_mask.any():
+        bad_reasons = scored_df.loc[included_mask, "reasons"].apply(has_reasons)
+        if bad_reasons.any():
+            raise RuntimeError(
+                f"reasons must be empty for included, found {bad_reasons.sum()}"
+            )
+
+    scored_df["probability"] = scored_df["probability"].astype(float)
+    scored_df["label"] = scored_df["label"].astype(str)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    scored_df.to_parquet(output_path, index=False)
+
+    stats["identified"] = int(df.shape[0])
+    stats["screened"] = int(scored_df.shape[0])
+    stats["engine"] = engine_name
+    stats["recall_target"] = float(recall)
+    stats["seeds_count"] = len(seeds_list)
+    stats["out_path"] = str(output_path)
+
+    log_path = Path("data/cache/screen_log.csv")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_columns = [
+        "time",
+        "identified",
+        "screened",
+        "excluded_rules",
+        "excluded_model",
+        "included",
+        "engine",
+        "recall_target",
+        "threshold_used",
+        "seeds_count",
+        "version",
+        "random_state",
+        "fallback",
+        "out_path",
+    ]
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    log_row = {"time": timestamp}
+    stats_map = cast(Mapping[str, Any], stats)
+    log_row.update({key: stats_map.get(key, None) for key in log_columns[1:]})
+
+    pd.DataFrame([[log_row[col] for col in log_columns]], columns=log_columns).to_csv(
+        log_path,
+        mode="a",
+        header=not log_path.exists(),
+        index=False,
+    )
+
+    typer.echo(
+        "Screen OK | "
+        f"identified={stats['identified']} "
+        f"screened={stats['screened']} "
+        f"excluded_rules={stats['excluded_rules']} "
+        f"excluded_model={stats['excluded_model']} "
+        f"included={stats['included']} "
+        f"engine={stats['engine']} "
+        f"threshold={stats['threshold_used']:.3f} "
+        f"seeds={stats['seeds_count']} "
+        f"fallback={stats['fallback']} "
+        f"rules={json.dumps(rule_counts)}"
+    )
+
+
+def _write_source_parquet(path: Path, papers: Iterable[Paper]) -> None:
+    records = [paper.model_dump() for paper in papers]
+    if not records:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(records).to_parquet(path, index=False)
 
 
 if __name__ == "__main__":

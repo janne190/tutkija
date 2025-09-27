@@ -29,15 +29,23 @@ jobs:
           uv pip install pytest mypy ruff
           uv pip install -e .
 
-      - name: Check commit message
-        if: github.event_name == 'pull_request'
+
+      - name: Check PR title (Conventional Commits)
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          msg="$(jq -r '.pull_request.title' < "$GITHUB_EVENT_PATH")"
-          echo "PR title, $msg"
-          if echo "$msg" | grep -Eiq '^(feat|fix|chore|docs|ci|refactor|test|perf)(\(.+\))?: '; then
+          set -euo pipefail
+          PR_NUM="${{ github.event.pull_request.number }}"
+          # Hae tuore otsikko; jos gh ei toimi (esim. fork-PR), käytä event-payloadia
+          msg="$(gh pr view "$PR_NUM" --json title -q .title || jq -r '.pull_request.title // ""' "$GITHUB_EVENT_PATH")"
+          echo "PR title: $msg"
+          # tyyppi [scope optional] : viesti  (vaatii tekstin kolonin jälkeen)
+          if echo "$msg" | grep -Eiq '^(feat|fix|chore|docs|ci|refactor|test|perf)(\([^)]+\))?: .+'; then
             echo ok
           else
-            echo "PR otsikon tulee noudattaa muotoa, tyyppi(scope), viesti" && exit 1
+            echo "PR otsikon tulee noudattaa muotoa: tyyppi(scope): viesti"
+            exit 1
           fi
 
       - name: Lint
