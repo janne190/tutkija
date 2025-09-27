@@ -169,10 +169,6 @@ def _score_with_scikit(
 
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
-    # Count records excluded by rules
-    excluded_rules = len(frame[frame["reasons"].str.len() > 0])
-    metadata["excluded_rules"] = excluded_rules
-
     frame["probability"] = prob_series
     frame["label"] = np.where(prob_series > threshold, INCLUDED, EXCLUDED)
 
@@ -199,15 +195,13 @@ def _build_pipeline(seed: int) -> Pipeline:
         steps=[
             (
                 "tfidf",
-                TfidfVectorizer(
-                    ngram_range=(1, 2), min_df=1, max_df=0.9, stop_words="english"
-                ),
+                TfidfVectorizer(ngram_range=(1, 2), min_df=1, max_df=0.9),
             ),
             (
                 "clf",
                 LogisticRegression(
-                    solver="liblinear",
-                    penalty="l1",
+                    solver="lbfgs",
+                    penalty="l2",
                     C=0.5,
                     random_state=seed,
                     class_weight="balanced",
