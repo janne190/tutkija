@@ -314,16 +314,19 @@ def screen(
     if "reasons" not in scored_df.columns:
         scored_df["reasons"] = [[] for _ in range(len(scored_df))]
 
+    # Normaali muoto: lista merkkijonoja
     scored_df["reasons"] = scored_df["reasons"].apply(_norm_reasons)
+
+    # Aseta included-riveille tyhjä lista rivikohtaisesti (.at)
     included_mask = scored_df["label"].astype(str).str.lower().eq("included")
-    scored_df.loc[included_mask, "reasons"] = scored_df.loc[
-        included_mask, "reasons"
-    ].apply(lambda _: [])
+    for idx in scored_df.index[included_mask]:
+        scored_df.at[idx, "reasons"] = []
+
+    # Varmista ilman merkkijonovertailuja
     bad = int(
-        (
-            (scored_df["label"].astype(str).str.lower() == "included")
-            & (scored_df["reasons"].astype(str) != "[]")
-        ).sum()
+        scored_df.loc[included_mask, "reasons"]
+        .apply(lambda r: len(r) if isinstance(r, list) else 1)
+        .sum()
     )
     if bad:
         raise RuntimeError(f"reasons must be empty for included, found {bad}")
