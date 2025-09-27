@@ -26,7 +26,8 @@ def _add_reason_if_missing(df: pd.DataFrame, idx: Any, reason: str) -> bool:
     lst = _reason_list(df.loc[idx, "reasons"])
     if reason not in lst:
         lst.append(str(reason))
-        df.loc[idx, "reasons"] = lst
+        # Aseta lista aina yhteen soluun
+        df.at[idx, "reasons"] = lst
         return True
     return False
 

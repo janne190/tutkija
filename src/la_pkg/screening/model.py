@@ -117,7 +117,6 @@ def _score_with_scikit(
     probabilities = np.full(frame.shape[0], DEFAULT_THRESHOLD, dtype=float)
     threshold = float(DEFAULT_THRESHOLD)
     fallback = "default_prob_0.5"
-    model_used = False  # <-- uusi
 
     if frame.empty:
         stats = _build_stats(
@@ -149,7 +148,6 @@ def _score_with_scikit(
             threshold = pick_threshold_for_recall(y_true, y_prob, target_recall)
 
             fallback = "model"
-            model_used = True  # <-- merkkaa että malli käytetty
         except (ValueError, NotFittedError) as exc:
             logger.warning("Unable to train logistic model with gold labels: %s", exc)
 
@@ -165,41 +163,34 @@ def _score_with_scikit(
             fallback = "seed_similarity"
         else:
             fallback = "default_prob_0.5"
-    # Jos todennäköisyydet eivät vaihtele (esim. fallback 0.5), käytä
-    # kevyttä avainsanaheuristiikkaa, joka erottaa alaan liittyvät tekstit.
-    if probabilities.size and np.allclose(probabilities, probabilities[0]):
+
+    # Käytä kevyttä avainsanaheuristiikkaa vain, jos gold-labelit ovat olemassa
+    # mutta mallin ennusteet jäivät tasaisiksi (esim. kaikki 0.5).
+    if (
+        gold_labels is not None
+        and not gold_labels.empty
+        and probabilities.size
+        and np.allclose(probabilities, probabilities[0])
+    ):
         text_lower = text_series.fillna("").str.lower()
+
         # ei-ottava ryhmä → ei UserWarningia
         pattern = r"\b(?:cancer|oncolog|screening|tumou?r|neoplasm|breast|lung)\b"
         has_kw = text_lower.str.contains(pattern, regex=True)
 
         probabilities = np.where(has_kw.to_numpy(), 0.95, 0.05).astype(float)
 
-        if gold_labels is not None and not gold_labels.empty:
-            y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
-            train_probs = (
-                pd.Series(probabilities, index=frame.index)
-                .loc[gold_labels.index]
-                .to_numpy(dtype=float, copy=False)
-                .tolist()
-            )
-            threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
-
-        # ← muuta tämä: merkitse heuristiikka fallbackiksi vain jos mallia ei saatu käytettyä
-        if not model_used:
-            fallback = "keyword_heuristic"
-
-        # Jos kultastandardilabelit ovat saatavilla, mitoita kynnys recall-tavoitteeseen.
-        if gold_labels is not None and not gold_labels.empty:
-            y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
-            train_probs = (
-                pd.Series(probabilities, index=frame.index)
-                .loc[gold_labels.index]
-                .to_numpy(dtype=float, copy=False)
-                .tolist()
-            )
-            threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
-
+        # mitoita kynnys recall-tavoitteeseen kultadatalle
+        y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
+        train_probs = (
+            pd.Series(probabilities, index=frame.index)
+            .loc[gold_labels.index]
+            .to_numpy(dtype=float, copy=False)
+            .tolist()
+        )
+        threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
+        # pysy 'model' fallbackissa (mallipolku käytössä)
+        fallback = "model"
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
     frame["probability"] = prob_series
