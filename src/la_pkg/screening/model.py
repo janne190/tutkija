@@ -48,7 +48,6 @@ def pick_threshold_for_recall(
     target_recall: float = 0.9,
 ) -> float:
     """Return the smallest threshold meeting the desired recall."""
-
     if not 0 < target_recall <= 1:
         raise ValueError("target_recall must be in (0, 1]")
     y_true_arr = np.asarray(y_true, dtype=int)
@@ -78,7 +77,6 @@ def score_and_label(
     seeds: Sequence[str] | None = None,
 ) -> tuple[pd.DataFrame, ScreenStats]:
     """Score records and assign labels using either scikit-learn or ASReview."""
-
     frame = df.copy()
     if use_asreview:
         try:
@@ -114,6 +112,7 @@ def _score_with_scikit(
         for seed_value in (seeds or [])
         if seed_value and seed_value.strip()
     ]
+
     probabilities = np.full(frame.shape[0], DEFAULT_THRESHOLD, dtype=float)
     threshold = float(DEFAULT_THRESHOLD)
     fallback = "default_prob_0.5"
@@ -138,15 +137,12 @@ def _score_with_scikit(
         try:
             pipeline = _build_pipeline(seed)
             train_text = text_series.loc[gold_labels.index]
-            # fit with explicit int dtype
             pipeline.fit(train_text, gold_labels.to_numpy(dtype=int, copy=False))
             probabilities = pipeline.predict_proba(text_series)[:, 1]
             train_probs = pipeline.predict_proba(train_text)[:, 1]
-            # pass plain lists with concrete dtypes
             y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
             y_prob = train_probs.astype(float, copy=False).tolist()
             threshold = pick_threshold_for_recall(y_true, y_prob, target_recall)
-
             fallback = "model"
         except (ValueError, NotFittedError) as exc:
             logger.warning("Unable to train logistic model with gold labels: %s", exc)
@@ -164,23 +160,20 @@ def _score_with_scikit(
         else:
             fallback = "default_prob_0.5"
 
-    # Käytä kevyttä avainsanaheuristiikkaa vain, jos gold-labelit ovat olemassa
-    # mutta mallin ennusteet jäivät tasaisiksi (esim. kaikki 0.5).
+    # Heuristiikka vain, jos gold-labelit ovat olemassa ja malli tuotti tasaiset ennusteet
     if (
         gold_labels is not None
         and not gold_labels.empty
-        and probabilities.size
+        and probabilities.size > 0
         and np.allclose(probabilities, probabilities[0])
     ):
         text_lower = text_series.fillna("").str.lower()
-
-        # ei-ottava ryhmä → ei UserWarningia
+        # ei-ottava ryhmä → ei Pandas-warningia
         pattern = r"\b(?:cancer|oncolog|screening|tumou?r|neoplasm|breast|lung)\b"
         has_kw = text_lower.str.contains(pattern, regex=True)
-
         probabilities = np.where(has_kw.to_numpy(), 0.95, 0.05).astype(float)
 
-        # mitoita kynnys recall-tavoitteeseen kultadatalle
+        # mitoita kynnys uudelleen gold-joukon perusteella
         y_true = gold_labels.to_numpy(dtype=int, copy=False).tolist()
         train_probs = (
             pd.Series(probabilities, index=frame.index)
@@ -189,12 +182,14 @@ def _score_with_scikit(
             .tolist()
         )
         threshold = pick_threshold_for_recall(y_true, train_probs, target_recall)
-        # pysy 'model' fallbackissa (mallipolku käytössä)
+        # pysytään mallifallbackissa
         fallback = "model"
+
     probabilities = np.clip(probabilities, 0.0, 1.0)
     prob_series = pd.Series(probabilities, index=frame.index, name="probability")
     frame["probability"] = prob_series
-    frame["label"] = np.where(prob_series >= threshold, INCLUDED, EXCLUDED)
+    # Strict ">" → kun prob = threshold = 0.5 (no gold / no seeds), kaikki EXCLUDED
+    frame["label"] = np.where(prob_series > threshold, INCLUDED, EXCLUDED)
 
     has_reasons = frame["reasons"].apply(len).gt(0)
     frame.loc[has_reasons, "label"] = EXCLUDED
