@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Sequence
 from typing import Any
-
+import numpy as np
 import pandas as pd
 
 _LANGUAGE_REASON = "language filter"
@@ -14,6 +14,30 @@ _MANUAL_REASON = "manual check"
 _ALLOWED_REASONS = {_LANGUAGE_REASON, _YEAR_REASON, _TYPE_REASON, _MANUAL_REASON}
 _NON_RESEARCH_TYPES = {"editorial", "letter", "news"}
 _TYPE_COLUMNS = ("type", "document_type", "publication_type", "pub_type")
+
+
+def is_empty(x: Any) -> bool:
+    """Check if a value is empty, handling None, pandas/numpy objects, and sequences."""
+    if x is None:
+        return True
+    if hasattr(x, "empty"):  # DataFrame/Series
+        return x.empty
+    if hasattr(x, "size"):  # ndarray
+        return x.size == 0
+    try:
+        return len(x) == 0  # list, tuple, etc.
+    except TypeError:
+        return False
+
+
+def has_reasons(v: Any) -> bool:
+    """Check if a value contains any reasons, handling numpy arrays and other types."""
+    if isinstance(v, np.ndarray):
+        return v.size > 0
+    try:
+        return len(v) > 0
+    except TypeError:
+        return bool(v)
 
 
 def _reason_list(val: Any) -> list[str]:
@@ -35,10 +59,10 @@ def _add_reason_if_missing(df: pd.DataFrame, idx: Any, reason: str) -> bool:
 def _normalize_reasons(value: Any) -> list[str]:
     raw: list[str]
     if isinstance(value, list):
-        raw = [str(item) for item in value if str(item)]
+        raw = [str(item) for item in value if not is_empty(str(item))]
     elif isinstance(value, tuple):
-        raw = [str(item) for item in value if str(item)]
-    elif value in (None, ""):
+        raw = [str(item) for item in value if not is_empty(str(item))]
+    elif is_empty(value):
         return []
     elif isinstance(value, float) and pd.isna(value):
         return []
@@ -48,7 +72,7 @@ def _normalize_reasons(value: Any) -> list[str]:
     normalised: list[str] = []
     for item in raw:
         text = item.strip()
-        if not text:
+        if is_empty(text):
             continue
         reason = text if text in _ALLOWED_REASONS else _MANUAL_REASON
         if reason not in normalised:
@@ -57,11 +81,11 @@ def _normalize_reasons(value: Any) -> list[str]:
 
 
 def _to_int(value: Any) -> int | None:
-    if value in (None, ""):
+    if is_empty(value):
         return None
     try:
         if isinstance(value, (list, tuple)):
-            if not value:
+            if is_empty(value):
                 return None
             value = value[0]
         return int(str(value).strip())
@@ -100,11 +124,16 @@ def apply_rules(
 
     counts: dict[str, int] = {"language": 0, "year": 0, "type": 0}
 
-    if allowed_lang and "language" in result.columns:
+    # Käytä eksplisiittistä None-tarkistusta, jotta mypy kaventaa tyypin
+    if (
+        allowed_lang is not None
+        and len(allowed_lang) > 0
+        and "language" in result.columns
+    ):
         allowed = {str(lang).lower() for lang in allowed_lang}
         for idx, value in result["language"].items():
             normalized = str(value).strip().lower() if value is not None else ""
-            if not normalized:
+            if is_empty(normalized):
                 continue
             if normalized not in allowed:
                 if _add_reason_if_missing(result, idx, _LANGUAGE_REASON):
@@ -125,7 +154,7 @@ def apply_rules(
             flagged = False
             for entry in _normalize_iterable(value):
                 normalized = str(entry).strip().lower()
-                if not normalized:
+                if is_empty(normalized):
                     continue
                 words = normalized.split()
                 if any(word in _NON_RESEARCH_TYPES for word in words):

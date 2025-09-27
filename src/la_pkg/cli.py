@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 from typing import Iterable, Optional, Any, Mapping, cast
 
-
+import numpy as np
 import pandas as pd  # type: ignore[import-untyped]
 import typer
 
@@ -22,34 +22,53 @@ def main() -> None:
     """Tutkija CLI commands."""
 
 
+def is_empty(x: Any) -> bool:
+    """Check if a value is empty, handling None, pandas/numpy objects, and sequences."""
+    if x is None:
+        return True
+    if hasattr(x, "empty"):  # DataFrame/Series
+        return x.empty
+    if hasattr(x, "size"):  # ndarray
+        return x.size == 0
+    try:
+        return len(x) == 0  # list, tuple, etc.
+    except TypeError:
+        return False
+
+
+def has_reasons(v: Any) -> bool:
+    """Check if a value contains any reasons, handling numpy arrays and other types."""
+    if isinstance(v, np.ndarray):
+        return v.size > 0
+    try:
+        return len(v) > 0
+    except TypeError:
+        return bool(v)
+
+
 def _parse_seed_option(seeds: str | None) -> list[str]:
     return [s.strip() for s in (seeds or "").split(",") if s.strip()]
 
 
 def _norm_reasons(value: object) -> list[str]:
-    if value is None:
+    if is_empty(value):
         return []
     if isinstance(value, list):
-        return [str(item) for item in value if str(item).strip()]
+        return [str(item) for item in value if not is_empty(str(item).strip())]
     if isinstance(value, str):
         text = value.strip()
-        return [] if not text else [text]
-    try:  # Lazy import to avoid hard dependency at runtime
-        import numpy as np  # type: ignore[import-untyped]
-
-        if isinstance(value, np.ndarray):
-            return [str(item) for item in value.tolist() if str(item).strip()]
-    except Exception:  # pragma: no cover - best effort normalisation
-        pass
+        return [] if is_empty(text) else [text]
+    if isinstance(value, np.ndarray):
+        return [str(item) for item in value.tolist() if not is_empty(str(item).strip())]
     if isinstance(value, tuple):
-        return [str(item) for item in value if str(item).strip()]
+        return [str(item) for item in value if not is_empty(str(item).strip())]
     if hasattr(value, "tolist"):
         try:
             items = value.tolist()  # type: ignore[call-arg]
-            return [str(item) for item in items if str(item).strip()]
+            return [str(item) for item in items if not is_empty(str(item).strip())]
         except Exception:  # pragma: no cover - defensive
             pass
-    return [str(value)] if str(value).strip() else []
+    return [str(value)] if not is_empty(str(value).strip()) else []
 
 
 def _load_env_example() -> str:
@@ -319,17 +338,17 @@ def screen(
 
     # Aseta included-riveille tyhjä lista rivikohtaisesti (.at)
     included_mask = scored_df["label"].astype(str).str.lower().eq("included")
-    for idx in scored_df.index[included_mask]:
-        scored_df.at[idx, "reasons"] = []
+    if getattr(included_mask, "any", None) and included_mask.any():
+        for idx in scored_df.index[included_mask]:
+            scored_df.at[idx, "reasons"] = []
 
     # Varmista ilman merkkijonovertailuja
-    bad = int(
-        scored_df.loc[included_mask, "reasons"]
-        .apply(lambda r: len(r) if isinstance(r, list) else 1)
-        .sum()
-    )
-    if bad:
-        raise RuntimeError(f"reasons must be empty for included, found {bad}")
+    if getattr(included_mask, "any", None) and included_mask.any():
+        bad_reasons = scored_df.loc[included_mask, "reasons"].apply(has_reasons)
+        if bad_reasons.any():
+            raise RuntimeError(
+                f"reasons must be empty for included, found {bad_reasons.sum()}"
+            )
 
     scored_df["probability"] = scored_df["probability"].astype(float)
     scored_df["label"] = scored_df["label"].astype(str)

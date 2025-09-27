@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Iterable, Sequence, TypedDict
+from typing import Any, Iterable, Sequence, TypedDict
 
 import numpy as np
 import pandas as pd
@@ -38,6 +38,20 @@ class ScreenStats(TypedDict):
     random_state: int
     fallback: str
     out_path: str
+
+
+def is_empty(x: Any) -> bool:
+    """Check if a value is empty, handling None, pandas/numpy objects, and sequences."""
+    if x is None:
+        return True
+    if hasattr(x, "empty"):  # DataFrame/Series
+        return x.empty
+    if hasattr(x, "size"):  # ndarray
+        return x.size == 0
+    try:
+        return len(x) == 0  # list, tuple, etc.
+    except TypeError:
+        return False
 
 
 def pick_threshold_for_recall(
@@ -144,11 +158,11 @@ def _score_with_scikit(
                     "Unable to train logistic model with gold labels: %s", exc
                 )
 
-        elif seeds_list:
+        elif not is_empty(seeds_list):
             vectorizer = _build_vectorizer()
             matrix = vectorizer.fit_transform(text_series)
             seed_indices = _match_seed_indices(frame, seeds_list)
-            if seed_indices:
+            if not is_empty(seed_indices):
                 seed_matrix = matrix[seed_indices]
                 similarities = cosine_similarity(matrix, seed_matrix)
                 max_similarity = similarities.max(axis=1)
@@ -333,7 +347,7 @@ def _ensure_reason_list(value: object) -> list[str]:
 
 
 def _match_seed_indices(frame: pd.DataFrame, seeds: Sequence[str]) -> list[int]:
-    if not seeds:
+    if is_empty(seeds):
         return []
     indices: set[int] = set()
     for seed in seeds:
@@ -357,11 +371,11 @@ def _split_seed(seed: str) -> tuple[str | None, str | None]:
         prefix, value = seed.split(":", 1)
         prefix = prefix.strip().lower()
         value = value.strip()
-        if not value:
+        if is_empty(value):
             return None, None
         return prefix or None, value
     cleaned = seed.strip()
-    if not cleaned:
+    if is_empty(cleaned):
         return None, None
     return None, cleaned
 
