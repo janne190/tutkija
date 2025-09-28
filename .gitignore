@@ -15,11 +15,30 @@ build/
 *.egg-info/
 
 # Project data
-data/
+data/*
+!data/cache/
+data/cache/*
+!data/cache/pdf_index.csv
+!data/cache/parsed_index.csv
+!data/cache/README.md
+!data/logs/
+data/logs/*
+!data/logs/pdf_audit.csv
+!data/pdfs/
+data/pdfs/*
+!data/pdfs/README.md
+!data/parsed/
+data/parsed/*
+!data/parsed/*/
+!data/parsed/**/tei.xml
+!data/parsed/**/text.txt
+!data/samples/
+data/samples/*
+!data/samples/README.md
 !tests/data/
 
-cache/
-output/
+/cache/
+/output/
 
 # OS
 .DS_Store

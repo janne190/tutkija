@@ -1,0 +1,3 @@
+# Reliable Seeds for PDF Discovery
+
+Synthetic abstract for sample parsing output.
