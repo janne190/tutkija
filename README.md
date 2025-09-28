@@ -30,9 +30,10 @@ la search-all --topic "genomic screening cancer" --out data\cache\merged.parquet
 la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --recall 0.9 --seeds "doi:10.1038/xyz , pmid:12345"
 
 # Fetch PDFs and parse with GROBID (set UNPAYWALL_EMAIL in .env)
-la pdf --in data\cache\merged.parquet --out data\cache\with_pdfs.parquet --pdf-dir data\pdfs --log data\logs\pdf_audit.csv --mailto $Env:UNPAYWALL_EMAIL
+la pdf discover --in data\cache\merged.parquet --out data\cache\pdf_index.parquet
+la pdf download --in data\cache\pdf_index.parquet --pdf-dir data\pdfs --audit data\logs\pdf_audit.csv --mailto $Env:UNPAYWALL_EMAIL
 docker run -d --name grobid -p 8070:8070 ghcr.io/kermitt2/grobid:latest
-la parse --in data\cache\with_pdfs.parquet --out data\cache\parsed.parquet --parsed-dir data\parsed --grobid-url http://localhost:8070 --err-log data\logs\parse_errors.csv --sample 20
+la parse run --pdf-dir data\pdfs --out-dir data\parsed --index-out data\cache\parsed.parquet --grobid-url http://localhost:8070 --err-log data\logs\parse_errors.csv --sample 20
 ```
 > Windows: wrap the topic in quotes so UTF-8 characters survive.
 
@@ -81,9 +82,23 @@ All first-party tests and commands run without reaching the public internet once
 
 `la search-all` performs live HTTP requests to OpenAlex (`https://api.openalex.org/works`), PubMed (`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`) and arXiv (`https://export.arxiv.org/api/query`). No API keys are required. Set the optional `TUTKIJA_CONTACT_EMAIL` environment variable to add a polite User-Agent/`mailto` to the calls.
 
-`la pdf` looks for arXiv, PubMed Central and Unpaywall download locations in that order. The command writes PDFs under `data/pdfs/`, augments the Parquet file with `pdf_path`, `pdf_license` and `has_fulltext` columns and appends an audit trail to `data/logs/pdf_audit.csv`. Provide your registered Unpaywall email via `.env` (`UNPAYWALL_EMAIL=`) so the API call is accepted.
+`la pdf discover` scans the merged metadata or the optional `tools/seed_urls.csv` list and records which provider (arXiv, PubMed Central or Unpaywall) can serve each paper. `la pdf download` reads that index, writes PDFs under `data/pdfs/`, augments the Parquet file with `pdf_path`, `pdf_license` and `has_fulltext` columns and appends an audit trail to `data/logs/pdf_audit.csv`. Provide your registered Unpaywall email via `.env` (`UNPAYWALL_EMAIL=`) or the `--mailto` flag so the API call is accepted.
 
-`la parse` expects a running GROBID container. It reads the PDF-enriched parquet, sends each file to the service, stores the returned TEI XML under `data/parsed/<id>/tei.xml` and writes a lightweight Markdown summary to `text.txt`. Errors are recorded in `data/logs/parse_errors.csv`.
+`la parse run` expects a running GROBID container. It scans the PDF directory, sends each file to the service, stores the returned TEI XML under `data/parsed/<id>/tei.xml` and writes a lightweight Markdown summary to `text.txt`. Errors are recorded in `data/logs/parse_errors.csv` and the metadata index lands in `data/cache/parsed.parquet`.
+
+### Phase 4 helper script
+
+The repository ships with a convenience wrapper for Windows operators. `tools/run_vaihe4.ps1` provisions the virtual environment, checks for the required environment variables and executes the discovery, download and parsing commands in sequence. Run it from the project root:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File tools/run_vaihe4.ps1
+```
+
+Use `-SkipDiscover` when you already have an up-to-date `data/cache/pdf_index.parquet`. Override the default paths with the corresponding parameters, for example:
+
+```powershell
+pwsh -File tools/run_vaihe4.ps1 -PdfDir D:\\Tutkija\\pdfs -ParsedDir D:\\Tutkija\\parsed -GrobidUrl http://grobid.internal:8070 -SkipDiscover
+```
 
 ## Testing
 
