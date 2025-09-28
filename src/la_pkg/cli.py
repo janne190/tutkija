@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import time
+from collections import Counter
 from pathlib import Path
 from typing import Iterable, Optional, Any, Mapping, cast
 
@@ -12,10 +13,15 @@ import numpy as np
 import pandas as pd  # type: ignore[import-untyped]
 import typer
 
+from .pdf.fetchers import arxiv_pdf_url, pmc_pdf_url
 from .screening import apply_rules, score_and_label
 from .search.types import Paper
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
+pdf_app = typer.Typer(add_completion=False, no_args_is_help=True)
+parse_app = typer.Typer(add_completion=False, no_args_is_help=True)
+app.add_typer(pdf_app, name="pdf")
+app.add_typer(parse_app, name="parse")
 
 
 @app.callback()
@@ -409,30 +415,131 @@ def screen(
     )
 
 
-@app.command(name="pdf")
-def fetch_pdfs(
+def _pdf_provider_metadata(row: Mapping[str, object]) -> tuple[Optional[str], Optional[str], bool]:
+    """Return provider metadata for a row without performing network calls."""
+
+    url = arxiv_pdf_url(row)
+    if url:
+        return "arxiv", url, False
+    url = pmc_pdf_url(row)
+    if url:
+        return "pmc", url, False
+    doi = row.get("doi") if isinstance(row, Mapping) else getattr(row, "doi", "")
+    doi_str = str(doi or "").strip()
+    if doi_str:
+        return "unpaywall", None, True
+    return None, None, False
+
+
+@pdf_app.command(name="discover")
+def discover_pdfs(
     input_path: Path = typer.Option(
         Path("data/cache/merged.parquet"),
         "--in",
-        help="Syöte Parquet tiedosto, tyypillisesti la search-all tulos",
+        help="Syöte Parquet tiedosto (esim. la search-all tulos)",
+        show_default=True,
+    ),
+    seed_csv: Path = typer.Option(
+        Path("tools/seed_urls.csv"),
+        "--seed-csv",
+        help="Varapolku PDF-siementen CSV listalle",
         show_default=True,
     ),
     output_path: Path = typer.Option(
-        Path("data/cache/with_pdfs.parquet"),
+        Path("data/cache/pdf_index.parquet"),
         "--out",
-        help="Tulos Parquet polku PDF-metatiedoilla",
+        help="Kirjoitettava PDF-indeksi Parquet muodossa",
+        show_default=True,
+    ),
+) -> None:
+    """Perusta PDF-indeksi ja rikasta se tarjoajatiedoilla."""
+
+    source_kind = None
+    frame: pd.DataFrame | None = None
+
+    if input_path.exists():
+        frame = pd.read_parquet(input_path)
+        source_kind = "metadata"
+    elif seed_csv.exists():
+        frame = pd.read_csv(seed_csv)
+        source_kind = "seeds"
+
+    if frame is None:
+        typer.secho(
+            "Syöte puuttuu: odotin Parquet tiedostoa tai siemeniä CSV:stä",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
+
+    frame = frame.copy()
+    if "source" not in frame.columns:
+        frame["source"] = source_kind
+    else:
+        frame["source"] = frame["source"].fillna(source_kind)
+
+    if "title" not in frame.columns:
+        if "url" in frame.columns:
+            fallback_titles = frame["url"].astype(str).fillna("")
+        else:
+            fallback_titles = pd.Series([""] * len(frame))
+        frame["title"] = fallback_titles
+
+    provider_rows = [
+        _pdf_provider_metadata(row)
+        for row in frame.to_dict(orient="records")
+    ]
+    provider_df = pd.DataFrame(
+        provider_rows,
+        columns=["pdf_provider", "pdf_provider_url", "pdf_needs_unpaywall_email"],
+    )
+    provider_df.index = frame.index
+    frame = pd.concat([frame, provider_df], axis=1)
+
+    if "pdf_path" not in frame.columns:
+        frame["pdf_path"] = None
+    if "pdf_license" not in frame.columns:
+        frame["pdf_license"] = None
+    if "has_fulltext" not in frame.columns:
+        frame["has_fulltext"] = False
+
+    frame["pdf_needs_unpaywall_email"] = (
+        frame["pdf_needs_unpaywall_email"].fillna(False).astype(bool)
+    )
+    frame["pdf_discovery_source"] = source_kind
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_parquet(output_path, index=False)
+
+    counts = Counter(frame["pdf_provider"].fillna("none"))
+    typer.echo(
+        "PDF discovery OK | "
+        f"rows={len(frame)} "
+        f"arxiv={counts.get('arxiv', 0)} "
+        f"pmc={counts.get('pmc', 0)} "
+        f"unpaywall={counts.get('unpaywall', 0)} "
+        f"none={counts.get('none', 0)} "
+        f"out={output_path}"
+    )
+
+
+@pdf_app.command(name="download")
+def download_pdfs(
+    index_path: Path = typer.Option(
+        Path("data/cache/pdf_index.parquet"),
+        "--in",
+        help="PDF-indeksin Parquet polku",
         show_default=True,
     ),
     pdf_dir: Path = typer.Option(
         Path("data/pdfs"),
         "--pdf-dir",
-        help="Hakemisto johon PDF-tiedostot tallennetaan",
+        help="Hakemisto johon PDF:t tallennetaan",
         show_default=True,
     ),
     audit_log: Path = typer.Option(
         Path("data/logs/pdf_audit.csv"),
-        "--log",
-        help="CSV audit-loki joka sisältää lataustulokset",
+        "--audit",
+        help="CSV loki lataustapahtumista",
         show_default=True,
     ),
     mailto: str = typer.Option(
@@ -459,15 +566,15 @@ def fetch_pdfs(
         show_default=True,
     ),
 ) -> None:
-    """Lataa PDF:t arXivista, PMC:stä ja Unpaywallista."""
+    """Lataa PDF:t ja päivitä indeksi audit-tiedoilla."""
 
-    if not input_path.exists():
-        typer.secho(f"Syöte puuttuu: {input_path}", fg=typer.colors.RED)
+    if not index_path.exists():
+        typer.secho(f"Indeksi puuttuu: {index_path}", fg=typer.colors.RED)
         raise typer.Exit(code=1)
 
     from .pdf.download import download_all
 
-    df = pd.read_parquet(input_path)
+    df = pd.read_parquet(index_path)
     result = download_all(
         df,
         pdf_dir,
@@ -478,37 +585,55 @@ def fetch_pdfs(
         unpaywall_email=mailto or os.environ.get("UNPAYWALL_EMAIL", ""),
     )
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    result.to_parquet(output_path, index=False)
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    result.to_parquet(index_path, index=False)
 
-    fetched = int(result["has_fulltext"].sum()) if "has_fulltext" in result else 0
+    fetched = int(result.get("has_fulltext", pd.Series(dtype=bool)).sum()) if not result.empty else 0
     typer.echo(
-        "PDF fetch OK | "
+        "PDF download OK | "
         f"downloaded={fetched} "
         f"total={len(result)} "
-        f"out={output_path} "
+        f"out={index_path} "
         f"audit={audit_log}"
     )
 
 
-@app.command(name="parse")
+def _scan_pdf_directory(pdf_dir: Path) -> pd.DataFrame:
+    """Return a DataFrame describing PDF artefacts under the directory."""
+
+    pdf_files = sorted(p for p in pdf_dir.rglob("*.pdf") if p.is_file())
+    records: list[dict[str, object]] = []
+    for path in pdf_files:
+        relative = path.relative_to(pdf_dir)
+        identifier = relative.as_posix()
+        if identifier.lower().endswith(".pdf"):
+            identifier = identifier[: -4]
+        identifier = identifier.replace("/", "_")
+        records.append({
+            "id": identifier,
+            "pdf_path": str(path),
+        })
+    return pd.DataFrame.from_records(records)
+
+
+@parse_app.command(name="run")
 def parse_pdfs(
-    input_path: Path = typer.Option(
-        Path("data/cache/with_pdfs.parquet"),
-        "--in",
-        help="Syöte Parquet tiedosto PDF-polkujen kanssa",
+    pdf_dir: Path = typer.Option(
+        Path("data/pdfs"),
+        "--pdf-dir",
+        help="Hakemisto josta PDF:t luetaan",
         show_default=True,
     ),
-    output_path: Path = typer.Option(
-        Path("data/cache/parsed.parquet"),
-        "--out",
-        help="Tulos Parquet polku jonne parse-metadata kirjoitetaan",
-        show_default=True,
-    ),
-    parsed_dir: Path = typer.Option(
+    out_dir: Path = typer.Option(
         Path("data/parsed"),
-        "--parsed-dir",
+        "--out-dir",
         help="Hakemisto jonne TEI ja tekstit tallennetaan",
+        show_default=True,
+    ),
+    index_out: Path = typer.Option(
+        Path("data/cache/parsed.parquet"),
+        "--index-out",
+        help="Parquet polku jonne parse-metadata kirjoitetaan",
         show_default=True,
     ),
     grobid_url: str = typer.Option(
@@ -531,23 +656,30 @@ def parse_pdfs(
 ) -> None:
     """Jäsennä ladatut PDF:t GROBID-palvelulla."""
 
-    if not input_path.exists():
-        typer.secho(f"Syöte puuttuu: {input_path}", fg=typer.colors.RED)
+    if not pdf_dir.exists():
+        typer.secho(f"PDF-hakemisto puuttuu: {pdf_dir}", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    df = _scan_pdf_directory(pdf_dir)
+    if df.empty:
+        typer.secho(
+            f"PDF-hakemistossa ei ole PDF-tiedostoja: {pdf_dir}",
+            fg=typer.colors.RED,
+        )
         raise typer.Exit(code=1)
 
     from .parse.run import parse_all
 
-    df = pd.read_parquet(input_path)
     result = parse_all(
         df,
-        parsed_dir,
+        out_dir,
         grobid_url,
         err_log,
         sample=sample,
     )
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    result.to_parquet(output_path, index=False)
+    index_out.parent.mkdir(parents=True, exist_ok=True)
+    result.to_parquet(index_out, index=False)
 
     if sample is None:
         processed_indices = result.index
@@ -564,7 +696,8 @@ def parse_pdfs(
         "Parse OK | "
         f"parsed={success} "
         f"processed={processed_display} "
-        f"out={output_path} "
+        f"out-dir={out_dir} "
+        f"index={index_out} "
         f"errors={err_log}"
     )
 

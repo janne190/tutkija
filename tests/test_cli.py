@@ -213,3 +213,71 @@ def test_la_search_all_creates_merge(tmp_path: Path, monkeypatch) -> None:
     assert "Multisource OK" in cli_result.output
     assert out_path.exists()
     assert Path("data/cache/merge_log.csv").exists()
+
+
+def test_parse_run_scans_directory(tmp_path: Path, monkeypatch) -> None:
+    runner = CliRunner()
+    pdf_dir = tmp_path / "pdfs"
+    pdf_dir.mkdir()
+    sample_pdf = pdf_dir / "example.pdf"
+    sample_pdf.write_bytes(b"%PDF-1.4\n%%EOF")
+
+    out_dir = tmp_path / "parsed"
+    index_out = tmp_path / "parsed.parquet"
+    err_log = tmp_path / "errors.csv"
+
+    recorded: dict[str, object] = {}
+
+    def fake_parse_all(df, parsed_dir, grobid_url, err_log_path, *, sample=None):  # type: ignore[override]
+        recorded["rows"] = df.to_dict(orient="records")
+        recorded["parsed_dir"] = parsed_dir
+        recorded["grobid_url"] = grobid_url
+        recorded["err_log"] = err_log_path
+        recorded["sample"] = sample
+
+        result = df.copy()
+        result["parsed_ok"] = True
+        result["parsed_xml_path"] = [str(parsed_dir / "example" / "tei.xml")]
+        result["parsed_txt_path"] = [str(parsed_dir / "example" / "text.txt")]
+        return result
+
+    import la_pkg.parse.run as parse_run_mod
+
+    monkeypatch.setattr(parse_run_mod, "parse_all", fake_parse_all)
+
+    cli_result = runner.invoke(
+        cli_module.app,
+        [
+            "parse",
+            "run",
+            "--pdf-dir",
+            str(pdf_dir),
+            "--out-dir",
+            str(out_dir),
+            "--index-out",
+            str(index_out),
+            "--grobid-url",
+            "http://example-grobid",
+            "--err-log",
+            str(err_log),
+            "--sample",
+            "1",
+        ],
+    )
+
+    assert cli_result.exit_code == 0, cli_result.output
+    assert "Parse OK" in cli_result.output
+
+    assert recorded["parsed_dir"] == out_dir
+    assert recorded["grobid_url"] == "http://example-grobid"
+    assert recorded["err_log"] == err_log
+    assert recorded["sample"] == 1
+
+    rows = recorded["rows"]
+    assert isinstance(rows, list)
+    assert rows == [{"id": "example", "pdf_path": str(sample_pdf)}]
+
+    assert index_out.exists()
+    frame = pd.read_parquet(index_out)
+    assert frame.loc[0, "parsed_ok"] is True
+    assert frame.loc[0, "parsed_xml_path"].endswith("example/tei.xml")
