@@ -45,15 +45,16 @@ The project includes a Retrieval Augmented Generation (RAG) pipeline for answeri
 # 1) Chunk TEI documents into smaller pieces
 la rag chunk --parsed-index data/cache/parsed_index.parquet `
              --out data/cache/chunks.parquet `
-             --overlap 128 --max-tokens 1024
+             --include-front true --use-text-txt true `
+             --min-tokens 50 --overlap 64 --max-tokens 1024
 
 # 2) Build a vector index (using ChromaDB and Google embeddings by default)
-la rag index --chunks data/cache/chunks.parquet `
-             --index-dir data/index/chroma `
-             --embed-provider google --embed-model text-embedding-004
+la rag index build --chunks data/cache/chunks.parquet `
+                   --index-dir data/index/chroma `
+                   --embed-provider google --embed-model text-embedding-004
 
 # 3) Ask a question
-la qa --question "What are the key methods in X?" `
+la qa --question "Mitkä menetelmät ovat aineistossa yleisiä?" `
       --index-dir data/index/chroma --k 6 `
       --llm-provider google --llm-model gemini-1.5-flash `
       --out data/output/qa.jsonl
@@ -62,6 +63,9 @@ la qa --question "What are the key methods in X?" `
 ### Provider Configuration
 
 You can switch the embedding and language model providers via the command-line options. For example, to use a different embedding model, you would change the `--embed-provider` and `--embed-model` flags on the `la rag index` command. Similarly, the `--llm-provider` and `--llm-model` flags on the `la qa` command control the language model used for generating answers.
+
+**Environment Variables:**
+Set `GEMINI_API_KEY` (or `GOOGLE_API_KEY` as a fallback) in your `.env` file for Google models.
 
 ### Interpreting the Output
 

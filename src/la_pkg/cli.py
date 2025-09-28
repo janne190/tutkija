@@ -765,6 +765,24 @@ def chunk_cli(
         help="Minimi tokenien määrä per chunk",
         show_default=True,
     ),
+    include_front: bool = typer.Option(
+        False,
+        "--include-front",
+        help="Pakota TEI front mukaan vaikka body puuttuisi",
+        is_flag=True,
+    ),
+    use_text_txt: bool = typer.Option(
+        False,
+        "--use-text-txt",
+        help="Fallback `parsed_txt_path`iin kun TEI/body ei tuota chunkkeja",
+        is_flag=True,
+    ),
+    min_chars: int = typer.Option(
+        0,
+        "--min-chars",
+        help="Minimi merkkien määrä per chunk (0 = ei käytössä)",
+        show_default=True,
+    ),
 ) -> None:
     """Paloittele TEI-dokumentit loogisiin osiin ja tokeneiksi."""
     from .rag.chunk import run_chunking
@@ -776,6 +794,9 @@ def chunk_cli(
             max_tokens=max_tokens,
             overlap=overlap,
             min_tokens=min_tokens,
+            include_front=include_front,
+            use_text_txt=use_text_txt,
+            min_chars=min_chars,
         )
     except FileNotFoundError as e:
         typer.secho(str(e), fg=typer.colors.RED)

@@ -37,33 +37,56 @@ def build_index(
     df = pd.read_parquet(chunks_path)
     if df.empty:
         print("No chunks to index.")
+        # Create metadata for empty index to avoid downstream errors
+        meta = IndexMeta(
+            n_docs=0,
+            n_chunks=0,
+            vector_dim=0,  # Placeholder
+            embed_provider=embed_provider,
+            embed_model=embed_model,
+        )
+        meta_path = index_dir / "index_meta.json"
+        meta_path.parent.mkdir(parents=True, exist_ok=True)
+        with meta_path.open("w", encoding="utf-8") as f:
+            json.dump(meta.model_dump(), f, indent=2)
         return
 
-    # Configure embeddings
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise RuntimeError("Missing GEMINI_API_KEY/GOOGLE_API_KEY. Set it in .env.")
+
     if embed_provider == "google":
-        genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+        genai.configure(api_key=api_key)
         embedding_function = embedding_functions.GoogleGenerativeAiEmbeddingFunction(
-            api_key=os.environ["GOOGLE_API_KEY"], model_name=embed_model
+            api_key=api_key, model_name=embed_model
         )
     else:
         raise ValueError(f"Unsupported embed provider: {embed_provider}")
 
-    # Initialize ChromaDB client
     client = chromadb.PersistentClient(path=str(index_dir))
     collection = client.get_or_create_collection(
         name="papers", embedding_function=embedding_function
     )
 
-    # Add documents to the collection in batches
     for i in range(0, len(df), batch_size):
         batch = df.iloc[i : i + batch_size]
 
-        # Clean metadata: remove None values
-        metadatas = batch.drop(columns=["text", "chunk_id"]).to_dict("records")
-        cleaned_metadatas = []
-        for meta in metadatas:
-            cleaned_meta = {k: v for k, v in meta.items() if v is not None}
-            cleaned_metadatas.append(cleaned_meta)
+        metadata_cols = [
+            "chunk_id",
+            "paper_id",
+            "section_id",
+            "page_start",
+            "page_end",
+        ]
+        # Varmista, että kaikki metadata-sarakkeet ovat olemassa
+        for col in metadata_cols:
+            if col not in batch.columns:
+                batch[col] = None
+
+        metadatas = batch[metadata_cols].to_dict("records")
+        cleaned_metadatas = [
+            {k: v for k, v in meta.items() if pd.notna(v)} for meta in metadatas
+        ]
 
         collection.add(
             ids=batch["chunk_id"].astype(str).tolist(),
