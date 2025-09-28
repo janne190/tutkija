@@ -9,10 +9,10 @@ param(
   [string]$MetadataPath = "data/cache/merged.parquet",
   [string]$SeedCsv = "tools/seed_urls.csv",
   [string]$PdfIndex = "data/cache/pdf_index.parquet",
-  [string]$PdfDir = "data/pdfs",
+  [string]$PdfDir = "data/pdf",
   [string]$AuditLog = "data/logs/pdf_audit.csv",
   [string]$ParsedDir = "data/parsed",
-  [string]$ParsedIndex = "data/cache/parsed.parquet",
+  [string]$ParsedIndex = "data/cache/parsed_index.parquet",
   [string]$ParseErrors = "data/logs/parse_errors.csv",
   [string]$GrobidUrl
 )
@@ -139,8 +139,10 @@ if (Test-Path $ParsedDir) {
 }
 Write-Host ("PDF files: {0}" -f $pdfCount)
 Write-Host ("Parsed TEI: {0}" -f $teiCount)
-Write-Host "Index: $PdfIndex"
-Write-Host "Parsed index: $ParsedIndex"
-Write-Host "Parse errors: $ParseErrors"
+Write-Host ("PDF directory: {0}" -f $PdfDir)
+Write-Host ("Parsed directory: {0}" -f $ParsedDir)
+Write-Host ("PDF index: {0}" -f $PdfIndex)
+Write-Host ("Parsed index: {0}" -f $ParsedIndex)
+Write-Host ("Parse errors: {0}" -f $ParseErrors)
 
 Write-Step "Phase 4 workflow complete"

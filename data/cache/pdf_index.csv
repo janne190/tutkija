@@ -1,0 +1,21 @@
+id,title,url,doi,source,pdf_provider,pdf_provider_url,pdf_needs_unpaywall_email,pdf_license,pdf_discovery_source,pdf_path,has_fulltext
+arxiv-2101.00001,Graph Neural Networks for Sampled Data,https://example.org/article/0,10.5555/arxiv-2101.00001,arxiv,arxiv,https://arxiv.org/pdf/2101.00001.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/arxiv-2101.00001.pdf,True
+pmc-7654321,Clinical Insights into Sample Pipelines,https://example.org/article/1,10.5555/pmc7654321,pmc,pmc,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7654321/pdf,False,pmc,synthetic,/workspace/tutkija/data/pdfs/pmc-7654321.pdf,True
+doi-10-1000-demo-1,Open Access Discovery via Unpaywall,https://example.org/article/2,10.1000/demo.1,unpaywall,unpaywall,,True,,synthetic,,False
+seed-01,Adaptive Control of Sample Pipelines,https://example.org/article/3,10.1000/demo.2,openalex,unpaywall,,True,,synthetic,,False
+seed-02,Federated Learning for Literature Workflows,https://example.org/article/4,10.1000/demo.3,openalex,arxiv,https://arxiv.org/pdf/2401.00002.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-02.pdf,True
+seed-03,Semi-supervised Screening in Practice,https://example.org/article/5,10.1000/demo.4,openalex,arxiv,https://arxiv.org/pdf/2401.00003.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-03.pdf,True
+seed-04,Benchmarking PDF Parsing,https://example.org/article/6,10.1000/demo.5,openalex,unpaywall,,True,,synthetic,,False
+seed-05,Maintaining Audit Trails,https://example.org/article/7,10.1000/demo.6,openalex,pmc,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC990005/pdf,False,pmc,synthetic,/workspace/tutkija/data/pdfs/seed-05.pdf,True
+seed-06,Reliable Seeds for PDF Discovery,https://example.org/article/8,10.1000/demo.7,openalex,arxiv,https://arxiv.org/pdf/2401.00006.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-06.pdf,True
+seed-07,RapidFuzz Threshold Experiments,https://example.org/article/9,10.1000/demo.8,openalex,arxiv,https://arxiv.org/pdf/2401.00007.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-07.pdf,True
+seed-08,Fallback Strategies for Metadata,https://example.org/article/10,10.1000/demo.9,openalex,arxiv,https://arxiv.org/pdf/2401.00008.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-08.pdf,True
+seed-09,Evaluating Parsing Latency,https://example.org/article/11,10.1000/demo.10,openalex,unpaywall,,True,,synthetic,,False
+seed-10,Mitigating Network Constraints,https://example.org/article/12,10.1000/demo.11,openalex,arxiv,https://arxiv.org/pdf/2401.00010.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-10.pdf,True
+seed-11,Sampling Strategies for Phase 4,https://example.org/article/13,10.1000/demo.12,openalex,unpaywall,,True,,synthetic,,False
+seed-12,PDF Deduplication Heuristics,https://example.org/article/14,10.1000/demo.13,openalex,unpaywall,,True,,synthetic,,False
+seed-13,Metadata Quality Metrics,https://example.org/article/15,10.1000/demo.14,openalex,unpaywall,,True,,synthetic,,False
+seed-14,Seed URL Governance,https://example.org/article/16,10.1000/demo.15,openalex,arxiv,https://arxiv.org/pdf/2401.00014.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-14.pdf,True
+seed-15,Graceful CLI Degradation,https://example.org/article/17,10.1000/demo.16,openalex,unpaywall,,True,,synthetic,,False
+seed-16,Synthetic Artefacts for Testing,https://example.org/article/18,10.1000/demo.17,openalex,pmc,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC990016/pdf,False,pmc,synthetic,/workspace/tutkija/data/pdfs/seed-16.pdf,True
+seed-17,Orchestrating Phase Pipelines,https://example.org/article/19,10.1000/demo.18,openalex,arxiv,https://arxiv.org/pdf/2401.00017.pdf,False,arxiv,synthetic,/workspace/tutkija/data/pdfs/seed-17.pdf,True

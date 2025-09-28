@@ -1,0 +1,3 @@
+# Seed URL Governance
+
+Synthetic abstract for sample parsing output.
