@@ -13,15 +13,22 @@ import numpy as np
 import pandas as pd  # type: ignore[import-untyped]
 import typer
 
+from dotenv import load_dotenv  # Import load_dotenv
 from .pdf.fetchers import arxiv_pdf_url, pmc_pdf_url
 from .screening import apply_rules, score_and_label
 from .search.types import Paper
 
+# Load environment variables from .env file
+load_dotenv()
+
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 pdf_app = typer.Typer(add_completion=False, no_args_is_help=True)
 parse_app = typer.Typer(add_completion=False, no_args_is_help=True)
+rag_app = typer.Typer(add_completion=False, no_args_is_help=True)
+
 app.add_typer(pdf_app, name="pdf")
 app.add_typer(parse_app, name="parse")
+app.add_typer(rag_app, name="rag")
 
 
 @app.callback()
@@ -415,7 +422,9 @@ def screen(
     )
 
 
-def _pdf_provider_metadata(row: Mapping[str, object]) -> tuple[Optional[str], Optional[str], bool]:
+def _pdf_provider_metadata(
+    row: Mapping[str, object],
+) -> tuple[Optional[str], Optional[str], bool]:
     """Return provider metadata for a row without performing network calls."""
 
     url = arxiv_pdf_url(row)
@@ -494,8 +503,7 @@ def discover_pdfs(
         frame["title"] = fallback_titles
 
     provider_rows = [
-        _pdf_provider_metadata(row)
-        for row in frame.to_dict(orient="records")
+        _pdf_provider_metadata(row) for row in frame.to_dict(orient="records")
     ]
     provider_df = pd.DataFrame(
         provider_rows,
@@ -597,7 +605,11 @@ def download_pdfs(
     index_path.parent.mkdir(parents=True, exist_ok=True)
     result.to_parquet(index_path, index=False)
 
-    fetched = int(result.get("has_fulltext", pd.Series(dtype=bool)).sum()) if not result.empty else 0
+    fetched = (
+        int(result.get("has_fulltext", pd.Series(dtype=bool)).sum())
+        if not result.empty
+        else 0
+    )
     typer.echo(
         "PDF download OK | "
         f"downloaded={fetched} "
@@ -616,12 +628,14 @@ def _scan_pdf_directory(pdf_dir: Path) -> pd.DataFrame:
         relative = path.relative_to(pdf_dir)
         identifier = relative.as_posix()
         if identifier.lower().endswith(".pdf"):
-            identifier = identifier[: -4]
+            identifier = identifier[:-4]
         identifier = identifier.replace("/", "_")
-        records.append({
-            "id": identifier,
-            "pdf_path": str(path),
-        })
+        records.append(
+            {
+                "id": identifier,
+                "pdf_path": str(path),
+            }
+        )
     return pd.DataFrame.from_records(records)
 
 
@@ -640,7 +654,7 @@ def parse_pdfs(
         show_default=True,
     ),
     index_out: Path = typer.Option(
-        Path("data/cache/parsed.parquet"),
+        Path("data/cache/parsed_index.parquet"),
         "--index-out",
         help="Parquet polku jonne parse-metadata kirjoitetaan",
         show_default=True,
@@ -717,6 +731,210 @@ def _write_source_parquet(path: Path, papers: Iterable[Paper]) -> None:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(records).to_parquet(path, index=False)
+
+
+@rag_app.command(name="chunk")
+def chunk_cli(
+    parsed_index: Path = typer.Option(
+        Path("data/cache/parsed_index.parquet"),
+        "--parsed-index",
+        help="Polku jäsennettyyn Parquet-indeksiin",
+        show_default=True,
+    ),
+    out: Path = typer.Option(
+        Path("data/cache/chunks.parquet"),
+        "--out",
+        help="Polku, johon chunkit tallennetaan",
+        show_default=True,
+    ),
+    overlap: int = typer.Option(
+        128,
+        "--overlap",
+        help="Chunkkien välinen overlap tokenien määrässä",
+        show_default=True,
+    ),
+    max_tokens: int = typer.Option(
+        1024,
+        "--max-tokens",
+        help="Maksimi tokenien määrä per chunk",
+        show_default=True,
+    ),
+    min_tokens: int = typer.Option(
+        50,
+        "--min-tokens",
+        help="Minimi tokenien määrä per chunk",
+        show_default=True,
+    ),
+) -> None:
+    """Paloittele TEI-dokumentit loogisiin osiin ja tokeneiksi."""
+    from .rag.chunk import run_chunking
+
+    try:
+        run_chunking(
+            parsed_index_path=parsed_index,
+            out_path=out,
+            max_tokens=max_tokens,
+            overlap=overlap,
+            min_tokens=min_tokens,
+        )
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@rag_app.command(name="index")
+def index_cli(
+    chunks: Path = typer.Option(
+        Path("data/cache/chunks.parquet"),
+        "--chunks",
+        help="Polku chunkkeihin",
+        show_default=True,
+    ),
+    index_dir: Path = typer.Option(
+        Path("data/index/chroma"),
+        "--index-dir",
+        help="Hakemisto, johon indeksi tallennetaan",
+        show_default=True,
+    ),
+    embed_provider: str = typer.Option(
+        "google",
+        "--embed-provider",
+        help="Embedding-mallin tarjoaja",
+        show_default=True,
+    ),
+    embed_model: str = typer.Option(
+        "text-embedding-004",
+        "--embed-model",
+        help="Käytettävä embedding-malli",
+        show_default=True,
+    ),
+    batch: int = typer.Option(
+        128,
+        "--batch",
+        help="Eräkoko indeksoinnissa",
+        show_default=True,
+    ),
+) -> None:
+    """Rakenna vektorikanta chunkeista."""
+    from .rag.index import build_index
+
+    try:
+        build_index(
+            chunks_path=chunks,
+            index_dir=index_dir,
+            embed_provider=embed_provider,
+            embed_model=embed_model,
+            batch_size=batch,
+        )
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@rag_app.command(name="stats")
+def stats_cli(
+    index_dir: Path = typer.Option(
+        Path("data/index/chroma"),
+        "--index-dir",
+        help="Hakemisto, josta indeksi ladataan",
+        show_default=True,
+    ),
+) -> None:
+    """Näytä statistiikkaa rakennetusta indeksistä."""
+    from .rag.index import get_index_stats
+
+    try:
+        stats = get_index_stats(index_dir)
+        typer.echo(stats.model_dump_json(indent=2))
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@rag_app.command(name="verify")
+def verify_cli(
+    index_dir: Path = typer.Option(
+        Path("data/index/chroma"),
+        "--index-dir",
+        help="Hakemisto, josta indeksi ladataan",
+        show_default=True,
+    ),
+    question_file: Path = typer.Option(
+        Path("tests/data/rag_smoke_questions.json"),
+        "--question-file",
+        help="Polku JSON-tiedostoon, joka sisältää testikysymykset",
+        show_default=True,
+    ),
+) -> None:
+    """Aja smoketest-kysymykset indeksiä vasten."""
+    from .rag.index import verify_index
+
+    try:
+        success = verify_index(index_dir, question_file)
+        if not success:
+            typer.secho("Index verification failed.", fg=typer.colors.RED)
+            raise typer.Exit(1)
+        else:
+            typer.secho("Index verification passed.", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@app.command(name="qa")
+def qa_cli(
+    question: str = typer.Option(
+        ..., "--question", help="Kysymys, johon haetaan vastaus"
+    ),
+    index_dir: Path = typer.Option(
+        Path("data/index/chroma"),
+        "--index-dir",
+        help="Hakemisto, josta indeksi ladataan",
+        show_default=True,
+    ),
+    k: int = typer.Option(
+        6, "--k", help="Kuinka monta dokumenttia haetaan", show_default=True
+    ),
+    llm_provider: str = typer.Option(
+        "google", "--llm-provider", help="LLM-mallin tarjoaja", show_default=True
+    ),
+    llm_model: str = typer.Option(
+        "gemini-1.5-flash",
+        "--llm-model",
+        help="Käytettävä LLM-malli",
+        show_default=True,
+    ),
+    out: Path = typer.Option(
+        Path("data/output/qa.jsonl"),
+        "--out",
+        help="Polku, johon QA-tulokset tallennetaan",
+        show_default=True,
+    ),
+) -> None:
+    """Hae vastaus kysymykseen RAG-mallilla."""
+    from .rag.qa import run_qa
+
+    try:
+        run_qa(
+            question=question,
+            index_dir=index_dir,
+            k=k,
+            llm_provider=llm_provider,
+            llm_model=llm_model,
+            out_path=out,
+        )
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":

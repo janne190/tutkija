@@ -1,0 +1,2576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Signaling Network Assessment of Mutations and Copy Number Variations Predicts Breast Cancer Subtype-specific Drug Targets</title>
+				<funder>
+					<orgName type="full">Genome Canada</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Canadian Institutes of Health Research</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">NRC&apos;s Genome and Health Initiative</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Naif</forename><surname>Zaman</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Anatomy and Cell Biology</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Center for Bioinformatics</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Lei</forename><surname>Li</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Molecular Genetics</orgName>
+								<orgName type="institution">University of Toronto</orgName>
+								<address>
+									<settlement>Toronto</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Maria</forename><forename type="middle">Luz</forename><surname>Jaramillo</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Zhanpeng</forename><surname>Sun</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department">Department of Experimental Medicine</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Chabane</forename><surname>Tibiche</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Myriam</forename><surname>Banville</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Catherine</forename><surname>Collins</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mark</forename><surname>Trifiro</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department">Department of Experimental Medicine</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Miltiadis</forename><surname>Paliouras</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department">Department of Experimental Medicine</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Andre</forename><surname>Nantel</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Anatomy and Cell Biology</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Maureen</forename><surname>O'connor-Mccourt</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Edwin</forename><surname>Wang</surname></persName>
+							<email>edwin.wang@cnrc-nrc.gc.ca</email>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Center for Bioinformatics</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<settlement>Montreal</settlement>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Signaling Network Assessment of Mutations and Copy Number Variations Predicts Breast Cancer Subtype-specific Drug Targets</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">7B50620757D2B5A875D9A0A6C4C69436</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:54+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Individual cancer cells carry a bewildering number of distinct genomic alterations (i.e., copy number variations and mutations), making it a challenge to uncover genomic-driven mechanisms governing tumorigenesis. Here we performed exome-sequencing on several breast cancer cell lines which represent two subtypes, luminal and basal. We integrated this sequencing data, and functional RNAi screening data (i.e., for identifying genes which are essential for cell proliferation and survival), onto a human signaling network.</p><p>Two subtype-specific networks were identified, which potentially represent coresignaling mechanisms underlying tumorigenesis. Within both networks, we found that genes were differentially affected in different cell lines; i.e., in some cell lines a gene was identified through RNAi screening whereas in others it was genomically altered.</p><p>Interestingly, we found that highly connected network genes could be used to correctly classify breast tumors into subtypes based on genomic alterations. Further, the networks effectively predicted subtype-specific drug targets, which were experimentally validated.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Thus far, several thousands of tumors representing more than 20 cancer types have been sequenced. These efforts have identified thousands of genomic alterations such as somatic mutations, amplifications, deletions, chromosomal translocations and genefusions in each individual cancer genome <ref type="bibr" target="#b1">(Banerji et al., 2012;</ref><ref type="bibr" target="#b26">Stephens et al., 2012;</ref><ref type="bibr">Cancer Genome Atlas Network, 2012)</ref>. With so many genomic alterations in each tumor genome, it is a big challenge to dissect, prioritize and uncover the functional importance of the genomic alterations and the underlying mechanism that drive cancer development, progression and metastasis <ref type="bibr">(Chin et al., 2011)</ref>.</p><p>During cancer cell evolution, some genomic alterations become the underlying cause for tumor cell proliferation, fitness and clonal selection. Cell survival, proliferation and apoptosis are the most primitive and fundamental cancer hallmarks <ref type="bibr" target="#b11">(Hanahan and Weinberg, 2011)</ref>. Systematic identification of genes which are essential for cell proliferation and survival or cancer essential genes (i.e. functional screens in which gene knocking-down results in cancer cell growth inhibition) by genome-wide RNAi screening has showed that indeed there exist distinct subsets of genes that are selectively required by different cancer cells <ref type="bibr" target="#b22">(Schlabach et al., 2008;</ref><ref type="bibr" target="#b23">Silva et al., 2008)</ref>. These results suggest that different cancer cells have unique growth and survival requirements which are acquired through distinct subsets of genomic alterations. For a more comprehensive understanding of how genomic alterations drive cancer cell survival and proliferation, it is imperative to conduct an analysis that integrates genomic alteration information and functional genetic data (i.e., via genome-wide RNAi screenings) from the same individual cancer cell. Tumors are highly heterogeneous, sequencing of different regions of a tumor generated different sets of mutations <ref type="bibr" target="#b10">(Gerlinger et al., 2012)</ref>. The mixture of mutations in a tumor prevents linking genes to functions. It could be interesting to dissect and sequence the major clones of tumors or conduct single-cell genome sequencing so that each mutation could be functionally investigated in the cell/clone which bears that mutation. Toward this end, in this study we performed genome-wide exome-sequencing for a panel of breast cancer cell lines and matched their corresponding genome-wide RNAi screening data <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref> to perform an integrated network analysis to get insights into the underlying mechanisms of cancer cell survival and proliferation driven by genomic alterations.</p><p>Breast cancers have been classified into three molecular subtypes: luminal, HER2 and basal (basal A and basal B) <ref type="bibr" target="#b27">(van 't Veer et al., 2002)</ref>, using a 50-gene expression signature (PAM50) <ref type="bibr" target="#b19">(Parker et al., 2009)</ref>. The HER2 subtype often has ERBB2 mutated or amplified and has had some degree of clinical success because of effective therapeutics that can target ERBB2 <ref type="bibr" target="#b25">(Slamon et al., 1987)</ref>. The luminal subtype is often characterized by the expression of estrogen receptor (ER+), which is not expressed in the basal subtype.</p><p>The ER+ group (known as luminal breast cancer) has some degree of varying drug response, while triple-negative breast cancers (known as basal-like breast cancer) lack the expression of ER, progesterone receptor and HER2 and have very limited chemotherapy or other molecularly targeted drugs available. Therefore, we focused on developing integrated networks, composed of both genetic screening (RNAi screening) and genomic alteration (mutation and copy number variations) data, to further characterize the luminal and basal breast cancer subtypes. This novel approach is likely to generate more insights into the fundamental network wiring in cancer with the more focused aim to identify subtype-specific breast cancer genes which may lead to better treatment options in the near future.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>RESULTS AND DISCUSSION</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Genome Sequencing of Breast Cancer Cell Lines</head><p>A genome-wide cell survival RNAi screen has previously been conducted for a panel of luminal and basal breast cancer cell lines <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref>. Furthermore, since five lines in the panel have already been exome-sequenced <ref type="bibr" target="#b24">(Sjoblom et al., 2006)</ref>, we performed an exome-sequencing of the remaining 11 lines (see Extended Experimental Procedures; Table <ref type="table">S1</ref>). After removing naturally occurring genetic polymorphisms using the data from dbSNP database and 1000 genome project (see Extended Experimental Procedures), we identified 3,817 somatic point mutations. Of these tumor associated genetic alterations, 2,548 were predicted to generate missense mutations (annotated as non-synonymous mutation by Annovar (<ref type="url" target="http://www.openbioinformatics.org/annovar/)">http://www.openbioinformatics.org/annovar/)</ref>), 192 nonsense (or stopgain) mutations, 111 mutations were shown to contain an essential splice site, 4 mutations resulted in stop codon read-through (or stopless) mutations, and 1,073 were synonymous substitutions which would result in silent changes in protein sequence. We also identified, 164 small insertions or deletions (79 and 85, respectively), of which 94 introduced translational frameshifts while 50 were in-frame, 5 stopgain and 1 stoploss SNVs (Table <ref type="table">S2</ref>). Based on the Annovar program which predicts potential functional mutations, we obtained 1,630 potential driver-mutating genes (i.e., cancercausing genes) for all the 11 cell lines (Table <ref type="table">S3</ref>). Mutants of MAP kinase family were found across all of the lines. As expected, mutant TP53 (80%) was associated with basal subtypes. These results are in agreement of the results of genome sequencing of nearly 1,000 breast cancer samples <ref type="bibr" target="#b1">(Banerji et al., 2012;</ref><ref type="bibr" target="#b26">Stephens et al., 2012;</ref><ref type="bibr">Cancer Genome Atlas Network, 2012)</ref>. We also compared the driver-mutating genes in this study to those derived from COSMIC database and ~1,000 breast cancer samples mentioned above, and found 45 novel driver-mutating genes in at least one cell line. Three genes ZBTB18, TENM4, TMEM178A (Table <ref type="table">S3</ref>) among them are found in two cell lines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Subtype-Specific Survival Signaling Networks Highlight the Evolutionary</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Convergence of Selective Genomic Alterations</head><p>Cells employ signaling pathways and networks to drive biological processes. Genomic alterations in signaling pathways and networks might result in malignant signaling which then leads to cancer phenotypes. Genome-wide RNAi screening experiments not only uncover cancer essential genes, but also pinpoint genes which are involved in influencing cell proliferation. Knocking-down a proliferation influencing gene will not necessarily lead to cell death, but will greatly reduce cancer cell growth (see Experimental <ref type="bibr">Procedures,</ref><ref type="bibr">Fig S1)</ref>. If a gene which is involved in the regulation of proliferation genes is also subject to nonsynonymous genetic alterations (mutations) or amplified, we defined that gene as a 'cell survival related driving-regulator' (called 'driving-regulator' in this study) (see Experimental Procedures, Fig <ref type="figure">S1</ref>). Previously we showed that modeling and perturbing of signaling networks <ref type="bibr" target="#b20">(Rozenblatt-Rosen et al., 2012;</ref><ref type="bibr" target="#b8">Cui et al., 2007;</ref><ref type="bibr" target="#b2">Barabasi et al., 2011)</ref> and cancer hallmarks <ref type="bibr" target="#b14">(Li et al., 2010)</ref> led to getting insights into cancer gene mutations and identifying high-quality cancer biomarkers. To obtain further insight into the underlying mechanism of cancer cell proliferation trigged by cancer genomic alterations, for each cell line we mapped driving-regulators, cancer essential and proliferation influencing genes onto a manually curated human signaling network (containing ~6,000 genes and 50,000 relations) <ref type="bibr" target="#b0">(Awan et al., 2007;</ref><ref type="bibr" target="#b8">Cui et al., 2007;</ref><ref type="bibr">Li et al., 2012)</ref> to generate integrated cell line-specific survival networks (Figure <ref type="figure">1</ref>; see Experimental Procedures). Such a network represents the signaling mechanism for cancer cell survival and proliferation. The gene amplification data processed using GISTIC <ref type="bibr" target="#b4">(Beroukhim et al., 2007)</ref> were obtained from Cancer Cell Line Encyclopedia (CCLE, <ref type="url" target="http://www.broadinstitute.org/ccle/home">http://www.broadinstitute.org/ccle/home</ref>). Detailed information for defining cancer essential and proliferation influencing genes, and 'driving-regulators' are explained in Figure <ref type="figure">S1</ref> and Experimental Procedures.</p><p>Highly connected network genes, called hubs, act as global signal integrators or global regulators for multiple signaling pathways <ref type="bibr" target="#b28">(Wang et al., 2007;</ref><ref type="bibr" target="#b31">Wang, 2010)</ref>. To find out whether the driving-regulators, and essential and proliferation influencing genes shape the survival networks, we conducted both fuzzy k-mean clustering and hierarchical clustering analyses of the cell lines using the hubs of cancer essential genes, drivingregulators or both, respectively. In this study, we defined the top 10% of highly connected genes in a network as hubs. In general, we also tested the hubs using top 15% as a cutoff in all the analyses and found both cutoffs generated similar results. As seen in Figure <ref type="figure" target="#fig_1">2A</ref> and 2B, the hubs of either driving-regulators (p = 0.12, fuzzy k-mean clustering and Fisher's test) or essential genes (p = 1.0, fuzzy k-mean clustering and Fisher's test) alone were unable to classify the individual cell lines to the luminal and basal subtypes. However, when we combined the hubs of the driving-regulators and essential genes, the cell lines were better classified and distinguished into the luminal and basal subtypes (Figure <ref type="figure" target="#fig_1">2C</ref>, p = 0.03, fuzzy k-mean clustering and Fisher's test).</p><p>Permutation tests (see Extended Experimental Procedures) showed that significant classification of luminal and basal subtypes by the network hubs couldn't be obtained by random (p = 9.0x10 -4 ). These results suggest that although both driving-regulators and essential genes are profoundly different between cancer cells (Figure <ref type="figure" target="#fig_1">S2</ref>), they are complementary and converge to similar survival signaling mechanisms within their respective subtype. To further explore these observations in detail, we constructed subtype-specific survival networks (see Extended Experimental Procedures). A subtypespecific network contains ~200 genes which appear across ≥50% of a subtype's cell lines.</p><p>Nearly all the genes (&gt;95%) in a subtype-specific network, act as cancer essential genes in one cell line but as driving-regulators in another line (Figure <ref type="figure" target="#fig_2">3</ref>). Randomization tests (see Extended Experimental Procedures) showed that the recurrent usage of the genes in luminal and basal subtypes, respectively, is not by random (p &lt; 1.0x10 -4 ). These network genes are recurrently used by the subtype's lines, suggesting that cancer cells are 'addicted' to their respective subtype-specific network for survival and proliferation. A subtype-specific network represents core survival signaling mechanisms which shed light on convergent evolutionary events, and provides functional constraints for selecting genomic alterations that could offer a competitive growth advantage for cancer cells. The selective pressure led to the emergence of distinct network hubs in the luminal and basal subtypes (Figure <ref type="figure" target="#fig_2">3A</ref>, 3B and 3C). For example, AKT1, PIK3 and ESR1 are dominantly selected in luminal, whereas TP53 and SRC are genetically dominant in the basal subtypes.</p><p>We explored network modules for the subtype-specific networks using the Gene Ontology-guided Markov Cluster (MCL) Algorithm (see Extended Experimental Procedures). Three functional modules where one is centered by CDK1 for cell cycle, one is centered by P53 for apoptosis and genome instability and another one is centered by growth factors such as EGFR and MAPK pathway components for cell proliferation, were found in the basal-specific networks (Figure <ref type="figure" target="#fig_2">3A</ref> and <ref type="figure" target="#fig_2">3B</ref>). Two network modules, where one is centered by CDK1/MYC for cell cycle, and the other is centered by AKT/PIK3CA, growth factors such as MET and MAPK pathway components for cell proliferation and growth, were found in the luminal-specific network (Figure <ref type="figure" target="#fig_2">3C</ref>). To further interpret these findings, we conducted pathway enrichment analysis (see Extended Experimental Procedures) for each subtype-specific network using the cancer essential genes, proliferation influencing genes and driving-regulators. Signaling pathways of cell cycle, apoptosis, MAPK/growth factors (i.e., MET) and transcription processes were found in both luminal and basal lines, highlighting the fact that these cancer subtypes share core survival pathways commonly used by breast cancers (Table <ref type="table">S4</ref>). In addition, cancer cells of the basal subtype (basal A and basal B) share the signaling pathways for genome instability such as P53, DNA repair, and telomere extension and maintenance (Table <ref type="table">S4</ref>), which were not commonly used by luminal cells. Most of the essential genes affecting genome instability pathways are relatively unique for the basal subtype, which highlights the signature of basal subtype, and provides unique drug targets for the aggressive groups such as triple negative groups.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Subtype-Specific Survival Signaling Networks Provide Predictive Power</head><p>The convergence of the cancer essential genes and driving-regulators into their respective subtype-specific survival networks suggests that in each subtype there is a 'deterministic' path for cancer cell proliferation driven by genomic alterations, and therefore, the networks could provide 'predictable' power for selective genomic alterations.</p><p>Consequently, we tested whether the integrated subtype-specific networks could have predictive power in order to accurately identify breast cancer tumor subtypes. To demonstrate this, we used the hub genes of the subtype-specific networks to classify the 16 cell lines. To do so, we first identified differential hubs between the subtype-specific networks (see Extended Experimental Procedures) and then classify the 16 cell lines. Indeed, hub genes were able to distinguish between luminal and basal subtypes (Figure <ref type="figure" target="#fig_3">4A</ref>, p = 1.2x10 -4 , fuzzy k-mean clustering and Fisher's test). These results suggest that amplification or mutation of a few top hub genes could activate the entire network for cancer cell survival and proliferation. Therefore, we extended this analysis to demonstrate that these hub genes' genomic alteration profiles (amplification and drivemutating status) were able to significantly classify 402 breast tumor samples (see Extended Experimental Procedures) into the basal and luminal subtypes (Figure <ref type="figure" target="#fig_3">4B</ref>, p = 2.2x10 -16 , fuzzy k-mean clustering and Fisher's test). These results highlight the convergent and deterministic properties of selective genomic alterations, which exploit distinct core survival signaling networks (i.e., subtype-specific networks) for cancer cell proliferation. These genomic alterations could be gradually or suddenly (i.e., through genome duplication) accumulated and then be selected during cancer evolution.</p><p>Detection of the genomic alterations of a fraction or all of the genes in this hub gene set could help in early diagnosis of breast tumors. Recently, plasma genome sequencing approach has been showed that copy number variations and mutations of plasma DNA are detectable and comparable between cancer and healthy individuals <ref type="bibr" target="#b7">(Chan et al., 2012;</ref><ref type="bibr" target="#b13">Leary et al., 2012)</ref>. As sequencing costs continue to decline, these genes could be used to develop non-invasive tests (e.g., using plasma genome sequencing <ref type="bibr" target="#b18">(Murtaza et al., 2013))</ref> for screening very early-stage breast cancer patients or distinguish breast cancer subtypes.</p><p>To further demonstrate their predictive power of the subtype-specific networks, we seek out to predict subtype-specifically therapeutic interventions. If a hub gene specifically appears in either luminal or basal subtype-specific networks, we expected that that gene could be a drug target specifically for its subtype. Based on this criterion, AKT1, mTOR, MET, MDM2, HSP90AA1, RAF1, SFN, FYN, CHEK1, ESR1 were predicted as potentially luminal-specific drug targets, while TGF-beta, IGF1R, MAPK3, GRB2, SRC, TUBB, JAK2 and EGFR were predicted as potentially basal-specific drug targets (undruggable differential hubs between subtypes such as transcription factors like P53</p><p>were not considered). To validate these predictions, we obtained the data from systematic drug screenings of cancer cell lines including over 40 breast cancer cell lines <ref type="bibr" target="#b9">(Garnett et al., 2012;</ref><ref type="bibr" target="#b12">Heiser et al., 2012)</ref> and statistically evaluated the sensitivity of these drugs for luminal and basal subtypes (see Experimental Procedures). The predicted targets, among which have been included in the drug screenings, except MAP2K1 and CHEK1 were in agreement with the experimentally screening results (Table <ref type="table">1</ref>).</p><p>In summary, using an integrative network analysis of the data derived from exomesequencing and genome-wide RNAi screening of a breast cancer cell line panel, we have shown that a set of primitive core signaling pathways such as cell cycle, apoptosis, growth factors/MAPK and transcription is commonly exploited by genomic alterations for cancer cell survival in all the breast cancer cells, while the signaling pathways of P53 and genome instability such as telomere maintenance are specifically exploited by genomic alterations in the basal subtype. The essential genes in these pathways are unique drug targets for the aggressive breast (i.e., basal subtype) cancer groups. The functional convergence of the essential genes and driving-regulators in a limited number of signaling pathways lead to emerging of subtype-specific survival signaling networks in which genes recurrently switch roles between cancer essential genes and cancer drivingregulators in cancer cells. These networks elucidate underlying signaling mechanisms governing cancer cell survival and proliferation, and imply selective pressures for evolutionary convergence of cancer genomic alterations. However, it is clear that signaling mechanisms of the two subtypes are different, which is evident by the fact that a set of network genes (i.e. genes are differentially different between the two subtypespecific networks) whose genomic alteration profiles (amplification and mutating status) are able to significantly distinguish breast tumor samples into luminal and basal subtypes, and furthermore, these networks predicted subtype-specific drug targets. Importantly, most (~80%) of the predicted drug targets have been experimentally validated. Together with the finding that more amplified genes could act as cancer drivers, these results may have profound clinical implications in personalized treatment of cancer patients <ref type="bibr">(Wang et al., 2013a;</ref><ref type="bibr">Wang et al., 2013b)</ref>, and screening early breast cancer patients by plasma DNA sequencing using the set of network genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>EXPERIMENTAL PROCEDURES</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Samples for Exome-Sequencing</head><p>Eleven breast cancer cell lines (i.e. BT549, MDAMB436, BT20, MDAMB231, MDAMB468, SKBR3, ZR751, HCC1500, MDAMB453, MCF7 and T47D) were obtained from ATCC for exome-sequencing.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Datasets</head><p>Exome-sequencing data for five breast cancer cell lines (Table <ref type="table">S1</ref>) were obtained from Sjoblom et al. <ref type="bibr" target="#b24">(Sjoblom et al., 2006)</ref>. Microarray and copy number data of the sixteen breast cancer cell lines were obtained from the Cancer Cell Line Encyclopedia (CCLE, <ref type="url" target="http://www.broadinstitute.org/ccle/home">http://www.broadinstitute.org/ccle/home</ref>). Data for genome-wide RNAi screening of cell survival and proliferation of the 16 breast cancer cell lines were obtained from COLT-Cancer database (<ref type="url" target="http://colt.ccbr.utoronto.ca/cancer/">http://colt.ccbr.utoronto.ca/cancer/</ref>). The human signaling network (Version 4, containing ~6,000 genes and ~50,000 relations) includes data from the manually curated signalling networks by us previously <ref type="bibr" target="#b0">(Awan et al., 2007;</ref><ref type="bibr" target="#b8">Cui et al., 2007;</ref><ref type="bibr" target="#b15">Li et al., 2012)</ref> and by PID (<ref type="url" target="http://pid.nci.nih.gov/">http://pid.nci.nih.gov/</ref>) and our recent manual curations using iHOP database (<ref type="url" target="http://www.ihop-net.org/UniPub/iHOP/">http://www.ihop-net.org/UniPub/iHOP/</ref>). Pathway gene lists were obtained from GSEA Molecular Signatures Database (<ref type="url" target="http://www.broadinstitute.org/gsea/msigdb/index.jsp">http://www.broadinstitute.org/gsea/msigdb/index.jsp</ref>). Data of systematic drug screenings of breast cancer cell lines were obtained from these studies <ref type="bibr" target="#b9">(Garnett et al., 2012;</ref><ref type="bibr" target="#b12">Heiser et al., 2012)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer Essential Genes, Proliferation Influencing Gene and Driving-Regulators</head><p>The descriptions (below) of driving-regulators, essential and proliferation influencing genes are summarized in Figure <ref type="figure">S1</ref>. Genome-wide RANi screening results of the 16 breast cancer cell lines was collected in COLT-Cancer database (<ref type="url" target="http://colt.ccbr.utoronto.ca/cancer/">http://colt.ccbr.utoronto.ca/cancer/</ref>). In the database, the essentiality of each gene for a given cell line has been scored based on GARP (Gene Activity Rank Profile) scores and P values, which were computed in each experiment of the genome-wide RANi screening <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref>. Lower P value depicts higher significance for the 'higher gene essentiality' (e.g., higher degrees of influencing cell survival). Details for calculating of GARP scores and P value were described previously <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref>.</p><p>Housekeeping genes were also annotated in the database. If a gene in a given cell line has a RANi-screening p value less than 0.05 and is not belonging to housekeeping genes, that gene was defined as a 'cancer essential gene' in that cell line <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref>.</p><p>Validation experiments supported this p value cutoff (i.e., 0.05) for defining the cancer essential genes <ref type="bibr" target="#b16">(Marcotte et al., 2012)</ref>. If a gene in a given cell line has a RANi-screening p value less than 0.1 but greater than 0.05, we defined that gene as a 'proliferation influencing gene' in that cell line. We assumed that knocking-down a proliferation influencing gene will not lead to cell death, but significantly reduce cell growth and survival. We asked that an essential gene, proliferation influencing gene in a given cell line should be among the top 75% of the expressed genes for that cell line as described previously <ref type="bibr">(Cancer Genome Atlas Network, 2011)</ref>. Amplification genes are considered if they have a GISTIC score &gt; 0.3 and are among the top 50% of the expressed genes for that cell line. The cutoff 0.3 is widely used to define gene amplifications <ref type="bibr" target="#b17">(Mermel et al., 2011;</ref><ref type="bibr" target="#b3">Barretina et al., 2012)</ref>. Details of setting the cutoff of 50% for gene expression are explained in Extended Experimental Procedures. If an amplified gene in a given cell line has a RANi-screening p value less than 0.4, we defined this gene as a cell survival related 'driving-regulator' in that cell line, assuming that knocking-down the driving-regulators will affect cell growth and survival. It should be noted that the definitions of these terms are based on certain cutoffs. We changed the cutoffs of RANi-screening P values for these genes (i.e., p &lt; 0.03, 0.03 &lt; p &lt; 0.1 and p &lt; 0.5 for 'cancer essential genes', 'proliferation influencing genes', and 'driving-regulators', respectively) and re-ran all the analyses in this study. We found that the results are similar to those obtained using the original cutoffs. However, we still like to warn that interpreting of the results should take in consideration of the definitions and the cutoffs used in this study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Drug Sensitivity Analysis</head><p>For a given drug, we compared the IC50 values between luminal and basal lines.</p><p>Kruskal-Wallis ANOVAs were used to evaluate the statistically significant differences of the IC50 values between the subtypes. Heiser et al. <ref type="bibr" target="#b12">(Heiser et al., 2012)</ref> performed drug screening on more breast cancer cell lines (~50 cell lines) than Garnett et al. <ref type="bibr" target="#b9">(Garnett et al., 2012)</ref>. Therefore, we mainly used the data from Heiser et al.</p><p>Table 1. Validation of the Predicted Subtype-Specific Drug Targets Compound Predicted subtype-specific drug target Basal vs Luminal (P value) Subtype specificity SIGMA AKT12 INHIBITOR AKT1, AKT2 (luminal) 5.04E-04 Luminal TAMOXIFEN ESR1 (luminal) 3.92E-02 Luminal NUTLIN3A MDM2 (luminal) 3.13E-02 Luminal RAPAMYCIN mTOR (luminal) 1.78E-03 Luminal 17-AAG HSP90 (luminal) 3.98E-02 Luminal BOSUTINIB SRC (basal) 1.08E-02 Basal DOCETAXEL TUBB1 (basal) 1.27E-02 Basal BMS.536924 IGF1R (basal) 4.95E-02 Basal VX-680 JAK2 (basal) 4.95E-02 Basal ERLOTINIB EGFR (basal) 2.33E-02 Basal RDEA119 MAP2K1/MEK12 (luminal) 2.04E-02 Basal TCS 2312 DIHYDROCHLORIDE CHEK1 (luminal) 1.46E-01 Not significant Figure 1. Analysis of Integrated Networks for Breast Cancer Cell Survival and Proliferation.</p><p>The data of genome-sequencing, genome-wide RNAi screening, copy number variations and gene expression profiles of individual lines were used for constructing an integrated network for each individual cell line. Cell line-specific networks across each of the breast cancer subtypes were used for constructing subtype-specific networks for cancer cell survival and proliferation. Comparative and differential analysis of the subtype-specific networks allowed to predicting subtype-specific treatments and also significantly classifying breast tumor samples. See also Figure <ref type="figure">S1</ref> and Table <ref type="table">S1</ref>.  <ref type="table">S3</ref>. and Luminal (C) Subtypes. Nodes represent genes while links represent regulation (directed links) or interaction (neutral links) between genes. A node is represented by a pie chart that shows each gene's distribution as essential gene (red), a driving-regulator (blue) or a proliferation influencing gene (cream) in its subtype. The background color behind the clusters represents a cluster's function in relation to one of the cancer hallmarks: apoptosis (pink), cell proliferation (green) and cell cycle (blue). Cytoscape <ref type="bibr" target="#b21">(Saito et al., 2012)</ref> was used to present and visualize the networks. See also Figure <ref type="figure" target="#fig_1">S2</ref> and Table <ref type="table">S4</ref>. Using the Hubs from Subtype-Specific Networks (A) Hierarchical clustering of the 16 cell lines using the differential hubs from the subtype-specific networks of luminal and basal subtypes. In the heatmap, for a given cell line, if a hub gene is an essential gene, a diving-regulator or a proliferation influencing gene, it appears in red, otherwise in beige. On the side bar, grey and yellow represent luminal and basal cell lines, respectively. (B) The same differential hubs from A were used to classify 402 breast tumor samples. In the heatmap, red represents mutated genes or amplified genes that are among the top 50% of the expressed genes for tumor samples. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure legends Figure 1 .</head><label>legends1</label><figDesc>Figure legends</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Hierarchical Clustering of the 16 Breast Cancer Cell LinesHierarchical clustering of the cell lines using cell line-specific network hubs: (A) drivingregulator hubs, (B) essential gene hubs, (C) The hubs of essential genes and drivingregulators combined. Red and beige in the heatmaps indicate whether the hub genes are present or absent, respectively, in a cell line. See also TableS3.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Subtype-Specific Survival Signaling Networks for Basal A (A), Basal B (B)and Luminal (C) Subtypes. Nodes represent genes while links represent regulation (directed links) or interaction (neutral links) between genes. A node is represented by a pie chart that shows each gene's distribution as essential gene (red), a driving-regulator (blue) or a proliferation influencing gene (cream) in its subtype. The background color behind the clusters represents a cluster's function in relation to one of the cancer hallmarks: apoptosis (pink), cell proliferation (green) and cell cycle (blue). Cytoscape<ref type="bibr" target="#b21">(Saito et al., 2012)</ref> was used to present and visualize the networks. See also FigureS2and TableS4.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. Clustering of 16 Breast Cancer Cell Lines and 402 Breast Tumor SamplesUsing the Hubs from Subtype-Specific Networks (A) Hierarchical clustering of the 16 cell lines using the differential hubs from the subtype-specific networks of luminal and basal subtypes. In the heatmap, for a given cell line, if a hub gene is an essential gene, a diving-regulator or a proliferation influencing gene, it appears in red, otherwise in beige. On the side bar, grey and yellow represent luminal and basal cell lines, respectively. (B) The same differential hubs from A were used to classify 402 breast tumor samples. In the heatmap, red represents mutated genes or amplified genes that are among the top 50% of the expressed genes for tumor samples.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><figDesc>Fig 2</figDesc><graphic coords="22,109.28,131.92,122.03,150.83" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p>This work is supported by <rs type="funder">NRC's Genome and Health Initiative</rs>, <rs type="funder">Genome Canada</rs> and <rs type="funder">Canadian Institutes of Health Research</rs>. We thank <rs type="person">Dr. Z. Yu</rs> at <rs type="affiliation">Lady Davis Institute</rs> for discussing the manuscript.</p></div>
+			</div>
+			<listOrg type="funding">
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" />			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Regulatory network motifs and hotspots of cancer genes in a mammalian cellular signalling network</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Moksong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chowdhury</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IET. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="292" to="297" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Sequence analysis of mutations and translocations across breast cancer subtypes</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Banerji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cibulskis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Rangel-Escareno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Frederick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lawrence</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Y</forename><surname>Sivachenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sougnez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Cortes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Fernandez-Lopez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">G</forename><surname>Ardlie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Auclair</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Bautista-Pina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Duke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Francis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Maffuz-Aziz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Onofrio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Parkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">H</forename><surname>Pho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Quintanar-Jurado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rebollar-Vega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rodriguez-Cuevas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Romero-Cordoba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Uribe-Figueroa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Baselga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Polyak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Sgroi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Jimenez-Sanchez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Gabriel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Garraway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Melendez-Zajgla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Toker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hidalgo-Miranda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meyerson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">486</biblScope>
+			<biblScope unit="page" from="405" to="409" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Network medicine: a network-based approach to human disease</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Barabasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Gulbahce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Loscalzo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Genet</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="56" to="68" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lehar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sonkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Reddy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Monahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Morais</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Meltzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Korejwa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jane-Valbuena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>Mapa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Thibault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bric-Furlong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Raman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shipway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Engels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">K</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Aspesi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jagtap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hatton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Palescandolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sougnez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Onofrio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Liefeld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Macconaill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Winckler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Reich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Mesirov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Gabriel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ardlie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">E</forename><surname>Myer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Weber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Porter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Warmuth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Finan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Morrissey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">R</forename><surname>Sellers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Schlegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Garraway</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Assessing the significance of chromosomal aberrations in cancer: methodology and application to glioma</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Nghiemphu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hsueh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Linhart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Vivanco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Alexander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Soto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Perner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Prensner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Debiasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Demichelis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hatton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Rubin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Garraway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">F</forename><surname>Nelson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Mischel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">F</forename><surname>Cloughesy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">K</forename><surname>Mellinghoff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">R</forename><surname>Sellers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl. Acad. Sci. U. S. A</title>
+		<imprint>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="page" from="20007" to="20012" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Integrated genomic analyses of ovarian carcinoma</title>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Genome Atlas Network</title>
+		<imprint>
+			<biblScope unit="volume">474</biblScope>
+			<biblScope unit="page" from="609" to="615" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+	<note>Nature</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Comprehensive molecular portraits of human breast tumours</title>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Genome Atlas Network</title>
+		<imprint>
+			<biblScope unit="volume">490</biblScope>
+			<biblScope unit="page" from="61" to="70" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+	<note>Nature</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Cancer Genome Scanning in Plasma: Detection of Tumor-Associated Copy Number Aberrations, Single-Nucleotide Variants, and Tumoral Heterogeneity by Massively Parallel Sequencing</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">W</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Siu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">C</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">B</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Chiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">M</forename><surname>Lo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">C</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Chem. Chin</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="534" to="555" />
+			<date type="published" when="2011">2012. 2011</date>
+		</imprint>
+	</monogr>
+	<note>Making sense of cancer genomic data Genes Dev</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jaramillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A map of human cancer signaling</title>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">152</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dastur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">R</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Surdez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Milano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Tam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Stevenson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lutz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Kogera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lawrence</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mclaren-Douglas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Mitropoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mironenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Jewitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Boisvert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Hur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Baselga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Stamenkovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Engelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">V</forename><surname>Sharma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Delattre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">S</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Settleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ramaswamy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Benes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Intratumor heterogeneity and branched evolution revealed by multiregion sequencing</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gerlinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Rowan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Horswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Larkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Endesfelder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gronroos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Martinez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Matthews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stewart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tarpey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Varela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Phillimore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Begum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">Q</forename><surname>Mcdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Latimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nohadani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Eklund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Spencer-Dene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Pickering</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Stamp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Szallasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Downward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Swanton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">N. Engl. J. Med</title>
+		<imprint>
+			<biblScope unit="volume">366</biblScope>
+			<biblScope unit="page" from="883" to="892" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Subtype and pathway specific responses to anticancer compounds in breast cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Heiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sadanandam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Kuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Benz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Goldstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Gibb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ziyad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bayani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">I</forename><surname>Billig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dueregger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Jakkula</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Korkola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Durinck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pepin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Guan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Purdom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Neuvial</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bengtsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Wood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">G</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">T</forename><surname>Vassilev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Hennessy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Greshock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">E</forename><surname>Bachman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Hardwicke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Marton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Wolf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Collisson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Neve</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Speed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Feiler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">F</forename><surname>Wooster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Haussler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Stuart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">T</forename><surname>Spellman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl. Acad. Sci. U. S. A</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="2724" to="2729" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Detection of chromosomal alterations in the circulation of cancer patients with whole-genome sequencing</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Leary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sausen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Kinde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Papadopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Carpten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Craig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>O'shaughnessy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Parmigiani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">E</forename><surname>Velculescu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Transl. Med</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="162" to="154" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Identification of high-quality cancer prognostic markers and metastasis network modules</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Lenferink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Collins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page">34</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">The human phosphotyrosine signaling network: Evolution and hotspots of hijacking in cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tibiche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kaneko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Schiller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="1222" to="1230" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Essential gene profiles in breast, pancreatic, and ovarian cancer cells</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Marcotte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Suarez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sayad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Karamboulas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Krzyzanowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sircoulomb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Medrano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fedyshyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Koh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Fedyshyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Luhova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">C</forename><surname>Brito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Vizeacoumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">S</forename><surname>Vizeacoumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Datti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kasimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Buzina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Misquitta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Normand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Haider</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ketela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Wrana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rottapel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">G</forename><surname>Neel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Moffat</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="172" to="189" />
+		</imprint>
+	</monogr>
+	<note>Cancer Discov. 2</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">facilitates sensitive and confident localization of the targets of focal somatic copy-number alteration in human cancers</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Mermel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<idno>GISTIC2.0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="page" from="12" to="R41" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Non-invasive analysis of acquired resistance to cancer therapy by sequencing of plasma DNA</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Murtaza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Dawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Tsui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Gale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Forshew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Piskorz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Parkinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">F</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Kingsbury</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Marass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Humphray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hadfield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bentley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Brenton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Caldas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Rosenfeld</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">497</biblScope>
+			<biblScope unit="page" from="108" to="112" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Supervised risk predictor of breast cancer based on intrinsic subtypes</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Parker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mullins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Cheang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Leung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Voduc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vickery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fauron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Quackenbush</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">J</forename><surname>Stijleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Palazzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Marron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Nobel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Mardis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">O</forename><surname>Nielsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Ellis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Perou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Bernard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Clin. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="1160" to="1167" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Interpreting cancer genomes using systematic host network perturbations by tumour virus proteins</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Rozenblatt-Rosen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Deo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Padi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Adelmant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Calderwood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rolland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Grace</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dricot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Askenazi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tavares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Pevzner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Abderazzaq</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Byrdsong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Carvunis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Correll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Duarte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Feltkamp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Ficarro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Franchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">K</forename><surname>Garg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Gulbahce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Holthaus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>James</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Korkhin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Litovchick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Mar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Pak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rabello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rubio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Singh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Spangle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wanamaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">T</forename><surname>Webber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Roecklein-Canfield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Johannsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Barabasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kieff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Cusick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Munger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Marto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Quackenbush</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">P</forename><surname>Roth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Decaprio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Vidal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">487</biblScope>
+			<biblScope unit="page" from="491" to="495" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<author>
+			<persName><forename type="first">R</forename><surname>Saito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Smoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ono</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ruscheinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lotia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Pico</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Bader</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ideker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A travel guide to Cytoscape plugins</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="1069" to="1076" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Cancer proliferation gene discovery through functional genomics</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Schlabach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Solimini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Smogorzewska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Sowa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Ang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">F</forename><surname>Westbrook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Hackett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Harper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Hannon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">319</biblScope>
+			<biblScope unit="page" from="620" to="624" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Profiling essential genes in human mammary cells by multiplex RNAi screening</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Marran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Parker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Golding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Schlabach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Hannon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">319</biblScope>
+			<biblScope unit="page" from="617" to="620" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">The consensus coding sequences of human breast and colorectal cancers</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sjoblom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">D</forename><surname>Wood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Parsons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Barber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mandelker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Leary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ptak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Silliman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Szabo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Buckhaults</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Farrell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Meeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Markowitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Willis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Willson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Gazdar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hartigan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Parmigiani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">E</forename><surname>Bachman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Papadopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">E</forename><surname>Velculescu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">314</biblScope>
+			<biblScope unit="page" from="268" to="274" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Human breast cancer: correlation of relapse and survival with amplification of the HER-2/neu oncogene</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Slamon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Levin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ullrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Mcguire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">235</biblScope>
+			<biblScope unit="page" from="177" to="182" />
+			<date type="published" when="1987">1987</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">The landscape of cancer genes and mutational processes in breast cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Stephens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Tarpey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">P</forename><surname>Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Wedge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nik-Zainal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Varela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Papaemmanuil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cheverton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gamble</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hinton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jayakumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Latimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mclaren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Mcbride</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Menzies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mudie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Chapman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Teague</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Easton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Langerod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Tee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Huimin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Broeks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Vargas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Turashvili</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Martens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fatima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Miron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">F</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Boyault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Mariani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lakhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">'</forename><surname>V, Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Foekens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Desmedt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sotiriou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tutt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Caldas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Reis-Filho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Aparicio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Salomon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Borresen-Dale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">486</biblScope>
+			<biblScope unit="page" from="400" to="404" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Gene expression profiling predicts clinical outcome of breast cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Van 't Veer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Van De Vijver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">D</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Hart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Peterse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Van Der Kooy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Marton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Witteveen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Schreiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Kerkhoven</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Linsley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bernards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Friend</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">415</biblScope>
+			<biblScope unit="page" from="530" to="536" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology: exploring cancer-associated genes on cellular networks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lenferink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Mol. Life Sci</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="1752" to="1762" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology in the genome sequencing era: Part 1, dissecting and modeling of tumor clones and their networks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">K</forename><surname>Beitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin. Cancer Biol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="279" to="285" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology in the genome sequencing era: Part 2, evolutionary dynamics of tumor clonal networks and drug resistance</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">K</forename><surname>Beitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin. Cancer Biol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="286" to="292" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Cancer systems biology</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<publisher>CRC Press</publisher>
+			<pubPlace>Boca Raton, FL</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

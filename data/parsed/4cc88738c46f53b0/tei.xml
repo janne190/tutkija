@@ -1,0 +1,1597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Robust distance correlation for variable screening</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2022-12-26">26 Dec 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Tianzhou</forename><surname>Ma</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Maryland</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hongjie</forename><surname>Ke</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Maryland</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Zhao</forename><surname>Ren</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Pittsburgh</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Robust distance correlation for variable screening</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-12-26">26 Dec 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9FB6C64A796DF4A83BAB5AE51D1CC5A1</idno>
+					<idno type="arXiv">arXiv:2212.13292v1[stat.ME]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Distance correlation</term>
+					<term>Robustness</term>
+					<term>Sure screening property</term>
+					<term>Variable selection</term>
+					<term>Truncation</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>High-dimensional data are commonly seen in modern statistical applications, variable selection methods play indispensable roles in identifying the critical features for scientific discoveries. Traditional best subset selection methods are computationally intractable with a large number of features, while regularization methods such as Lasso, SCAD and their variants perform poorly in ultrahigh-dimensional data due to low computational efficiency and unstable algorithm. Sure screening methods have become popular alternatives by first rapidly reducing the dimension using simple measures such as marginal correlation then applying any regularization methods. A number of screening methods for different models or problems have been developed since the seminal work by <ref type="bibr" target="#b15">Fan &amp; Lv (2008)</ref>, however, none of the methods have targeted at data with heavy-tailedness, which is another important characteristics of modern big data. In this paper, we propose a robust distance correlation ("RDC") based sure screening method to perform screening in ultrahigh-dimensional regression with heavy-tailed data. The proposed method shares the same good properties as the original model-free distance correlation based screening while has additional merit of robustly estimating the distance correlation when data is heavy-tailed and improves the model selection performance in screening. We conducted extensive simulations under different scenarios of heavy tailedness to demonstrate the advantage of our proposed procedure as compared to other existing model-based or model-free screening procedures with improved feature selection and prediction performance. We also applied the method to high-dimensional heavy-tailed RNA sequencing (RNA-seq) data of The Cancer Genome Atlas (TCGA) pancreatic cancer cohort and RDC was shown to outperform the other methods in prioritizing the most essential and biologically</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Data with much larger number of features than sample size is frequently seen in modern statistical applications, ranging from genomic research, biomedical imaging to signal processing problems. High dimensional variable selection has become fundamentally important to many scientific discoveries nowadays. For example, oncologists apply variable selection methods to identify genes most predictive of cancer prognosis from tens of thousands of candidate genes. Classical variable selection methods such as the best subset selection using AIC or BIC criterion suffers from an NP-hard combinatorial problem and the computation becomes unaffordable with a large number of features. Since late 1990s, various regularization methods have been developed and extensively applied for feature selection in high-dimensional regression and classification models. These methods include but are not limited to, Lasso <ref type="bibr" target="#b44">(Tibshirani, 1996)</ref>; SCAD <ref type="bibr" target="#b14">(Fan and Li, 2001;</ref><ref type="bibr" target="#b27">Kim et al., 2008;</ref><ref type="bibr" target="#b59">Zou and Li, 2008)</ref>; the least angle regression (LARS) algorithm <ref type="bibr" target="#b9">(Efron et al., 2004)</ref>; elastic net <ref type="bibr" target="#b58">(Zou and Hastie, 2005;</ref><ref type="bibr" target="#b60">Zou and Zhang, 2009)</ref>; the adaptive Lasso <ref type="bibr" target="#b57">(Zou, 2006)</ref>; the Dantzig selector <ref type="bibr" target="#b2">(Candes and Tao, 2007)</ref> and MCP <ref type="bibr" target="#b53">(Zhang, 2010)</ref>. One can refer to <ref type="bibr" target="#b16">Fan and Lv (2010)</ref> for a detailed overview of variable selection methods in high-dimensional models. As the number of features p grows exponentially with the sample size n in an ultrahigh-dimensional problem, however, many regularization methods perform poorly owing to the low computational efficiency and unstable algorithm. In a seminal work, <ref type="bibr" target="#b15">Fan and Lv (2008)</ref> proposed a sure independence screening (SIS) method by first ranking and selecting features based on their marginal correlations with the response in a linear model before applying any regularization methods. SIS is attractive in practice by rapidly reducing the dimension in the original model while keeping the most important features in the reduced set with large probability (a property known as "sure screening property"). From then on, variable screening has drawn considerable attention and a wide variety of screening methods have been developed</p><p>for different models or problems in the past decade. <ref type="bibr" target="#b18">Fan et al. (2009)</ref> and <ref type="bibr" target="#b19">Fan and Song (2010)</ref> developed more general version of independent screening by ranking the maximum marginal likelihood estimators for generalized linear model. Other papers have proposed sure screening methods for nonparametric or semi-parametric regression <ref type="bibr" target="#b11">(Fan et al., 2011;</ref><ref type="bibr" target="#b31">Liu et al., 2014;</ref><ref type="bibr" target="#b17">Fan et al., 2014b;</ref><ref type="bibr" target="#b5">Chang et al., 2016)</ref>, for quantile regression <ref type="bibr" target="#b24">(He et al., 2013;</ref><ref type="bibr" target="#b50">Wu and Yin, 2015;</ref><ref type="bibr" target="#b33">Ma et al., 2017)</ref>, for censoring data <ref type="bibr">(Fan et al., 2010;</ref><ref type="bibr" target="#b54">Zhao and Li, 2012;</ref><ref type="bibr" target="#b22">Gorst-Rasmussen and Scheike, 2013;</ref><ref type="bibr" target="#b39">Song et al., 2014)</ref>, for Gaussian graphical model <ref type="bibr" target="#b32">(Luo et al., 2014;</ref><ref type="bibr" target="#b30">Liang et al., 2015)</ref>, for classification problems <ref type="bibr" target="#b34">(Mai and Zou, 2012;</ref><ref type="bibr" target="#b6">Cui et al., 2015;</ref><ref type="bibr" target="#b36">Pan et al., 2016;</ref><ref type="bibr" target="#b51">Xie et al., 2020)</ref> and among others. In addition to those methods targeting at a class of specific models, <ref type="bibr" target="#b56">Zhu et al. (2011</ref><ref type="bibr">), Li et al. (2012)</ref> and <ref type="bibr" target="#b35">Mai et al. (2015)</ref> proposed model-free screening procedures for a more general usage when the model structure cannot be clearly specified.</p><p>A majority of regularization methods and marginal correlation based screening methods assumed light-tailed distribution for response and covariates <ref type="bibr">(Fan and</ref><ref type="bibr">Lv, 2008, 2010)</ref>. The violation of such an assumption is common in practice. For instance, non-Gaussian and heavy-tailed distribution is a stylized feature of high-dimensional data such as microarray and next-generation sequencing (NGS) data in genomics and functional magnetic resonance imaging (fMRI) data in neuroimaging. For example, the gene expression measured by either bulk RNA-seq or single-cell RNA-seq techniques display both zero inflation and heavy tail behavior that approximates a power law <ref type="bibr" target="#b45">(Townes and Irizarry, 2020)</ref>. To tackle such a problem, numerous robust regularization methods have been developed in the literature based on quantile regression or least absolute regression <ref type="bibr" target="#b29">(Li and Zhu, 2008;</ref><ref type="bibr" target="#b49">Wu and Liu, 2009;</ref><ref type="bibr" target="#b46">Wang, 2013;</ref><ref type="bibr" target="#b10">Fan et al., 2014a)</ref>. However, these methods are essentially targeting at median estimation instead of mean estimation. In a deviation analysis, <ref type="bibr" target="#b3">Catoni (2012)</ref> showed that the empirical mean is way deviated in the presence of heavy-tailed errors. By revisiting the classical Huber loss as a way of robustification <ref type="bibr" target="#b25">(Huber, 1964)</ref>, <ref type="bibr" target="#b13">Fan et al. (2017)</ref>, <ref type="bibr" target="#b55">Zhou et al. (2018)</ref> and <ref type="bibr" target="#b40">Sun et al. (2020)</ref> proposed Huber-type estimators of regression coefficients and derived their non-asymptotic concentration results in a linear model under mild moment conditions on the error. In these methods, a tuning parameter (called robustification parameter) needs to be specified beforehand to balance between robustness and bias of estimation. Similar Huber estimator has been proposed for estimating high-dimensional covariance matrix with the robustification parameter determined via empirical cross-validation <ref type="bibr" target="#b0">(Avella-Medina et al., 2018)</ref> or in a data-driven fashion <ref type="bibr" target="#b26">(Ke et al., 2019)</ref>. However, no methods have been developed for the robust estimation of measures (e.g. Pearson correlation or distance correlation) directly used in variable screening when heavy-tailed distributions are observed.</p><p>First introduced by <ref type="bibr" target="#b42">Székely et al. (2007)</ref> and then used as a utility for variable screening in <ref type="bibr" target="#b28">Li et al. (2012)</ref>, distance correlation (DC) is a new measure of dependence and has impres-sive properties that makes it useful in feature screening and stand out among all screening procedures. Specifically, distance correlation is robust to model misspecification and equivalent to Pearson correlation in screening when normality assumption holds. In addition, it measures the dependence between two random vectors so it can be readily used for multivariate responses or group wise predictors often seen in real data. Later work on DC considers bias correction in DC estimation <ref type="bibr" target="#b41">(SzéKely and Rizzo, 2013)</ref> and extension from marginal to partial DC <ref type="bibr" target="#b43">(Székely et al., 2014)</ref>. Despite its robustness against model specification, the sample DC statistics used in <ref type="bibr" target="#b28">Li et al. (2012)</ref> lacks tail robustness. In this paper, we propose a DC-based measure via a truncation-type robust estimation (called "Robust DC") for sure screening in ultrahigh-dimensional regression with heavy-tailed data. The proposed Robust DC shares the same good properties as the original distance correlation based screening when data is subexponential. In addition, it has the merit of robustly estimating the distance correlation when data is heavy-tailed and improves the model selection performance in screening. The proposed measure enjoys the sure screening property with weaker assumptions on the distribution than the original distance correlation screening, as justified by our theoretical analysis. Our theorem also reveals a new phenomenon on the optimal choice of optimal robustification parameter. To the best of our knowledge, the proposed method is the only screening method that considers both robustness to model specification and tail robustness. We conducted extensive simulations under different scenarios of heavy tailedness to demonstrate the advantage of our proposed procedure as compared to other existing model-based or model-free screening procedures. The proposed screening procedure was also applied to the high-dimensional heavy-tailed RNA sequencing (RNA-seq) data of The Cancer Genome Atlas (TCGA) pancreatic cancer cohort. Robust DC was shown to outperform the other methods in prioritizing the most essential and biologically meaningful genes and improving both the feature selection and prediction performance.</p><p>The rest of the paper is organized as follows. In Section 2, we will first introduce the distance correlation measure and the adaptive Huber type method, and then propose our robust distance correlation measure for feature screening in ultra-high dimensional regression.</p><p>Section 3 provides the non-asymptotic theoretical results of the proposed measure and shows the sure screening property. We conduct extensive simulations in Section 4 to show the strength of our method. In Section 5, we apply our method to an example of RNA-seq study in pancreatic cancer. We conclude and discuss the potential extension of the method in Section 6.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methods</head><p>2.1 Independence screening using distance correlation <ref type="bibr" target="#b42">Székely et al. (2007)</ref> first introduced the DC measure to generalize the idea of correlation to characterize the joint dependence of any two random vectors. Denote by φ x (t) and φ y (s) the respective characteristic functions of two random vectors x and y, and φ x,y (t, s) be the joint characteristic function. The nonnegative distance covariance between x and y with finite first moments is defined as: x and y with finite first moments is defined:</p><formula xml:id="formula_0">dcov 2 (x, y) = R dx+dy ||φ x,y (t, s) -φ x (t)φ y (s)|| 2</formula><formula xml:id="formula_1">dc(x, y) = dcov(x, y)</formula><p>dcov(x, x)dcov(y, y) .</p><p>Further, <ref type="bibr" target="#b42">Székely et al. (2007)</ref> showed that:</p><formula xml:id="formula_2">dcov 2 (x, y) = S 1 + S 2 -2S 3 ,</formula><p>where S 1 , S 2 and S 3 are defined as:</p><formula xml:id="formula_3">S 1 = E{||x-x || dx ||y-y || dy }, S 2 = E{||x-x || dx }E{||y- y || dy } and S 3 = E{E(||x-x || dx |x)E(||y-y || dy |y)}, (x , y</formula><p>) is an independent copy of (x, y).</p><p>This has motivated the estimation of sample distance covariance via estimating S 1 , S 2 and S 3 using the usual moment estimation:</p><formula xml:id="formula_4">dcov 2 (x, y) = Ŝ1 + Ŝ2 -2 Ŝ3 , where Ŝ1 = 1 n 2 n k=1 n l=1 ||x k -x l || dx ||y k -y l || dy , Ŝ2 = 1 n 2 n k=1 n l=1 ||x k -x l || dx 1 n 2 n k=1 n l=1 ||y k -y l || dy and Ŝ3 = 1 n 3 n k=1 n l=1 n m=1 ||x k -x l || dx ||y m -y l || dy . When d x = d y = 1, they are simplified to Ŝ1 = 1 n 2 n k=1 n l=1 |X k -X l ||Y k -Y l |, Ŝ2 = 1 n 2 n k=1 n l=1 |X k -X l | 1 n 2 n k=1 n l=1 |Y k -Y l | and Ŝ3 = 1 n 3 n k=1 n l=1 n m=1 |X k -X l ||Y m -Y l |.</formula><p>Accordingly, the sample DC can be estimated as</p><formula xml:id="formula_5">dc(x, y) = dcov(x, y) dcov(x, x) dcov(y, y)</formula><p>.</p><p>(2.1) DC has three important properties that make it a preferred measure for variable screening:</p><p>(1) DC is monotonically increasing in Pearson correlation under normality assumption, thus using DC for screening is equivalent to using Pearson correlation for linear regression;</p><p>(2) DC is equal to zero if and only if x and y are independent, thus DC is more effective than Pearson correlation when there exist non-linear relationship between two random variables;</p><p>(3) DC measures the dependency between two random vectors so it allows for both multivariate responses (d y &gt; 1) and groupwise predictors (d x &gt; 1), either continuous or categorical.</p><p>Without loss of generality, consider the case with univariate response, denote by Y the univariate response and x = (X 1 , . . . , X p ) T the predictor vector in a regression, where p is the number of features. For ultrahigh-dimensional regression, the dimensionality p grows at an exponential rate of sample size n. <ref type="bibr" target="#b28">Li et al. (2012)</ref> proposed to use ωj = dc</p><formula xml:id="formula_6">2 (X j , Y )</formula><p>as a measure in independence screening of ultrahigh-dimensional regression. They selected important features with large ωj as follows: {j : ωj ≥ cn -κ , 1 ≤ j ≤ p}, where c and κ are prespecified threshold values theoretically defined. They also showed the sure screening property of their procedure by assuming both x and y have the subexponential tails. In practice, they followed from <ref type="bibr" target="#b15">Fan and Lv (2008)</ref> to set the empirical threshold and recommended the first</p><formula xml:id="formula_7">d = [n/ log n], 2[n/ log n] or 3[n/ log n]</formula><p>features with the largest ωj to be retained after screening.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Huber loss and robust distance correlation for independence screening</head><p>Heavy-tailedness is one prominent feature of high-dimensional data that has brought new challenges to conventional statistical methods. In the presence of heavy-tailed distribution, there is a non-negligible probability that observations are sampled far away from the population mean causing the empirical mean to seriously deviate from the true mean <ref type="bibr" target="#b3">(Catoni, 2012)</ref>. To tackle heavy-tailed errors, most methods in the literature conducted least absolute deviation (LAD) regression, but they essentially alter the problem by estimating the median or quantiles instead of the mean. In most cases, however, the mean estimate but not the median is the quantity of interest, e.g. in the estimation of DC.</p><p>Alternatively, one can consider the Huber loss as another way of robustification to adapt for different magnitudes of errors. The Huber loss l τ (.) <ref type="bibr" target="#b25">(Huber, 1964)</ref> is defined as:</p><formula xml:id="formula_8">l τ (x) =        x 2 /2, if |x| ≤ τ, τ |x| -τ 2 /2, if |x| &gt; τ,</formula><p>where τ &gt; 0 is called the robustification parameter. Two extremes of the Huber loss are the least squares and the LAD as τ = ∞ and τ = 0 respectively. When a majority of |x|'s are small, it simplifies to the common squared error loss. In the presence of heavytailed errors, the Huber loss down-weights large |x| (i.e. potential outliers) to introduce robustness. In general, the minimizer becomes more robust but also more biased from the model parameters as τ decreases, so the robustification parameter τ controls the tradeoff between bias and robustness. Choosing τ to achieve an optimal tradeoff between two has become the major task in the development of Huber-type robust methods. <ref type="bibr" target="#b13">Fan et al. (2017)</ref> considered high-dimensional regression with coefficients in an ℓ q ball (0 &lt; q ≤ 1) and proposed a modified Huber's procedure to obtain a robust estimator of coefficients with the robustification parameter adapted to the sample size and dimension. Sun et al. ( <ref type="formula">2020</ref>) further proposed the adaptive Huber regression for robust estimation and inference, allowing q = 0 and more general moment condition of the error in both low and high dimensions. In a similar vein, <ref type="bibr" target="#b26">Ke et al. (2019)</ref> directly considered a simple truncated estimator ψ τ (x) = (|x| ∧ τ )sign(x) for covariance estimation and also proposed simple automatic data-driven tuning scheme (see also <ref type="bibr" target="#b47">Wang et al. (2020)</ref>) to find the optimal robustification parameter for the computation of the robust estimators.</p><p>In spite of the nice properties and being model-free, the sample DC estimate in equation</p><p>(2.1) used in <ref type="bibr" target="#b42">Székely et al. (2007)</ref> and <ref type="bibr" target="#b28">Li et al. (2012)</ref> is not robust against heavy-tailedness of the data. When the underlying distribution is heavy-tailed, the observations might be sampled far away from the population mean. As a result, the individual sample DC estimate will not be concentrated around the truth which directly impacts its screening performance,</p><p>given that there are many DC estimates to be considered.</p><p>To guarantee the tail-robustness in the estimation of DC, we propose a robust estimates of DC (called "Robust DC" or RDC in short) via obtaining the truncated estimators Ŝτ 1 ,τ 2 1 , Ŝτ 1 ,τ 2 2 and Ŝτ 1 ,τ 2 3 . Suppose we have n i.i.d. samples of two random variables of interest Y and X, the robust covariance and correlation estimates are defined as: rdcov</p><formula xml:id="formula_9">2 (Y, X) = Ŝτ 1 ,τ 2 1 + Ŝτ 1 ,τ 2 2 -2 Ŝτ 1 ,τ 2 3 ; rdc(Y, X) = rdcov(Y, X) rdcov(Y, Y ) rdcov(X, X) , (2.2)</formula><p>where Ŝτ 1 ,τ 2</p><formula xml:id="formula_10">1 = 1 n 2 n k=1 n l=1 |ψ τ 1 (Y k -Y l )||ψ τ 2 (X k -X l )|, Ŝτ 1 ,τ 2 2 = 1 n 2 n k=1 n l=1 |ψ τ 2 (X k -X l )| 1 n 2 n k=1 n l=1 |ψ τ 1 (Y k - Y l )| and Ŝτ 1 ,τ 2 3 = 1 n 3 n k=1 n l=1 n m=1 |ψ τ 1 (Y k -Y l )||ψ τ 2 (X m -X l )|. The truncation operator ψ τ (u) = (|u| ∧ τ )sign(u)</formula><p>, and τ is the robustification parameter. Interestingly, the optimal choice of τ for DC estimate is revealed by a careful theoretical investigation: it should be adapted to the sample size n at the rate of n 1/4 rather than the typical rate n 1/2 shown in existing works. In other words, we should truncate the data more aggressively in calculating the robust estimates of distance correlation. Details on the theoretical properties of optimal choice of τ and how to determine it in a data-driven fashion will be discussed in Section 2.3 and xx.</p><p>With the predictor vector x = (X 1 , . . . , X p ) T and the response variable Y , we will use</p><formula xml:id="formula_11">ωτ j = rdc 2 (X j , Y</formula><p>) as a marginal utility to rank the relative importance of X j and perform independence screening in ultrahigh-dimensional regression. The features with the largest ωτ j are kept after screening, i.e. the set {j : ωτ j ≥ c n -κ , 1 ≤ j ≤ p}, where c and κ are theoretically justified threshold values. In practice, as for all screening methods, the top number of features to be left d is a key tuning parameter that empirically balances the tradeoff between false negative (when d is too small) and false positive (when d is too large) errors. In this paper, we followed from the literature and chose d = n/ log n . But we also suggest users to try out the alternative approaches by linking d to the significance level of a hypothesis test <ref type="bibr" target="#b1">(Bühlmann et al., 2010)</ref> or the desired false positive rate <ref type="bibr" target="#b54">(Zhao and Li, 2012)</ref> for the best performance.</p><p>Remarks: Multivariate response or grouped predictors are common to see in the modern statistical applications. For example, many complex diseases consist of a large number of highly correlated clinical phenotypes that are associated with pleiotropic genes or genetic variants. <ref type="bibr" target="#b28">Li et al. (2012)</ref> showed in simulations that the DC can be successfully used to screen for multivariate response or grouped predictors. Though we introduced the method using univariate response and predictor notation, our method is built on the basis of the original DC thus is readily extended to perform robust screening for multivariate response (when d y &gt; 1) or grouped predictors (when d x &gt; 1). The tuning of robustification parameter will remain the same in the multivariate case.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Tuning of the robustification parameter</head><p>A data-driven procedure is proposed to automatically tune the robustification parameter τ .</p><p>Define the pairwise difference by a generic notation {Z 1 , . . . ,</p><formula xml:id="formula_12">Z N } = {|Y 1 -Y 2 |, . . . , |Y n-1 -Y n |}</formula><p>for the response Y or {|X 1j -X 2j |, . . . , |X (n-1)j -X nj |} for the jth predictor of x, where N = n 2 . By theorem xx, it can be shown that an "ideal" choice of τ can be solved from the following equation:</p><p>1</p><formula xml:id="formula_13">N N i=1 (Z 4 i ∧ τ 4 ) τ 4 = t n ,<label>(2.3)</label></formula><p>where t = C log p as guided by the theory. The choice of C is the same for all X j 's (1 ≤ j ≤ p)</p><p>and Y and can be determined empirically depending on the extent of tail heaviness of the data. From the above, we can get an optimal estimate of τ for the response and each of the predictor variable, respectively. We then plug τ estimates back into equation 2.2 to compute</p><formula xml:id="formula_14">each of Ŝτ 1 ,τ 2 1 , Ŝτ 1 ,τ 2 2</formula><p>and Ŝτ 1 ,τ 2 3 and finally solve for rdcov(X j , Y ) and rdc(X j , Y ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Algorithm for RDC based sure independence screening (RDC-SIS)</head><p>Below is an algorithm to estimate RDC and perform sure screening based on its ranking:</p><p>Following sure screening, one can perform a second-stage variable selection by commonly used regularization methods such as Lasso, Elastic net or SCAD, to select the final set of predictors. Alternatively, to identify the important predictors that are marginally independent of the response, we may refer to the original SIS screening method in <ref type="bibr" target="#b15">Fan and Lv (2008)</ref> and propose an iterative version of RDC-SIS by removing variables in stepwise fashion. Due to limited space, we will not further expand its discussion here.</p><p>Algorithm 1 RDC-SIS Input: Predictor vectors x i = (X i1 , . . . , X ip ) T ∈ R p and the outcome variable Y i for i = 1, . . . , n; pre-specified C and d. Estimation: Data-adaptive estimation of RDC 1: Calculate the pairwise difference of each predictor variable {Z j1 , . . . , Z jN }, 1 ≤ j ≤ p and the outcome variable {Z y1 , . . . , Z yN }. 2: Given t = C log p, solve τ j and τ y for each predictor variable and the outcome variable respectively from equation (2.3). 3: For each predictor 1 ≤ j ≤ p, compute the truncated versions Ŝτ j ,τy 1 , Ŝτ j ,τy 2 and Ŝτ j ,τy 3 and thus rdcov j and rdc j from equation (2.2). Screening: Compute ωτ j = rdc 2 j and sort all features by ωτ j from the largest to the smallest. Output: The top d features ranked by ωτ j . 3. Theoretical properties 4. Simulation 4.1 Simulation settings In this section, we will conduct comprehensive Monte Carlo simulations to show the performance of our proposed screening method as compared to other existing methods under different scenarios. In addition to our RDC method, we include five other popular sure screening methods for comparison, including marginal correlation screening (SIS; Fan and Lv (2008)), the original distance correlation screening (DC; Li et al. (2012)), sure independent ranking and screening (SIRS; Zhu et al. (2011)), fused Kolmogorov filter (FK; Mai et al. (2015)) and nonparametric independence screening (NIS; Fan et al. ( <ref type="formula">2011</ref>)). For FK method, we consider G i = 2, . . . , 6. For each of the following simulation scenarios, we replicate for B = 100 times and evaluate four criteria of the screening performance below:</p><p>• Minimum model size (MMS): the minimum model size to include all active predictors.</p><p>• P 1 : the proportion of replications that include at least one true active predictor for a given model size d.</p><p>• P a : the proportion of replications that include all true active predictors for a given model size d.</p><p>• T P d : average number of true active predictors identified for a given model size d.</p><p>For P 1 and P a , we set d = n/ log n . When calculating T P d , we further introduce two larger model sizes d 1 = 2n/ log n , d 2 = 3n/ log n for a comprehensive evaluation.</p><p>(I). In the first scenario, we consider general simulation with various types of heavy-tailed distribution in x = (X 1 , X 2 , . . . , X p ) T :</p><p>Ia. x ∼ t 3 (0, Σ p×p ), where Σ jj = 1 and Σ jj = 0.5 |j-j | for 1 ≤ j = j ≤ p;</p><p>Ib. X j independently drawn from P areto(1, 1) for 1 ≤ j ≤ p.</p><p>In all models, we consider n = 100 and p = 2000. We generate the response</p><formula xml:id="formula_15">Y ∼ t 2 (x T β),</formula><p>where the indices of nonzero β's represent the true active predictors. Here, we set the nonzero part of β equal to (2, -2, 2, -2) (i.e. the number of true active predictors s = 4) and let them evenly distributed among all p variables. We evaluate and compare the performance of different methods.</p><p>(II). In the second scenario, we consider the multivariate response. We generate x from the (III). In the third scenario, we consider the simulation example 1(a) and 1(b) in <ref type="bibr" target="#b28">Li et al. (2012)</ref>. However, instead of setting x to be multivariate normal distributed, we alternatively consider x to have multivariate central t distribution with degrees of freedom equal to 3.</p><p>Specifically, we assume x = (X 1 , X 2 , . . . , X p ) T ∼ t 3 (0, Σ p×p ), where Σ jj = 1 and Σ jj = 0.5 |j-j | for 1 ≤ j = j ≤ p. We fix n = 200 and p = 2000 as in their examples. The responses Y are generated from the following two models:</p><formula xml:id="formula_16">IIIa. Y = α 1 β 1 X 1 + α 2 β 2 X 2 + α 3 β 3 I(X 12 &lt; 0) + α 4 β 4 X 22 + ; IIIb. Y = α 1 β 1 X 1 X 2 + α 3 β 2 I(X 12 &lt; 0) + α 4 β 3 X 22 + ,</formula><p>where β j = (-1) U (a + |Z|) for j = 1, 2, 3 and 4, where a = 4 log n/ √ n with U ∼ Bern(0.4)</p><p>and Z ∼ N (0, 1). We set (α 1 , α 2 , α 3 , α 4 ) = (2, 0.5, 3, 2) as in <ref type="bibr" target="#b28">Li et al. (2012)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Simulation results</head><p>Table <ref type="table" target="#tab_2">1</ref> shows the results of the first scenario. It is clear that RDC outperforms DC under both t distribution (Ia) and Pareto distribution (Ib). In addition, RDC is among the best performer when comparing to all other methods for both cases. Such advantage is also seen in the second scenario when the response is multivariate (Table <ref type="table">2</ref>).</p><p>For the third scenario (Table <ref type="table" target="#tab_4">3</ref>), when the true regression does not include interaction terms (IIIa), the perform of all methods are very closed. In the presence of X 1 X 2 interaction, DC as well as RDC outperform the SIS and SIRS methods, which is consistent with what has been found in <ref type="bibr" target="#b28">Li et al. (2012)</ref>. Because here x follows a heavy-tailed multivariate t distribution, it is also expected to see that RDC outperforms the original DC based screening methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Real data application</head><p>We then apply our method to a real genomic dataset from the Pancreatic adenocarcinoma (PAAD) cohort of The Cancer Genome Atlas (TCGA), a large consortium project that Table 2: Scenario (II) results: y  <ref type="bibr" target="#b48">(Weinstein et al., 2013)</ref>.</p><formula xml:id="formula_17">= (Y 1 , Y 2 , Y 3 ) T ∼ x T β, Σ Y = (σ Y,kk ) 3×3 , n = 100, p = 2000, s = 2, ρ X = ρ Y = 0.5, B =</formula><p>PAAD is the most common type of pancreatic cancer and has one of the poorest prognosis among all cancers. Previous studies showed that KRAS mutation and RAS-MAPK signaling pathway were essential to the understanding of pancreatic cancer <ref type="bibr" target="#b38">(Ryan et al., 2014;</ref><ref type="bibr" target="#b21">Furukawa, 2015;</ref><ref type="bibr" target="#b37">Raphael et al., 2017)</ref>. Our purpose is to investigate the effects of upstream gene expression on the expression of MAPK1 protein, a key component in the MAPK pathway. We downloaded the RNA sequencing (RNA-seq) gene expression data and retrieved the MAPK1 protein expression from the Reverse Phase Protein Array (RPPA) data of the TCGA PAAD cohort from Broad GDAC Firehose (<ref type="url" target="https://gdac.broadinstitute.org/">https://gdac.broadinstitute.org/</ref>).</p><p>RNA-seq data are measured in Transcripts Per Million (TPM) values and RPPA data contain continuous intensity values. After filtering genes with average TPM values smaller than 10 in RNA-seq and merging the available samples from both data types, 16191 genes for 116 cancer cases were left for the analysis. We will apply our robust DC method as well as its competitors to rank and identify the genes most predictive of the MAPK1 protein expression.</p><p>Since we do not know the ground truth in real data, we will use pathway analysis results to validate the top ranked features kept by each screening method and evaluate their feature screening performance. For a fair comparison, we first take the top 500 genes ranked by each method and perform a pathway enrichment analysis by Fisher's exact test on each set using GO, KEGG, Reactome and Biocarta databases downloaded from MSigDB (cite). Pathways in the intersection of the top 200 enriched pathways from each method were regarded as function domains most indicative of the underlying biological truth and treated as a "gold standard" for comparison. We will plot the mean and standard errors of -log10(p-value) from the enrichment tests of these pathways using varying number of top ranked features in each screening method to compare the overall performance of the method. The best method will have the most enrichment in these pathways regardless of the number of features used.</p><p>The predictive performance of the final set of genes selected after applying the second stage</p><p>regularization is assessed by considering a robust version of mean absolute error (MAE) via the leave-one-out cross-validation: M AE( β) = 1 ntest ntest i=1 |Y test i -(x test i ) T β|, where Y test i and x test i</p><p>are the response and predictor variables of the observation in the test data. In addition, to show the robustness and stability of our method, we also generate multiple subsamples of the original dataset and assess the concordance of features selected with the full data.</p><p>An initial exploration of the data finds that the expression of more than half of the genes as well as the protein expression of MAPK1 show heavy tailed distribution with kurtosis larger than 3 (Figure <ref type="figure" target="#fig_2">1</ref>). A total of 34 pathways sit in the intersection of the top 200 pathways enriched by each method and will be used as the basis for comparison. These pathways mainly include interferon and other cytokine signaling, Ras and Rho signaling as well as cell cycle related pathways. Figure <ref type="figure" target="#fig_3">2</ref> shows that RDC outperforms all other methods in overall enrichment of the "gold standard" pathways and such trend is consistent independent of the top number of genes used. This has proven the ranking by our robust DC method is superior than the other methods by prioritizing the more informative and biologically meaningful genes.</p><p>We keep only the top d = n/ log(n) = 24 genes from each screening method and perform a second stage regularization by Lasso. The tuning parameter in Lasso is chosen by cross-validation using glmnet package <ref type="bibr" target="#b20">(Friedman et al., 2009)</ref>. Table <ref type="table" target="#tab_6">4</ref> summarizes the MAE, adjusted R 2 and selected genes of each method. Among all methods, the final model selected by RDC+Lasso has the largest adjusted R 2 value and has the smallest MAE. Overall, there is little overlap among the genes selected by all methods. DC and RDC shared a large proportion of matched genes (75%) and the three genes RDC uniquely selected include ZF P 36L2, COQ2 and IF IT 1. ZF P 36L2 has been shown to promote cancer cell aggressiveness in pancreatic ductal adenocarcinoma <ref type="bibr" target="#b52">(Yonemori et al., 2017)</ref>. COQ2 provides instructions for making an enzyme that produces coenzyme Q10, whose level in plasma has been shown to be associated with prostate cancer risk <ref type="bibr" target="#b4">(Chai et al., 2011)</ref>. M AP K1 gene itself is not selected in the top lists of any methods probably due to differences in translational rates and protein half-lives, among others <ref type="bibr" target="#b8">(Edfors et al., 2016)</ref>. expression is equal to 5.5.  the 34 pathways in the intersection against the top number of genes used for each method.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Discussion</head><p>In this paper, we proposed a robust version of distance correlation measure called "Robust DC" to perform variable screening in ultrahigh-dimensional regression and accounted for both model misspecification and tail robustness. The method builds upon the original formulas for estimating distance correlation and replaces with its truncated version that protects against heavy-tailedness. We also proposed a data-driven procedure to determine the optimal level of truncation by automatically tuning the robustification parameter. Simulation under scenarios of various heavy-tailed distributions demonstrated the advantage of our robust DC method in prioritizing true active predictors when either the predictor or the outcome variables have heavy tails. The real application to the heavy-tailed RNA-seq and RPPA data of TCGA PAAD cohort revealed that the robust DC method identified more biologically informative pathways and selected unique genes related to the progression mechanism of prostate cancer.</p><p>Since it was first introducted by <ref type="bibr" target="#b15">Fan and Lv (2008)</ref>, sure screening methods based on different model-based or model-free measures have been proposed and shown their merits in variable selection of ultrahigh-dimensional regression and classification problems when coupled with regularization methods. Distance correlation based sure screening is one such representative method that often sits as one of the top performers in different comparison scenarios <ref type="bibr" target="#b28">(Li et al., 2012)</ref>. However, like many other model-free screening methods, the method(s) are robust against model misspecification but fail to address the tail robustness.</p><p>Heavy-tailedness is another important characteristics of modern big data and its great impact on mean estimation has been reiterated in recent literature <ref type="bibr" target="#b13">(Fan et al., 2017)</ref>. Our method is the first sure screening method to address both model misspecification and tail robustness.</p><p>Importance of addressing heavy-tailedness is seen in real data where a number of critical biomarkers are not selected by other methods due to the skewed distribution of RNA-seq data.</p><p>The data-driven tail truncation procedure for protecting against heavy-tailedness is not restricted to DC measure but can be extended to other measures such as the Pearson correlation, the canonical correlation (Di He and Zou, 2021), etc. In addition, since the marginal screening methods completely ignore the inter-feature dependency, one can also consider conducting a robust multivariate (or joint) screening that ranks each variable after controlling for other correlated variables <ref type="bibr" target="#b23">(He et al., 2019)</ref>. We applied the proposed screening method to the gene expression data in real data demonstration, considering the heavy-tailedness of most RNA-seq or microarray-type data. The proposed method can be readily extended to select variables in other heavy-tailed data types such neuroimaging or copy number variation data, etc.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>c</head><figDesc>dx c dy ||t|| 1+dx dx ||s|| 1+dy dy dtds, where d x and d y are the dimensions of x and y, c d = π (1+d)/2 /Γ((1+d)/2), and ||a|| d indicates the Euclidean norm of a ∈ R d . Like the Pearson correlation, the nonnegative DC between</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>same heavy-tailed distributions as in scenario (I), and then generate y = (Y 1 , Y 2 , Y 3 ) T from a multivariate normal distribution with common mean x T β and Σ Y = (σ Y,kk ) 3×3 , where Σ Y,kk = 1 and Σ Y,kk = 0.5 for k = k . The nonzero parts of β are β 1 = β 2 = 1 (i.e. the number of true active predictors s = 2).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Distribution of kurtosis of expression of all genes. The kurtosis of MAPK1 protein</figDesc><graphic coords="22,114.15,355.93,379.80,234.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Plot of mean -log10(p-value) with standard error from the Fisher's exact tests of</figDesc><graphic coords="24,107.40,75.98,393.30,243.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 1 :</head><label>1</label><figDesc>Scenario (I) results: Y ∼ t 3 (x T β), n = 100, p = 2000, s = 4, β s ∈ {-2, 2},</figDesc><table><row><cell>ρ X = 0.5, B = 100.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Models</cell><cell cols="3">Method Minimum model size P 1</cell><cell cols="3">P a T P d 1 T P d 2</cell></row><row><cell></cell><cell>RDC</cell><cell>15.5</cell><cell>1</cell><cell>0.6</cell><cell>3.7</cell><cell>3.83</cell></row><row><cell></cell><cell>DC</cell><cell>18</cell><cell>1</cell><cell cols="2">0.53 3.6</cell><cell>3.77</cell></row><row><cell></cell><cell>SIS</cell><cell>157.5</cell><cell cols="4">0.93 0.1 2.83 3.07</cell></row><row><cell>Ia: x ∼ t 3 (0, Σ p×p )</cell><cell>SIRS</cell><cell>38.5</cell><cell>1</cell><cell cols="3">0.47 3.53 3.67</cell></row><row><cell></cell><cell>FK</cell><cell>32.5</cell><cell>1</cell><cell cols="2">0.37 3.5</cell><cell>3.6</cell></row><row><cell></cell><cell>NIS</cell><cell>202</cell><cell cols="3">0.9 0.03 2.5</cell><cell>2.67</cell></row><row><cell></cell><cell>RDC</cell><cell>5</cell><cell>1</cell><cell cols="2">0.87 3.87</cell><cell>3.9</cell></row><row><cell></cell><cell>DC</cell><cell>43.5</cell><cell>1</cell><cell cols="3">0.2 3.13 3.53</cell></row><row><cell></cell><cell>Cor</cell><cell>117</cell><cell>1</cell><cell>0</cell><cell cols="2">1.97 2.63</cell></row><row><cell>Ib: X j ∼ P areto(1, 1)</cell><cell>SIRS</cell><cell>16</cell><cell>1</cell><cell cols="3">0.53 3.67 3.83</cell></row><row><cell></cell><cell>FK</cell><cell>14</cell><cell>1</cell><cell>0.7</cell><cell>3.8</cell><cell>3.83</cell></row><row><cell></cell><cell>NIS</cell><cell>340</cell><cell>1</cell><cell>0.03</cell><cell>2</cell><cell>2.47</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 3 :</head><label>3</label><figDesc>100. Scenario (III) results: n = 200, p = 2000, ρ X = 0.5, B = 100, d 1 = 2n/ log n ,</figDesc><table><row><cell>Models</cell><cell cols="3">Method Minimum model size P 1</cell><cell cols="3">P a T P d 1 T P d 2</cell></row><row><cell></cell><cell>RDC</cell><cell>4</cell><cell>1</cell><cell>1</cell><cell>2</cell><cell>2</cell></row><row><cell></cell><cell>DC</cell><cell>5</cell><cell cols="4">0.97 0.87 1.93 1.93</cell></row><row><cell></cell><cell>SIS</cell><cell>1137</cell><cell>0.07</cell><cell>0</cell><cell>0.1</cell><cell>0.2</cell></row><row><cell>IIa: x ∼ t 3 (0, Σ p×p )</cell><cell>SIRS</cell><cell>1683.5</cell><cell>0.07</cell><cell>0</cell><cell>0.07</cell><cell>0.1</cell></row><row><cell></cell><cell>FK</cell><cell>28.5</cell><cell cols="4">0.9 0.43 1.63 1.63</cell></row><row><cell></cell><cell>NIS</cell><cell>2</cell><cell>1</cell><cell cols="2">0.87 1.9</cell><cell>1.97</cell></row><row><cell></cell><cell>RDC</cell><cell>2</cell><cell>1</cell><cell>1</cell><cell>2</cell><cell>2</cell></row><row><cell></cell><cell>DC</cell><cell>12.5</cell><cell>1</cell><cell cols="3">0.7 1.87 1.93</cell></row><row><cell></cell><cell>SIS</cell><cell>41.5</cell><cell>1</cell><cell cols="3">0.43 1.53 1.67</cell></row><row><cell>IIb: X j ∼ P areto(1, 1)</cell><cell>SIRS</cell><cell>3</cell><cell>1</cell><cell cols="3">0.83 1.83 1.87</cell></row><row><cell></cell><cell>FK</cell><cell>2</cell><cell>1</cell><cell>1</cell><cell>2</cell><cell>2</cell></row><row><cell></cell><cell>NIS</cell><cell>38</cell><cell>1</cell><cell cols="2">0.43 1.57</cell><cell>1.6</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 4 :</head><label>4</label><figDesc>Comparison of M AE (computed from leave-one-out cross-validation), adjusted R 2 and gene lists of the final models selected by different methods</figDesc><table><row><cell>Methods</cell><cell cols="2">MAE Adjusted</cell><cell>Model</cell><cell>Selected genes</cell></row><row><cell></cell><cell></cell><cell>R 2</cell><cell>size</cell><cell></cell></row><row><cell>DC+Lasso</cell><cell>0.2</cell><cell>0.436</cell><cell>12</cell><cell>CCNE1,CENPB,CNIH3,HAPLN1,HOXD9,IKBKB,MX1,</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>NUDT19, PDCD2L,PDCD5,SNTA1,USP18</cell></row><row><cell cols="2">RDC+Lasso 0.17</cell><cell>0.451</cell><cell>12</cell><cell>CCNE1,CENPB,COQ2,HAPLN1,IFIT1,IKBKB,MX1,</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>NUDT19,PDCD2L,SNTA1,USP18,ZFP36L2,ZNF204P</cell></row><row><cell>SIS+Lasso</cell><cell>0.17</cell><cell>0.394</cell><cell>8</cell><cell>ATP6AP2,CCNE1,CENPB,CNIH3,FAM54A,HOXD9,</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>IMPDH1,PDCD2L</cell></row><row><cell>FK+Lasso</cell><cell>0.18</cell><cell>0.419</cell><cell>10</cell><cell>ASB14,C16orf80,CCNE1,COX4NB,E2F1,HAPLN1,IKBKB,</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>PDCD2L,SNTA1,USP18</cell></row><row><cell cols="2">SIRS+Lasso 0.18</cell><cell>0.419</cell><cell>12</cell><cell>C16orf80,CCNE1,CENPB,CNIH3,GPI,MX1,NUDT19,NUDT2,</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>OAS2,PDCD2L,SNTA1,ZFP36L2</cell></row></table></figure>
+		</body>
+		<back>
+
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgments</head></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Materials</head><p>The supplementary materials contain the proofs of the three lemmas.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Robust estimation of high-dimensional covariance and precision matrices</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Avella-Medina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Battey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">105</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="271" to="284" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Variable selection in high-dimensional linear models: partially faithful distributions and the PC-simple algorithm</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bühlmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kalisch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Maathuis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="261" to="278" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">The Dantzig selector: Statistical estimation when p is much larger than n</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Candes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2313" to="2351" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Challenging the empirical mean and empirical variance: a deviation study</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Catoni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Annales de l&apos;IHP Probabilités et statistiques</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="1148" to="1185" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Plasma coenzyme q10 levels and prostate cancer risk: the multiethnic cohort study</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">V</forename><surname>Cooney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Franke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">P</forename><surname>Caberto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Wilkens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Le Marchand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Goodman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Henderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">N</forename><surname>Kolonel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Epidemiology and Prevention Biomarkers</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="708" to="710" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Local independence feature screening for nonparametric and semipara-metric models by marginal empirical likelihood</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="515" to="539" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening for ultrahigh dimensional discriminant analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">510</biblScope>
+			<biblScope unit="page" from="630" to="641" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">On sure screening with multiple responses</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Z</forename><surname>Di He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="1749" to="1777" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Gene-specific correlation of RNA and protein levels in human cells and tissues</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Edfors</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Danielsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Hallström</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Käll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lundberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pontén</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Forsström</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Uhlén</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular Systems Biology</title>
+		<imprint>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">12</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<author>
+			<persName><forename type="first">B</forename><surname>Efron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Johnstone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Least angle regression</title>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="407" to="499" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Adaptive robust variable selection</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Barut</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="324" to="351" />
+			<date type="published" when="2014">2014a</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Nonparametric independence screening in sparse ultra-high-dimensional additive models</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="issue">494</biblScope>
+			<biblScope unit="page" from="544" to="557" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">High-dimensional variable selection for Cox&apos;s proportional hazards model</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Borrowing Strength: Theory Powering Applications-a Festschrift for Lawrence D. Brown</title>
+		<imprint>
+			<publisher>Institute of Mathematical Statistics</publisher>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="70" to="86" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Estimation of high dimensional mean regression in the absence of symmetry and light tail assumptions</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">79</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="247" to="265" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Variable selection via nonconcave penalized likelihood and its oracle properties</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">456</biblScope>
+			<biblScope unit="page" from="1348" to="1360" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Sure independence screening for ultrahigh dimensional feature space</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="849" to="911" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A selective overview of variable selection in high dimensional feature space</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="101" to="148" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Nonparametric independence screening in sparse ultra-high-dimensional varying coefficient models</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Dai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="issue">507</biblScope>
+			<biblScope unit="page" from="1270" to="1284" />
+			<date type="published" when="2014">2014b</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Ultrahigh dimensional feature selection: beyond the linear model</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Samworth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="2013" to="2038" />
+			<date type="published" when="2009-09">2009. Sep</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Sure independence screening in generalized linear models with NP-dimensionality</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="3567" to="3604" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">glmnet: Lasso and elastic-net regularized generalized linear models</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">R package version</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Impacts of activation of the mitogen-activated protein kinase pathway in pancreatic cancer</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Furukawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers in Oncology</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">23</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Independent screening for single-index hazard rate models with ultrahigh dimensional features</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gorst-Rasmussen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Scheike</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="217" to="245" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Covariance-insured screening</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computational statistics &amp; data analysis</title>
+		<imprint>
+			<biblScope unit="volume">132</biblScope>
+			<biblScope unit="page" from="100" to="114" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Quantile-adaptive model-free variable screening for high-dimensional heterogeneous data</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Hong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="342" to="369" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Robust estimation of a location parameter</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Huber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann. Math. Statist</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="73" to="101" />
+			<date type="published" when="1964">1964</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">User-friendly covariance estimation for heavy-tailed distributions</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Minsker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-X</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistical Science</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="454" to="471" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Smoothly clipped absolute deviation on high dimensions</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-S</forename><surname>Oh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="issue">484</biblScope>
+			<biblScope unit="page" from="1665" to="1673" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Feature screening via distance correlation learning</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="issue">499</biblScope>
+			<biblScope unit="page" from="1129" to="1139" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">L 1-norm quantile regression</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational and Graphical Statistics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="163" to="185" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">An equivalent measure of partial correlation coefficients for high-dimensional Gaussian graphical models</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Qiu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">511</biblScope>
+			<biblScope unit="page" from="1248" to="1265" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Feature selection for varying coefficient models with ultrahigh-dimensional covariates</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="issue">505</biblScope>
+			<biblScope unit="page" from="266" to="274" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Witten</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1407.7819</idno>
+		<title level="m">Sure screening for Gaussian graphical models</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Variable screening via quantile partial correlation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-L</forename><surname>Tsai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">518</biblScope>
+			<biblScope unit="page" from="650" to="663" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">The kolmogorov filter for variable screening in high-dimensional binary classification</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Mai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="229" to="234" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">The fused kolmogorov filter: a nonparametric model-free screening method</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Mai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1471" to="1497" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Ultrahigh-dimensional multiclass linear discriminant analysis by pairwise sure independence screening</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">111</biblScope>
+			<biblScope unit="issue">513</biblScope>
+			<biblScope unit="page" from="169" to="179" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Integrated genomic characterization of pancreatic ductal adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Raphael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Hruban</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Aguirre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Moffitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Yeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stewart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Robertson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Cher-Niack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="185" to="203" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Pancreatic adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">S</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bardeesy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">371</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1039" to="1049" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Censored rank independence screening for high-dimensional survival data</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jessie</forename><surname>Jeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="799" to="814" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Adaptive huber regression</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fan</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="issue">529</biblScope>
+			<biblScope unit="page" from="254" to="265" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">The distance correlation t-test of independence in high dimension</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Székely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Rizzo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Multivariate Analysis</title>
+		<imprint>
+			<biblScope unit="volume">117</biblScope>
+			<biblScope unit="page" from="193" to="213" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Measuring and testing dependence by correlation of distances</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Székely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Rizzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">K</forename><surname>Bakirov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2769" to="2794" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Partial distance correlation with methods for dissimilarities</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Székely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Rizzo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2382" to="2412" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Regression shrinkage and selection via the lasso</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society. Series B (Methodological)</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="267" to="288" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Quantile normalization of single-cell rna-seq read counts without unique molecular identifiers</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">W</forename><surname>Townes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Irizarry</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome biology</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="17" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">The l1 penalized lad estimator for high dimensional linear regression</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Multivariate Analysis</title>
+		<imprint>
+			<biblScope unit="volume">120</biblScope>
+			<biblScope unit="page" from="135" to="151" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">A new principle for tuning-free Huber regression</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-X</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>In Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">The cancer genome atlas pan-cancer analysis project</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Weinstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Collisson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R M</forename><surname>Shaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Ozenberger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ellrott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Shmulevich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Stuart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G A R</forename><surname>Network</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">1113</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Variable selection in quantile regression</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="801" to="817" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Conditional quantile screening in ultrahigh-dimensional heterogeneous data</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="65" to="76" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Category-adaptive variable screening for ultra-high dimensional heterogeneous categorical data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="issue">530</biblScope>
+			<biblScope unit="page" from="747" to="760" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">ZFP 36l2 promotes cancer cell aggressiveness and is regulated by antitumor micro RNA-375 in pancreatic ductal adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yonemori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Seki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kurahara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Osako</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Idichi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Arai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Koshizuka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Maemura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Natsugoe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Science</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="124" to="135" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Nearly unbiased variable selection under minimax concave penalty</title>
+		<author>
+			<persName><forename type="first">C.-H</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="894" to="942" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Principled sure independence screening for Cox models with ultra-high-dimensional covariates</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Multivariate Analysis</title>
+		<imprint>
+			<biblScope unit="volume">105</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="397" to="411" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<author>
+			<persName><forename type="first">W.-X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Bose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A new perspective on robust M-estimation: Finite sample theory and applications to dependence-adjusted multiple testing</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="1904" to="1931" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening for ultrahigh-dimensional data</title>
+		<author>
+			<persName><forename type="first">L.-P</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-X</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="issue">496</biblScope>
+			<biblScope unit="page" from="1464" to="1475" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">The adaptive lasso and its oracle properties</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">476</biblScope>
+			<biblScope unit="page" from="1418" to="1429" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">One-step sparse estimates in nonconcave penalized likelihood models</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1509" to="1533" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">On the adaptive elastic-net with a diverging number of parameters</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1733" to="1751" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

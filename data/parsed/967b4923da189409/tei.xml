@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Deep Bayesian Bandits Approach for Anticancer Drug Screening : Exploration via Functional Prior</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2022-07-10">10 Jul 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Mingyu</forename><surname>Lu</surname></persName>
+							<email>mingyulu@cs.washington.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">University of Washington Seattle</orgName>
+								<address>
+									<postCode>98195-4322</postCode>
+									<region>WA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yifang</forename><surname>Chen</surname></persName>
+							<email>yfchen@cs.washington.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">University of Washington Seattle</orgName>
+								<address>
+									<postCode>98195-4322</postCode>
+									<region>WA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A Deep Bayesian Bandits Approach for Anticancer Drug Screening : Exploration via Functional Prior</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-07-10">10 Jul 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">6F2B50E9F429B60777A61C84BC9AF0F9</idno>
+					<idno type="arXiv">arXiv:2205.02944v2[cs.LG]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Contextual Bandits</term>
+					<term>Deep Bayesian Bandits</term>
+					<term>Drug Discovery</term>
+					<term>Drug Screening</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Identifying potential cancer treatments with machine learning holds great promise to precision oncology. However, anticancer drugs screening is a lengthy and cost-intensive process. To address this challenge, we formulate drug screening studies as a contextual bandit problem, in which an algorithm selects anticancer therapeutics based on contextual information about cancer cell lines while adapting its treatment strategy to maximize treatment response. We propose using a novel deep Bayesian bandits framework that uses functional prior to approximate posterior for drug response prediction based on genomic features and drug structure and leverage inherent information between actions. We empirically evaluate our method on three large-scale in-vitro pharmacogenomic datasets and show that our approach outperforms several benchmarks in identifying the optimal treatment for a given cell line.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>By using genomic signatures and identifying druggable targets, the landscape of precision oncology has progressed rapidly. <ref type="bibr" target="#b23">(Yang et al., 2012;</ref><ref type="bibr" target="#b7">Jordi et al., 2012;</ref><ref type="bibr" target="#b6">Iorio et al., 2016)</ref> One approach is to conduct anticancer therapeutics screening but this approach remains challenging as drug screening study is often an expensive, time-consuming process. Moreover, most of the studies rely on exhaustively experimenting all available drugs without considering cancer heterogeneity. To solve in-vitro identification and treatment allocation in anticancer therapeutics screening more efficiently, a natural attempt is to cast it as a contextual bandit problem, a well-known tool for personalization <ref type="bibr" target="#b11">(Li et al., 2010)</ref>. Contextual bandits framework enables effective personalized intervention by taking appropriate actions based on sample's characteristics instead of random or uniform treatment assignment. Recently, contextual bandits methods, especially Thompson Sampling <ref type="bibr" target="#b20">(Thompson, 1933)</ref>, are being tailored to healthcare applications in a different domains, including mobile health <ref type="bibr" target="#b21">(Tomkins et al., 2020)</ref> and risk stratification for multiple myeloma. <ref type="bibr">(Zhou et al., 2019)</ref> However, naively applying conventional bandit algorithms to drug screen studies is not feasible. First of all, the performance relies on accurate assumptions about the reward environment, which can be highly complex and non-linear. Second, finding a proper set of candidate models to map genomic features to drug sensitivity may also be difficult. Moreover, due to inherent heterogeneity across and within different cancer types and drug metabolism <ref type="bibr" target="#b4">(Dagogo-Jack and Shaw., 2018)</ref>, modeling uncertainty plays an important role in determining the right decision. Third, the exploration-exploitation dilemma adds another layer of complexity, meaning that more action-context pairs would be required to obtain a better approximation of different policies. Insufficient sample size or model of less expressive power would lead to a wrong decision. <ref type="bibr">(Zhou et al., 2019)</ref> Finally, most conventional contextual bandit algorithms treat each action as an unrelated discrete point and fail to leverage the similarity and inherent structure between each action. For instance, in cancer trial, OTX015, a BET inhibitor (BETi) that exhibits anti-tumor activity in non-small cell and small cell lung cancer, shares a similar structure with JQ1 <ref type="bibr" target="#b17">(Riveiro et al., 2016)</ref>. Under a conventional bandit setting, without knowing the inherent relationship between two similar drugs, unnecessary exploration would be conducted.</p><p>In this work, our contributions are as follows. First, we adapt a deep Bayesian bandits approach in drug screening studies as it provides a natural solution to uncertainty estimation with high-dimensional data. Second, under this settings, to find an approach to approximate posterior distribution of drug response prediction function, we use 'functional prior' <ref type="bibr" target="#b5">(Hafner et al., 2019;</ref><ref type="bibr" target="#b19">Sun et al., 2019;</ref><ref type="bibr" target="#b22">Tran et al., 2020)</ref> and, following <ref type="bibr" target="#b19">Sun et al. (2019)</ref>, update functional posterior with variational inference through the Stein gradient estimator (SSGE) <ref type="bibr" target="#b12">(Liu and Wang, 2019)</ref>. Third, to avoid unnecessary exploration, for functional posterior update, to select proper measurement data points, we use a bootstrap procedure to sample from both perturbed genomics contexts and drug compound features. We empirically evaluated our method and compared it with other treatment allocation strategies using three large-scale drug sensitivity screens. Our method delivers the best performance against several benchmark algorithms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Background and Related Work</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Contextual Bandits</head><p>Contextual bandits <ref type="bibr" target="#b11">(Li et al., 2010)</ref> is a generalization of the multi-armed bandit in which the policy for choosing future actions is dependent on context information at each step t. For example, in clinical trial, the context could be patients' symptoms or laboratory observations. It is characterized by a sequence of a context-reward pairs {x t , r t } t=1,2,...,T ∈ X × R |A| , where X , A are some arbitrary context space and action space (e.g., a set of treatment choices), respectively. Given a candidate policy set Π, the contextual bandits problem aims to learn a policy π : X → A, or a mapping from context to actions that maximizes cumulative rewards, or equivalently to minimize the total regret compared to the best policy in hindsight.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Thompson Sampling &amp; Deep Bayesian Bandits</head><p>Thompson Sampling is a Bayesian approach <ref type="bibr" target="#b20">(Thompson, 1933;</ref><ref type="bibr" target="#b0">Agrawal and Goyal, 2011)</ref> that allows sampling from the posterior distribution, P (θ), over plausible problem instances such as rewards or model parameters. At each round t, it observes the context, x t , and an arm a is chosen according to the probability that it maximizes the expected reward. The posterior distribution is then updated after the result of an action is observed. Through the lens of Thompson Sampling, deep Bayesian bandits refer to tackling contextual bandits by parameterizing the action-value function and a prior distribution over P 0 (θ) placed over the parameters. Although the weight posterior for neural networks is analytically intractable, it can be approximated by methods such as Dropout <ref type="bibr" target="#b8">(Kingma et al., 2015;</ref><ref type="bibr" target="#b18">Srivastava et al., 2014)</ref> or Monte Carlo methods <ref type="bibr" target="#b1">(Betancourt, 2017)</ref>. <ref type="bibr" target="#b16">Riquelme et al. (2018)</ref> conduct a comprehensive analysis of different approximation methods in deep Bayesian bandit settings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Problem Setup</head><p>We formulate treatment allocation in anti-cancer therapeutics as a Bayesian contextual bandit problem. That is, we have a context set X ⊂ R d 1 , defined as the individual genomics information with d 1 -dimension; a discrete action set A ⊂ R d 2 , defined as a set of given drugs whose compounds can be expressed as a d 2 -dimension feature vector; and a reward set R ⊂ R |A| , where each reward vector is a possible collection of corresponding drug responses (pIC-50/Activity Area) for all drugs. Finally, we are given a policy set Π : X → A, which is deep Bayesian neural net here. The protocol is as follows:</p><p>• At time t, we are given a context, x t ∈ X , and a non-observable reward vector r t ∈ R, that are jointly drawn from some unknown i.i.d distribution D. In our case, this scenario can be regarded as randomly sampled cancer cell line at time t whose actual responses to various drugs are unknown.</p><p>• Then we play a t ∈ A based on previous history and observe only the corresponding r t (a t ), for example, the drug response in our case, not in the whole r t vector.</p><p>By repeating this process for a total of T times (or T incoming samples), we can obtain the total cumulative reward T t=1 r t (a t ). We measure the difference between our algorithm performance and the benchmark performance by the notion of cumulative regret R(T ), defined as</p><formula xml:id="formula_0">R(T ) = max π * T t=1 r t (π * (x t )) - T t=1 r t (a t ).</formula><p>(1)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Drug Response Prediction with Genomics and Drug Contexts</head><p>In precision oncology, treatment efficacy depends not only on patients' genomics features but also on therapeutics information which have shown to improve the predictive performance. <ref type="bibr" target="#b9">(Kuenzi et al., 2020;</ref><ref type="bibr" target="#b15">Preuer et al., 2017)</ref> Here, our solution is to treat both genomics features and therapeutics context as a combined input into our neural network and show that the trained neural net can automatically capture inherent relationships between the two, genomics information (RNA expression) and drug features (MorganFingePrint); therefore, explore more efficiently. Specifically, on each round t for each action a, we denote such concatenated feature vector as x t = (x g , x d ) ∈ R d 1 +d 2 , where d 1 and d 2 are the dimension of genomics and drug features, respectively. When the agent selects an action a d based on</p><p>x g , corresponding drug information x d will be provided for reward estimation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Functional Prior and Posterior Approximation for multi-modal Data</head><p>Even though drug features can provide additional information in reward prediction, multimodal data of different data types complicates determining the prior distribution. The weight distribution would be highly variable and difficult to express with some commonly used prior distributions, such as the Gaussian distribution. <ref type="bibr" target="#b5">(Hafner et al., 2019;</ref><ref type="bibr" target="#b22">Tran et al., 2020</ref>) Therefore, we are not aiming to learn a posterior distribution of weights in weight space but a distribution of functional posterior <ref type="bibr" target="#b5">(Hafner et al., 2019;</ref><ref type="bibr" target="#b19">Sun et al., 2019;</ref><ref type="bibr" target="#b22">Tran et al., 2020)</ref> which is a function space that maps pharmacogenomics data to drug response. <ref type="bibr" target="#b19">Sun et al. (2019)</ref> introduce function space variance, analogous to weight space variational inference.</p><formula xml:id="formula_1">f (x) = g φ (x, ξ)<label>(2)</label></formula><p>Here f (x) is a sampled function for some function g φ , a neural network with stochastic weights and stochastic inputs, and ξ, a random noise vector, corresponding to randomness in functional space. For any given dataset D, the functional variance inference maximizes functional ELBO (fELBO) defined as:</p><formula xml:id="formula_2">L(q) = E q [log(p(D|f ))] -sup n∈N,x∈X n KL[q(f X )||p(f X )]. (<label>3</label></formula><formula xml:id="formula_3">)</formula><p>As there is no analytical form for the functional KL divergence, following <ref type="bibr" target="#b19">Sun et al. (2019)</ref>, we also utilize the spectral Stein gradient estimator (SSGE) to approximate log density derivatives. SSGE is proposed by Liu and Wang ( <ref type="formula">2019</ref>) is an estimator that only requires measurement samples from the targeted implicit distribution i.e., distributions without tractable densities, functional space for drug response prediction in out case.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Sampling Measurement Sets for Cancer Treatment Exploration</head><p>To estimate KL divergence properly with SSGE, we need unbiased samples from the implicit distribution of genomic contexts and drug features. Typically, one can sample from the training set where noise is injected into the data or from region of testing data. <ref type="bibr" target="#b5">(Hafner et al., 2019)</ref>. Here we use a combination of two approaches <ref type="bibr" target="#b22">(Tran et al., 2020)</ref>: to encourage exploration, we use sample not only from history D t but also from random drug feature x a in the action space that we are interested in exploring. To address this problem, we use a simple bootstrapped method <ref type="bibr" target="#b13">(Osband and Roy, 2015)</ref> to sample measurement sets. Accordingly, we sample a new history set H from both training history D t and Dt with perturbed action-context-concatenated features xt .</p><formula xml:id="formula_4">Dt = (x 1 , . . . xt ); xt = (x g , x d); H t ∼ D t ∪ Dt .<label>(4)</label></formula><p>Therefore, with H as our measurement set, f ELBO can be re-written as</p><formula xml:id="formula_5">L H (q) = E q [log(p(D|f ))] -sup n∈N,x∈X n KL q(f H )||p(f H ) .<label>(5)</label></formula><p>With SSGE and proper measurement samples, we can approximate the entropy of both q and p, which are both from implicit distribution; then, we can sample from the implicit posterior of drug response prediction for different compounds in bandits settings.</p><p>Algorithm 1 Functional Posterior Update 1: Universal parameters : KL weight λ 2: Input: D t , functional variational posterior g(•|φ) 3: Dt ∼ D t ; Sample Dt from D with perturbed genomics and action contexts. 4: f = g([ Dt , D t ], E|φ) Sample a new function f (.) with noise vector E. 5: ∆ 1 = 1 |Dt| ∇φ log p (y|f i ) Compute reconstruction loss. 6: ∆ 2 = SSGE( Dt , D t ) Estimate KL divergence from implicit posterior. 7: φ ← optimize(φ, ∆ 1 -λ∆ 2 ) 8: Return functional variational posterior g(•|φ)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Experimental Design and Data</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Simulated Drug Screen Design</head><p>In this work, we simulate anticancer treatment trials and evaluate our algorithms in three large-scale cancer cell line screenings, including Genomics in Drug Sensitivity in Cancer (GDSC-1 and GDSC-2) <ref type="bibr" target="#b23">(Yang et al., 2012;</ref><ref type="bibr" target="#b6">Iorio et al., 2016)</ref> and the Cancer Cell Line Encyclopedia (CCLE) <ref type="bibr" target="#b7">(Jordi et al., 2012)</ref>. For cancer cell lines, we used RNA expressions and performed principal component analysis (PCA) to reduce the RNA expression dimension to 500. For drug context, we converted the drug SMILE string to Morgan fingerprint with 256 bits. <ref type="bibr" target="#b3">(Capecchi et al., 2020)</ref> For drug-dose response, in GDSC, we adapted negative log of half-maximal inhibitory concentration, pIC50. In CCLE, since some IC50 measurements are missing, we used activity area (AA) instead. All cancer cell lines and drug responses were scaled into the range of [0,1]. We run the bandits/simulated trials for 5000 rounds.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Evaluation Metrics and Benchmark Algorithms</head><p>As described in Equation 1, we reported cumulative regrets, the reward difference between competing algorithm, π, and an oracle, π * , that would have access to the (unknown) treatment effect functions. We test our algorithm against competing algorithms (Appendix A.4) of different posterior approximations that demonstrated promising results. <ref type="bibr" target="#b16">(Riquelme et al., 2018)</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Effect of Different Measurement Sets on the fBNN posterior</head><p>Here we show the effectiveness of using drug compound features as input contexts and adding action perturbation. From Figure <ref type="figure" target="#fig_0">1</ref>, we show that our strategy gives much lower cumulative regret compared to ones without them. To demonstrate that context-action pair perturbation as proxy of functional prior improves uncertainty estimation for drug response prediction, we compared the performance of models updated with different samples for SSGE, including (i) perturbing only genomics context, x g = x g + ; ∼ N (0, 1) (ii) perturbing only action (drug) context x d ∈ R d 2 and (iii) random sampling from multivariate Gaussian distribution, x g ∈ R d 1 ; x g ∼ N (0, 1) and random selected drugs from the action set, x d ∼ U (R d 2 ). Our sampling method, compared to the other proxy samples as in Figure <ref type="figure" target="#fig_0">1</ref>, improves the quality of approximation of the desired prior and achieves lower regret.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Molecular Therapeutics Recommendation in Cancer Treatment</head><p>Now we empirically evaluate our functional Bayesian neural bandit with benchmark algorithms in deep bayesian bandits in selecting drug compounds that would maximize drug response. Selecting optimal treatment requires not only learning drug response function but also uncertainty estimation for exploration. As shown in Table <ref type="table">1</ref>, models that can only optimize both, for example, NeuralGreedy and BBB performs poorly. <ref type="bibr" target="#b16">(Riquelme et al., 2018)</ref> Bootstrap and ParameterNoise seem to provide better posterior approximations for drug response prediction but suffer from under exploration, sometimes committing to the suboptimal drug in the experiments <ref type="bibr" target="#b16">(Riquelme et al., 2018;</ref><ref type="bibr" target="#b19">Sun et al., 2019)</ref>. Our method, on the other hand, by using genomics-action pair as proxy for functional prior, provides a better exploration strategy. Table <ref type="table">1</ref>: Cumulative regret distribution at the final step in 3 drug screen studies. We report the mean and standard error of the mean over 20 trials.</p><p>Algorithm GDSC-1 GDSC-2 CCLE Uniform 2011 ± 10.2 995 ± 6.7 2509 ± 12.3 NeuralGreedy 531.4 ± 194.3 262.2 ± 152 1361.4 ± 361.7 BayesByBackprop(BBB) 1500.2 ±396.4 497.3 ± 187.3 1682.3 ± 390.0 DropOut 508.3± 33.4 378.2 ± 84.0 1176.2 ± 342.1 BootstrappedNN 429.7 ± 162.2 179.1 ± 70.5 705.5 ± 409.8 ParameterNoise 467.5 ± 287.5 170.6 ± 65.4 785.51 ± 585.5 FunctionalPosterior 202.4 ± 70.0 98.46 ± 30.3 252.8 ± 35.5</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Conclusion</head><p>In this work, we introduce a new deep Bayesian bandit approach for in-vitro anticancer therapeutics selection. To enable efficient exploration in a contextual bandit setting with drug compound features and gene expression, we use functional variational approach to approximate this pharmacogenomics posterior. Empirically, we demonstrate that our approach explores efficiently and performs the best. The result is consistent across three publicly available pharmacogenomics datasets in cancer treatment recommendations. We hope that our work will serve as a stepstone towards improving the efficacy and quality of treatment allocation strategy in both pre-clinical therapeutic discovery and clinical study.</p><p>Appendix A.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.1 Contextual bandits in Healthcare</head><p>An instantiation of the contextual bandits framework in treatment recommendations.</p><p>Algorithm 2 Contextual Bandits in Healthcare 1: Available treatment options a ∈ A, and the treatment period length T .</p><p>2: for t = 1, 2, . . . , T do 3:</p><p>Agent receives the context information x t for the current patient.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4:</head><p>A treatment a t is determined based on the history and the context information.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5:</head><p>Record the post-treatment health outcome r t for the patient. 6: end for</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 Thompson Sampling &amp; Deep Bayesian Bandits</head><p>Deep Bayesian Bandits refers to posterior approximation with a deep neural network. For example, in Algorithm 3, can be neural neural networks parameters drawn from a weight distribution, P (θ). <ref type="bibr" target="#b16">Riquelme et al. (2018)</ref> conduct a comprehensive analysis of different approximation methods in deep Bayesian bandit settings and propose NeuralLinear, a Bayesian linear regression built on the representation of the last layer of a neural network. <ref type="bibr" target="#b2">Blundell et al. (2015)</ref> introduce Bayes by Backprop, which learns the probability distribution of weights. <ref type="bibr" target="#b10">Kveton et al. (2019)</ref> propose DeepFPL, a neural network that uses ensemble sampling as an approximation to generating new noise in each round. In addition to posterior approximation of model weights, <ref type="bibr" target="#b24">Zhang et al. (2020)</ref> propose Neural Thompson Sampling, which focuses on the posterior distribution of reward. <ref type="bibr" target="#b19">Sun et al. (2019)</ref> introduce the functional prior, sampling from the functional posterior by concatenating a random noise vector into input.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Algorithm 3 Thompson Sampling</head><p>1: f (• | θ0 ); prior distribution over models, P 0 (θ) : θ0 ∈ Θ → [0, 1] 2: for t = 1, 2, . . . , T do 3:</p><p>Observe context x t ∈ R d .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4:</head><p>Sample model parameter θt ∼ P t (θ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5:</head><p>a t = arg max a f (x, a | θt ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6:</head><p>Select action a t and observe reward r t (a t ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7:</head><p>Update the history D t ← D t-1 ∪ (x t , a t , r t (a t )).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8:</head><p>Update the posterior distribution P t+1 (θ) = PosteriorUpdate(D t , P t ). 9: end for</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.3 Dataset</head><p>GDSC is the resource for therapeutic biomarker discovery in cancer cells. The GDSC1 dataset was generated between 2009 and 2015 using a matched set of cancer cell lines; contains 987 cell lines and 367 compounds. GDSC2 was generated in 2015 following improvements to screen design and assay <ref type="bibr" target="#b6">(Iorio et al., 2016)</ref>; contains 198 Compounds and 809 cell lines. The Cancer Cell Line Encyclopedia (CCLE) project, started in 2008, contains pharmacological profiles for 24 anticancer drugs across 479 cell lines. For all datasets, we first filtered out cancer cell lines with missingness in drug-dose response greater than 70%. We then filtered out drug compounds with missing sensitivity in at least one of the curated cell lines. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.4 Baselines &amp; Benchmark Algorithms</head><p>Uniform a baseline for which an agent takes each action at random with equal probability.</p><p>NeuralGreedy is a algorithm trained with a neural network and acts greedily (take action that predicted with the highest drug response.) where a random action is selected with probability .</p><p>BayesByBackprop (BBB) is proposed by <ref type="bibr" target="#b2">Blundell et al. (2015)</ref> and is one of the commonly used variational approaches that aproximate posterior by minimizing KL divergence. It is a Bayesian neural network with sampled weights from the variational posterior, w ∼ q(w|θ). Variational parameters θ are updated with KL divergence between a mixture of two Gaussian densities prior and model weights distribution. BBB is a commonly used baseline in deep Bayesian bandits.</p><p>Dropout is a training technique where the output of each neuron is independently zeroed out with probability p at each forward pass <ref type="bibr" target="#b18">(Srivastava et al., 2014;</ref><ref type="bibr" target="#b8">Kingma et al., 2015)</ref>. Following the best action with respect to the random dropout prediction can be interpreted as an implicit form of Thompson sampling.</p><p>BootstrappedNN is an empirical approach to approximate the posterior sampling distribution <ref type="bibr" target="#b13">(Osband and Roy, 2015)</ref>. The idea is to train q models with different dataset D i where D i is typically created by sampling with replacement from an original dataset, D. In our case, we train q models with the same structure as NeuralGreedy and D is the history context that the agent has seen. In action selection, we sample a model uniformly at random (with probability 1/q) and take action predicted reward to be the best by the sampled model.</p><p>DirectNoiseInjection is a recently proposed method by <ref type="bibr" target="#b14">Plappert et al. (2018)</ref>. Parameternoise injection is an exploration technique proved successful in RL. Through noise injection in parameter space: θ = θ + N (0, σ 2 ), we can perform state-dependent exploration. When selecting action, model weights are perturbed with isotropic Gaussian noise so that we get a t = π θ(s t ). The magnitude of noise is adaptively adjusted based on distance measure between perturbed and non-perturbed policy in action space. <ref type="bibr" target="#b14">(Plappert et al., 2018)</ref> Network Structure and Hyper-Parameter Tuning For our oracle policy, we trained a 2-layer fully connected feedforward network with full access to genomics features, drug structure and corresponding drug response in the dataset. For each experiment, we ran 20 trials with 5,000 steps in each trials. All algorithms were updated every 30 steps. The size of each batch is 32. For all neural network structures, we adopted the same number of layers and hidden dimensions. as our oracle policy. We performed a grid search over parameters within a plausible range and reported the best results for each algorithm. We did a grid search over {1e -1 , 1e -2 , 1e -3 , 1e -4 , 1e -5 } for learning rate. For NeuralGreedy, we performed grid search for over {0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6}. For DirectNoiseInjection, we searched noise range over {1e -1 , 1e -2 , 1e -3 , 1e -4 , 1e -5 }. For Dropout, we searched over probability {0.2, 0.4, 0.6, 0.8}. For BayesByBackprop, we searched prior noise over {1, 1e -1 , 1e -2 } and prior mean over {1, 1e -1 , 1e -2 }. For BootstrappedNN, we searched the number of models over {2, 3, 5, 10}. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.5 Extra Results</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Cumulative regrets between (a) with and without drug context in the GDSC dataset, and (b) Functional Bayesian Neural Network with different measurement set samples. The confidential interval is generated through 20 trials.</figDesc><graphic coords="6,326.28,257.15,175.44,120.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Comparison of (mean) cumulative regrets at each step in maximizing cancer treatment effect for 5,000 rounds over 20 trials in GDSC-1, GDSC-2, &amp; CCLE. (left to right.)</figDesc><graphic coords="11,90.00,350.31,142.56,91.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 2 :</head><label>2</label><figDesc>Summary Statistics of drug response dataset used in the work</figDesc><table><row><cell cols="4">Dataset number of cell lines number of drugs Drug Response</cell></row><row><cell cols="2">GDSC1 472</cell><cell>133</cell><cell>IC-50</cell></row><row><cell cols="2">GDSC2 602</cell><cell>116</cell><cell>IC-50</cell></row><row><cell>CCLE</cell><cell>411</cell><cell>21</cell><cell>Activity Area</cell></row></table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Analysis of thompson sampling for the multi-armed bandit problem</title>
+		<author>
+			<persName><forename type="first">Shipra</forename><surname>Agrawal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Navin</forename><surname>Goyal</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/1111.1797" />
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">A conceptual introduction to hamiltonian monte carlo</title>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Betancourt</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/1701.02434" />
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Weight uncertainty in neural networks</title>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Blundell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julien</forename><surname>Cornebise</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Koray</forename><surname>Kavukcuoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daan</forename><surname>Wierstra</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Capecchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Probst</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Reymond</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s13321-020-00445-4</idno>
+		<ptr target="https://doi.org/10.1186/s13321-020-00445-4" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Cheminformatics</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Tumour heterogeneity and resistance to cancer therapies</title>
+		<author>
+			<persName><forename type="first">-Jack And At</forename><surname>Dagogo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Shaw</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nrclinonc.2017.166</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Clin Oncol</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Noise contrastive priors for functional uncertainty</title>
+		<author>
+			<persName><forename type="first">Danijar</forename><surname>Hafner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dustin</forename><surname>Tran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Timothy</forename><surname>Lillicrap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Irpan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Davidson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A landscape of pharmacogenomic interactions in cancer</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theo</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Graham R Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanne</forename><surname>Schubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuel</forename><surname>Aben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Syd</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Cokelaer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ewald</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Van Dyk</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Holger</forename><surname>Heshani De Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xianming</forename><surname>Heyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Regina</forename><forename type="middle">K</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingsong</forename><surname>Egan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Garnett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cell.2016.06.017</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="page">7</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">The cancer cell line encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Barretina</forename><surname>Jordi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<date type="published" when="2012">3 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Variational dropout and the local reparameterization trick</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Diederik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tim</forename><surname>Kingma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Max</forename><surname>Salimans</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Welling</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/1506.02557" />
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Predicting drug response and synergy using a deep learning model of human cancer cells</title>
+		<author>
+			<persName><surname>Bm Kuenzi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Park</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ccell.2020.09.014</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Randomized exploration in generalized linear bandits</title>
+		<author>
+			<persName><forename type="first">Manzil</forename><surname>Branislav Kveton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Csaba</forename><surname>Zaheer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lihong</forename><surname>Szepesvari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohammad</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Ghavamzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Boutilier</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/1906.08947" />
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A contextual-bandit approach to personalized news article recommendation</title>
+		<author>
+			<persName><forename type="first">Lihong</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Langford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">E</forename><surname>Schapire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 19th international conference on World wide web</title>
+		<meeting>the 19th international conference on World wide web</meeting>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="661" to="670" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Stein variational gradient descent: A general purpose bayesian inference algorithm</title>
+		<author>
+			<persName><forename type="first">Qiang</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dilin</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Bootstrapped thompson sampling and deep exploration</title>
+		<author>
+			<persName><forename type="first">Ian</forename><surname>Osband</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roy</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Matthias</forename><surname>Plappert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rein</forename><surname>Houthooft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Prafulla</forename><surname>Dhariwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Szymon</forename><surname>Sidor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><forename type="middle">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xi</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tamim</forename><surname>Asfour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pieter</forename><surname>Abbeel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marcin</forename><surname>Andrychowicz</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note>Parameter space noise for exploration</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Deepsynergy: predicting anti-cancer drug synergy with deep learning</title>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Preuer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P I</forename><surname>Richard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sepp</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Hochreiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Krishna</forename><forename type="middle">C</forename><surname>Bender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Günter</forename><surname>Bulusu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Klambauer</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btx806</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/btx806" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<idno type="ISSN">1367-4803</idno>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1538" to="1546" />
+			<date type="published" when="2017">12 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Deep bayesian bandits showdown: An empirical comparison of bayesian deep networks for thompson sampling</title>
+		<author>
+			<persName><forename type="first">Carlos</forename><surname>Riquelme</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><surname>Tucker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jasper</forename><surname>Snoek</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Otx015 (mk-8628), a novel bet inhibitor, exhibits antitumor activity in non-small cell and small cell lung cancer models harboring different oncogenic mutations</title>
+		<author>
+			<persName><surname>Me Riveiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Astorgues-Xerri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Vazquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Frapolli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Kwee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rinaldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Odore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Rezai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bekradda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Inghirami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>'incalci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Noel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cvitkovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Raymond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bertoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename></persName>
+		</author>
+		<idno type="DOI">10.18632/oncotarget.13181</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Dropout: A simple way to prevent neural networks from overfitting</title>
+		<author>
+			<persName><forename type="first">Nitish</forename><surname>Srivastava</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><surname>Hinton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Krizhevsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruslan</forename><surname>Salakhutdinov</surname></persName>
+		</author>
+		<ptr target="http://jmlr.org/papers/v15/srivastava14a.html" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">56</biblScope>
+			<biblScope unit="page" from="1929" to="1958" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Functional variational bayesian neural networks</title>
+		<author>
+			<persName><forename type="first">Shengyang</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guodong</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiaxin</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roger</forename><surname>Grosse</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">On the likelihood that one unknown probability exceeds another in view of the evidence of two samples</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>William</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Thompson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<date type="published" when="1933">1933</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<title level="m" type="main">Intelligentpooling: Practical thompson sampling for mhealth</title>
+		<author>
+			<persName><forename type="first">Sabina</forename><surname>Tomkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Predrag</forename><surname>Klasnja</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susan</forename><surname>Murphy</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2008.01571" />
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">All you need is a good functional prior for</title>
+		<author>
+			<persName><forename type="first">Simone</forename><surname>Ba-Hien Tran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dimitrios</forename><surname>Rossi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maurizio</forename><surname>Milios</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Filippone</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells</title>
+		<author>
+			<persName><forename type="first">Wanjuan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nidhi</forename><surname>Bindal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dave</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">Richard</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sridhar</forename><surname>Ramaswamy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">Andrew</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">A</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/nar/gks1111</idno>
+		<ptr target="https://doi.org/10.1093/nar/gks1111" />
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<idno type="ISSN">0305-1048</idno>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">D1</biblScope>
+			<biblScope unit="page" from="955" to="D961" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Neural thompson sampling</title>
+		<author>
+			<persName><forename type="first">Weitong</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dongruo</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lihong</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Quanquan</forename><surname>Gu</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2010.00827" />
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">How do tumor cytogenetics inform cancer treatments? dynamic risk stratification and precision medicine using multiarmed bandits</title>
+		<author>
+			<persName><forename type="first">Zhijin</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Mamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Coffey</surname></persName>
+		</author>
+		<idno type="DOI">10.2139/ssrn.3405082</idno>
+	</analytic>
+	<monogr>
+		<title level="j">SSRN Electronic Journal</title>
+		<imprint>
+			<biblScope unit="volume">01</biblScope>
+			<biblScope unit="page">2019</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

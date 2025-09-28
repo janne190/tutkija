@@ -1,0 +1,1134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Machine learning prediction of cancer cell sensitivity to drugs based on genomic and chemical properties</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">EMBL -European Bioinformatics Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus --Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">EMBL -European Bioinformatics Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus --Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Cancer Genome Project</orgName>
+								<orgName type="institution" key="instit1">Wellcome Trust Sanger Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus -- Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mathew</forename><surname>Garnett</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Cancer Genome Project</orgName>
+								<orgName type="institution" key="instit1">Wellcome Trust Sanger Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus -- Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ultan</forename><surname>Mcdermott</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Cancer Genome Project</orgName>
+								<orgName type="institution" key="instit1">Wellcome Trust Sanger Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus -- Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Benes</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">Center for Molecular Therapeutics</orgName>
+								<orgName type="department" key="dep2">Massachusetts General Hospital Cancer Center and Harvard Medical School</orgName>
+								<address>
+									<addrLine>149 13 th Street</addrLine>
+									<postCode>02129</postCode>
+									<settlement>Charlestown</settlement>
+									<region>MA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Pedro</forename><forename type="middle">J</forename><surname>Ballester</surname></persName>
+							<email>pedro.ballester@ebi.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">EMBL -European Bioinformatics Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus --Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Julio</forename><surname>Saez-Rodriguez</surname></persName>
+							<email>saezrodriguez@ebi.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">EMBL -European Bioinformatics Institute</orgName>
+								<orgName type="institution" key="instit2">Wellcome Trust Genome Campus --Cambridge</orgName>
+								<address>
+									<postCode>CB10 1SD</postCode>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Machine learning prediction of cancer cell sensitivity to drugs based on genomic and chemical properties</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9434448BC5EE3799434DDD0F23DCA214</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>drug screenings</term>
+					<term>cancer genomics</term>
+					<term>chemo-informatics</term>
+					<term>machine learning</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Predicting the response of a specific cancer to a therapy is a major goal in modern oncology that should ultimately lead to a personalised treatment. High-throughput screenings of potentially active compounds against a panel of genomically heterogeneous cancer cell lines have unveiled multiple relationships between genomic alterations and drug responses. Various computational approaches have been proposed to predict sensitivity based on genomic features, while others have used the chemical properties of the drugs to ascertain their effect. In an effort to integrate these complementary approaches, we developed machine learning models to predict the response of cancer cell lines to drug treatment, quantified through IC 50 values, based on both the genomic features of the cell lines and the chemical properties of the considered drugs. Models predicted IC 50 values in a 8-fold cross-validation and an independent blind test with coefficient of determination R 2 of 0.72 and 0.64 respectively. Furthermore, models were able to predict with comparable accuracy (R 2 of 0.61) IC50s of cell lines from a tissue not used in the training stage. Our in silico models can be used to optimise the experimental design of drugcell screenings by estimating a large proportion of missing IC 50 values rather than experimentally measure them. The implications of our results go beyond virtual drug screening design: potentially thousands of drugs could be probed in silico to systematically test their potential efficacy as anti-tumour agents based on their structure, thus providing a computational framework to identify new drug repositioning opportunities as well as ultimately be useful for personalized medicine by linking the genomic traits of patients to drug sensitivity.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>High-throughput screening of a large number of molecules is a widely used approach to identify lead compounds exerting a beneficial effect on a given phenotype. In the context of cancer, libraries of chemical entities have been tested in this way against panels of cell lines grown in different conditions and with heterogeneous genomic backgrounds <ref type="bibr" target="#b0">[1]</ref>. Following the pioneering work of the "NCI-60", a collection of 59 human cancer cell lines developed by the National Cancer Institute for in vitro drug screening <ref type="bibr" target="#b1">[2]</ref>, recent hallmark studies have shown that screening very large cell line collections can recapitulate known and identify novel molecular genomic determinants of drug sensitivity <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref>.</p><p>In these studies, using systematic statistical inference and regression methods, determinant such as oncogenic lesions, high or low levels of basal gene expression and other genotypic traits have been associated to profiles of increased sensitivity/resistance to specific compounds. For instance, by applying a multivariate analysis of variance <ref type="bibr" target="#b5">[6]</ref> and the 'Elastic Net' regression framework <ref type="bibr" target="#b6">[7]</ref> established druggenotype associations have been confirmed and complemented with markers of tissue-specificity and novel connections, e.g. the EWS-FLI1 translocation in Ewing's sarcoma and sensitivity to PARP inhibitors, have been identified and further experimentally validated. Results of these studies have been made publicly available, providing unique resources that support the discovery of new predictive biomarkers for personalised cancer therapy.</p><p>Increasing further the size of the considered cell-line/compound panels would be very beneficial, as it provides the basis to improve the accuracy and predictive power of the inferred associations. However, this requires larger infrastructures and the cost grows with the screening size. In addition, due to various technical and logistical reasons in a high-throughput screen <ref type="bibr" target="#b6">[7]</ref>, the resulting compound-by-cell line matrix of drug efficacy (typically summarised in their IC 50 , the half maximal (50%) inhibitory concentration of a substance with respect to cell viability) is often not complete. Although many steps are automated, filling experimentally each gap could be expensive and laborious <ref type="bibr" target="#b5">[6]</ref>. Hence, an accurate tool to impute missing IC 50 s and estimate them for novel cell lines would be of great value for drug screening design. Furthermore, a robust prediction tool for in silico identification of potentially effective drugs for treating a specific cancer could be used for drug repositioning <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b8">9]</ref>. An approach of this kind is represented by the COMPARE algorithm <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b10">11]</ref> that uses drug response profiles of the NCI-60 screening, through a 'guiltby-association' paradigm. Following this principle, drugs eliciting a similar drug-response profile across the cell lines in the NCI-60 panel are hypothesized to share a common mode of action (MoA), thus enabling MoA discovery for novel drugs (if their tumour-suppression profile is similar to that of a known and well characterized drug) as well as the discovery of novel or secondary effects for established drugs.</p><p>Ultimately, in silico methods to accurately predict the effectiveness of drugs based on the molecular making of tumours (i.e. genome, transcriptome) would be a major milestone towards personalized therapies for cancer patients based on molecular biomarkers <ref type="bibr" target="#b11">[12]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results</head><p>We therefore investigated whether it is possible to build machine learning models (for details see "Materials and Methods" section, "Machine learning" subsection) that can predict drug sensitivity using cell line screening experimental data, where cell lines are treated with variable concentration of a given drug and the resulting dose-response curve summarized by an IC 50 . We focused on the most comprehensive cancer drug screening dataset available to date, from the "Genomics of Drug Sensitivity in Cancer" (GDSC) project <ref type="bibr" target="#b2">[3]</ref>. For each drug, a neural network model was trained to predict its IC 50 profile across the panel of cell lines based on the genomic background of each cell, as characterised by microsatellite instability status (1 = unstable or 0 = stable), somatic coding variants in the coding sequence of 77 cancer genes (1 = any change in protein sequence and 0 = wild type) and copy number alterations denoting gene amplification and deletion of those cancer genes (1 = amplification / more than 7 copy numbers, 0 = wild type / between 1 or 7 copy numbers, and -1 = deletion / no copy number). However, the predictive power of these initial models was limited, especially for those drugs without a well-known oncogene-to-drug response dependency.</p><p>We reasoned that cancer cell sensitivity to drug molecules is driven by features from both cells and drugs.</p><p>Whereas cell features are ultimately connected to the inner workings of the cell, drug features include physicochemical properties that are correlated with the ability of the molecule to cross the cell membrane (e.g. lipophilicity) or its selectivity to intracellular targets (e.g. fingerprints encoding the chemical structure). Indeed, extensive work has been done on Quantitative Structure-Activity Relationship (QSAR) approaches to predicting whole-cell activity of molecules based of their chemical properties <ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref>,</p><p>including applications to predicting anti-cancer activity in drugs <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b17">18]</ref>. However, such QSAR approaches exclusively based on chemical features cannot distinguish between resistant and sensitive cell lines. For instance, building a model without any information of the cell lines, the model will be not capable of predicting cell line A to be more resistant than cell line B to drug C, which is the main aim of integrating chemical and genomic features in our models.</p><p>We therefore extended our machine learning models to include as input chemical features from the drugs, besides the molecular characterization of the cell lines (see <ref type="bibr">Fig 1)</ref>. This integrative approach not only integrates two complementary streams of information, but also allows the model to be trained with much larger amounts of data, which is often a key factor to improve predictive performance (see <ref type="bibr">Fig 2)</ref>.</p><p>Consequently, data was pre-processed to include 689 chemical descriptors of the drugs and 138 genomic features for differentiating the cell lines, resulting in an input space of 827 features.</p><p>Chemical descriptors were generated with PaDEL software <ref type="bibr" target="#b18">[19]</ref> from simplified molecular-input line entry system (SMILES) structures. Descriptors include physicochemical features such as weight, lipophilicity, rule of five, and additionally fingerprints of the drugs (for details see "Materials and Methods" section, "Features" subsection, and <ref type="url" target="http://padel.nus.edu.sg/software/padeldescriptor/">http://padel.nus.edu.sg/software/padeldescriptor/</ref>). We performed an 8-fold cross-validation, where the test set of each fold was not used for training so as to measure the predictive power of the resulting models across all drugs rather than for each drug separately. Neural networks were able to impute missing log(IC 50 ) values on the test sets with an averaged Pearson correlation coefficient (R p ), coefficient of determination (R</p><p>2 ) and root mean square error (RMSE) (Text S1) of 0.85, 0.72 and 0.83 across all 111 drugs, respectively (Fig 3A). Alternatively, random forests achieved comparable performances (R p of 0.85, R 2 of 0.72 and RMSE of 0.84; full details in supplementary materials). Furthermore, we conducted a blind test using 13,565 new experimental IC 50</p><p>values only received after training our models in order to verify our cross-validation results (drug-to-cell line matrix updated by ~18%, with these newly generated IC 50 s exclusively used as the blind test set).</p><p>The results on the blind test were almost as good as in the cross-validation, obtaining an R p of 0.79, R Using an analysis of variance (ANOVA) to identify drug-to-oncogene associations, we investigated how well the IC 50 values predicted for the test set using our model recapitulate associations manifested in the experimental data, for instance, whether a given mutation is causing sensitivity or resistance against a drug <ref type="bibr" target="#b2">[3]</ref>. Using only predicted IC 50 values, we correctly captured 79% (168/213) of the significant observations with the same t-test tendency (positive or negative effect on drug sensitivity) identified with the experimental IC 50 s. When only considering significant associations from our model (p-value adjusted with Benjamini-Hochberg, FDR=0.2), we correctly predicted 28% (59/213) of all experimentally identified associations. Where we failed to detect an association the ANOVA effect size is often small, or the experimental correlation is associated with a mutation either not or infrequently represented within the subset of cell lines with predicted IC 50 values. Notably, as example of the utility of this approach, using only predicted IC 50 values we identified known drug-to-oncogene associations such as sensitivity of BRAF-mutated cells lines to MEK1/2-inhibitors (Fig <ref type="figure" target="#fig_6">4B</ref>) <ref type="bibr" target="#b19">[20]</ref>. The range of predicted IC 50 values for a drug are typically narrower than for the observed values and is likely because currently available genomic dataset are in sufficient to explain the observed range of drug responses across the cell lines.</p><p>In addition, we assessed the predictive power of our model for unknown cell lines. Therefore, we applied a more stringent 8-fold cross-validation, where a cell line was either included in the train or test set. These </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Discussion</head><p>Our results show that by using genomic features from the cell lines and chemical information from drugs, it is possible to build in silico multi-drug models to impute missing IC 50 values with non-parametric machine learning algorithms such as neural networks and random forests. As output for our method, we chose to explore IC50 values as generated by Garnett et al. <ref type="bibr" target="#b2">[3]</ref>, which enables us to compare our results to them, however other metrics (such as a capped IC50 or area under the curve), might provide additional insight and potentially lead to more robust models.</p><p>The Pearson correlation (Fig. <ref type="figure" target="#fig_4">2A</ref>) and coefficient of determination (Fig. <ref type="figure" target="#fig_4">2B</ref>) of the multi-drug model are significantly better than the single-drug models, while the RMSE error is similar (Fig <ref type="figure" target="#fig_4">2C</ref>). This means that the error (on average) of predicting a given IC50 value is the same in the multi-drug and single-drug models (RMSE) and, since some drugs are active at different concentration ranges, the model is able to cover a much larger dynamic range with a similar precision. The coefficient of determination balances these two terms, and thus a broader range with the same RMSE increases R 2 . Thanks to the use of chemical descriptors, multi-drug models are trained with a volume of data that is two orders of magnitude bigger than the data to train each single-drug model. This larger dataset weights the difficulty in training heterogeneous response values across drugs.</p><p>In several instances, the use of multi-drug models permitted the in silico identification of genomic events associated with altered drug sensitivity, which is only possible when genomic properties are considered.</p><p>Although our models did not capture all known gene to drug associations, we anticipate that as larger drug sensitivity and genomic datasets become available in coming years the predictive power of these models will increase. We believe that the predictive power of our models is due to the large number of cell lines and broad range of drugs in the GDSC panel that samples intensively the chemical space of common cancer drugs (chemotherapeutic and kinase inhibitors). It remains to be determined how these models will predict completely unknown families of therapeutic agents.</p><p>The predictive ability of our methods for individual values is still limited and could be further improved by extending the set of input features with additional layers of molecular characterization of the cell lines, such as basal transcriptional profiles and phosphoproteomic data. These data types have been used to predict drug responses in various contexts <ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref>. Another valuable extension could be the inclusion of gene expression data following drug treatment, a powerful in silico resource for predicting treatment outcomes and elucidating compound mode of action <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b25">26]</ref>, as well as a promising gateway to the identification of new drug repositioning opportunities <ref type="bibr" target="#b26">[27]</ref>. Additionally, epigenetics data could enhance the prediction capabilities of future methods <ref type="bibr" target="#b27">[28]</ref>.</p><p>Our method uses purely experimental data, but additional predictive power can be expected from including knowledge of the underlying network <ref type="bibr" target="#b28">[29]</ref>. It has been shown that the prediction of drug response and mode of action by transcriptional profiling is significantly enhanced when paired with known a priori gene and protein networks <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b30">31]</ref> and drug similarities have been inferred based on the corresponding in silico predicted impinged pathway <ref type="bibr" target="#b31">[32]</ref>. Prior knowledge could also increase the interpretability of the results. Known regulatory relationships between genes and transcriptional data <ref type="bibr" target="#b32">[33]</ref> and protein networks <ref type="bibr" target="#b33">[34]</ref> can be used to identify deregulated pathways, and be further linked to the genomic alterations that drive them <ref type="bibr" target="#b34">[35]</ref>, highlighting subnetworks of importance for drug response.</p><p>Incorporation of these additional features will require a scheme to prioritize the input features based on their impact on the final trained model. Associations between features and outcomes could be explicitly unveiled by integrating in our models feature selections criteria and dimensionality reduction techniques.</p><p>In terms of predictive models, we have used standard machine learning methods (neural networks and random forests), given their flexibility and robustness as predictive models. A fertile ground for further research is investigating the application of other modeling techniques, including linear regression methods (e.g. LASSO, ElasticNets).</p><p>Our results also show that one can estimate the accuracy of prediction for different degrees of sparseness in the data, which may have utility when designing experiments where coverage has to be balanced with accuracy. Furthermore, because models are able to predict IC 50 on cell lines not screened yet, predictions from these models can be used to decide whether it is worthwhile expanding the panel of cell lines, or rather focus on a few selected ones.</p><p>The implications of our results go beyond their utility to optimise the experimental design of drug screenings. Once a model is built, it could be used to systematically test the potential effect of novel drugs in silico, based on their chemical features and similarity. These predictions can help to evaluate the potential activity of new drugs, e.g. from large chemical libraries, to be screened. Furthermore, predictions on clinically approved drugs is expected to reveal candidates for drug repurposing and potentially identify specific disease sub-types that would be most responsive <ref type="bibr" target="#b7">[8]</ref>. Although cell lines are not an exact replica of real tumours, comprehensive predictive models such as ours together with expanded genomic and epigenomic datasets may be a good proxy to facilitate the development new therapeutic strategies tailored to individual patients <ref type="bibr" target="#b11">[12]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Materials and Methods</head><p>Training dataset -We used the data from the Genomics of Drug Sensitivity in Cancer project <ref type="bibr" target="#b2">[3]</ref>, which contains 639 cancer cell lines, each of them characterised by a set of genomic features (details in the next section). The characterisation is not complete for every cell line, and therefore we filtered out cell lines with more than 15 missing genomic features, which reduced the set of selected cell lines from 639 to 608. The dataset contains 131 drugs. As our method exploits the chemical structure of each drug, this information in simplified molecular-input line entry system (SMILES) format is required. Therefore, we did not consider the 20 drugs for which SMILES were not available, and built our model for the remaining 111 drugs.</p><p>The resulting matrix of 608 cell lines by 111 drugs will have 67,488 possible drug response curves, each summarised by its IC 50 value (drug concentration in µM units required to eradicate 50% of the cancer cells). Currently, the dataset contains 38,930 IC 50 values out of these 67,488 (58%), with missing values mostly due to logistic reasons such as co-ordinating measurements from various screening centres. The log IC 50 ranges from -7.40 (IC 50 ~4•10 -8 M; the most sensitive drug-cell combination) to 6.91 (IC 50 ~8•10 6 M; the most resistant). Note that extremely large and small values are extrapolations in the IC 50 that have no clinical relevance. We use these ranges in this study as those are the ones used in the paper Garnett et al. [3] that we compare our results against. Blind test dataset -We generated test sets during the cross-validation for estimating the expected error (details in cross-validation section). However, even cross-validation can overestimate the prospective performance of machine learning methods. Therefore, we conducted a truly blind test in order to demonstrate the prospective capabilities of our cross-validated models to impute missing IC50 values in the 608 cell lines by 111 drugs matrix (Fig S1). Our blind test contains 13,565 newly generated IC 50 values, which were obtained after training took place, or put it differently, a batch of new experimental data was generated to independently validate our models. To sum up, 58% of the IC 50 values are in the original dataset (used for cross-validation), an additional 18% are used for the blind test (independent test).</p><p>Features -There are two different input data streams in our method: the genomic background for each cancer cell line, and the chemical properties of a drug. For the first input data stream, cancer cell lines are characterised by the mutational status of 77 oncogenes, where each of them is further described by copy number variation (any high grade amplification or homozygous deletion of a cancer gene) and sequence variation (changes in the protein sequence, e.g. non-synonymous single nucleotide polymorphism).</p><p>Additionally, there is one binary feature for the microsatellite stability status of each cell line. The cell line features were encoded as followed:</p><p>Microsatellite instability status = 1 , if unstable</p><formula xml:id="formula_0">0 , if stable ! " # $ # Sequence variation = 1 , if mutation 0 , if wildtype ! " # $ # Copy number variation = 1 0 -1 , if amplification , if wildtype , if deletion " # $ $ % $ $</formula><p>All mutations considered, we have 77 possible copy number variations plus 77 possible sequence variations and one microsatellite stability value, which sums up to 155 possible cell line features.</p><p>However, a few mutational features are missing for some cell lines, and we conservatively removed a feature in case it was missing for any cell line. This led to a final set of 138 genomic features characterising each cancer cell line.</p><p>The second input data stream incorporates 1D and 2D chemical properties of each drug. We generated these chemical features using the PaDEL software (v2.11, downloaded from the project website, <ref type="url" target="http://padel.nus.edu.sg/software/padeldescriptor/">http://padel.nus.edu.sg/software/padeldescriptor/</ref>) <ref type="bibr" target="#b18">[19]</ref> from the SMILES with default settings. 722 features are physicochemical descriptors and 881 are obtained from the fingerprints, leading to a total of 1603 chemical features. We only included chemical features that could be calculated for all drugs.</p><p>Furthermore, we removed any feature with the same value across all drugs, obtaining a final set of 689 chemical features for each drug (e.g. atom count, bond count, molecular weight, xlogP or PubChem fingerprint, to name a few). The list of drugs is available in the Supplementary material (druglist.csv).</p><p>Taking together the cancer cell line and drug stream, we used 827 features to build our predictive models of the log IC 50 value of a given cell line in the presence of a given drug.</p><p>Cross-validation -We used an 8-fold cross-validation for building our models. Therefore, we separated the original dataset into eight equally sized sets of IC 50 values, obtained by randomly distributing all IC 50 s of the matrix into 8 bins. One of them was exclusively used for testing (never involved in any training), other six were destined for training the model and the remaining piece was used for cross-training. Crossvalidation is a process used to avoid under-and overfitting <ref type="bibr" target="#b35">[36]</ref> e.g. identifying the optimal number of hidden units and training iterations for a neural network (details in "Machine learning" section). We rotated iteratively the sets so that each data point was used at least once for training, cross-training or testing.</p><p>Finally, we obtained 8 models, which were equally predictive.</p><p>Furthermore, we used a more stringent version of the above described 8-fold cross-validation. We ensured that test, train and cross-train set are not sharing any cell line, which might occur in the nonstringent version (described above). For instance, assume cell line C1 is treated with the drugs D1, D2 and D3; For the non-stringent cross-validation, the combination C1-D1, C1-D2 and C1-D3 might be distributed over test, train and cross-train set; for the stringent cross-validation, every combination with C1</p><p>is exclusively occurring in one of those three sets.</p><p>Machine learning -For the neural networks, we used the Java implementation from Encog 3.0.1 (<ref type="url" target="http://www.heatonresearch.com/encog">http://www.heatonresearch.com/encog</ref>) <ref type="bibr" target="#b36">[37,</ref><ref type="bibr" target="#b37">38]</ref> of a feed-forward multi layer perceptron, where we defined three different layers: input, hidden (or middle) and output layer. Every perceptron of a layer is completely connected to each perceptron of the upper layer. The number of features determined the number of input units, or put it differently, required perceptrons in the first layer. The number of hidden units was explored during the training for determining the correct model complexity, which was between 1 and 30 hidden units. Furthermore, each input and hidden unit had also an bias, which is a permanent activation input for those perceptrons. We used a single output unit for predicting the continuous log(IC 50 ) value.</p><p>As perceptron activation function for enabling the network to predict non-linear behaviour, we used the sigmoid function, which returns values in an interval from 0 to 1. Therefore, we had to normalise the IC 50 values (raw IC 50 values, not in log space) also into a range from 0 to 1, which was done with the following logistic-like function:</p><formula xml:id="formula_1">norm y ( ) = 1</formula><p>1+ y -0.1 where y &gt; 0 y : Observed/expected IC50 value, which has to be a positive number greater than zero.</p><p>We trained the network with the resilient error backpropagation implementation from Encog with default parameters <ref type="bibr" target="#b38">[39]</ref>. For exploring the final model complexity, which is described by number of hidden units and amount of training iterations, we examined different neural network architectures from 1 up to 30 hidden units and trained them for maximal 400 iterations. We searched the global minimum in that crosstraining landscape (minimizing the root mean square error of cross training set) for avoiding an under-or overfitting (usually, between 21 and 27 hidden units were chosen as best model after approximately 300 iterations).</p><p>We also carried out random forest <ref type="bibr" target="#b39">[40]</ref> regression models to investigate whether there was any significant performance gain using an alternative non-parametric machine learning methodology (Text S3). A random forest is an ensemble of many different regression trees randomly generated from the same training data (recommended value of n=500 trees was used). Figure 1: IC 50 prediction workflow. Our method is based on two different input streams: (1) cell line features of 77 oncogenes and their mutation state, (2) drug features that are generated with PaDEL software [19] from the simplified molecular-input line entry system (SMILES), see method section for details. The continuous IC 50 value is predicted with state-of-the-art machine learning algorithms (neural networks and random forests).   -05 , t-test multiple hypothesis corrected with Benjamini &amp; Hochberg). prediction, or put a differently, plotting a line through observation-by-observation points. The following definition of R 2 typically returns values in range from 0 to 1, where values closer to one indicate a good prediction and 0 suggest weak fitting of the observations. However, since the regression model is not data driven and rather a conservative assumption of being a perfect prediction, also negative values are possible in case the prediction is far off the observation. R 2 = 1-(y obs i -y pred i ) 2 i=1 n ∑ (y obs i -y obs ) 2 i=1 n ∑ n : Size of the test set y obs : Observed/expected log(IC 50 ) value y obs : Average of all observed log(IC 50 ) values y pred : Predicted log(IC 50 ) value (ii) Root mean square error (RMSE) provides an average of the error across all predictions made by the models: RMSE = 1 n (y obs i -y pred i ) 2 i=1 n ∑ n : Size of the test set y obs : Observed/expected log(IC 50 ) value y pred : Predicted log(IC 50 ) value Text S2: Comparing performance of imputation methods and machine learning approach. A straightforward way to estimate missing IC 50 values is to impute them from the rest of the values. We therefore compared our feature-based approach against conventional imputation methods on our blind test. We used well-known reference methods from the R package "imputation" v1.3 developed by Jeffrey Wong: Singular Value Threshold (SVT), Singular Value Decomposition (SVD), and k-Nearest Neighbor   To further challenge our model and our hypothesis that it is possible to leave out several cell lines, we removed all lung cell lines and used them exclusively for testing. There are 106 out of 608 cell lines are from lung tissue (~17 % from data), which we were able to predict with minor performance reduction compared to including all cell lines (Figure <ref type="figure" target="#fig_5">3A</ref>): root mean square error (RMSE) increased from 0.83 to 0.99, coefficient of determination (R 2 ) declined from 0.72 to 0.61 and the Pearson correlation coefficient (R p ) decreased from 0.85 to 0.79.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>For</head><figDesc>building our model, we used GDSC screening data from 608 genomically characterised cell lines and 111 drugs for which chemical information were available (see Fig 2 and Methods for details). The published version of this matrix holds 38,930 IC 50 values (~58% of the total, due to technical and logistic reasons).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>6 0.</head><label>6</label><figDesc>64 and an RMSE of 0.97 (Fig S1, Text S2). The accuracy of the predictions encouraged us to train the networks with fewer IC 50 values. Remarkably, the predictive power of the models did not fall appreciably off in quality, even if the amount of training data was reduced to 20 % of the total (Fig 3B).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><figDesc>models achieved an R p of 0.82, R 2 of 0.68 and an RMSE of 0.89 (Fig S2) demonstrating the accuracy of our model to predict IC 50 values for completely new cell lines. In an additional simulation, we left out all cancer cell lines from a specific tissue, e.g. we removed all lung cancer cell lines (106 out of 608 cell lines) and still obtained an R p of 0.79, R 2 of 0.61 and RMSE of 0.99 (Fig S3).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figures:Figure 1 :</head><label>1</label><figDesc>Figures:</figDesc><graphic coords="18,72.52,95.40,459.84,146.88" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Comparison of single-drug models and the multi-drug model. The performance of the multi-drug model (red asterisk) and the family of 111 single-drug models (blue histogram) is represented using three different metrics: (A) Pearson correlation R p , (B) coefficient of determination R 2 , and (C) root mean square error RMSE.</figDesc><graphic coords="18,72.52,391.80,457.92,122.88" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: IC 50 prediction. Predictions are achieved with 8-fold cross-validations. Performance values are exclusively calculated on the test sets. (A) Correlation between predicted to experimental observed log(IC 50 ) values (Pearson correlation R p = 0.85 ; coefficient of determination R 2 = 0.72, root mean square error RMSE = 0.83). Although there is an enrichment of resistant cell lines, which tend to have higher log(IC 50 ) values than sensitive cell lines, the lower log(IC 50 ) values are still decently predicted. (B)Expected improvement of the IC 50 prediction by filling experimentally gaps in the cell-to-drug matrix. The vertical grey line corresponds to the published data set (filled to ~58%, due to logistic reasons), which corresponds to the results in panel (A). However, similar accuracies (R p of 0.84 instead of 0.85, R 2 of 0.70 instead of 0.72) can be achieved using exclusively 20 % of the whole matrix.</figDesc><graphic coords="19,72.52,72.36,200.88,302.88" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Comparing ANOVA with prediction. (A) Analysis of variance (ANOVA) of experimental data and predicted output for drug-to-oncogene associations (20% FDR). The size of each association (dot) is proportional to the amount of treated cell lines containing the particular mutated oncogene. Blue dots indicating the same t-test tendency in our predictions, and red ones the opposite. (B) Predicted and measured IC 50 s of BRAF-mutated vs. wild-type cell lines exposed to the MEK1/2-inhibitor PD-0325901 (pvalue of prediction = 1.91×10</figDesc><graphic coords="20,72.52,72.36,312.96,303.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure S1 :</head><label>S1</label><figDesc>Figure S1: Blind test of multi-drug model. The training dataset holds 38,930 IC 50 values, that is ~58% of all possible drug-to-cell line combinations. For the blind test, 13,565 novel IC 50 values were generated, an~18% additional data points which were not included in the training dataset. For obtaining the predicted log(IC50) values, we averaged the output of each model (8 different models resulting from the 8-fold cross-validation procedure). The prediction on the blind test was slightly worse than that estimated by cross-validation (Fig 3A): root mean square error (RMSE) was increased from 0.83 to 0.97, coefficient of determination (R 2 ) declined from 0.72 to 0.64 and the Pearson correlation coefficient (R p ) was decreased from 0.85 to 0.79. This small performance decrease is due to the fact that blind test data points are not selected at random: these tend to come from drug-cell combinations that are not optimally represented in the training set (i.e. those cell lines in the training set that have been probed against every drug in the panel will not have further IC50 values in the test set, as all training and test sets in this study are nonoverlapping).</figDesc><graphic coords="24,72.52,72.36,275.76,185.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure S2 :</head><label>S2</label><figDesc>Figure S2: Correlation between predicted to experimental observed log(IC 50 ) values leaving out cell lines. The stringent 8-fold cross-validation was performed on the distinct set of cell lines, so that a cell line was neither used for testing or involved in the training. The figure shows values obtained solely on the test sets. The prediction quality is slightly worse than the normal cross-validation (Figure 3A): RMSE increased from 0.83 to 0.89, R 2 decreased from 0.72 to 0.68 and the R p decreased from 0.85 to 0.82.</figDesc><graphic coords="25,72.52,72.36,275.76,203.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure S3 :</head><label>S3</label><figDesc>Figure S3: Correlation between predicted to experimental observed log(IC 50 ) values leaving out all lung cell lines. To further challenge our model and our hypothesis that it is possible to leave out several</figDesc><graphic coords="25,72.52,448.68,276.96,201.84" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>We thank <rs type="person">King Wai Lau</rs>, <rs type="person">David Wedge</rs> and <rs type="person">Jorge Soares</rs> for helping with data, <rs type="person">Marc Hafner</rs>, <rs type="person">Mario Niepel</rs>, <rs type="person">John Marioni</rs>, <rs type="person">Theo Knijnenburg</rs>, <rs type="person">Lodewyk Wessels</rs> for useful discussions, and <rs type="person">Clare Pacini</rs> and <rs type="person">Maja Köhn</rs> for feedback on the manuscript.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data access -The dataset is fully accessible of the Genomics of Drug Sensitivity in Cancer project <ref type="bibr" target="#b2">[3]</ref>, downloaded from the project website, <ref type="url" target="http://www.cancerrxgene.org/">http://www.cancerrxgene.org/</ref>. The training set is based on release v1.0 from June 2012. Newly generated IC 50 values of the blind test are published in release v1.1 from July 2012, which are not part of Release v1.0.</p><p>Software access -The Encog Machine Learning Framework (version 3.0.1) <ref type="bibr" target="#b36">[37,</ref><ref type="bibr" target="#b37">38]</ref> containing the neural network implementation is a free available and open source (Apache License 2.5), and could be downloaded on the Heaton Research webpage (<ref type="url" target="http://www.heatonresearch.com/encog">http://www.heatonresearch.com/encog</ref>). For the random forest model, the R package randomForest (version 4.6-6) <ref type="bibr" target="#b40">[41]</ref> is also freely available under GPL licence from CRAN webpage (<ref type="url" target="http://cran.r-project.org/web/packages/randomForest/index.html">http://cran.r-project.org/web/packages/randomForest/index.html</ref>).</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplemental Materials</head><p>Text S1: Measuring performance.</p><p>The output of our method is the logarithm to base 10 of the IC 50 in µM: We evaluated three different performance metrics, (i) one that captures the linear dependency of the prediction versus observation, (ii) a metric for outlining the variance of an assumed perfect prediction and (iii) additionally another metric that describes the average error of the model predictions:</p><p>(i) Pearson correlation coefficient (R p ) describes the relationship of prediction and observation. R p is in a range from -1 to 1; negative correlations hint at inverse predictions (more predicted wrong than correct), R p of 0 correspond to a random relationship (no correlation), and positive correlations indicate linear behaviour with positive gradient: </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Cell line-based platforms to evaluate the therapeutic efficacy of candidate anticancer agents</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">V</forename><surname>Sharma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Settleman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="241" to="253" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The National Cancer Institute: cancer drug discovery and development program</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Grever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Schepartz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Chabner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="622" to="638" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dastur</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Subtype and pathway specific responses to anticancer compounds in breast cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Heiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sadanandam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Kuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Benz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Goldstein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci U S A</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="2724" to="2729" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Applied multivariate statistics for the social sciences</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Stevens</surname></persName>
+		</author>
+		<editor>Riegert D</editor>
+		<imprint>
+			<date type="published" when="2002">2002</date>
+			<publisher>Lawrence Erblaum Associates, Inc</publisher>
+			<pubPlace>Mahwah, NJ</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Drug repositioning: identifying and developing new uses for existing drugs</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">T</forename><surname>Ashburn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">B</forename><surname>Thor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Drug Discov</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="673" to="683" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Editorial: computational methods for drug repurposing</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sanseau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Koehler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Brief Bioinform</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="301" to="302" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Display and analysis of patterns of differential activity of drugs against human tumor cell lines: development of mean graph and COMPARE algorithm</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Paull</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Shoemaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hodes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Monks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Scudiero</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="1088" to="1092" />
+			<date type="published" when="1989">1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">COMPARE: a web accessible tool for investigating mechanisms of cell growth inhibition</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Zaharevitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Holbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bowerman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Svetlik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Mol Graph Model</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="297" to="303" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Cancer biomarkers: selecting the right drug for the right patient</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Kelloff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Sigman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Drug Discov</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="201" to="214" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Quantitative structure-activity relationships (QSAR) and molecular modelling in cancer research</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kubinyi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Cancer Res Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page" from="529" to="537" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">CDRUG: a web server for predicting anticancer activity of chemical compounds</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="3334" to="3335" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Ranking chemical structures for drug discovery: a new machine learning approach</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Agarwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dugar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sengupta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Chem Inf Model</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="page" from="716" to="731" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Kernels for small molecules and the prediction of mutagenicity, toxicity and anti-cancer activity</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Swamidass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bruand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Phung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ralaivola</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">Suppl 1</biblScope>
+			<biblScope unit="page" from="359" to="368" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Mining the NCI anticancer drug discovery databases: genetic function approximation for the QSAR study of anticancer ellipticine analogues</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Myers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Connor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Paull</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Chem Inf Comput Sci</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="189" to="199" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Mining and visualizing large anticancer drug discovery databases</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Waltham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Andrews</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Chem Inf Comput Sci</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="367" to="379" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">PaDEL-descriptor: an open source software to calculate molecular descriptors and fingerprints</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">W</forename><surname>Yap</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Comput Chem</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="1466" to="1474" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">BRAF mutation predicts sensitivity to MEK inhibition</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Solit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Garraway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Pratilas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sawai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">439</biblScope>
+			<biblScope unit="page" from="358" to="362" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Harnessing gene expression to identify the genetic basis of drug resistance</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Causton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mancenido</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Goddard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Perlstein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">310</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Integrative analysis of proteomic signatures, mutations, and drug responsiveness in the NCI 60 cancer cell line set</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rabinovsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Carey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Hennessy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Agarwal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Cancer Ther</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="257" to="267" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Using expression and genotype to predict drug response in yeast</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Ruderfer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Schreiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Perlstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kruglyak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">6907</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">CellMiner: A Web-Based Suite of Genomic and Pharmacologic Tools to Explore Transcript and Drug Patterns in the NCI-60 Cell Line Set</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">C</forename><surname>Reinhold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sunshine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Varma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kohn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="page" from="3499" to="3511" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">A modular approach for integrative analysis of large-scale gene-expression and drug-response data</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Kutalik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Beckmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bergmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="531" to="539" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lamb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">D</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Modell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">C</forename><surname>Blat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">313</biblScope>
+			<biblScope unit="page" from="1929" to="1935" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Transcriptional data: a new gateway to drug repositioning?</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rittman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drug Discov Today</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Cancer epigenetics reaches mainstream oncology</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rodriguez-Paredes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Esteller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Med</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="330" to="339" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Simplistic pathways or complex networks?</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Jorgensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Linding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Curr Opin Genet Dev</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="15" to="22" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Background gene expression networks significantly enhance drug response prediction by transcriptional profiling</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Torkamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Schork</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pharmacogenomics J</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">A systems biology approach to prediction of oncogenes and molecular perturbation targets in B-cell lymphomas</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Mani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lefebvre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">K</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Basso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">169</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Large-scale elucidation of drug response pathways in humans</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Silberberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gottlieb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kupiec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ruppin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sharan</forename><forename type="middle">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Comput Biol</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="163" to="174" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Revealing signaling pathway deregulation by using gene expression signatures and regulatory motif analysis</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ringner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">77</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">DEGAS: de novo discovery of dysregulated pathways in human diseases</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Ulitsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Krishnamurthy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Karp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Shamir</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<date type="published" when="2010">2010. 13367</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Identifying causal genes and dysregulated pathways in complex diseases</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">A</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wuchty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Przytycka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput Biol</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">1001095</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mitchell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Machine Learning</title>
+		<imprint>
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Introduction to Neural Networks for Java</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jeff</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jeff</surname></persName>
+		</author>
+		<title level="m">Programming Neural Networks with Encog3 in Java</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A Direct Adaptive Method for Faster Backpropagation Learning -the Rprop Algorithm</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Riedmiller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Braun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Ieee International Conference on Neural Networks</title>
+		<imprint>
+			<date type="published" when="1993">1993. 1993</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="586" to="591" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Random forests</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Breiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Machine Learning</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="5" to="32" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Text S3: Random Forest. In model building, we used the same training set, features and performance measures as in the neural network model. However, unlike in the neural network and for the sake of efficiency, we did not tune any parameter of the Random Forest and hence the 8-fold cross-validation was slightly different (i.e. the same test set used by the neural network model, but exploiting more training data with a control parameter-free Random Forest)</title>
+		<author>
+			<persName><forename type="first">Wiener</forename><surname>Alam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Classification and Regression by randomForest</title>
+		<imprint>
+			<date type="published" when="2002">2002</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="18" to="22" />
+		</imprint>
+	</monogr>
+	<note>(kNN) imputation. To estimate the parameters of each imputation method we used cross validation as suggested in the example code of the R package SVT imputation obtained 0.06 R p and 1.66 RMSE. The SVD imputation improved the performance to 0.37 R p and 1.54 RMSE. The best performing imputation method is kNN with 0.71 and 1.10 R p and RMSE, respectively Our method (in this case a neural network) including genomic and chemical drug properties outperformed all imputation methods with an R p of 0.79, R 2 of 0.72 and RMSE of 0.97. It is important to note that imputation techniques, unlike feature-based machine learning, cannot be used to extrapolate, i.e. to predict IC50s for unseen cell lines or drugs Here all seven partitions are exclusively used for training and the last partition for test. As usual, the prediction on the eight independent folds, one per each regression, is averaged In the case of randomly constructed partitions, RMSE was 0.84, R 2 was 0.72 and the R p was 0.85. In the case of leaving cells out partitions, RMSE was 0.85, R 2 was 0.71 and the R p was 0.84. The performance on the blind test was RMSE was 1.00, R 2 was 0.59 and the R p was 0.78. Overall, these results are very similar to those obtained with the neural network model. Each machine learning model was independently trained and validated using different computer codes which further supports the robustness of our results</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

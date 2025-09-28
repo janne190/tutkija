@@ -9,7 +9,7 @@ param(
   [string]$MetadataPath = "data/cache/merged.parquet",
   [string]$SeedCsv = "tools/seed_urls.csv",
   [string]$PdfIndex = "data/cache/pdf_index.parquet",
-  [string]$PdfDir = "data/pdf",
+  [string]$PdfDir = "data/pdfs",
   [string]$AuditLog = "data/logs/pdf_audit.csv",
   [string]$ParsedDir = "data/parsed",
   [string]$ParsedIndex = "data/cache/parsed_index.parquet",

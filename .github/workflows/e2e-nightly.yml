@@ -38,94 +38,33 @@ jobs:
           . .venv/bin/activate
           la search-all --topic "genomic screening cancer" --out data/cache/merged.parquet
 
-      - name: Live pdf fetch
+      - name: Live pdf discover
         run: |
           set -euo pipefail
           . .venv/bin/activate
-          la pdf --in data/cache/merged.parquet --out data/cache/with_pdfs.parquet --pdf-dir data/pdfs --log data/logs/pdf_audit.csv --mailto "$UNPAYWALL_EMAIL" --timeout 30 --retries 2 --throttle 200
+          la pdf discover --in data/cache/merged.parquet --out data/cache/pdf_index.parquet
+
+      - name: Live pdf download
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la pdf download --in data/cache/pdf_index.parquet --pdf-dir data/pdfs --audit data/logs/pdf_audit.csv --mailto "$UNPAYWALL_EMAIL" --timeout 30 --retries 2 --throttle 200
 
       - name: Live parse smoke
         run: |
           set -euo pipefail
           . .venv/bin/activate
-          la parse --in data/cache/with_pdfs.parquet --out data/cache/parsed.parquet --parsed-dir data/parsed --grobid-url http://localhost:8070 --err-log data/logs/parse_errors.csv --sample 20
+          la parse run --pdf-dir data/pdfs --out-dir data/parsed --index-out data/cache/parsed_index.parquet --grobid-url http://localhost:8070 --err-log data/logs/parse_errors.csv --sample 20
 
       - name: Live screen smoke
         run: |
           set -euo pipefail
           . .venv/bin/activate
           la screen --in data/cache/merged.parquet --out data/cache/screened.parquet --recall 0.9
-          python - <<'PY'
-import csv
-from pathlib import Path
-
-log_path = Path('data/cache/screen_log.csv')
-if not log_path.exists():
-    raise SystemExit('screen_log.csv puuttuu')
-
-rows = list(csv.DictReader(log_path.open(encoding='utf-8')))
-if not rows:
-    raise SystemExit('screen_log.csv tyhja')
-
-last = rows[-1]
-required = [
-    'identified',
-    'screened',
-    'excluded_rules',
-    'excluded_model',
-    'included',
-    'engine',
-    'recall_target',
-    'threshold_used',
-    'seeds_count',
-    'version',
-    'random_state',
-    'fallback',
-    'out_path',
-]
-missing = [field for field in required if field not in last]
-if missing:
-    raise SystemExit(f'screen_log viimeinen rivi puuttuu kentat: {missing}')
-
-def _as_float(value):
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return 0.0
-
-identified = _as_float(last['identified'])
-screened = _as_float(last['screened'])
-if identified <= 0:
-    raise SystemExit('identified oltava positiivinen')
-ratio = screened / identified
-if ratio < 0.7:
-    raise SystemExit(f'screened/identified liian pieni: {ratio:.2f}')
-
-out_path = Path(last['out_path'])
-if not out_path.exists():
-    raise SystemExit(f'out_path ei osoita tiedostoon: {out_path}')
-
-print('screen_log viimeinen rivi OK', last)
-PY
+          python scripts/validate_screen_log.py
 
       - name: Validate pdf/parse outcomes
         run: |
           set -euo pipefail
           . .venv/bin/activate
-          python - <<'PY'
-import pandas as pd
-
-pdf_frame = pd.read_parquet('data/cache/with_pdfs.parquet')
-parsed_frame = pd.read_parquet('data/cache/parsed.parquet')
-
-pdf_ok = int(pdf_frame.get('has_fulltext', pd.Series(dtype=int)).sum())
-parsed_ok = int(parsed_frame.get('parsed_ok', pd.Series(dtype=int)).sum())
-
-print('PDF ok:', pdf_ok, '/', len(pdf_frame))
-print('Parsed ok:', parsed_ok, '/', len(parsed_frame))
-
-if len(parsed_frame) > 0:
-    ratio = parsed_ok / len(parsed_frame)
-    if ratio < 0.8:
-        raise SystemExit(f'parsed_ok ratio too low: {ratio:.2f}')
-PY
+          python scripts/validate_pdf_parse.py

@@ -1,0 +1,2760 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Sparse dictionary learning recovers pleiotropy from human cell fitness screens</title>
+				<funder ref="#_dTayEG2">
+					<orgName type="full">Kat Huang of the Pattern Team @ Broad</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2021-11-11">11 Nov 2021</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Joshua</forename><surname>Pan</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jason</forename><forename type="middle">J</forename><surname>Kwon</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jessica</forename><forename type="middle">A</forename><surname>Talamas</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ashir</forename><forename type="middle">A</forename><surname>Borah</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Francisca</forename><surname>Vazquez</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jesse</forename><forename type="middle">S</forename><surname>Boehm</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Aviad</forename><surname>Tsherniak</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Marinka</forename><surname>Zitnik</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Biomedical Informatics</orgName>
+								<orgName type="institution">Harvard</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">James</forename><forename type="middle">M</forename><surname>Mcfarland</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">William</forename><forename type="middle">C</forename><surname>Hahn</surname></persName>
+							<email>william_hahn@dfci.havard.edu</email>
+							<affiliation key="aff0">
+								<orgName type="institution">Broad Institute</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Sparse dictionary learning recovers pleiotropy from human cell fitness screens</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2021-11-11">11 Nov 2021</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">EDFAC38356319F674C172CF650BB4AFE</idno>
+					<idno type="arXiv">arXiv:2111.06247v1[q-bio.QM]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>In high-throughput functional genomic screens, each gene product is commonly assumed to exhibit a singular biological function within a defined protein complex or pathway. In practice, a single gene perturbation may induce multiple cascading functional outcomes, a genetic principle known as pleiotropy. Here, we model pleiotropy in fitness screen collections by representing each gene perturbation as the sum of multiple perturbations of biological functions, each harboring independent fitness effects inferred empirically from the data. Our approach ('Webster') recovered pleiotropic functions for DNA damage proteins from genotoxic fitness screens, untangled distinct signaling pathways upstream of shared effector proteins from cancer cell fitness screens, and learned aspects of the cellular hierarchy in an unsupervised manner. Modeling compound sensitivity profiles in terms of genetically defined functions recovered compound mechanisms of action. Our approach establishes a sparse approximation mechanism for unraveling complex genetic architectures underlying high-dimensional gene perturbation readouts.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>CRISPR-Cas9 technology has made gene perturbation a routine practice, and genome-scale screens can be readily performed across diverse cell contexts to measure physiological outcomes such as cell fitness. After collecting such datasets, a key challenge is to infer the genetic architecture underlying the observed fitness effects, such that individual genes become mapped to putative biological functions essential in specific cell contexts for cell fitness.</p><p>A foundational aspect of genetic architecture is pleiotropy, which states that gene products can participate in multiple independent biological functions. Although pleiotropy is pervasive, our ability to account for pleiotropy within collections of cell fitness screens is limited. Because each gene perturbation is measured across many cell contexts, to capture pleiotropy one must first describe a set of biological functions that vary independently across cell contexts, then define a one-tomany mapping of genes to these functions. Both of these steps are challenging to perform in high-dimensional data, and the lack of a unified conceptual framework results in different calculations of pleiotropy which cannot be directly compared <ref type="bibr" target="#b14">(Costanzo et al., 2016;</ref><ref type="bibr" target="#b19">Dudley et al., 2005;</ref><ref type="bibr" target="#b37">Koch et al., 2017)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Present work.</head><p>Here, we propose a framework that exploits pleiotropy to structure latent representations of biological function learned from fitness data. Our approach ('Webster') takes a large gene perturbation matrix as input and infers a set of biological functions, which we refer to as a dictionary, such that each gene perturbation can be approximated as a combination of a small number of these dictionary elements. Regularizing the dictionary using the gene co-fitness graph results in individual dictionary elements mapping to interpretable biological modules. By applying Webster to CRISPR-Cas9 fitness screen collections performed in human cells under a variety of conditions, we explored the layers of functional impact resulting from single gene perturbation; jointly embedded gene and functional dependencies to chart fitness landscapes; and projected new perturbations into the learned reference space.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Overview</head><p>Given a set of gene perturbation measurements, we wish to infer a dictionary of latent variable elements, such that the effects of each gene perturbation can be approximated as a mixture of dictionary elements. Furthermore, dictionary elements should correspond to interpretable biological functions learned empirically from the data with no outside knowledge. To perform this inference, we employed dictionary learning via Webster (Figure <ref type="figure">1</ref>). Webster receives as input an n × m matrix of fitness effects, where n is the number of cell contexts, and m is the number of genes. (A fitness effect is the change in cell number upon gene perturbation.)</p><p>Webster models the fitness effect matrix in terms of k latent biological functions learned from the data, with k &lt; m and n. The output of Webster is two low-rank matrices: (1) an n × k dictionary matrix capturing the fitness effect of losing one of k inferred functions across n cell contexts, and (2) a k × m loadings matrix encoding the sparse approximation of each of m gene effects in terms of t dictionary elements, with t &lt;&lt; k. Formally, this approach corresponds to an approximation task called "sparse dictionary learning" <ref type="bibr" target="#b58">(Rubinstein et al., 2010)</ref>, with connections to sparse matrix factorization and dimensionality reduction <ref type="bibr" target="#b10">(Cleary et al., 2017;</ref><ref type="bibr" target="#b33">Kim and Park, 2007;</ref><ref type="bibr" target="#b63">Stein-O'Brien et al., 2018)</ref>.</p><p>Figure <ref type="figure">1</ref>: Pleiotropy underlying the fitness effects of gene perturbation can be approximated using dictionary learning. Fitness screen collections measure changes in cell growth rate following gene perturbation across diverse cell contexts. Webster applies graph-regularized dictionary learning to this data to discover latent variables corresponding to biological functions. Webster returns: 1) A dictionary matrix containing the fitness effect of perturbing each inferred biological function and 2) sparse gene-to-function loadings. Using this information, each measured gene effect can be approximated as a sparse linear combination of these latent functional effects, scaled by the appropriate loadings. Given the number of latent functions (k) and a hard sparsity parameter (t), Webster minimizes the total approximation error while preserving the local structure of genes and cell contexts in its reduced-dimensional representations.</p><p>Webster incorporates several biologically-inspired priors to constrain its dictionary learning (Figure <ref type="figure">1</ref>, Figure <ref type="figure" target="#fig_4">S1</ref>). First, cell contexts that depend on similar genes for proliferation are encouraged to depend on similar functions (as represented in the dictionary matrix). Second, genes with similar perturbation outcomes in the original data are encouraged to be loaded onto similar sets of functions, capturing modular pleiotropy <ref type="bibr" target="#b71">(Wang et al., 2010)</ref> between co-essential pathways <ref type="bibr" target="#b69">(Wainberg et al. 2021)</ref>. Finally, t is chosen to be small such that each gene effect is modeled in terms of a few functions, reflecting the observed sparsity across genotype-phenotype maps in model organisms <ref type="bibr" target="#b71">(Wang et al., 2010)</ref>. Latent variables obeying these locality and sparsity constraints will capture coherent gene programs that are selectively dependent in particular cell contexts, thereby informing biological function <ref type="bibr" target="#b32">(Keeling et al., 2019;</ref><ref type="bibr" target="#b68">Wagner and Zhang, 2011)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Model description</head><p>Webster encompasses three steps: (1) preprocessing raw fitness data; (2) dictionary initialization with k-medoids; (3) graph-regularized dictionary learning. Preprocessing removes low-variance gene effects and corrects batch effects between cell contexts prior to dictionary learning. Then, k-medoids defines an initial n × k dictionary that clusters the data. From this starting point, dictionary learning is performed using an objective function balancing (i) approximation error, (ii) smoothness over a nearest-neighbor graph of genes and (iii) smoothness over a nearest-neighbor graph of cell contexts. This is performed via dual graph-regularized k-SVD <ref type="bibr">(Yankelevsky and</ref><ref type="bibr">Elad, 2016, 2020)</ref>, which optimizes k overlapping subspaces of genes and takes the first eigenvector of the subspace as its representative dictionary element. Each gene effect is then linearly approximated using t dictionary elements via orthogonal matching pursuit <ref type="bibr" target="#b51">(Pati et al., 1993)</ref>, thereby capturing statistically independent components of variance. A detailed methodological overview is in the Appendix.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Implementation and data sources</head><p>We applied Webster to published CRISPR-Cas9 fitness screens in a human cell line exposed to a diverse set of genotoxic stressors <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. Preprocessing the 31 genome-scale screens yielded 304 high variance fitness genes (Figure <ref type="figure" target="#fig_5">S2A</ref>). After a hyperparameter sweep (Figure <ref type="figure" target="#fig_5">S2B</ref>), Webster successfully reconstructed the original gene perturbation data using an inferred dictionary composed of ten elements, using two dictionary elements to represent each gene perturbation (Table <ref type="table">S1</ref>). We matched each dictionary element to a biological function by annotating its most sensitive genotoxic stressors and its top loaded genes, using literature resources that were hidden during model training.</p><p>Next, we scaled Webster to a ∼ 20 times larger dataset of 675 cancer cell line fitness screens, the Cancer Dependency Map <ref type="bibr" target="#b46">(Meyers et al., 2017)</ref>. We preprocessed the data to include 2,921 gene effects exhibiting high variance across cell lines. After a hyperparameter sweep (Figure <ref type="figure" target="#fig_1">S3A</ref>-B), we recovered 220 dictionary elements and approximated each gene effect using up to four dictionary elements (Table <ref type="table">S2</ref>). We further validated that Webster was reproducible across random runs over identical parameters (Figure <ref type="figure" target="#fig_1">S3C</ref>), robust to noise (Figure <ref type="figure" target="#fig_1">S3D</ref>), and that dictionaries trained on one cancer fitness dataset could successfully model perturbations from another dataset performed with a different CRISPR-Cas9 guide library and cell culture conditions <ref type="bibr" target="#b6">(Behan et al., 2019)</ref> (Figure <ref type="figure" target="#fig_1">S3E</ref>). We matched each dictionary element to a biological function by annotating the strongest loaded genes, supported by consensus cell line features that explain the fitness effect captured by the element. Nine out of ten dictionary elements captured the fitness effect of losing literature-supported functions, whereas the remaining elements captured technical factors such as common essential effects (Table <ref type="table">S2</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results</head><p>First, we benchmark Webster's inferences against other common latent variable methods. Then, we explore biological insights that emerge from Webster factorizations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Benchmarking</head><p>We compared Webster's inferences against three commonly used latent variable methods: Principal Components Analysis (PCA), Independent Components Analysis (ICA), and k-medoids (Table <ref type="table">1</ref>). PCA and ICA learned latent variables that well approximated the data but lacked sparsity and interpretability. By relaxing the one-hot sparsity assumption in k-medoids to allow pleiotropy, Webster improved the recovery of ground-truth genesets as well as reduced the approximation error of the overall factorization.</p><p>Table <ref type="table">1</ref>: Benchmarking results for Webster vs. common latent variable methods. The mean over 5 randomized runs is reported for: root mean square error; the smoothness over the gene co-fitness graph, calculated as the mean squared difference between gene loadings for gene pairs strongly correlated in the original data; sparsity of gene loadings; entropy and purity of the factorizations against ground truth gene annotations, taken from <ref type="bibr" target="#b49">(Olivieri et al., 2020) and</ref><ref type="bibr" target="#b59">(Sanchez-Vega et al., 2018)</ref>. Entropy and purity calculated as in <ref type="bibr" target="#b33">(Kim and Park, 2007)</ref>. Best scores are reported in bold. k = 10 for the genotoxic dataset, and 220 for DepMap.</p><p>Dataset M ethod RMSE SMOOTHNESS SPARSITY ENTROPY PURITY GENOTOXIC PCA 1.88 7.49 0.300 0.649 0.416 ICA 2.59 4.49 0.383 0.695 0.452 K-MEDOIDS 2.20 7.82 1.000 0.484 0.602 WEBSTER 1.80 4.64 0.889 0.462 0.624 DEPMAP PCA 0.782 3.3E2 0.299 0.385 0.607 ICA 0.774 2.7E3 0.262 0.669 0.385 K-MEDOIDS 1.88 4.8E2 1.000 0.234 0.689 WEBSTER 1.17 2.1E2 0.949 0.101 0.882 3.2 Learning representations of DNA damage functions from genotoxic fitness screens</p><p>Next, we explored the biological insights recovered by Webster from the genotoxic screening data (Figure <ref type="figure" target="#fig_0">2A</ref>). As an example, Webster's first dictionary element (Figure <ref type="figure" target="#fig_0">2B</ref>) captured the negative fitness effects of DNA adduct-inducing agents (UV light, illudin S, and BPDE) (Figure <ref type="figure" target="#fig_0">2C</ref>), which are toxic in the absence of nucleotide excision repair (NER). The top four genes loaded on this dictionary element were classical NER members (ERCC8, GTF2H5, UVSSA, ERCC5), and the fifth (STK19) was a recently discovered pathway member <ref type="bibr" target="#b7">(Boeing et al., 2016;</ref><ref type="bibr" target="#b49">Olivieri et al., 2020)</ref>. Indeed, the strength of a gene's loading on this element was a sensitive and specific predictor of NER pathway membership (Figure <ref type="figure" target="#fig_5">S2C</ref>, AUROC = 0.9).</p><p>We identified other dictionary elements that captured the effects of DNA damage pathways (Figure <ref type="figure" target="#fig_0">2D</ref>), with canonical pathway members loaded onto the appropriate dictionary elements (Figure <ref type="figure" target="#fig_0">2D</ref>). PCA and ICA failed to separate these independent pathways into individual components (Figure <ref type="figure" target="#fig_5">S2C</ref>, Table <ref type="table">1</ref>). From the fitness data alone and without geneset information as input, Webster learned a set of maximally informative dictionary elements capturing the functional effects of losing biological pathways that respond genotoxic stress.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Pleiotropy underlies the DNA damage response</head><p>We next examined how learned mixtures of functional effects approximated pleiotropic gene effects. The H2AFX histone protein is phosphorylated in response to DNA double stranded breaks. Webster approximated the effect of perturbing H2AFX as a mixture of two functional effects scaled by their loadings (Pearson correlation = 0.76, Figure <ref type="figure" target="#fig_0">2E</ref>):</p><formula xml:id="formula_0">H2AFX ≈ 1.4 * Homologous Recombination + 0.8 * End Joining</formula><p>MCPH1 is an obligate H2AFX interactor at double stranded break sites. Webster approximated the effect of depleting MCPH1 using identical functional effects and similar loadings (Figure <ref type="figure" target="#fig_0">2F</ref>). Homologous Recombination and End Joining both repair double stranded breaks, but are preferentially activated under different conditions <ref type="bibr">(Figure 2E and F)</ref>. By constraining Webster to approximate a large number of gene perturbations with a small number of dictionary elements, it parsimoniously modeled perturbations of double stranded break sensors as mixtures of the underlying double stranded break repair pathways. The immortalized human cell line RPE1-hTERT harboring a genome-scale CRISPR-Cas9 knockout library was subjected to 31 genotoxic stressors at a sub-lethal dose, resulting in a genotoxic fitness screen collection <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. From this data matrix, Webster was parameterized to infer ten biological functions and approximate each gene effect as a sparse mixture of two functional effects. B. Top: The original fitness data, preprocessed to a set of 304 high-variance fitness gene effects from 31 treatment conditions, shown as a hierarchically clustered heatmap. Bottom: Webster's approximation of the data, with each gene effect approximated as a sparse mixture of two inferred functions. The order of genes and treatments is preserved between panels. C. The dictionary matrix. Each column of the dictionary captures the inferred fitness effect of depleting an biological function learned from the data. D. The loadings matrix. Top: Sparse gene-to-function loadings for the 304 fitness genes. Each gene (column) has two non-zero loadings, encoding the model's sparse representation of its gene effect. Bottom: Literature curated gene annotations, defined by <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. Gene order is preserved between panels. TSG = Tumor Suppressor Gene. E. Gene effect decomposition. Webster decomposes H2AFX knockout as a mixture of two functional effects related to DNA double stranded breaks. The first function, Homologous Recombination, has a fitness effect induced by olaparib and camptothecin, etc. The second, End Joining, has a fitness effect induced by doxorubicin and etoposide, etc. Webster faithfully modeled the H2AFX gene effect as the sum of these two functional effects, scaled by their respective loadings (Pearson = 0.76). F. Top: Relationships learned from fitness data for H2AFX and MCPH1, an obligate H2AFX interactor. Each arrow corresponds to an inferred gene-to-function loading. Bottom: Illustration of H2AFX/MCPH1's shared roles as DNA double stranded break sensors upstream of Homologous Recombination and End Joining. From this data alone, Webster learned a dictionary matrix of 220 fitness effects reflecting inferred biological functions, and approximated each gene effect in terms of four functional effects. C. Webster approximated the fitness effect of SHOC2 knockout as a mixture of four functional effects (Activated KRAS, Activated NRAS, EGFR signaling and FGFR signaling), each of which were strongest in cell lines harboring corresponding genomic alterations (KRAS mutation, NRAS mutation, activated EGFR and FGFR expression, respectively). This decomposition reflects the pleiotropic interactions underlying SHOC2's overall function downstream of these signaling pathways. D. Conceptual overview of cellular organization. After learning gene functions with Webster from cancer fitness data alone, experimentally derived subcellular localization data <ref type="bibr" target="#b22">(Go et al., 2021)</ref> were used to annotate Webster's functions across 20 subcellular locations within a total of 7 cellular compartments. E. Joint embedding of fitness effects for genes and functions inferred from DepMap data, with functions colored by their specificity for one of seven cellular compartments -mitochondria, endoplasmic reticulum (ER), recycling, membrane, nucleus, cytosol and miscellaneous. Subcellular location data was not used during the training of the Webster model. F. Top: Insets from E. detailing functions within the ER, capturing specific subcellular locations or protein complexes within these broad compartments. Bottom: Insets from above panel detailing genes embedded nearby their pleiotropic gene functions.</p><p>We note that linear algebra operations in our interpretable latent space reflect the underlying structure of pleiotropic gene relationships. RAD51B is a Homologous Recombination gene as well as risk allele for Fanconi Anemia. In our model, H2AFX -End Joining + Fanconi Anemia ≈ RAD51B (Pearson cor = 0.69). This is analogous to linear semantics underlying word embeddings in which kingman + woman ≈ queen <ref type="bibr" target="#b48">(Mikolov et al., 2013)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Learning pleiotropic biological functions from cancer cell line fitness screens</head><p>From the larger Cancer Dependency Map dataset, Webster modeled 2,921 gene effects as pleiotropic mixtures of 220 functional effects learned empirically from cancer fitness data (Figure <ref type="figure" target="#fig_1">3A-B</ref>). For instance, SHOC2 is part of the oncogenic RAS signaling pathway. Webster approximated the effect of SHOC2 depletion in 675 cell lines in terms of four functional effects from the dictionary (Pearson correlation = 0.85, Figure <ref type="figure" target="#fig_1">3C</ref>):</p><formula xml:id="formula_1">SHOC2 ≈ 0.9 * Activated KRAS + 0.8 * Activated NRAS+ 0.2 * EGFR Signaling + 0.2 * FGFR Signaling</formula><p>Cell lines with the strongest fitness effects per function exhibited matched molecular alterations: KRAS hotspot mutations, NRAS hotspot mutations, activated EGFR and high FGF expression, respectively (Figure <ref type="figure" target="#fig_1">3C</ref>, Figure <ref type="figure" target="#fig_1">S3F</ref>). These genomics features were unused during model training.</p><p>By looking globally across fitness data alone, Webster discovered cell contexts with distinct activated signaling pathways that influence SHOC2 function, thereby revealing functional components underlying a single gene perturbation.</p><p>A biochemical basis for pleiotropy arises when protein complexes share common subunits but use them to perform distinct functions. From the fitness data alone, Webster learned independent representations for STAGA and ATAC complexes. From these, the effect of perturbing a shared subunit was represented as KAT 2A ≈ 1 * STAGA complex + 0.2 * ATAC complex + • • • , while the effects of perturbing complex-specific subunits were represented as ADA2A ≈ 0 * STAGA complex + 0.26</p><formula xml:id="formula_2">* ATAC complex + • • • and ADA2B ≈ 2.2 * STAGA complex + 0 * ATAC complex + • • • .</formula><p>Other modular complexes such as SWI/SNF, Mediator, and Integrator exhibited similar patterns. Overall, 53% of the gene effects that were well approximated by Webster (Pearson cor ≥ 0.4) exhibited evidence of pleiotropy (loadings ≥ 0.25 on at least two functions), placing cancer cells in line with other organisms exhibiting majority pleiotropic genes <ref type="bibr" target="#b71">(Wang et al., 2010)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Learned functions reflected a cellular hierarchy</head><p>Next, we explored general properties of Webster's learned latent space. For example, gene products are spatially regulated within a cellular hierarchy (Figure <ref type="figure" target="#fig_1">3D</ref>), but because Webster is trained on fitness data alone, it has no prior knowledge of this hierarchy. We leveraged recently published proximity labeling measurements <ref type="bibr" target="#b22">(Go et al., 2021)</ref> represented as probability distributions for each gene product over twenty subcellular locations. By multiplying gene location probabilities with our gene-to-function loadings inferred from cancer fitness screens, we computed scores indicating the level of physical compartmentalization for each fitness function (Figure <ref type="figure" target="#fig_2">S4A-B</ref>). We visualized these inferences by jointly embedding 2,921 genes and 220 functions according to their fitness effects using UMAP and coloring functions according to their localization (Figure <ref type="figure" target="#fig_1">3E</ref>). Functions enriched for specific compartments occupied nearby regions of the embedding space (Figure <ref type="figure" target="#fig_2">S4C</ref>), with pleiotropic genes embedded as data points nearby their underlying functions (Figure <ref type="figure" target="#fig_1">3F</ref>). This echoes the hierarchical relationships observed in classic yeast fitness screens <ref type="bibr" target="#b14">(Costanzo et al., 2016;</ref><ref type="bibr">Kramer et al., 2014)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6">Projecting compounds into a latent space defined by gene functions</head><p>Finally, we assessed whether our dictionary optimized on gene perturbation data captured generalized patterns present in unseen perturbations (Figure <ref type="figure" target="#fig_2">4A</ref>). The PRISM Drug Repurposing dataset contains compound sensitivity measurements across hundreds of cancer cell lines <ref type="bibr" target="#b12">(Corsello et al., 2020)</ref>. We isolated ∼200 compounds with diverse and well-annotated mechanisms of action from the PRISM dataset and modeled each compound sensitivity profile as a mixture of four elements of the dictionary trained exclusively on gene perturbation data (Figure <ref type="figure" target="#fig_2">4B</ref>, Table <ref type="table">S3</ref>). Approximation quality of compound sensitivity using gene functions varied by compound class (Figure <ref type="figure" target="#fig_7">S5A</ref>), with clinical anticancer compounds such as MDM and EGFR inhibitors exhibiting the best approximations, and broadly cytotoxic compounds such as Aurora Kinase inhibitors exhibiting the least robust approximations (Figure <ref type="figure" target="#fig_7">S5B</ref>). This suggests that Webster learned representations of on-target pathways for certain compound classes from gene perturbation data alone, in concordance with previous results on pairwise gene-drug correlations <ref type="bibr" target="#b23">(Gonçalves et al., 2020)</ref>. Examples included RAF and MEK inhibitors projecting onto the BRAF Signaling function learned from gene perturbations, bromodomain inhibitors projecting onto the H2A.Z maintenance function, and HMGCR inhibitors projecting onto the Mevalonate Synthesis function (Figure <ref type="figure" target="#fig_2">4C-D</ref>). Some profiles were modeled as interpretable mixtures of multiple independent biological pathways, reflecting polypharmacology (ex: ATK inhibition was modeled as mixtures of RICTOR/AKT Signaling, PIK3CA Signaling and PTEN Signaling functions) (Figure <ref type="figure" target="#fig_7">S5D</ref>). We also found that projection onto on-target pathways was sensitive to compound dose, with high doses that caused broad cytotoxicity or low doses with no fitness effect failing to project at all (Figure <ref type="figure" target="#fig_2">4E</ref>, Figure <ref type="figure" target="#fig_7">S5E</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Discussion</head><p>Wagner and Zhang nominated pleiotropic inference as an outstanding problem in functional genomics a decade ago <ref type="bibr" target="#b68">(Wagner and Zhang, 2011)</ref>, envisioning two major challenges: deriving "biologically non-arbitrary" latent phenotypes from high dimensional data, and accounting for the sparse nature of genotype-phenotype relationships <ref type="bibr" target="#b71">(Wang et al., 2010)</ref>. By framing pleiotropy as an instance of the sparse representation problem <ref type="bibr" target="#b20">(Elad, 2010)</ref> solved by graph-regularized dictionary learning, we recovered interpretable latent dictionary elements that sparsely combine to model gene effects, thereby satisfying the two challenges outlined above. Webster meets the analytical challenge posed by growing CRISPR-Cas9 fitness screens by enabling unsupervised learning of biological functions using only numerical fitness data as input. It is generally applicable to fitness screen collections of various designs, and may be especially useful in organisms in which fitness screens are experimentally tractable but gene functions are poorly annotated, such as bacteria <ref type="bibr" target="#b53">(Price et al., 2018)</ref>. Future work could address limitations of our current method, for instance by regularizing on hierarchical graph structures rather than simple neighbor graphs, or by learning the degree of pleiotropy as a per-gene parameter rather than setting it globally.</p><p>Representing gene effects as vectors distributed over a space of latent functions runs counter to traditional symbolic representations (ex: Gene A performs Function B if Condition C is satisfied) <ref type="bibr" target="#b21">(Fraser and Marcotte, 2004)</ref>. However, in natural language processing, word symbols are represented as vectors distributed over a space of latent semantics <ref type="bibr" target="#b48">(Mikolov et al., 2013;</ref><ref type="bibr" target="#b52">Pennington et al., 2014)</ref>. Dictionary learning applied to word vectors (word2Vec, GloVe) resolves polysemic words as sparse linear combinations of latent meanings, such as: apple ≈ 0.16 * f ruit + 0.22 * mobile&amp;IT + . . . <ref type="bibr" target="#b76">(Zhang et al., 2019)</ref>.</p><p>The fact that polysemic words and pleiotropic genes are modeled by dictionary learning suggests that word co-occurrence and gene co-fitness share statistical regularities. Perhaps the distributional hypothesis of semantics ("you shall know a word by the company it keeps") <ref type="bibr" target="#b8">(Boleda, 2020</ref>) also applies to gene function ("you shall know a gene by shared causal effects with other genes"). If so, it may be advantageous to transition from genotype-phenotype "maps" to "geometries", where statistically independent phenotypes form an empirically derived latent space in which gene effects are vectors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A Appendix B Data and code availability</head><p>We provide two code repositories and two data repositories to support this manuscript. The main repository contains R code for reproducing figures and analyses presented in the paper, and can be found at <ref type="url" target="https://github.com/joshbiology/gene_fn">https://github.com/joshbiology/gene_fn</ref>. We created a Figshare archive that is the starting point for these analyses (<ref type="url" target="https://www.doi.org/10.6084/m9.figshare.14960006">https://www.doi.org/10.6084/m9.figshare.14960006</ref>).</p><p>We provide a second repository of MATLAB code implementing the factorization methods that are the basis of Webster. This can be found at <ref type="url" target="https://github.com/joshbiology/graph_dictionary_learning">https://github.com/joshbiology/graph_  dictionary_learning</ref>. Finally, we provide a data repository containing Webster's preprocessed numerical input data and subsequent analysis output, a subset of which form the Supplemental Tables cited throughout this paper (<ref type="url" target="https://www.doi.org/10.6084/m9.figshare.14963561">https://www.doi.org/10.6084/m9.figshare.14963561</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C Method details C.1 Overview of the basic sparse approximation problem</head><p>The field of sparse approximation encompasses a diverse range of applications and implementation strategies. One specific formulation of the sparse approximation problem is centered around the following task (from <ref type="bibr" target="#b20">(Elad, 2010)</ref>, "Chapter 9.2 The Sparse-Land Model", see also <ref type="bibr" target="#b74">(Yankelevsky and Elad, 2016)</ref> (1) A dictionary matrix D in R n×k ;</p><p>(2) Sparse representations of each training signal in terms of dictionary elements. These representations form a matrix X = [x 1 , x 2 , . . . , x m ] with each x i being a t-sparse vector in R k .</p><p>The approximation of each training signal is y i ≈ D * x i . The term on the left is the measured signal, which is a vector in R n . The term on the right is a matrix operation resulting in a vector in R n , composed from the weighted sum of t columns of D (each of which are vectors in R n ), with the weights being the t non-zero coefficients held in x i .</p><p>We can also express this in matrix form: Y ≈ D * X.</p><p>To solve the sparse approximation problem, we find an optimal solution to both D and X that minimizes the approximation error, given the sparsity constraints imposed by the parameter t, and the number of dictionary elements dictated by k. Formally, the objective is arg min</p><formula xml:id="formula_3">D,X ||Y -DX|| 2 F s.t. ||x i || 0 ≤ t ∀i C.</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Sparse approximation of pleiotropic gene functions from fitness data</head><p>We adapt the framework of sparse approximation to model fitness data. Fitness data consists of measured changes in cell growth rate upon biological perturbations applied across cell contexts.</p><p>Here, we focus on gene perturbation, which can be induced in a variety of ways, including with programmable CRISPR-Cas9 nucleases. For additional descriptions of fitness experiments and their design, see <ref type="bibr" target="#b55">(Rancati et al., 2018)</ref> (focused on human cells) and <ref type="bibr" target="#b15">(Costanzo et al., 2019)</ref> (focused primarily on yeast).</p><p>We are specifically interested in modeling the genetic architecture underlying fitness measurements.</p><p>In particular, we seek to model pleiotropy, in which gene products have multiple functions depending on the cell context. Solving pleiotropy within fitness data reduces to (1) learning a set of fitness effects of perturbed biological functions, and (2) modeling gene effects as a combination of these functional effects.</p><p>There is a clear connection between these two tasks and the basic sparse approximation problem described above, although augmentations are required to encourage latent dictionary elements to model biological functions rather than numerically valid -but biologically meaningless -patterns in the data. To achieve this, we exploit several properties of fitness data. First, genes with correlated fitness effects tend to have similar biological functions, a concept referred to as co-essentiality <ref type="bibr" target="#b1">(Amici et al., 2021;</ref><ref type="bibr" target="#b5">Bayraktar et al., 2020;</ref><ref type="bibr" target="#b9">Boyle et al., 2018;</ref><ref type="bibr" target="#b34">Kim et al., 2019;</ref><ref type="bibr" target="#b50">Pan et al., 2018;</ref><ref type="bibr" target="#b69">Wainberg et al., 2021;</ref><ref type="bibr" target="#b70">Wang et al., 2017)</ref>. Second, similar cell contexts will share similar rate limiting functions for cell growth. This concept has been most extensively explored in the cancer field, in which related cell lines have been shown to harbor similar "selective dependencies" <ref type="bibr" target="#b44">(McDonald et al., 2017;</ref><ref type="bibr" target="#b66">Tsherniak et al., 2017)</ref>. Constraining learned representations to capture coherent gene modules essential in specific cell contexts is consistent with past use of bi-clustering to model pleiotropy <ref type="bibr" target="#b19">(Dudley et al., 2005;</ref><ref type="bibr" target="#b37">Koch et al., 2017)</ref>.</p><p>In summary, to recover latent representations in our model that capture biological functions, we augmented the basic sparse approximation objective (error minimization) with two additional objectives: learned representations should preserve the local structure between gene effects as well as preserve the local structure between cell contexts. To operationalize this, we adopted the framework of dual-graph regularized dictionary learning.</p><p>C.3 Webster: dual graph regularized dictionary learning applied to preprocessed fitness data</p><p>Our overall approach ('Webster') for modeling pleiotropic gene functions in fitness data consists of two steps. First, we preprocess the fitness data. This is done by centering and scaling individual screens, then centering the fitness effects of each gene perturbation ('gene effects'), and finally filtering out low variance gene effects. Batch correction and other quality control steps are applied at this stage as well, described in detail in later sections. Second, from this matrix of preprocessed gene effects, Webster uses dual graph regularized dictionary learning (DGRDL) <ref type="bibr">(Yankelevsky and</ref><ref type="bibr">Elad, 2016, 2020)</ref> to sparsely approximate the gene effect matrix in terms of latent biological functions.</p><p>Mathematically, this can be described as follows. Let the set of gene effects Y = [y 1 , y 2 , . . . , y m ] in R n consist of fitness effects upon individually perturbing m genes across n cell contexts. Pairwise similarities between the m gene effects define a matrix W in R m×m , while the pairwise similarities between the n cell contexts define a matrix V in R n×n .</p><p>From Y , W and V , we recover a dictionary matrix D in R n×k and a sparse representation matrix X in R k×m (with each column of X containing only t non-zero entries). D and X are optimized to satisfy the following objectives:</p><p>(1) Minimize the total approximation error ||Y -D * X|| F ;</p><p>(2) Minimize the sum of squared differences between the columns of X, weighted by the similarities of the corresponding columns of Y , expressed as 1 2 1≤i,j≤m W i,j * (X[, i] -X[, j]) 2 ; (3) Minimize the sum of squared differences between the rows of D, weighted by the similarities of the corresponding rows of Y, expressed as</p><formula xml:id="formula_4">1 2 1≤i,j≤n V i,j * (D[i, ] -D[j, ]) 2 .</formula><p>The intuition behind objective ( <ref type="formula">2</ref>) is that the more similar two gene effects are in the original data, the more similar their sparse representations should be; i.e. they should be approximated using similar biological functions. The intuition behind objective (3) is that the more similar two cell contexts are in their growth requirements, the more similar their representations in the dictionary matrix should be, i.e they should depend on the same functions for growth. Formally, objectives ( <ref type="formula">2</ref>) and (3) can be compactly expressed as a quadratic form of a graph Laplacian derived from the gene effect similarity graph and the cell context similarity graph, respectively.</p><p>The final DGRDL objective function is:</p><formula xml:id="formula_5">arg min D,X ||Y -DX|| 2 F + αT r(D T LD) + βT r(XL c X T ) s.t. ||x i || 0 ≤ t ∀i</formula><p>where L in R m×m is the Laplacian matrix derived from the cell context similarity graph, L c in R n×n is the Laplacian of the gene effect similarity graph, and α and β are importance weights for each term in the final objective. In practice, we choose k &lt; m, as we assume that gene effects can be described by a small set of latent elements. We also tend to choose k &lt; n, resulting in an undercomplete dictionary basis. Finally, we choose t to be small (t &lt;&lt; k) but greater than 1.</p><p>This is a high-level summary of DGRDL specifically through the lens of fitness data. For a fuller exploration of DGRDL applied to other data modalities, as well as theoretical guarantees of DGRDL for signal recovery, see the original papers: <ref type="bibr">(Yankelevsky and</ref><ref type="bibr">Elad, 2016, 2020)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C.4 Implementation details</head><p>In order to implement DGRDL, we obtained MATLAB code for k-SVD, orthogonal matching pursuit, and DGRDL from the respective lab websites (<ref type="url" target="https://elad.cs.technion.ac.il/software/">https://elad.cs.technion.ac.il/  software/</ref> and <ref type="url" target="http://www.cs.technion.ac.il/~ronrubin/software.html">http://www.cs.technion.ac.il/~ronrubin/software.html</ref>), which we detailed in the documentation for our code repository (<ref type="url" target="https://github.com/joshbiology/graph_dictionary_learning">https://github.com/joshbiology/graph_  dictionary_learning</ref>).</p><p>Our Webster approach customizes the base DGRDL method in several ways. First, we use nearestneighbor graphs in our graph regularization terms, with the goal of preserving local structure present in the data. Empirically, nearest neighbor graphs capture the overall topological relationships present in gene effect similarity networks <ref type="bibr" target="#b1">(Amici et al., 2021;</ref><ref type="bibr" target="#b50">Pan et al., 2018)</ref>, and provide the highest enrichment for previously annotated gene-gene relationships <ref type="bibr" target="#b9">(Boyle et al., 2018;</ref><ref type="bibr" target="#b34">Kim et al., 2019)</ref>. As a side note, nearest neighbor graphs are also the input to popular manifold learning algorithms t-SNE and UMAP, which tend to sufficiently capture local structure in biological data. We use nearest neighbor gene similarity and cell context similarity graphs as the basis for the graph regularization objectives described above, using cosine similarity and five nearest neighbors for both graphs (unless otherwise specified below).</p><p>Our second customization involves the dictionary learning initialization step. As DGRDL is an iterative optimization algorithm, it requires a pre-initialized dictionary in order to perform its first iteration. In the absence of a pre-initialized dictionary, DGRDL chooses k random elements among the input training signals to serve as the initial dictionary. We found empirically that this random selection introduced variability in the optimization outcomes. As a result, we pass a pre-initialized dictionary to DGRDL in the form of k representative training signals chosen via k-medoids from among the input training signals, using the MATLAB kmedoids function. As k-medoids is a clustering algorithm, the initial dictionary can be thought of as optimal for clustering the data into k mutually exclusive groups. From this starting point, an new dictionary is learned that best approximates all m training signals in terms of t dictionary elements while preserving local structure of the data. As t &gt; 1, this process can be thought of as relaxing the one-hot clustering assumptions present in the initial dictionary.</p><p>Finally, we multiply the sparse representation matrix X with a scalar correction factor 1/ √ n to convert coefficients into units of standard deviation from their original unit of Euclidean distance. As these coefficients are analogous to the loading coefficients used in PCA, we refer to this matrix of coefficients as the loadings matrix in the manuscript.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C.5 Fitness data origins and preprocessing</head><p>The genotoxic screening collection was downloaded from the publisher's website <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. The dataset consisted of 17,382 measured gene effects over 31 fitness screens performed in the presence of low doses of genotoxins. Each of the 31 screens was already processed through normZ which centers and scales the data <ref type="bibr" target="#b11">(Colic et al., 2019)</ref>.</p><p>To select high variance genes, we assumed that a large portion of gene effects in genome-scale screens have no phenotype in any cell contexts (also known as non-essential genes). Any variance present in these gene effects will be due to experimental noise rather than biological signal. The distribution of these across-cell-line variances will follow a chi-squared distribution, which converges to a normal distribution with large n. Biologically driven gene effects will exhibit greater variation across cell lines and will form positive outliers in this normal distribution. To detect such outliers, we used a quantile-quantile plot to visualize the observed distribution of gene effect variances compared to a theoretical normal distribution. We drew a cutoff that separated high variance genes from the remaining (variance &gt; 3), resulting in 304 gene effects over 31 screens that formed the input to graph regularized dictionary learning.</p><p>The 19Q4 Broad Cancer Dependency Map screening collection was downloaded from the Cancer Dependency Map FigShare archive (under the file Achilles_gene_effect.csv, <ref type="url" target="https://doi.org/10.6084/m9.figshare.11384241.v3">https://doi.org/10.  6084/m9.figshare.11384241.v3</ref>). The raw dataset consisted of 18,333 gene effect measurements over 689 cancer cell lines. We filtered out a group of cell lines that suffered a batch effect due to PCR contamination. We filtered out a group of X-chromosomal genes whose copy number across cell lines could not be properly controlled for. We also filtered out two HUGO gene groups, olfactory genes (<ref type="url" target="https://www.genenames.org/data/genegroup/#!/group/141">https://www.genenames.org/data/genegroup/#!/group/141</ref>) and KRTAP genes (<ref type="url" target="https://www.genenames.org/data/genegroup/#!/group/619">https://www.genenames.org/data/genegroup/#!/group/619</ref>), whose high sequence similarity resulted in large-scale off target guide cutting activity as previously described <ref type="bibr" target="#b9">(Boyle et al., 2018)</ref>. This intermediate dataset consisted of 17,167 gene effect measurements over 675 cell lines.</p><p>We applied several correction measures before gene effect selection. The first was a generalized correction for cutting effects specific to chromosome arms, as reported previously <ref type="bibr" target="#b1">(Amici et al., 2021)</ref>. We then centered each cell line screen and applied a batch correction for screen quality. This was done by linearly regressing out the NNMD profile over cell lines from each gene effect profile. NNMD stands for null-normalized mean difference and was previously described <ref type="bibr" target="#b17">(Dempster et al., 2019)</ref>. The NNMD score for each cell line was obtained from the "NNMD" column the sample_info.csv file from Figshare archive (<ref type="url" target="https://doi.org/10.6084/m9.figshare.11384241.v3">https://doi.org/10.6084/m9.figshare.11384241.v3</ref>). After screen quality correction, we scaled each cell line screen. This dataset was used as input for gene effect selection.</p><p>For gene effect selection, we used three criteria:</p><p>(1) Variance ( <ref type="formula">2</ref></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>) Perturbation confidence (3) Maximum pairwise correlation with other gene effects</head><p>The cutoff for variance was chosen using a quantile-quantile plot, as with the genotoxic screening data above. A variance cutoff of 1 was used. The perturbation confidence score was calculated as described previously (<ref type="url" target="http://archive.today/2021.03.22-122633/https://cancerdatascience.org/blog/posts/gene_confidence_blog/">http://archive.today/2021.03.22-122633/https:  //cancerdatascience.org/blog/posts/gene_confidence_blog/</ref>). In brief, an XGBoost model was trained to discriminate between known low confidence gene perturbations and high confidence gene perturbations using various features derived from the individual guide RNA effects. The recommended cutoff of 0.5 was applied. From these gene effects, we kept those that exhibited a maximum pairwise correlation with other gene effects above a certain threshold, as done in yeast fitness screen analyses <ref type="bibr" target="#b13">(Costanzo et al., 2010</ref><ref type="bibr" target="#b14">(Costanzo et al., , 2016))</ref>. The threshold we used was 0.275. This resulted in a preprocessed matrix of 2,921 gene effect measurements over 675 cell lines that formed the input to graph regularized dictionary learning.</p><p>Sanger Institute screens processed through the CERES algorithm were downloaded from the Cancer Dependency Map FigShare archive (under the filename sample_info.csv, <ref type="url" target="https://doi.org/10.6084/m9.figshare.9116732.v2">https://doi.org/10.  6084/m9.figshare.9116732.v2</ref>). The raw data consisted of 17,716 gene effect measurements over 318 cell lines. Arm correction, centering, NNMD regression and scaling were applied.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C.6 Hyperparameter tuning and model selection</head><p>For the genotoxic fitness screens, we empirically chose the primary dictionary learning hyperparameter k (dictionary size) by sweeping between values of 1 and 31 while fixing t = 2. We evaluated each of the model objectives and looked for diminishing returns for the approximation error and gene Laplacian model objectives (the cell context Laplacian had a linear relationship with k, so it was less informative for model selection). Diminishing returns were reached at k = 10. For a comparison, we also swept across k while fixing t = 1 (representing hard clustering). We also repeated these experiments without graph regularization (by setting α and β to 0).</p><p>For the cancer cell fitness screens, we performed a grid search over k = 25 to 675 in steps of 25, and t = 1:8, resulting in 216 model instances. From this search, we selected t = 4, as this was the sparsest model parameter whose objectives remained well behaved for all values of k. Subsequently, we performed a second sweep over k = 25 to 675 in steps of 5, with t fixed at 4, resulting in 131 model instances. Diminishing returns in the approximation error and gene Laplacian model objectives were observed at k = 220, which we chose for the final factorization. We confirmed that model objectives for these hyperparameter choices were stable to random seed initialization.</p><p>Various other model hyperparameters were set to the default values recommended in the original paper <ref type="bibr" target="#b74">(Yankelevsky and Elad, 2016)</ref>, and were as follows: α = 0.2; β = 0.6; number of iterations = 20. Finally, we set the graph regularization terms according to the settings explained above: neighbor graph degree = 5; neighbor graph metric/edgeweight = cosine similarity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C.7 Dictionary learning experiments: robustness, denoising and transferability</head><p>To assess robustness, we performed DGRDL with different random seed initializations, using the same k-medoids initialized dictionary. Element-wide consistency between the resulting dictionaries was assessed using Pearson correlation.</p><p>To assess the denoising properties of dictionary learning on fitness data, we created four noisy versions of the cancer cell fitness screening dataset by adding Gaussian random noise. The Gaussian random noise matrices were created using the R function rnorm with standard deviations set to a variety of values (s.d. = 0.25, 0.5, 1, 1.5). We also randomly split the 2,921 gene effects in cancer cells into 2,191 training genes and 730 test genes.</p><p>For each of the five datasets (original data and four noise levels), we trained DGRDL on the training gene effects only (using k = 220, t = 4) and subsequently modeled the corresponding unseen test genes in terms of dictionary elements (with the same noise level present in the test and training genes). Each reconstructed test gene was subsequently compared to the corresponding gene effect in the raw data (which did not have additional synthetic noise added) using Pearson correlation as a metric. We repeated this entire process five times, and kept the mean Pearson correlation for each test gene at each noise level. For each noise level, the distribution of these resulting scores were plotted as a distribution.</p><p>For the transferability experiments, we used a dictionary trained on data measured by one institute (Broad) to model the corresponding gene effects measured by another institute (Sanger), which used different experimental conditions and CRISR-Cas9 guide RNA sequences for each gene. We took a dictionary trained on the full Broad 2,191 gene effects over 675 cell lines (k = 220, t = 4) and subsetted it to the 161 cell lines that were screened by both institutes. For the Broad and Sanger datasets, we modeled the corresponding 2,901 overlapping gene effects across the 161 common cell lines in terms of the same Broad-trained dictionary. The resulting approximations were assessed using Pearson correlation and were plotted as a distribution for each dataset. As a comparison, a dictionary with shuffled cell line annotations was used to model the 2,901 Sanger-measured gene effects.</p><p>This concludes the descriptions of the core algorithmic steps performed with Webster in the manuscript. The remaining sections describe the annotation and visualization steps performed on Webster output.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D Quantification and Statistical Analysis D.1 Benchmarking</head><p>To benchmark Webster against other latent variable models, we applied PCA, ICA and k-medoids to identically preprocessed fitness data, with k held constant. Each method, including Webster, was run 5 times with varying random seeds with the mean of each benchmark reported. For sparsity, we reported the average Hoyer index over each gene representation. (k-medoids always returns a perfect score of 1, since each gene is represented by a single medoid.)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.2 Neighbor graph embedding to visualize gene function landscapes</head><p>For visualizing genotoxic and cancer cell fitness screen collections, we utilized the UMAP approach <ref type="bibr" target="#b45">(McInnes et al., 2018)</ref> as implemented by the R umap package. In each case, two matrices were concatenated and used as input: the preprocessed gene effects that served as inputs to Webster, and the dictionary matrix that is outputted by Webster. For the genotoxic screens, the 304 gene effects and 10 functional effects were plotted using the following UMAP parameters: metric = "pearson", num_neighbors = 15. For the cancer cell fitness screens, the 2,921 gene effects and 220 functional effects were plotted using the following UMAP parameters: metric = "pearson", num_neighbors = 10. All other parameters were set to default.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.3 Annotation of learned functions</head><p>Dictionary elements learned by Webster from each screen collection were annotated as follows. For each of the ten dictionary elements learned from genotoxic fitness screens, we considered, in order of priority, (1) strongly loaded genes and ( <ref type="formula">2</ref>) which treatments induced a strong fitness effect. For the first of the five dictionary elements , the strongly loaded genes on each mapped to one of five classical DNA damage response pathways. These relationships were corroborated by the set of treatments that induce fitness effects in these genes. For three of the dictionary elements, only a single treatment induced a strong fitness effect on its loaded genes. These were representative of the resistance / sensitivity profiles of these specific treatments, which we corroborated by matching its strongly loaded genes against similar screens from the literature. Finally, two dictionary elements exhibited strong enrichment for common essential genes and proliferation suppressor genes in their highly loaded genes, annotations for which were taken from the literature <ref type="bibr" target="#b11">(Colic et al., 2019;</ref><ref type="bibr" target="#b25">Hart et al., 2015)</ref>.</p><p>For each of the 220 dictionary elements learned from the cancer cell fitness screens, we again considered, in order of importance, (1) strongly loaded genes and ( <ref type="formula">2</ref>) top genomic features from models trained to predict the function's fitness profile over cell lines (see below). For annotations of the strongly loaded genes, we used a gene annotation web service, gProfiler, that takes a ranked list of genes as input and outputs a ranked list of enriched genesets <ref type="bibr" target="#b56">(Raudvere et al., 2019)</ref>. We supplemented these annotations with corresponding ones from STRING <ref type="bibr" target="#b64">(Szklarczyk et al., 2014)</ref>. We searched the literature for additional insights and recently published corroborating papers when applicable. Finally, we performed biomarker association analysis using cell line features, described below.</p><p>Using a combination of geneset enrichments, specific literature annotations for the top loaded genes and cell line features, we were able to manually annotate each dictionary element. Of the 220 dictionary elements, 199 elements were mapped to a biological function using manual curation by the authors. Of these, 195 were annotated according to geneset enrichments among top loaded genes, and 4 were named based on a clear biomarker. Nineteen of the dictionary elements were highly loaded for essential genes, which incur fitness effects at the lower detection limit of our assay and group together in our analysis for that reason. These functions were labeled as "Common Essential (Gene)", where the Gene was chosen to be the top loaded gene, or "Common Essential (Chr#)", when the common essential genes shared synteny on chromosome regions <ref type="bibr" target="#b1">(Amici et al., 2021)</ref>. Finally, two dictionary elements could not be mapped to a biological process. On deeper examination, the top loaded genes for both of these functions were perturbed using Avana CRISPR-Cas9 guides that targeted non-unique genomic sequences, suggesting that these elements represented technical factors that were separated from the remainder of the data. We labeled these as "[Gene] (unclear)".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.4 Associating fitness effects with baseline genomic features of cell lines</head><p>Baseline genomic features were associated to each function using predictive modeling. Using the function's inferred fitness effect across cell lines as the target, we performed random forest regression using the following features from the DepMap 21Q2 release (<ref type="url" target="https://doi.org/10.6084/m9.figshare.14541774.v2">https://doi.org/10.6084/m9.figshare.14541774.v2</ref>):</p><p>• RNAseq expression</p><p>• copy number • boolean mutation matrices • Methylation</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• Proteomics</head><p>• Lineage</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• metabolomics data</head><p>The numerical features were normalized and the categorical features were one-hot encoded and then combined into a feature matrix. These features were then used to predict the target fitness profile using 5-fold cross validation, using Pearson correlation as the metric for model performance. We selected the top 1000 features in each fold using the f-regression metric to fit the model to the target. component in the model, using the quickelbow function in the R package bigpca. For ICA, we set the number of components to 13, according to the MSTD score from <ref type="bibr" target="#b31">(Kairov et al., 2017)</ref>, which calculates an optimal number of stable ICA components.</p><p>To compare the Webster, PCA and ICA factorizations, we computed an individual AUROC for each geneset defined by <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref> for each inferred component, using the roc_auc function in the R package yardstick. This computes the enrichment specificity of each geneset across components, according to the rank order of genes by their loading scores on that component. <ref type="table">Table S1:</ref> Webster output from genotoxic fitness screen data: dictionary matrix, loadings matrix, and annotations. <ref type="url" target="https://figshare.com/articles/dataset/Webster_Supplemental_Output/14963561?file=29148153">https://figshare.com/articles/dataset/Webster_Supplemental_Output/  14963561?file=29148153</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>E Supplemental Tables</head><p>Table S2: Webster output from Cancer Dependency Map data: dictionary matrix, loadings matrix, and annotations. <ref type="url" target="https://figshare.com/articles/dataset/Webster_Supplemental_Output/14963561?file=29148159">https://figshare.com/articles/dataset/Webster_Supplemental_Output/</ref> Table S3: Compound-to-function loadings for annotated compounds from PRISM primary and secondary screens. <ref type="url" target="https://figshare.com/articles/dataset/Webster_Supplemental_Output/14963561?file=29148174">https://figshare.com/articles/dataset/Webster_Supplemental_  Output/14963561?file=29148174</ref> F Supplemental Figures  A quantile-quantile plot is shown for the observed fitness variances for 17,382 gene effect measurements (y-axis), in comparison to a theoretical normal distribution fitted to the distribution of these variances (x-axis). A threshold is drawn to distinguish gene effects whose variance exceeds the theoretical normal distribution, resulting in 304 high-variance fitness genes chosen as input to Webster. B. Webster parameter grid search. Using the same data as input, we applied Webster across many values of k and t, with and without graph-regularization. Diminishing returns for both reconstruction error (Frobenius norm) and gene similarity (Gene Laplacian) are reached with k = 10 for both values of t. We chose t = 2 in order to model pleiotropic effects in the genotoxic screening data. C. Interpretability of latent factors recovered from Webster, PCA and ICA. Using the literature annotations from <ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref> as ground truth, we calculated the Area Under the Receiver Operating Characteristic curve (AUROC) for each of ten genesets across each of the learned factors from all three models. The number of dictionary elements for Webster were chosen as described above; the number of PCA components was chosen with a standard elbow blot over PCA eigenvalues; the number ICA components was chosen according to <ref type="bibr" target="#b31">(Kairov et al., 2017)</ref>. The loadings for each gene over each component were used as the predictors for the AUROC metric. An AUROC ≥ 0.5 score indicates that positive loadings were predictive of the geneset, while an AUROC score ≥ 0.5 indicates that negative loadings were predictive of the geneset. C. Dictionary learning metrics. Left: Initialized vs. final dictionaries. In our Webster implementation, we initialize dictionary learning using a dictionary of k initial gene effects chosen by k-medoids. Each column of the initial dictionary (k-medoids) was correlated to the corresponding column in the final dictionary after 20 algorithm iterations (k = 220, t = 4). The resulting 220 Pearson correlation values are shown as a histogram. Right: Using the same k-medoids dictionary as a starting point, dictionary learning was performed using two different random seed initializations. The Pearson correlations of the corresponding columns from each dictionary are shown as a histogram. D. Denoising properties of Webster. The starting fitness data was corrupted with different amounts of random noise. After splitting genes into training and test sets (3:1 split), we then applied Webster (k=220, t= 4) to learn a dictionary from the noisy training data. From this dictionary, we performed orthogonal matching pursuit to model the noisy test genes in terms of dictionary elements. We compared this reconstructed profile against the ground truth test gene profiles, which were unseen during model training. The Pearson correlation of the reconstructed test genes versus their ground truths are plotted as a distribution per noise level. The uppermost distribution (σ = 0) corresponds to Webster's performance in the absence of noise. Dashed red lines mark the mean of each distribution. E. Transferability of Webster dictionary elements to unseen data. Parallel genome-scale screens were performed at Broad and Sanger Institutes for 150+ common cancer cell lines, using different CRISPR-Cas9 reagents and culturing strategies. We assessed the transferability of a Webster dictionary trained on Broad data (which used the Avana CRISPR-Cas9 guide library) to model gene effects captured by the Sanger Institute (which used the Sanger CRISPR-Cas9 guide library). We learned a Webster dictionary (k=220, t=4) over the 675 cell lines screened by the Broad. We then subsetted the learned dictionary to a set of 150+ common cell lines, and used this smaller dictionary to model gene effects measured by Broad Institute or the Sanger Institute. The Pearson correlation of the reconstructed genes are plotted as a distribution. As a null comparison, we shuffled the rows of the dictionary and performed the same modeling using this shuffled dictionary. Dashed red lines mark the mean of each distribution. F. Biomarker analysis for SHOC2 functional effects. We performed a random forest regression on the fitness effect of each of the four underlying functions, using baseline -omics measurements across cancer cell lines as features (including RNA-seq bulk transcriptomic data, mutational hotspot data, protein abundance data, etc). The model performances (Pearson correlation) are shown next to barplots displaying the feature importances in the final models. Relevant biomarkers for each function are bolded. (Abbreviations; CN = copy number; MutHot = mutational hotspot; MusMis = missense mutation; RPPA = Reverse Phase Protein Array; RRBS = Reduced-representation bisulfite sequencing; ssGSEA = single sample gene set enrichment analysis) Figure <ref type="figure" target="#fig_2">S4</ref>: Subcellular localization analysis from cancer fitness data. A. Schematic overview of subcellular localization analysis. A set of 1,463 fitness genes were also profiled in a recent subcellular localization experiment <ref type="bibr" target="#b22">(Go et al., 2021)</ref>, which reports the localization probability of each gene product over 20 inferred subcellular locations. We performed a matrix multiplication between their localization probabilities and our fitness-inferred gene-to-function loadings. The resulting matrix of 220 functions x 20 locations represents the overall distribution of localization probabilities over the learned Webster functions. B. A heatmap of the matrix described in A. Both rows (locations) and columns (functions) are hierarchically clustered. Clustering rows results in seven hierarchically defined cell compartments: nucleus, mitochondria, endoplasmic reticulum (ER), recycling, membrane, cytoplasm and miscellaneous. The miscellaneous category is carried over from <ref type="bibr" target="#b22">(Go et al., 2021)</ref>. Because proximity labelling proteomics were used to define subcellular locations in that study, proteins that are part of large complexes were predominantly co-labeled with other protein complex subunits, thereby decreasing their ability to infer unique subcellular locations for these proteins. C. Facet plot of Figure <ref type="figure" target="#fig_1">3E</ref>, in which only functions are plotted as data points in the embedding. Functions enriched for each of the seven compartments are plotted separately.  <ref type="bibr" target="#b12">(Corsello et al., 2020)</ref>. Each of these profiles was modeled as a sparse linear combination of four dictionary elements, using a dictionary trained on gene perturbation data (from Figure <ref type="figure" target="#fig_1">3B</ref>). The quality of these approximations was assessed using a Pearson correlation to the original compound sensitivity profile. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Pleiotropy underlies the DNA damage response to genotoxins in a human cell line. A.The immortalized human cell line RPE1-hTERT harboring a genome-scale CRISPR-Cas9 knockout library was subjected to 31 genotoxic stressors at a sub-lethal dose, resulting in a genotoxic fitness screen collection<ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. From this data matrix, Webster was parameterized to infer ten biological functions and approximate each gene effect as a sparse mixture of two functional effects. B. Top: The original fitness data, preprocessed to a set of 304 high-variance fitness gene effects from 31 treatment conditions, shown as a hierarchically clustered heatmap. Bottom: Webster's approximation of the data, with each gene effect approximated as a sparse mixture of two inferred functions. The order of genes and treatments is preserved between panels. C. The dictionary matrix. Each column of the dictionary captures the inferred fitness effect of depleting an biological function learned from the data. D. The loadings matrix. Top: Sparse gene-to-function loadings for the 304 fitness genes. Each gene (column) has two non-zero loadings, encoding the model's sparse representation of its gene effect. Bottom: Literature curated gene annotations, defined by<ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref>. Gene order is preserved between panels. TSG = Tumor Suppressor Gene. E. Gene effect decomposition. Webster decomposes H2AFX knockout as a mixture of two functional effects related to DNA double stranded breaks. The first function, Homologous Recombination, has a fitness effect induced by olaparib and camptothecin, etc. The second, End Joining, has a fitness effect induced by doxorubicin and etoposide, etc. Webster faithfully modeled the H2AFX gene effect as the sum of these two functional effects, scaled by their respective loadings (Pearson = 0.76). F. Top: Relationships learned from fitness data for H2AFX and MCPH1, an obligate H2AFX interactor. Each arrow corresponds to an inferred gene-to-function loading. Bottom: Illustration of H2AFX/MCPH1's shared roles as DNA double stranded break sensors upstream of Homologous Recombination and End Joining.</figDesc><graphic coords="5,108.00,83.73,396.00,375.41" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Pleiotropy underlies the fitness effect of gene knockout across human cancer cell lines.A. The Cancer Dependency Map (DepMap) fitness screen collection. Individual human cancer cell lines were screened for genetic dependencies for cell growth by comparing cell counts before and after infection with a genome-scale CRISPR-Cas9 gene knockout library. B. The DepMap data was preprocessed to a set of 2,921 high variance fitness genes screened across 675 cell lines. From this data alone, Webster learned a dictionary matrix of 220 fitness effects reflecting inferred biological functions, and approximated each gene effect in terms of four functional effects. C. Webster approximated the fitness effect of SHOC2 knockout as a mixture of four functional effects (Activated KRAS, Activated NRAS, EGFR signaling and FGFR signaling), each of which were strongest in cell lines harboring corresponding genomic alterations (KRAS mutation, NRAS mutation, activated EGFR and FGFR expression, respectively). This decomposition reflects the pleiotropic interactions underlying SHOC2's overall function downstream of these signaling pathways. D. Conceptual overview of cellular organization. After learning gene functions with Webster from cancer fitness data alone, experimentally derived subcellular localization data<ref type="bibr" target="#b22">(Go et al., 2021)</ref> were used to annotate Webster's functions across 20 subcellular locations within a total of 7 cellular compartments. E. Joint embedding of fitness effects for genes and functions inferred from DepMap data, with functions colored by their specificity for one of seven cellular compartments -mitochondria, endoplasmic reticulum (ER), recycling, membrane, nucleus, cytosol and miscellaneous. Subcellular location data was not used during the training of the Webster model. F. Top: Insets from E. detailing functions within the ER, capturing specific subcellular locations or protein complexes within these broad compartments. Bottom: Insets from above panel detailing genes embedded nearby their pleiotropic gene functions.</figDesc><graphic coords="6,108.00,84.39,396.00,374.10" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Projecting compound perturbations into a reference space of gene functions. A. Conceptual overview of reference-query projection for fitness data. If Webster learned true biological functions from gene perturbation data, those functions should generalize to unseen perturbations measured over the same cell lines, such as compound sensitivity measurements. B. Overview of query dataset. Compounds from the Drug Repurposing Hub were screened at a uniform dose (2.5 uM) over a set of barcoded cell lines to generate compound sensitivity profiles (Corsello et al., 2020). We modeled 191 high-variance compound treatments by approximating each compound sensitivity profile as a mixture of up to four gene functions learned from CRISPR data using Webster. Compound data was not used during the training of the gene function dictionary. C. Joint UMAP embedding of genes, functions, and compound sensitivity profiles. Compounds embedded near gene functions reflecting their mechanism of action. D. Focus on three gene functions: BRAF signaling, H2A.Z maintenance, and Mevalonate synthesis. Top: The five genes most strongly loaded onto each function are shown next to a heatmap of their loading scores. Middle: The compounds most strongly loaded onto each gene function are shown next to a heatmap of their loading scores. Bottom: Insets of the embedding shown in C centered on each of the three gene functions. E. Query compound projection onto reference gene functions varies by dose. In a secondary screen, various HMGCR inhibitors were screened at an 8-point dose curve ranging from 10 uM to 8 nM. Compound sensitivity profiles at each dose point were modeled independently in terms of Webster's gene functions. The resulting loadings on the Mevalonate synthesis function are plotted against the dose.</figDesc><graphic coords="8,108.00,75.34,396.00,424.92" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><figDesc>, "I.Introduction" and (Mairal et al., 2014), "Chapter 1.4 Dictionary Learning"): Suppose a set of m training signals Y = [y 1 , y 2 , . . . , y m ] in R n . From this set of training signals alone, we seek to approximate them by recovering:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure S1 :</head><label>S1</label><figDesc>Figure S1: Methodological details of Webster. Extended version of Figure1showing the objective function of graph-regularized dictionary learning<ref type="bibr" target="#b74">(Yankelevsky and Elad, 2016)</ref>. Given a raw fitness dataset, Webster first preprocesses the data by standardizing cell contexts (rows), then centering gene effects (columns). It then applies a simple selection threshold to automatically choose a set of high variance gene effects (columns) to compose the input data matrix Y . Webster factorizes Y into two low-rank matrices, D and X, by (1) minimizing the approximation error of the low-rank factorization, (2) preserving gene effect (column) similarity from Y across columns of X, and (3) preserving cell context (row) similarity from Y across rows of D. Besides the key parameters k and t, which controls the rank of the factorization and the number of non-zero entries per column of X, respectively, additional parameters include: the neighbor graphs used in the row and column graph-regularization (default: 5 nearest neighbors, chosen by cosine similarity); and the relative contributions of the graph regularization terms to the overall objective (default: α = 0.2 and β = 0.6, as explained in<ref type="bibr" target="#b74">(Yankelevsky and Elad, 2016)</ref>).</figDesc><graphic coords="23,108.00,103.07,396.02,286.72" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure S2 :</head><label>S2</label><figDesc>FigureS2: Assessment of Webster on genotoxic fitness data. A. High-variance gene selection. A quantile-quantile plot is shown for the observed fitness variances for 17,382 gene effect measurements (y-axis), in comparison to a theoretical normal distribution fitted to the distribution of these variances (x-axis). A threshold is drawn to distinguish gene effects whose variance exceeds the theoretical normal distribution, resulting in 304 high-variance fitness genes chosen as input to Webster. B. Webster parameter grid search. Using the same data as input, we applied Webster across many values of k and t, with and without graph-regularization. Diminishing returns for both reconstruction error (Frobenius norm) and gene similarity (Gene Laplacian) are reached with k = 10 for both values of t. We chose t = 2 in order to model pleiotropic effects in the genotoxic screening data. C. Interpretability of latent factors recovered from Webster, PCA and ICA. Using the literature annotations from<ref type="bibr" target="#b49">(Olivieri et al., 2020)</ref> as ground truth, we calculated the Area Under the Receiver Operating Characteristic curve (AUROC) for each of ten genesets across each of the learned factors from all three models. The number of dictionary elements for Webster were chosen as described above; the number of PCA components was chosen with a standard elbow blot over PCA eigenvalues; the number ICA components was chosen according to<ref type="bibr" target="#b31">(Kairov et al., 2017)</ref>. The loadings for each gene over each component were used as the predictors for the AUROC metric. An AUROC ≥ 0.5 score indicates that positive loadings were predictive of the geneset, while an AUROC score ≥ 0.5 indicates that negative loadings were predictive of the geneset.</figDesc><graphic coords="24,108.00,138.33,396.00,309.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure</head><figDesc>Figure S3: (Previous page.) Assessment of Webster on cancer cell fitness data.A. Webster parameter grid search. Using the cancer cell fitness data as input, we applied Webster across many values of k (25 to 600, with step size 25) and t (1 to 10). As t = 1:3 performed poorly at large values of k, we chose t = 4 for the factorization. B. Higher-density grid search. With t = 4 fixed, we swept across k (25 to 600, with step size 5) with multiple random initializations with different seeds. Plotted are the marginal improvements seen in model objectives with each additional step size of k, averaged over random initializations. Diminishing returns in both objectives are observed around k = 220, which was chosen for the final factorization. C. Dictionary learning metrics. Left: Initialized vs. final dictionaries. In our Webster implementation, we initialize dictionary learning using a dictionary of k initial gene effects chosen by k-medoids. Each column of the initial dictionary (k-medoids) was correlated to the corresponding column in the final dictionary after 20 algorithm iterations (k = 220, t = 4). The resulting 220 Pearson correlation values are shown as a histogram. Right: Using the same k-medoids dictionary as a starting point, dictionary learning was performed using two different random seed initializations. The Pearson correlations of the corresponding columns from each dictionary are shown as a histogram. D. Denoising properties of Webster. The starting fitness data was corrupted with different amounts of random noise. After splitting genes into training and test sets (3:1 split), we then applied Webster (k=220, t= 4) to learn a dictionary from the noisy training data. From this dictionary, we performed orthogonal matching pursuit to model the noisy test genes in terms of dictionary elements. We compared this reconstructed profile against the ground truth test gene profiles, which were unseen during model training. The Pearson correlation of the reconstructed test genes versus their ground truths are plotted as a distribution per noise level. The uppermost distribution (σ = 0) corresponds to Webster's performance in the absence of noise. Dashed red lines mark the mean of each distribution. E. Transferability of Webster dictionary elements to unseen data. Parallel genome-scale screens were performed at Broad and Sanger Institutes for 150+ common cancer cell lines, using different CRISPR-Cas9 reagents and culturing strategies. We assessed the transferability of a Webster dictionary trained on Broad data (which used the Avana CRISPR-Cas9 guide library) to model gene effects captured by the Sanger Institute (which used the Sanger CRISPR-Cas9 guide library). We learned a Webster dictionary (k=220, t=4) over the 675 cell lines screened by the Broad. We then subsetted the learned dictionary to a set of 150+ common cell lines, and used this smaller dictionary to model gene effects measured by Broad Institute or the Sanger Institute. The Pearson correlation of the reconstructed genes are plotted as a distribution. As a null comparison, we shuffled the rows of the dictionary and performed the same modeling using this shuffled dictionary. Dashed red lines mark the mean of each distribution. F. Biomarker analysis for SHOC2 functional effects. We performed a random forest regression on the fitness effect of each of the four underlying functions, using baseline -omics measurements across cancer cell lines as features (including RNA-seq bulk transcriptomic data, mutational hotspot data, protein abundance data, etc). The model performances (Pearson correlation) are shown next to barplots displaying the feature importances in the final models. Relevant biomarkers for each function are bolded. (Abbreviations; CN = copy number; MutHot = mutational hotspot; MusMis = missense mutation; RPPA = Reverse Phase Protein Array; RRBS = Reduced-representation bisulfite sequencing; ssGSEA = single sample gene set enrichment analysis)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure S5 :</head><label>S5</label><figDesc>Figure S5: Compound embedding results. A. Compound sensitivity profiles over 360+ cancer cell lines were obtained from the PRISM Drug Repurposing dataset<ref type="bibr" target="#b12">(Corsello et al., 2020)</ref>. Each of these profiles was modeled as a sparse linear combination of four dictionary elements, using a dictionary trained on gene perturbation data (from Figure3B). The quality of these approximations was assessed using a Pearson correlation to the original compound sensitivity profile. For each compound class, the distribution of Pearson correlations across individual drugs belonging to that class are shown in a box and whisker plot. Compound classes are ordered by their mean Pearson correlation. B. Each data point in the scatter plot represents one of the compounds from PRISM that was modeled in terms of gene functions. The X axis charts the median cell fitness of each compound, and the Y axis charts the Pearson correlation of the approximated profile to the measured profile. C. Same as Figure S3F, but for the BRAF Signaling function. D. A heatmap of compound-to-function loadings. Each row represents a compound sensitivity profile for an AKT inhibitor from the PRISM primary screen (2.5 uM dose), and each column represents a Webster function learned from genetic data. Loadings values are displayed in each cell of the heatmap. E. Additional dose-sensitive loading plots accompanying Figure 4E.</figDesc><graphic coords="28,127.80,75.72,356.41,467.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><figDesc>Figure S5: Compound embedding results. A. Compound sensitivity profiles over 360+ cancer cell lines were obtained from the PRISM Drug Repurposing dataset<ref type="bibr" target="#b12">(Corsello et al., 2020)</ref>. Each of these profiles was modeled as a sparse linear combination of four dictionary elements, using a dictionary trained on gene perturbation data (from Figure3B). The quality of these approximations was assessed using a Pearson correlation to the original compound sensitivity profile. For each compound class, the distribution of Pearson correlations across individual drugs belonging to that class are shown in a box and whisker plot. Compound classes are ordered by their mean Pearson correlation. B. Each data point in the scatter plot represents one of the compounds from PRISM that was modeled in terms of gene functions. The X axis charts the median cell fitness of each compound, and the Y axis charts the Pearson correlation of the approximated profile to the measured profile. C. Same as Figure S3F, but for the BRAF Signaling function. D. A heatmap of compound-to-function loadings. Each row represents a compound sensitivity profile for an AKT inhibitor from the PRISM primary screen (2.5 uM dose), and each column represents a Webster function learned from genetic data. Loadings values are displayed in each cell of the heatmap. E. Additional dose-sensitive loading plots accompanying Figure 4E.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="2,108.00,423.51,396.02,146.32" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="27,108.00,153.48,396.02,312.27" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head n="6">Acknowledgements</head><p>Work was funded by <rs type="grantNumber">U01 CA176058</rs> (W.C.H.). We thank members of the <rs type="institution">Hahn Lab</rs> and the Cancer Data Science team, as well as <rs type="person">Caleb Laureau</rs>, <rs type="person">Peter Winter</rs>, <rs type="person">Kevin Zhan</rs>, <rs type="person">Luc de Waal</rs>, <rs type="person">Yael Yankelevsky</rs> and <rs type="person">Niklas Rindorff</rs> for helpful feedback and discussions. Thank you to <rs type="person">Ben Cooley</rs>, <rs type="person">Andrew Tang</rs>, <rs type="person">Nena Berg</rs> and <rs type="funder">Kat Huang of the Pattern Team @ Broad</rs> (<ref type="url" target="https://pattern.broadinstitute.org/">https://pattern.broadinstitute.org/</ref>) for developing the minisite. Thank you to <rs type="person">Mariya Kazachkova</rs> for sharing her arm correction script. Figures created with assets from <rs type="institution">BioRender.com</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_dTayEG2">
+					<idno type="grant-number">U01 CA176058</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>A final model was trained on all the data and the feature importances were extracted from that model to help determine the likely features that were most important in these predictions. In certain cases, cell lines strongly dependent on a certain function harbored interpretable predictive features; those are reported in the paper when applicable, and were used to corroborate the function name chosen as described above.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.5 Subcellular localization analyses</head><p>The Human Cell Map project profiled bait-prey interactions in human cells using proximity ligation. We downloaded their subcellular localization inferences for 4,424 proteins across 20 subcellular locations <ref type="bibr" target="#b22">(Go et al., 2021)</ref>. Of these proteins, 1,463 had corresponding gene effects as part of the Webster analysis cancer cell fitness screen, so their data was filtered to a dense matrix of 1,463 protein localization profiles, and the Webster loadings matrix was filtered to the same set of 1,463 genes assigned loaded across 220 inferred biological functions.</p><p>To ask whether highly loaded genes in specific functions shared subcellular localization annotations, we took the matrix product, which resulted in a new matrix of 220 functions scored across 20 localizations. Each of the 220 rows of this matrix is the sum of the individual protein-level localization distributions weighted by their loading score on that function. This was used for the basis of subcellular localization analysis of our Webster inferred functions.</p><p>We noted during clustering of the 20 subcellular localizations (both in the original NMF matrix as well as this new matrix product) that each could be grouped into one of seven interpretable compartments. These compartment level annotations were used throughout the paper.</p><p>Finally, we report the localization specificity of individual functions. For each of the 220 functions, the entropy of its distribution over 20 localizations was calculated using the R entropy package, and the resulting 220 entropy scores were rescaled such that lowest entropy distributions were assigned a new "Specificity" score of 1, while the highest entropy distributions were assigned a score of 0.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.6 Compound sensitivity data</head><p>PRISM Primary Screen compound sensitivity data was obtained from the Drug Repurposing Hub Figshare archive (primary-screen-replicate-collapsed-logfold-change.csv, <ref type="url" target="https://doi.org/10.6084/m9.figshare.9393293.v4">https://doi.org/10.  6084/m9.figshare.9393293.v4</ref>). The raw data matrix consisted of 5,274 compound sensitivity profiles measured over 578 cell lines using a 2.5 uM dose treatment. To eliminate cell line quality effects, we subtracted a trimmed mean of each cell line profile from each compound sensitivity profile.</p><p>To prepare the data for modeling in terms of Webster's latent functions, we selected compound classes representing known mechanisms of action, for which there were at least 5 compound sensitivity profiles in the primary screen. This matrix contained missing values, which were imputed using the R package FastImputation. Finally, we kept those cell lines that were also screened in the CRISPR-Cas9 fitness dataset.</p><p>The final compound sensitivity profiles with known MOA's consisted of 191 compound sensitivity profiles over 367 cell lines. Each compound was modeled in terms of the dictionary matrix learned from CRISPR-Cas9 gene perturbation, filtered to the same 367 cell lines. The modeling was performed with orthogonal matching pursuit with t = 4, such that each compound sensitivity profile was modeled as a sparse combination of four dictionary elements.</p><p>The 191 compound sensitivity profiles were added as data points to the UMAP gene function plot by reconstructing each compound sensitivity profile using full-sized dictionary elements (675 cell lines), and using the R predict function to add the imputed profile to the previously learned R umap object. These steps were repeated for the PRISM Secondary Screen compound sensitivity data, in which the same compounds as above were treated at multiple dose points.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D.7 Additional factorization of genotoxic screening data</head><p>For PCA applied to the genotoxic screening dataset, we set the number of components to 8, which was automatically chosen according to an "elbow plot" of the eigenvalues corresponding to each</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A novel Fanconi anaemia subtype associated with a dominant-negative mutation in RAD51</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>References Ameziane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>May</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Haitjema</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Van De Vrugt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Van Rossum-Fikkert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ristic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Williams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Balk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rockx</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">8829</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">FIREWORKS: a bottom-up approach to integrative coessentiality network analysis</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Amici</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Jackson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Truica</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Abdulkadir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Mendillo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Life Sci Alliance</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Systematic mapping of genetic interactions for de novo fatty acid synthesis identifies C12orf49 as a regulator of lipid metabolism</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Aregger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Lawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Billmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H Y</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Usaj</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Metab</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="499" to="513" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A genome-wide CRISPR/Cas9 screen in acute myeloid leukemia cells identifies regulators of TAK-243 sensitivity</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Barghout</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Aman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Nouri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Blatman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Arevalo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Maclean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hurren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ketela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Saini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JCI Insight</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">BICRA, a SWI/SNF Complex Member, Is Associated with BAF-Disorder Related Phenotypes in Humans and Model Organisms</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Barish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">S</forename><surname>Barakat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mashtalir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Phillips</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Valencia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ugur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wegner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bostwick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Am. J. Hum. Genet</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="1096" to="1112" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Metabolic coessentiality mapping identifies C12orf49 as a regulator of SREBP processing and cholesterol metabolism</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">C</forename><surname>Bayraktar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>La</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Karpman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Unlu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ozerdem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Ritter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Alwaseem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Molina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-H</forename><surname>Hoffmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Millner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Metab</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="487" to="498" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Prioritization of cancer therapeutic targets using CRISPR-Cas9 screens</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Picco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Goncalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Beaver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Migliardi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Rao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sassi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pinnelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">568</biblScope>
+			<biblScope unit="page" from="511" to="516" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Multiomic Analysis of the UV-Induced DNA Damage Response</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Boeing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Encheva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Gori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Saunders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Instrell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Aygun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rodriguez-Martinez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Weems</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Kelly</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="1597" to="1610" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Distributional Semantics and Linguistic Theory</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Boleda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu. Rev. Linguist</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="213" to="234" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">High-resolution mapping of cancer cell networks using co-functional interactions</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Boyle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Pritchard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Greenleaf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">8594</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Efficient Generation of Transcriptomic Profiles by Random Composite Measurements</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Cleary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cheung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Regev</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">171</biblScope>
+			<biblScope unit="page" from="1424" to="1436" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Identifying chemogenetic interactions from CRISPR screens with drugZ</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Colic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zimmermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mascall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mclaughlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bertolet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Lenoir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Angers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Durocher</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Med</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">52</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Discovering the anti-cancer potential of non-oncology drugs by systematic viability profiling</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Corsello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">T</forename><surname>Nagari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Spangler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rossen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kocak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Bryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Humeidi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Cancer</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="235" to="248" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The genetic landscape of a cell</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Baryshnikova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bellay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">D</forename><surname>Spear</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Sevier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L Y</forename><surname>Koh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Toufighi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mostafavi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">327</biblScope>
+			<biblScope unit="page" from="425" to="431" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A global genetic interaction network maps a wiring diagram of cellular function</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vandersluis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">N</forename><surname>Koch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Baryshnikova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Pons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Usaj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hanchard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">353</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Global Genetic Networks and the Genotype-to-Phenotype Relationship</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kuzmin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Van Leeuwen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mair</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Andrews</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">177</biblScope>
+			<biblScope unit="page" from="85" to="100" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">ACBD5 and VAPB mediate membrane associations between peroxisomes and the ER</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Costello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">G</forename><surname>Castro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hacker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Schrader</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Metz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zeuschner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Azadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Godinho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Costina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Findeisen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">216</biblScope>
+			<biblScope unit="page" from="331" to="342" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Extracting Biological Insights from the Project Achilles Genome-Scale CRISPR Screens in Cancer Cell Lines</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Dempster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rossen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kazachkova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kugener</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Root</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tsherniak</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Integration of over 15,000 proteomic experiments builds a global compendium of human multiprotein assemblies</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Drew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Wallingford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Marcotte</surname></persName>
+		</author>
+		<idno>hu.MAP 2.0</idno>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A global view of pleiotropy and phenotypically derived gene function in yeast</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Dudley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Janse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tanay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Shamir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Church</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2005">2005. 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elad</surname></persName>
+		</author>
+		<title level="m">Sparse and Redundant Representations: From Theory to Applications in Signal and Image Processing</title>
+		<imprint>
+			<publisher>Springer Science &amp; Business Media</publisher>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A probabilistic view of gene function</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Fraser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Marcotte</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="559" to="564" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">A proximity-dependent biotinylation map of a human cell</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Go</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D R</forename><surname>Knight</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rajasekharan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Rathod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G</forename><surname>Hesketh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">T</forename><surname>Abe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-Y</forename><surname>Youn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Samavarchi-Tehrani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Y</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Drug mechanism-of-action discovery through the integration of pharmacological and CRISPR screens</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Segura-Cabrera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Pacini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Picco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jaaks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Coker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Van Der Meer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightfoot</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">9405</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Genetic pleiotropy in complex traits and diseases: implications for genomic medicine</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gratten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Visscher</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Med</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">78</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">High-Resolution CRISPR Screens Reveal Fitness Genes and Genotype-Specific Cancer Liabilities</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chandrashekhar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Aregger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Steinhart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Macleod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zimmermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fradet-Turcotte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">163</biblScope>
+			<biblScope unit="page" from="1515" to="1526" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Context-dependent genetic interactions in cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Henkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Rauscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boutros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Curr. Opin. Genet. Dev</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="73" to="82" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<title level="m" type="main">The GATOR-Rag GTPase pathway inhibits mTORC1 activation by lysosome-derived amino acids</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G</forename><surname>Hesketh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Papazotos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pawling</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Paf1C regulates RNA polymerase II progression by modulating elongation rate</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Shamovsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Nudler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">D</forename><surname>Dynlacht</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl. Acad. Sci. U. S. A</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page" from="14583" to="14592" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">VAPs and ACBD5 tether peroxisomes to the ER for peroxisome maintenance and lipid homeostasis</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">É</forename><surname>Coyaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Freeman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Di Pietro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vissa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Yip</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Fairn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Braverman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">216</biblScope>
+			<biblScope unit="page" from="367" to="377" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">A consensus set of genetic vulnerabilities to ATR inhibition</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hustedt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Álvarez-Quilón</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcewan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Koob</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Durocher</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>bioRxiv 574533</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Determining the optimal number of independent components for reproducible transcriptomic data analysis</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kairov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cantini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Greco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Molkenov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Czerwinska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Barillot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zinovyev</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genomics</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="1" to="13" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">The meanings of &quot;function&quot; in biology and the problematic case of de novo gene emergence</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Keeling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Garza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Nartey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A.-R</forename><surname>Carvunis</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">8</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Sparse non-negative matrix factorizations via alternating non-negativityconstrained least squares for microarray data analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Park</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="1495" to="1502" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">A network of human functional gene interactions from knockout fitness screens in cancer cells</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dede</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Lenoir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Srinivasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Colic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Life Sci Alliance</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+		<title level="m" type="main">Dynamic rewiring of biological activity across genotype and lineage revealed by context-dependent functional interactions</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Gheorge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hart</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Fitness variation across subtle environmental perturbations reveals local modularity and global pleiotropy of adaptation</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kinsler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Geiler-Samerotte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Petrov</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Elife 9</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+		<title level="m" type="main">Systematic identification of pleiotropic genes from genetic interactions</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">N</forename><surname>Koch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Deshpande</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Andrews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L</forename><surname>Myers</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">The landscape of cancer cell line metabolism</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghandi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gopal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Deik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Souza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Pierce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Keskula</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hernandez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Med</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="850" to="860" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Control of the polyamine biosynthesis pathway by G2-quadruplexes</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hagen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cléry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">H</forename><surname>Allain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">-T</forename><surname>Hall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note>Elife 7</note>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Haploid genetic screens identify SPRING/C12ORF49 as a determinant of SREBP signaling and cholesterol metabolism</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Loregger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Raaben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nieuwenhuis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M E</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">T</forename><surname>Jae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">G</forename><surname>Van Den Hengel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hendrix</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Van Den Berg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Scheij</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">1128</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mairal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Bach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ponce</surname></persName>
+		</author>
+		<title level="m">Sparse Modeling for Image and Vision Processing</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Streamlined analysis schema for high-throughput identification of endogenous protein complexes</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Malovannaya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bulynko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Y</forename><surname>Jung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">B</forename><surname>Lanz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>O'malley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Qin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl. Acad. Sci. U. S. A</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="2431" to="2436" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Modular Organization and Assembly of SWI/SNF Family Chromatin Remodeling Complexes</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mashtalir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>D'avino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Otto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Zullow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">M</forename><surname>Mckenzie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Kubiak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>St Pierre</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">175</biblScope>
+			<date type="published" when="1272">2018. 1272-1288 e20</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Project DRIVE: A Compendium of Cancer Dependencies and Synthetic Lethal Relationships Uncovered by Large-Scale, Deep RNAi Screening</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Mcdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Weck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Schlabach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Billy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">J</forename><surname>Mavrakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Hoffman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Belur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Castelletti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Frias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Gampa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">170</biblScope>
+			<biblScope unit="page" from="577" to="592" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note>e10</note>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mcinnes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Healy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Melville</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Computational correction of copy-number effect improves specificity of CRISPR-Cas9 essentiality screens in cancer cells</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Meyers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Bryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Mcfarland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Sizemore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">V</forename><surname>Dharia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">G</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Cowley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pantel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">A non-canonical SWI/SNF complex is a synthetic lethal target in cancers driven by BAF complex perturbation</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>D'avino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Cassel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mashtalir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">M</forename><surname>Mckenzie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Mcbride</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Valencia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bocker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M M</forename><surname>Soares</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="1410" to="1420" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Linguistic Regularities in Continuous Space Word Representations</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mikolov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-T</forename><surname>Yih</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zweig</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2013 Conference of the North American Chapter</title>
+		<meeting>the 2013 Conference of the North American Chapter<address><addrLine>Atlanta, Georgia</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="746" to="751" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">A Genetic Map of the Response to DNA Damage in Human Cells</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Olivieri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Álvarez-Quilón</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Schellenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zimmermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hustedt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Rossi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Adam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Melo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">182</biblScope>
+			<biblScope unit="page" from="481" to="496" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>e21</note>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Interrogation of Mammalian Protein Complex Structure, Function, and Membership Using Genome-Scale Fitness Screens</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Meyers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mashtalir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Sizemore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Wells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Cassel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vazquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">C</forename><surname>Hahn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Syst</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="555" to="568" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Orthogonal matching pursuit: recursive function approximation with applications to wavelet decomposition</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Pati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rezaiifar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Krishnaprasad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of 27th Asilomar Conference on Signals, Systems and Computers</title>
+		<meeting>27th Asilomar Conference on Signals, Systems and Computers</meeting>
+		<imprint>
+			<date type="published" when="1993">1993</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="40" to="44" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Glove: Global vectors for word representation</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pennington</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Socher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Manning</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing</title>
+		<meeting>the 2014 Conference on Empirical Methods in Natural Language Processing</meeting>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="1532" to="1543" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Mutant phenotypes for thousands of bacterial genes of unknown function</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Wetmore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Waters</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Callaghan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Kuehl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Melnyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Lamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Suh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">557</biblScope>
+			<biblScope unit="page" from="503" to="509" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">A method for benchmarking genetic screens reveals a predominant mitochondrial bias</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Billmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Aregger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H Y</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">N</forename><surname>Ward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Andrews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page">10013</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Emerging and evolving concepts in gene essentiality</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Rancati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Typas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Pavelka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Genet</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="34" to="49" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Profiler: a web server for functional enrichment analysis and conversions of gene lists</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Raudvere</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kolberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Kuzmin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Arak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Adler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Peterson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vilo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="191" to="W198" />
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+	<note>update</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Toward an integrated map of genetic interactions in cancer cells</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Rauscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Heigwer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Henkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hielscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Voloshanenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boutros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">7656</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Dictionaries for Sparse Representation Modeling</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rubinstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Bruckstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE</title>
+		<meeting>IEEE</meeting>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="volume">98</biblScope>
+			<biblScope unit="page" from="1045" to="1057" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Oncogenic Signaling Pathways in The Cancer Genome Atlas</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sanchez-Vega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Armenia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">K</forename><surname>Chatila</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Luna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>La</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dimitriadoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Kantheti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Saghafinia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">173</biblScope>
+			<biblScope unit="page" from="321" to="337" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note>e10</note>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Optimized libraries for CRISPR-Cas9 genetic screens with multiple modalities</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Sanson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Hanna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hegde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">F</forename><surname>Donovan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Strand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Sullender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W</forename><surname>Vaimberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Goodale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Root</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Piccioni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">5416</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Damage control: the pleiotropy of DNA repair genes in Drosophila melanogaster</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Sekelsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Burtis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Hawley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetics</title>
+		<imprint>
+			<biblScope unit="volume">148</biblScope>
+			<biblScope unit="page" from="1587" to="1598" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Pleiotropy in complex traits: challenges and strategies</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Solovieff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cotsapas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Purcell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Smoller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Genet</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="483" to="495" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Stein-O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Arora</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Culhane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Favorov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">X</forename><surname>Garmire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Greene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Goff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ngom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Ochs</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Enter the Matrix: Factorization Uncovers Knowledge from Omics</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="790" to="805" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">STRING v10: protein-protein interaction networks, integrated over the tree of life</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Szklarczyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Franceschini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wyder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Forslund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Heller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Huerta-Cepas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Simonovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Roth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">P</forename><surname>Tsafou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="447" to="D452" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Subunit architecture and functional modular rearrangements of the transcriptional mediator complex</title>
+		<author>
+			<persName><forename type="first">K.-L</forename><surname>Tsai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tomomori-Sato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Conaway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Conaway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Asturias</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">157</biblScope>
+			<biblScope unit="page" from="1430" to="1444" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Defining a Cancer Dependency Map</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tsherniak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vazquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">G</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Cowley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Harrington</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pantel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Krill-Burger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">170</biblScope>
+			<biblScope unit="page" from="564" to="1916796928" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">The detection and characterization of pleiotropy: discovery, progress, and promise</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Tyler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Pendergrass</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Brief. Bioinform</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="13" to="22" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">The pleiotropic structure of the genotype-phenotype map: the evolvability of complex organisms</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Wagner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Genet</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="204" to="213" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">A genome-wide atlas of co-essential modules assigns function to uncharacterized genes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wainberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Kamber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Balsubramani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Meyers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Sinnott-Armstrong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hornburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Jian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Gene Essentiality Profiling Reveals Gene Networks and Synthetic Lethal Interactions with Oncogenic Ras</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">W</forename><surname>Hughes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kendirli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Klein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Sabatini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">168</biblScope>
+			<biblScope unit="page" from="890" to="903" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Genomic patterns of pleiotropy and the evolution of complexity</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B.-Y</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl. Acad. Sci. U. S. A</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="18034" to="18039" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">A global overview of pleiotropy and genetic architecture in complex traits</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Watanabe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Stringer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Frei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Umićević Mirkov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>De Leeuw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J C</forename><surname>Polderman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Van Der Sluis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">A</forename><surname>Andreassen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Neale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Posthuma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="1339" to="1348" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">POST1/C12ORF49 regulates the SREBP pathway by promoting site-1 protease maturation</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-T</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z.-M</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-W</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X.-J</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B.-L</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Protein Cell</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">Dual Graph Regularized Dictionary Learning</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yankelevsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Signal and Information Processing over Networks</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="611" to="624" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">Theoretical guarantees for graph sparse coding</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yankelevsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Comput. Harmon. Anal</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="698" to="725" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<monogr>
+		<title level="m" type="main">Word Embedding Visualization Via Dictionary Learning</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Cheung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Olshausen</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

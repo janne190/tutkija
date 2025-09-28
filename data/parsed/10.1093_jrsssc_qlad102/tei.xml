@@ -1,0 +1,1738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">MULTIVARIATE BAYESIAN STRUCTURED VARIABLE SELECTION FOR PHARMACOGENOMIC STUDIES</title>
+				<funder ref="#_dDab5gT">
+					<orgName type="full">European Union Horizon 2020</orgName>
+				</funder>
+				<funder ref="#_GXYD57D">
+					<orgName type="full">UK Medical Research Council</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Research Council of Norway project No. 237718 &quot;Big Insight</orgName>
+					<orgName type="abbreviated">ZZ</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2023-02-13">13 Feb 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Zhi</forename><surname>Zhao</surname></persName>
+							<email>zhi.zhao@medisin.uio.no</email>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="institution">Oslo University Hospital</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Marco</forename><surname>Banterle</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">London School of Hygiene &amp; Tropical Medicine</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Alex</forename><surname>Lewin</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">London School of Hygiene &amp; Tropical Medicine</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Manuela</forename><surname>Zucknick</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Biostatistics</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<addrLine>Blindern 0317 Oslo</addrLine>
+									<postBox>P.O.Box 1122</postBox>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">MULTIVARIATE BAYESIAN STRUCTURED VARIABLE SELECTION FOR PHARMACOGENOMIC STUDIES</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-02-13">13 Feb 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B60A1003C743BB3811158127CF3932EB</idno>
+					<idno type="arXiv">arXiv:2101.05899v3[stat.ME]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>cancer drug sensitivity screening</term>
+					<term>Markov random field prior</term>
+					<term>precision cancer medicine</term>
+					<term>random effects</term>
+					<term>seemingly unrelated regression</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Precision cancer medicine aims to determine the optimal treatment for each patient. In-vitro cancer drug sensitivity screens combined with multi-omics characterization of the cancer cells have become an important tool to achieve this aim. Analyzing such pharmacogenomic studies requires flexible and efficient joint statistical models for associating drug sensitivity with high-dimensional multi-omics data. We propose a multivariate Bayesian structured variable selection model for sparse identification of omics features associated with multiple correlated drug responses. Since many anti-cancer drugs are designed for specific molecular targets, our approach makes use of known structure between responses and predictors, e.g. molecular pathways and related omics features targeted by specific drugs, via a Markov random field (MRF) prior for the latent indicator variables of the coefficients in sparse seemingly unrelated regression. The structure information included in the MRF prior can improve the model performance, i.e. variable selection and response prediction, compared to other common priors. In addition, we employ random effects to capture heterogeneity between cancer types in a pan-cancer setting. The proposed approach is validated by simulation studies and applied to the Genomics of Drug Sensitivity in Cancer data, which includes pharmacological profiling and multi-omics characterization of a large set of heterogeneous cell lines.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction.</head><p>A large proportion of advanced solid tumors harbor potentially treatable genomic variants <ref type="bibr" target="#b20">(Fontes Jardim et al., 2015;</ref><ref type="bibr" target="#b30">Le Tourneau et al., 2015;</ref><ref type="bibr" target="#b49">Von Hoff et al., 2010)</ref>, but very few cancer patients actually benefit from genome-informed treatments <ref type="bibr" target="#b36">(Marquart et al., 2018)</ref>. Thus, there is great potential to improve the use and benefit of therapy for individual patients by better patient stratification and by patient-tailored design of therapies. Precision cancer medicine aims at guiding cancer patient treatment based on detailed molecular characterization of each patient's disease. One strategy that is rapidly gaining traction is ex vivo cancer drug sensitivity screening, which predicts responses to a range of potential therapies in cancer cell lines and patient-derived cells and identifies molecular features that are associated with drug response. Studies where both, drug sensitivity and molecular (multi-omics), data are available are commonly referred to as pharmacogenomic studies. In this article we employ a multivariate (multi-response) regression setup with high-dimensional input matrix to analyze pharmacogenomic data, where sensitivities to several drugs are the response variables and molecular (multi-)omics variables are the input features. We analyze data from the Genomics of Drug Sensitivity in Cancer (GDSC) database <ref type="bibr" target="#b21">(Garnett et al., 2012;</ref><ref type="bibr" target="#b51">Yang et al., 2013)</ref>, which contains the results from drug sensitivity screens to hundreds of cancer drugs for hundreds of cell lines representing diverse cancers in a pan-cancer setup and multi-omics characterization of these cell lines. Our approach can identify important genes affiliated with target pathways of the drugs (i.e. target genes) as well as genes whose dysfunction is known to drive cancer (cancer genes), which may guide personalized cancer therapies and aid discovery of potential new application areas of anti-cancer drugs in additional cancer types based on the identification of both tissue-specific and pan-cancer processes.</p><p>Large-scale in vitro cancer drug screens produce a large amount of drug sensitivity data which are expected to be correlated for drugs that have similar mechanisms of action or common target genes or pathways. Meanwhile, multi-omics information, including for example transcriptomics (gene expression), genomics (point mutations or copy number variations) or epigenomics (e.g. CpG methylation) data, is measured for the cancer cells, which is expected to guide personalized cancer therapies through prediction of drug sensitivity <ref type="bibr" target="#b21">(Garnett et al., 2012;</ref><ref type="bibr" target="#b5">Barretina et al., 2012)</ref>. The omics input data are often high-dimensional and are typically sparsely associated with the response variables in a structured manner, where variables corresponding to genes in the same molecular pathway can have similar association patterns with the drugs, for example because a drug targets a molecular signaling pathway which effects the expression of several genes in the pathway. In addition, since multiple omics characterizations reflect different aspects' of information of the same system or co-functionality of multiple gene features <ref type="bibr" target="#b29">(Kim et al., 2019)</ref>, an analysis of joint associations between the correlated multiple phenotypes (e.g, multiple drugs) and high-dimensional molecular features (i.e. multi-omics data) is desired, but poses both theoretical and computational challenges. Finally, it is expected that not all of the heterogeneity between the cancer samples can be explained by the available molecular data. In particular, a pan-cancer pharmacogenomic screen will include samples from multiple cancer types, which adds heterogeneity in the drug sensitivity due to the different tissue and cell types, even if the involved molecular pathways and mechanisms are the same. This leads us to include random effects in the model to reflect heterogeneity between cancer types.</p><p>There are a number of statistical and machine learning models developed for predicting drug sensitivity by using omics data (see e.g. <ref type="bibr" target="#b2">Ballester et al. (2022)</ref>; <ref type="bibr" target="#b44">Sharifi-Noghabi et al. (2021)</ref>; <ref type="bibr" target="#b18">Feng et al. (2021)</ref>; <ref type="bibr" target="#b0">Adam et al. (2020)</ref>). These models are often designed for making accurate predictions, either within a single cancer type <ref type="bibr" target="#b17">(Costello et al., 2014)</ref> or using a cancer-agnostic approach <ref type="bibr" target="#b5">(Barretina et al., 2012)</ref>. Furthermore, while emphasizing accurate predictions, many of the models lack effective variable selection options, making such black-box models less practical for biological studies or clinical applications. <ref type="bibr" target="#b27">Huang et al. (2020)</ref> developed Tissue-guided LASSO for integrating cancer tissue of origin with genomic profiles, which just repeats the analysis in each cancer type, rather than jointly modelling the pan-cancer data. <ref type="bibr" target="#b56">Zhao and Zucknick (2020)</ref> proposed Tree-guided group lasso with Integrative Penalty Factors to jointly model drug-drug similarities and heterogeneity of multi-omics from pan-cancer data, but do not take into account correlation structure across multiple omics data sources.</p><p>Bayesian modeling provides flexibility to specify the relationships in such complex data. There have been several Bayesian methods developed to deal with structure in complex data. For example, <ref type="bibr" target="#b1">Bai et al. (2022)</ref> and <ref type="bibr" target="#b52">Yang and Narisetty (2020)</ref> studied Bayesian group selection of high-dimensional predictors, but for univariate response variables. <ref type="bibr" target="#b35">Liquet et al. (2017)</ref> extended the univariate response model to a multivariate model, but lack computational efficiency because they used a standard MCMC algorithm. <ref type="bibr" target="#b41">Richardson et al. (2011)</ref> proposed hierarchical related regression (HRR) for multivariate response variables. HRR assumes a simple independence prior for the residual covariance matrix, and it applies an efficient Evolutionary Stochastic Search (ESS) algorithm based on Evolutionary Monte Carlo <ref type="bibr" target="#b10">(Bottolo and Richardson, 2010)</ref>. More complex priors, e.g., inverse Wishart or hyperinverse Wishart prior, can be used for the residual covariance matrix to learn structures between multivariate response variables <ref type="bibr" target="#b39">(Petretto et al., 2010;</ref><ref type="bibr" target="#b12">Carvalho et al., 2007;</ref><ref type="bibr" target="#b50">Wang, 2010;</ref><ref type="bibr" target="#b6">Bhadra and Mallick, 2013;</ref><ref type="bibr" target="#b8">Bottolo et al., 2021)</ref>.</p><p>Besides imposing different structured priors on the residual covariance matrix, it is necessary to also impose structured variable selection priors for high-dimensional predictors. Although independent spike-and-slab priors for variable selection are often used in highdimensional multivariate models <ref type="bibr" target="#b28">(Jia and Xu, 2007;</ref><ref type="bibr" target="#b8">Bottolo et al., 2021;</ref><ref type="bibr" target="#b24">Ha et al., 2021;</ref><ref type="bibr" target="#b13">Chakraborty et al., 2021)</ref>, a structured MRF prior can also be used for the latent indicator variables to introduce prior dependence between predictors <ref type="bibr" target="#b14">(Chekouo et al., 2015</ref><ref type="bibr" target="#b16">(Chekouo et al., , 2016</ref><ref type="bibr" target="#b15">(Chekouo et al., , 2017))</ref>, and hyperpriors of the MRF prior can be used to infer the sparsity of the dependence structure. <ref type="bibr" target="#b31">Lee et al. (2017)</ref> utilized the residual covariance matrix for the dependence structure in an MRF prior to encourage joint selection of the same predictor across several correlated response variables. In all these articles, an MRF prior is set for the latent variables of regression coefficients only corresponding to one response variable, which therefore does not allow to learn structures across multiple response variables.</p><p>In this article, we propose a multivariate Bayesian structured variable selection approach based on <ref type="bibr" target="#b41">Richardson et al. (2011)</ref> and its extension by <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>, which can deal with multiple response variables (e.g., the cell lines' sensitivity to multiple cancer drugs) and high-dimensional genomic predictors, and possess computational efficiency through the ESS algorithm. Our proposed approach aims to include a known complex structure between multiple response variables and high-dimensional predictors via a flexible MRF prior for the latent indicator variables of the regression coefficient matrix. That is, we include known biological associations for the dependence structure in an MRF prior rather than doing MRF inference. Our use of the MRF prior has two main advantages:</p><p>• it takes into account prior knowledge on inter-relations between predictors including across groups of predictors and across response variables, to improve model performance (i.e. variable selection and prediction), and • it performs posterior inference for the model in a more computationally efficient manner than the use of data-driven structured priors (e.g. multiplicative prior for the Bernoulli probability of the latent indicator variable (i.e. hotspot prior) by <ref type="bibr" target="#b41">Richardson et al. (2011)</ref> and hyperprior for the MRF edge potentials by <ref type="bibr" target="#b15">Chekouo et al. (2017)</ref>) would allow.</p><p>For example, Figure <ref type="figure" target="#fig_0">1</ref> illustrates two groups of drugs and their corresponding two groups of target genes or pathways across multiple omics characterizations. When using omics data to predict drug responses, the associations between the multiple drugs and omics features can include prior knowledge about the groups of drugs and their target genes or target pathways. An MRF prior is able to address the joint structure by adding the edges for omics features within a group of target genes or pathways that correspond to the group of their targeting drugs. In addition, if the drug responses are measured on cell lines from different cancer types or different tissues, we use random effects to capture the sample heterogeneity arising from these sample groups. An R package BayesSUR <ref type="bibr" target="#b55">(Zhao et al., 2021)</ref> is available on the Comprehensive R Archive Network at <ref type="url" target="https://CRAN.R-project.org/package=BayesSUR.">https://CRAN.  R-project.org/package=BayesSUR</ref>. The rest of the article is organized as follows. In Section 2, we introduce the Bayesian SSUR model, propose an MRF prior for the latent indicator variables of the coefficient matrix, and introduce random effects for sample groups. Section 3 compares the performances of Bayesian SSUR models with our MRF prior to the hotspot prior by <ref type="bibr" target="#b9">Bottolo et al. (2011)</ref> with respect to (w.r.t.) structure recovery and prediction in simulated data. In Section 4, we analyse a pharmacogenomic data set from the GDSC database. In Section 5, we conclude the article with a discussion.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methodology.</head><p>2.1. SSUR model. We study a multivariate regression model with a response matrix Y n×m from n samples and m response variables. All response variables are regressed on the same p predictors which are measured on the n samples, so that the predictor matrix is X n×p . Associations between the responses Y and predictors X are captured by a coefficient matrix B p×m . We first assume correlated response variables, but independent samples. Section 2.3 will then extend the model to allow for correlated samples. The classic SUR model is defined as</p><formula xml:id="formula_0">Y = XB + U, vec{U} ∼ N (0, Ψ ⊗ I n ), (1)</formula><p>where the residuals have correlated columns with covariance Ψ and independent rows, and vec{•} is to vectorize a matrix by column.</p><p>In the Bayesian framework, to efficiently sample from the posterior distribution of the regression coefficients from (1), <ref type="bibr" target="#b53">Zellner and Ando (2010)</ref> reparametrized the SUR model and proposed a direct Monte Carlo procedure. <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref> used the same reparametrization for the SUR model, but with an inverse Wishart prior Ψ ∼ IW(ν, τ I m ). Briefly, then model (1) can be rewritten as</p><formula xml:id="formula_1">y j = Xβ j + l&lt;j u l ρ jl + j , j ∼ N (0, σ 2 j I n ),<label>(2)</label></formula><p>where u l = y l -Xβ l . The reparametrized parameters (σ 2 j , ρ jl ) have priors</p><formula xml:id="formula_2">σ 2 j ∼ IG ν -m + 2j -1 2 , τ 2 , ρ jl |σ 2 j ∼ N 0, σ 2 j τ , j &gt; l, (<label>3</label></formula><formula xml:id="formula_3">)</formula><p>where v is fixed and τ ∼ Gamma(a τ , b τ ). Note that the joint distribution f (Y|X, B, Ψ) is the same regardless of the order used for the decomposition since we are simply factorising it by chain-conditioning <ref type="bibr" target="#b8">(Bottolo et al., 2021)</ref>.</p><p>The reparametrization factorizes the likelihood across multiple response variables possible, which especially benefits high-dimensional response variables. If only a few of the p predictor variables are assumed to be associated with any of the response variables, we use a latent indicator matrix Γ = {γ kj } for variable selection. If γ kj = 1, then β kj = 0 and the kth predictor is regarded as an associated predictor to the jth response variable; otherwise γ kj = 0 and β kj = 0. Independent spike-and-slab priors <ref type="bibr" target="#b22">(George and McCulloch, 1993;</ref><ref type="bibr" target="#b11">Brown et al., 1998)</ref> for the regression coefficients can be used to find a small subset of predictors that explains the variability of Y, for example:</p><p>(4)</p><formula xml:id="formula_4">β kj |γ kj , w ∼ γ kj N (0, w) + (1 -γ kj )δ 0 (β kj ),</formula><p>where w ∼ IG(a w , b w ) and δ 0 (•) is the Dirac delta function.</p><p>We may not only introduce sparsity to the high-dimensional coefficient matrix, but also sparsity to the precision matrix Ψ -1 , which implies that the residuals u l = y l -Xβ l and u j = y j -Xβ j for only a few pairs of response variables l = j have non-zero partial correlations, assuming a multivariate normal distribution for the residuals. Such a sparse precision matrix can be conceptualized as a graph G, with nodes representing the residual variables u l , and edges between them corresponding to non-zero elements of the precision matrix. <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref> used a hyper-inverse Wishart prior for Ψ instead of an inverse Wishart prior, i.e.</p><p>(5) Ψ ∼ HIW G (ν, τ I m ).</p><p>It assumes an underlying decomposable graph G between residuals. The HIW prior on decomposable graphs greatly enhances computational power since the parameters are updated within each clique and there is no computationally expensive normalisation constant to calculate. Since the fully Bayesian estimation procedure produces edges averaged over many different graphs, the posterior mean graph can well approximate non-decomposable graphs <ref type="bibr" target="#b19">(Fitch et al., 2014)</ref>. A sparse graph G can result in sparse Ψ -1 . So <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref> specified a Bernoulli(η) prior for each edge of the graph. Then a Binomial prior is on the cardinality edge-set</p><formula xml:id="formula_5">(6) |E| ∼ Binomial(m(m -1)/2, η),</formula><p>where η ∼ Beta(a η , b η ) controls the sparsity of the graph. Based on ( <ref type="formula">5</ref>) and ( <ref type="formula" target="#formula_29">6</ref>), the parameters σ 2 and ρ are indexed across the response variables of each clique of G rather than all response variables. In addition to sparse covariance selection, <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref> also used sparse variable selection for the predictor variables via a hotspot prior (i.e. a multiplicative prior) for the hyper-parameter ω kj in γ kj ∼ Ber(ω kj ). A guideline of prior specifications for the hyper-inverse Wishart prior and spike-and-slab prior can be found in Supplementary S1.</p><p>2.2. SSUR model with MRF prior. Figure <ref type="figure" target="#fig_0">1</ref> illustrates known relationships between drug responses and genomic predictors. As an example, imagine a group of drugs with the same mechanism of action, where the response of a cancer cell to these drugs depends on a certain gene to be silenced. Gene silencing can either occur via a genomic alteration (deletion event), missense mutation, or another down-regulation of gene expression. It might thus be observable in one or several omics features, e.g. gene expression, copy number variation or mutation data. We may include such prior knowledge in the SUR model (1), instead of using independent or hotspot priors <ref type="bibr" target="#b41">(Richardson et al., 2011;</ref><ref type="bibr" target="#b32">Lewin et al., 2016;</ref><ref type="bibr" target="#b8">Bottolo et al., 2021)</ref>.</p><p>We propose to use an MRF prior for the latent indicator vector γ = vec{Γ} to address prior structure for the associations between response variables and predictors. The MRF prior is <ref type="bibr">(7)</ref> f (γ|d, e, G) ∝ exp{d1 γ + eγ Gγ},</p><p>where the scalar d controls overall model sparsity, scalar e determines the strength of the structure relationships between responses and predictors, and G is an mp × mp (possibly weighted) adjacency matrix representing a graph to include prior structure knowledge. Term d1 γ in (7) can be generalized to d γ, where the vector d will assign different relative contributions to the prior selection probabilities of the predictors. To specify the scalar d, we refer to <ref type="bibr" target="#b31">Lee et al. (2017)</ref> by using log-odds of a rough model sparsity (i.e. proportion of nonzero regression coefficients). To specify e, <ref type="bibr" target="#b47">Stingo et al. (2011)</ref> suggested a separate simulation from (7) over a grid of e to detect the "phase transition" value, and then specified a Beta prior on e. However, due to much computational cost in highdimensional γ, especially in multivariate regressions when searching some large values of e resulting in very dense models, we first estimate the roughly largest e and then use a grid search for e to identify its optimal value for the model. See Supplementary S2 for more details.</p><p>For the G matrix, we assign a positive edge potential {k+j(p-1), k +j (p-1)}-element if the latent indicator variables γ kj and γ k j are correlated. To illustrate the idea, we consider a simple case with three response variables (i.e. y 1 , y 2 and y 3 ) and four predictors (i.e. x 1 , x 2 , x 3 and x 4 ). When the predictors x 1 and x 2 are assumed a priori to be associated with responses y 1 and y 2 , and x 3 and x 4 are assumed to be associated with y 3 , then G is a 12 × 12 matrix given by equation ( <ref type="formula">8</ref>). Any nonzero element in G above can be any positive number which indicates a weight for the prior relationship between two latent indicator variables. Here for simplicity, we construct a symmetric G matrix and assume all nonzero weights to be 1.</p><formula xml:id="formula_6">(8) G = γ 11 γ 21 γ 31 γ 41 γ 12 γ 22 γ 32 γ 42 γ 13 γ 23 γ 33 γ 43                                     γ 11 0 1 0 0 1 1 0 0 0 0 0 0 γ 21 1 0 0 0 1 1 0 0 0 0 0 0 γ 31 0 0 0 0 0 0 0 0 0 0 0 0 γ 41 0 0 0 0 0 0 0 0 0 0 0 0 γ 12 1 1 0 0 0 1 0 0 0 0 0 0 γ 22 1 1 0 0 1 0 0 0 0 0 0 0 γ 32 0 0 0 0 0 0 0 0 0 0 0 0 γ 42 0 0 0 0 0 0 0 0 0 0 0 0 γ 13 0 0 0 0 0 0 0 0 0 0 0 0 γ 23 0 0 0 0 0 0 0 0 0 0 0 0 γ 33 0 0 0 0 0 0 0 0 0 0 0 1 γ 43 0 0 0 0 0 0 0 0 0 0 1 0 .</formula><p>Note that we might not know all exact relationships between response variables and predictors, but we still formulate the matrix G based on what we know. For example, if we only know relationships between response variables and relationships between predictors, we can aggregate these relationships by G y ⊗ G x -I. Here we use -I to only allow zero diagonals in G, because nonzero diagonals are already captured by the term d1 γ. For example, if we assume that y 1 and y 2 are related w.r.t. each predictor, x 1 and x 2 are related w.r.t. each response variable, and x 3 and x 4 are related w.r.t. each response variable, this translates into the following three Kronecker products. We can then aggregate them by aligning their coordinates into the full matrix G.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gy</head><p>for y 1 and y 2</p><formula xml:id="formula_7">⊗ Gx for x 1 ,x 2 ,x 3 and x 4 -I = 1 1 1 1 ⊗ I 4 -I 8 .</formula><p>Gy for y 1 ,y 2 and y 3</p><formula xml:id="formula_8">⊗ Gx for x 1 and x 2 -I = I 3 ⊗ 1 1 1 1 -I 6 .</formula><p>Gy for y 1 ,y 2 and y 3</p><formula xml:id="formula_9">⊗ Gx for x 3 and x 4 -I = I 3 ⊗ 1 1 1 1 -I 6 .</formula><p>2.3. SSUR model with MRF prior and random effects. The SSUR model with hotspot prior in Section 2.1 and SSUR model with MRF prior in Section 2.2 both assume independent and identically distributed samples conditional on the predictors. However, samples can be heterogeneous, especially in applications with large sample size. For example, largescale drug screens may include cell line samples from different cancer tissue types. We address the heterogeneity of multiple sample groups by introducing random effects into the model similarly to <ref type="bibr" target="#b14">Chekouo et al. (2015)</ref>.</p><p>Let Z n×T be indicator variables representing n samples from T heterogeneous groups. We define an SUR model which includes spike-and-slab priors (4), hyper-inverse Wishart prior (5), MRF prior (7) and random effects, where the random effects B 0 = {β 0,tj : t = 1, • • • , T ; j = 1, • • • , m}, and all priors above are mutually independent:</p><formula xml:id="formula_10">Y = ZB 0 + XB + U, β 0,tj |w 0 ∼ N (0, w 0 ), β kj |γ kj , w ∼ γ kj N (0, w) + (1 -γ kj )δ 0 (β kj ), w 0 ∼ IG(a w 0 , b w 0 ), w ∼ IG(a w , b w ), γ|d, e, G ∝ exp{d1 γ + eγ Gγ}, vec{U} ∼ N (0, Ψ ⊗ I n ), Ψ ∼ HIW G (ν, τ I m ), τ ∼ Gamma(a τ , b τ ),<label>(9)</label></formula><p>Let us look into details of the random effects. For any ith sample and jth response variable, we have</p><formula xml:id="formula_11">y ij = x i• β j + z i• β 0,j + u ij .</formula><p>For the ith sample, the covariance between the jth and j th response variables is ψ jj that is the jj -element of Ψ, since</p><formula xml:id="formula_12">Cov[y ij , y ij ] = Cov[x i• β j + z i• β 0,j + u ij , x i• β j + z i• β 0,j + u ij ] = Cov[u ij , u ij ] = ψ jj .</formula><p>Although the priors for the coefficients B 0 and B in (9) do not provide any correlation between different responses for the same sample, the hyper-inverse Wishart prior on Ψ models correlations between the response variables, and so does an inverse Wishart prior on Ψ. If we look at the reparametrization (3) from the inverse Wishart prior, or similarly from the hyper-inverse Wishart prior, correlations between the response variables are contained in the reparametrized parameter ρ.</p><p>For the jth response variable, the covariance between the ith and i th samples is</p><formula xml:id="formula_13">Cov[y ij , y i j ] = Cov[x i• β j + z i• β 0,j + u ij , x i • β j + z i • β 0,j + u i j ] = wx i• x i • + w 0 z i• z i • = wx i• x i • , if ith and i th samples belong to different groups (z i• = z i • ), wx i• x i • + w 0 , if ith and i th samples belong to the same group (z i• = z i • ),</formula><p>in which the hyper-parameter w 0 in the random effect determines the correlation between two samples from the same group. We would like a weakly informative prior for β 0,tj based on previous studies or expert knowledge in applications. In pharmacogenomic studies from multiple cancer tissues, for predict drug responses a tissue effect is usually stronger than a gene effect. Therefore it is appropriate to specify a larger hyper-parameter w 0 than w.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Posterior computation.</head><p>Posterior inference for the SSUR model with the MRF prior with or without additional random effects can be done in a similar manner to <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>. For the SUR model ( <ref type="formula" target="#formula_1">2</ref>) with a hyper-inverse Wishart prior for the residual covariance matrix Ψ and an MRF prior for the latent indicator variables γ, the joint posterior distribution is</p><formula xml:id="formula_14">f (B, Γ, w, ρ, σ 2 , τ, G, η|Y, X) (10) =f (Y|X, B, ρ, σ 2 )f (B|Γ, w)f (Γ|G, d, e)f (w)f (ρ|σ 2 , τ, G)f (σ 2 |τ, G)f (τ )f (G|η)f (η) = j f (y j |X, B, ρ, σ 2 ) k,j f (β kj |γ kj , w)f (γ|G, d, e)f (w) j,l&lt;j f (ρ jl |σ 2 j , τ, G) j f (σ 2 j |τ, G)f (τ )f (G|η)f (η),</formula><p>where ρ and σ 2 are vectors of {ρ jl } and {σ 2 j }, respectively. Since y j |X, B, ρ, σ 2 is normally distributed with mean Xβ j + l&lt;j u l ρ jl and variance σ 2 j I n , we can obtain the full conditional distributions of the regression coefficients β j , w, σ 2 j , ρ jl and τ . The posterior distribution of the latent indicator variable γ = vec{Γ} is estimated by a Metropolis-Hastings sampler. The graph G of the hyper-inverse Wishart prior is sampled from a junction tree sampler which is essentially Metropolis-Hastings sampling <ref type="bibr" target="#b23">(Green and Thomas, 2013)</ref>, see <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref> for more details. If there are random effects for sample groups as in (9), the joint posterior distribution (10) includes parameters B 0 and w 0 , i.e.</p><formula xml:id="formula_15">f (B 0 , B, Γ, w 0 , w, ρ, σ 2 , τ, G, η|Y, X, Z) =f (Y|X, Z, B 0 , B, ρ, σ 2 )f (B 0 |w 0 )f (w 0 )f (B|Γ, w)f (Γ|G, d, e)f (w)f (ρ|σ 2 , τ, G)f (σ 2 |τ, G)f (τ )f (G|η)f (η).</formula><p>We implement Gibbs samplers to obtain posterior estimates for B, ρ and σ 2 , and update the latent indicator variable Γ via a Metropolis-Hastings sampler with parallel tempering in the same way as <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>. Thompson sampling <ref type="bibr" target="#b43">(Russo et al., 2018)</ref> is used to derive the proposal for each latent indicator γ kj . The hyper-parameter τ is updated via a random walk Metropolis sampler as proposed by <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>. To overcome the prohibitive computational time in high-dimensional settings, the ESS algorithm <ref type="bibr" target="#b10">(Bottolo and Richardson, 2010;</ref><ref type="bibr" target="#b41">Richardson et al., 2011)</ref> is used to update the posteriors. For each iteration of the MCMC sampler, after sampling the latent indicator variables Γ, we first update the hyper-parameters (τ, w, w 0 , G), then update the parameters σ 2 and ρ, and finally the regression coefficient matrices B and B 0 (see Supplementary S3). At each iteration, the ESS algorithm implements a local move to add/delete and swap the latent indicator variables within each chain, and then a global move to exchange and crossover the latent indicators between any two parallel tempered chains. The temperature across all response variables is adapted based on the acceptance rate of the global exchange operator. The ESS algorithm with parallel tempering is effective in searching a high-dimensional model space with multiple modes <ref type="bibr" target="#b10">(Bottolo and Richardson, 2010)</ref>.</p><p>2.5. Model performance evaluation. To evaluate the performance of the proposed approach, we focus on structure recovery and prediction performance. The structure recovery includes the estimation of the latent indicator variable Γ which captures the relationships between response variables and high-dimensional predictors, and the estimation of the graph G which addresses the residual relationships between response variables. Predictive accuracy of Bayesian models for new data points can be measured by the expected log pointwise predictive density (elpd), which can be assessed by leave-one-out cross-validation (elpd loo ) or by the widely applicable information criterion (elpd waic ) <ref type="bibr" target="#b48">(Vehtari et al., 2017)</ref>. We also calculate the root mean squared prediction error (RMSPE) measured on an independent test data set for the median probability model (MPM) <ref type="bibr" target="#b3">(Barbieri and Berger, 2004;</ref><ref type="bibr" target="#b4">Barbieri et al., 2021)</ref> in addition to the training data root mean squared error (RMSE). <ref type="bibr" target="#b48">Vehtari et al. (2017)</ref> proposed an efficient computation for the Bayesian LOO estimate of out-of-sample predictive fit elpd loo = m j=1 n i=1 log f (y ij |y (-i)j ), where y (-i)j is the observation vector of the jth response variable except the ith observation. The LOO is estimated by</p><formula xml:id="formula_16">elpd loo = m j=1 n i=1 1 1 N N t=1 1 f (y ij |ϑ (t) )</formula><p>, where N is the length of an MCMC chain and ϑ (t) is the MCMC samples at the tth iteration for all related parameters. The WAIC is estimated by</p><formula xml:id="formula_17">elpd waic = elpd loo - m j=1 n i=1 Var N t=1 [log f (y ij |ϑ (t) )],</formula><p>where the second term above is used as a measure of the model complexity.</p><p>For future prediction, a single model may be required in some cases, for practical reasons or for simplicity. <ref type="bibr" target="#b3">Barbieri and Berger (2004)</ref> suggested the median probability model (MPM), which is defined for each coefficient to be E[β kj |γ kj = 1, data] if P{γ kj = 1|data} &gt; 0.5, or 0 otherwise. It can be estimated through MCMC estimates:</p><formula xml:id="formula_18">βkj,MP M =    N t=1 β (t) kj N t=1 γ (t) kj , if N t=1 γ (t) kj N &gt; 0.5, 0, otherwise,</formula><p>where γ</p><formula xml:id="formula_19">(t)</formula><p>kj is the estimate of the tth MCMC iteration for the latent indicator variable of</p><formula xml:id="formula_20">β kj . After obtaining BMP M = { βkj,MP M }, the RMSE = 1 √ mn Y -X BMP M 2 , RMSPE = 1 √ mn Y * -X * BMP M 2 ,</formula><p>where Y n×m and X n×p were used to estimate BMP M , and Y * n ×m and X * n ×p are new data.</p><p>3. Simulation study.</p><p>In this section, our SSUR model with MRF prior, denoted as SSUR-MRF, is evaluated w.r.t. structure recovery for the regression coefficient matrix and prediction performance of responses. We set up two simulation scenarios: one with independent samples and the other with heterogeneous and correlated samples. In the first scenario, our approach is compared with the SSUR model with a hotspot prior, denoted as SSUR-hotspot, which was studied by <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>. In the second scenario, our approach is compared with the SSUR-MRF model without random effects.  In scenario 1, the response and predictor datasets are generated based on a multivariate linear regression model Y = 1α + XB Γ + U. The intercepts α = {α j } and input data X = {x ik } (i = 1, • • • , 250; k = 1, • • • , 300; j = 1, • • • , 20) are simulated independently from the standard normal distribution. The regression coefficients B = {β kj } (k = 1, • • • , 300; j = 1, • • • , 20) are also simulated independently from the standard normal distribution but truncated by the latent indicator variable Γ = {γ kj }, i.e. B Γ = {β kj 1 γ kj =1 }.</p><p>The noise matrix U is simulated based on the multivariate normal distributed Ũ and a G-Wishart distribution <ref type="bibr" target="#b37">(Mohammadi and Wit, 2019)</ref>. We first simulate the G-Wishart distribution P ∼ W G (3, M ) where diagonals of M are 1 and the off-diagonals are 0.5, and then use Cholesky decomposition chol(P -1 ) to obtain the noise matrix U = Ũ • chol(P -1 ). We control the average signal-to-noise ratio defined by <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>, and set it to 10. In-dependent data sets X * and Y * are simulated based on the same scenario as validation data. In scenario 2, X, Γ, B Γ and U are generated in the same manner as scenario 1. We also include group indicators Z with independent row vectors z i ∼ multinomial(0.1, 0.2, 0.3, 0.4) (i = 1, • • • , n and the number of groups is set to T = 4), and random effects B 0 with each group effect from N (0, 2 2 ). The response dataset is generated from a linear mixed model Y = XB Γ + ZB 0 + U. Independent validation data sets are also simulated based on scenario 2. The algorithms for the two simulation scenarios can be found in Supplementary S4. Both simulation algorithms generate validation datasets independently with the same sample size to evaluate the performance of the proposed methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.2.</head><p>Comparison of the SSUR-hotspot and SSUR-MRF models. We first compare our proposed SSUR-MRF model to the SSUR-hotspot model on simulated data generated with scenario 1.Our approach uses the network in Figure <ref type="figure" target="#fig_2">2</ref>(a) as prior information to construct edge potentials for the MRF prior as illustrated in Section 2.2. Throughout this article, we refer to a predictor as being selected or identified, if the corresponding latent indicator variable has posterior mean larger than 0.5. Figure <ref type="figure" target="#fig_3">3</ref> shows that SSUR-hotspot and our SSUR-MRF both have good recovery for the residual structure between response variables (i.e. G). However, SSUR-MRF has better structure recovery of the latent indicator variable Γ. Table 1 reports higher accuracy, sensitivity and specificity of the estimator for Γ by SSUR-MRF than SSUR-hotspot. The two methods have similar elpd loo and elpd waic , but our approach has smaller RMSE and RMSPE.  3.3. Sensitivity analysis for SSUR-MRF. The MRF prior can be strongly informative as the edge potentials were constructed according to the true relationships Γ between the simulated response variables and predictors. Here we use different edge potentials G in the MRF prior for a sensitivity analysis. Starting from the previously constructed edge potentials G, we partially delete true edge potentials, either uniformly or non-uniformly, or add noise edges, or aggregate Kronecker products between the three response groups and six predictor groups as shown in Figure <ref type="figure" target="#fig_2">2(a)</ref>. The four cases are as follows:</p><p>• Case 1: delete 1%, 10%, 50% or 90% edges uniformly from the fully informative G.</p><p>This case for every block in Γ, some corresponding edge potentials in G are kept. • Case 2: delete 1%, 10%, 50%, 90% or 100% edges non-uniformly in consecutive chunks from the edge list 1 of the fully informative G. In this case, for some blocks in Γ all corresponding edge potentials in G are deleted. • Case 3: add 0.1%, 0.5%, 1% 2 noise edges to the fully informative G.</p><p>• Case 4: aggregate Kronecker products between response groups and predictor groups (see guidance in Section 2.2).</p><p>Table <ref type="table" target="#tab_1">2</ref> Case 1 shows that our SSUR-MRF model can identify well truly associated predictors w.r.t. accuracy, sensitivity and specificity of the estimated Γ, and have stable prediction performance w.r.t. RMSE and RMSPE, when deleting 1%, 10%, 50% or 90% true edges uniformly. This indicates that our approach can recover a good structure of Γ and good prediction performance of responses, even if only a little true association knowledge across all patterns of Γ is used in the MRF prior. Case 2 (Table <ref type="table" target="#tab_1">2</ref>) where some of the patterns/blocks in Γ are fully unknown (i.e. when the corresponding blocks of edges in G are deleted) in the MRF prior, the sensitivity of variable selection and prediction performance w.r.t. RMSE and RMSPE becomes slightly worse. Figure <ref type="figure" target="#fig_4">4</ref> indicates that the information of the deleted blocks cannot be recovered fully, but will instead be estimated with a sparser Γ. Supplementary S5 shows slightly worse residual structure recovery (i.e. Ĝ) when deleting more edges non-uniformly. However, even the worst-case scenario in Case 2, when all edges are deleted, i.e. when the MRF prior with G = 0 degenerates to a Bernoulli prior without any known structure information between variables, has similar performance to the SSUR model with hotspot prior in Table <ref type="table" target="#tab_0">1</ref>. Case 3 (Table <ref type="table" target="#tab_1">2</ref>), where adding noise edges, shows similar variable selection and prediction performance to using true potential edges. Finally, Case 4 (Table <ref type="table" target="#tab_1">2</ref>), where aggregating Kronecker products for the edge potentials in the MRF prior, the variable selection remains similar to using true potential edges. Here, elpd loo and elpd waic do not change much between different cases, but they can be used as the objective function to optimize hyperparameters. 1 The coordinates of all nonzero entries of G are put in an edge list in order. Deleting edge potentials uniformly, e.g. deleting 1%, means that the 1 + (1 -1/|E|)/1% • {0 : (1% • |E|)}th edges of the edge list are deleted. Deleting 1% edges non-uniformly (i.e. blocks of edges) means that the last 1% edges in the edge list are deleted. The edge list includes the edges of each pattern (i.e. association block) together. Adding 1% noise edges means that 1% • mp(mp -1)/2 wrong edges are included randomly.</p><p>2 Note that 1% already exceeds the total number of true edges that are ∼ 0.3% of all possible edges.  3.4. Results and discussion of SSUR-MRF with random effects. In the simulation scenario 2, T = 4 sample group variables are simulated to assess the performance of our SSUR-MRF model with random effects. Figure <ref type="figure" target="#fig_5">5</ref>(a), 5(c) and Table <ref type="table" target="#tab_2">3</ref> show similar recovery of the latent indicator variable Γ w.r.t. accuracy, sensitivity and specificity for both SSUR-MRF with and without random effects. However, SSUR-MRF model without random effects is difficult to recover the residual graph structure G (Figure <ref type="figure" target="#fig_5">5(d)</ref>), while the model with random effects can recover well the true structure (Figure <ref type="figure" target="#fig_5">5(b)</ref>). See also Table <ref type="table" target="#tab_2">3</ref>, which reports the recovery performance of G w.r.t. accuracy, sensitivity and specificity when thresholding its posterior mean at 0.5. For the response prediction, SSUR-MRF with random effects has smaller elpd loo , elpd waic , RMSE and RMSPE than SSUR-MRF without random effects (Table <ref type="table" target="#tab_2">3</ref>). In addition, for the accuracy of estimated regression coefficients,</p><formula xml:id="formula_21">1 √ mp BMP M -B 2</formula><p>ℓ 2 by SSUR-MRF without random effects has larger error (0.050) than by SSUR-MRF with random effects (0.013). In addition, the  4. Analysis of the pharmacogenomic screen.</p><p>4.1. Pharmacogenomic data. We apply our approach to the Genomics of Drug Sensitivity in Cancer (GDSC) database <ref type="bibr" target="#b51">(Yang et al., 2013;</ref><ref type="bibr" target="#b21">Garnett et al., 2012)</ref> to study the relationships between multiple cancer drugs and high-dimensional genomic features characterising cancer cell lines. The pharmacological and genomic data are from the archived dataset release 5 (<ref type="url" target="https://www.cancerrxgene.org">https://www.cancerrxgene.org</ref>) preprocessed by <ref type="bibr" target="#b21">Garnett et al. (2012)</ref>. We would like to investigate how the MRF prior can help to improve inference for groups of drugs that are known to have correlated response; we therefore select two groups of cancer drugs with similar molecular targets and the generic non-targeted chemotherapy agent Methotrexate: four MAPK inhibitors (RDEA119, PD-0325901, CI-1040 AZD6244), two Bcr-Abl tyrosine kinase inhibitors (Nilotinib, Axitinib), and one chemotherapy agent (Methotrexate).</p><p>The seven drugs were tested on 499 cell lines from 13 cancer tissue types with complete drug sensitivity values. The drug sensitivity of the cell lines was summarized by the log 10 (IC 50 ) from in vitro drug concentration response experiments. Note that smaller log 10 (IC 50 ) values indicate higher sensitivity of a cell line to the drug; therefore a negative regression coefficient indicates that a positive increment of the value of a feature is associated with an increase in drug sensitivity. In order to explore the relationships between the three groups of drugs and the genomic profiles of the cell lines, we first preselect known cancer genes and their corresponding genomic features by following <ref type="bibr" target="#b21">Garnett et al. (2012)</ref>, including 426 copy number variation features (counts) and 68 mutated features (binary). To make a trade-off between the computational efficiency and amount of information from gene expression data, we then preselect three subsets of gene expression features with the largest variances over cell lines, which explain 10%, 30% and 50% of the variation, which results in 269, 1175 and 2602 gene expression features, respectively. This creates three data sets including both gene expression, copy number variation and mutation information, to predict drug sensitivity responses, i.e. feature set I with 763 predictors, feature set II with 1669 predictors, feature set III with 3096 predictors. 4.2. Prior specification and model setup. To construct edge potentials for the MRF prior in the proposed model ( <ref type="formula" target="#formula_10">9</ref>) in Section 2.3, we summarize some known biological relationships between the drugs and genomic information. First, all features (gene expression, copy number variation, mutation) corresponding to the same gene are assumed to be related. Such group of features are likely to be identified together corresponding to each drug, i.e. if one feature for a certain gene is a predictor of drug sensitivity, then the other features corresponding to the same gene are more likely to be predictors as well. This is illustrated in Figure <ref type="figure" target="#fig_6">6</ref>(a) and results in a Kronecker product for the edge potentials Gy 7 drugs</p><formula xml:id="formula_22">⊗ Gx 3 features -I 21 = I 7 ⊗ 1 1 1 1 1 1 1 1 1 -I 21 .</formula><p>Second, the two Bcr-Abl tyrosine kinase inhibitors were developed to inhibit Bcr-Abl tyrosine kinase activity and proliferation of Bcr-Abl expressing cells, so the point mutation BCR-ABL, and features associated with genes BCR and ABL are related and likely to be identified together corresponding to the two Bcr-Abl inhibitors. This is illustrated in Figure <ref type="figure" target="#fig_6">6</ref>(b) and results in a Kronecker product for the edge potentials</p><p>Gy 2 drugs ⊗ Gx 5 features</p><formula xml:id="formula_23">-I 10 = 1 1 1 1 ⊗    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1    -I 10 .</formula><p>Third, the four MAPK inhibitors were developed to reduce the activity of the MAPK pathway, so genes representing the MAPK pathway are likely to be identified together as potential predictor variables for drug sensitivity of the four MAPK inhibitors. Based on the set of genes linked to the MAPK pathway from the Kyoto Encyclopedia of Genes and Genomes (KEGG) PATHWAY database, we can construct another Kronecker product for the edge potentials. Here an edge potential of the G matrix, i.e. an edge weight, is 2, if the corresponding two features are both from the same gene and also belong to one group of drug target genes. Finally, we aggregate the individual Kronecker products by aligning their coordinates in the final G matrix for the MRF prior.</p><p>Other prior specifications, MCMC settings and diagnostics can be found in Supplementary S7 and S8. For comparison, we also run almost the same model as SSUR-MRF but with hyperparameter e = 0 in the MRF prior, which degenerates to a Bernoulli prior, and which we name SSUR-Ber. We choose SSUR-Ber instead of SSUR-hotspot as the comparison model, since it is easier to use than SSUR-hotspot, which has many tuning hyperparameters of the hotspot prior, and because SSUR-Ber has shown similar model performance as SSUR-hotspot shown in Section 3. 4.3. Results and discussion. Figure ?? shows an estimated residual structure between the seven drugs by our SSUR-MRF model based on Feature set III with the most genomic information. It does not only estimate residual correlation between any two MAPK inhibitors and between the two Bcr-Abl inhibitors, but also separates the chemotherapy drug Methotrexate from the other drugs. Supplementary S9 shows the residual structures between the seven drugs as estimated by the SSUR-MRF and SSUR-Ber models with feature sets I-III, respectively. We find that the structure estimated by our SSUR-MRF model based on feature set III is closest to our knowledge about the relationships between the seven drugs. To look at variable selection, a gene feature is considered to be identified if the estimated marginal selection probability of its coefficient is larger than 0.5, i.e. if the corresponding latent indicator variable has posterior mean larger than 0.5. Table <ref type="table" target="#tab_3">4</ref> reports the numbers of identified features over the seven drugs by the SSUR-Ber and SSUR-MRF models. SSUR-Ber results in very sparse models and identifies a similar number of genomic features for each drug. In contrast, our SSUR-MRF model identifies more genomic features and finds a different model sparsity for the three drug groups, in particular relatively denser models for the four MAPK inhibitors. This indicates that our model is able to distinguish variable selection corresponding to different response variables. For the group with the two BCR-ABL inhibitors, i.e. Nilotinib and Axitinib, both SSUR-Ber and SSUR-MRF identify the mutation BCR-ABL associated with drug Nilotinib, as expected. For the group of the four MAPK inhibitors, Figure <ref type="figure" target="#fig_9">8</ref> displays the numbers of identified features by SSUR-Ber and SSUR-MRF. For feature sets I, II and III, SSUR-Ber identifies quite different features (Figure <ref type="figure" target="#fig_9">8</ref>(a)), i.e. there is not much overlap. However, our SSUR-MRF model identifies 35 common features over the three feature sets. This reflects more stable variable selection due to using prior knowledge via the MRF prior. Table <ref type="table" target="#tab_4">5</ref> further shows that the SSUR-Ber model does not identify any known target features for the MAPK inhibitors. Supplementary Table <ref type="table" target="#tab_0">S10</ref>.1 shows the identified feature names for the MAPK inhibitors by SSUR-Ber. Overall, our SSUR-MRF model is able to identify many more features than SSUR-Ber, and identifies more known target features for the MAPK inhibitors.  Figure <ref type="figure" target="#fig_10">9</ref> shows the names of features that were identified for the MAPK inhibitors by the SSUR-MRF model. The seven copy number variation and mutation features in Figure <ref type="figure" target="#fig_10">9</ref>(a) are also in Figure <ref type="figure" target="#fig_10">9</ref>(b) and (c), because only more gene expression features are selected by the models using feature sets II and III, but no additional mutation or copy number variation features. As more target gene expression features are used to construct the edge potentials in the MRF prior in the models built with feature sets II and III, our approach can identify more of them. As Figure <ref type="figure" target="#fig_9">8</ref>(b) shows, we have identified 35 common features with the SSUR-MRF model over feature sets I, II and III, but only seven of these common features belong to known target genes of the corresponding drugs as shown in Figure <ref type="figure" target="#fig_10">9</ref>. We find that the 28 other common identified features (listed in Supplementary Table <ref type="table" target="#tab_0">S10</ref>.2) are cancer genes, i.e. genes that are known to be deregulated in cancer. The Cancer Gene Census summarizes how dysfunction of these genes drives cancer <ref type="bibr" target="#b46">(Sondka et al., 2018)</ref>. In Table <ref type="table" target="#tab_5">6</ref>, prediction performances of the SSUR-Ber and SSUR-MRF models are reported based on Feature set III which has the most genomic information. Overall, prediction performance is very similar between the two models. As for elpd loo or elpd waic , our SSUR-MRF model is slightly worse than SSUR-Ber. To assess the prediction performance of the median probability model, we need an independent data set for out-of-sample prediction to obtain RMSPE. For this purpose we gathered 46 cell lines with complete pharmacogenomic data from the updated GDSC data set by <ref type="bibr" target="#b45">Smirnov et al. (2016)</ref>, that were not included in our training data. Table <ref type="table" target="#tab_5">6</ref> shows that SSUR-MRF has slightly better RMSPE than SSUR-Ber on this independent data set.  Our approach also estimates the tissue-specific effects of 13 cancer types, which may indicate relationships between drug responses and cancer types. Figure <ref type="figure" target="#fig_11">10</ref> shows the estimated random effects by SSUR-MRF using the genomic feature set III. Negative effect estimates can indicate especially high effectiveness of a drug to kill cancer cells of the corresponding cancer type. We focus on the strongest (negative) effects, since most error bars of the posterior mean for the cancer type random effects are quite large. Methotrexate has the strongest average effect in blood cancer samples; it is known to be an effective chemotherapeutic agent in leukemia <ref type="bibr" target="#b40">(Powell et al., 2010)</ref>. Supplementary S12 shows that Methotrexate has much lower log(IC 50 ) values (i.e. more effectiveness) on cell lines from blood tissue type compared with other tissue types. Three of the four MAPK inhibitors (RDEA119, PD-0325901, CI-1040) have their strongest effect in skin cancer cell lines. Supplementary S12 also shows that these drugs have lower log(IC 50 ) values on skin tissue cell lines compared with other tissue types, while AZD6244 shows more variation. Nilotinib and Axitinib are common targeted therapies for chronic myelogenous leukemia with a BCR-ABL mutation <ref type="bibr" target="#b25">(Halbach et al., 2016)</ref>. We can observe the effect of Nilotinib on blood cancer samples in Figure <ref type="figure" target="#fig_11">10</ref> although with large error bars, and the quite low log(IC 50 ) on the only four BCR-ABL mutated blood cancer cell lines are shown in Supplementary S12.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion.</head><p>In this work, we have developed a multivariate Bayesian structured variable selection model for analyzing data from pharmacogenomic studies. Our model exploits the relationships between multiple correlated response variables (drug sensitivity measurements) and high-dimensional structured multi-omics input data for variable selection and to improve prediction. With our approach we want to (a) be able to borrow known information between response variables and predictors, (b) learn associations between response variables and predictors, and (c) understand the residual covariance of response variables. The proposed approach allows us to make use of known network information on the relationships between responses and predictors in an MRF prior for the variable selection indicator Γ, and to further simultaneously select predictors in a sparse manner and learn the residual covariance matrix between the response variables. In addition, we can take into account sample heterogeneity through random effects which are excluded from the variable selection. Guidance for specifying (weakly) informative hyper-parameters has been provided in the Supplement.</p><p>Through the simulation studies, we have demonstrated that the proposed approach can recover the network structure (i.e. latent indicator variable Γ) between multiple response variables and predictors, and predict responses well. We have found that including only a small amount of prior knowledge for most patterns/network groups (Figure <ref type="figure" target="#fig_4">4(d)</ref>) will improve model performance over a model that does not any include prior knowledge. Our approach is also robust to noise in the prior information (i.e. false edge potentials) in the MRF prior (Table <ref type="table" target="#tab_1">2</ref>). Even if there is no prior association knowledge between drugs and genes/pathways (i.e. subgraphs), our approach has similar model performance as SSURhotspot.</p><p>In the pharmacogenomic data application, our approach robustly identified molecular targets of the targeted therapies, and also validated other known cancer-related genes. The use of known information in the MRF prior improved the prediction performance in the independent validation data compared to SSUR-Ber when applied to the largest input data set (feature set III). Through the random effects in our approach, cancer tissue effects were estimated, which could indicate potential relationships between drugs and cancer types. Nevertheless, there was still remaining heterogeneity within cancer types, e.g. reflecting molecular cancer sub-types. To address this, our model could be extended to multilevel random effects or a mixture approach could be employed for the random effects, e.g. by a flexible Dirichlet process prior <ref type="bibr">(Li et al., 2010;</ref><ref type="bibr" target="#b26">Heinzl et al., 2012)</ref>. i Supplementary materials for 'Multivariate Bayesian structured variable selection for pharmacogenomic studies' S1: Prior specifications for HIW prior and spike-and-slab prior.</p><p>For the hyper-parameters ν and τ in Ψ ∼ HIW G (ν, τ I m ), we specify a fixed ν = m + 2 and τ ∼ Gamma(a τ , b τ ). ν = m + 2 is suggested by <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>, because it is the smallest integer degree resulting in a proper prior for the reparametrized parameter σ 2 j . A sensitivity analysis for these hyper-parameters of the hyper-inverse Wishart prior can be found in Supplementary S5.</p><p>The hyper-parameters a w and b w control the variance of the spike-and-slab prior for non-zero regression coefficients in</p><formula xml:id="formula_24">β kj |γ kj , w ∼ γ kj N (0, w) + (1 -γ kj )δ 0 (β kj ),</formula><p>which determines the posterior scale for the estimated effects. In order to provide a sufficiently large scale for the effects, we would like to allow some posterior density for values of w that will correspond to non-neglible posterior density for values of β kj larger than the upper 95% confidence bound E[β kj ] + 1.96 Var[β kj ], where E[•] and Var[•] are the mean and variance of the prior for the effect β kj . This is to ensure that prior of w provides large enough variation to be able to cover a wide range of β kj . Since w has posterior conditional 0,tj respectively, a w and b w can be chosen with similar scales as the two factors. For example, we assume a model sparsity (i.e., proportion of nonzero coefficients) r sparsity = 1 mp kj γ kj ∈ (0, 1), and E[β kj ] and Var[β kj ] can either be estimated roughly from previous studies or elucidated using expert knowledge about typical effect sizes in similar studies. Then we specify</p><formula xml:id="formula_25">a w = const a • 1/2 • m • p • r sparsity , b w = const b • 1/2 • m • p • r sparsity • (E[β kj ]) 2 ,</formula><p>where const a and const b are chosen to ensure that the 5% quantile of the posterior conditional ( ) is larger than E[β kj ] + 1.96 Var[β kj ].</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>S2: Prior specification for the MRF prior.</head><p>It is known that the hyper-parameter e in a Markov random field (MRF) prior f (γ|d, e, G) ∝ exp d1 γ + eγ Gγ can display a phase transition behaviour <ref type="bibr" target="#b33">(Li and Zhang, 2010;</ref><ref type="bibr" target="#b47">Stingo et al., 2011)</ref> which results in a sharp increase in the number of selected predictors (i.e., β kj = 0) with a small change of e given a value (w, d). In the MRF prior, the model sparsity is logit -1 d which can be used to specify the hyper-parameter d. Here logit is log-odds that is the natural logarithm of the odds.</p><p>To specify e, <ref type="bibr" target="#b47">Stingo et al. (2011)</ref>; <ref type="bibr" target="#b31">Lee et al. (2017)</ref> first looked for the phase transition boundary, and then implemented a grid search for the hyper-parameter. This might still search many values for e over the phase transition boundary, which would result in very dense models in high-dimensional settings. So we first determine the expected largest value e to avoid searching in the space of too dense models which would be computationally slow, and then implement the grid search strategy. If one wants to specify model sparsity in the range (c 1 , c 2 ), one can achieve this by specifying the hyper-parameter d subject to logit -1 d = c 1 and search hyper-parameter e from 0 to -d-ln(c -1 2 -1) (see below). Because of d =logit c 1 , c 1 represents a lower bound for the model sparsity which is reached if e = 0. We aim to give a roughly estimate for e ≥ 0 based on the assumed largest sparsity c 2 .</p><p>An estimate for e in the MRF prior</p><formula xml:id="formula_26">A MRF prior f (γ|d, e, G) ∝ exp d1 γ + eγ Gγ corresponds to a set of conditional Bernoulli distributions given by f (γ j |γ -(j) d, e, G) = p γ j j (1 -p j ) 1-γ j ,</formula><p>where p j = 1 1 + exp(-de r =j g rj γ r ) ,</p><p>and {g rj } rj = G.</p><p>One might expect to take the average over γ to be the assumed largest sparsity c 2 (i.e., roughly inclusion probability of each predictor),</p><formula xml:id="formula_27">1 mp mp j=1 1 1 + exp(-d -e r =j g rj γ r ) = c 2 .</formula><p>However, it is not easy to get an explicit or approximate expression for e via the equation above.</p><p>Our strategy is to assume at least one link/neighbour so that the parameter e is not too small. Since r =j g rj γ r counts the number of links/neighbours of the rth feature, we let</p><formula xml:id="formula_28">1 1 + exp(-d -e • 1) = c 2 ⇒ e = -d -ln(c -1 2 -1).</formula><p>S3: Sampling steps for the parameters in SSUR-MRF model.</p><p>Here the Gibbs samplers use the posterior conditionals of the parameters referring to <ref type="bibr" target="#b8">Bottolo et al. (2021)</ref>.</p><p>• sampling latent indicator variables Γ using the Metropolis-Hastings sampler;</p><p>• sampling hyper-parameter τ using a random walk Metropolis sampler;</p><p>• sampling hyper-parameter w (and w 0 ) using Gibbs sampling;</p><p>• sampling the graph G from the junction tree sampler;</p><p>• sampling σ 2 and ρ from the full conditional distributions (which would be the Gibbs sampler); • sampling coefficients B (and B 0 ) from the full conditional distributions (which would be the Gibbs sampler).</p><p>S4: Algorithms for simulation scenarios.</p><p>Algorithm 1 Simulation steps without random effects To specify the hyperparameter of random effects in Algorithm 2, we set a w 0 = 100 by choosing r sparsity = 1, E[β 0,kj ] = 0, Var[β 0,kj ] = 2 2 , const aw 0 = 1/30 and b w 0 = 500 according to the prior specification in Section S3 by setting r sparsity = 1 (i.e. no variable selection for the random effects) and E[β 0,tj ] = 0 (i.e. random effects centred at zero). For the hyperparameters d and e in a MRF prior, we assume the model sparsity in the range (c 1 , c 2 ) = (0.1, 0.3), and then d = logit c 1 = -2 and grid interval e = (0, -d-ln(c -1 2 -1)) = (0, 1.2). We determine the final e = 1 for Algorithm 1, and the final e = 0.2 for Algorithm 2.</p><formula xml:id="formula_29">1: Design a decomposable graph G, dim(G) = m × m 2: Design a sparse matrix Γ, dim(Γ) = p × m 3: Simulate x ik ∼ N (0, 1) and x * ik ∼ N (0, 1), i = 1, • • • , n and k = 1, • • • , p 4: Simulate αj, β kj ∼ N (0, 1), k = 1, • • • , p and j = 1, • • • , m 5: Simulate ũij ∼ N (0, 0.5 2 ), i = 1, • • • , n and j = 1, • • • , m<label>6</label></formula><p>We run a MCMC sampler with 5 chains, 400 000 iterations in total with the first 200 000 iterations as a burn-in period.</p><p>S5: Sensitivity analysis the hyper-inverse Wishart prior in SSUR-MRF model.</p><p>For our approach SSUR-MRF model, we tested various hyperparameters of the hyperinverse Wishart prior based on the simulation scenario 1. Large ν = 100 or a τ in the hyper-inverse Wishart prior results in a denser Ĝ than G (Figure <ref type="figure" target="#fig_5">S5</ref>.1, S5.3, S5.5 and S5.7). But all hyperparameters of the hyper-inverse Wishart prior are not much sensitive to the structure recovery of Γ and response predictions (Table <ref type="table" target="#tab_2">S3</ref>). Estimator Γ Predictors Responses 0.0 0.2 0.4 0.6 0.8 1.0 1 3 5 7 9 11 13 15 17 19 2 21 40 59 78 97 116 135 154 173 192 211 230 249 268 287 Estimator Ĝ Responses Responses 0.0 0.2 0.4 0.6 0.8 1.0 1 3 5 7 9 11 13 15 17 19 1 3 5 7 9 11 13 15 17 19 Figure S5.2: Posterior mean of the latent indicator variable Γ and learning structure Ĝ by SSUR-MRF HIW G (22, τ I), τ ∼ Gamma(0.001, 10) and η ∼ Beta(0.1, 1). Estimator Γ Predictors Responses 0.0 0.2 0.4 0.6 0.8 1.0 1 3 5 7 9 11 13 15 17 19 2 21 40 59 78 97 116 135 154 173 192 211 230 249 268 287 Estimator Ĝ Responses Responses 0.0 0.2 0.4 0.6 0.8 1.0 1 3 5 7 9 11 13 15 17 19 1 3 5 7 9 11 13 15 17 19 Figure S5.4: Posterior mean of the latent indicator variable Γ and learning structure Ĝ by SSUR-MRF, HIW G (22, τ I), τ ∼ Gamma(0.1, 10) and η ∼ Beta(0.001, 1).</p><p>Table S5: Performance of variable selection and response predictions by SSUR-MRFwith different hyper-inverse Wishart prior accuracy sensitivity specificity elpd loo elpd waic RMSE RMSPE ν = 22, τ ∼ Gamma(0.1, 10), η ∼ Beta(0.1, 1) † 0.989 0.998 0.986 -18616.6 -18616.8 0.643 0.412 ν = 100, τ ∼ Gamma(0.1, 10), η ∼ Beta(0.1, 1) 0.989 0.998 0.987 -18656.6 -18657.2 0.646 0.411 ν = 22, τ ∼ Gamma(0.001, 10), η ∼ Beta(0.1, 1) 0.989 0.998 0.987 -18617.5 -18617.7 0.644 0.410 ν = 22, τ ∼ Gamma(100, 10), η ∼ Beta(0.1, 1) 0.989 0.998 0.987 -18617.6 -18617.7 0.648 0.413 ν = 22, τ ∼ Gamma(0.1, 10), η ∼ Beta(0.001, 1) 0.989 0.998 0.987 -18617.5 -18617.6 0.643 0.413 † These specifications are the same as the SSUR-MRF model in Table 1.  S7: Prior specifications in the GDSC data analysis.</p><p>To specify weak informative priors for the random effects for the 13 cancer tissue types, we set the hyper-parameter w 0 ∼ IG(54.6, 400) by assuming each cancer tissue effect with prior mean 0 and prior standard deviation 3 and according to the prior specification in section S5. Corresponding to the three feature sets, the model sparsity is assumed to be 6%, 2% and 1% respectively<ref type="foot" target="#foot_0">foot_0</ref> , so we obtain parameter d of the MRF prior with values -2.7, -4 and -4.6. Our SSUR-MRF model with random effects, hereafter denoted as SSUR-MRF, has good MCMC diagnostics (see Section S8). For comparison, we run a similar model with parameter e = 0 of the MRF prior, which is equivalent to independent Bernoulli priors for the latent indicator variables, here denoted as SSUR-Ber. In SSUR-Ber, the model sparsity hyper-parameter d in the prior f (γ|d) ∝ exp{d1 γ} is tuned to reach the best elpd loo and elpd waic .         </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig 1 :</head><label>1</label><figDesc>Fig 1: Illustration of the drug groups and omics path (adapted from Ruffieux (2019)).</figDesc><graphic coords="4,108.20,272.06,395.61,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>3. 1 .</head><label>1</label><figDesc>Simulation scenarios. We design a network (Figure2(a)) to construct a complex structure between 20 response variables and 300 predictors. It assumes that the responses are divided into three groups, and the first 120 predictors are divided into six groups. The first group of responses ({y 1 , • • • , y 5 }) is related to four groups of predictors ({x 1 , • • • , x 5 }, {x 30 , • • • , x 50 }, {x 51 , • • • , x 60 } and {x 110 , • • • , x 120 }). The second group of responses ({y 6 , • • • , y 12 }) is also related to four predictor groups ({x 10 , • • • , x 20 }, {x 51 , • • • , x 60 }, {x 70 , • • • , x 90 } and {x 110 , • • • , x 120 }). The third group of responses ({y 13 , • • • , y 20 }) is related to three predictor groups ({x 30 , • • • , x 50 }, {x 70 , • • • , x 90 } and {x 110 , • • • , x 120 }). Corresponding to this network structure between responses and predictors, a sparse latent indicator variable Γ (Figure 2(b)) reflects the associations between response variables and predictors in the SUR model (1). In addition, we design a decomposable graph G (Figure2(c)) to reflect the residual structure between the response variables. The graph G has six blocks representing six subgroups of responses that cannot be explained by the linear predictor XB, which makes the modeling more challenging. The information in G is included in the residuals and can be expected to be recovered by statistical models.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig 2 :</head><label>2</label><figDesc>Fig 2: Simulation scenarios: True relationships between response variables and predictors. (a) Network structure between Y and X; (b) latent indicator variable Γ for the associations between Y and X in the SUR model; (c) additional structure G between response variables not explained by XB. Black indicates a true relation between the response variables and predictors.</figDesc><graphic coords="11,91.80,304.51,435.74,149.94" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig 3 :</head><label>3</label><figDesc>Fig 3: Results for simulation scenario 1: Posterior mean of Γ and G by models SSUR-hotspot (panels (a) and (b)) and SSUR-MRF (panels (c) and (d))</figDesc><graphic coords="12,74.69,381.33,462.63,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig 4 :</head><label>4</label><figDesc>Fig 4: Results for simulation scenario 1: Sensitivity analysis for case 2, i.e. when blocks of edges are deleted (i.e. delete edges non-uniformly).</figDesc><graphic coords="14,12.78,399.82,586.45,119.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig 5 :</head><label>5</label><figDesc>Fig 5: Results for simulation scenario 2: Posterior mean of Γ and G by the SSUR-MRF with random effects based on the simulated data from scenario 2</figDesc><graphic coords="15,79.09,159.33,453.82,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig 6 :</head><label>6</label><figDesc>Fig 6: GDSC data application: Illustration of the assumed relationships between drugs and related gene features, which are used for the MRF prior. The right panel is for the Bcr-Abl fusion gene, its corresponding related features and the two Bcr-Abl tyrosine kinase inhibitor drugs. The left panel illustrates gene TP35 as one example with its corresponding features representing all three data sources; all seven drugs are shown to indicate that the relationship between the three gene features is valid in relation to all drugs in the data set. The rectangles indicate drugs, solid circles indicate gene features and dashed circles indicate that the elements inside are related. The edges between drugs and dashed circled gene features indicate assumed associations between the gene features and the drug sensitivity measurements for the drugs. The names with suffix ".GEX", ".CNV" and ".MUT" indicate features of expression, copy number variation and mutation, respectively.</figDesc><graphic coords="16,149.52,292.88,312.95,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig 7 :</head><label>7</label><figDesc>Fig 7: GDSC data application: Estimated residual structure between the seven drugs by the SSUR-MRF model based on features set III with Ĝ thresholded at 0.5.</figDesc><graphic coords="18,237.83,90.70,136.35,128.53" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig 8 :</head><label>8</label><figDesc>Fig 8: GDSC data application: A Venn diagram for the numbers of identified features for the MAPK inhibitors by SSUR-Ber (panel (a)) and SSUR-MRF (panel (b)) models and overlaps between the models fitted with feature sets I, II, and III.</figDesc><graphic coords="19,177.49,182.37,257.03,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig 9 :</head><label>9</label><figDesc>Fig 9: GDSC data application: Estimated network between the MAPK inhibitors and identified target genes based on Ĝ and Γ thresholded at 0.5 by SSUR-MRF corresponding to feature set I, II and III respectively.</figDesc><graphic coords="20,80.21,198.64,451.59,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig 10 :</head><label>10</label><figDesc>Fig 10: GDSC data application: Posterior estimates for the cancer tissue random effects for all drugs based on the median probability model. Random effects are centred around zero. Error bars are ± standard deviation of the posterior mean.</figDesc><graphic coords="21,198.90,90.71,214.20,428.39" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><figDesc>proper a w and b w according to this posterior conditional with 5% quantile larger than E[β kj ]+1.96 Var[β kj ]. Since a w and b w are combined with the factors 1</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><figDesc>: Simulate P ∼ WG(3, M ) where diagonals of M are 1 and off-diagonals are 0.5, dim(P ) = m × m 7: Use Cholesky decomposition chol(P -1 ) to getU = Ũ • chol(P -1 ) 8: Generate Y = 1α + (XB) Γ + U and Y * = 1α + X * B Γ + U Algorithm 2 Simulation steps with random effects Design a decomposable graph G, dim(G) = m × m 2: Design a sparse matrix Γ, dim(Γ) = p × m Simulate x ik ∼ N (0, 1) and x * ik ∼ N (0, 1), i = 1, • • • , n and k = 1, • • • , p 4: Simulate β kj ∼ N (0, 1), k = 1, • • • , p and j = 1, • • • , m Simulate zi ∼ multinomial(0.1, 0.2, 0.3, 0.4) where zi = (zi1, • • • , ziT ) , i = 1, • • • , n, T = 4,and the same for and z * i 6: Simulate β0,t1 ∼ N (0, 2 2 ), t = 1, • • • , T Simulate ũij ∼ N (0, 0.5 2 ), i = 1, • • • , n and j = 1, • • • , m 8: Simulate P ∼ WG(3, M ) where diagonals of M are 1 and off-diagonals are 0.5, dim(P ) = m × m Use Cholesky decomposition chol(P -1 ) to get U = Ũ • chol(P -1 ) 10: Generate Y = XB Γ + ZB0 + U and Y * = X * B Γ + Z * B0 + U To specify hyperparameters in Algorithm 1, we set a w = 15 and b w = 60 for the variance of shrinkage coefficients by choosing r sparsity = 0.1, E[β kj ] = -0.1, Var[β kj ] = 1, const aw = 1/20 and const bw = 20 according to the prior specification in Section S5.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><figDesc>Figure S5.1: Posterior mean of the latent indicator variable Γ and learning structure Ĝ by SSUR-MRF, HIW G (100, τ I), τ ∼ Gamma(0.1, 10) and η ∼ Beta(0.1, 1).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_15"><head>Figure</head><figDesc>Figure S5.3: Posterior mean of the latent indicator variable Γ and learning structure Ĝ by SSUR-MRF, HIW G (22, τ I), τ ∼ Gamma(100, 10) and η ∼ Beta(0.1, 1).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><figDesc>vi S6: Estimated G for the sensitivity analysis in Section 3.3.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head>Figure S6 :</head><label>S6</label><figDesc>Figure S6: Sensitivity analysis Case 2: delete blocks of edges</figDesc><graphic coords="31,23.22,128.70,565.55,128.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_18"><figDesc>S8: MCMC diagnostics by SSUR-Ber and SSUR-MRF in the GDSC data analysis.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_19"><head>Figure</head><figDesc>Figure S8.1.1: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-2, mrf e=0, a w0=55, b w0=400, a w=4, b w=32), and others are by default.</figDesc><graphic coords="32,131.15,123.16,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_20"><head>Figure</head><figDesc>Figure S8.1.2: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-4, mrf e=0, a w0=55, b w0=400, a w=4, b w=32), and others are by default.</figDesc><graphic coords="32,131.15,416.02,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_21"><head>viii</head><figDesc>Figure S8.1.3: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-3.5, mrf e=0, a w0=55, b w0=400, a w=4, b w=33), and others are by default.</figDesc><graphic coords="33,131.15,90.71,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_22"><head>Figure</head><figDesc>Figure S8.2.1: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-2, mrf e=0, a w0=55, b w0=400, a w=4, b w=32), and others are by default.</figDesc><graphic coords="33,131.15,396.57,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_23"><head>Figure</head><figDesc>Figure S8.2.2: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-4, mrf e=0.3, a w0=55, b w0=400, a w=4, b w=32), and others are by default.</figDesc><graphic coords="34,131.15,90.71,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_24"><head>Figure</head><figDesc>Figure S8.2.3: Diagnostic plots. The hyperparameters set hyperpar = list(mrf d=-4.6, mrf e=0.5, a w0=55, b w0=400, a w=4, b w=33), and others are by default.</figDesc><graphic coords="34,131.15,396.31,349.71,239.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_25"><head>xS9:</head><figDesc>Estimated residual structure between the seven drugs in the GDSC data analysis.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_26"><head>Figure S9 :</head><label>S9</label><figDesc>Figure S9: GDSC data application: Estimated residual structure between the seven drugs by SSUR-MRF and SSUR-Ber based on Ĝ thresholded at 0.5. Panels (a)-(c) are estimated by SSUR-MRF, and panels (d)-(f ) are estimated by SSUR-Ber, corresponding to Feature sets I, II and III respectively</figDesc><graphic coords="35,91.80,142.24,479.74,342.73" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Results for simulation scenario 1: Accuracy of variable selection and prediction performance of models SSUR-hotspot and SSUR-MRF prior</figDesc><table><row><cell></cell><cell cols="5">accuracy sensitivity specificity RMSE RMSPE</cell></row><row><cell>SSUR-hotspot</cell><cell>0.988</cell><cell>0.936</cell><cell>0.999</cell><cell>0.800</cell><cell>0.693</cell></row><row><cell>SSUR-MRF</cell><cell>0.989</cell><cell>0.998</cell><cell>0.986</cell><cell>0.643</cell><cell>0.412</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2</head><label>2</label><figDesc>Results for simulation scenario 1: Sensitivity analysis of SSUR-MRF with different MRF priors</figDesc><table><row><cell></cell><cell cols="3">accuracy sensitivity specificity</cell><cell>elpd loo</cell><cell cols="3">elpd waic RMSE RMSPE</cell></row><row><cell>Case 1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>delete edges uniformly</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18612.2 -18612.4</cell><cell>0.642</cell><cell>0.411</cell></row><row><cell>10%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18623.0 -18624.1</cell><cell>0.642</cell><cell>0.411</cell></row><row><cell>50%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18618.7 -18622.3</cell><cell>0.642</cell><cell>0.410</cell></row><row><cell>90%</cell><cell>0.994</cell><cell>0.993</cell><cell>0.994</cell><cell cols="2">-18622.1 -18623.8</cell><cell>0.652</cell><cell>0.453</cell></row><row><cell>Case 2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>delete edges non-uniformly</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18622.0 -18623.8</cell><cell>0.642</cell><cell>0.412</cell></row><row><cell>10%</cell><cell>0.988</cell><cell>0.989</cell><cell>0.988</cell><cell cols="2">-18619.8 -18620.6</cell><cell>0.668</cell><cell>0.470</cell></row><row><cell>50%</cell><cell>0.986</cell><cell>0.959</cell><cell>0.991</cell><cell cols="2">-18622.5 -18624.2</cell><cell>0.806</cell><cell>0.723</cell></row><row><cell>90%</cell><cell>0.991</cell><cell>0.955</cell><cell>0.998</cell><cell cols="2">-18622.6 -18624.8</cell><cell>0.780</cell><cell>0.662</cell></row><row><cell>100%</cell><cell>0.990</cell><cell>0.942</cell><cell>1.000</cell><cell cols="2">-18623.1 -18624.5</cell><cell>0.800</cell><cell>0.732</cell></row><row><cell>Case 3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>add noise edges</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>0.1%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18621.5 -18623.8</cell><cell>0.643</cell><cell>0.414</cell></row><row><cell>0.5%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18622.0 -18623.4</cell><cell>0.643</cell><cell>0.413</cell></row><row><cell>1%</cell><cell>0.989</cell><cell>0.998</cell><cell>0.987</cell><cell cols="2">-18621.2 -18623.2</cell><cell>0.643</cell><cell>0.412</cell></row><row><cell>Case 4</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>aggregate Kronecker products</cell><cell>0.990</cell><cell>0.998</cell><cell>0.988</cell><cell cols="2">-18620.2 -18623.0</cell><cell>0.644</cell><cell>0.412</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3</head><label>3</label><figDesc>Results for simulation scenario 2: Structure recovery and prediction by SSUR-MRF with and without random effects</figDesc><table><row><cell></cell><cell cols="3">accuracy sensitivity specificity</cell><cell>elpd loo</cell><cell>elpd waic RMSE RMSPE</cell></row><row><cell>With random effects</cell><cell></cell><cell></cell><cell></cell><cell>-18804.0 -18802.4</cell><cell>0.638</cell><cell>0.433</cell></row><row><cell>Γ</cell><cell>0.989</cell><cell>0.999</cell><cell>0.987</cell></row><row><cell>G</cell><cell>0.930</cell><cell>0.861</cell><cell>1.000</cell></row><row><cell>Without random effects</cell><cell></cell><cell></cell><cell></cell><cell>-18932.1 -18935.8</cell><cell>2.855</cell><cell>2.892</cell></row><row><cell>Γ</cell><cell>0.988</cell><cell>0.993</cell><cell>0.987</cell></row><row><cell>G</cell><cell>0.845</cell><cell>0.752</cell><cell>0.939</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4</head><label>4</label><figDesc>GDSC data application: Number of identified genomic features corresponding to each drug by the SSUR-Ber and SSUR-MRF models.</figDesc><table><row><cell></cell><cell cols="7">Nilotinib Axitinib RDEA119 PD-0325901 CI-1040 AZD6244 Methotrexate</cell></row><row><cell>SSUR-Ber</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Feature set I</cell><cell>5</cell><cell>5</cell><cell>2</cell><cell>3</cell><cell>1</cell><cell>0</cell><cell>3</cell></row><row><cell>Feature set II</cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>1</cell><cell>1</cell><cell>2</cell><cell>2</cell></row><row><cell>Feature set III</cell><cell>8</cell><cell>11</cell><cell>8</cell><cell>4</cell><cell>8</cell><cell>10</cell><cell>8</cell></row><row><cell>SSUR-MRF</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Feature set I</cell><cell>1</cell><cell>2</cell><cell>42</cell><cell>41</cell><cell>40</cell><cell>40</cell><cell>0</cell></row><row><cell>Feature set II</cell><cell>9</cell><cell>10</cell><cell>56</cell><cell>56</cell><cell>56</cell><cell>57</cell><cell>9</cell></row><row><cell>Feature set III</cell><cell>39</cell><cell>38</cell><cell>87</cell><cell>86</cell><cell>86</cell><cell>89</cell><cell>41</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 5</head><label>5</label><figDesc>GDSC data application: Numbers of genomic features selected as predictors for the MAPK inhibitors in the SSUR-Ber and SSUR-MRF models. Note that Feature sets I, II and III include 40, 55, and 81 features corresponding to known target genes of the corresponding drug, respectively.</figDesc><table><row><cell></cell><cell cols="2">SSUR-Ber (%) SSUR-MRF (%)</cell></row><row><cell>Feature set I</cell><cell></cell><cell></cell></row><row><cell># identified targets # known targets</cell><cell>0/40 (0%)</cell><cell>7/40 (17.5%)</cell></row><row><cell># identified targets # identified features</cell><cell>0/5 (0%)</cell><cell>7/43 (16.3%)</cell></row><row><cell>Feature set II</cell><cell></cell><cell></cell></row><row><cell># identified targets # known targets</cell><cell>0/55 (0%)</cell><cell>8/55 (14.5%)</cell></row><row><cell># identified targets # identified features</cell><cell>0/5 (0%)</cell><cell>8/57 (14.0%)</cell></row><row><cell>Feature set III</cell><cell></cell><cell></cell></row><row><cell># identified targets # known targets</cell><cell>0/81 (0%)</cell><cell>17/81 (21.0%)</cell></row><row><cell># identified targets # identified features</cell><cell>0/28 (0%)</cell><cell>17/96 (17.7%)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 6</head><label>6</label><figDesc>GDSC data application: Prediction performance of the SSUR-Ber and SSUR-MRF models based onFeature set III.</figDesc><table><row><cell></cell><cell cols="2">SSUR-Ber SSUR-MRF</cell></row><row><cell>elpd.LOO</cell><cell>-8135.5</cell><cell>-8143.1</cell></row><row><cell>elpd.WAIC</cell><cell>-8168.8</cell><cell>-8178.0</cell></row><row><cell>RMSE</cell><cell>2.003</cell><cell>1.883</cell></row><row><cell>RMSPE</cell><cell>2.095</cell><cell>2.062</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_0"><p>We assume there are roughly 50 associated features for each response variables based on the number of drug target genes. Then the assumed model sparsity is 50 divided by the total number of features, i.e., 50/763, 50/1699 and 50/3096.</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgements. This work was supported by <rs type="funder">Research Council of Norway project No. 237718 "Big Insight" (ZZ)</rs>, <rs type="funder">European Union Horizon 2020</rs> grant agreements No. <rs type="grantNumber">847912</rs> "<rs type="projectName">RESCUER" (MZ) and No. 633595 "DynaHealth" (AL</rs>), <rs type="funder">UK Medical Research Council</rs> grants <rs type="grantNumber">MR/M013138/1</rs> (MB, AL). The authors thank <rs type="person">Dr. Leonardo Bottolo</rs> for discussions.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_dDab5gT">
+					<idno type="grant-number">847912</idno>
+					<orgName type="project" subtype="full">RESCUER&quot; (MZ) and No. 633595 &quot;DynaHealth&quot; (AL</orgName>
+				</org>
+				<org type="funding" xml:id="_GXYD57D">
+					<idno type="grant-number">MR/M013138/1</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Although our approach has been successfully applied in scenarios with multiple correlated response variables and high-dimensional predictors, it might become too computationally demanding if the model is not assumed to be very sparse (i.e. if the number of associated features is not assumed to be much smaller than mp). An alternative is to change our MCMC sampling approach to approximate inference, e.g. variational inference <ref type="bibr" target="#b7">(Blei et al., 2017;</ref><ref type="bibr" target="#b54">Zhang et al., 2019;</ref><ref type="bibr" target="#b38">Münch et al., 2021)</ref>. Supplementary Material. R package BayesSUR is available on the Comprehensive R Archive Network at <ref type="url" target="https://CRAN.R-project.org/package=BayesSUR">https://CRAN.R-project.org/package=BayesSUR</ref>. R code reproducing all results can be found at <ref type="url" target="https://github.com/zhizuio/BayesSUR-RE">https://github.com/zhizuio/BayesSUR-RE</ref>. The Supplementary material contains details on prior specifications, sampling steps, calculation of model performance indexes, details on the simulation scenarios and sensitivity analysis, and additional results of the GDSC data analysis.   </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Machine learning approaches to drug response prediction: challenges and recent progress. npj Precision Oncology</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Adam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Rampášek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Safikhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Goldenberg</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">19</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Spike-and-slab group lassos for grouped regression and sparse generalized additive models</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Antonelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Boland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">117</biblScope>
+			<biblScope unit="issue">537</biblScope>
+			<biblScope unit="page" from="184" to="197" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Artificial intelligence for drug response prediction in disease models</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Ballester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Stevens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aittokallio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Briefings in Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">450</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Optimal predictive model selection</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Barbieri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O</forename><surname>Berger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="870" to="897" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The median probability model and correlated variables</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Barbieri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">I</forename><surname>George</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ročková</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1085" to="1112" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The cancer cell line encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Joint high-dimensional bayesian variable and covariance selection with an application to eqtl analysis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bhadra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mallick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="447" to="457" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Variational inference: A review for statisticians</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Blei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kucukelbir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Mcauliffe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">518</biblScope>
+			<biblScope unit="page" from="859" to="877" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">A computationally efficient bayesian seemingly unrelated regressions model for high-dimensional quantitative trait loci discovery</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Banterle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series C (Applied Statistics)</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="886" to="908" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Bayesian detection of expression quantitative trait loci hot-spots</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Petretto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Blankenberg</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetics</title>
+		<imprint>
+			<biblScope unit="volume">189</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1449" to="1459" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Evolutionary stochastic search for bayesian model exploration</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Richardson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="583" to="618" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Multivariate bayesian variable selection and prediction</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Vannucci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fearn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society, Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="627" to="641" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Simulation of hyper-inverse wishart distributions in graphical models</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Carvalho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Massam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="647" to="659" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Bayesian robust learning in chain graph models for integrative pharmacogenomics</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Baladandayuthapani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bhadra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Ha</surname></persName>
+		</author>
+		<idno type="DOI">arXiv,10.48550/ARXIV.2111.11529</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">mirna-target gene regulatory networks: A bayesian integrative approach to biomarker selection with application to kidney cancer</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chekouo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Stingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Doecke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K.-A</forename><surname>Do</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">71</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="428" to="438" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">A bayesian integrative approach for multi-platform genomic data: A kidney cancer case study</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chekouo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Stingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Doecke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K.-A</forename><surname>Do</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="615" to="624" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A Bayesian predictive model for imaging genetics with application to schizophrenia</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chekouo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Stingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Guindani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K.-A</forename><surname>Do</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1547" to="1571" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A community effort to assess and improve drug sensitivity prediction algorithms</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Costello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Heiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Georgii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gönen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bansal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Hintsanen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="1202" to="1212" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Large-scale pharmacogenomic studies and drug response prediction for personalized cancer medicine</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Mou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Genetics and Genomics</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="540" to="551" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">The performance of covariance selection methods that consider decomposable models only</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fitch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Massam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="659" to="684" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Impact of a biomarker-based strategy on oncology drug development: A meta-analysis of clinical trials leading to fda approval</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Fontes Jardim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schwaederle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Eggermont</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Schilsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mendelsohn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Lazar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kurzrock</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JNCI: Journal of the National Cancer Institute</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">253</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Variable selection via gibbs sampling</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">I</forename><surname>George</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Mcculloch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="issue">423</biblScope>
+			<biblScope unit="page" from="881" to="889" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Sampling decomposable graphs using a markov chain on junction trees</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Green</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="91" to="110" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Bayesian structure learning in multilayered genomic networks</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Ha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Stingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Baladandayuthapani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="issue">534</biblScope>
+			<biblScope unit="page" from="605" to="618" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Axitinib and sorafenib are potent in tyrosine kinase inhibitor resistant chronic myeloid leukemia cells</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Halbach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gretzmeier</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Communication and Signaling</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">6</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Additive mixed models with dirichlet process mixture and p-spline priors</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Heinzl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fahrmeir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kneib</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AStA Advances in Statistical Analysis</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="page" from="47" to="68" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Tissue-guided lasso for prediction of clinical drug response using preclinical samples</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bhope</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sinha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Emad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLOS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="22" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Mapping quantitative trait loci for expression abundance</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetics</title>
+		<imprint>
+			<biblScope unit="volume">176</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="611" to="623" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A network of human functional gene interactions from knockout fitness screens in cancer cells</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dede</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Lenoir</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Life Science Alliance</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2019">2019. 201800278</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Molecularly targeted therapy based on tumour molecular profiling versus conventional therapy for advanced cancer (shiva): a multicentre, open-label, proof-of-concept, randomised, controlled phase 2 trial</title>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Tourneau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Delord</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-P</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gavoille</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dubot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Isambert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Campone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trédan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Massiani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-A</forename><surname>Mauborgne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Lancet Oncology</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page" from="1324" to="1334" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Multivariate bayesian variable selection exploiting dependence structure among outcomes: Application to air pollution effects on dna methylation</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Tadesse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Baccarelli</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="232" to="241" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Mt-hess: an efficient bayesian approach for simultaneous association detection in omics datasets, with application to eqtl mapping in multiple tissues</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lewin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Saadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Peters</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="523" to="532" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Bayesian variable selection in structured high-dimensional covariate spaces with applications in genomics</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">105</biblScope>
+			<biblScope unit="issue">491</biblScope>
+			<biblScope unit="page" from="1202" to="1214" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Bayesian inference in semiparametric mixed models for longitudinal data</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Müller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="70" to="78" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Bayesian Variable Selection Regression of Multivariate Responses for Group Data</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liquet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mengersen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Pettitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sutton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1039" to="1067" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Estimation of the percentage of us patients with cancer who benefit from genome-driven oncology</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Marquart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Prasad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JAMA Oncology</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1093" to="1098" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Bdgraph: An r package for bayesian structure learning in graphical models</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mohammadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1" to="30" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Drug sensitivity prediction with normal inverse gaussian shrinkage informed by external data</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Münch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Van De Wiel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G R</forename><surname>Leday</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrical Journal</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="289" to="304" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">New insights into the genetic control of gene expression using a bayesian multi-tissue approach</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Petretto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Langley</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">1000737</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Arsenic trioxide improves event-free and overall survival for adults with acute promyelocytic leukemia: North american leukemia intergroup study c9710</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Powell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Moser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Stock</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Blood</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="3751" to="3757" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Bayesian models for sparse regression analysis of high dimensional data</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Rosenthal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Statistics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="539" to="568" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title level="m" type="main">Large-scale variational inference for bayesian joint regression modelling of highdimensional genetic data</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ruffieux</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">PhD dissertation</note>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A tutorial on thompson sampling</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Russo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">V</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kazerouni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Osband</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Foundations and Trends in Machine Learning</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="96" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Drug sensitivity prediction from cell line-based pharmacogenomics data: guidelines for developing machine learning models</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Sharifi-Noghabi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jahangiri-Tazehkand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mammoliti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Nair</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Mer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Briefings in Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">294</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Pharmacogx: an r package for analysis of large pharmacogenomic datasets</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Safikhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>El-Hachem</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1244" to="1246" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">The cosmic cancer gene census: describing genetic dysfunction across all human cancers</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sondka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bamford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Review Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="696" to="705" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Incorporating biological information into linear models: A bayesian approach to the selection of pathways and genes</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Stingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Tadesse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Vannucci</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann. Appl. Stat</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1978" to="2002" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Practical bayesian model evaluation using leave-one-out cross-validation and waic</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vehtari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gabry</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics and Computing</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1413" to="1432" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Pilot study using molecular profiling of patients&apos; tumors to find potential targets and select treatments for their refractory cancers</title>
+		<author>
+			<persName><forename type="first">Von</forename><surname>Hoff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Stephenson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Rosen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Loesch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Borad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Anthony</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jameson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Cantafio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Richards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Fitch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Wasserman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Fernandez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Green</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sutherland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Bittner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Alarcon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mallery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Penny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Clinical Oncology</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">33</biblScope>
+			<biblScope unit="page" from="4877" to="4883" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Sparse seemingly unrelated regression modelling: Applications in finance and econometrics</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Stat. Data Anal</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="2866" to="2877" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Genomics of drug sensitivity in cancer (gdsc): a resource for therapeutic biomarker discovery in cancer cells</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Reserch</title>
+		<imprint>
+			<biblScope unit="page" from="955" to="961" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Consistent Group Selection with Bayesian High Dimensional Modeling</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">N</forename><surname>Narisetty</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="909" to="935" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">A direct monte carlo approach for bayesian analysis of the seemingly unrelated regression model</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zellner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ando</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Econometrics</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="33" to="45" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Advances in variational inference</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Butepage</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kjellstrom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mandt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Pattern Analysis &amp; Machine Intelligence</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="2008" to="2026" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">BayesSUR: An R package for high-dimensional multivariate Bayesian variable and covariance selection in linear regression</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Banterle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bottolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lewin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zucknick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1" to="32" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Structured penalized regression for drug sensitivity prediction</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zucknick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series C (Applied Statistics)</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="525" to="545" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

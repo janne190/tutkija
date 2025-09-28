@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Smaller p-values in genomics studies using distilled historical information</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2020-04-20">April 20, 2020</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Jordan</forename><forename type="middle">G</forename><surname>Bryan</surname></persName>
+							<email>jordan.bryan@duke.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Statistical Science</orgName>
+								<orgName type="institution">Duke University</orgName>
+								<address>
+									<postCode>27708</postCode>
+									<settlement>Durham</settlement>
+									<region>NC</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Peter</forename><forename type="middle">D</forename><surname>Hoff</surname></persName>
+							<email>peter.hoff@duke.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Statistical Science</orgName>
+								<orgName type="institution">Duke University</orgName>
+								<address>
+									<postCode>27708</postCode>
+									<settlement>Durham</settlement>
+									<region>NC</region>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Smaller p-values in genomics studies using distilled historical information</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2020-04-20">April 20, 2020</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">1C1BFA6DCAEB07CE8AD828FB9A5A5C44</idno>
+					<idno type="arXiv">arXiv:2004.07887v1[stat.AP]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Medical research institutions have generated massive amounts of biological data by genetically profiling hundreds of cancer cell lines. In parallel, academic biology labs have conducted genetic screens on small numbers of cancer cell lines under custom experimental conditions. In order to share information between these two approaches to scientific discovery, this article proposes a "frequentist assisted by Bayes" (FAB) procedure for hypothesis testing that allows historical information from massive genomics datasets to increase the power of hypothesis tests in specialized studies. The exchange of information takes place through a novel probability model for multimodal genomics data, which distills historical information pertaining to cancer cell lines and genes across a wide variety of experimental contexts. If the relevance of the historical information for a given study is high, then the resulting FAB tests can be more powerful than the corresponding classical tests. If the relevance is low, then the FAB tests yield as many discoveries as the classical tests. Simulations and practical investigations demonstrate that the FAB testing procedure can increase the number of effects discovered in genomics studies while still maintaining strict control of type I error and false discovery rates.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>In recent years, non-profit research organizations have initiated large-scale efforts to create genetic maps of cancer <ref type="bibr">(Tsherniak and others, 2017;</ref><ref type="bibr" target="#b22">Meyers and others, 2017;</ref><ref type="bibr" target="#b21">McFarland and others, 2018;</ref><ref type="bibr" target="#b16">Iorio and others, 2016;</ref><ref type="bibr" target="#b2">Behan and others, 2019;</ref><ref type="bibr" target="#b10">Ghandi and others, 2019)</ref>.</p><p>The data produced by these projects measure different modalities of the cancer genome.</p><p>For instance, RNAseq data measure how much RNA is being expressed from a particular gene in a given cancer cell line. CRISPR dependency data measure the extent to which the proliferation of a cancer cell line is affected upon deletion of a given gene. DNA sequencing data record the presence or absence of aberrant nucleotide sequences in the coding regions of genes in cancer cell lines.</p><p>The purpose of exploratory data-driven screens like these is to discover patterns in the relationships among cancer cell lines and among genes, patterns which will hopefully yield new biological insights. However, many biological questions cannot be answered without hypothesis-driven experiments, which complement the scattershot approach of data-driven screens by testing the effects of targeted interventions on the baseline state of cellular models of cancer. For example, the CRISPR-Cas9 gene editing technology has been used in conjunction with traditional treatment-control experimental designs to successfully uncover and validate the functional role of several genes <ref type="bibr">(Kory and others, 2018;</ref><ref type="bibr">Birsoy and others, 2015;</ref><ref type="bibr">Pusapati and others, 2018;</ref><ref type="bibr">Liao and others, 2017</ref>).</p><p>An open question in modern biology is how to properly inform hypothesis-driven experimenters with the information available in massive genomics datasets created by data-driven screens. The most conspicuous efforts to deliver genomics information to biologists come in the form of online data portals. Online portals allow biologists to browse and visualize a corpus of publicly available genomics data without the need for computing expertise. For this reason, portals are invaluable tools for strengthening biological arguments, sleuthing in an ad-hoc manner to find connections to genetic mechanisms of interest, and generating new hypotheses. However, data portals do not provide a method for directly incorporating information from the corpus into the statistical evaluation of new hypotheses. Modern statistical methods applicable to analyzing large genomics datasets are also potentially ill-suited to the needs of hypothesis-driven experiments. While the technologies and methodologies employed by a modern working biologist are complex, the statistical tests necessary to extract insights from their data need not be.</p><p>The current state of affairs in biology therefore demands a framework for (1) distilling information from a corpus of multimodal genomics data, (2) quantifying the relevance of this information to specific hypothesis-driven experiments, and (3) incorporating relevant information from the corpus into statistical evaluations of specific experimental hypotheses, while maintaining error rate controls. This article proposes such a framework that combines the flexibility of Bayesian statistical modeling with the statistical guarantees of frequentist hypothesis testing procedures. Specifically, the proposal is to first distill information from a historical corpus with a probabilistic tensor factorization model, which quantifies the relationships among a set of biological entities measured by different genomics modalities. Inference from this tensor probability model creates a numerical feature profile for each entity, which encodes historical information distilled from all modalities. Next, an empirical Bayes procedure is used to assess the relevance of these features to data from a new hypothesis-driven study. Finally, the relevant information is used to construct hypothesis tests and p-values for biological effects measured by the new experiment. This is accomplished by using the recently-developed "frequentist, assisted by Bayes" (FAB) hypothesis testing framework described by <ref type="bibr" target="#b14">Hoff (2019)</ref>, which is based on frequentist testing procedures that are optimal with respect to historical information. As a result, if the historical information is highly relevant to the new experimental data, the FAB tests will have higher power than the corresponding classical tests that do not make use of historical information. Conversely, the proposed empirical Bayes procedure generates FAB tests whose power approaches that of classical tests when the historical information is irrelevant. The FAB tests retain type I error rate and false discovery rate (FDR) guarantees whether or not the historical information is relevant to the new modality in the study at hand. Hence, the FAB testing procedure described here may be applied with confidence to studies performed with any number of measurement types or experimental designs, even when the utility of the historical information is unknown.</p><p>The remainder of the article is organized as follows: Section 2.1 describes the FAB testing procedure in the context of hypothesis-driven genomics experiments where histori-cal information is available for multiple biological effects. Section 2.2 presents an empirical Bayes method for quantifying the relevance of the historical information to a new set of experimental data. Section 2.3 details the probabilistic model for distilling information from multimodal genomics datasets, which makes the FAB procedure applicable to practical settings where historical information for the biological effects under study is not otherwise available. Finally, Sections 3.1 and 3.2 describe results from the application of the FAB tests to simulated and real datasets. The simulation studies in Section 3.1 empirically validate the FAB procedure's theoretical type I error properties under null scenarios and showcase its type II behavior under non-null scenarios. Section 3.2 presents a comprehensive catalogue of practical settings in which the FAB procedure can be used to discover more biological effects than the classical procedure. The examples presented include CRISPR screens, cell viability profiling for drug repurposing, differential expression analysis, differential dependency analysis, and modifier screens targeted towards specific genetic interactions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Methods</head><p>Advances in modern sequencing technologies have dramatically increased the amount of data produced in hypothesis-driven biological experiments. Analysis of data from such experiments may involve hundreds or thousands of statistical hypothesis tests, each corresponding to a biological effect of interest. The following sections describe a procedure by which the presence of multiple hypotheses, often a statistical challenge in the analysis of genomics data, creates an opportunity for increasing the power of hypothesis tests by using historical information. The testing procedure described maintains frequentist type I error guarantees and adaptively estimates the relevance of the historical information to a new set of experimental data so that type II error approaches that of classical tests when the relevance of the historical information is low. When historical information for each of thousands of biological effects under investigation in a particular study is not readily available, a generalization of the probability model underlying the testing procedure may be used to distill that information from multimodal genomics data. The result is a two-stage estimation procedure, which has the potential to increase the number of discoveries made in a wide variety of genomics studies.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">FAB hypothesis tests for genomics data</head><p>Hypothesis-driven genomics experiments are often designed to evaluate a null hypothesis H j : θ j = 0 for each of many biological effects θ j , j = 1, . . . , M . In many cases, the data used to evaluate these hypotheses consist of independent, approximately normally distributed estimates θ1 , . . . , θM of the effects θ 1 , . . . , θ M , as well as an estimate of the variance of each θj . Specifically, it is often assumed that</p><formula xml:id="formula_0">θj ∼ N (θ j , σ 2 j /c j )<label>(1)</label></formula><p>independently for j = 1, . . . , M , where each c j is a known constant. Given an estimator σ2 j of σ 2 j , the statistic T j = √ c j θj /σ j has approximately a standard normal or t-distribution under the null hypothesis H j : θ j = 0. In what follows, t-distributions are assumed as these are exact in several cases. For example, if the data for effect j consist of a sample Y 1j , . . . , Y nj ∼ i.i.d. N (θ j , σ 2 j ), then setting θj to be the sample mean, σ2 j to be the the pooled sample estimate of σ 2 j , and c j = n j , each T j is exactly t-distributed under the hypothesis H j . Under this sampling model, the statistical significance of the effect θ j is typically evaluated using a classical two-tailed t-test, which tests H j : θ j = 0 versus K j : θ j = 0. With some algebraic manipulations, it can be shown that the p-value for the two-tailed t-test has the following form:</p><formula xml:id="formula_1">p j = 1 -|F ν (T j ) -F ν (-T j )| (2)</formula><p>where T j = √ c j θj /σ j , F ν is the cumulative distribution function of the t-distribution with ν degrees of freedom, and σj 2 is an estimator of σ 2 j for which ν σj 2 /σ 2 j ∼ χ 2 ν . Under the null hypothesis H j , p j is uniformly distributed in the interval (0, 1), so the type I error rate of the test may be controlled at level α by rejecting the null when p j &lt; α.</p><p>A useful mathematical fact first noted by <ref type="bibr" target="#b14">Hoff (2019)</ref> is that for any value of b j , the following quantity is also uniformly distributed under H j :</p><formula xml:id="formula_2">p FAB j = 1 -|F ν (T j + b j ) -F ν (-T j )| .</formula><p>(3)</p><p>Hypothesis tests based on p FAB j therefore have the same type I error rates as those based on the classical p-value. However, under an alternative value of θ j with the same sign as b j , p FAB j will be stochastically smaller than p j . Therefore, careful selection of b j can lead to a more powerful hypothesis test than the classical two-sided t-test. If θ j is positive, then the FAB p-value approaches the p-value from a one-sided test against the alternative θ j &gt; 0 as b j → ∞. Likewise, if θ j is negative, the FAB p-value approches that of a one-sided test against the alternative θ j &lt; 0 as b j → -∞. The FAB p-value can therefore be as small as half the classical p-value. However, the FAB p-value can be larger than the classical p-value for values of θ j and b j with opposite sign.</p><p>A principled approach to using historical data to inform the choice of b j is to encode information about θ j with a prior distribution, say θ j ∼ N (m j , v j ). Here, the quantities m j and v j are historically-informed location and scale parameters for the biological effect θ j . As shown in <ref type="bibr" target="#b14">Hoff (2019)</ref>, if σ 2 j were known, the value of b j that maximizes the prior expected power of any test based on</p><formula xml:id="formula_3">p FAB j is b OPT j = 2m j σ j / √ c j v j .<label>(4)</label></formula><p>In practice, σ 2 j is not known and so must be replaced with an estimator, in which case the corresponding value of b j is only approximately (asymptotically) optimal, in terms of prior expected power.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Assessing relevance of historical information</head><p>As discussed in <ref type="bibr" target="#b14">Hoff (2019)</ref>, the uniformity of p FAB under H j is guaranteed regardless of the choice of prior distribution as long as the information used to compute b j is statistically independent of T j . The choice of prior parameters m j , v j must therefore be informed by quantities that are independent of the data used to compute T j . In the setting of multiple biological hypotheses, such indirect information can be extracted by a probability model that describes the relationships among the biological effects θ j , j = 1, . . . , M . The method discussed here models these relationships as a function of historical information while using an empirical Bayes strategy to determine the relevance of that information to the current experimental data. Specifically, let the data from a hypothesis-driven experiment be summarised by vectors Ȳ, S ∈ R M , where entries Ȳj and S j denote the sample means and sample standard deviations, respectively, of measurements made on θ j across n j replicates. Further, suppose that historical information about each biological effect θ j is available in the form of a vector of q features derived from a large corpus of genomics data and that these vectors are collected into the rows of a matrix X ∈ R M ×q . Then the experimental data and the biological effects can be jointly described by a sampling model for the observed data</p><formula xml:id="formula_4">Ȳ|θ ∼ N M θ, diag(σ 2 1 /n 1 , . . . , σ 2 M /n M ) ,<label>(5)</label></formula><p>and a model relating the unobserved biological effects to the explanatory variables X,</p><formula xml:id="formula_5">θ|β ∼ N M (Xβ, τ 2 I M ).<label>(6)</label></formula><p>Together, these two models are sometimes referred to as the Fay-Herriot model <ref type="bibr" target="#b9">(Fay and Herriot, 1979;</ref><ref type="bibr" target="#b11">Ghosh and Rao, 1994)</ref>, a type of hierarchical model used in the small-area estimation literature. The model (6) for the parameters is referred to as the linking model, as it relates the effects of interest to historical effect-level information X through the parameter β. The parameter τ 2 describes the magnitude of the variation in the biological effects that cannot be explained by X. The magnitude of β relative to τ 2 is a measure of the relevance of the historical data to the hypothesis-driven experiment that generates Ȳ and S.</p><p>To quantify the relevance of the historical information, an empirical Bayes strategy is adopted by placing the hierarchical prior distribution</p><formula xml:id="formula_6">β ∼ N q 0, ψ 2 I q (7)</formula><p>on the parameter β from the linking model ( <ref type="formula" target="#formula_5">6</ref>). If the variance parameters σ 2 , τ 2 and ψ 2 are known, then the induced conditional distribution of θ j given all of the experimental data not corresponding to H j is normal and can be written in closed form. The mean and variance of this distribution θ j | Ȳ-j are then natural choices for the prior parameters m j and v j . The form of these quantities is given by the following expressions</p><formula xml:id="formula_7">mj = X j G -1 -j X -j Ȳ-j ṽj = W jj W jj + τ 2 2 X j G -1 -j X j + τ 2 . (<label>8</label></formula><formula xml:id="formula_8">)</formula><p>where</p><formula xml:id="formula_9">G -j = X -j H -1 -j X -j + (1/ψ 2 )I q , H = τ 2 I M + W, W = diag(σ 2 1 /n 1 , . . . , σ 2 M /n M )</formula><p>, and X j denotes the column vector containing the entries of the j th row of X. Given a suitable estimator σ2 j that is independent of σ2 j , data-derived plug-in estimators for τ 2 , ψ 2 are obtained by maximizing the marginal likelihood of the data under a pooled variance approximation (see Section 1.1 of the Appendix). From (26) it is clear that when the historical information is not relevant to the experimental data-i.e. τ 2 /ψ 2 is large-prior uncertainty about θ j is correspondingly large, and the prior mean of θ j is close to zero. Conversely, when τ 2 /ψ 2 is small, the prior mean and variance of θ j are close to those implied by the least squares estimator of β under the weighted regression model Ȳ ∼ N M (Xβ, W), in which the biological effects are exactly a linear combination of the columns of X.</p><p>The procedure above ensures that the prior distribution on each biological effect is strong only when the historical information is relevant to the current experimental data.</p><p>Hence, the quantity b FAB j = 2 mj σj / √ n j ṽj (9) tends to have a large absolute value only when the relevance of the historical information is high. Since b FAB j is statistically independent of T j , H j can be evaluated with p FAB j by setting b j := b FAB j in (3). This yields a FAB test that has the same power as the classical test if the prior information is irrelevant-i.e. as b FAB j → 0. However, the FAB test is more powerful than the classical test if the prior information is accurate. Importantly, though, the FAB p-value is uniformly distributed under the null hypothesis regardless of the form or accuracy of the linking model in (6). The validity of the FAB test, like that of the classical test, relies only on the validity of the sampling model in (5).</p><p>The FAB testing procedure described above relies upon historical information pertaining to biological effects θ j for j = 1, . . . , M . Because of the utility of cancer cell lines as model organisms for the study of human genomics, a vast body of genomics studies-diverse in terms of methodology, technology, and motivating research question-concern biological effects of the type θ j = θ lgk , where l corresponds to a particular cancer cell line, g corresponds to a particular gene, and k corresponds to a genomics modality. Given a matrix X of historical features describing associations among cancer cell lines and among genes, the FAB testing procedure would be applicable to any study that produces measurements involving these entities. However, if the information in X is to be relevant to many future studies, the relationships captured by the historical features must generalize beyond any one particular modality.</p><p>Cancer genomics data corpora represent estimates of biological effects θ lgk from several modalities such as RNA sequencing, DNA sequencing, CRISPR dependency, and others.</p><p>Features for cancer cell lines and genes that are expressive enough to capture the structure uncovered by all of these screening modalities have the potential to be sufficiently general to be useful for FAB testing in future genomics studies. Suppose that the biological effects measured in a collection of cancer genomics data with L cancer cell lines, G genes, and K modalities are represented by a three-way tensor Θ with entries θ lgk . Then a low rank tensor approximation to Θ can be made, so that</p><formula xml:id="formula_10">θ lgk ≈ µ k + U l B k V g (<label>10</label></formula><formula xml:id="formula_11">)</formula><p>where and <ref type="figure">d</ref> U and d V are much smaller than L and G, respectively. The approximation above forms the basis of a statistical model</p><formula xml:id="formula_12">U l ∈ R d U , V g ∈ R d V , B k ∈ R d U ×d V ,</formula><formula xml:id="formula_13">θ lgk |B k , U l , V g , µ k , τ 2 k ∼ N µ k + U l B k V g , τ 2 k (11)</formula><p>in which the model parameters consist of a matrix U containing d U -dimensional vector representations of cancer cell lines, a matrix V containing d V -dimensional vector representations of genes, and a tensor B, which modulates the inner product between these representations.</p><p>In contrast to a modality-wise tensor SVD model, in which</p><formula xml:id="formula_14">Θ k ≈ U k B k V k for each modal-</formula><p>ity slice, the features in U and V are global, i.e. constant across experimental modalities.</p><p>This form allows information to be shared across the different Θ k so that U and V encode information from all experimental modalities, while each matrix slice B k selects the features of U and V local to modality k.</p><p>Authors Ye ( <ref type="formula">2005</ref>), Sutskever and others (2009), and <ref type="bibr" target="#b17">Khan and Kaski (2014)</ref> consider similar models for tensor data. The probabilistic framework proposed here extends their approaches to accommodate characteristics typical of genomics datasets. For instance, for many such datasets, it is desirable to work with data values Y lgk that reflect an estimate of θ lgk after several processing and cleaning steps have been applied to raw measurement values. For continuous-valued Y lgk , the normal model ( <ref type="formula">11</ref>) can be used by setting Y lgk = θ lgk , so that marginally</p><formula xml:id="formula_15">Y lgk |B k , U l , V g , µ k , τ 2 k ∼ N µ k + U l B k V g , τ 2 k (12)</formula><p>If instead the data corresponding to effects Θ k are binary mutation calls, the latent variable model of <ref type="bibr" target="#b0">Albert and Chib (1993)</ref> can be adapted to the tensor model, such that marginally over θ lgk the tensor data entries Y lgk follow a Bernoulli distribution with success probability depending on the variables U l , V g , and B k :</p><formula xml:id="formula_16">Y lgk =    1, if θ lgk &gt; 0 0, if θ lgk &lt; 0 θ lgk |B k , U l , V g , µ k ∼ N µ k + U l B k V g , 1 .<label>(13)</label></formula><p>For data that are strictly positive and continuous-as found in RNA sequencing datasets-</p><p>the "tobit" model <ref type="bibr" target="#b6">(Chib, 1992</ref>) can be used, again letting data Y lgk be a deterministic function of θ lgk :</p><formula xml:id="formula_17">Y lgk =    θ lgk , if θ lgk &gt; 0 0, if θ lgk &lt; 0 θ lgk |B k , U l , V g , µ k , τ 2 k ∼ N µ k + U l B k V g , τ 2 k .<label>(14)</label></formula><p>The probabilistic formulation of the tensor model allows inference involving all of these data types to be conducted using Markov Chain Monte Carlo (MCMC). In particular, appropriate prior distributions on the model parameters lead to an efficient Gibbs sampling algorithm for sampling from the posterior distribution of the model parameters given the tensor data.</p><p>Missing entries-a common feature of large genomics datasets-can be assumed Missing at Random (MAR) and marginalized out of the model within the Gibbs steps (see Section 1.3 of the Appendix).</p><p>Closer examination of the normal tensor model reveals a connection to the linking model in ( <ref type="formula" target="#formula_5">6</ref>). Recall the vectorization-Kronecker identity vec</p><formula xml:id="formula_18">(ABC ) = (C ⊗ A)vec(B)</formula><p>where vec is defined as the operator that stacks the columns of an m × n matrix to form an m • n × 1 column vector <ref type="bibr" target="#b15">(Horn and Johnson, 2008)</ref>. Ignoring the intercept term µ k for notational convenience and applying this identity to the tensor model yields a vectorized representation:</p><formula xml:id="formula_19">vec(Θ k )|B k , U, V, τ 2 k ∼ N GL (V ⊗ U)vec(B k ), τ 2 k I GL .<label>(15)</label></formula><p>Now suppose that the model parameters U and V have been estimated from tensor data measuring biological effects from several genomics modalities. From the point of view of an experimenter running a hypothesis-driven experiment using a new modality k , the matrix</p><p>V ⊗ U represents historical information about the associations among cancer cell lines and among genes. According to ( <ref type="formula" target="#formula_5">6</ref>), the linking model for biological effects measured by the new modality is</p><formula xml:id="formula_20">θ k |β k ∼ N GL (Xβ k , τ 2 k I GL ). (<label>16</label></formula><formula xml:id="formula_21">)</formula><p>Replacing X with V ⊗ U, β k with vec(B k ), and θ k with vec(Θ k ) in the above reveals that the linking model ( <ref type="formula" target="#formula_5">6</ref>) is just a special case of (15) for a new modality k .</p><p>Hence, for experimental data from a hypothesis-driven study, FAB tests and FAB pvalues based on this linking model can be constructed by first estimating U and V from the tensor probability model, then testing each biological hypothesis H j by setting X = V ⊗ U and following the procedure in Section 2.1 using the subset of the rows of X that correspond to the effects θ lgk measured in the new study (Figure <ref type="figure" target="#fig_0">1</ref>). The first step is computationally intensive, but need only be run once in advance of seeing new experimental data. The second step requires a computation for each hypothesis in the new study, but can be done efficiently using linear algebraic results for leave-one-out estimation. See Sections A.1 and A.2 of the Appendix for details on this two-step procedure. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Θ Θ k′</head><formula xml:id="formula_22">B k′ B U V ⊤ l g θ lgk′ ≈ U ⊤ l B k′ V g = (U l ⊗ V g ) ⊤ = X ⊤ lg Ȳlgk′ ≃ θ lgk′ ≈ X ⊤ lg β k′ B k′ θ lgk′ β k′ β k′ β k′ Ȳlgk′ ≈ × × Genes Cancer cell lines M o d a li t ie s Y lgk′ R e p li c a t e s θ lgk′</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results</head><p>The procedure described above was applied to several simulated and real datasets to validate its type I error control, its robustness to irrelevant historical information, and its ability to yield more discoveries on real genomics data. The cancer cell line and gene features derived from the tensor probability model allowed the FAB testing procedure to be applied to measurement types as diverse as CRISPR dependency scores, drug viability profiles, differential expression scores from mammary cell subpopulations, and differential CRISPR dependency scores between mutant and wild-type cells. Though the assumed sampling model in (5) applies to experimental data with heteroscedastic error structure, in the simulation studies and investigations with real genomics data, a common sampling variance was assumed, so that σ 2 j = σ 2 for all j = 1, . . . , M . In all cases the independent estimators σ2 , σ2 were calculated using an appropriate data-partitioning strategy on the entries of S (see Section A.1 of the Appendix).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Simulation studies</head><p>To verify that the FAB procedure produces uniformly distributed p-values under the null hypothesis, 10, 000 datasets were simulated, each consisting of vectors Ȳ, S of length 250.</p><p>Each entry of Ȳ and S was calculated from 5 samples drawn from a N (0, 1) distribution, representing 5 replicates of a null measurement with sampling variance equal to 1. Matrices</p><formula xml:id="formula_23">U ∈ R 10×5 , V ∈ R 25×5 ,</formula><p>representing, respectively, cancer cell line and gene features were then generated with entries drawn from N (0, 1). The distribution of FAB p-values obtained from fitting models ( <ref type="formula" target="#formula_4">5</ref>), ( <ref type="formula" target="#formula_5">6</ref>) to each of the 10, 000 datasets was empirically uniform, indistinguishable from that of the classical p-values (Figure <ref type="figure" target="#fig_1">2</ref>). To demonstrate proper FDR control, the p-values obtained for each dataset were then adjusted using the <ref type="bibr">Benjamini-Hochberg (BH)</ref> procedure <ref type="bibr" target="#b3">(Benjamini and Hochberg, 1995)</ref>. Since all of the values in each of the datasets were simulated from null effects, a value of 1 was recorded for a dataset if any of its BHadjusted p-values fell below a target of 0.1. A value of 0 was recorded otherwise. Taking the average of the 0's and 1's over the 10, 000 trials yielded Monte Carlo estimates of the FDR for the classical and FAB tests. Both achieved the target FDR of 0.1 up to Monte Carlo error (Figure <ref type="figure" target="#fig_1">2</ref>). Further simulations were conducted to test the behavior of the FAB procedure under non-null scenarios. First, matrices U ∈ R 5×10 , V ∈ R 100×10 were generated with entries drawn from N (0, 1) and a matrix X was set to X := V⊗U. Then, vectors β ∈ R 100 , ∈ R 500 were generated, each with entries drawn from N (0, 1). The vectors Xβ and were then normalized to have empirical variance equal to 1. For τ 2 -the magnitude of variation left unexplained by X-taking values in {1, 0.8, 0.6, 0.4, 0.2, 0}, a biological effects vector was constructed according to</p><formula xml:id="formula_24">θ = √ 1 -τ 2 Xβ + √ τ 2</formula><p>and 200 datasets Ȳ, S were simulated for each value of τ 2 according to Y ij ∼ N (θ j , 1), i = 1, . . . , 5. The simulation procedure therefore ensured that the total variation in θ was held constant at 1, while the proportion of variation explained by X increased as τ 2 decreased.</p><p>The cumulative number of discoveries made across the 200 trials was then recorded at varying FDR thresholds. As shown in Figure <ref type="figure" target="#fig_2">3</ref>, when τ 2 = 1, the FAB procedure yielded as many discoveries as the classical two-sided test. However, under all other conditions, the FAB test produced more discoveries at every FDR threshold. As τ 2 decreased the number of discoveries made by the FAB test cleanly interpolated between that of the classical two-sided test and that of a one-sided oracle test against the alternative in the direction of sign(θ j ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Smaller p-values in genomics studies</head><p>To extract biologically meaningful historical information, the tensor factorization method described in Section 2. of mRNA abundance, which is a proxy for the amount of the gene-product active in the cell. The mutation dataset (Barretina and others, 2012) contains binary entries indicating whether gene g is mutated in cell line l. The CRISPR (Meyers and others, 2017) and RNAi (McFarland and others, 2018) datasets each contain cell viability scores corresponding to the growth inhibitory effect induced in cell line l when gene g is deleted (CRISPR) or suppressed (RNAi). The tensor probability model was fit to these four modalities using the tobit model (14) for the gene expression dataset, the probit model (13) for the mutation dataset, and the normal model (11) for the CRISPR and RNAi datasets. Historical information profiles of dimension d U = 16 and d V = 64 were distilled for 1209 cancer cell lines and 4570 genes, </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">Viability profiling to repurpose non-oncology drugs</head><p>The use of historical information distilled from the Dependency Map need not be limited to experimental designs with many cell lines and many genes. The FAB testing procedure is also applicable to a class of experiments known as "cell viability profiling" in which a perturbagen, such as a drug, is applied to a panel of cell lines in order to determine which cell lines are sensitive or resistant to the perturbagen's action. Negative viability scores correspond to celldeath or growth-inhibition in response to the drug treatment, while positive scores suggest enhanced proliferation. A recent effort to uncover oncology indications for non-oncology drugs (Corsello and others, 2019) produced 4686 such viability profiles, each corresponding to a drug's action on a panel of 578 cancer cell lines, 569 of which appear in the Dependency Map dataset. For these experiments, the cell line features were used to model each of the drug viability profiles. Using the notation from Section 2.3, the procedure was equivalent</p><p>to setting V := 1. As shown in Figure <ref type="figure" target="#fig_4">5</ref>, at an FDR of 0.1, the FAB tests yielded as many or more discoveries than traditional p-values for 80% of the drugs screened. For 67% of the drugs screened, the FAB test yielded strictly more discoveries. As measured by absolute deviance from the red line on the main diagonal of Figure <ref type="figure" target="#fig_4">5</ref>, the difference between the number of discoveries made by the FAB and classical tests tended to be small when the FAB test yielded fewer discoveries and tended to be larger when the FAB test yielded more discoveries.</p><p>q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q qq qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q qq q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 0 200 400 Drugs for which more discoveries were made by the FAB test are highlighted in yellow, while drugs for which more discoveries were made by the classical test are highlighted in blue. Drugs for which the number of discoveries was equal are highlighted grey and lie along the red diagonal line.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3">Differential expression analysis for mammary cell subpopulations</head><p>Experimental data containing measurements for hundreds of cancer cell lines are relatively scarce due to the labour-intensive nature of cell culture. More common in the genomics literature are datasets with treatment-control measurements for a limited number of samples, but many genes. These data are often interpreted by performing a differential expression analysis, in which significant genes are identified by conducting hypothesis tests on contrast scores between samples in the treatment and control conditions for each gene in a study.</p><p>To demonstrate the utility of the FAB procedure in differential expression analysis, gene expression profiles of mammary cell subpopulations from three healthy human donors were obtained from a study conducted by <ref type="bibr">Lim and others (2009)</ref>. Each donor in the study contributed samples of mammary stem cells (MS), luminal progenitor cells (LP) and mature luminal cells (ML). The object of the study was to test for significantly differentially expressed genes between MS / LP, MS / ML, and ML / LP cell populations. To prepare the data for use, the steps outlined in the tutorial for the software package limma <ref type="bibr">(Ritchie and</ref><ref type="bibr">others, 2015, 2007;</ref><ref type="bibr" target="#b27">Smyth and Speed, 2003)</ref> were followed. For each contrast, the FAB testing model was applied to the average difference in gene expression between the cell populations, using the gene features V.  <ref type="bibr">Lim and others (2009)</ref>. From left to right, the contrasts tested were MS vs. LP, MS vs. ML, and ML vs. LP. Although the model precision is far from perfect (bottom row), the FAB test is more powerful at an FDR of 0.1 for all three contrasts.</p><p>Although the linking model precision varied across the different contrasts, it showed some capacity for predicting all of the differential expression scores (Figure <ref type="figure" target="#fig_5">6</ref>). Correspondingly, the FAB p-values yielded more discoveries at an FDR of 0.1 for each of the three contrasts than those from a traditional two-sided t-test. The fact that the FAB approach was able to achieve some predictive power in this setting is notable for two important reasons: first, it suggests that the FAB framework can be applied to modalities-such as contrast scores-that bear very little relationship to those contained in the dataset from which the historical information was distilled. Second, it suggests that the gene-to-gene relationships distilled by the tensor model from a corpus of cancer genomics data generalize to non-cancer biological contexts.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.4">Robustness of the FAB test</head><p>The FAB testing procedure convincingly yields more discoveries than the classical two-sided test when applied to experimental data with some degree of linear relationship to historical features. To illustrate what happens in practice when there is little to no linear relationship between the historical features and the experimental data, CRISPR dependency scores from the Kory and others (2018) study were obtained for 2 cancer cell lines and 2865 genes.</p><p>The dependency scores consist of measurements for each cell line under two experimental conditions: culture in media that contained the α-amino acid serine, and culture in serinefree media. Differential dependency scores were calculated by taking the difference in average dependency score between the culture conditions.</p><p>0.00 0.25 0.50 0.75 1.00 -4 0 4 Observed Predicted 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 FDR UMPU FDR FAB Only UMPU Neither Only FAB ACH-000995 ACH-000551 25 50 75 100 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 Total discoveries Proportion shared discoveries In contrast to previous examples, the differential dependency scores predicted by the linking model showed almost no correlation to the observed data from this study (Figure <ref type="figure" target="#fig_7">7</ref>, left). The FAB test yielded more discoveries than the classical test, but the increase in power was due to the fact that most of the observed differential dependency scores had positive values. Hence the predicted values from the linking model were centered about a positive intercept term. However, the scale of the predicted values was appropriately small relative to that of the observed data due to the shrinkage induced by the empirical Bayes estimator ψ2 . Likewise, the estimator τ 2 was appropriately large, so that the computed offset terms b FAB j were conservative relative to the classical test statistics T j . The result was that, at an FDR of 0.1, relatively few discoveries were made only by the classical test, while relatively many discoveries were made only by the FAB test (Figure <ref type="figure" target="#fig_7">7</ref>, middle). For both cancer cell lines in the study, the lists of genes produced by taking, respectively, the r-smallest adjusted classical and FAB p-values also showed a high degree of overlap for ranks r = 1, . . . , 100 (Figure <ref type="figure" target="#fig_7">7</ref>, right).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.5">Biological relevance of FAB discoveries</head><p>While the FAB testing procedure has the potential to increase the expected number of discoveries made in a given study, it does not give any guarantees about the quality of those discoveries. The latter is difficult to analyze in the abstract. In practice, however, the quality of additional discoveries in genomics studies may be analyzed by evaluating their biological plausibility. To this end, FAB tests were performed in a differential dependency analysis between 10 Ras-mutant and 8 Ras-wild-type AML cell lines using data from a followup experiment conducted by <ref type="bibr">Wang and others (2017)</ref>. The follow-up experiment measured CRISPR dependency scores for a focused set of 127 genes. Some of the genes were previously suspected to be interactors with oncogenic Ras and others were included as controls. The discoveries made by the FAB and classical tests at an FDR of 0.1 are highlighted in Figure <ref type="figure" target="#fig_8">8</ref>.</p><p>Overall, the FAB test yielded 30 discoveries, compared to 23 discoveries from the classical test. Among the genes discovered only by the FAB test was NRAS, a member of the Ras family and one of the genes used to distinguish Ras-mutants from wild-type. Rasmutant cancer cell lines tend to show increased dependency in Ras family genes (note that the oncogene KRAS is one of the primary discoveries made by both tests) compared to wild- ). The genes discovered at a 0.1 FDR threshold are displayed above for the FAB test and below for the classical test. type cancer cell lines, so the inclusion of NRAS among the list of discoveries is biologically plausible. Another discovered gene, ICMT, was a hit in a separate experiment from the Wang and others (2017) article and is known to be involved in the maturation of Ras. Yet another gene discovered by the FAB test alone, ELAVL1, is a putative regulator of cell survival in KRAS-driven pancreatic ductal adenocarcinomas (PDACs) (Brody and Dixon, 2018), though its role in the context of AML is not as well understood. Finally, the gene ELOVL1, discovered only by the FAB test, is a fatty acid elongase that performs cell-essential fatty acid synthesis. It has been reported that Ras-driven tumors activate fatty acid synthesis genes, and that this activation creates a synthetic lethality with Rapamycin (Gouw and others, 2017; Salloum and others, 2014). Further, Guo and others (2016) note that Rapamycin supresses expression of ELOVL1 in bovine mammary epithelial cells (BMECs). Hence, lossof-function of ELOVL1 could plausibly have a differentially adverse effect on Ras-mutant cancer cell lines like those in the Wang and others (2017) follow-up study. Together, these results suggest that the additional genes discovered by the FAB test are likely from the set of biologically relevant Ras-interactors, rather than from the set of inactive controls. 4 Discussion Given a sufficiently rich source of historical information, hypothesis tests in genomics studies can realize substantial gains in statistical power under the FAB testing framework while still maintaining experiment-wise type I error rates. A probability model that describes relationships among biological effects can be used not only to synthesize this source of indirect information, but also to construct a distribution according to which FAB p-values are computed. Regardless of whether this probability model is correct, however, the resulting FAB p-values are uniformly distributed under the null hypothesis. In the case of model misspecification, parameters that inform the degree to which historical information is relevant to a given genomics study can be estimated via an empirical Bayes strategy in order to protect against over-confidence in inferred quantities used in the FAB tests. Both in simulation and in practice, this procedure adaptively reverts FAB tests to classical tests, so that bona fide discoveries are not obscured when the model fit is poor. This suggests that the FAB testing framework can safely be applied even when the relevance of the historical information to data from a new study is unknown. Practical investigations demonstrate that historical features distilled from the Cancer Dependency Map dataset by the tensor probability model contain information relevant to data types ranging from direct readouts of familiar screening technologies to esoteric contrast scores between distinct, non-cancerous biological populations.</p><p>A promising research direction is to consider whether there are other ways in which these features might be used to inform practitioners of hypothesis-driven genomics experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Software</head><p>Software in the form of R code is available at <ref type="url" target="https://github.com/j-g-b/BTF">https://github.com/j-g-b/BTF</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.1.2 Maximizing the marginal data likelihood</head><p>Consider the sampling and linking model with the normal hierarchical prior distribution on β as in the main text</p><formula xml:id="formula_25">Ȳ|θ ∼ N M (θ, diag(σ 2 1 /n 1 , . . . , σ 2 M /n M )) θ|β ∼ N M (Xβ, τ 2 I M ) β ∼ N q (0, ψ 2 I q )<label>(18)</label></formula><p>Under this model, the induced marginal density on Ȳ is</p><formula xml:id="formula_26">p( Ȳ) = 1 2π|A| exp - Ȳ A -1 Ȳ 2 (19)</formula><p>where the marginal covariance of Ȳ is</p><formula xml:id="formula_27">A = ψ 2 XX + τ 2 I M + diag(σ 2 1 /n 1 , . . . , σ 2 M /n M )<label>(20)</label></formula><p>As long as the rows of X are not mutually orthogonal-which would make XX equal to the identity-variation due to ψ 2 and variation due to τ 2 can be disambiguated. In fact,</p><p>given values for the σ 2 j , maximum likelihood estimators for ψ 2 and τ 2 are available, even when p &gt; n.</p><p>The log-likelihood of ψ 2 and τ 2 under the marginal density for Ȳ is</p><formula xml:id="formula_28">ℓ(τ 2 , ψ 2 ) = - 1 2 log 2π + log |A| + Ȳ A -1 Ȳ (21)</formula><p>The maximizer of ℓ(τ 2 , ψ 2 ) is not available in closed form. In addition, numerical optimization applied to the expression above requires computing the M × M matrix A, which can become very large when the number of hypotheses is large. Making the approximation σ2 /n j ≈ σ2 /n for j = 1, . . . , M eases much of this computational burden. Letting XX = QΛQ be the orthogonal eigendecomposition of the symmetric matrix XX , A can now be written as</p><formula xml:id="formula_29">A = Q(τ 2 I M + ψ 2 Λ + (σ 2 /n)I M )Q (22)</formula><p>from which it is clear that the eigenvalues of A are τ 2 + ψ 2 λ j + σ2 /n, j = 1, . . . , M</p><p>where λ i is the i th eigenvalue of X. The first q eigenvectors of XX can be obtained by taking the singular value decomposition of X. If q ≥ M , then these are all that is needed to evaluate the log-likelihood. If q &lt; M , then the M -q remaining eigenvectors do not need to be computed explicitly. Since the columns of Q form an orthonormal eigenbasis for R M , these eigenvectors correspond to the directions that are orthogonal to the first q eigenvectors of XX . In addition, the associated eigenvalues of these directions are 0.</p><p>Hence, the component of the quadratic form ȲA -1 Ȳ corresponding to these directions has</p><formula xml:id="formula_31">total norm || Ȳ|| 2 2 -q j=1 ||Q j Ȳ|| 2 2 τ 2 + σ2 /n . (<label>24</label></formula><formula xml:id="formula_32">)</formula><p>The maximum likelihood estimators for τ 2 , ψ 2 are thus found by numerically finding τ 2 , ψ 2 that maximize q j=1 log(τ 2 + ψ 2 λ j + σ2 /n) + ||Q j Ȳ|| 2 2 τ 2 + ψ 2 λ j + σ2 /n -I[q &lt; M ] || Ȳ|| 2 2 -q j=1 ||Q j Ȳ|| 2 2 τ 2 + σ2 /n (25)</p><p>Finally, note that the Kronecker structure of X specific to the tensor model described in the main text can be exploited to calculate the eigenvalues and eigenvectors of XX by computing the singular value decompositions of U and V.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 Result for leave-one-out estimation</head><p>The following result uses linear algebra identities to obtain expressions for the leave-one-out</p><formula xml:id="formula_33">(LOO) estimators mj = X j G -1 -j X -j Ȳ-j ṽj = W jj W jj + τ 2 2 X j G -1 -j X j + τ 2 . (<label>26</label></formula><formula xml:id="formula_34">)</formula><p>The LOO estimators can be written in terms of the corresponding estimators based on the full model. The LOO estimators corresponding to the rows of a matrix can therefore be calculated with only one matrix inversion operation on the q × q matrix used to fit the full model. Recall from the main text that G = X HX + (1/ψ 2 )I q and note that</p><formula xml:id="formula_35">X HX + (1/ψ 2 )I q = M j=1</formula><p>H jj X j X j + (1/ψ 2 )I q (27) so G -1 -j = X -j H -j X -j + (1/ψ 2 )I q -1 = X HX + (1/ψ 2 )I q -H jj X j X j -1 .</p><p>(28)</p><p>From here, use the Woodbury matrix inversion identity to obtain</p><formula xml:id="formula_36">G -1 -j = G -1 + H jj 1 -H jj X j G -1 X j G -1 X j X j G -1 . (29) Hence, mj = X j G -1 -j X -j Ȳ-j = X j (G -1 -j X H Ȳ -G -1 -j X j H jj Ȳj )<label>(30)</label></formula><p>Substituting 29 into 30 and simplifying yields mj = θj -H jj X j G -1 X j 1 -H jj X j G -1 X j ( Ȳjθj ) (31)</p><p>where θj = X j G -1 X Ȳ. Performing a similar substitution into the expression for ṽj yields</p><formula xml:id="formula_37">ṽj = W jj W jj + τ 2 2 H jj X j G -1 X j 1 -H jj X j G -1 X j + τ 2<label>(32)</label></formula><p>A.3 Inference and Gibbs sampling in the tensor probability model Finally, it is assumed that each precision variable 1/τ 2 k is drawn independently from G(1/2, 1/2) and each µ k is drawn independently from N (0, 1). of the parameters in the tensor probability model. In each Gibbs step, the cell line features are sampled using the full conditional distribution</p><formula xml:id="formula_38">U l |Θ, V, B, τ 2 ∼ N d U η * l , [Λ * l ] -1 (33) with Λ * l = I + g,k (1/τ 2 k )B k V g V g B k η * i = [Λ * l ] -1 g,k (1/τ 2 k )(θ lgk -µ k )B k V g .<label>(34)</label></formula><p>Analogous expressions are used to update the gene features V g . The each vec(B k ) is sampled from the conditional distribution</p><formula xml:id="formula_39">vec(B k )|Θ, U, V, τ 2 ∼ N d V ×d U ξ * k , [Ψ * k ] -1 Ψ * k = (1/τ 2 k ) i,j V g V g ⊗ U l U l ξ * k = [Ψ * k ] -1 (1/τ 2 k ) l,g (θ lgk -µ k )(V g ⊗ U l ) .<label>(35)</label></formula><p>Finally, τ 2 k is sampled according to</p><formula xml:id="formula_40">1/τ 2 k |Θ, U, V, B ∼ G (a * k , b * k ) a * k = N M + 1 2 b * k = l,g θ lgk -µ k -U l B k V g 2 + 1 2 (36)</formula><p>and µ k according to</p><formula xml:id="formula_41">µ k |Θ, U, V, B, τ 2 k ∼ N γ * k , [φ * k ] -1 γ * k = [φ * k ] -1 i,j (1/τ 2 k )(θ lgk -U l B k V g ) φ * k = (N M/τ 2 k ) + 1 (37)</formula><p>Inference for the biological effects θ lgk proceeds as follows: for a modality k with data modeled with the normal sampling model, θ lgk = Y lgk at each Gibbs iteration. For a modality k with binary data, the θ lgk have full conditional distributions given by</p><formula xml:id="formula_42">θ lgk |Y, U, V, B ∼          N + (µ k + U l B k V g , 1) if Y lgk = 1 N -(µ k + U l B k V g , 1) if Y lgk = 0 (38)</formula><p>where N ± denotes the normal distribution truncated from below and above, respectively, at 0. For a modality k with strictly positive continuous data, the θ lgk have full conditional distributions</p><formula xml:id="formula_43">θ lgk |Y, U, V, B, τ 2 k ∼          Y lgk if Y lgk &gt; 0 N -(µ k + U l B k V g , τ 2 k ) if Y lgk = 0 (39)</formula><p>Missingness in large genomics corpora often has to do with availability of cell line samples or sequencing library size. Therefore, it is reasonable to assume that missing data </p><formula xml:id="formula_44">Y lgk |U, V, B, τ 2 k ∼ N (µ k + U l B k V g , τ 2 k ).<label>(40)</label></formula><p>In the probit model, Y lgk is drawn from</p><formula xml:id="formula_45">Y lgk |U, V, B, τ 2 k ∼ B(Φ(µ k + U l B k V g )) (41)</formula><p>and in the tobit model Y lgk is drawn from</p><formula xml:id="formula_46">Y lgk |U, V, B, τ 2 k ∼ N + (µ k + U l B k V g , τ 2 k ) (42)</formula></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Schematic of the FAB testing procedure. Cancer cell line and gene historical information profiles distilled from the tensor Θ are used to model biological effects from a new modality. Experimental replicates from the new modality are assumed to be iid normal samples from the biological effects.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Results of a simulation study on 10000 simulated datasets, each consisting of 10 cell lines, 25 genes, and 5 replicates. Each dataset was generated from the null sampling model (θ = 0) with σ 2 = 1. The left plot shows the distribution of p-values from a two-sided t-test. The middle plot shows the distribution of FAB p-values. The right plot shows the Monte Carlo average of the FDR with errorbars giving ± 1 Monte Carlo standard error. Both procedures achieve the target FDR of 0.1.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure3: Results of a simulation study demonstrating the effect of increasing model precision on the behavior of the FAB test. The plot titles show the proportion of variance in θ unexplained by X. The height of the bars represent the cumulative number of discoveries made at increasing FDR levels for two-sided classical (light blue), FAB (yellow), and onesided oracle (dark grey) tests. When the lack-of-fit variance τ 2 is close to the total variance in the biological effects, the FAB test yields as many discoveries as the standard two-sided test. When τ 2 is small, the FAB test behaves more like a one-sided oracle test.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure4: Results of applying the linear model to data from the Wang and others (2017) CRISPR essentiality screens. In the upper left plot, the number of discoveries at an FDR of 0.1 is plotted for each test. In the upper right plot, BH-adjusted p-values for standard two-sided and FAB tests are plotted against the rank of the adjusted p-value. The FAB test leads to more discoveries for a range of FDRs. The lower plots show predicted CRISPR dependency scores against observed CRISPR dependency scores for cell lines that also appear in the DepMap CRISPR dataset (left) and those that do not (right).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Number of discoveries made at an FDR of 0.1 for each compound profile in Repurposing dataset for classical and FAB p-values. Drugs for which more discoveries were made by the FAB test are highlighted in yellow, while drugs for which more discoveries were made by the classical test are highlighted in blue. Drugs for which the number of discoveries was equal are highlighted grey and lie along the red diagonal line.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 6 :</head><label>6</label><figDesc>Figure6: Results of applying the linear model to data fromLim and others (2009). From left to right, the contrasts tested were MS vs. LP, MS vs. ML, and ML vs. LP. Although the model precision is far from perfect (bottom row), the FAB test is more powerful at an FDR of 0.1 for all three contrasts.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 7 :</head><label>7</label><figDesc>Figure 7: Results of applying the linear model to data from the Kory and others (2018) study. The model predictions are uncorrelated with the observed differential dependency scores (left). Still, at an FDR of 0.1 relatively few discoveries are made only by the classical test (center, blue), while relatively many are made only by the FAB test (center, yellow). Moreover, the list of top 1-100 most significant genes within each cancer cell line for the FAB and classical tests are nearly identical to one another (right).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 8 :</head><label>8</label><figDesc>Figure 8: Results of applying the linear model to data from the follow-up study in Wang and others (2017). The genes discovered at a 0.1 FDR threshold are displayed above for the FAB test and below for the classical test.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>A</head><figDesc>priori, it is assumed that the cell line representations U l are independently distributed as N d U (0, I) and the gene representations V g are independently distributed as N d V (0, I). The matrices B k are vectorized and the vec(B k ) are given independent flat priors N d U ×d V (0, ∞I).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><figDesc>are missing at random (MAR). Under a MAR assumption, marginalizing out missing data is accomplished by treating the missing data like model parameters within the Gibbs sampling steps: at each iteration, a new Y lgk is drawn according to its sampling model given the other model parameters. For the normal model, this means Y lgk is drawn from</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>The authors thank <rs type="person">Charles Henry Adelmann</rs> for helpful conversations.</p></div>
+			</div>			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"> <ref type="bibr">Ye, Jieping. (2005, November)</ref><p>. Generalized Low Rank Approximations of Matrices. Machine Learning 61(1-3), 167-191.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A Appendix</head><p>A.1 Empirical Bayes estimation of variance parameters A.1.1 Data partitioning</p><p>The empirical Bayes strategy for estimation of the relevance of the historical data is as follows: first, estimate σ2 . Then obtain estimators of τ 2 , ψ 2 by maximizing the marginal likelihood of the data under the assumption that σ 2 j = σ2 for j = 1, . . . , M . The assumption of homoscedasticity eases the computations involved with evaluating the marginal likelihood of the data, as explained below. However, it should be noted that this assumption applies only to the sampling model assumed when calculating the value for b FAB j , not the (possibly) heteroscedastic sampling model that underlies the validity of the FAB and classical hypothesis tests. The FAB test is valid as long as b FAB j is statistically independent of the test statistic</p><p>The independence of b FAB j and T j can be accomplished by partitioning the available data into two non-overlapping index sets. Let J be an index set containing a randomly selected half of the entries in {1, . . . , M }.</p><p>where ν = j∈J (n j -1). Given σ2 corresponding to the index set J , estimators τ 2 and ψ2 can be found by maximizing the marginal likelihood of the data Ȳj , j ∈ J induced by the combined sampling model, linking model, and hierarchical prior on the coefficients β (see the following section). For Ȳj , j / ∈ J , estimators σ2 j can be computed from entries S j where j / ∈ J such that under the null hypothesis H j : θ j = 0, the statistic T j = Ȳj / σ2 j /n j is distributed as a t ν random variable. Hence, any b FAB j , computed from σ2 , τ 2 , and ψ2 using data Ȳj , S j , j ∈ J is independent of any T j where j / ∈ J , and vice versa.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.4 Identifiability and Procrustes alignment</head><p>The parameters U, B, V in the tensor factorization model are not identifiable, since for any square orthogonal matrices Q, P and diagonal scaling matrices L, J the following holds</p><p>In MCMC sampling algorithms, like Gibbs sampling, it is common to observe that such rotation and scale ambiguity leads to misalignment of samples from disparate parts of the Markov Chain. Hence, before taking posterior summaries, it is necessary to align the samples of the matrices U, B and V to a common rotation and scale. This is accomplished by a Procrustes alignment procedure, followed by a scaling of each of the aligned U and V samples to have unit column norm. The scaling and rotation operations applied to each sample of U and V are then passed to the samples of B k , so that the overall matrix product is preserved-that is, if U * , V * , and B * k are the aligned counterparts to U, V and B k , then</p><p>for every sample.</p><p>A.5 Choice of cancer cell lines and genes for inclusion in tensor probability model</p><p>Cancer cell line historical feature profiles were inferred for all cancer cell lines that appeared in at least one of the four cancer genomics datasets from the Dependency Map collection.</p><p>This totaled 1209 cancer cell lines. The list of genes for which historical information profiles were derived was obtained by taking the union of the following sets of genes: (1) genes in the COSMIC cancer gene census (Sondka and others, 2018), (2) genes in the Kory and others (2018) study, (3) genes in the Wang and others (2017) focused screen, (4) the top 1, 000 genes as ranked by variance of gene expression profile, and (5) the top 1, 000 genes as ranked by sum of squared gene expression values. In total, this list contained 4570 genes.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Bayesian Analysis of Binary and Polychotomous Response Data</title>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">H</forename><surname>Albert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Siddhartha</forename><surname>Chib</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="issue">422</biblScope>
+			<biblScope unit="page">669</biblScope>
+			<date type="published" when="1993-06">1993. June</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Jordi</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Giordano</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Nicolas</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kavitha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012-03">2012. March</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Prioritization of cancer therapeutic targets using CRISPR-Cas9 screens</title>
+		<author>
+			<persName><forename type="first">Fiona</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Francesco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gabriele</forename><surname>Picco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gonc</forename><surname>¸alves</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Emanuel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charlotte</forename><forename type="middle">M</forename><surname>Beaver</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">568</biblScope>
+			<biblScope unit="issue">7753</biblScope>
+			<biblScope unit="page" from="511" to="516" />
+			<date type="published" when="2019-04">2019, April</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing</title>
+		<author>
+			<persName><forename type="first">Yoav</forename><surname>Benjamini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yosef</forename><surname>Hochberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Methodological)</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="289" to="300" />
+			<date type="published" when="1995-01">1995. January</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">An Essential Role of the Mitochondrial Electron Transport Chain in Cell Proliferation Is to Enable Aspartate Synthesis</title>
+		<author>
+			<persName><forename type="first">Kıvanc</forename><forename type="middle">¸</forename><surname>Birsoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tim</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Walter</forename><forename type="middle">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Freinkman</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Elizaveta</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Abu-Remaileh</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Monther</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">M</forename><surname>Sabatini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">162</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="540" to="551" />
+			<date type="published" when="2015-07">2015, July</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Complex HuR function in pancreatic cancer cells</title>
+		<author>
+			<persName><forename type="first">Jonathan</forename><forename type="middle">R</forename><surname>Brody</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dan</forename><forename type="middle">A</forename><surname>Dixon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">RNA</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">1469</biblScope>
+			<date type="published" when="2018-05">2018. May</date>
+			<publisher>Wiley Interdisciplinary Reviews</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Bayes inference in the Tobit censored regression model</title>
+		<author>
+			<persName><forename type="first">Siddhartha</forename><surname>Chib</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Econometrics</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="79" to="99" />
+			<date type="published" when="1992-01">1992. January</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Non-oncology drugs are a source of previously unappreciated anti-cancer activity</title>
+		<author>
+			<persName><forename type="first">Steven</forename><forename type="middle">M</forename><surname>Corsello</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Nagari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rohith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><forename type="middle">D</forename><surname>Spangler</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Rossen</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jordan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mustafa</forename><surname>Kocak</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Biology</title>
+		<imprint>
+			<date type="published" when="2019-08">2019, August</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<author>
+			<persName><forename type="first">Broad</forename><surname>Depmap</surname></persName>
+		</author>
+		<title level="m">DepMap 19Q3 Public. type: dataset</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Estimates of income for small places: an application of James-Stein procedures to census data</title>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">E</forename><surname>Fay</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Iii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roger</forename><forename type="middle">A</forename><surname>Herriot</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Amer. Statist. Assoc</title>
+		<imprint>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="issue">366</biblScope>
+			<biblScope unit="page" from="269" to="277" />
+			<date type="published" when="1979">1979</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Next-generation characterization of the Cancer Cell Line Encyclopedia</title>
+		<author>
+			<persName><forename type="first">Mahmoud</forename><surname>Ghandi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franklin</forename><forename type="middle">W</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jané-Valbuena</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Judit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><forename type="middle">C</forename><surname>Lo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">569</biblScope>
+			<biblScope unit="issue">7757</biblScope>
+			<biblScope unit="page" from="503" to="508" />
+			<date type="published" when="2019-05">2019, May</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Small area estimation: an appraisal</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N K</forename><surname>Rao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statist. Sci</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="55" to="93" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+	<note>With comments and a rejoinder by the authors</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Oncogene KRAS activates fatty acid synthase, resulting in specific ERK and lipid signatures associated with lung adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">Arvin</forename><forename type="middle">M</forename><surname>Gouw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Livia</forename><forename type="middle">S</forename><surname>Eberlin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Margulis</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Katherine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Delaney</forename><forename type="middle">K</forename><surname>Sullivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Georgia</forename><forename type="middle">G</forename><surname>Toal</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">114</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="4300" to="4305" />
+			<date type="published" when="2017-04">2017, April</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Rapamycin Inhibits Expression of Elongation of Very-long-chain Fatty Acids 1 and Synthesis of Docosahexaenoic Acid in Bovine Mammary Epithelial Cells</title>
+		<author>
+			<persName><forename type="first">Zhixin</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yanfeng</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Xue</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Bao</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Chaogetu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Qiburi and others</title>
+		<imprint>
+			<date type="published" when="2016-01">2016. January</date>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="1646" to="1652" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<author>
+			<persName><forename type="first">Peter</forename><forename type="middle">D</forename><surname>Hoff</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1907.12589</idno>
+		<idno>arXiv: 1907.12589</idno>
+		<title level="m">Smaller $p$-values via indirect information</title>
+		<imprint>
+			<date type="published" when="2019-07">2019, July</date>
+		</imprint>
+	</monogr>
+	<note>stat</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Topics in matrix analysis</title>
+		<author>
+			<persName><forename type="first">Roger</forename><forename type="middle">A</forename><surname>Horn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><forename type="middle">R</forename><surname>Johnson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Cambridge Univ. Press</publisher>
+			<biblScope unit="page">846124886</biblScope>
+			<pubPlace>Cambridge; OCLC</pubPlace>
+		</imprint>
+	</monogr>
+	<note>printing edition</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A Landscape of Pharmacogenomic Interactions in Cancer</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theo</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Daniel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Graham</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Michael</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="740" to="754" />
+			<date type="published" when="2016-07">2016, July</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Bayesian Multi-view Tensor Factorization</title>
+		<author>
+			<persName><forename type="first">Suleiman</forename><forename type="middle">A</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samuel</forename><surname>Kaski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Machine Learning and Knowledge Discovery in Databases</title>
+		<editor>
+			<persName><forename type="first">Toon</forename><surname>Calders</surname></persName>
+		</editor>
+		<editor>
+			<persName><surname>Esposito</surname></persName>
+		</editor>
+		<editor>
+			<persName><surname>Floriana</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Eyke</forename><surname>Hüllermeier</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Rosa</forename><surname>Meo</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Berlin, Heidelberg; Berlin Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="volume">8724</biblScope>
+			<biblScope unit="page" from="656" to="671" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">SFXN1 is a mitochondrial serine transporter required for one-carbon metabolism</title>
+		<author>
+			<persName><forename type="first">Nora</forename><surname>Kory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">A</forename><surname>Wyant</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Prakash</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Gyan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>De Bos</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jelmi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Bottanelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Francesca and others</title>
+		<imprint>
+			<date type="published" when="2018-11">2018, November</date>
+			<biblScope unit="volume">362</biblScope>
+			<biblScope unit="page">9528</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A genetic interaction analysis identifies cancer drivers that modify EGFR dependency</title>
+		<author>
+			<persName><forename type="first">Sida</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Davoli</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Teresa</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Leng</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yumei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mamie</forename><forename type="middle">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qikai</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes &amp; Development</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="184" to="196" />
+			<date type="published" when="2017-01">2017. January</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Aberrant luminal progenitors as the candidate target population for basal tumor development in BRCA1 mutation carriers</title>
+		<author>
+			<persName><forename type="first">Elgene</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franc</forename><surname>Vaillant</surname></persName>
+		</author>
+		<author>
+			<persName><surname>¸ois</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Di</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Natasha</forename><forename type="middle">C</forename><surname>Forrest</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Bhupinder and others</title>
+		<imprint>
+			<date type="published" when="2009-08">2009. August</date>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="907" to="913" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Improved estimation of cancer dependencies from large-scale RNAi screens using model-based normalization and data integration</title>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">M</forename><surname>Mcfarland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zandra</forename><forename type="middle">V</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kugener</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Guillaume</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><forename type="middle">M</forename><surname>Dempster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phillip</forename><forename type="middle">G</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Communications</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">4610</biblScope>
+			<date type="published" when="2018-12">2018, December</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Computational correction of copy number effect improves specificity of CRISPR-Cas9 essentiality screens in cancer cells</title>
+		<author>
+			<persName><forename type="first">Robin</forename><forename type="middle">M</forename><surname>Meyers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jordan</forename><forename type="middle">G</forename><surname>Bryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">M</forename><surname>Mcfarland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barbara</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ann</forename><forename type="middle">E</forename><surname>Sizemore</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1779" to="1784" />
+			<date type="published" when="2017-12">2017, December</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">CRISPR Screens Uncover Genes that Regulate Target Cell Sensitivity to the Morphogen Sonic Hedgehog</title>
+		<author>
+			<persName><forename type="first">Ganesh</forename><forename type="middle">V</forename><surname>Pusapati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jennifer</forename><forename type="middle">H</forename><surname>Kong</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Patel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bhaven</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Krishnan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Arunkumar</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sagner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Andreas and others</title>
+		<imprint>
+			<date type="published" when="2018-01">2018. January</date>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="113" to="129" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">limma powers differential expression analyses for RNA-sequencing and microarray studies</title>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">E</forename><surname>Ritchie</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Phipson</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Belinda</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Di</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yifang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charity</forename><forename type="middle">W</forename><surname>Law</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gordon</forename><forename type="middle">K</forename><surname>Smyth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="47" to="e47" />
+			<date type="published" when="2015-04">2015, April</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A comparison of background correction methods for two-colour microarrays</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Ritchie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Silver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Oshlack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Holmes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Diyagama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Holloway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">K</forename><surname>Smyth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="2700" to="2707" />
+			<date type="published" when="2007-10">2007, October</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Mutant Ras Elevates Dependence on Serum Lipids and Creates a Synthetic Lethality for Rapamycin</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Salloum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mukhopadhyay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Polonetskaya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Foster</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular Cancer Therapeutics</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="733" to="741" />
+			<date type="published" when="2014-03">2014. March</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Normalization of cDNA microarray data</title>
+		<author>
+			<persName><forename type="first">Gordon</forename><forename type="middle">K</forename><surname>Smyth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Terry</forename><surname>Speed</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Methods</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="265" to="273" />
+			<date type="published" when="2003-12">2003, December</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">The COSMIC Cancer Gene Census: describing genetic dysfunction across all human cancers</title>
+		<author>
+			<persName><forename type="first">Zbyslaw</forename><surname>Sondka</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Bamford</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sally</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charlotte</forename><forename type="middle">G</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sari</forename><forename type="middle">A</forename><surname>Ward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ian</forename><surname>Dunham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="696" to="705" />
+			<date type="published" when="2018-11">2018, November</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Modelling Relational Data using Bayesian Clustered Tensor Factorization</title>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><forename type="middle">B</forename><surname>Tenenbaum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruslan</forename><forename type="middle">R</forename><surname>Salakhutdinov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Neural Information Processing Systems</title>
+		<editor>
+			<persName><forename type="first">Y</forename><surname>Bengio</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">D</forename><surname>Schuurmans</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Lafferty</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">C</forename><forename type="middle">K I</forename><surname>Williams</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">A</forename><surname>Culotta</surname></persName>
+		</editor>
+		<imprint>
+			<publisher>Curran Associates, Inc</publisher>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="1821" to="1828" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Defining a Cancer Dependency Map</title>
+		<author>
+			<persName><forename type="first">Aviad</forename><surname>Tsherniak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francisca</forename><surname>Vazquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phil</forename><forename type="middle">G</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barbara</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kryukov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Gregory and others</title>
+		<imprint>
+			<date type="published" when="2017-07">2017, July</date>
+			<biblScope unit="volume">170</biblScope>
+			<biblScope unit="page" from="564" to="576" />
+		</imprint>
+	</monogr>
+	<note>e16</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Gene Essentiality Profiling Reveals Gene Networks and Synthetic Lethal Interactions with Oncogenic Ras</title>
+		<author>
+			<persName><forename type="first">Tim</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Haiyan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">W</forename><surname>Hughes</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Bingxu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kendirli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Arek and others</title>
+		<imprint>
+			<date type="published" when="2017-02">2017, February</date>
+			<biblScope unit="volume">168</biblScope>
+			<biblScope unit="page" from="890" to="903" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

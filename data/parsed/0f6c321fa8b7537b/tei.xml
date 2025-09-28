@@ -1,0 +1,1232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Estimating the Heritability of Longitudinal Rate-of-Change: Genetic Insights into PSA Velocity in Prostate Cancer-Free Individuals</title>
+				<funder ref="#_mgdXEGG">
+					<orgName type="full">National Institutes of Health</orgName>
+					<orgName type="abbreviated">NIH</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Ovarian (PLCO) Cancer Screening Trial</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">NIH HPC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2025-09-23">23 Sep 2025</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Pei</forename><surname>Zhang</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Xiaoyu</forename><surname>Wang</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Jianxin</forename><surname>Shi</surname></persName>
+							<email>jianxin.shi@nih.gov</email>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><forename type="middle">S</forename><surname>Albert</surname></persName>
+							<email>albertp@nih.gov</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Mathematics</orgName>
+								<orgName type="institution">University of Maryland</orgName>
+								<address>
+									<settlement>College Park</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Division of Cancer Epidemiology and Genetics</orgName>
+								<orgName type="institution">National Cancer Institute</orgName>
+								<address>
+									<region>MD</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">Division of Cancer Epidemiology and Genetics</orgName>
+								<orgName type="institution">National Cancer Institute</orgName>
+								<address>
+									<region>MD</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="department">Division of Cancer Epidemiology and Genetics</orgName>
+								<orgName type="institution">National Cancer Institute</orgName>
+								<address>
+									<region>MD</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="department">Division of Cancer Epidemiology and Genetics</orgName>
+								<orgName type="institution">National Cancer Institute</orgName>
+								<address>
+									<region>MD</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Estimating the Heritability of Longitudinal Rate-of-Change: Genetic Insights into PSA Velocity in Prostate Cancer-Free Individuals</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2025-09-23">23 Sep 2025</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">E8CC71EAC9D6BBC14D2D722D6535063D</idno>
+					<idno type="arXiv">arXiv:2505.04773v3[stat.AP]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:54+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>linear mixed model</term>
+					<term>AI-REML algorithm</term>
+					<term>REHE method</term>
+					<term>meta-analysis</term>
+					<term>truncation</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Serum prostate-specific antigen (PSA) is widely used for prostate cancer screening. While the genetics of PSA levels has been studied to enhance screening accuracy, the genetic basis of PSA velocity, the rate of PSA change over time, remains unclear. The Prostate, Lung, Colorectal, and Ovarian (PLCO) Cancer Screening Trial, a large, randomized study with longitudinal PSA data (15,260 cancerfree males, averaging 5.34 samples per subject) and genome-wide genotype data, provides a unique opportunity to estimate PSA velocity heritability. We developed a mixed model to jointly estimate heritability of PSA levels at age 54 and PSA velocity. To accommodate the large dataset, we implemented two efficient computational approaches: a partitioning and meta-analysis strategy using average information restricted maximum likelihood (AI-REML), and a fast restricted Haseman-Elston (REHE) regression method. Simulations showed that both methods yield unbiased estimates of both heritability metrics, with AI-REML providing smaller variability in the estimation of velocity heritability than REHE. Applying AI-REML to PLCO data, we estimated heritability at 0.32 (s.e. = 0.07) for baseline PSA and 0.45 (s.e. = 0.18) for PSA velocity. These findings reveal a substantial genetic contribution to PSA velocity, supporting future genome-wide studies to identify variants affecting PSA dynamics and improve PSA-based screening.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Serum prostate-specific antigen (PSA) measurement is the most widely used screening test for prostate cancer <ref type="bibr" target="#b2">(Catalona et al., 1991;</ref><ref type="bibr" target="#b0">Adhyam and Gupta, 2012)</ref>. There has been extensive work in evaluating the clinical utility of PSA for the early detection of prostate cancer <ref type="bibr" target="#b2">(Catalona et al., 1991;</ref><ref type="bibr" target="#b0">Adhyam and Gupta, 2012)</ref>. However, the effectiveness of screening strategies using PSA remains controversial. Recent approaches that have shown some promise involve incorporating genetics to improve screening efficiency <ref type="bibr" target="#b15">(Kachuri et al., 2023;</ref><ref type="bibr" target="#b35">Zhang et al., 2025)</ref>. Characterizing the heritability of PSA among individuals who do not develop prostate cancer is important, as it reflects the proportion of PSA variation attributable to genetic factors in a natural population. Most studies have estimated this heritability from a crosssectional perspective. However, PSA is a biomarker that varies over time and strongly associated with age. Therefore, it is important to distinguish between the heritability at a specific age (or time point) and the heritability of rate of change in this biomarker across time. In this article, we develop novel approaches for simultaneously estimating these two components of heritability.</p><p>Even among individuals who are not diagnosed with prostate cancer, there is marked variation in both the overall level and the rate-of-change in PSA across individuals. Figure <ref type="figure" target="#fig_0">1</ref> shows serial annual PSA measurements for 12 randomly selected males from the screening arm of the Prostate, Lung, Colorectal, and Ovarian (PLCO) Cancer Screening Trial who were not diagnosed with prostate cancer. This figure shows marked variation in both the initial PSA measurement as well as the rate of change of PSA over time. What fraction of the variation can be attributable to genome-wide common variants? Is the fraction for the rate-of-change different than that for a cross-sectional assessment at a particular age? New methodological approaches are needed to address these questions, even though <ref type="bibr" target="#b35">Zhang et al. (2025)</ref> have examined these two components attributable to statistically significant variants associated with PSA.</p><p>Estimating heritability is one of central problems in human genetics and statistical methods have been developed based on twin studies and other family designs. Recently, many statistical methods have been proposed to estimate heritability explained by genome-wide common variants using individual-level genotype and phenotype data <ref type="bibr" target="#b32">(Yang et al., 2010;</ref><ref type="bibr" target="#b17">Lango Allen et al., 2010;</ref><ref type="bibr" target="#b20">Lippert et al., 2011;</ref><ref type="bibr">Yang</ref>  White Males in the PLCO Cancer Screening Trial <ref type="bibr">et al., 2011;</ref><ref type="bibr" target="#b28">Speed and Balding, 2014;</ref><ref type="bibr" target="#b3">Chen, 2014)</ref> or summary statistics of genome-wide association studies <ref type="bibr" target="#b1">(Bulik-Sullivan et al., 2015;</ref><ref type="bibr" target="#b4">Finucane et al., 2015;</ref><ref type="bibr" target="#b29">Speed et al., 2020;</ref><ref type="bibr" target="#b19">Li et al., 2023)</ref>. However, these methods incorporate only individual-level genetic effects on the intercept and are not suitable for estimating heritability components in both the static and dynamic aspects of longitudinal phenotypes.</p><p>van <ref type="bibr" target="#b30">Dommelen et al. (2004)</ref> developed a two-stage modeling approach for estimating those heritability components in twin studies where the genetic structure can be inferred. In the current article, we use genome-wide variants to determine the genetic structure needed for estimating these metrics in populationbased studies.</p><p>The PLCO Cancer Screening Trial is a randomized controlled trial designed to evaluate various screening strategies for early cancer detection <ref type="bibr" target="#b6">(Gohagan et al., 2000;</ref><ref type="bibr" target="#b25">Pinsky et al., 2012;</ref><ref type="bibr" target="#b24">Machiela et al., 2023)</ref>.</p><p>This trial has collected comprehensive data, including repeated measurements of serum PSA concentrations and genome-wide genotypic information based on genotyping arrays. For this study, we focused on a subsample of 15, 260 male participants from the PLCO study who had no history of cancer or prostaterelated surgeries and had at least one recorded PSA measurement. This data enabled us to estimate the heritability metrics on both the baseline PSA levels and PSA velocity in a natural population.</p><p>In this article, we develop a linear mixed model to jointly estimate the heritability of PSA at both a single time point (or age) and the velocity of the trajectory across time. Several challenges arise in this estimation, including variation from ultra-high-dimensional SNP-specific random effects (nearly 7 million common variants) and implementation in population-based studies with in large sample sizes. We develop two estimation procedures with one being likelihood-based and the other moment-based focused on minimizing the sum of squared differences of products of all paired measurements. The likelihood-based approach is potentially very efficient but suffers from computational infeasibility when the total number of measurements is large. Alternatively, the method-of-moments approach is more computationally feasible, but suffers from reduced efficiency. With regard to the likelihood-based approach, we propose to first partition subjects into non-overlapping groups, analyze data in each group, and develop a novel metaanalytic approach that makes estimation possible even in large studies. This is compared with the methodof-moments approach in a wide range of situations through simulations as well as using analysis from the PLCO study.</p><p>The rest of this article is organized as follow. In Section 2, we first briefly review the methods for estimating heritability for quantitative traits based on cross-sectional studies and typical method for estimating the heritability using individual-level genotype and phenotype data, and then formulate a mixed modeling framework to jointly estimate heritability of PSA level at a a particular age and PSA velocity using longitudinal observations. We then developed methods for estimating the model using the AI-REML algorithm and REHE regression method. Section 3 assesses the performance of the two approaches using simulations. Section 4 estimates variance components, heritability of PSA baseline and velocity, and their 95% confidence intervals based on the longitudinal PSA levels in the PLCO study. In Section 5, we offer further discussion on the findings and implications.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Methodologies</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Estimating Heritability in Cross-Sectional Studies</head><p>For a quantitative trait, heritability quantifies the proportion of variation in a trait that can be attributed to genetic differences among individuals. Two types of heritability are often used in the genetics field:</p><p>H 2 , the broad sense heritability that measures the full contribution of genetics to the trait, and h 2 , the narrow sense heritability that measures the total additive genetic effects. The analysis of narrow sense heritability can be based on the following model</p><formula xml:id="formula_0">y i = µ + g i + ϵ i ,<label>(1)</label></formula><p>where y i denotes the phenotypic value, µ denotes the mean of phenotypic values, g i = P p=1 α p z ip denotes the total additive genetic effects, z ip represents the genotypic values standardized with mean zero and variance one across subjects, α p ∼ N(0, σ 2 α ) is random effect for SNP p, and ϵ i denotes the residue. Under</p><p>the assumption that g i and ϵ i are independent, we have Var(</p><formula xml:id="formula_1">y i ) = σ 2 g + σ 2 ϵ with σ 2 g = Var(g i ) = P σ 2 α and σ 2 ϵ = Var(ϵ i ).</formula><p>The narrow sense heritability can be defined as <ref type="bibr" target="#b31">(Visscher et al., 2008)</ref>.</p><formula xml:id="formula_2">h 2 = σ 2 g /(σ 2 g + σ 2 ϵ )</formula><p>Estimating h 2 relies on the following equation cor(y i , y k ) = h 2 G ik after we standardize y = (y 1 , y 2 , . . . , y N ) ⊤ such that the variance of the phenotype is 1, where G ik = P p=1 z ip z kp /P is the genetic correlation between two subjects. This equation leads to two types of methods for estimating h 2 : restricted maximum likelihood (REML) <ref type="bibr" target="#b32">(Yang et al., 2010)</ref> and phenotype correlation-genotype correlation (PCGC) <ref type="bibr" target="#b23">(Lynch and Walsh, 1998;</ref><ref type="bibr" target="#b7">Golan et al., 2014)</ref>. Since we will extend both methods for estimating variance components in longitudinal settings, we here briefly describe the two methods. The PCGC method regresses the empirical phenotypic correlation y i y k onto genetic correlations G ik with the slope unbiasedly estimating h 2 <ref type="bibr" target="#b23">(Lynch and Walsh, 1998;</ref><ref type="bibr" target="#b7">Golan et al., 2014)</ref>, similar to the Haseman-Elston (HE) regression in the genetic literature <ref type="bibr" target="#b10">(Haseman and Elston, 1972;</ref><ref type="bibr" target="#b3">Chen, 2014)</ref>. This method has been further extended to estimate multiple variance components and is referred to as the Restricted Haseman-Elston (REHE) method <ref type="bibr" target="#b34">(Yue et al., 2021)</ref>. The confidence interval of the estimate is obtained by parametric bootstrapping. This approach, while simple and easy to implement, loses efficiency compared to those methods based on the full likelihood.</p><p>We then review the REML method. Let Z = (z ip ) N ×P denote the genetic information matrix for N subjects and P common variants. Let G = ZZ ⊤ /P be the N × N genetic correlation matrix. Let θ = (σ 2 g , σ 2 ϵ ) ⊤ . The marginal distribution y|Z, θ, β ∼ N(Aβ, V ), where A and β are the design matrix and coefficients for fixed effects, respectively, V = Cov(y|Z, θ) = σ 2 g G + σ 2 ϵ I N and I N is a N × N identity matrix. The restricted log likelihood can be expressed as</p><formula xml:id="formula_3">ℓ REM L (θ|y, Z) = - 1 2 y ⊤ Ry + log det(V ) + log det(A ⊤ V -1 A) + constant, where R = V -1 -V -1 A(A ⊤ V -1 A) -1 A ⊤ V -1</formula><p>represents the matrix transforming observed response into residuals. The average information REML (AI-REML) algorithm <ref type="bibr" target="#b14">(Johnson and Thompson, 1995;</ref><ref type="bibr" target="#b5">Gilmour et al., 1995)</ref> is easier to implement, computationally efficient, and numerically stable to unbiasedly estimate variance components and has been widely used for fitting mixed model, including estimating heritability in genetics <ref type="bibr" target="#b32">(Yang et al., 2010)</ref> . In each iteration, we calculate the gradient vector DL θ (θ) with</p><formula xml:id="formula_4">∂ℓ REM L ∂θ s = - 1 2 tr R ∂V ∂θ s -y ⊤ R ∂V ∂θ s Ry ,<label>(2)</label></formula><p>and AI θ (θ), the average of the observed and expected information matrix of θ, with</p><formula xml:id="formula_5">AI θ (θ) s,k = 1 2 ( ∂ 2 ℓ REM L ∂θ s θ k + E[ ∂ 2 ℓ REM L ∂θ s θ k ]) = - 1 2 y ⊤ R ∂V ∂θ s R ∂V ∂θ k Ry ,<label>(3)</label></formula><p>where ∂V /∂θ 1 = G and ∂V /∂θ 2 = I N . Of note, the average information matrix is much easier to calculate. The AI-REML method updates θ at iteration h + 1 as:</p><formula xml:id="formula_6">θ(h+1) = θ(h) -[AI θ ( θ(h) )] -1 DL θ ( θ(h) ), (<label>4</label></formula><formula xml:id="formula_7">)</formula><p>where h is iterate number and each θ s and θ k are the sth and kth element in θ.</p><p>The covariance matrix for θ is obtained as -AI θ ( θ) -1 after convergence and the variance of ĥ2 can be derived by the Delta method <ref type="bibr" target="#b23">(Lynch and Walsh, 1998;</ref><ref type="bibr" target="#b18">Lehmann and Casella, 2006)</ref>. Of note, V can be expressed as a linear combination of multiple variance components, a necessary condition for the AI-REML algorithm <ref type="bibr" target="#b14">(Johnson and Thompson, 1995)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">A Mixed Modeling Approach for Estimating Intercept Heritability and Velocity</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Heritability in Longitudinal Studies</head><p>Consider a longitudinal study with N subjects, each of which has n i observations. For the jth screening for subject i, let y ij be the quantitative trait value, t ij be the time variable, and m (l) ij be the value of covariate l(l = 1, . . . , L) and m</p><p>(1) ij = t ij . The study has P common variants with genotypic values z ip standardized to have mean zero and variance one across subjects. We propose the following mixed effect model:</p><formula xml:id="formula_8">y ij = β 0 + L l=1 β l m (l) ij + g i + g * i t ij + b i0 + b i1 t ij + e ij ,<label>(5)</label></formula><p>where b i0 ∼ N(0, σ 2 b0 ) is subject-specific random effects on the intercept, b i1 ∼ N(0, σ 2 b1 ) is the random effect on the slope, g i = P p=1 α p z ip denotes baseline random genetic effects, g * i = P p=1 η p z ip denotes the random effects for the slope, and residual e ij ∼ N(0, σ 2 e ). We assume that genotype random effects α p ∼ N(0, σ 2 α ) and η p ∼ (0, σ 2 η ), and they are mutually independent, and are independent of the residuals.</p><p>We have σ 2 g = Var(g i ) = P σ 2 α and σ 2 g * = Var(g * i ) = P σ 2 η . The heritability of phenotypic trait at the intercept is defined as</p><formula xml:id="formula_9">λ 1 = σ 2 g /(σ 2 g + σ 2 b 0 ),<label>(6)</label></formula><p>and the heritability of the phenotypic trait's velocity is defined as</p><formula xml:id="formula_10">λ 2 = σ 2 g * /(σ 2 g * + σ 2 b 1 ). (<label>7</label></formula><formula xml:id="formula_11">)</formula><p>The definition of λ 1 requires us to specify a particular time point of interest. As expressed in Equation (5), this corresponds to the case where the time variable is set to zero (t ij = 0). The metric λ 1 is different from what is usually assessed for heritability at a particular time point in cross-sectional studies.</p><p>In a cross-sectional design, we cannot distinguish between individual-specific and residual variation, resulting in heritability defined as σ 2 g /(σ 2 g + σ 2 b0 + σ 2 e ) in our notation. Our definition for λ 1 uses the longitudinal data structure to assess the heritability at a particular time point treating the within-individual variation as measurement error.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1">Leveraging AI-REML Algorithm for Studies with Small-to-Moderate Sample Sizes</head><formula xml:id="formula_12">Let θ = (σ 2 g , σ 2 g * , σ 2 b0 , σ 2 b1 , σ 2 e ) ⊤ .</formula><p>We now estimate θ by maximizing the restricted log likelihood function.</p><p>To proceed, let y = (y ⊤ 1 , . . . , y ⊤ N ) ⊤ represent the vector of all observed phenotypic traits, where y i = (y i1 , . . . , y in i ) ⊤ represents the traits for the ith subject. The marginal distribution for y is given as</p><formula xml:id="formula_13">y|Z, θ, β ∼ N(Aβ, V ),<label>(8)</label></formula><p>where</p><formula xml:id="formula_14">V = Cov(y|Z, θ) is the N i=1 n i × N i=1 n i covariance matrix of y, A is the N i=1 n i × (L + 1)</formula><p>covariate matrix and β = (β 0 , . . . , β L ) ⊤ denotes the (L + 1) × 1 column vector of coefficients for fixed effects. Then, the restricted log likelihood can be expressed as</p><formula xml:id="formula_15">ℓ REM L (θ|y, Z) = - 1 2 y ⊤ Ry + log det(V ) + log det(A ⊤ V -1 A) + constant,<label>(9)</label></formula><p>where</p><formula xml:id="formula_16">R = V -1 -V -1 A(A ⊤ V -1 A) -1 A ⊤ V -1</formula><p>represents the matrix transforming observed response into residuals.</p><p>To use the AI-REML algorithm to estimate variance components θ, it is necessary to show that the covariance matrix V can be expressed as the linear combination of all variance components in θ (Lemma 1).</p><p>Lemma 1 In Model (5), the covariance matrix V is a linear combination of variance components, denoted as V = 5 s=1 θ s H s , where</p><formula xml:id="formula_17">H 1 =            1 n 1 1 ⊤ n 1 G 11 1 n 1 1 ⊤ n 2 G 12 • • • 1 n 1 1 ⊤ n N G 1N 1 n 2 1 ⊤ n 1 G 21 1 n 2 1 ⊤ n 2 G 22 • • • 1 n 2 1 ⊤ n N G 2N . . . . . . . . . . . . 1 n N 1 ⊤ n 1 G N 1 1 n N 1 ⊤ n 2 G N 2 • • • 1 n N 1 ⊤ n N G N N            , H 2 =            t 1 t ⊤ 1 G 11 t 1 t ⊤ 2 G 12 • • • t 1 t ⊤ N G 1N t 2 t ⊤ 1 G 21 t 2 t ⊤ 2 G 22 • • • t 2 t ⊤ N G 2N . . . . . . . . . . . . t N t ⊤ 1 G N 1 t N t ⊤ 2 G N 2 • • • t N t ⊤ N G N N            , H 3 =            J n 1 0 • • • 0 0 J n 2 • • • 0 . . . . . . . . . . . . 0 • • • 0 J n N            , H 4 =            t 1 t ⊤ 1 0 • • • 0 0 t 2 t ⊤ 2 • • • 0 . . . . . . . . . . . . 0 • • • 0 t N t ⊤ N            , H 5 = I N i=1 n i , G = ZZ ⊤ /P is the N × N genetic relationship matrix, G ik is the (i, k)th element of G and I s is a s × s</formula><p>identity matrix, J s is a s × s matrix with every element equal to 1, for any positive integer number s.</p><p>The proof of Lemma 1 is provided as Supplementary Material A. Using the notation introduced in Lemma 1, we derive the gradient function of the restricted log likelihood function</p><formula xml:id="formula_18">DL θ (θ) = ∂ℓ REM L ∂θ = - 1 2            tr(RH 1 ) -y ⊤ RH 1 Ry tr(RH 2 ) -y ⊤ RH 2 Ry . . . tr(RH 5 ) -y ⊤ RH 5 Ry            , AI θ (θ) = - 1 2            y ⊤ RH 1 RH 1 Ry y ⊤ RH 1 RH 2 Ry • • • y ⊤ RH 1 RH 6 Ry y ⊤ RH 2 RH 1 Ry y ⊤ RH 2 RH 2 Ry • • • y ⊤ RH 2 RH 6 Ry . . . . . . . . . . . . y ⊤ RH 5 RH 1 Ry y ⊤ RH 5 RH 2 Ry • • • y ⊤ RH 5 RH 5 Ry            .</formula><p>In the AI-REML algorithm, we iterate θ</p><formula xml:id="formula_19">(h+1) = θ(h) -[AI θ ( θ(h) )] -1 DL θ ( θ(h) ) until convergence with |ℓ REM L ( θ(h+1) ) -ℓ REM L ( θ(h) )| &lt; 10 -4</formula><p>. Of note, in the iteration process, if one parameter or multiple parameters are updated to be negative, we set it or them to be σ 2 ph × 10 -6 <ref type="bibr" target="#b33">(Yang et al., 2011)</ref> where σ 2 ph denotes the empirical variance of all observed phenotypic values. Let θ be the REML estimate.</p><p>The baseline heritability is estimated as λ1 = σ2 g /(σ 2 g + σ2 b0 ) and the velocity heritability is estimated as</p><formula xml:id="formula_20">λ2 = σ2 g * /(σ 2 g * + σ2 b1 ).</formula><p>We use the Delta method to obtain the covariance matrix Cov(( λ1 , λ2 ) ⊤ ). To proceed, we define</p><formula xml:id="formula_21">ξ = (ξ 1 , ξ 2 , ξ 3 , ξ 4 , ξ 5 ) ⊤ := (λ 1 , λ 2 , σ 2 g + σ 2 b0 , σ 2 g * + σ 2 b1 , σ 2 e ) ⊤ .</formula><p>In Supplementary Material B, we derive the Jacobian matrix</p><formula xml:id="formula_22">K = ( ∂θ ∂ξ ) =                ξ 3 0 ξ 1 0 0 0 ξ 4 0 ξ 2 0 -ξ 3 0 1 -ξ 1 0 0 0 -ξ 4 0 1 -ξ 2 0 0 0 0 0 1               </formula><p>.</p><p>By the Delta method <ref type="bibr" target="#b23">(Lynch and Walsh, 1998;</ref><ref type="bibr" target="#b18">Lehmann and Casella, 2006)</ref>, the estimated Fisher's information matrix for ξ evaluated at ξ is derived as</p><formula xml:id="formula_23">-AI ξ ( ξ) ≈ - K⊤ AI θ ( θ) K,<label>(10)</label></formula><p>where AI( θ) is the average information matrix for θ evaluated at θ. The covariance matrix for ( λ1 , λ2 ) ⊤ can be extracted from the inverse of -AI ξ ( ξ).</p><p>2.2.2 Leveraging AI-REML Algorithm by Partitioning and Meta-analysis for Studies with</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Large Sample Sizes</head><p>Of note, the AI-REML algorithm requires inverting the covariance matrix V , which is a</p><formula xml:id="formula_24">N i=1 n i × N i=1 n i dimensional matrix.</formula><p>This becomes computationally prohibitive when N i=1 n i is very large. An approach to address the challenge is to evenly divide the subjects into M non-overlapping groups and then apply the AI-REML algorithm for each group to estimate θm (and ξm ). The final estimate can then be obtained by appropriately combining θm (and ξm ), using methods such as a simple average or a fixed effect meta-analysis. While this strategy is conceptually straightforward, we have two comments regarding its implementation. First, this approach may lose efficiency because it does not utilize crossgroup information. To minimize information loss, we recommend reducing the number of groups as much as possible while maintaining computational feasibility. Second, all elements of θ and ξ are constrained to be positive. Failing to account for this left truncation could result in biased estimates for θ and ξ, as we will show in simulations. In what follows, we propose a likelihood-based approach that accounts for truncation to estimate each parameter, its variance, and 95% confidence interval.</p><p>Assume</p><formula xml:id="formula_25">X m = µ + ϵ m for m = 1, • • • , M , where ϵ m ∼ N(0, σ 2 m ) and σ 2 m is known. Given an observation X m = x m left-truncated at zero, the likelihood is f m (x m ) = (1 -π m )δ 0 (x m ) + 1 σm ϕ( xm-µ σm ). Here, π m = P (X m &gt; 0|X m ∼ N(µ, σ 2 m ) without truncation) = Φ( µ σm ), δ 0 (x) is the Dirac delta function at zero, ϕ(x)</formula><p>is the probability density function of standard Gaussian distribution N(0, 1), and Φ(x) is the cumulative distribution function of N(0, 1). Then, the logarithmic likelihood for the observed data X 1 , . . . , X M is derived as</p><formula xml:id="formula_26">ℓ(µ|X 1 , . . . , X M ) = {m:Xm=0} log{1 -Φ( µ σ m )} + {m:Xm&gt;0} {-log σ m + log ϕ( X m -µ σ m )}.</formula><p>Then, we obtain the maximum likelihood estimator (MLE) μ and its variance. In Supplementary Material D, we present simulations comparing the performance of three approaches: the simple averaging method, the fixed-effect meta-analysis, and our proposed meta-analysis method that accounts for left truncation.</p><p>Additionally, in Supplementary Material D, we provide MLE for estimating µ when observations are doubly truncated -left-truncated at zero and right-truncated at one -which is applicable for estimating λ 1 and λ 2 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.3">Estimating Heritability Metrics Using the Restricted Haseman-Elston Regression</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method</head><p>Yue et al. ( <ref type="formula">2021</ref>) proposed a method-of-moments-based estimation procedure, termed restricted Haseman-Elston (REHE) regression Method, to ensure non-negative variance component estimates for cross-sectional traits, thereby providing heritability estimates constrained between 0 and 1. Building on this approach, we extend the methodology to estimate non-negative variance components θ in the longitudinal context, which further provides estimates for heritability at a specific time point, as well as for heritability of velocity in a longitudinal trait, denoted by λ1 and λ2 constrained between 0 and 1. To simplify notation, we begin by assuming there are no fixed effects. In Supplemental Material B, we show that</p><formula xml:id="formula_27">E(y 2 ij |Z, θ) = σ 2 g G ii + σ 2 g * G ii t 2 ij + σ 2 b0 + σ 2 b1 t 2 ij + σ 2 e , E(y ij y ir |Z, θ) = σ 2 g G ii + σ 2 g * G ii t ij t ir + σ 2 b0 + σ 2 b1 t ij t ir , E(y ij y km |Z, θ) = σ 2 g G ik + σ 2 g * G ik t ij t km ,<label>(11)</label></formula><p>where i, k = 1, 2, . . . , N , j, r = 1, 2, . . . , n i , m = 1, 2, . . . , n k , j ̸ = r and i ̸ = k.</p><p>Thus, we estimate parameters by minimizing the loss function</p><formula xml:id="formula_28">F (θ) = N i=1 n i j=1 N h=1 n h l=1 [y ij y hl -E(y ij y hl |Z, θ)] 2 , (<label>12</label></formula><formula xml:id="formula_29">)</formula><p>subject to the constraints that all variance components are non-negative. The confidence intervals for θ and ( λ1 , λ2 ) can be obtained by parametric bootstrapping.</p><p>When the number of subjects and observations is very large, computing the loss function F (θ) becomes computationally intensive. To address this challenge, we reformulate the loss function and introduce a fast algorithm that substantially reduces the computational cost.</p><p>From Equation ( <ref type="formula" target="#formula_27">11</ref>) and ( <ref type="formula" target="#formula_28">12</ref>), the loss function F (θ) can be expressed as:</p><formula xml:id="formula_30">F (θ) = N i=1 n i j=1 ∆ 2 ij + 2 i∈F n i -1 j=1 n i r=j+1 ∆ 2 ijr + 2 N -1 i=1 n i j=1 N k=i+1 n k m=1 ∆ 2 ijkm ,<label>(13)</label></formula><p>where F denotes the set of indices corresponding to individuals with at least two repeated measurements, and</p><formula xml:id="formula_31">∆ ij = y 2 ij -(σ 2 g G ii + σ 2 g * G ii t 2 ij + σ 2 b0 + σ 2 b1 t 2 ij + σ 2 e ), ∆ ijr = y ij y ir -(σ 2 g G ii + σ 2 g * G ii t ij t ir + σ 2 b0 + σ 2 b1 t ij t ir ), ∆ ijkm = y ij y km -(σ 2 g G ik + σ 2 g * G ik t ij t km ).</formula><p>Moreover, the loss function can be also expressed as a standard convex quadratic function using the matrix form:</p><formula xml:id="formula_32">F (θ) = 1 2 θ ⊤ Dθ -c ⊤ θ + constant, (<label>14</label></formula><formula xml:id="formula_33">)</formula><p>where D is a 5 × 5 constant matrix, c is a 5 × 1 constant column vector, and both of them solely need to be calculated once (Supplementary Material B). Notably, in the optimization process, F (θ) is a standard convex quadratic function subject to constraints θ s ≥ 0 for all s = 1, 2, 3, 4, 5. Then, the optimization process yields a unique solution, making the local minimum also the global minimum, thereby facilitating the estimation of θ and improving computational efficiency <ref type="bibr" target="#b8">(Goldfarb and Idnani, 1983;</ref><ref type="bibr" target="#b16">Lange, 2012;</ref><ref type="bibr" target="#b9">Gordon and Tibshirani, 2012)</ref>.</p><p>When fixed-effect coefficients β are present with design matrix A, we first estimate β using ordinary least squares: β = (A ⊤ A) -1 A ⊤ y. Subsequently, we calculate residues y * = y -A β and then adopt the proposed REHE method to estimate θ based on residues y * .</p><p>Using the variance component estimates obtained via the REHE regression method in longitudinal settings, we employ a parametric bootstrapping approach with 1, 000 repetitions to derive empirical standard errors for the estimated variance components θ and and the two heritability metrics λ1 and λ2 . This is achieved by setting the fixed-effect coefficients β and variance components θ in Model (5) to their respective estimated values, β and θ.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Simulation Studies</head><p>We conducted extensive simulation studies to evaluate the performance of the proposed AI-REML algorithm and the REHE method, with particular focus on assessing bias and precision for estimating two heritability metrics (λ 1 and λ 2 ). Specifically, we examined the influence of several key factors, including sample size, the number of longitudinal measurements per subject, and the inclusion of non-causal genetic common variants (i.e., 10, 000 causal variants and 6, 938, 674 variants unrelated to the phenotype). To make the simulations realistic and tailored for the PSA analysis in the PLCO study, we used the genotype data from the PLCO study to simulate genetic effects g i for the baseline and g * i for the velocity.</p><p>The simulation is done in the following steps. First, we randomly selected 10, 000 genetic variants as causal. Second, for each subject, we generated independent random genotypic effects α p for the baseline and η p for the velocity for the 10, 000 causal variants, and calculated g i and g * i accordingly. After simulating g i and g * i , we simulated the ages of selection for each subject and generated the corresponding phenotypic values in Model ( <ref type="formula" target="#formula_34">15</ref>). Since the study entry age ranged from 54 to 74 years in the PLCO study and each subject had J repeated measurements in the simulation settings where J was set to be 6 or 10, the screening ages t ij were simulated within the range of 54 to 84 and normalized to (t ij -54)/30 to ensure numerical stability. Coefficients of fixed effects were set as (β 0 , β 1 ) ⊤ = (-0.2118, 0.8415) ⊤ , similar to the estimates from the PSA analysis in the PLCO study.</p><p>Table <ref type="table" target="#tab_0">1</ref> provides parameter settings for Scenarios I, II and III, including the variance components and the corresponding heritability metrics for the intercept and velocity effects. In Scenario I, the residual error is substantially smaller than all other sources of variation including for both genetic (σ 2 g and σ 2 g * )</p><p>and extraneous individual-specific (σ 2 b0 and σ 2 b1 ) components. In this scenario, all non-residual variance components are equal and both heritability metrics (λ 1 and λ 2 ) are 0.5. Scenario II emphasizes stronger heritability of the phenotype at 54 years old (λ 1 = 0.8) and weaker heritability for the velocity (λ 2 = 0.2), while Scenario III reverses this pattern to favor higher heritability of the phenotypic velocity (λ 2 = 0.8).</p><p>These settings were chosen to evaluate the robustness and sensitivity of the AI-REML algorithm and the REHE method under situations where the heritability metrics are centered at 0.5, and near the boundary values of 0 or 1. To assess the impact of those aforementioned key factors, we considered a range of simulation settings with either N = 2, 000 or 15, 260 subjects, each having J longitudinal observations where J was set to be 6 or 10. The number of genetic variants used to estimate variance components and the two heritability metrics were set to be either P = 10, 000 (causal variants only) or P = 6, 948, 674 (including both causal and noncausal variants). Each simulation setting was evaluated based on 1, 000 repetitions. Notably, for the AI-REML algorithm, simulations were conducted for N = 2, 000, where partitioning was not required and for N = 15, 260 where the datasets were evenly divided into seven subsamples to accommodate computational constraints.</p><p>Simulation results are presented in Tables <ref type="table" target="#tab_1">2</ref> and <ref type="table" target="#tab_2">3</ref>, including both the mean and median of the estimates across simulated realizations. For the proposed AI-REML algorithm using truncation-adjusted metaanalysis in large-scale studies (N = 15, 260), the estimation of both two heritability metrics is unbiased under all situations considered. Interestingly, estimates of both heritability metrics remain unbiased even when all available variants (P = 6, 948, 674), rather than all true causal variants, are included in the model, where the Gaussian effect size assumption for α p and η p is violated (only 10, 000 causal variant effects simulated from Gaussian distributions and the remaining 6, 938, 674 non-causal variant effects set to zero). These findings are consistent with previous simulation studies in cross-sectional settings <ref type="bibr" target="#b32">(Yang et al., 2010</ref><ref type="bibr" target="#b33">(Yang et al., , 2011) )</ref> and are further supported by theoretical results from asymptotic analysis <ref type="bibr" target="#b13">(Jiang et al., 2016)</ref>.</p><p>Furthermore, we compared the results of truncation-adjusted meta-analysis (Tables <ref type="table" target="#tab_1">2</ref> and <ref type="table" target="#tab_2">3</ref>) with those of the simple averaging method (Table <ref type="table" target="#tab_4">S5</ref> of Supplementary Material D) for combining the partitionspecific estimates, using the AI-REML algorithm for N = 15, 260. For estimating λ 1 , both methods yielded nearly unbiased estimates. This is because the partition-specific estimates of λ 1 are typically wellestimated when the sample size per subgroup is large enough, resulting in rarely approaching either the boundary values of 0 or 1. In contrast, the estimation of λ 2 exhibits substantially greater variability under limited number of measurements per subject, resulting in partition-specific estimates more frequently hitting the boundaries. When λ 2 is 0.5, both methods remain nearly unbiased due to the symmetric distribution and equal likelihood of reaching the lower or upper bound. However, when λ 2 deviates from 0.5, the simple averaging method performed poorly for estimating λ 2 , particularly under the cases with P = 6, 948, 674 and J = 6 (Table <ref type="table" target="#tab_4">S5</ref> of Supplementary Material D), highlighting the necessity of truncation-adjusted meta-analysis in such cases. As shown in Figure <ref type="figure" target="#fig_0">S1</ref> of Supplementary Material D, these cases corresponds to the situation where partition-specific estimates of λ 2 have a high likelihood of hitting one of the boundary values (0 or 1), with a different (and asymmetric) probability of reaching each boundary. In contrast, when the number of repeated measures is increased to J = 10, or when only the causal variants are included (P = 10, 000), the simple averaging method performs well for estimating λ 2</p><p>(Table <ref type="table" target="#tab_4">S5</ref> of Supplementary Material D), as the variability of the partition-specific estimates is reduced, leading to these estimates rarely reaching the boundary values.</p><p>For the AI-REML algorithm with a smaller sample size (N = 2, 000), there is no bias for estimating λ 1 , while estimation of λ 2 appears biased when its true value deviates from 0.5, the number of measurements is small (J = 6), and all available variants are incorporated (P = 6, 948, 674). However, when we define bias with respect to the median rather than the mean, there is no bias in these cases (due to many of the λ 2 from 1,000 repetitions being either left-truncated at zero or right-truncated at 1).</p><p>Unlike AI-REML, which achieves unbiased estimation for two heritability components when N = 15, 260, REHE provides biased estimation of λ 2 when its true value deviates from 0.5 and non-causal variants are included <ref type="bibr">(P = 6, 948, 674)</ref>. This bias is eliminated or substantially reduced when bias is based on using the median rather than the mean to account for truncation.</p><p>The results indicate that for both sample sizes (N ) and differing number of follow-up measurements per subject (J), AI-REML achieves smaller variability in estimating heritability components than REHE.</p><p>This finding is expected since AI-REML, without partitioning when N = 2, 000, utilizes the full likelihood information, whereas REHE relies solely on pairwise information. For the larger sample sizes (N = 15, 260), where partitioning is necessary for implementing AI-REML, the fact that the average Hessianbased standard errors (SE), empirical standard errors (Emp SE), and scaled median absolute median (MAD) <ref type="bibr" target="#b26">(Rousseeuw and Croux, 1993)</ref> are similar for differing number of J and P demonstrates the good statistical properties of the proposed truncation-adjusted meta-analysis approach. This dataset is very unique, as few cohort studies have collected simultaneously genome-wide genetic data in addition to pre-specified serial PSA measurements. For the genetic information, we consider P = 6, 948, 674 common variants on autosomal chromosomes, with a minor allele frequency (MAF) at Mean is the average of estimates from 1,000 repetitions; Median is the median of estimates from 1,000 repetitions; SE is the estimated standard error derived from estimated Fisher's information; Empirical SE is calculated across repetitions; MAD represents the scaled median absolute deviation so that it corresponds to the SE under Gaussian distribution and provides a robust measure of variability; A dash (-) indicates that SE was not available for the REHE method Mean is the average of estimates from 1,000 repetitions; Median is the median of estimates from 1,000 repetitions; SE is the estimated standard error derived from estimated Fisher's information; Empirical SE is calculated across repetitions; MAD represents the scaled median absolute deviation so that it corresponds to the SE under Gaussian distribution and provides a robust measure of variability; A dash (-) indicates that SE was not available for the REHE method least 0.01 and an imputation quality score r 2 ≥ 0.3 to ensure quality control. In the PLCO genetic data, both the dosage and allele frequency (AF) for each SNP are based on the reference allele. The genetic relationship matrix G was constructed by the standardized genotype values, defined as z ip = (x ip -AF p )/ 2AF p (1 -AF p ) where x ip is the number of copies of the reference allele for the pth SNP of the ith individual, and AF p is the frequency of the reference allele for the pth SNP. and exclusion, and culminating in the retained sample used for the longitudinal PSA analysis in the PLCO study We propose a longitudinal model for the serial PSA measurements that incorporates screening age and joint genetic effects derived from genome-wide genetic variants to describe the trajectories among the 15,260 unaffected males:</p><formula xml:id="formula_34">y ij = β 0 + β 1 t ij + g i + g * i t ij + b i0 + b i1 t ij + e ij , g i = P p=1 α p z ip , g * i = P p=1 η p z ip .<label>(15)</label></formula><p>Recognizing the skewness of measurements of PSA level in this population, we applied a log transformation to normalize the distribution and meet the normality assumption for the response in Model (15) <ref type="bibr" target="#b35">(Zhang et al., 2025)</ref>. A small subset of participants (9 out of 15, 260) were recorded zero PSA values. To justment since there is only a lower bound at zero and no upper bound. For the heritability metrics (λ 1 and λ 2 ), those of which is bounded by 0 and 1, we used a doubly truncated adjustment. The results indicate substantial heritability for both the intercept and slope, estimated at 0.31 (SE = 0.07) and 0.45 (SE = 0.18), respectively. As a sensitivity analysis, we performed the analysis by partitioning the population into seven groups and obtained similar results (Supplementary Material D). As seen in the simulation results, standard errors for estimating slope heritability are substantially larger than those for the intercept, demonstrating the difficulty in making inference on the genetic influences for velocity. In the PLCO Study, we had an average number of follow-up measurements across participants of 5.34. With additional follow-up measurements, we would certainly decrease the standard error for λ 2 . In the simulations, we showed that there was a substantial decrease in the standard errors for λ 2 when we increased the number of follow-up measurements per subject from 6 to 10 (Table <ref type="table" target="#tab_2">3</ref>). Moreover, the two estimated heritability metrics, combined from partition-specific estimates using the simple averaging method or fixed-effect meta-analysis, were comparable to those derived from the truncation-adjusted meta-analysis (Supplementary Material E). This consistency is expected, as our simulation studies indicated minimal bias in estimating λ 2 when this heritability metric is approximately 0.50.</p><p>Table <ref type="table" target="#tab_4">5</ref> shows the results when we applied the REHE method to the PLCO Study data, we find that the estimated ratios of genetic contributions to the baseline PSA levels and the rate of change in PSA level are 0.26 (SE = 0.06) and 0.48 (SE = 0.37), respectively. A comparison of the AI-REML algorithm and REHE method shows similar estimates of heritability metrics and standard errors for heritability on the intercept (λ 1 ), but notable differences in the standard errors for velocity heritability (λ 2 ). This observation is consistent with findings from the simulation studies, where AI-REML, particularly when combined with truncation-adjusted meta-analysis, demonstrated superior performance over REHE, especially in estimating the velocity heritability. Overall, based on the AI-REML results for the longitudinal PSA data from the PLCO study, the heritability of baseline PSA was estimated at 0.32 (SE = 0.07) and the heritability of PSA velocity at 0.45 (SE = 0.18), suggesting a substantial genetic contribution to PSA velocity. This finding highlights the potential for genome-wide association studies of PSA velocity and SE denotes the estimated standard error, derived from estimated Fisher information. For the combined estimates based on five parts, meta-analysis was performed for each of variance components (σ 2 g , σ 2 g * , σ 2 b0 , σ 2 b1 and σ 2 e ) using left-truncated Gaussian distribution, while heritability metrics (λ1 and λ2) were analyzed using doubly truncated Gaussian distributions.</p><p>further genetically adjusted PSA velocity to enhance the efficacy of PSA screening for the early detection of (aggressive) prostate cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Discussion</head><p>In this paper, we introduce a mixed modeling framework designed to assess the genetic contributions to a longitudinal phenotype. This framework separately estimates the overall genetic contributions to both the intercept and slope components, enabling an examination of static and dynamic aspects of a phenotypic trait. We proposed two approaches, AI-REML and REHE, that can accommodate large sample sizes, making them suitable for typical population-based studies. These methods build upon earlier approaches applied to cross-sectional phenotypes where only a single individual-specific genetic effect needs to be incorporated for characterizing the heritability <ref type="bibr" target="#b32">(Yang et al., 2010</ref><ref type="bibr" target="#b33">(Yang et al., , 2011))</ref>.</p><p>For both small (N = 2, 000) and larger sample sizes (N = 15, 260), AI-REML algorithm outperforms REHE method in our simulation studies. This was particularly pronounced in estimating λ 2 as compared with λ 1 . For smaller sample sizes where AI-REML can be directly applied without partitioning, the reduced standard errors for AI-REML over REHE is easily explained since the former maximizes the full likelihood while the latter is a method-of-moments estimator. In the PLCO analysis and in simulations with the larger sample size of N = 15, 260, AI-REML still outperforms REHE in most situations. This is interesting since partitioning is required for AI-REML, and the required meta-analysis approach does not use cross-partition information. REHE, however, uses pairwise information across the entire large dataset.</p><p>For very large longitudinal studies (larger than the PLCO study), REHE may outperform AI-REML. This would be consistent with the results of <ref type="bibr" target="#b36">Zhou (2017)</ref> who demonstrated that a moment-based estimation method, HE, outperformed partitioned AI-REML for cross-sectional studies with very large sample sizes.</p><p>Incorporating genetic variation into the rate-of-change in a longitudinal phenotype poses significant methodological challenges. First, applying the AI-REML or REHE to data with large sample sizes is difficult since the dimensionality increases with the total number of measurements and not just the number of individuals. A direct implementation of AI-REML is prohibitive for large-scale studies since inverting a covariance matrix whose dimension of the total number of measurements is required. In large studies, we proposed a convenient way to conduct the AI-REML algorithm by evenly splitting the population into multiple groups and then combining estimates across these groups. Particularly for estimating the slope heritability (λ 2 ), we proposed a truncation adjustment that accounts for group-specific estimates on the boundary. In the motivating example, estimates using this adjustment were similar to estimates obtained by simply averaging estimates (some on the boundary) across groups. Our simulations showed that the simple averaging method performed well when the true value of λ 2 is 0.50, since group specific estimates were as likely to be 0 as to be 1. In contrast, simulations showed that the naive approach of simply averaging the estimates performed poorly when λ 2 was closer to either 0 or 1.</p><p>Through analyses of PLCO Study data and simulation studies, we found that a large number of longitudinal measurements is needed for estimating the slope heritability well. For example, in our application where the average number of serial measurements per individual is 5.34, the standard error for λ2 is substantially larger than that for λ1 for the AI-REML algorithm (Table <ref type="table" target="#tab_3">4</ref>). In fact, a 95% confidence interval for λ2 ranges from 0.09 to 0.80, making precise inference on λ 2 difficult in this analysis. Simulation results suggested that there is substantially reduced variability for estimating λ 2 when J = 10 as compared with J = 6.</p><p>With the proposed methodologies, we are able to estimate the heritability of both a longitudinal biomarker at a particular time point and the velocity of the phenotype. Our method allows for the estimation of heritability at any age (t). However, given our formulation, which decomposes overall genetic effects into baseline and velocity components, the resulting time-dependent heritability follows a quadratic pattern with time. If obtaining a time-dependent assessment of heritability is the purpose, a more flexible approach could be developed where non-parametric regression methods tailored to high-dimensional data structures may be applied <ref type="bibr" target="#b11">(Hastie and Tibshirani, 1993;</ref><ref type="bibr" target="#b27">S ¸entürk and Müller, 2008;</ref><ref type="bibr" target="#b12">Hoover et al., 1998)</ref>.</p><p>dependent genetic effects as g i (t) = P p=1 α p (t)z ip , where the high-dimensional random functions α p (t)'s follow a stochastic processes with mean zero. This is an area for future research.</p><p>We conclude that the proposed AI-REML algorithm combined with truncation-adjusted meta-analysis perform well in estimating the heritability of static and dynamic aspects of longitudinal phenotypes in large population studies. Several alternative REML-based approaches that may offer improved efficiency warrant exploration in future research. First, directly maximizing the restricted log likelihood without partitioning would be a possible if we could invert very high dimensional covariance matrices corresponding to our model framework, where all measurements are correlated with each other (within and between individuals). However, this poses a significant numerical challenge. Second, a straightforward two-stage approach could be considered, in which individual-specific coefficients for intercepts and slopes are estimated in the first stage, followed by the estimation of velocity heritability based on REML method in the second stage. Although this two-stage approach may be feasible under balanced data structures, it may be problematic in settings with highly imbalanced designs. Third, a Monte Carlo Expectation Maximization (MCEM) REML algorithm could be developed by extending methods previously proposed for heritability analysis in cross-sectional studies <ref type="bibr" target="#b26">(Rousseeuw and Croux, 1993;</ref><ref type="bibr">Loh et al., 2015a,b)</ref>) to the longitudinal setting. The development of MCEM and Bayesian approaches to address this problem remains an important direction for future research.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: PSA Level Trajectories of 12 Randomly Selected Participants from the 15,260 Healthy European</figDesc><graphic coords="3,164.27,23.04,283.46,173.50" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Flow chart illustrating the sample selection criterion, detailing each stage of participant inclusion</figDesc><graphic coords="19,93.40,150.47,425.19,262.77" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 :</head><label>1</label><figDesc>Parameter settings used in Scenarios I-III, based on 1,000 repetitions, where N = 2,000 (or 15,260), J = 6 (or 10), and P = 10,000(or 6,948,674).</figDesc><table><row><cell cols="4">Parameter Scenario I Scenario II Scenario III</cell></row><row><cell>σ 2 g</cell><cell>2.0</cell><cell>2.0</cell><cell>0.5</cell></row><row><cell>σ 2 g  *</cell><cell>2.0</cell><cell>0.5</cell><cell>2.0</cell></row><row><cell>σ 2 b0</cell><cell>2.0</cell><cell>0.5</cell><cell>2.0</cell></row><row><cell>σ 2 b1</cell><cell>2.0</cell><cell>2.0</cell><cell>0.5</cell></row><row><cell>σ 2 e</cell><cell>0.1</cell><cell>0.1</cell><cell>0.1</cell></row><row><cell>λ 1</cell><cell>0.5</cell><cell>0.8</cell><cell>0.2</cell></row><row><cell>λ 2</cell><cell>0.5</cell><cell>0.2</cell><cell>0.8</cell></row><row><cell cols="2">4 Application to PSA Analysis</cell><cell></cell><cell></cell></row><row><cell cols="4">measurement (Figure 2). Participants in this subsample (N = 15, 260) were expected to undergo up to</cell></row><row><cell cols="4">six annual blood tests to measure serum PSA concentrations. The distribution of available records among</cell></row><row><cell cols="4">these participants was as follows: 61.9% had six records, 21.5% had five, 9.9% had four, 3.2% had three,</cell></row><row><cell cols="2">2.1% had two, and 1.4% had only one record.</cell><cell></cell><cell></cell></row></table><note><p>With the serial PSA measurements from the Prostate, Lung, Colorectal, and Ovarian (PLCO) Cancer Screening Trial, we can use our methodologies to simultaneously estimate the heritability for PSA at a particular time point (age) and the velocity among prostate cancer-free participants. Our analysis focused on the subsample of participants who are European white males in the screening arm, had no prior history of cancer or prostate-related surgeries (such as transurethral resection of the prostate, prostatectomy, or vasectomy), remained prostate cancer-free throughout the trial, and had at least one recorded PSA</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 :</head><label>2</label><figDesc>Comparison of Two Approaches for Heritability on Intercept</figDesc><table><row><cell>Mean, Median(SE,Emp SE,MAD)</cell><cell>N = 2, 000</cell><cell>P = 10, 000, J = 6 P = 10, 000, J = 10 P = 6, 948, 674, J = 6 P = 6, 948, 674, J = 10</cell><cell>0.50,0.50(0.07,0.07,0.08) 0.50,0.50(0.07,0.07,0.07) 0.50,0.50(0.19,0.19,0.19) 0.50,0.51(0.18,0.18,0.18)</cell><cell>0.80,0.80(0.07,0.07,0.07) 0.80,0.80(0.06,0.06,0.06) 0.79,0.81(0.19,0.17,0.20) 0.79,0.81(0.18,0.16,0.18)</cell><cell>0.20,0.20(0.08,0.08,0.08) 0.20,0.20(0.07,0.07,0.08) 0.21,0.20(0.19,0.17,0.19) 0.21,0.21(0.18,0.16,0.19)</cell><cell>0.50,0.49(-,0.11,0.11) 0.50,0.49(-,0.12,0.12) 0.49,0.49(-,0.23,0.23) 0.49,0.48(-,0.24,0.25)</cell><cell>0.77,0.77(-,0.11,0.11) 0.77,0.77(-,0.12,0.11) 0.73,0.75(-,0.21,0.24) 0.72,0.73(-,0.22,0.26)</cell><cell>0.22,0.23(-,0.11,0.11) 0.23,0.23(-,0.11,0.12) 0.26,0.24(-,0.19,0.22) 0.27,0.25(-,0.21,0.24)</cell><cell>N = 15, 260</cell><cell>0.50,0.50(0.03,0.03,0.03) 0.50,0.50(0.02,0.02,0.02) 0.50,0.50(0.07,0.07,0.07) 0.50,0.50(0.06,0.06,0.07)</cell><cell>0.80,0.80(0.02,0.02,0.02) 0.80,0.80(0.02,0.02,0.02) 0.79,0.79(0.07,0.06,0.07) 0.79,0.80(0.06,0.06,0.06)</cell><cell>0.20,0.20(0.03,0.03,0.03) 0.20,0.20(0.03,0.03,0.03) 0.21,0.21(0.07,0.06,0.06) 0.21,0.21(0.06,0.06,0.06)</cell><cell>0.50,0.50(-,0.03,0.03) 0.50,0.50(-,0.03,0.03) 0.51,0.49(-,0.10,0.08) 0.51,0.49(-,0.10,0.09)</cell><cell>0.80,0.79(-,0.04,0.03) 0.80,0.80(-,0.04,0.03) 0.79,0.77(-,0.10,0.09) 0.79,0.77(-,0.10,0.10)</cell><cell>0.20,0.20(-,0.02,0.02) 0.20,0.20(-,0.03,0.03) 0.21,0.20(-,0.06,0.06) 0.21,0.20(-,0.07,0.06)</cell></row><row><cell></cell><cell></cell><cell>Method</cell><cell>AI-REML</cell><cell></cell><cell></cell><cell>REHE</cell><cell></cell><cell></cell><cell></cell><cell>AI-REML</cell><cell></cell><cell></cell><cell>REHE</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>True</cell><cell>0.50</cell><cell>0.80</cell><cell>0.20</cell><cell>0.50</cell><cell>0.80</cell><cell>0.20</cell><cell></cell><cell>0.50</cell><cell>0.80</cell><cell>0.20</cell><cell>0.50</cell><cell>0.80</cell><cell>0.20</cell></row><row><cell></cell><cell></cell><cell>Scenario</cell><cell>I</cell><cell>II</cell><cell>III</cell><cell>I</cell><cell>II</cell><cell>III</cell><cell></cell><cell>I</cell><cell>II</cell><cell>III</cell><cell>I</cell><cell>II</cell><cell>III</cell></row><row><cell></cell><cell></cell><cell>Parameter</cell><cell></cell><cell>λ 1</cell><cell></cell><cell></cell><cell>λ 1</cell><cell></cell><cell></cell><cell></cell><cell>λ 1</cell><cell></cell><cell></cell><cell>λ 1</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3 :</head><label>3</label><figDesc>Comparison of Two Approaches for Heritability on Velocity</figDesc><table><row><cell>Mean, Median(SE,Emp SE,MAD)</cell><cell>N = 2, 000</cell><cell>P = 10, 000, J = 6 P = 10, 000, J = 10 P = 6, 948, 674, J = 6 P = 6, 948, 674, J = 10</cell><cell>0.50,0.50(0.13,0.13,0.13) 0.50,0.50(0.08,0.08,0.08) 0.51,0.51(0.33,0.30,0.35) 0.51,0.50(0.21,0.20,0.20)</cell><cell>0.21,0.20(0.16,0.15,0.17) 0.20,0.20(0.09,0.09,0.09) 0.28,0.19(0.39,0.29,0.28) 0.23,0.22(0.23,0.19,0.23)</cell><cell>0.80,0.80(0.16,0.15,0.17) 0.80,0.81(0.08,0.08,0.08) 0.73,0.82(0.39,0.29,0.28) 0.78,0.81(0.23,0.20,0.23)</cell><cell>0.49,0.49(-,0.39,0.67) 0.49,0.49(-,0.37,0.53) 0.50,0.51(-,0.46,0.73) 0.50,0.51(-,0.44,0.73)</cell><cell>0.33,0.16(-,0.37,0.23) 0.31,0.19(-,0.34,0.28) 0.46,0.32(-,0.45,0.47) 0.45,0.31(-,0.44,0.46)</cell><cell>0.67,0.82(-,0.37,0.27) 0.70,0.82(-,0.34,0.26) 0.54,0.64(-,0.44,0.54) 0.55,0.63(-,0.43,0.55)</cell><cell>N = 15, 260</cell><cell>0.50,0.50(0.05,0.05,0.05) 0.50,0.50(0.03,0.03,0.03) 0.50,0.50(0.11,0.13,0.12) 0.50,0.51(0.07,0.08,0.08)</cell><cell>0.20,0.20(0.05,0.06,0.06) 0.20,0.20(0.03,0.03,0.03) 0.20,0.20(0.15,0.13,0.14) 0.20,0.20(0.08,0.08,0.08)</cell><cell>0.81,0.81(0.06,0.06,0.06) 0.80,0.80(0.03,0.03,0.03) 0.81,0.82(0.14,0.14,0.15) 0.81,0.81(0.09,0.09,0.08)</cell><cell>0.50,0.50(-,0.11,0.11) 0.50,0.50(-,0.09,0.09) 0.50,0.49(-,0.27,0.28) 0.50,0.49(-,0.23,0.23)</cell><cell>0.20,0.20(-,0.13,0.14) 0.20,0.20(-,0.11,0.11) 0.27,0.23(-,0.25,0.29) 0.25,0.22(-,0.22,0.25)</cell><cell>0.80,0.80(-,0.10,0.11) 0.80,0.80(-,0.09,0.09) 0.78,0.80(-,0.21,0.26) 0.79,0.81(-,0.18,0.22)</cell></row><row><cell></cell><cell></cell><cell>Method</cell><cell>AI-REML</cell><cell></cell><cell></cell><cell>REHE</cell><cell></cell><cell></cell><cell></cell><cell>AI-REML</cell><cell></cell><cell></cell><cell>REHE</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>True</cell><cell>0.50</cell><cell>0.20</cell><cell>0.80</cell><cell>0.50</cell><cell>0.20</cell><cell>0.80</cell><cell></cell><cell>0.50</cell><cell>0.20</cell><cell>0.80</cell><cell>0.50</cell><cell>0.20</cell><cell>0.80</cell></row><row><cell></cell><cell></cell><cell>Scenario</cell><cell>I</cell><cell>II</cell><cell>III</cell><cell>I</cell><cell>II</cell><cell>III</cell><cell></cell><cell>I</cell><cell>II</cell><cell>III</cell><cell>I</cell><cell>II</cell><cell>III</cell></row><row><cell></cell><cell></cell><cell>Parameter</cell><cell></cell><cell>λ 2</cell><cell></cell><cell></cell><cell>λ 2</cell><cell></cell><cell></cell><cell></cell><cell>λ 2</cell><cell></cell><cell></cell><cell>λ 2</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4 :</head><label>4</label><figDesc>Estimation Results for Five Evenly Divided Parts Using the AI-REML Algorithm with Meta-</figDesc><table><row><cell cols="2">Analysis of Truncated Estimates</cell></row><row><cell></cell><cell>Estimate(SE)</cell></row><row><cell cols="2">Parameter 1st Part 2nd Part 3rd Part 4th Part 5th Part Combined</cell></row><row><cell>σ 2 g</cell><cell>0.15(0.07) 0.12(0.07) 0.19(0.07) 0.18(0.07) 0.06(0.07) 0.14(0.03)</cell></row><row><cell>σ 2 g  *</cell><cell>0.02(0.33) 0.00(0.41) 0.85(0.36) 0.05(0.33) 0.94(0.38) 0.32(0.16)</cell></row><row><cell>σ 2 b0</cell><cell>0.31(0.07) 0.32(0.07) 0.25(0.06) 0.26(0.06) 0.39(0.07) 0.30(0.03)</cell></row><row><cell>σ 2 b1</cell><cell>0.84(0.33) 1.06(0.41) 0.01(0.35) 0.73(0.32) 0.00(0.36) 0.49(0.14)</cell></row><row><cell>σ 2 e</cell><cell>0.10(0.00) 0.10(0.00) 0.10(0.00) 0.09(0.00) 0.10(0.00) 0.10(0.00)</cell></row><row><cell cols="2">λ 1 0.32(0.16) 0.27(0.16) 0.44(0.16) 0.41(0.15) 0.14(0.15) 0.32(0.07)</cell></row><row><cell cols="2">λ 2 0.02(0.39) 0.00(0.39) 0.99(0.40) 0.07(0.42) 1.00(0.39) 0.45(0.18)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 5 :</head><label>5</label><figDesc>Results of PSA Analysis Using the Adapted REHE Method and Parametric Bootstrapping with</figDesc><table><row><cell>1, 000 Repetitions</cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="4">Parameter Estimate Emp SE MAD</cell></row><row><cell>σ 2 g</cell><cell>0.12</cell><cell>0.03</cell><cell>0.03</cell></row><row><cell>σ 2 g  *</cell><cell>0.20</cell><cell>0.14</cell><cell>0.16</cell></row><row><cell>σ 2 b 0</cell><cell>0.35</cell><cell>0.03</cell><cell>0.03</cell></row><row><cell>σ 2 b 1</cell><cell>0.22</cell><cell>0.13</cell><cell>0.15</cell></row><row><cell>σ 2 e</cell><cell>0.10</cell><cell>0.00</cell><cell>0.00</cell></row><row><cell>λ 1</cell><cell>0.26</cell><cell>0.06</cell><cell>0.06</cell></row><row><cell>λ 2</cell><cell>0.48</cell><cell>0.31</cell><cell>0.37</cell></row></table><note><p>Emp SE refers to the empirical standard error; MAD represents the scaled median absolute deviation, a robust alternative to the sample standard deviation, especially in the presence of outliers or non-normal data.</p></note></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>We express our gratitude to the participants of the Prostate, Lung, Colorectal, and <rs type="funder">Ovarian (PLCO) Cancer Screening Trial</rs> and the scientists who contributed to the development of this invaluable resource. This research used PLCO prostate cancer datasets. This work was supported by the <rs type="funder">National Institutes of Health (NIH)</rs> <rs type="programName">Intramural Research Program</rs> and utilized the computational resources of the <rs type="funder">NIH HPC</rs> Biowulf cluster (<ref type="url" target="https://hpc.nih.gov">https://hpc.nih.gov</ref>).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_mgdXEGG">
+					<orgName type="program" subtype="full">Intramural Research Program</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Code and Data Availability R code used for simulation studies and analysis are provided in a walkthrough available on GitHub at <ref type="url" target="https://github.com/BettyzhangPei/Heritability-Velocity">https://github.com/BettyzhangPei/Heritability-Velocity</ref>. Access to the PLCO datasets can be requested through the Cancer Data Access System (CDAS) at <ref type="url" target="https://cdas.cancer.gov/">https://cdas.cancer.gov/</ref>.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>enable log transformation, these zero values were replaced with 0.005, as the minimum observed non-zero PSA level prior to transformation was 0.01. Following this adjustment, the empirical distribution of the transformed PSA measurements closely approximates a Gaussian distribution, as demonstrated in Figure 3. We rescaled the time variable t among the male population such that the range from the youngest age at enrollment (54) to the oldest age at the end of follow-up (80) approximately spans 1. dimensional covariance matrix since our dataset has 15, 260 participants with an average of 5.34 measurements per individual; this makes the estimation computationally infeasible. We randomly partition the population into five groups, each containing 3, 052 males, and then apply the AI-REML algorithm on each subsample. Variance components and the two derived heritability metrics are separately estimated for each partition. Table <ref type="table">4</ref> presents the partition-specific estimates from the AI-REML algorithm (columns 2-6); note that in some cases, these estimates are at the boundary of the parameter space (this only occurs when estimating the variance components and heritability related to slope). To obtain combined estimates of the variance components (θ) and two heritability metrics (λ 1 and λ 2 ) and their standard errors, we performed truncation-adjusted meta-analysis. For each variance component, we used left-truncated ad-</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Information</head><p>Supplementary Material A details the notations and derivations involved in the matrix calculations. Supplementary Material B illustrates detailed deductions for the proposed methods. Supplementary Material C outlines efficient preprocessing steps for generating and storing joint genetic effects for simulation studies.</p><p>It also presents a comparison between the simple averaging method and truncation-adjusted meta-analysis -based on the AI-REML algorithm -for combining estimates from several non-overlapping groups in largesample settings. Supplementary Material D shows the performance of simulation studies on meta-analysis for truncated estimates with limited sample sizes. Finally, Supplementary Material E presents alternative methods for combining partition-specific estimates obtained from the AI-REML algorithm in the PLCO study, estimation results from seven evenly partitioned subgroups using the AI-REML algorithm, and performance metrics of the REHE method through parametric bootstrapping.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A review on the clinical utility of PSA in cancer prostate</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Adhyam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Gupta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Indian Journal of Surgical Oncology</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="120" to="129" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Ld score regression distinguishes confounding from polygenicity in genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">K</forename><surname>Bulik-Sullivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-R</forename><surname>Loh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">K</forename><surname>Finucane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ripke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>G ; N. Patterson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Daly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Neale</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="291" to="295" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>of the Psychiatric Genomics Consortium</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Catalona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Ratliff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Dodds</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Coplen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Petros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">324</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="1156" to="1161" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Estimating heritability of complex traits from genome-wide association studies using IBSbased Haseman-Elston regression</title>
+		<author>
+			<persName><forename type="first">G.-B</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers in Genetics</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">107</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Partitioning heritability by functional annotation using genome-wide association summary statistics</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">K</forename><surname>Finucane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bulik-Sullivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gusev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Trynka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Reshef</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-R</forename><surname>Loh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Anttila</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Farh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1228" to="1235" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Average information REML: an efficient algorithm for variance parameter estimation in linear mixed models</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Gilmour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename><surname>Cullis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="page" from="1440" to="1450" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The prostate, lung, colorectal and ovarian (PLCO) cancer screening trial of the National Cancer Institute: history, organization, and status</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Gohagan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">C</forename><surname>Prorok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">B</forename><surname>Hayes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B.-S</forename><surname>Kramer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">P</forename><surname>Team</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Controlled Clinical Trials</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="251S" to="272" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Measuring missing heritability: inferring the contribution of common variants</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Golan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rosset</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">111</biblScope>
+			<biblScope unit="issue">49</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+	<note>E5272-E5281</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">A numerically stable dual method for solving strictly convex quadratic programs</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Goldfarb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Idnani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mathematical Programming</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="33" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Karush-kuhn-tucker conditions</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Gordon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Optimization</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">725/36</biblScope>
+			<biblScope unit="page">725</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The investigation of linkage between a quantitative trait and a marker locus</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Haseman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Elston</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Behavior Genetics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="3" to="19" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Varying-coefficient models</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society Series B: Statistical Methodology</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="757" to="779" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Nonparametric smoothing estimates of time-varying coefficient models with longitudinal data</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Hoover</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Rice</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">O</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-P</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="809" to="822" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">On high-dimensional misspecified mixed model analysis in genome-wide association study</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annuals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="2127" to="2160" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Restricted maximum likelihood estimation of variance components for univariate animal models using sparse matrix techniques and average information</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Thompson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Dairy Science</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="449" to="456" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Genetically adjusted PSA levels for prostate cancer screening</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kachuri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Hoffmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">I</forename><surname>Berndt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Shelley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Schaffer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Machiela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">D</forename><surname>Freedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Medicine</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1412" to="1423" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Karush-kuhn-tucker theory</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lange</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Optimization</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="107" to="135" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Hundreds of variants clustered in genomic loci and biological pathways affect human height</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lango Allen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Estrada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Lettre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">I</forename><surname>Berndt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Weedon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Rivadeneira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Willer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">U</forename><surname>Jackson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vedantam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Raychaudhuri</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">467</biblScope>
+			<biblScope unit="issue">7317</biblScope>
+			<biblScope unit="page" from="832" to="838" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Theory of Point Estimation</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">L</forename><surname>Lehmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Casella</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<publisher>Springer Science &amp; Business Media</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Accurate and efficient estimation of local heritability using summary statistics and the linkage disequilibrium matrix</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mazumder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Communications</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">7954</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">FaST linear mixed models for genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lippert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Listgarten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Kadie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">I</forename><surname>Davidson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Heckerman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="833" to="835" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Contrasting genetic architectures of schizophrenia and other complex diseases using fast variance-components analysis</title>
+		<author>
+			<persName><forename type="first">P.-R</forename><surname>Loh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bhatia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gusev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">K</forename><surname>Finucane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">K</forename><surname>Bulik-Sullivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Pollack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W G</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>De Candia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Wray</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1385" to="1392" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>of the Psychiatric Genomics Consortium</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Efficient Bayesian mixed-model analysis increases association power in large cohorts</title>
+		<author>
+			<persName><forename type="first">P.-R</forename><surname>Loh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tucker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">K</forename><surname>Bulik-Sullivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Vilhjálmsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">K</forename><surname>Finucane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">I</forename><surname>Chasman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Ridker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Neale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Berger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="284" to="290" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<title level="m" type="main">Genetics and Analysis of Quantitative Traits</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lynch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Walsh</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<publisher>Sinauer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">GWAS explorer: an open-source tool to explore, visualize, and access GWAS summary statistics in the PLCO atlas</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Machiela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">I</forename><surname>Berndt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sampson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">De</forename><surname>Almeida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Abubakar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hislop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K.-L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dagnall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific Data</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">25</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Prostate cancer specific survival in the prostate, lung, colorectal, and ovarian (PLCO) cancer screening trial</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">F</forename><surname>Pinsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Black</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Parnes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Grubb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">D</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Reding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Andriole</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Epidemiology</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="401" to="e406" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Alternatives to the median absolute deviation</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Rousseeuw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Croux</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical association</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="issue">424</biblScope>
+			<biblScope unit="page" from="1273" to="1283" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Generalized varying coefficient models for longitudinal data</title>
+		<author>
+			<persName><forename type="first">D</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-G</forename><surname>Müller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="653" to="666" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">MultiBLUP: improved SNP-based prediction for complex traits</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Speed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Balding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Research</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1550" to="1557" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Evaluating and improving heritability models using summary statistics</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Speed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Holmes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Balding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="458" to="462" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Genetic study of the height and weight process during infancy</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Van Dommelen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>De Gunst</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">W</forename><surname>Van Der</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">I</forename><surname>Vaart</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Boomsma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Twin Research and Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="607" to="616" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Heritability in the genomics era -concepts and misconceptions</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Visscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Wray</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Genetics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="255" to="266" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Common SNPs explain a large proportion of the heritability for human height</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Benyamin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Mcevoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gordon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Henders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Nyholt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Madden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Heath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">G</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Montgomery</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="565" to="569" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">GCTA: a tool for genome-wide complex trait analysis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Goddard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Visscher</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="76" to="82" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">REHE: Fast variance components estimation for linear mixed models</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Thornton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shojaie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetic Epidemiology</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="891" to="905" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Mixed modeling approach for characterizing the genetic effects in a longitudinal phenotype</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Albert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Hong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="2070" to="2087" />
+			<date type="published" when="2025">2025</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">A unified framework for variance component estimation with summary statistics in genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">2027</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

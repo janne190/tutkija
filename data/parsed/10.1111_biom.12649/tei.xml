@@ -1,0 +1,1433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Bayesian Genome-and Epigenome-wide Association Studies with Gene Level Dependence</title>
+				<funder ref="#_FhzDEaW">
+					<orgName type="full">National Institute of Environmental Health Sciences</orgName>
+					<orgName type="abbreviated">NIEHS</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">National Institutes of Health National Center for Advancing Translational Sciences</orgName>
+				</funder>
+				<funder ref="#_xb2ytBP">
+					<orgName type="full">NIH / NCATS)</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2016-04-29">29 Apr 2016</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Eric</forename><forename type="middle">F</forename><surname>Lock</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biostatistics</orgName>
+								<orgName type="institution">University of Minnesota Minneapolis</orgName>
+								<address>
+									<postCode>55455</postCode>
+									<region>MN</region>
+									<country key="US">U.S.A</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><forename type="middle">B</forename><surname>Dunson</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Statistical Science</orgName>
+								<orgName type="institution">Duke University</orgName>
+								<address>
+									<postCode>27708</postCode>
+									<settlement>Durham</settlement>
+									<region>NC</region>
+									<country key="US">U.S.A</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Bayesian Genome-and Epigenome-wide Association Studies with Gene Level Dependence</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2016-04-29">29 Apr 2016</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">3D61D46E922BABF47C9024C793959064</idno>
+					<idno type="arXiv">arXiv:1604.08654v1[stat.ME]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>High-throughput genetic and epigenetic data are often screened for associations with an observed phenotype. For example, one may wish to test hundreds of thousands of genetic variants, or DNA methylation sites, for an association with disease status. These genomic variables can naturally be grouped by the gene they encode, among other criteria. However, standard practice in such applications is independent screening with a universal correction for multiplicity. We propose a Bayesian approach in which the prior probability of an association for a given genomic variable depends on its gene, and the gene-specific probabilities are modeled nonparametrically. This hierarchical model allows for appropriate gene and genome-wide multiplicity adjustments, and can be incorporated into a variety of Bayesian association screening methodologies with negligible increase in computational complexity. We describe an application to screening for differences in DNA methylation between lower grade glioma and glioblastoma multiforme tumor samples from The Cancer Genome Atlas. Software is available via the package BayesianScreening for R: github.com/lockEF/BayesianScreening.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Several technologies that are used for genomic research measure data that are high-throughput and genome-wide. These data may be genetic or epigenetic. Technologies that measure genetic data include single nucleotide polymorphism (SNP) arrays, whole-exome sequencing, and whole-genome sequencing; technologies that measure epigenetic data include DNA methylation bisulphite arrays or bisulphite sequencing, and chromatin immunoprecipitation sequencing (ChIP-seq). These technologies all measure hundreds of thousands of variables, each of which can be mapped to a location on the genome. In this article we use the general term "marker" to refer to any such variable.</p><p>A recurring objective in genomic research is to test each marker for an association with a given phenotypic trait, such as disease status. These are commonly conducted in a frequentist framework, where a p-value for the null hypothesis of no association is calculated independently for each marker. Several thousand such studies have been conducted for genetic associations alone <ref type="bibr" target="#b37">[Welter et al., 2014]</ref>. While these studies have revealed several important biomarkers, they have also been criticized for lack of power and lack of reproducibility <ref type="bibr" target="#b32">[Visscher et al., 2012]</ref>. The reliance on p-values and binary conclusions may be partly responsible for these criticisms. P-values are a poor proxy for our degree of confidence that a true association exists, because they depend on the power of the test <ref type="bibr" target="#b27">[Stephens and Balding, 2009]</ref>. Furthermore, standard corrections for multiple comparisons that control the family-wise error rate or false discovery rate for a single study typically require exorbitant effect sizes, leaving most associated markers undetected <ref type="bibr" target="#b22">[Park et al., 2010]</ref>.</p><p>As an alternative to frequentist-based approaches, several methodologies have been developed to screen for genome-wide associations in a fully Bayesian framework (for a review see <ref type="bibr" target="#b27">Stephens and Balding [2009]</ref>), and these are increasingly used in practice. Bayesian approaches directly compute the posterior probability that a marker is associated with a given trait, under a full probabilistic model for both the null and alternative hypotheses. This provides a straightforward and intuitive framework for meta-analyses that combine results from multiple studies <ref type="bibr" target="#b31">[Verzilli et al., 2008</ref><ref type="bibr" target="#b38">, Wen et al., 2014]</ref>. Moreover, Bayesian approaches provide a natural framework for borrowing information across multiple related markers within a single study to compute more well-informed and accurate weights of evidence in the form of posterior probabilities. Importantly, Bayesian techniques that combine multiple related tests need not treat the null and alternative hypotheses asymmetrically; this is in contrast to frequentist approaches to the multiple comparisons problem that typically require larger effect sizes for the alternative as the number of tests grows.</p><p>Despite their potential flexibility for borrowing information, standard practice for Bayesian genome-wide testing is to screen each marker independently. This involves specifying a prior probability for association at each marker <ref type="bibr" target="#b27">[Stephens and Balding, 2009]</ref>, or effectively fixing the prior probability at 0.5 and considering the Bayes factor for each marker <ref type="bibr" target="#b34">[Wakefield, 2009</ref><ref type="bibr" target="#b43">, Xu et al., 2012]</ref>. Alternatively, the prior probability of association at each marker can be treated as unknown (with, for example, a Beta(a, b) prior distribution) and inferred during posterior computation <ref type="bibr">[Scott et al., 2010, Lock and</ref><ref type="bibr">Dunson, 2015]</ref>. However, this approach still relies on the over-simplified premise that the probability of association is the same for all markers.</p><p>In this article, we describe a computationally scalable and widely applicable approach to inferring null probabilities that depend on the genomic location of each marker. Specifically, the prior probability of association for a given marker depends on the gene it encodes. The gene-specific probabilities are modeled with a nonparametric distribution that allows for appropriate genome-wide ad-justments for multiplicity. We demonstrate how this approach can dramatically improve posterior accuracy and interpretation when there is gene-level dependence among tests.</p><p>We apply our approach to an epigenome-wide association study of cancerous brain tumors that develop from astrocyte cells. Specifically, we use DNA methylation data from the Illumina HumanMethylation450 array to compare methylation profiles between lower-grade astrocytoma and glioblastoma multiforme samples from The Cancer Genome Atlas. These data include methylation measurements at 294, 093 genomic sites that map to 24, 358 different genes. We apply our gene-level dependence model in conjunction with a previously described method for screening for differential distribution between groups in methylation array data based on shared kernels <ref type="bibr" target="#b18">[Lock and Dunson, 2015]</ref>. Our analysis reveals systematic differences in methylation distribution at a large number of genomic sites, and the proportion of sites with differential methylation varies substantially between genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">Gene-wise Association Tests</head><p>Many methods have been developed that combine multiple markers within a single gene to test for an association at the gene level. For example, there is a wide body of literature on methods that aggregate genetic variants within a gene, via a direct sum or a regression model, to obtain a p-value for the null hypothesis that the gene has no association with the given phenotype <ref type="bibr" target="#b21">[Pan et al., 2014</ref><ref type="bibr">, Wu et al., 2011</ref><ref type="bibr" target="#b17">, Liu et al., 2010]</ref>. Similarly, there are methods that combine methylation markers within a given gene (or region) to obtain a composite p-value <ref type="bibr" target="#b35">[Wang et al., 2012]</ref>. These methods can substantially increase power if many markers within a gene have a weak association that cannot be detected independently <ref type="bibr" target="#b40">[Wojcik et al., 2015]</ref>, and also reduce the number of overall tests for multiplicity correction. However, aggregating at the gene level may miss important marker-specific effects; for example, different mutations within the same gene can have very different phenotypic consequences <ref type="bibr" target="#b23">[Rowntree and Harris, 2003]</ref>.</p><p>In a Bayesian framework, <ref type="bibr" target="#b39">Wilson et al. [2010]</ref> describe a genome-wide model for the association of genetic markers with an observed phenotype, in which the Bayes factor for model inclusion can be computed at the marker or gene level. In their implementation each marker has the same prior probability of association p genome-wide, with hyperprior p ∼ Beta(a, b); a gene is considered associated with the observed phenotype if any marker within the gene is associated. Alternatively, <ref type="bibr" target="#b24">Ruklisa et al. [2015]</ref> describe a class of Bayesian approaches to rare variant association testing in which the prior probability that a given marker is associated depends on the gene it encodes. For their approach the gene-specific probabilities are estimated independently based on training data, with no borrowing of information across the genes. Nevertheless, they illustrate that gene-specific probabilities can outperform genome-wide approaches.</p><p>In this article we describe a flexible compromise between genome-wide and gene-specific priors for marker associations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Model</head><p>Here we describe our hierarchical model for gene-specific probabilities in general, to convey its applicability to a wide variety of data types and Bayesian models for association. Details specific to the methylation screening example in Section 5 are given in Appendix A.</p><p>Suppose data are collected for M genetic or epigenetic markers from N individuals, where each marker maps to one of G genes. Let M g be the number of markers that map to gene g, so that M = G g=1 M g . Let X gmn denote data for marker m in gene g (g ∈ 1, . . . , M g ) for individual n, and let Y n define a phenotypic response for individual n.</p><p>Let H 0,gm define a probabilistic model of no association with Y for marker m in gene g, and H a,gm define the alternative model of association. The posterior probability of the null for the given marker, P (H 0,gm | X, Y ), is</p><formula xml:id="formula_0">P (H 0,gm )P (X, Y | H 0,gm ) P (H 0,gm )P (X, Y | H 0,gm ) + P (H a,gm )P (X, Y | H a,gm )</formula><p>.</p><p>Under our proposed model, prior probabilities are equal within a gene:</p><formula xml:id="formula_1">p g = P (H 0,gm ) for m = 1, . . . , M g .</formula><p>We use a nonparametric hyperprior to infer the gene-level prior probabilities {p g } G g=1 and borrow information across the genes. Specifically, the distribution of the p g s is a Dirichlet process <ref type="bibr" target="#b6">[Ferguson, 1973]</ref> with a Beta(a, b) base distribution and concentration parameter α: p g ∼ DP(Beta(a, b), α). Under this framework, each p g is drawn from a theoretically infinite number of realizations θ h from Beta(a, b), with corresponding probability weights π h :</p><formula xml:id="formula_2">p g ∼ ∞ h=1 π h δ θ h ,</formula><p>where δ θ h is a point mass at θ h . A consequence of this model is clustering of the genes, as values θ h with larger weights π h will correspond to the probability for several genes. This clustering property is useful for interpretation (e.g., to identify gene sets) but our primary motivation for using the Dirichlet process is to provide a sufficiently robust and flexible hierarchical distribution for the p g s.</p><p>The concentration parameter α controls the dispersion of the weights π h and, hence, influences the sizes of the gene clusters. As α → 0 a single realization will correspond to all genes (e.g., p 1 = . . . = p G = θ 1 ); hence, the limit is equivalent to a genome-wide correction for multiplicity. As α → ∞ each gene will have its own realization (e.g., p 1 = θ 1 , p 2 = θ 2 , . . .); hence, the limit is equivalent to a separate, independently estimated probability for each gene. In practice we find that fixing α as a small positive value, such as α = 1, allows for sufficient posterior flexibility between these two extremes.</p><p>It is also informative to consider the choice of a, b in the Beta base distribution. In applications where a Beta(a, b) distribution is used for a shared prior probability, fixing a = 1 is common <ref type="bibr" target="#b25">[Scott et al., 2010]</ref>. Choosing b = λM , provides a natural multiplicity adjustment, as the expected number of associated markers under the prior model is then 1/λ regardless of the number of markers M <ref type="bibr" target="#b39">[Wilson et al., 2010]</ref>. This result extends to our context, as E(p g ) = a/b and therefore the expected number of associated markers under the prior is</p><formula xml:id="formula_3">G g=1 M g E(p g ) = M • a b .</formula><p>However, philosophically there may be little reason for the probability of association at each marker to be negatively effected by the number of markers measured. In practice we find that a simple uniform base distribution Beta(1, 1) allows for substantial flexibility and still performs well as a multiplicity correction under a global null.</p><p>The parameter p g should not be interpreted as the overall probability of association for gene g. Rather, it can be viewed as the inferred proportion of locations within the gene that are associated. This is one approach to prioritize genes, but more importantly the p g s can improve the accuracy of posterior inference at the marker level.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Inference</head><p>Here we describe a general Gibbs sampling scheme to compute the full posterior under the gene-level prior model specified above. This estimation approach is informative, illustrating how the marker parameters, gene parameters, and global parameters relate to each other. Fundamentally, the algorithm proceeds by sampling from the posterior of each marker, then updating the gene-specific probabilities and their corresponding Dirichlet process parameters.</p><p>We use the constructive stick-breaking representation of the Dirichlet process <ref type="bibr" target="#b26">[Sethuraman, 1994]</ref> to sample from its full conditional distribution. That is, the probability weights π h are generated by</p><formula xml:id="formula_4">π h = V h l&lt;h (1 -V l ), where V h iid ∼ Beta(1, α).</formula><p>In practice we truncate the infinite mixture by a large integer H, and perform blocked Gibbs sampling <ref type="bibr" target="#b10">[Ishwaran and James, 2001]</ref>. Thus, letting C g define the cluster index for gene g (p g = θ Cg ), C g ∈ {1, . . . , H}. The weights π h usually decrease quickly to very small values, and thus the effect of truncation is negligible.</p><p>Assuming the marginal likelihoods under the null and alternative models can be computed for each marker, sampling from the full conditionals proceeds as follows:</p><p>1. Designate null markers H 0,gm for g = 1, . . . , G, m = 1, . . . , M g . The conditional probability of the null, P (H 0,gm | X, Y, p g ), is</p><formula xml:id="formula_5">p g P (X, Y | H 0,gm ) p g P (X, Y | H 0,gm ) + (1 -p g )P (X, Y | H a,gm )</formula><p>.</p><p>2. Allocate indices C g for g = 1, . . . , G:</p><formula xml:id="formula_6">P C g = h | θ h , {H 0,gm } Mg m=1 ∝ π h θ Sg h (1 -θ h ) Mg-Sg</formula><p>for h = 1, . . . , H, where S g is the number of null markers in gene g, S g = Mg m=1 1(H 0,gm ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Update the weights π</head><formula xml:id="formula_7">h for h = 1, . . . , H. First, draw the stick-breaking weights V 1 , . . . , V H-1 . The full conditional distribution of V h is Beta 1 + G g=1 1(C g = h), α + G g=1 1(C g &gt; h) , with V H = 1. Then set π h = V h l&lt;h (1 -V l ) for h = 1, . . . , H.</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Update the atoms θ</head><formula xml:id="formula_8">h for h = 1, . . . , H. The full conditional distribution of θ h is Beta a + Sh , b + Mh -Sh ,</formula><p>where Mh is the total number of markers in genes allocated to cluster h, and Sh is the number of null markers:</p><formula xml:id="formula_9">Mh = {g:Cg=h} M g , Sh = {g:Cg=h} S g .</formula><p>Set p g = θ Cg for g = 1, . . . , G.</p><p>Point estimates for the gene-level probabilities p g and marker posterior probabilities P (H 0,gm | X, Y ) can be obtained by averaging their draws over the sampling iterations.</p><p>The marginal likelihoods under the null and alternative hypotheses in sampling step 1 may not be feasible to compute directly. If not, additional sampling steps can be incorporated to update model-specific parameters for each marker under H 0,gm and H a,gm . Such an approach is used for the two-group methylation screening scenario described in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Simulation Study</head><p>Here we present a simulation study to illustrate the advantages of our hierarchical model for gene-level probabilities. We compare our hierarchical approach detailed in Sections 2 and 3 with three other approaches for inferring marginal probabilities of the null at each marker:</p><p>• Separate estimation, in which a probability is inferred independently for each gene, and shared by all markers for that gene.</p><p>• Joint estimation, in which a probability is inferred globally and shared by all markers.</p><p>• Simple estimation, in which the prior is fixed at 0.5 for all markers. This is equivalent to independently considering the Bayes factor for each marker.</p><p>For simplicity, we assume marker values are binary (e.g., representing presence of the minor allele for genotype data). We simulate data for two groups, each with 100 individuals (N = 200). For null markers, binary values are simulated under a common probability for both groups, where this probability is drawn from a uniform distribution. For alternative markers, binary values are simulated under a different probability for each group, where these probabilities are drawn independently from a uniform distribution. The Bayes factor for the null over the alternative for a given marker is then</p><formula xml:id="formula_10">β(1 + s 1 + s 2 , 1 + 200 -s 1 -s 2 ) β(1 + s 1 , 1 + 100 -s 1 )β(1 + s 2 , 1 + 100 -s 2 )</formula><p>,</p><p>where β defines the beta function, and s 1 and s 2 are the number of individuals for which the marker is present in groups 1 and 2, respectively. This is analogous to the prospective Bayes factor for SNP association testing introduced in <ref type="bibr" target="#b0">Balding [2006]</ref>. Data are simulated for G = 1000 genes, where the number of markers within a gene M g is drawn from {2, 3, . . . , 20} with equal probability. We consider three different scenarios with dramatically different assumption on the distribution of null and alternative markers across the genes. For each scenario, we show the inferred distribution of the gene-specific probabilities p g under the four methods considered. We also compute the expected overall error in classifying null and alternative markers, as the average misclassification probability over all markers.</p><p>First, we simulate data where the null is true for all markers, to illustrate how the four methods perform as a multiplicity adjustment. Results are shown in Figure <ref type="figure" target="#fig_0">1A</ref>. The simple model with fixed prior probability of 0.5 performs relatively poorly; in this and other simulations the average error in classifying markers independently is approximately 20%. The joint and hierarchical models have negligible error, as they both borrow information globally to enforce appropriately high prior probabilities of the null. The model with separately inferred priors for each gene does not perform as well, as its shift toward the null is relatively weak, especially for those genes with a small number of markers.</p><p>Second, we simulate data from a bimodal distribution in which the majority of genes (80%) are null for all markers, but for a subgroup of genes (20%) the alternative is true for all markers. Results are shown in Figure <ref type="figure" target="#fig_0">1B</ref>. In this case the hierarchical model performs well, as it identifies both modes and allocates the appropriate genes to each mode. The separate model performs better than the joint model, as the joint model does not account for the heterogeneity in the genes. However, the separate model is not competitive with the hierarchical model, as again the gene-specific probabilities have substantial uncertainty and do not shrink toward the two modes if they are estimated independently.</p><p>Third, we simulate the gene-specific probabilities from a Beta(1, 0.2) distribution, which has a majority of its mass near 1 (corresponding to genes in which the vast majority of markers are null) but a long left tail. Results are shown in Figure <ref type="figure" target="#fig_0">1C</ref>. The joint and separate models perform similarly, as the joint model ignores the gene heterogeneity and the separate model exaggerates gene heterogeneity. The hierarchical model serves as a flexible compromise between the two extremes, and closely approximates the true gene-specific probabilities.</p><p>To compare the Bayesian methods above with frequentist methods for multiple hypothesis testing, we compute a p-value for the null using Fisher's exact test at each marker. We consider the following multiplicity adjustments for these p-values:</p><p>• Separate false-discovery rate (FDR) corrections for each gene, using the Benjamini-Hochberg method <ref type="bibr" target="#b2">[Benjamini and Hochberg, 1995]</ref>.</p><p>• An overall FDR correction for each marker.</p><p>• A two-step hierarchical hypothesis testing framework <ref type="bibr" target="#b15">[Li and Ghosh, 2014]</ref> that uses the Hochberg <ref type="bibr" target="#b9">[Hochberg, 1988]</ref> and Benjamini-Hochberg methods. This method controls the overall FDR while allowing for dependence within sets of hypotheses. In our context, a set corresponds to markers within a gene.</p><p>P-values and Bayesian posterior probabilities have fundamental differences in philosophy and interpretation, and are not directly comparable. Nonetheless, for illustration we compare the various approaches above by considering standard thresholds on the posterior probability, p-value or FDR that are used to classify markers as null or alternative. For Bayesian methods we use 0.5 as a threshold on the posterior probability, and for the frequentist methods we use a significance threshold of α = 0.05. The resulting misclassification rates under each simulation scenario are shown in Table <ref type="table">1</ref>. Under the null model the hierarchical Bayesian approach gives very low error, similar to overall FDR corrections. Under the two scenarios with alternative markers the Bayesian hierarchical model performs substantially better than frequentist multiplicity corrections, which are overly conservative.</p><p>Figure <ref type="figure" target="#fig_1">2</ref> gives receiver operating characteristic (ROC) curves showing the proportion of markers with false positive or true positive classification (where 'positive' corresponds to the alternative) as the threshold on the posterior probability, p-value, or FDR is varied. Results are shown for the bimodal and Beta simulations; the ROC curve for the null simulation is trivial, as there are no true positives. In both cases the Bayesian hierarchical model has uniformly better classification performance than alternatives. The ROC curves for separate estimation are close, indicating that the rank ordering of probabilities are similar despite the improved accuracy of the hierarchical model.</p><p>A spreadsheet available online gives results for 99 additional simulated datasets with varying sample size, number of genes, and distribution of gene-level probabilities. These results demonstrate the robustness of the hierarchical model. Table <ref type="table">1</ref>: Error in classifying null and alternative markers, using 0.5 as a threshold for the posterior probability for Bayesian methods, and 0.05 as an FDR or P-value threshold for frequentist methods using Fisher's exact test. The average over 50 replicate simulations is shown, and the resulting standard error is less than 0.05% for all cells.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Null</head><p>Bimodal Beta (1, 0.2) Bayesian Hierarchical 0.01% 0.07% 3.92% Separate 0.50% 1.68% 4.87% Joint 0.01% 6.89% 5.34% Simple 5.07% 8.72% 7.82% Frequentist Two-step FDR 0.01% 7.73% 6.30% Separate FDR 0.23% 5.64% 5.41% Overall FDR 0.01% 7.15% 5.78% No correction 2.91% 7.50% 6.49% </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Application to LGG-GBM Methylation</head><p>We implement our hierarchical gene-level prior model in a screen for differences in DNA methylation between lower grade gliomas (LGG) and glioblastoma multiforme (GBM) tumor samples that develop from astrocyte cells in the brain.</p><p>Methylation is an epigenetic phenomenon that occurs at cytosine-phosphateguanine (CpG) dinucleotide sites in the genome. Methylation is thought to play a significant role in LGG pathogenesis <ref type="bibr">[TCGA Research Network, 2015]</ref> and GBM pathogenesis <ref type="bibr" target="#b29">[TCGA Research Network, 2013]</ref>, but the differences between the two tumor classes have not been well-characterized on a genomewide scale. Both tumors are heterogenous and typically fatal, but a more complete understanding of their molecular differences is important, as LGGs often progress to GBMs and GBM patients have a much shorter survival time.</p><p>We use data from the Illumina HumanMethylation450 array, for 128 astrocyte derived LGG samples and 130 GBM samples, from The Cancer Genome Atlas. Measured CpG sites that have any missing data are removed, as are sites that map to intergenic regions. After filtering, 294, 093 CpG sites remain, that map to 24, 358 distinct genes. The number of sites in a gene ranges broadly from 1 to 1017. Array values at each site are between 0 (no methylation) and 1 (fully methylated across all cells in the tumor sample).</p><p>Several computational methods have been developed to screen for differential methylation levels between groups, based on array data <ref type="bibr" target="#b11">[Jaffe et al., 2012</ref><ref type="bibr" target="#b20">, Maksimovic et al., 2015]</ref> or sequencing data <ref type="bibr" target="#b28">[Sun et al., 2014</ref><ref type="bibr" target="#b5">, Feng et al., 2014</ref><ref type="bibr" target="#b41">, Wu et al., 2015]</ref>. However, the focus on differential methylation levels between groups may miss other important differences between group distributions; for example, certain genomic regions have been shown to exhibit more variability in methylation, and hence greater epigenetic instability, among cancer cells than among normal cells <ref type="bibr" target="#b7">[Hansen et al., 2011]</ref>.</p><p>We test for differences in distribution between the LGG and GBM samples at each CpG site. Our testing model is described in detail in <ref type="bibr" target="#b18">Lock and Dunson [2015]</ref>, where it is implemented on comparatively sparse methylation data (≈ 20, 000 sites) with a global prior and shown to compare favorably to frequentist and Bayesian alternatives. Briefly, the distribution at each site is modeled as a mixture of normal kernels, truncated between 0 and 1. The kernels are shared across CpG sites, and thus capture shared patterns of multi-modality and skewness that are typical in methylation array data. Under the null the kernel mixing weights at each site are assumed to be the same between the two groups, and under the alternative they are different. This provides a robust and consistent framework for testing differential distribution, and can identify important differences that are not captured by simply comparing mean methylation levels. Furthermore, the method facilitates interpretation by modeling the full distribution, with uncertainty, for each class. We incorporate hierarchical gene-level priors within the shared kernel testing model, and compute the full posterior via Gibbs sampling.</p><p>The estimated gene-level probabilities are shown in Figure <ref type="figure" target="#fig_2">3</ref>. Their distribution resembles that in the simulation shown in Figure <ref type="figure" target="#fig_0">1C</ref>. For the majority of genes the distribution between the two groups is inferred to be equal at most sites (p g ≈ 1). However, there is a substantial left tail, corresponding to genes in which a large number of sites are inferred to differ between the two groups. For illustration we focus on one such gene, BST2, which has 9 measured CpG sites and an estimated gene-level probability of p g = 0.198. We select BST2 because it has been considered as a tangible target for immunotherapy in the treatment of GBM <ref type="bibr" target="#b4">[Etcheverry et al., 2010]</ref>, an independent comparison of GBM and normal samples found differences in BST2 methylation that correlate with gene expression <ref type="bibr" target="#b33">[Wainwright et al., 2011]</ref>, and BST2 methylation may play a role in the pathonogenesis of other cancers <ref type="bibr" target="#b19">[Mahauad-Fernandez et al., 2014]</ref>. Figure <ref type="figure" target="#fig_3">4</ref> shows the genomic location and posterior probability of group equality for the nine CpG sites in BST2, as well as group histograms and posterior densities for methylation at three sites.</p><p>Given the large number of CpGs and corresponding genes with differential methylation distribution, we also investigate differences at a macro level. Figure <ref type="figure" target="#fig_4">5</ref> shows the site means and standard deviations within each group, for those sites with a posterior probability of equality less than 0.01 (24.6% of all CpGs). Mean methylation levels at these sites are generally greater in the LGG samples than the GBM samples; this is concordant with findings in a smaller comparison of 1536 CpG sites in 807 genes <ref type="bibr" target="#b13">[Laffaire et al., 2011]</ref>. The distribution of standard deviations is more curious, as LGG samples show a larger number of sites with either very high variability or very low variability in comparison to the distribution for GBM. Details regarding the association model and Gibbs sampling algorithm for posterior computation are given in Appendix A.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Validation</head><p>To asses the appropriateness of the hierarchical gene-level model, we consider the agreement of estimated gene-level probabilities and marker-level posteriors under cross validation. Specifically, we randomly select 10, 000 CpGs to leave out, and compute gene-level probabilities using the remaining 284, 093 CpGs. For each left out CpG, we measure the Kullback-Leibler divergence of its estimated gene-level probability under the reduced data from its CpG-level posterior probability under the full data. This can be interpreted as the gain of information or degree of "surprise" between a CpG's posterior probability and its gene-level prior <ref type="bibr" target="#b16">[Lindley, 1956]</ref>. We repeat this process using a separately estimated prior probability for each gene, a single inferred prior probability, and a prior probability of 0.5 (corresponding to the separate, joint and simple models in the Simulation Study). The hierarchical model yields the greatest agree- ment, with a mean Kullback-Leibler divergence of 0.451; the separate model has a divergence of 0.482, the joint model 0.560, and the simple model 0.654.</p><p>We also conduct two permutation studies, to further assess the appropriateness and flexibility of our gene-level model. First, we randomly permute the gene labels for each marker, so that there is no true gene-level dependence. The subsequent posterior means for the gene level prior probabilities p g are shown in the top-left panel of Figure <ref type="figure">6</ref>. The estimates converge appropriately to a single global probability near 0.72, in sharp contrast to the relatively dispersed estimates using the true data in Figure <ref type="figure" target="#fig_1">2</ref> of the main article. Second, we randomly permute the class labels but maintain the true gene labels, to generate a dataset with a global null but gene-level dependence. The subsequent posterior estimates are shown in the top-right panel of Figure <ref type="figure">6</ref>, and cluster very close to 1. In fact, all 294, 093 estimated site-specific posterior probabilities of the null are greater than 0.5. Together, these results demonstrate that the hierarchical gene-level model appropriately shrinks gene-level priors toward a global pattern.</p><p>The estimated hierarchical gene-level probabilities closely approximate a single joint prior probability in Figure <ref type="figure">6</ref>, where a joint prior is appropriate, but not for the true data. Thus, we conclude that a single joint model is an over-Figure <ref type="figure">6</ref>: Histogram of hierarchically estimated and separately estimated genelevel priors after randomly permuting gene labels (left column), and after randomly permuting class labels (right column). simplification for these data. We also compare the hierarchical gene-level prior probabilities under permutation with separate, independently estimated genelevel probabilities. The separately estimated probabilities are shown in the bottom row of 6. These have a lot of variability under both permutation scenarios, illustrating how independent consideration of the genes sacrifices accuracy by exaggerating gene effects.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Discussion</head><p>Borrowing information and incorporating prior knowledge in a principled and computationally feasible way is an important challenge for Bayesian genomeand epigenome-wide screening methods. Here we present a flexible and gener-ally applicable hierarchical model for inferring gene-specific probabilities, which may be extended in several ways. Under our prior all markers within a gene have an equivalent probability of association. The incorporation of other marker-level information, such as gene promoter status for DNA methylation <ref type="bibr" target="#b36">[Weber et al., 2005]</ref> or functional annotation (e.g., synonymous vs. non-synonymous) for genotype markers <ref type="bibr" target="#b12">[Kichaev et al., 2014</ref><ref type="bibr" target="#b24">, Ruklisa et al., 2015]</ref>, may improve posterior precision and interpretation. For example, a Dirichlet process model may be used for gene-level intercepts within a regression model for marker probabilities that includes additional prior covariates <ref type="bibr" target="#b14">[Lewinger et al., 2007]</ref>. Incorporating additional gene-level prior information, such as allowing greater dependence within known functional gene networks <ref type="bibr" target="#b45">[Zhang et al., 2014]</ref>, is also a promising direction of future work.</p><p>Our focus is on association testing. However, markers that are statistically associated with a given phenotype may not affect the phenotype directly, especially if markers are correlated (e.g., linkage disequilibrium in genetic data). Our gene-specific model and other prior information can also be used in the context of model inclusion probabilities, to select markers that have novel predictive power for a given phenotype and are therefore more likely to be causal <ref type="bibr" target="#b39">[Wilson et al., 2010</ref><ref type="bibr">, Zhang et al., 2014</ref><ref type="bibr" target="#b3">, Duan and Thomas, 2013]</ref>. However, computational scaling for high-throughput data is often a challenge in such problems; alternatively, markers identified via association testing may subsequently be included as phenotype predictors in a second stage model <ref type="bibr" target="#b44">[Yazdani and Dunson, 2015]</ref>.</p><p>In our context we consider multiple hypotheses, in which the hypotheses are naturally grouped by markers within a gene, but there are similar scenarios in other areas of genomics research. For example, when screening multiple genes for a phenotypic association (e.g., via microarray or RNA-seq data) the genes can be partitioned into groups based on pathways or other prior information. Frequentist methods that provide appropriate type I error control over genes and gene sets have been developed <ref type="bibr" target="#b1">[Benjamini and Heller, 2008</ref><ref type="bibr" target="#b8">, Heller et al., 2009</ref><ref type="bibr" target="#b15">, Li and Ghosh, 2014]</ref>, and these methods can be generalized to other problems that involve testing hypotheses over multiple sets. Broadly, our proposed model defines a general prior for multiple hypothesis testing within a Bayesian framework when the hypotheses can be partitioned into sets.</p><p>where S g is the number of null markers in gene g, S g = Mg m=1 1(H 0,gm ). 5. Update the weights π h for h = 1, . . . , H. First, draw the stick-breaking weights V 1 , . . . , V H-1 by</p><formula xml:id="formula_11">(V h | C • ) ∼ Beta 1 + G g=1 1(C g = h), α + G g=1 1(C g &gt; h) ,</formula><p>with V H = 1. Then set π h = V h l&lt;h (1 -V l ) for h = 1, . . . , H.</p><p>6. Update the atoms θ h for h = 1, . . . , H:</p><formula xml:id="formula_12">(θ h | C • , H 0,•• ) ∼ Beta a + Sh , b + Mh -Sh ,</formula><p>where Mh is the total number of markers in genes allocated to cluster h, and Sh is the number of null markers:</p><p>Mh = {g:Cg=h} M g , Sh = {g:Cg=h} S g .</p><p>Set p g = θ Cg for g = 1, . . . , G.</p><p>We use a simple uniform prior for the base distribution of p g (a = b = 1).</p><p>For the high-throughput data considered, computing is not trivial, costing approximately 30 seconds per Gibbs cycle. However, less than 1% of computing time is spent on the draws for the gene-level prior parameters (steps 4-6). We find that draws mix well and converge very quickly to a stationary posterior. We run two parallel chains, with different initializations, for 1000 cycles, with the first 200 treated as burn-in. Figure <ref type="figure" target="#fig_6">7</ref> shows good agreement of estimated gene-level prior probabilities between the two chains. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Comparison of four approaches to inferring prior probabilities, under three simulation scenarios (A,B, and C). Kernel density estimates of the resulting gene-specific probabilities are shown for continuous distributions; discrete distributions are shown by vertical lines. The distribution of the true genespecific probabilities is colored black. The expected overall error in classifying null and alternative markers is also shown for each method and each simulation scenario.</figDesc><graphic coords="9,176.73,181.55,257.80,330.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: ROC curves obtained by varying the threshold on the posterior probability, p-value, or FDR for various methods. Curves are combined for the joint and simple Bayesian models, and for the uncorrected p-value and FDR, as the rank ordering of markers between these methods do not change.</figDesc><graphic coords="10,150.96,427.20,309.34,154.67" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Histogram of estimated gene-specific probabilities p g .</figDesc><graphic coords="12,133.77,124.80,343.73,229.15" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: The top panel shows the estimated posterior probability of an association with GBM-LGG status for the 9 CpG sites measured in the gene BST2, with their corresponding genomic location. The lower panel shows the estimated densities for the GBM (blue) and LGG (red) groups for three sites; histograms of each group are shown, and their overlap is colored purple.</figDesc><graphic coords="13,168.14,124.80,274.97,235.69" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Histograms of summary statistics for every CpG site with a posterior probability of the null less than 0.01, computed separately for the GBM (dark gray) and LGG (light gray) groups. Overlap between the two histograms is colored a neutral gray. The left panel show the site means, the right shows the site standard deviations.</figDesc><graphic coords="14,133.77,124.80,343.71,236.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 7 :</head><label>7</label><figDesc>Figure 7: Scatterplot of estimated gene-level prior from two independent sampling chains.</figDesc><graphic coords="19,168.14,124.80,274.99,274.99" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="15,133.77,124.80,343.71,322.23" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgments We thank <rs type="person">Dr. Allison Ashley-Koch</rs> and <rs type="person">Dr. Sandeep Dave</rs> for fruitful scientific discussions that motivated this work. This work was supported by the <rs type="funder">National Institute of Environmental Health Sciences (NIEHS)</rs> [<rs type="grantNumber">R01-ES017436</rs>] and <rs type="funder">National Institutes of Health National Center for Advancing Translational Sciences</rs> (<rs type="funder">NIH / NCATS)</rs> [<rs type="grantNumber">ULI RR033183 &amp; KL2 RR0333182</rs>].</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_FhzDEaW">
+					<idno type="grant-number">R01-ES017436</idno>
+				</org>
+				<org type="funding" xml:id="_xb2ytBP">
+					<idno type="grant-number">ULI RR033183 &amp; KL2 RR0333182</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A Posterior Computation</head><p>This appendix provides details on posterior computation for the methylation screening application described in Section refapp.</p><p>First, we estimate and fix a dictionary of normal kernels truncated between 0 and 1, which will be used as mixture components for the density at each CpG site. These are estimated as described in Section 5 of <ref type="bibr" target="#b18">Lock and Dunson [2015]</ref>. In particular, the number of kernels is determined by out-of-sample cross validation of the log posterior density. For the present application this yields K = 8 kernels that appropriately span the data range from 0 to 1.</p><p>Let Π</p><p>gmK ) be the kernel probability weights that define the generative distribution for gene g and site m for group 0, and let Π</p><p>(1) gm be the kernel probability weights for group 1. Under the null model H 0gm , the mixing weights are the same for both groups: Π</p><p>gm . The kernel weights are assumed to be generated from a Dirichlet(λ) distribution, where λ is a hyperparameter that is inferred during the kernel estimation stage and fixed. Under H 1gm , Π (0) gm and Π</p><p>(1) gm are considered independent realizations from Dirichlet(λ). Under this framework, posterior draws from the gene-level prior model described in Section 3 of the main article are incorporated into Gibbs sampling for the kernel testing parameters. The full sampling algorithm is described below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Draw the kernel that generated each observation T (i)</head><p>gmn ∈ 1, . . . , K for genes g = 1, . . . , G, markers m = 1, . . . , M g , classes i = 0, 1 and samples n = 1, . . . , N i . The conditional probability that the given value is realized from component k is</p><p>where f (•) defines the density of a truncated normal distribution.</p><p>2. Designate null markers H 0,gm for g = 1, . . . , G, m = 1, . . . , M g . The conditional posterior probability is</p><p>where n</p><p>gmK ) is the number of subjects in group 0 that belong to each kernel k in marker g, m, n </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A tutorial on statistical methods for population association studies</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Balding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Genetics</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="781" to="791" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Screening for partial conjunction hypotheses</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Benjamini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Heller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1215" to="1222" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Controlling the false discovery rate: a practical and powerful approach to multiple testing</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Benjamini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hochberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="289" to="300" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A bayesian hierarchical model for relating multiple snps within multiple genes to disease risk</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Duan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Genomics</title>
+		<imprint>
+			<biblScope unit="page">406217</biblScope>
+			<date type="published" when="2013">2013. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">DNA methylation in glioblastoma: impact on gene expression and clinical outcome</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Etcheverry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Aubry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>De Tayrac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Vauleon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Boniface</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Guenot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Saikali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hamlat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Riffaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Menei</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genomics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">701</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">A bayesian hierarchical model to detect differentially methylated loci from single nucleotide resolution sequencing data</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">N</forename><surname>Conneely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page">69</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A Bayesian analysis of some nonparametric problems</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">S</forename><surname>Ferguson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="209" to="230" />
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Increased methylation variation in epigenetic domains across cancer types</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Timp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Bravo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sabunciyan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Langmead</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">G</forename><surname>Mcdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Diep</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="768" to="775" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">A flexible two-stage procedure for identifying gene sets that are differentially expressed</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Heller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Manduchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Grant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Ewens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1019" to="1025" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">A sharper Bonferroni procedure for multiple tests of significance</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hochberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="800" to="802" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Gibbs sampling methods for stick-breaking priors</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ishwaran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>James</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">453</biblScope>
+			<biblScope unit="page" from="161" to="173" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Bump hunting to identify differentially methylated regions in epigenetic epidemiology studies</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Jaffe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Murakami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">T</forename><surname>Leek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Fallin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Feinberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Irizarry</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Epidemiology</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="200" to="209" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Integrating functional data to prioritize causal variants in statistical fine-mapping studies</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kichaev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lindstrom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hormozdiari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Eskin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kraft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Pasaniuc</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Genetics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">1004722</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Methylation profiling identifies 2 groups of gliomas according to their tumorigenesis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Laffaire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Everhard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Idbaih</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Criniere</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Marie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>De Reynies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Schiappa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mokhtari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hoang-Xuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sanson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neuro-Oncology</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="84" to="98" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Hierarchical bayes prioritization of marker associations from a genome-wide association scan for further investigation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Lewinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Conti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Baurley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Triche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetic Epidemiology</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="871" to="882" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">A two-step hierarchical hypothesis set testing framework, with applications to gene expression data on ordered categories</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ghosh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">108</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">On a measure of the information provided by an experiment</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Lindley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Annals of Mathematical Statistics</title>
+		<imprint>
+			<date type="published" when="1956">1956</date>
+			<biblScope unit="page" from="986" to="1005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A versatile gene-based test for genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Mcrae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Nyholt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Medland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Wray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">K</forename><surname>Hayward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Visscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">G</forename><surname>Martin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="139" to="145" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Shared kernel Bayesian screening</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">F</forename><surname>Lock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Dunson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="829" to="842" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Bone marrow stromal antigen 2 (BST-2) DNA is demethylated in breast tumors and breast cancer cells</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">D</forename><surname>Mahauad-Fernandez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">C</forename><surname>Borcherding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Okeoma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PloS One</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">123931</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Removing unwanted variation in a differential methylation analysis of Illumina Human-Methylation450 array data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Maksimovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Gagnon-Bartsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Speed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Oshlack</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="page">526</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A powerful and adaptive association test for rare variants</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wei</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetics</title>
+		<imprint>
+			<biblScope unit="volume">197</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1081" to="1095" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Estimation of effect size distribution from genome-wide association studies and implications for future discoveries</title>
+		<author>
+			<persName><forename type="first">J.-H</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wacholder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Gail</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Peters</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">B</forename><surname>Jacobs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Chanock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Chatterjee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">The phenotypic consequences of cftr mutations</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Rowntree</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Harris</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="471" to="485" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Bayesian models for syndrome-and gene-specific probabilities of novel variant pathogenicity</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ruklisa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Ware</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Walsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Balding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Cook</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Medicine</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">120</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Bayes and empirical-Bayes multiplicity adjustment in the variable-selection problem</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O</forename><surname>Berger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="2587" to="2619" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">A constructive definition of Dirichlet priors</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sethuraman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="639" to="650" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Bayesian statistical methods for genetic association studies</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Stephens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Balding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Genetics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="681" to="690" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">MOABS: model based analysis of bisulfite sequencing data</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Xi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Goodell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biology</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">The somatic genomic landscape of glioblastoma</title>
+		<author>
+			<persName><surname>Tcga Research</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Network</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">155</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="462" to="477" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Comprehensive, integrative genomic analysis of diffuse lower-grade gliomas</title>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">372</biblScope>
+			<biblScope unit="page" from="2481" to="2498" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+		<respStmt>
+			<orgName>TCGA Research Network</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Bayesian meta-analysis of genetic association studies with different sets of markers</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Verzilli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Casas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chapman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sandhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Debenham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Boekholdt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">T</forename><surname>Khaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Wareham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Judson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">82</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="859" to="872" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Five years of GWAS discovery</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Visscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Mccarthy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">90</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="7" to="24" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">The expression of BST2 in human and experimental mouse brain tumors</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Wainwright</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">V</forename><surname>Balyasnikova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lesniak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Experimental and Molecular Pathology</title>
+		<imprint>
+			<biblScope unit="volume">91</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="440" to="446" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Bayes factors for genome-wide association studies: comparison with p-values</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wakefield</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genetic Epidemiology</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="79" to="86" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">IMA: an R package for high-throughput analysis of illumina&apos;s 450k infinium methylation data</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E</forename><surname>Sucheston</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Higgins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Ambrosone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Smiraglia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="729" to="730" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Chromosome-wide and promoter-specific analyses identify sites of differential DNA methylation in normal and transformed human cells</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wittig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Oakeley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Haase</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Schuebeler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="853" to="862" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">The nhgri GWAS catalog, a curated resource of SNP-trait associations</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Welter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Macarthur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Morales</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Burdett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Junkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Klemm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Flicek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Manolio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hindorff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">D1</biblScope>
+			<biblScope unit="page" from="1001" to="D1006" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Bayesian methods for genetic association analysis with heterogeneous subgroups: From meta-analyses to gene-environment interactions</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Stephens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="176" to="203" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Bayesian model search and multilevel inference for SNP association studies</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Iversen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Clyde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Schmidler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Schildkraut</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1342" to="1364" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Relative performance of gene-and pathway-level methods as secondary analyses for genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Wojcik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Kao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Duggal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genetics</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">34</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Detection of differentially methylated regions from whole-genome bisulfite sequencing data without replicates</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Qin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">N</forename><surname>Conneely</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">21</biblScope>
+			<biblScope unit="page">141</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Rare-variant association testing for sequencing data with the sequence kernel association test</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boehnke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="82" to="93" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Bayes factor based on the trend test incorporating hardy-weinberg disequilibrium: more power to detect genetic association</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Human Genetics</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="301" to="311" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">A hybrid Bayesian approach for genome-wide association studies on related individuals</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Yazdani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Dunson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page" from="3890" to="3896" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Integrative Bayesian variable selection with gene-based informative priors for genome-wide association studies</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Xue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Wiemels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genetics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">130</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

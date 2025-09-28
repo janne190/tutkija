@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Discovery of new drug therapeutic indications from gene mutation information for hepatocellular carcinoma</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Liang</forename><surname>Yu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computer Science and Technology</orgName>
+								<orgName type="institution">Xidian University</orgName>
+								<address>
+									<settlement>Xi&apos;an</settlement>
+									<country key="CN">PR China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Fengdan</forename><surname>Xu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computer Science and Technology</orgName>
+								<orgName type="institution">Xidian University</orgName>
+								<address>
+									<settlement>Xi&apos;an</settlement>
+									<country key="CN">PR China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Lin</forename><surname>Gao</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computer Science and Technology</orgName>
+								<orgName type="institution">Xidian University</orgName>
+								<address>
+									<settlement>Xi&apos;an</settlement>
+									<country key="CN">PR China</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Discovery of new drug therapeutic indications from gene mutation information for hepatocellular carcinoma</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">85507C6A1392B327E6C12E9DF3621D2B</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>hepatocellular carcinoma (HCC)</term>
+					<term>drug repositioning</term>
+					<term>mutated genes</term>
+					<term>kernel genes</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Hepatocellular carcinoma (HCC) is the most common primary liver malignancy and is a leading cause of cancer-related death worldwide. However, cure is not possible with currently used therapies, and there is not so much approved targeted therapy for HCC despite numerous attempts and clinical trials.</p><p>So, it is essential to identify additional therapeutic strategies to block the growth of HCC tumors. As a cancer disease, it is associated with aberrant genomic and transcriptional landscapes. We sought to use a systematic drug repositioning bioinformatics approach to identify novel candidate drugs to treat HCC, which considers not only aberrant genomic information, but also the changes of transcriptional landscapes. First, we screen the collection of HCC feature genes that frequently mutated in most samples of HCC based on human mutation data. Then, the gene expression data of HCC in TCGA are combined to classify the kernel genes of HCC. Finally, the therapeutic score (TS) of each drug is calculated based on the kolmogorov-smirnov statistical method. Using this strategy, we identified five drugs that associated with HCC, including three drugs that could treat HCC and two drugs that might have side-effect on HCC. In addition, we also make Connectivity Map (CMap) [18] profiles similarity analysis and KEGG enrichment analysis on drug targets. All these findings suggest that our approach is effective for accurate discovering novel therapeutic options for HCC and easily to be extended to other tumors.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>The identification of therapeutic approaches for the treatment of cancer is an arduous, costly, and often inefficient process <ref type="bibr" target="#b0">[1]</ref> . Drug repositioning, which is the discovery of new indications for existing drugs that are outside their original indications, is an increasingly attractive mode of new use discovery. In addition to saving time and money, an advantage of drug repurposing approaches is the fact that existing drugs have already been vetted in terms of safety, dosage, and toxicity <ref type="bibr" target="#b1">[ 2 ]</ref> . Therefore, repurposed drugs can often enter clinical trials much more rapidly than newly developed drugs. Rapid advances in genomics have led to the generation of large volumes of genomic and transcriptomic data for a diverse set of disease samples, normal tissue samples, animal models and cell lines.</p><p>Transcriptomic profiles, such as gene expression data are most widely used for drug repositioning.</p><p>One key source of data behind several repurposing efforts is the Connectivity Map (CMap) <ref type="bibr" target="#b2">[3]</ref> , which produced large-scale gene expression profiles from human cancer cell lines treated with different drug compounds under different conditions. The CMap approach attempts to take a more holistic view of these transcriptomic data and use them to connect expression profiles across conditions [3]. In particular, it indicates that drugs could potentially have a therapeutic effect on the disease if there is a strong negative correlation between the disease signatures and the drug expression profiles. For example, by systematically comparing gene expression signatures of inflammatory bowel disease (IBD) derived from GEO against a set of drug gene expression signatures comprising 164 drug compounds from CMap, Dudley et al. <ref type="bibr" target="#b3">[4 ]</ref> inferred several new interesting drug-disease pairs and validated one pair in IBD preclinical models. In another case, Jahchan et al. <ref type="bibr" target="#b4">[5]</ref> used a similar systematic drug-repositioning bioinformatics approach to query a large compendium of gene expression profiles to identify antidepressant drugs for the treatment of small cell lung cancer. A growing body of literature supports the use of CMap for drug repositioning; however, there are problems as well. A candidate can often be strengthened using independent disease signatures. But disease signatures are often selected by statistical methods, they are lack of biological information.</p><p>Hepatocellular carcinoma (HCC) is the most common primary liver malignancy and is a leading cause of cancer-related death worldwide <ref type="bibr" target="#b5">[6]</ref> . HCC is often induced by infections of hepatitis virus B (HBV) <ref type="bibr" target="#b6">[7]</ref> and C (HCV) <ref type="bibr" target="#b7">[8]</ref> , exposure to aflatoxin B1 from Aspergillus <ref type="bibr" target="#b8">[9]</ref> , alcohol abuse <ref type="bibr" target="#b9">[10]</ref> , or from nonalcoholic steatohepatitis <ref type="bibr" target="#b10">[11]</ref> . HCC is now the third leading cause of cancer deaths worldwide. However, cure is not possible with currently used therapies, and there is not so much approved targeted therapy for HCC despite numerous attempts and clinical trials. So, it is essential to identify additional therapeutic strategies to block the growth of HCC tumors. Many diseases, but very especially cancer, are associated with aberrant genomic and transcriptional landscapes <ref type="bibr" target="#b11">[12]</ref> . In this study, we sought to use a systematic drug repositioning bioinformatics approach to identify novel candidate drugs to treat HCC. First, we screen the collection of HCC feature genes that frequently mutated in most samples of HCC based on human mutation data. Then, the gene expression data of HCC in TCGA are combined to classify the gene set of HCC. Finally, the therapeutic score (TS) of each drug is calculated based on the kolmogorov-smirnov statistical method.</p><p>Using this strategy, we identified five drugs that associated with HCC, including three drugs that could cure HCC and two drugs that might have bad effect on HCC. In addition, we also make CMap [3]   profiles similarity analysis and KEGG enrichment analysis on drug targets. All these findings suggest that our approach is effective for accurate discovering novel therapeutic options for HCC and easily to be extended to other tumors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Analysis of disease characteristics of HCC</head><p>We characterized kernel, secondary, and marginal genes in the context of protein interaction (PPIs) network, PubMed (<ref type="url" target="www.ncbi.nlm.nih.gov/pubmed">www.ncbi.nlm.nih.gov/pubmed</ref>) <ref type="bibr" target="#b12">[13]</ref> , and Gene Ontology <ref type="bibr" target="#b13">[14]</ref> term annotation. The Human Protein Reference Database (HPRD) <ref type="bibr" target="#b14">[15]</ref> is a resource for experimentally derived information about the human proteome including protein-protein interactions, post-translational modifications (PTMs) and other information. We downloaded all human PPIs from this database, containing 15231 proteins and 38,167 interactions. Interestingly, we found that all of the three gene types have a heterogeneous degree distribution, and kernel genes tend to have higher degrees compared with secondary and marginal genes (Fig. <ref type="figure" target="#fig_0">1 A</ref>). Similarly, kernel genes are associated with more PubMed recordsand Gene Ontology term annotation than secondary and marginal genes (Fig. <ref type="figure" target="#fig_0">1 B</ref> and <ref type="figure">C</ref>). Table 1. HCC related genes extracted from OMIM. Gene Names Gene Entrez IDs IGF2R 3482 CASP8 841 MET 4233 PDGFRL 5157 TP53 7157 PIK3CA 5290 LCO 3935 CTNNB1 1499 AXIN1 8312</p><p>In order to analyze biological functions of kernel genes, we analysis the nine HCC pathogenic genes obtained from Online Mendelian Inheritance in Man (OMIM) <ref type="bibr" target="#b15">[16]</ref> from two aspects of gene mutation and expression level change. These nine HCC pathogenic genes (Table <ref type="table">1</ref>) are IGF2R, CASP8, MET, PDGFRL, TP53, PIK3CA, LCO, CTNNB1, and AXIN1. We find that five (IGF2R, TP53, PIK3CA, CTNNB1, AXIN1) of these genes are belong to kernel genes, these genes are frequent mutations, but their expression level don't change significantly. For direct neighbors in PPIs of these five genes, we find that there are frequently mutated or differentially expressed genes (see Fig. <ref type="figure" target="#fig_0">1 D</ref>) among their direct neighbors. TP53 is a quite important tumor suppressor gene, it can translate and synthesize P53 protein, and P53 protein is a vital regulator for cell growth, proliferation and injury repair. For the direct neighbors of TP53, there are 27 frequently mutated genes, and 11 differentially expressed genes.</p><p>CTNNB1 gene can encode β-catenin, a dual function protein that involves in regulation and coordination of cell-cell adhesion and gene transcription <ref type="bibr" target="#b16">[17]</ref> . Recent study of HCC has shown that CTNNB1 gene mutations and overexpression of its encoded protein are closely related to occurrence, progression and prognosis of tumor <ref type="bibr" target="#b17">[18]</ref> . CTNNB1 has 7 frequently mutated direct neighbors, and 9</p><p>differentially expressed direct neighbors. The above statistics show that the kernel genes that are screened by mutation and gene expression data contain more comprehensive biological information and can characterize the disease characteristics of HCC.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Choose Potential HCC Drugs through CTD Benchmark</head><p>To find most likely HCC-related drugs, we need evaluate the precision of our method firstly. We take Comparative Toxicogenomics Database (CTD) <ref type="bibr" target="#b18">[19]</ref> as benchmark. CTD provides manually curated information about drug-gene interactions, drug-disease and gene-disease relationships. Curated chemical-disease associations are extracted from the published literature by CTD biocurators and inferred associations are established via CTD curated chemical-gene interactions.</p><p>For a drug in CMap, if it cannot find corresponding chemical name in CTD, we will not calculate its therapeutic score (defined in section "Methods"). In this way, we finally get 1168 scored drugs.</p><p>Because most drug-disease associations in CTD are not marked as positive or negative, we rank the 1168 drugs in descending order by the absolute values of their therapeutic scores. We know the top drugs imply stronger connections with HCC. And then we calculate the precisions of our approach at different top-x drugs, which are shown in Fig 2 . The precision is calculated as follows:</p><p>= CTD P precision P (1)   where P represents the number of top-x drugs; PCTD represents the number of drugs in the top-x drugs can be found related with HCC in CTD database.</p><p>We find in the top-10 drugs (x=10), there are 9 drugs associated with HCC in CTD. That is to say, the precision is 0.9. For the top-20 drugs (x=20), the precision is 0.85 and there are three potentially HCCrelated drugs. When x is 30, its precision is 0.83 and we get five potential drugs with HCC. From the Fig 2, we notice that with the increase of x, the precision declines and the number of potential drugs increases. We hope we can predict relatively more HCC-related drugs with high precision.</p><p>Theinferredore, we choose top-30 (x = 30) drugs for further analysis. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Validate potentially HCC-related Drugs through PubMed Literature</head><p>In the above section, we choose the top-30 drugs (precision = 0.83) for further analysis. There are 19 therapeutic drugs with negative TS values in the top-30 drugs, shown in Table <ref type="table">1</ref>. 16 of them can be found having connections with HCC in CTD [19]. Three of the 16 drugs are marked as therapeutic drug (Rank=1, Rank=9, Rank= 11 and Evidence = "T" in Table <ref type="table">2</ref>) for HCC .Meanwhile, one drug is marked as marker/mechanism drug (Rank=15, Evidence = "M" in Table <ref type="table">2</ref>) for HCC and the other 12 inferred drugs are unmarked in CTD. Here, we can indicate these 12 unmarked drugs are possibly therapeutic drugs for HCC. The rest three drugs (Securinine, Mercaptopurine and Reserpine) are newly predicted ones by our method, which are marked as bold in Table <ref type="table">1</ref>. Based on PubMed, we analyze the three drugs further. PubMed [13] is a free resource developed and maintained by the National Center for Biotechnology Information (NCBI) at the National Library of Medicine (NLM).</p><p>PubMed comprises more than 26 million inferrederences and abstracts on life sciences and biomedical topics.</p><p>Table 2. Nineteen Therapeutic Drugs for HCC in the Top-30 Drugs. Rank Drug Name Evidence Inferred Count 1 Daunorubicin T 42 2 Chrysin Inferred 34 3 Topiramate Inferred 8 4 Securinine NULL NULL 5 Piperlongumine Inferred 8 6 Luteolin Inferred 28 7 Apigenin Inferred 36 8 Celastrol Inferred 19 9 Sirolimus T 68 10 Mercaptopurine NULL NULL 11 Genistein T 93 12 Irinotecan Inferred 46 13 Sanguinarine Inferred 5 14 Tyrphostin Ag-825 Inferred 7 15 Decitabine M 84 16 Camptothecin Inferred 28 17 Reserpine NULL NULL 18 Mycophenolic Acid Inferred 7 19 Tyrphostin Ag-1478 Inferred 35</p><p>Evidence represents a drug-disease association is curated, inferred or not existed in CTD database. Curated associations include three types: marker/mechanism (Evidence = "M"), therapeutic (Evidence = "T"), marker/mechanism &amp; therapeutic (Evidence = "M&amp;T"). If an association is inferred by CTD, Evidence = "inferred", and if it is not existed in CTD, Evidence = "NULL"; Inferred Count represents the number of inferrederence (s) for the curated and inferred associations. If an association is not existed in CTD, Inferred Count = "NULL".</p><p>Securinine (Rank=4 in Table <ref type="table">2</ref>), a quinolizine pseudoalkaloid (not from amino acid) from securinega suffurutiosa or securinini nitras, is one of central nervous stimulants and clinically applied to treat amyotrophic lateral sclerosis (ALS) <ref type="bibr" target="#b19">[20]</ref> , poliomyelitis <ref type="bibr" target="#b20">[21]</ref> and multiple sclerosis <ref type="bibr" target="#b21">[22]</ref> . It has been found</p><p>to be active as a γ-amino butyric acid (GABA) receptor antagonist <ref type="bibr" target="#b23">[23]</ref> . GABA is the chief inhibitory neurotransmitter in the central nervous system and plays a principal role in reducing neuronal excitability throughout the nervous system. Studies show that GABA stimulates HCC cell line HepG2 growth <ref type="bibr" target="#b24">[24]</ref> . Consequently, it means that securinine is a promising agent with therapeutic potential for HCC through inhibiting GABA receptor. The mechanism is depicted in Fig <ref type="figure" target="#fig_2">3A</ref>. Mercaptopurine(6-MP, Rank=10 in Table <ref type="table">2</ref>) is a medication used for cancer and autoimmune diseases [25]   . As a purine analog, mercaptopurine belongs to purine antagonist anti-metabolic drugs <ref type="bibr" target="#b26">[26]</ref> . 6-MP ribonucleotide inhibits purine nucleotide synthesis and metabolism by inhibiting an enzyme called Phosphoribosyl pyrophosphate (PRPP) amidotransferase. PRPP Amidotransferase is the rate limiting enzyme of purine synthesis <ref type="bibr" target="#b27">[ 27 ]</ref> . This alters the synthesis and function of RNA and DNA.</p><p>Mercaptopurine interferes with nucleotide interconversion and glycoprotein synthesis. This makes the mercaptopurine can effectively inhibit the synthesis of DNA, thereby inhibiting the growth of tumor cells <ref type="bibr" target="#b28">[28]</ref> . At present, although there is no direct experiment that mercaptopurine can inhibit the growth of HCC cells, it has been used to treat acute lymphocytic leukemia (ALL), chronic myeloid leukemia (CML), Crohn's disease, and ulcerative colitis <ref type="bibr" target="#b29">[29]</ref> . In summary, mercaptopurine is likely to achieve a certain effect on HCC.</p><p>Reserpine(Rank=17 in Table <ref type="table">2</ref>) is an indole alkaloid, antipsychotic, and antihypertensive drug <ref type="bibr" target="#b30">[30]</ref> that has been used for the control of high blood pressure and for the relief of psychotic symptoms <ref type="bibr" target="#b31">[31]</ref> . The result of Gwak et al <ref type="bibr" target="#b33">[32]</ref> shows that reserpine can reduce the expression level of CCND1 gene and its encoded protein. The CCND1 gene encodes the cyclin D1 protein. Cyclin D1 protein is a member of the cyclin protein family that is involved in regulating cell cycle progression. This protein plays a key role during the transition from the G1 phase, in which the cell grows, to the S phase, during which DNA is replicated. Overexpression of this protein allows cells to be easily crossed G1/S checkpoint that limits the growth of cells, which promotes tumor hyperplasia and is therefore considered to be an oncoprotein <ref type="bibr" target="#b34">[33]</ref> . Some studies have found that CCND1 gene is over-expressed in HCC <ref type="bibr" target="#b35">[34]</ref> . Thus, reserpine can potentially be used as an agent against HCC.</p><p>The other 11 drugs with negative TS values are shown in Table <ref type="table">3</ref>. They are possible to aggravate HCC. 9 of them have been found having relationships with HCC in CTD database and we can infer these relationships are possibly negative. The remaining 2 drugs (Tioguanine, Rifabutin) are newly potential drugs for aggravating HCC marked as bold in Table <ref type="table">3</ref>. We will investigate the two drugs (Tioguanine, Rifabutin) based on PubMed.</p><p>Table 3. Eleven Aggravating Drugs for HCC in the Top-30 Drugs. Rank Drug Name Evidence Inferred Count Cytochalasin B Inferred 5 2 Exemestane Inferred 2 3 Spiperone Inferred 2 4 Cinchonine Inferred 1 5 Mepacrine Inferred 8 6 Tioguanine NULL NULL 7 Rifabutin NULL NULL 8 N-Phenylanthranilic Acid Inferred 1 9 Valinomycin Inferred 1 10 Betulin Inferred 2 11 Puromycin Inferred 13</p><p>Evidence represents a drug-disease association is curated, inferred or not existed in CTD database. Curated associations include three types: marker/mechanism (Evidence = "M"), therapeutic (Evidence = "T"), marker/mechanism &amp; therapeutic (Evidence = "M&amp;T"). If an association is inferred by CTD, Evidence = "inferred", and if it is not existed in CTD, Evidence = "NULL"; Inferred Count represents the number of inferrederence (s) for the curated and inferred associations. If an association is not existed in CTD, Inferred Count = "NULL".</p><p>Thioguanine (Rank= 6 in Table <ref type="table">3</ref>) is a guanine analogues, with cell cycle specificity, for the S cycle of the strongest cell sensitivity. In addition, thioguanine can inhibit the synthesis of guanosine nucleoside, by inhibiting the biological activity of guanylate kinase, the drug can inhibit the guanosine monophosphate (GMP) phosphoric acid to guanosine bisphosphate (GDP) transformation process [35]   .Tioguanine is a medication used to treat acute myeloid leukemia (AML) <ref type="bibr" target="#b37">[36]</ref> , acute lymphocytic leukemia (ALL) <ref type="bibr" target="#b38">[37]</ref> , and chronic myeloid leukemia (CML) <ref type="bibr" target="#b39">[38]</ref> . In 2005, Ganter et al. Showed that CDKN3 expression was significantly decreased after a period of administration of thioguanine <ref type="bibr" target="#b40">[39]</ref> .</p><p>The CDKN3 gene inhibits tumor growth by controlling mitosis, which is a tumor suppressor gene <ref type="bibr" target="#b41">[40]</ref> .</p><p>Dai et al. Found that CDKN3 expression in patients with HCC was significantly lower than that in normal humans. CDKN3 knockout experiments indicated that CDKN3 could inhibit tumor growth [41]   . Therefore, in order to ensure the effectiveness of the treatment, clinical patients should avoid HCC patients taking thioguanine.</p><p>Rifabutin(Rank= 7 in Table <ref type="table">3</ref>) is a piperazine-containing rifamycin derivative, the drug has a broad spectrum of antibacterial activity. It can able to bind to the β-subunit of RNA polymerase and inhibit RNA polymerase activity, thereby reducing the number of RNA synthesis of bacterial <ref type="bibr" target="#b43">[42]</ref> . Rifabutin has been approved to prevent and treat disseminated infections of mycobacterium mycobacterium complex (MAC) carried by HIV-infected persons <ref type="bibr" target="#b44">[43]</ref> , and it is also used to treat multidrug-resistant tuberculosis <ref type="bibr" target="#b45">[44 ]</ref> . Kobayashi et al. find that rifabutine will lead to an increase in the expression of cytochrome P450 3A4 (CYP3A4) in liver tissue <ref type="bibr" target="#b46">[45 ]</ref> . CYP3A4 is an important metabolic enzyme, belongs to the cytochrome P450 family. It is also the most important component of adult liver microsomes CYP450, this gene is expressed in the intestinal, liver and kidney <ref type="bibr" target="#b47">[46]</ref> . However, Fanni et al. find a significant increase of expression of CYP3A4 in HCC patients and overexpression of CYP3A4 gene could result in drug degradation or even a decreased therapeutic effect <ref type="bibr" target="#b48">[47]</ref> . Therefore, for both suffering from HCC and tuberculosis patients, doctors should avoid using rifabutin to treat tuberculosis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Analyze potentially HCC-related Drugs through CMap database</head><p>The CMap database [3] can not only be applied to calculate drug-disease correlations, but also can be used to identify connections between two drugs. In particular, for a same disease, if two drugs have strongly positive relationship, they may have similar effects on this disease. On the contrary, if their relationship is negative, they may have opposite effects. In this section, we further analyze the five predicted drugs (three therapeutic drugs shown in Table <ref type="table">1</ref>: Securinine, Mercaptopurine and Reserpine; two aggravating drugs shown in Table <ref type="table">2</ref>: Tioguanine and Rifabutin) based on CMap and estimate their correlations (evaluated by formula ( <ref type="formula">6</ref>)) with known HCC drugs marked as "therapeutic" in CTD database [19]. The results are shown in Table <ref type="table">4</ref>.</p><p>Table 4. The relationships of six predicted drugs with known HCC therapeutic drugs in CTD. Predicted Drugs Known HCC Drugs in CTD Connectivity Scores Securinine Daunorubicin 0.916 Troglitazone 0.902 Paclitaxel 0.844 Mercaptopurine Estradiol 0.941 Dexamethasone 0.926 Sirolimus 0.845 Troglitazone 0.833 Reserpine Roxithromycin 0.922 Resveratrol 0.834 Tioguanine Genistein -0.973 Sirolimus -0.928 Indometacin -0.891 Paclitaxel -0.872 Rifabutin Calcium Folinate -0.878 Estradiol -0.873</p><p>The potentially therapeutic drugs of HCC are marked as bold. The other three drugs are potentially aggravating drugs of HCC.</p><p>For the three potentially therapeutic drugs (securinine, mercaptopurine and reserpine) marked as bold in Table <ref type="table">4</ref>, we find that securinine yields highly positive connectivity score (calculated by formula ( <ref type="formula">6</ref>))</p><p>for daunorubicin, troglitazone and paclitaxel. Mercaptopurine is found having strongly positive relationships with estradiol, dexamethasone, sirolimus and troglitazone. Reserpine gets high positive connectivity scores with roxithromycin and resveratrol. For the two potentially aggravating drugs (tioguanine and rifabutin) in Table <ref type="table">4</ref>, they all have negative relationship with known HCC drugs.</p><p>Tioguanine has high negative connectivity scores with genistein, sirolimus, indometacin and paclitaxel.</p><p>Rifabutin have clear negative connection scores with calcium folinate and estradiol.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Pathway Enrichment Analysis</head><p>In this part, we analyze the relationship between these five drugs and HCC from the point of view of drug targets. First, we get the target set of drugs from DrugBank <ref type="bibr" target="#b49">[48]</ref> because DrugBank contains the most complete information on drug and drug targets. Then, we enter these genes into DAVID <ref type="bibr" target="#b50">[49]</ref> to obtain all the KEGG <ref type="bibr" target="#b51">[50]</ref> pathways of the drug target. If the drug's target appears in a pathway, the pathway is picked.</p><p>From Table <ref type="table">5</ref>, it can be seen that the drug target of securinine and tioguanine is not clear and there is no corresponding drug target. Mercaptopurine has two drug targets, and drug targets of this drug appear in five KEGG pathways. Reserpine has two drug targets, which are included in seven KEGG pathways. Rifabutine consists of five drug targets, and nine KEGG pathways contain drug targets of the drug.</p><p>Table 5. Pathway enrichment analysis result of six selected drugs. Drug Name Drug Targets KEGG Pathways Securinine None None Mercaptopurine HPRT1, PPAT Purine metabolism Metabolic pathways; Drug metabolism other enzymes; Alanine aspartate and glutamate metabolism; Biosynthesis of antibiotics Reserpine SLC18A2, SLC18A1 Cocaine addiction; Synaptic vesicle cycle; Amphetamine addiction; Serotonergic synapse; Dopaminergic synapse; Parkinson's disease; Alcoholism Tioguanine None None Rifabutin rpoA, rpoB, rpoC, HSP90A1, HSP90B1 NOD-like receptor signaling pathway; Prostate cancer; Estrogen signaling pathway; Protein processing in endoplasmic reticulum; PI3K-Akt signaling pathway;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Pathways in cancer;</head><p>Antigen processing and presentation;</p><p>Thyroid hormone synthesis;</p><p>Progesterone-mediated oocyte maturation</p><p>The potentially therapeutic drugs of HCC are marked as bold. The other three drugs are potentially aggravating drugs of HCC. "NULL"</p><p>represents the drug has no targets in DrugBank at present. Thus, its corresponding KEGG pathway is "NULL" too.</p><p>In order to obtain the tissue-specific KEGG pathways of HCC, firstly, the nine genes (see Table <ref type="table">5</ref>) related to HCC are extended through obtaining the direct neighbors of nine genes in liver-specific protein-protein interaction (PPI) network got from GIANT <ref type="bibr" target="#b52">[51]</ref> . Then, we obtain a subnetwork from the liver PPI network, which contains 58 genes and 838 edges with weight 0.1 ≥ (S2 Table ). Finally, by using DAVID tool [49], we perform pathway enrichment analysis on these genes. The parameters of DAVID are fixed as: p-value = 0.001 and count = 5. Finally, we obtain 12 KEGG pathways [50]   related to the 58 genes (see Table <ref type="table">6</ref>).</p><p>Table 6. Twelve enriched KEGG pathways with HCC. Pathways Number of HCC-specific genes P-values Pathways in cancer 20 3.06E-13 Prostate cancer 10 1.41E-08 Adherens junction 8 1.44E-06 Endometrial cancer 7 2.15E-06 Colorectal cancer 8 2.62E-06 Apoptosis 8 3.32E-06 Melanoma 7 1.36E-05 Wnt signaling pathway 9 1.41E-05 Cell cycle 7 3.28E-04 Notch signaling pathway 5 4.16E-04 Basal cell carcinoma 5 7.61E-04 Melanogenesis 6 8.61E-04</p><p>There are four of five pathways in which mercaptopurine drug targets exist and these four pathways have common genes with the 12 tissue-specific KEGG pathway of HCC. The interaction between the four pathways and the 12 tissue-specific KEGG pathway of HCC is shown in Fig. <ref type="figure" target="#fig_3">4</ref>. Metabolic pathways have common genes with seven pathways which are tissue-specific KEGG pathway of HCC. There are common genes between purine metabolism and one HCC related pathway. For Drug metabolism other enzymes, it exits and common genes with one HCC related pathway. There are common genes between Biosynthesis of antibiotics and one HCC related pathway. These overlap genes between the pathways of mercaptopurine drug target and HCC tissue-specific KEGG pathways have shown that mercaptopurine has a potential effect of treating HCC. There are six of seven pathways in which reserpine drug targets exist and these six pathways have common genes with the 12 tissue-specific KEGG pathway of HCC. The interaction between the six pathways and the 12 tissue-specific KEGG pathways of HCC is shown in Fig. <ref type="figure" target="#fig_4">5</ref>. Cocaine addiction has common genes with five pathways which are tissue-specific KEGG pathways of HCC. There are common genes between Amphetamine addiction and seven HCC related pathways. For Serotonergic synapse, it exits and common genes with ten HCC related pathways. There are common genes between Alcoholism and seven HCC related pathways. Dopaminergic synapse has common genes with nine pathways which are tissue-specific KEGG pathways of HCC. There are common genes between Parkinson's disease and five HCC related pathways. These overlap genes between the pathways of reserpine drug target and HCC tissue-specific KEGG pathways have shown that reserpine is likely to become the treatment of liver cancer. HCC. and the more number of public genes is, the more rough edge is.</p><p>Two of nine pathways in which rifabutine drug targets exist are also tissue-specific KEGG pathways of HCC highlighted in the table 4. The remaining seven pathways are associated with HCC and there are common genes with those HCC related pathways. The interaction between the six pathways and the 12 tissue-specific KEGG pathways of HCC is shown in Fig. <ref type="figure" target="#fig_5">6</ref>. There are common genes between NOD-like receptor signaling pathway and eight HCC pathways. There are common genes between Estrogen signaling pathway and nine HCC pathways. PI3K-Akt signaling pathway has common genes with eight HCC pathways. There are common genes between five different liver cancer pathways. Antigen processing and presentation pathway has common genes with three pathways of liver cancer. Thyroid hormone synthesis has common genes with five pathways of liver cancer.</p><p>Progesterone-mediated oocyte maturation has common genes with ten pathways of liver cancer. There is a large number of common genes between pathways of rifabutine drug target and characteristic pathways of HCC, and it also confirms our prediction between rifabutin and HCC. and the more number of public genes is, the more rough edge is.</p><p>In Table <ref type="table">7</ref>, we have obtained twelve KEGG pathways that are closely related to HCC. Prostate cancer pathway and Pathways in cancer are pathways in which rifabutin drug targets are appeard, and they are two of twelve KEGG pathways closely related to HCC. This suggests that our approach not only accurately predict the potential association of rifabutine, but also clearly predicts the risk of rifabutin on HCC. The other two drugs don't have the same pathway as the HCC pathway mentioned above, but there are common genes between pathways where drug targets are located and the pathways closely related to HCC.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods and Materials</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Datasets</head><p>HCC gene expression data. The Cancer Genome Atlas (TCGA) <ref type="bibr" target="#b53">[ 52 ]</ref> is a comprehensive and coordinated effort to accelerate our understanding of the molecular basis of cancer through the application of genome analysis technologies, including large-scale genome sequencing. TCGA researchers aims to catalogue and discover major cancer-causing genomic alterations to create a comprehensive "atlas" of cancer genomic profiles. So far, the project has analyzed large cohorts of over 30 human tumors through large-scale genome sequencing and integrated multi-dimensional analyses.</p><p>We download the gene expression profiles of HCC from TCGA, and there are 423 samples in the data respectively represent mean and standard deviation of the expression vector for gene i across all samples. Finally, we use Limma <ref type="bibr" target="#b54">[53]</ref> to analyze cancer and normal samples and get the log FC value of each gene. The definition of log FC is as follows:</p><p>2 1 log log ( ) 1 z ik k T i ik k N z T FC N ∈ ∈ = ∑ ∑ (2) where log i FC is the log FC value of gene i ; ik z is the normalized expression of gene i in sample k ; T is the set of cancer samples ( =373 T ), N is the set of normal samples ( =50 N ). For a gene, if its log 1 FC ≥ and 0.02 p value -&gt; ≤ , this is differentially expressed gene, or it is generally expressed gene ( log 1 or 0.02 FC p value &lt; -&gt; &gt; ). The thresholds of log FC and p value -&gt;</p><p>refer to Mark et al. <ref type="bibr" target="#b55">[54]</ref> .</p><p>Gene expression data related to drugs. The gene expression data related to drugs is downloaded from the CMap (<ref type="url" target="http://www.broadinstitute.org/cmap/">http://www.broadinstitute.org/cmap/</ref>) database [3]. It contains 6,100 instances, which cover 1,309 drugs. These instances are measured on five types human cancer cell lines, including the breast cancer epithelial cell lines MCF7 and ssMCF7, the prostate cancer epithelial cell line PC3, the nonepithelial lines HL60 (leukemia) and SKMEL5 (melanoma).</p><p>SNP mutation data of HCC. We download the single nucleotide polymorphism (SNP) gene mutation data of HCC from TCGA [52] database. The SNP mutation data contains 373 cancer patient sample files, and each sample file contains the detailed descriptions of all the mutated genes. Since the mutation frequency of each gene across all samples is different, we select genes with relatively high mutation frequency for further analysis. Here, the frequency is set to be no less than 11 (11 = 373 × 3%), that is a gene mutated in at least three percent of all samples. Finally, we find 406 frequently mutated genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mutated Genes</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Defining the feature gene set of HCC</head><p>According to the data analysis we have done in section Datasets, we can divide the 20,501 genes into three classes based on mutation frequency and expression value. One class is kernel gene, which is mutated frequently. The second class is secondary gene, which is not mutated frequently but differentially expressed. The third class is marginal gene, which is neither mutated frequently nor differentially expressed.</p><p>In our work, we take the 406 kernel genes, i.e. frequently mutated gene, as the feature gene set of HCC.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Characteristics of the three gene types. A. Average degree for three different gene types. B. Average PubMed records associated for each gene type. C. Gene Ontology terms annotated for each gene type. In figure A, B, and C, the red rectangle represents kernel genes, the blue rectangle represents secondary genes, the gray rectangle represents marginal genes. In figure D, green rectangle represents differentially expressed genes in HCC, and yellow rectangle represents frequently mutated genes in patients with HCC.</figDesc><graphic coords="4,166.33,446.92,292.55,248.54" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig 2 .</head><label>2</label><figDesc>Fig 2. The precision of our approach at different top-x drugs.</figDesc><graphic coords="7,155.87,110.52,312.75,266.12" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig 3 .</head><label>3</label><figDesc>Fig 3. Description of the mechanism of drugs and HCC. A. The mechanism of securinine treating HCC. Securinine has been found to be active as a γ-amino butyric acid (GABA) receptor antagonist. GABA stimulates HCC cell line HepG2 growth. Consequently, it means that securinine is a promising agent with therapeutic effect on HCC patients through inhibiting GABA receptor. B. The mechanism of thioguanine aggravating HCC. Thioguanine is a guanine analogues and it can decrease the expression of CDKN3. But, CDKN3 gene inhibits tumor growth by controlling mitosis. Hence, thioguanine may get aggravating effect on HCC patients .</figDesc><graphic coords="9,198.58,172.00,228.05,330.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. .Pathway analysis of mercaptopurine drug targets. The purple circle represents pathways of the mercaptopurine drug targets appeared, and the green circle represents tissue-specific KEGG pathway of HCC. The gray side indicates that there is a common gene between two pathways, and the more number of public genes is, the more rough edge is.</figDesc><graphic coords="16,191.11,74.52,242.93,228.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Pathway analysis of reserpine drug targets. The purple circle represents pathways of the reserpine drug targets appeared, and the green circle represents tissue-specific KEGG pathway of HCC. The gray side indicates that there is a common gene between two pathways,</figDesc><graphic coords="17,175.15,79.65,274.90,218.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. Pathway analysis of rifabutine drug targets. The purple circle represents pathways of the rifabutine drug targets appeared, and the green circle represents tissue-specific KEGG pathway of HCC. The gray side indicates that there is a common gene between two pathways,</figDesc><graphic coords="18,183.33,78.85,258.53,204.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><figDesc>set. The type of a sample is distinguished by the barcode provided by TCGA. If the fourth part of the barcode of one sample is in the range from 01 to 09, the sample is a cancer sample. If the fourth part of the barcode in the range from 10 to 19, the sample is a normal sample. The specific introduction to the barcode can be found in TCGA help file. First, we obtain gene expression matrix data (20,501×423), which contains 373 cancer samples, 50 normal samples, and 20,501 genes. Then, we standardize the expression values of all genes as follows:represents the expression value of gene i in sample j , and</figDesc></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Calculate the therapeutic scores of drugs</head><p>We select kernel genes as the feature genes of HCC and rank them in descending order based on their expressions. For a gene, if its log FC value is greater than 0, it is stored in up-regulated gene set.</p><p>Otherwise, it is stored in down-regulated gene set. Then, these kernel genes are stored in up-regulated gene set ( up G ) or down-regulated gene set ( down G ). Finally, we get two ordered gene lists for HCC:</p><p>the up-regulated gene list and the down-regulated gene list.</p><p>We get 6,100 gene expression instances covered 1,309 drugs from CMap database. In other words, a drug may correspond to multiple instances. We rank the genes in each instance by their differential expression values between drug-treated and drug-untreated cell lines. In this way, we get 6,100 drugrelated gene lists. Therefore, based on kernel genes and 6100 drug-related gene expression instances, we use a nonparametric, rank-based pattern matching strategy originally introduced by Lamb et al. [3]   to evaluate the relationship between drugs and HCC (shown in Fig 1 (5)).</p><p>We take each ranked drug expression profile as reference signature and assess their similarity to HCC.</p><p>we compute a connectivity score separately for the set of up-or down-regulated genes: The computational formulas as follows [3]:</p><p>( )</p><p>( ) </p><p>The therapeutic score (TS ) of a drug is calculated as follows:</p><p>If the up-regulated genes are near the top (up-regulated) of the rank-ordered drug gene lists and the down-regulated genes are near the bottom (down-regulated) of the rank-ordered drug gene lists, we can get high positive therapeutic scores ( TS ), which indicate the drugs and HCC have similar expression profiles and the drugs might aggravate HCC. On the other hand, if the up-regulated pathway genes are near the bottom of the rank-ordered drug gene lists and the down-regulated pathway genes are near the top of the rank-ordered drug gene lists, we can get negative therapeutic scores (TS ), which imply the given drugs and HCC have adverse expression profiles and the drugs could be treatment candidates for HCC.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Discussions and Conclusions</head><p>We propose a method based on the combination of mutation data and differential expression data.</p><p>First, we screen the collection of hepatocellular feature genes that frequently mutated in most samples of hcc based on human somatic mutation data. Then, the gene expression data of HCC in TCGA are combined to classify the gene set of HCC. Finally, the therapeutic score (TS ) of each drug is calculated based on the kolmogorov-smirnov statistical method. By this method, five drugs associated with HCC are obtained, including three drugs that could cure HCC and two drugs that might have bad effect on HCC. There are advantages in our method. First, we take into account the essential impact of genetic changes on HCC. Secondly, we integrate multiple data to determine which type a gene should belong to. Finally, our method can clearly distinguish positive and negative relationship between drug and HCC.</p><p>However, we discover that our approach has a strong dependence with CMap database. CMap is a database of genome-wide transcriptional data that reveals the functional relationship between drugs, genes, and diseases by manipulating small molecules of biological activity (drugs) on cultured human cells. The data contained 1309 drugs, and 6100 drug expression gene expression profile. These expression profiles were used to measure five types of human cancer cell lines, including breast cancer epithelial cell lines MCF7 and ssMCF7, prostate cancer epithelial cell lines PC3, and non-epithelial cell lines HL60 (leukemia) and SKMEL5 (melanoma). CMap database has the following shorttage.</p><p>First, the number of drugs in CMap is limited, it only contains 1309 drugs, our method can't predict the drug that CMap does not contain. Secondly, the number of gene expression profiles of each drug in CMap is limited, and there will exsit measurement errors when calculate gene change. Finally, the cell line used in CMapis limited, only in the five types of human cancer cell lines are tested. Therefore, if the data in the CMap database is improved, it provides more drug expression data, our results will be more accurate and find more potential drugs for the treatment of HCC.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Estimating the cost of new drug development: is it really $802 million</title>
+		<author>
+			<persName><forename type="first">C P</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">V</forename><surname>Brantner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Health Affairs</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="420" to="428" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Drug repositioning: identifying and developing new uses for existing drugs[J]</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">T</forename><surname>Ashburn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Thor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature reviews Drug discovery</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="673" to="683" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease[J]. science</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lamb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E D</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Peck</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="volume">313</biblScope>
+			<biblScope unit="page" from="1929" to="1935" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Computational repositioning of the anticonvulsant topiramate for inflammatory bowel disease[J]</title>
+		<author>
+			<persName><forename type="first">J T</forename><surname>Dudley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sirota</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shenoy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science translational medicine</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">96</biblScope>
+			<biblScope unit="page" from="96" to="76" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A drug repositioning approach identifies tricyclic antidepressants as inhibitors of small cell lung cancer and other neuroendocrine tumors</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">S</forename><surname>Jahchan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J T</forename><surname>Dudley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">K</forename><surname>Mazur</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J]. Cancer discovery</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1364" to="1377" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Rising incidence of hepatocellular carcinoma in the United StatesJ]</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">B</forename><surname>El-Serag</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Mason</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">340</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="745" to="750" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Chronic hepatitis B: immune pathogenesis and emerging immunotherapeutics[J]</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current opinion in pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="93" to="105" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Natural history of hepatitis C[J]</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lingala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Ghany</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gastroenterology Clinics of North America</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="717" to="734" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Aflatoxins as a cause of hepatocellular carcinoma[J]</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kew</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Gastrointestin Liver Dis</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="305" to="310" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Alcoholic Hepatitis: Pathogenesis, Diagnosis and Treatment[J]</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Abenavoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Masarone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Federico</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Reviews on Recent Clinical Trials</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="159" to="166" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Hepatocellular carcinoma and non-alcoholic steatohepatitis: The state of play[J]</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Charrez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Qiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hebbard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">World journal of gastroenterology</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page">2494</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Genomic and epigenomic alterations in cancer[J]</title>
+		<author>
+			<persName><forename type="first">B V S K</forename><surname>Chakravarthi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nepal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Varambally</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Pathology</title>
+		<imprint>
+			<biblScope unit="volume">186</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1724" to="1735" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">PubMed celebrates its 10th anniversary[J]</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Canese</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">NLM Tech Bull</title>
+		<imprint>
+			<biblScope unit="volume">352</biblScope>
+			<biblScope unit="page">5</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Gene Ontology: tool for the unification of biology</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Botstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J M</forename><surname>Cherry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ashburner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Genet</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="25" to="29" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Human protein reference database-2009 update</title>
+		<author>
+			<persName><forename type="first">T S K</forename><surname>Prasad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Goel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kandasamy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="page" from="767" to="D772" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+	<note>suppl 1</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Online Mendelian Inheritance in Man (OMIM), a knowledgebase of human genes and genetic disorders</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hamosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A F</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Amberger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+	<note>suppl 1): D514-D517</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Genomic organization of the human β-catenin gene (CTNNB1)[J]</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Nollet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Berx</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Molemans</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genomics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="413" to="424" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Hepatocellular carcinoma with β-catenin mutation: imaging and pathologic characteristics[J]</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kitao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Matsui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Yoneda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Radiology</title>
+		<imprint>
+			<biblScope unit="volume">275</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="708" to="717" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">The Comparative Toxicogenomics Database&apos;s 10th year anniversary: update</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C J</forename><surname>Grondin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lennon-Hopkins</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="914" to="D920" />
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Result of application of securinine in acute poliomyelitis</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Buravtseva</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Farmakologiia i toksikologiia</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="7" to="12" />
+			<date type="published" when="1957">1957</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">From Asia securinine--a central nervous stimulant is used in treatment of amytrophic lateral sclerosis[J]</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Copperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Copperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Der</forename><surname>Marderosian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pennsylvania medicine</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="36" to="41" />
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Copperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Copperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Der</forename><surname>Marderosian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Securinine</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Jama</title>
+		<imprint>
+			<biblScope unit="volume">228</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="288" to="288" />
+			<date type="published" when="1974">1974</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Synthesis and biological evaluation of new securinine analogues as potential anticancer agents[J]</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ayad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Maillos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European journal of medicinal chemistry</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="287" to="293" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Identification of serum biomarkers associated with hepatitis B virusrelated hepatocellular carcinoma and liver cirrhosis using mass-spectrometry-based metabolomics</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Metabolomics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1526" to="1538" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Clinical pharmacology and pharmacogenetics of thiopurines[J]</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sahasranaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Howard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Roy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European journal of clinical pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="753" to="767" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<author>
+			<persName><forename type="first">E</forename><surname>Thackery</surname></persName>
+		</author>
+		<title level="m">The Gale Encyclopedia of Cancer: LZ</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Purine and pyrimidine metabolism</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Berens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E C</forename><surname>Krug</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Marr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochemistry and Molecular Biology of Parasites</title>
+		<imprint>
+			<biblScope unit="page" from="89" to="117" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Reviewing the mechanism of action of thiopurine drugs: towards a new paradigm in clinical practice[J]</title>
+		<author>
+			<persName><forename type="first">C J</forename><surname>Cara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A S</forename><surname>Pena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sans</surname></persName>
+		</author>
+		<idno>RA247- RA254</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Medical science monitor</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Royal Pharmaceutical Society of Great Britain. British National Formulary</title>
+		<imprint>
+			<biblScope unit="page">61</biblScope>
+			<date type="published" when="2011">2011</date>
+			<publisher>Royal Pharmaceutical Society</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">The Columbia Encyclopedia[M]. Parents&apos; Magazine&apos;s Education Press, a division of the Parent&apos;s Institute</title>
+		<imprint>
+			<date type="published" when="1960">1960</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Pharmacology in vivo of the phenylindan derivative, Lu 19-005, a new potent inhibitor of dopamine, noradrenaline and 5-hydroxytryptamine uptake in rat brain</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Arnt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Christensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hyttel</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Naunyn-Schmiedeberg&apos;s archives of pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">329</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="101" to="107" />
+			<date type="published" when="1985">1985</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Isoreserpine promotes β-catenin degradation via Siah-1 upregulation in HCT116 colon cancer cells</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gwak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J Y</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochemical and biophysical research communications</title>
+		<imprint>
+			<biblScope unit="volume">387</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="444" to="449" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Cyclin D1 and human neoplasia[J]</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Donnellan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Chetty</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular Pathology</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">A study of gene amplification and expression of cyclin D1 in hepatocellular carcinoma[J]</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wen</forename><forename type="middle">J</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Zhonghua bing li xue za zhi Chinese journal of pathology</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="26" to="30" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Principles of pharmacology: the pathophysiologic basis of drug therapy[M]</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<publisher>Lippincott Williams &amp; Wilkins</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Hepatic veno-occlusive disease caused by 6thioguanine</title>
+		<author>
+			<persName><forename type="first">R A</forename><surname>Gill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Onstad G R, Cardamone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of internal medicine</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="58" to="60" />
+			<date type="published" when="1982">1982</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Neurotoxicity of intrathecal chemotherapy for leukaemia</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marmont</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Damasio</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Letter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British medical journal</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">5883</biblScope>
+			<biblScope unit="page">47</biblScope>
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Downregulation of circadian clock genes in chronic myeloid leukemia: alternative methylation pattern of hPER3[J]. Cancer science</title>
+		<author>
+			<persName><forename type="first">M Y</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J G</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P M</forename><surname>Lin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="page" from="1298" to="1307" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Development of a large-scale chemogenomics database to improve drug candidate selection and to understand mechanisms of chemical toxicity and action[J]</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ganter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tugendreich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C I</forename><surname>Pearson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">119</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="219" to="244" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">The tumor suppressor CDKN3 controls mitosis[J]</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Nalepa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barnholtz-Sloan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Enzor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Cell Biol</title>
+		<imprint>
+			<date type="published" when="2013">2013. 201205125</date>
+			<publisher>jcb</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">CDKN3 expression is negatively associated with pathological tumor stage and CDKN3 inhibition promotes cell survival in hepatocellular carcinoma[J]</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Miao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Fang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular Medicine Reports</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1509" to="1514" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">The American Society of Health System Pharmacists[J]. JONA&apos;S healthcare law</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Beard</surname><genName>Jr</genName></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ethics and regulation</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="78" to="79" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">New ophthalmic manifestations of presumed rifabutinrelated uveitis[J]</title>
+		<author>
+			<persName><forename type="first">J F</forename><surname>Arevalo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Russack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Freeman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ophthalmic Surgery, Lasers and Imaging Retina</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="321" to="324" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Rifabutin-associated panuveitis with retinal vasculitis in pulmonary tuberculosis</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Skolik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Willermain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E</forename><surname>Caspers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ocular immunology and inflammation</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="483" to="485" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Human arylacetamide deacetylase is responsible for deacetylation of rifamycins: rifampicin, rifabutin, and rifapentine[J]</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nakajima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fukami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kobayashi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochemical pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">82</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1747" to="1756" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Gene structure of CYP3A4, an adult-specific form of cytochrome P450 in human livers, and its transcriptional control[J]</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hashimoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Toide</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kitamura</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Biochemistry</title>
+		<imprint>
+			<biblScope unit="volume">218</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="585" to="595" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Immunohistochemical markers of CYP3A4 and CYP3A7: a new tool towards personalized pharmacotherapy of hepatocellular carcinoma[J]</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Fanni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Manchia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Histochemistry: EJH</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">DrugBank 4.0: shedding new light on drug metabolism</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Law</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Knox</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Djoumbou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1091" to="D1097" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Systematic and integrative analysis of large gene lists using DAVID bioinformatics resources[J]</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B T</forename><surname>Sherman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lempicki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature protocols</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="44" to="57" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">KEGG for representation and analysis of molecular networks involving diseases and drugs</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kanehisa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Goto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Furumichi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="355" to="D360" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+	<note>suppl 1</note>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Understanding multicellular function and disease with human tissue-specific networks[J]</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Greene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Krishnan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A K</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="569" to="576" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas (TCGA): an immeasurable source of knowledge[J]</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tomczak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Czerwinska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wiznerowicz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Contemp Oncol (Pozn)</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1A</biblScope>
+			<biblScope unit="page" from="68" to="A77" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">limma powers differential expression analyses for RNAsequencing and microarray studies</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Ritchie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Phipson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">47</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Fold change and p-value cutoffs significantly alter microarray interpretations[J]</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Dalman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Deeter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Nimishakavi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">11</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

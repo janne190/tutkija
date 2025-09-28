@@ -1,0 +1,1838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Inferring synthetic lethal interactions from mutual exclusivity of genetic events in cancer</title>
+				<funder>
+					<orgName type="full">MAR</orgName>
+				</funder>
+				<funder ref="#_KmjnxW6 #_zcHdWYt">
+					<orgName type="full">Australian National Health &amp; Medical Research Council</orgName>
+				</funder>
+				<funder ref="#_89bqh8j">
+					<orgName type="full">Ian Potter Foundation (Australia)</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Sriganesh</forename><surname>Srihari</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute for Molecular Bioscience</orgName>
+								<orgName type="institution">The University of Queensland</orgName>
+								<address>
+									<postCode>4072</postCode>
+									<settlement>St. Lucia</settlement>
+									<region>Queensland</region>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jitin</forename><surname>Singla</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Computer Science and Engineering</orgName>
+								<orgName type="institution">Indian Institute of Technology Roorkee</orgName>
+								<address>
+									<postCode>247667</postCode>
+									<settlement>Uttarakhand</settlement>
+									<country key="IN">India</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Limsoon</forename><surname>Wong</surname></persName>
+							<email>wongls@comp.nus.edu.sg</email>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">National University of Singapore</orgName>
+								<address>
+									<postCode>117417</postCode>
+									<settlement>Singapore</settlement>
+									<country key="SG">Singapore</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mark</forename><forename type="middle">A</forename><surname>Ragan</surname></persName>
+							<email>m.ragan@uq.edu.au</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute for Molecular Bioscience</orgName>
+								<orgName type="institution">The University of Queensland</orgName>
+								<address>
+									<postCode>4072</postCode>
+									<settlement>St. Lucia</settlement>
+									<region>Queensland</region>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><roleName>Dr</roleName><forename type="first">Michael</forename><surname>Galperin</surname></persName>
+						</author>
+						<author>
+							<persName><roleName>Dr</roleName><forename type="first">Sebastian</forename><surname>Maurer-Stroh</surname></persName>
+						</author>
+						<title level="a" type="main">Inferring synthetic lethal interactions from mutual exclusivity of genetic events in cancer</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">25954F37A9A727F933252466E695FC17</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Synthetic lethality</term>
+					<term>Mutual exclusivity</term>
+					<term>Context-dependent genetic vulnerabilities</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Background: Synthetic lethality (SL) refers to the genetic interaction between two or more genes where only their co-alteration (e.g. by mutations, amplifications or deletions) results in cell death. In recent years, SL has emerged as an attractive therapeutic strategy against cancer: by targeting the SL partners of altered genes in cancer cells, these cells can be selectively killed while sparing the normal cells. Consequently, a number of studies have attempted prediction of SL interactions in human, a majority by extrapolating SL interactions inferred through large-scale screens in model organisms. However, these predicted SL interactions either do not hold in human cells or do not include genes that are (frequently) altered in human cancers, and are therefore not attractive in the context of cancer therapy.</p><p>Results: Here, we develop a computational approach to infer SL interactions directly from frequently altered genes in human cancers. It is based on the observation that pairs of genes that are altered in a (significantly) mutually exclusive manner in cancers are likely to constitute lethal combinations. Using genomic copy-number and gene-expression data from four cancers, breast, prostate, ovarian and uterine (total 3980 samples) from The Cancer Genome Atlas, we identify 718 genes that are frequently amplified or upregulated, and are likely to be synthetic lethal with six key DNA-damage response (DDR) genes in these cancers. By comparing with published data on gene essentiality (~16000 genes) from ten DDR-deficient cancer cell lines, we show that our identified genes are enriched among the top quartile of essential genes in these cell lines, implying that our inferred genes are highly likely to be (synthetic) lethal upon knockdown in these cell lines. Among the inferred genes include tousled-like kinase 2 (TLK2) and the deubiquitinating enzyme ubiquitin-specificprocessing protease 7 (USP7) whose overexpression correlate with poor survival in cancers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion:</head><p>Mutual exclusivity between frequently occurring genetic events identifies synthetic lethal combinations in cancers. These identified genes are essential in cell lines, and are potential candidates for targeted cancer therapy.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Background</head><p>Cells have evolved to ensure their viability. Although typically associated with survival (i.e. the ability to maintain homeostasis but not necessarily cell division), cell viability can be defined more broadly to encompass the ability to grow and proliferate. Processes within the cell ensure that it is sufficiently protected against deleterious genetic events -e.g. mutations, amplifications and deletions -that impact cell viability, but when these events are unavoidable the cell commits to apoptosis or programmed cell death.</p><p>Genetic events can modify this control on cell viability, resulting in viability being enhanced (e.g. in cancer) or compromised (e.g. during cell senescence and death). This is effected by the (over-)activation or inactivation of genes responsible for cell viability through gain-offunction or loss-of-function genetic events, respectively.</p><p>When two or more of these genetic events occur simultaneously, these can considerably impact the viability of cells. Synthetic lethality (SL), first defined by Bridges in 1922 <ref type="bibr" target="#b0">[1]</ref>, refers to one such combination between two genetic events (typically affecting two different genes) in which their co-occurrence results in severe loss of viability or death of the cell, although the cell remains viable when only one of the events occurs <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3]</ref>.</p><p>SL has gained considerable attention over the last few years due to its value in understanding the essentiality of genes or their combinations <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>, and more recently due to its promise as a therapeutic strategy for selective targeting of cancer cells <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b6">7]</ref>. Cancer cells are genetically different from normal cells and harbour genetic events in specific genes that enhance their viability. Therefore, by identifying and targeting (i.e. inducing a genetic event in) the synthetic-lethal partner of these genes, selective killing of cancer cells can be achieved while sparing the normal cells. SL-based therapies exploit these genetic differences in a way that is often not possible with conventional chemotherapy, which is often cytotoxic to normal as well as cancer cells <ref type="bibr" target="#b7">[8]</ref>.</p><p>A pioneering breakthrough in SL-based cancer therapy showed that inhibition of poly(ADPribose) polymerase (PARP) in cancer cells that harbour loss-of-function events in the breastcancer susceptibility genes BRCA1 and BRCA2 is dramatically lethal to these cells <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b9">10]</ref> (reviewed in <ref type="bibr" target="#b10">[11]</ref>). Germline losses in BRCA1/BRCA2 are highly penetrant, conferring 60-80% risk of breast and 30-40% risk of ovarian cancers. These losses account for about 10-25% of hereditary breast and ovarian cancers <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b11">12]</ref>.</p><p>Following the promise of BRCA-PARP, several studies have explored (computational) identification of SL interactions that could be efficacious in treating cancer. This began with seminal <ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref> and follow-up works <ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref> that studied "cross-talk" between pathways in model organisms including yeast, worm and fruit fly to characterise genetic interactions.</p><p>From these studies emerged a between-pathway model <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref> according to which loss of function in only one pathway does not greatly affect cell viability, but the further inactivation of a second parallel or compensatory pathway results in cell death. This model characterised synthetic lethal interactions as genetic interactions between these compensatory pathways.</p><p>More-recent studies <ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref> have attempted extrapolation of SL interactions from model organisms (e.g. yeast <ref type="url" target="http://drygin.ccbr.utoronto.ca/">http://drygin.ccbr.utoronto.ca/</ref>  <ref type="bibr" target="#b21">[22]</ref> using protein-sequence homology to infer interactions in human cells -e.g. BRCA2-RAD52 <ref type="bibr" target="#b22">[23]</ref>, SMARCB1-PSMA4, ASPSCR1-PSMC2 <ref type="bibr" target="#b18">[19]</ref> and between FEN1 and SMC3, RNF20, BLM, MRE11A, STAG3, CDC4 and CHTF18 <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b20">21]</ref>. Classification-based approaches <ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref> that employ a support vector machine trained with features from model organisms have also been used to predict new SL interactions in human, with the expectation that SL interactions follow similar organisational principles in human and model organisms. Recently Zhang et al. <ref type="bibr" target="#b27">[28]</ref> proposed that single-and double-knockdown of proteins within known pathways could be computationally simulated to estimate interactions that are lethal; AKT with BID, CASP9 and WEE1 were among the top SL interactions identified in human. Others <ref type="bibr" target="#b28">[29]</ref><ref type="bibr" target="#b29">[30]</ref><ref type="bibr" target="#b30">[31]</ref><ref type="bibr" target="#b31">[32]</ref><ref type="bibr" target="#b32">[33]</ref> have employed combined experimental and computational approaches by performing knockdown of combinatorial pairs of genes using large-scale siRNA-screens across cell lines and in vivo models (e.g. <ref type="url" target="http://www.genomernai.org/">http://www.genomernai.org/</ref>  <ref type="bibr" target="#b29">[30]</ref>). These approaches have been more successful than the solely computational ones, resulting in identification of actionable SL-based targets, including GATA2 and CDC6 as SL partners of KRAS <ref type="bibr" target="#b28">[29]</ref>. However, these approaches are considerably more expensive, and many of the essential genes so identified turn out to be either restricted to only these cell-line models or are infrequently overexpressed in cancers.</p><p>Despite these attempts, interactions extrapolated from lower-order model organisms fail to hold up in human cells and are less-appealing in the context of cancer therapy. This is because the model systems, despite sharing some homologous proteins with human, have considerably different and simpler cellular and functional organisation <ref type="bibr" target="#b33">[34,</ref><ref type="bibr" target="#b34">35]</ref>. While core cellular processes including cell-cycle and DNA-damage repair are broadly conserved, human cells express novel proteins, isoforms and/or paralogs with partially overlapping functions that buffer the loss of one another <ref type="bibr" target="#b33">[34]</ref><ref type="bibr" target="#b34">[35]</ref><ref type="bibr" target="#b35">[36]</ref><ref type="bibr" target="#b36">[37]</ref>, with the consequence that lethality inducible by targeting only one of them is not conserved. For example, human cells have three AKTs -AKT1, AKT2 and AKT3 -with partially overlapping functions <ref type="bibr" target="#b37">[38]</ref> whereas yeast has only one AKT. Similarly, SL interactions predicted from 'static' pathway maps do not reflect the actual scenario in cancer cells; these cells undergo significant pathway rewiring to enhance their viability <ref type="bibr" target="#b38">[39,</ref><ref type="bibr" target="#b39">40]</ref>. Finally, these SL interactions do not include cancer genes or genes that are frequently altered in cancers -in particular, from the examples above, ASPSCR1, BLM, SMARCB1 and MRE11A put together are altered (homozygous deletion) in &lt; 10% of most cancers as per The Cancer Genome Atlas (TCGA) Cbioportal cohort <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref> -and therefore, the proportion of cancers benefiting from targeting their SL partners is very small.</p><p>Here, we develop a computational approach taking into account the above factors by directly inferring SL interactions from frequently altered genes in cancers. We show that specific combinations of genes that display mutual exclusivity for genetic events are likely to constitute lethal combinations, and therefore by targeting these genes in conjunction could kill cancer cells. To demonstrate this, we consider six key DNA-damage response (DDR) genes that are frequently altered across four cancers -breast, prostate, ovarian and uterineand using genomic copy-number and gene-expression data from TCGA <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref>, we identify genes that are altered in a (significantly) mutually exclusive manner with these six DDR genes. By comparing with data from genome-wide (~16000 genes) essentiality screens across ten DDR-deficient cancer cell lines <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>, we show that our identified genes are enriched among the top quartile of essential genes in these cell lines, implying that our inferred genes are likely to be (synthetic) lethal upon knockdown in these cell lines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Methods</head><p>Suppose that in a given large set of viable (cancer) cells, a pair of genes exhibits mutual exclusivity with respect to a genetic event -i.e. each gene individually is affected by the genetic event in most large proportions of cells but both genes are simultaneously affected in few or none. We hypothesize that the observed viability of these cells is dependent on, or a consequence of, the mutual exclusivity between the two genes: cells are not viable if the genetic event were to affect both genes simultaneously, and therefore we observe that few if any viable cells in our population carry such an event in both genes (in other words, the mutually exclusive combinations constitute the (clonally) selected combinations amenable to cell survival). Consequently, we infer that the two genes are synthetic lethal with each other.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Mutual exclusivity between genetic events and inferring SL combinations</head><p>Suppose that we are given an arbitrarily large set of viable (cancer) cells S. Let A and B be a pair of genes affected by a genetic event E in these cells S.</p><p>Let S A (respectively, S B ) be the subset of S in which A (respectively, B) is affected by E, and let S AB = S A ∩ S B . The mutual exclusivity between A and B with respect to E can be defined as both |S A |/|S AB | and |S B |/|S AB | approaching infinity as |S| approaches infinity. Given this mutual exclusivity we infer that A and B are synthetic lethal with each other. Claim: |S A |/|S AB | and |S B |/|S AB | both approach infinity as |S| approaches infinity if, and only if, the co-occurrence of E in A and B affects cell viability, and therefore A and B are synthetic lethal with each other. Basis for the claim: Suppose the co-occurrence of E in A and B is lethal to the cells but not in either A or B alone. Then, S AB = φ or a very small proportion of S. Therefore, |S A |/|S AB | and |S B |/|S AB | approach infinity when S is large. Conversely, |S A |/|S AB | and |S B |/|S AB | both approaching infinity implies that as event E in A occurs more often and E in B occurs more often, the co-occurrence of E in A and B occurs less often. But, if A and B are independent, we do not expect to see this pattern. So, the occurrences of E in A and B are avoiding each other in viable cells, and thus their cooccurrence affects cell viability. 2.2 Computing significant mutually exclusive gene combinations Let X be the random variable that counts the number of cells that show co-occurrence of a genetic event for the pair of genes (A, B). We estimate the statistical significance for the mutual exclusivity between A and B based on the probability of observing at most |S AB | cells (out of |S B | cells) with co-occurrence of the event (with |S A | cells). We estimate this probability P[X ≤ |S AB |] as</p><formula xml:id="formula_0">P[X ≤ |S AB |] = 1 -P[X &gt; |S AB |], (<label>Equation 1)</label></formula><p>where P[X &gt; |S AB |] is computed using the hypergeometric probability mass function for</p><formula xml:id="formula_1">X = k &gt; |S AB |: | |</formula><p>This "1 -hypergeometric test" p-value (Equation <ref type="formula" target="#formula_0">1</ref>) is used to infer SL pairs (at p &lt; 0.05), and the inferred pairs are ranked in order of their p-values.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Datasets</head><p>We gathered genomic copy-number and gene-expression datasets from four sporadic cancers, breast <ref type="bibr" target="#b42">[43]</ref>, prostate <ref type="bibr" target="#b43">[44]</ref>, ovarian <ref type="bibr" target="#b44">[45]</ref> and uterine <ref type="bibr" target="#b45">[46]</ref>, from TCGA via Cbioportal (<ref type="url" target="http://www.cbioportal.org/index.do">http://www.cbioportal.org/index.do</ref>) <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref> and TCGA Firehose (<ref type="url" target="http://gdac.broadinstitute.org/">http://gdac.broadinstitute.org/</ref>), composing a total of 3980 samples (Table <ref type="table" target="#tab_3">1</ref>). We consider four distinct genetic events: two kinds of genomic events (viz. gene copy-number amplifications and deletions), and two kinds of expression level events (viz. gene up-and downregulation). We expect that the changes in expression levels should encompass the effects of other kinds of events not directly considered here -e.g. mutations, chromatin changes and methylation.</p><p>These copy-number and expression events are inferred from GISTIC-normalized <ref type="bibr" target="#b46">[47]</ref> values available via Cbioportal <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref> and TCGA Firehose. The copy-number value for each gene reflects the deviation in its number of copies from normal and is normalized to a range of <ref type="bibr">[-2, 2]</ref> where negative values represent deletions and positive values represent amplifications. We consider only high-level amplifications and deletions (typically homozygous deletions) having copy-number values +2 and -2, respectively. Likewise, the expression for each gene is z-score normalized, and here we consider genes that are highly upregulated or downregulated given by z-scores at least two standard deviations on either side of the mean (as per <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref>). For more details on how these GISTIC-normalized values are computed, refer to <ref type="bibr" target="#b46">[47]</ref>.</p><p>To validate our predictions (genes B) we employed genome-wide (~16000 genes) essentiality data from siRNA-mediated knockdown screens across ten cancer cell lines that harbour a deficiency (mutation, deletion or downregulation) in at least one of the genes A (Table <ref type="table">2</ref>) <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. These essentiality data are in the form of GARP (Gene Activity Rank Profile) scores for each gene and are approximately in the range [+5, -10] with a lower value in a cell line indicating higher essentiality for the gene in that cell line.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.2</head><p>Identifying mutually exclusive combinations involving frequently altered genes in cancers: a case study using six DNA-damage response genes</p><p>Here we consider mutual exclusivity with deletion and downregulation events affecting the following six genes (as genes A): ATM, BRCA1, BRCA2, CDH1, PTEN and TP53. These are tumour-suppressor genes that are central to or regulate DNA-damage response (DDR) functions, that is, genes that play important roles in maintaining the genomic integrity of the cell and control cell proliferation <ref type="bibr" target="#b10">[11]</ref>. These genes are deleted or downregulated across all the four cancers considered here, and their loss is a significant driver event in these cancers (TCGA, 2011; TCGA, 2012; TCGA, 2013; TCGA, 2014). To predict SL interactions, we identify genes B that are either amplified/upregulated or deleted/downregulated in a mutually exclusive manner to these genes A. Specifically, we identify two kinds of mutually exclusive combinations (SL interactions): (i) deletion/downregulation of gene A with amplification/upregulation of gene B; and (ii) deletion/downregulation of gene A with deletion/downregulation of gene B.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">Gene A deletion or downregulation with gene B amplification or upregulation</head><p>We identified a total of 842 SL interactions involving 718 genes B at p&lt;0.01. Figure <ref type="figure">1a</ref> shows the distribution of these interactions with respect to the different genes A. BRCA2 dominates the number of SL interactions followed by CDH1, PTEN and TP53, whereas ATM and BRCA1 participate in very few SL interactions. While these proportions are to an extent influenced by the actual fraction of cases in which these genes A are deleted/downregulated -PTEN (34%), CDH1 (12.9%), BRCA2 (9.8%), and TP53 (9.7%) are in much higher numbers than ATM (5.7%) and BRCA1 (4.8%) across all cancers -this still indicates that overall (i.e. across the four cancers) these six genes are involved to different extents in their synthetic lethality with amplification/upregulation of genes B. Moreover, there were fewer (&lt;5%) overlaps between genes B partnered with different genes A, indicating considerable diversity in the SL landscape (Additional file 1). However, different genes A dominate the SL interactions within the individual cancers -e.g. CDH1 (99.5%) for breast, PTEN (78.4%) and BRCA2 (16.8%) for prostate and BRCA1 (17.9%) and TP53 (16.2%) for ovarian cancers at p &lt; 0.01, as shown in Figure <ref type="figure">1b</ref>. These results indicate that SL interactions could be highly context-dependent (here, the type of cancer) with deletion/downregulation in different genes A dominating SL interactions within different cancers. Note that these analyses are based on uncorrected p-values (Equation <ref type="formula" target="#formula_0">1</ref>) and are meant only to give a sense of the distribution of SL interactions; for the validation of genes B (below) we use the relative rankings of their p-values.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">Gene A deletion or downregulation with gene B deletion or downregulation</head><p>The number of SL interactions involving both genes A and B deleted/downregulated were considerably fewer than in the previous case -a total of 143 interactions involving 117 genes B identified across all the four cancers at p &lt; 0.05. As above, BRCA2, PTEN and CDH1 dominate these SL interactions (Figure <ref type="figure" target="#fig_3">2a</ref>) when all four cancers are taken together, whereas different genes dominate within the individual cancers -e.g. CDH1 (91%) and PTEN (9%) for breast, PTEN (88%) and BRCA2 (9%) for prostate, and CDH1 (58%) and BRCA1 (38%) for ovarian cancers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Computational validation using data from cell-line essentiality screens</head><p>We expect that targeting genes B in conjunction with genes A could induce lethality. To validate this, we analysed the GARP essentiality scores of genes B in cell lines deficient with genes A. We chose ten cell lines (Table <ref type="table">2</ref>) that harbour a deficiency in at least one of the genes A <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand side plots of Figure <ref type="figure" target="#fig_4">3</ref> compare the ranges of GARP essentialities of our predicted genes B with that of the entire set of ~16000 profiled genes in these cell lines. While it is difficult to directly compare the two ranges because of the difference in number of genes in them, for the majority of cell lines the genes B at the 25 th percentile had lower GARP scores than the corresponding genes from the entire profiled set. In particular, our predicted genes B were enriched significantly (χ 2 test p&lt;10 -5 ) with the topquartile of essential genes (approximately the top 5000) from these ~16000 genes.</p><p>We ranked our predicted genes B in increasing order of their mutual-exclusivity significance to generate a mutual-exclusivity (ME) ranking. Then, for each gene B that was among the top 5000 we assigned a gene-essentiality (GE) rank as '5000 -rank of gene B in the essentiality screen' (a reverse ranking). We then plot GE rank vs ME rank for all genes B for each cell line according to the gene-A deficiency it harbours. For example, since the cell line HCC1143 harbours a deficiency in TP53 (Table <ref type="table" target="#tab_3">1</ref>), we plot GE rank vs ME rank for all genes B that are predicted as mutually exclusive with TP53 using the GARP score data for HCC1143. Doing so using the amplified/upregulated genes B resulted in the right-hand side plots shown in Figure <ref type="figure" target="#fig_4">3</ref>. For all cell lines harbouring deficiencies in ATM, BRCA1, BRCA2, PTEN and TP53 we see a downward trend, thereby indicating a strong agreement between the rankings based on mutual exclusivity and the GARP essentialities of our predicted genes B in gene Adeficient cell lines (no data are available for cell lines with CDH1 deficiency). This analysis indicates that the genes B that are mutually exclusive with the loss of A in tumours are also essential in gene A-deficient cell lines, and therefore supports our hypothesis that the observed mutual exclusivity is very likely a mechanism to avoid cell lethality (thereby enhancing the essentiality of B). As these genes B are also (frequently) amplified/upregulated in the cancers, these could be attractive as targets in cancer therapy.</p><p>Figure <ref type="figure" target="#fig_6">4</ref> shows similar plots using the deleted/downregulated genes B; however, since these genes are far fewer the plots show data for fewer gene ranks, the most being for PTEN.</p><p>To understand whether the lethality observed for genes B is specific to A-deficient cell lines, we analysed the differential essentiality of B in the cell lines relative to the MCF7 cell line (due to lack of suitable data on normal cell lines, we chose MCF7 which is a typical luminal line with no known DDR defect, as our control for the comparison). We observed significant difference between the mean essentialities for B between the DDR-deficient and MCF7 cell lines (Figure <ref type="figure" target="#fig_7">5a</ref>). Similar results were observed using data <ref type="bibr" target="#b31">[32]</ref> from two HCT116-derived isogenic cell lines, one PTEN-/-and the other with wild-type PTEN (Figure <ref type="figure" target="#fig_7">5b</ref>). This analysis indicated that the essentiality of B was highly specific to cell lines harbouring gene A deficiency, and hence B is synthetic lethal in the context of deficiencies in DDR genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Case studies of identified SL partners B</head><p>We expect that our predicted genes B that are amplified/upregulated to confer poor survival, and to validate this we plot the Kaplan-Meir curves for these genes using survival data from cancer patients (KMPlotter: <ref type="url" target="http://www.kmplot.com/">http://www.kmplot.com/</ref>) <ref type="bibr" target="#b47">[48]</ref>. Figure <ref type="figure">6</ref> shows examples for breast cancer (plots for ovarian cancer in Additional file 1).</p><p>Several interesting genes are identified here -e.g. TLK2, which encodes the serine/threonine tousled-like kinase, is closely associated with the repair of DNA double-strand breaks (DSBs) and in the regulation of chromatin assembly during the S-phase (<ref type="url" target="http://www.genecards.org/">http://www.genecards.org/</ref> ) <ref type="bibr" target="#b48">[49]</ref>. TLK2 is amplified/upregulated in 26% of sporadic breast cancer cases, and confers significantly poor survival (p = 0.00072). In particular, GOBO-based analysis (<ref type="url" target="http://co.bmc.lu.se/gobo/gobo.pl">http://co.bmc.lu.se/gobo/gobo.pl</ref>) <ref type="bibr" target="#b49">[50]</ref> indicates that TLK2 is upregulated in 37% luminal (estrogen receptor (ER)-positive) breast tumours with grade 3-stratified multivariate analysis showing a hazard ratio of 2.25 (p=10 -5 ) and poor survival (p&lt;0.01) in these tumours (Additional file 1).</p><p>Several interesting genes are identified here -e.g. TLK2, which encodes the serine/threonine tousled-like kinase, is closely associated with the repair of DNA double-strand breaks (DSBs) and in the regulation of chromatin assembly during S-phase <ref type="bibr" target="#b48">[49]</ref>. TLK2 is amplified/upregulated in 26% of sporadic breast cancer cases, and its amplification/upregulation is mutually exclusive to BRCA2 deletion/downregulation. TLK2 overexpression correlates with significantly poor survival (p = 0.00072) in these patients. In particular, GOBO-based analysis <ref type="bibr" target="#b49">[50]</ref> indicates that TLK2 is overexpressed in 37% luminal (estrogen receptor (ER)-positive) breast tumours, and grade 3-stratified multivariate analysis indicates a hazard ratio of 2.25 (p=10 -5 ) and poor survival (p&lt;0.01) in patients with these tumours (Additional file 1). Interestingly, TLK2 overexpression can co-occur with PTEN loss or when PIK3CA, a key driver of ER-positive/luminal tumours, is not overexpressed. This also agrees with the high expression of TLK2 in luminal cell lines MCF7, MDA-MB-361 and SUM52PE which do not show high expression for PIK3CA (Additional file 1). Therefore, it is possible that TLK2 acts as a context-dependent driver of ER-positive/luminal tumours in the absence of PIK3CA expression.</p><p>The ubiquitin specific peptidase USP7, which is a deubiquitinating enzyme, is amplified/overexpressed in ~40% of breast tumours in TCGA. USP7 is known to deubiquitinate target proteins including TP53 and PTEN. Overexpression of USP7 correlates with poor survival specifically in TP53-mutant patients (Additional file 1).</p><p>EXOSC4 which encodes the EXOSC4 subunit of the RNA exosome complex that is important for RNA processing and degradation, is upregulated in 24% breast tumours, and confers poor survival (p=0.012).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Discussion</head><p>Our results demonstrate that there exist pairs (A, B) of genes that are altered in a mutually exclusive manner across tumours. We hypothesize that this observed mutual exclusivity could be a mechanism to avoid cell death, and consequently these pairs (A, B) constitute synthetic lethal combinations. To test our hypothesis, we use the essentialities (GARP scores) measured for genes B across cell-lines deficient in genes A (here, A includes six key DDR genes). We demonstrate that when our predicted genes B are ranked in order of their mutual exclusivity with A (as p-values), their ranks are consistent with that of their GARP scores in these A-deficient cell lines: the top-ranked genes B are also highly essential (lethal) to these cell lines. This is strongly suggestive that mutual exclusivity is an important mechanism to avoid lethality.</p><p>Our approach is novel because we infer SL interactions directly from tumour data and validate these using essentiality data from tumour cell lines, and is different from earlier approaches <ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref>. Therefore, we effectively bypass several of the limitations of these approaches viz. inference of infrequently altered genes as SL partners, inference of genes solely from cell line models that may not hold in tumours, and inference of SL interactions from model organisms that do not hold in human <ref type="bibr" target="#b34">[35]</ref>.</p><p>Beginning from the between-pathway model <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref>, synthetic lethality (SL) has often been associated with compensatory or parallel pathways, such that the loss of function of one of the pathways does not significantly affect cell viability whereas the loss of both pathways results in cell death (Figure <ref type="figure" target="#fig_10">7a</ref>). Although this classical view gives an elegant explanation for SL, it only presents a partial one, mainly in terms of loss-of-function (inactivation) events. However, in general SL could also involve gain-of-functions (activation) events. Moreover, in the context of cancer, this model caters mainly to tumour-suppressor genes. For example, the loss of function in two parallel DNA-damage repair (tumour suppressor) pathways can lead to a considerable accumulation of DNA damage, resulting in genomic catastrophe and triggering apoptosis in cancer cells, as in the case of BRCA-PARP <ref type="bibr" target="#b10">[11]</ref>. However, tumoursuppressor genes in general can be difficult to target because of the (unknown) side-effects these could have on normal cells <ref type="bibr" target="#b50">[51,</ref><ref type="bibr" target="#b51">52]</ref>, and because these are infrequently (over-) expressed in cancers to enable their targeting. Interestingly, many of the SL interactions that are extrapolated from lower-order organisms turn out to be tumour-suppressor genes (e.g. SMARCB1, see Introduction) and these are rarely altered in human cancers. We suspect that many of these highly conserved genes are much less susceptible to alterations than are newer inventions in humans, and consequently do not form attractive therapeutic targets in human cancers.</p><p>Here, we extend these pathway models <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref> to include gain-of-function (activation) events (Figure <ref type="figure" target="#fig_8">7</ref>). In addition to the parallel-pathway model (Figure <ref type="figure" target="#fig_10">7a</ref>) we propose a negative feedback-loop model (Figure <ref type="figure" target="#fig_10">7b</ref>) wherein the forward path involves a gain-of-function event (often in an oncogene) whereas the negative-feedback loop involves a loss-of-function event (often in a tumour-suppressor gene). Cell viability is enhanced by activation events in the forward path or reciprocally by inactivation events in the negative-feedback loop. We hypothesize that, in the event of loss of a DDR gene in the negative-feedback loop, the simultaneous activation of an oncogene in the forward path could be detrimental to the cell's survival by generating genomic instability. Consequently, to maintain an optimal condition for survival, cancer cells harbour only one of the two events resulting in mutual exclusivity between these events. We suspect the PIK3CA-PTEN combination is one such case: the PI3K pathway either harbours frequent activation events in the oncogenic PIK3CA kinase (96/156 breast tumours) resulting in accelerated cell growth and proliferation or reciprocally frequent inactivation events in the tumour suppressor PTEN (67/156) resulting in loss of negativefeedback to control cell proliferation; however we rarely see breast tumours harbouring both these events (8/156; p-value≈0) possibly due to their detrimental effect on cancer cell survivability.</p><p>Likewise, the KRAS-NF1 combination also fits into this pathway model. Simultaneous activation of the KRAS oncogene together with inactivation of NF1 tumour suppressor could be lethal to cell survival, and hence these two events rarely co-occur (p-value = 0.001).</p><p>Another example of SL is between BRCA1 and CCNE1, which although are not components of the same physical pathway, are functionally related due to their roles in the cell cycle and therefore broadly fit into our proposed model. BRCA1, being a tumour suppressor and a regulator of DNA-damage repair, has a reciprocal role to CCNE1 whose overactivation accelerates cell divisions and confers replication stress and genomic instability. CCNE1 amplification/overexpression is mutually exclusive to BRCA1 deletion/underexpression in ovarian cancers (p-value = 0.073). Consequently, loss of BRCA1 is synthetic lethal to cells harbouring CCNE1 amplifications, and this has recently been validated using inhibition of BRCA1-mediated DNA repair in ovarian cancer cell lines <ref type="bibr" target="#b52">[53]</ref>.</p><p>While the induction of cell lethality for certain combinations of genetic events seems a compelling reason for the observed lack of tumour samples containing these combinations, an alternative explanation could be that cells use mutual exclusivity as a means to achieve multiplicity in phenotypes. For example, it is possible that PIK3CA activation and PTEN inactivation are two (disjoint) paths to achieve two distinct phenotypes. One observation in support of this is that PIK3CA-activated breast tumours tend to be luminal, whereas PTENinactivated breast tumours tend to be basal-like <ref type="bibr" target="#b42">[43]</ref>; however, harbouring simultaneous events in both genes is not additively advantageous to cells. A similar explanation also underlies the mutual exclusivity for KRAS and EGFR mutations seen in lung cancer <ref type="bibr" target="#b53">[54]</ref>.</p><p>Another example is CDH1-PTK2. Here, the tumour suppressor CDH1 is responsible for maintaining cell adhesion and regulating cell migration. The focal adhesion kinase PTK2 is responsible for disassembly of cell adhesions and promoting cell proliferation and migration. CDH1 inactivation is mutually exclusive to PTK2 activation in breast cancer (p-value = 0.001). During tumour development and in particular during metastasis, the inactivation of CDH1 or alternatively the activation of PTK2 could be two disjoint paths to achieve cell migration to distant sites.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Genes B as targets in cancer</head><p>Consistent with these pathway models, we expect that targeting B in the context of deletion/downregulation of A could result in cancer-cell death by either disrupting both survival pathways (Figure <ref type="figure" target="#fig_10">7a</ref>) or by shutting off (forward) signals for cell survival (Figure <ref type="figure" target="#fig_10">7b</ref>). In the latter case, targeting gene B irrespective of the (deletion/downregulation) status of A could result in cancer cell death, a scenario referred to as "oncogene addiction" <ref type="bibr" target="#b54">[55,</ref><ref type="bibr" target="#b55">56]</ref>. Our proposed model (Figure <ref type="figure" target="#fig_10">7b</ref>) subsumes this scenario, and hence presents a more-general strategy for targeting oncogenes under the synthetic lethality paradigm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusion</head><p>In recent years, SL has emerged as an attractive therapeutic strategy against cancer: by targeting the SL partners of altered genes, cancer cells can be selectively killed while normal cells are spared. Here we introduce a computational approach to infer SL interactions based on the frequency at which genes are altered in human cancers. It is based on the observation that pairs of genes that are altered in a (significantly) mutually exclusive manner in cancers are likely to constitute lethal combinations. Using omics datasets across breast, prostate, ovarian and uterine cancer, we identify 718 genes that are upregulated or amplified in cancers, and are likely to be synthetic lethal with six key DDR genes. Computational validation of our predicted genes using essentiality data from cell-line screens shows that these genes are among the top essential genes and therefore likely to be lethal upon knockdown in these cell lines. We intend to validate some of these genes using single-and double knockdown in cell line and in vivo cancer models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>List of abbreviations</head><p>DDR: DNA-damage response GARP: Gene Activity Rank Profile ME: Mutual exclusivity SL: Synthetic lethality TCGA: The Cancer Genome Atlas</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>RESPONSE TO REVIEWERS Reviewer 1 (Dr Michael Galperin)</head><p>I support publication of this manuscript in its current form.</p><p>Thank you for reviewing our manuscript and for your supportive comment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Reviewer 2 (Dr Sebastian Maurer-Stroh)</head><p>The manuscript 'Inferring synthetic lethal interactions from mutual exclusivity of genetic events in cancer' is an interesting study outlining a new computational statistical approach to identify synthetic lethal (SL) pairs for potential targeting in cancer treatment from large-scale gene copy number and expression data with example validation against essentiality data from siRNA screens. The introduction gives an adequate overview of prior related work and the background context. The new approach hinges on the observation that there seems to be an inverse correlation between gene essentiality and mutual exclusivity of co-occurrence of genomic events with mutated tumor suppressor genes in the studied cell lines (right side panel of Figure <ref type="figure" target="#fig_4">3</ref>). I have two main comments:</p><p>1) While the correlation in Figures <ref type="figure" target="#fig_4">3</ref> and <ref type="figure" target="#fig_6">4</ref> (right panel) is certainly interesting, I am wondering how SPECIFIC the identified SL pairs are in these cases to the actual gene pairs. The Figure only shows data/lines for cell lines that have a defect in the respective DDR gene A for which the mutual exclusivity with genes B is calculated. It would be important to show also the data/lines for all other cell lines used here (maybe in weak gray color so they stay in the background) so one can see if the correlation is specific to the studied SL pair with gene A or possibly a general function of the essentiality of genes B. The latter could be seen if a similar correlation would appear independent of defect status of gene A. Pair specificity would be important for future clinical use since a specific link would mean that a genetic test for defects in gene A would be useful, while unspecific linkage would not require it.</p><p>Thank you for this important comment. Certainly the specificity of our identified SL targets, or in other words, the differential essentiality/lethality of these targets in DDR-deficient cell lines vis-à-vis normal cell lines or in cell lines with proficient DDR, is an important concern. Due to lack of suitable data from normal cell lines, here we analyzed the differential essentiality of these genes relative to the MCF7 cell line, which is a typical luminal cell line that does not harbor any known DDR defect. In addition, we compared the essentialities of these genes between PTEN wild-type and PTEN-/isogenic HCT116-derived cell lines (obtained from <ref type="bibr" target="#b31">[32]</ref>) to understand differential essentiality in the context of PTEN loss. In both analyses, we observe significantly higher essentialities for our genes in DDR-deficient cell lines, thereby indicating that knockdown of these genes is more lethal specifically in the context of DDR defects. These analyses have now been added to Section 3.3 and as a new 2</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>) It would be a stronger argument for selected SL pairs if they can be mechanistically rationalized and discussed to a greater extent in their pathway context (e.g. double hit in same pathway or hit in two different redundant pathways). Maybe add 1 or 2 more explicit examples like the one for</head><p>PIK3CA-PTEN in the discussion.</p><p>This is again a very useful suggestion. We now discuss three other examples in the manuscript -BRCA1-CCNE1, KRAS-NF1 and CDH1-PTK2 under Discussion -to provide mechanistic explanation to our hypothesis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Reviewer 3 (Professor Sanghyuk Lee)</head><p>The authors propose an intriguing hypothesis that synthetic lethality underlies the mutual exclusivity in cancer. Using the TCGA data sets of four cancers (3980 samples), they identified 718 genes that were mutually exclusive with six key DNA-damage response genes. Their rank correlation with the synthetic lethality measured in ten DDR-deficient cancer cell lines showed a strong linear relationship. Survival plots for several candidate genes showed significant separation, further supporting the hypothesis. The concept of inferring synthetic lethality from the mutual exclusivity is novel even though several studies (Ciriello G et al., Genome Research 2012; Unni AM et al., eLife 2015) asserted those two are related. Systematic mining of the TCGA data sets provides a solid ground for the hypothesis.</p><p>There are several concerns that should be addressed:</p><p>1. The box plots are not helpful at all. The authors need a better illustration showing that mutually exclusive genes were enriched in top quartile of essential genes. The rank correlation plot is confusing as well because of the reverse ranking for the gene essentiality. It would be more intuitive to take the positive correlation in the plot.</p><p>The huge difference between the sizes of the two gene lists -our set of 718 genes vs ~16000 profiled genes -makes it difficult to have a better illustration for the side-by-side comparison between their GARP values. But, we mention this now in the caption of Figure <ref type="figure" target="#fig_4">3</ref>. Hence, we report the Chi-square test p-value (p&lt;10 -5 ) for the enrichment of our genes in the top-quartile of all profiled genes across the different cell lines.</p><p>We agree that showing the positive correlation might look more natural, but then if we were to plot using increasing ranks, we won't know at which rank to stop. Therefore, here we put a cut-off and begin at rank 5000 (because this covers the top-quartile of the ~16000 genes into which our predicted genes mostly fall), and then go down until rank 0. This inverse plot helps to convey the idea that as we go down the ME ranks (i.e. with higher co-occurrence) the essentiality of gene B drops in cell lines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">The authors show the Kaplan-Meier curves for candidate genes. It is not clear how the patients</head><p>were divided into two groups of high and low. KM plots tend to depend on the choice of patient cohorts dramatically. The same tendency should be replicated using independent patient cohorts. I assume that there exist several well-known cohorts of breast cancer with gene expression data available in public.</p><p>The patients were divided into two groups based on the expression levels of the genes in question, as patients overexpressing the genes (expression levels in the upper tertile) and patients underexpressing the genes (expression levels below the upper tertile). This information is now added to the Figure <ref type="figure">6</ref> caption.</p><p>We used KM Plotter <ref type="bibr" target="#b56">[57]</ref> to plot the KM curves. KM Plotter already combines multiple cohorts covering more than 1800 patients to generate the curves. For some of the genes, we also used GOBO <ref type="bibr" target="#b49">[50]</ref> which also combines several cohorts.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">To enhance the reliability of the assumption (i.e. synthetic lethality directly related to mutual exclusivity), it would be of great help to show well-known examples in the introductory part. EGFR-KRAS in lung cancer was highlighted by a recent paper (Unni AM et al., eLife 2015). I expected a</head><p>similar trend for the BRCA-PARP genes in breast cancer, but was puzzled to find that they do not seem to be mutually exclusive in a simple query to the cBioPortal. Do authors have any explanation?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>What happens to the MDM2-TP53 gene pair (Ciriello G et al., Genome Research 2012)?</head><p>Synthetic lethality is a broader concept and in general covers any combination of genetic events that induces lethality in cells. Here, we only analyze expression up/downregulation and genomic amplification/deletion events affecting six DDR genes to study SL in the context of DDR defects. Our rationale behind focusing on DDR is that cells already deficient in DDR functions would be highly sensitive to further DNA damage, and therefore any event that triggers further accumulation of DNA damage -the upregulation/amplification of an oncogene that results in fast cell divisions, or the downregulation/deletion of a compensatory DDR gene that further weakens DNA-damage repair functions -could be highly lethal to the cells (genomic catastrophe). By basing on mutual exclusivity, we present a systematic approach to mine for SL cases, and demonstrate our approach on DDR genes; but the SL cases reported in the literature covering non-DDR genes might not be detected from our analysis.</p><p>Moreover, lethality depends on the functions and essentialities of the affected genes -e.g. events affecting two genes might be avoiding one another (i.e. mutually exclusive) as a means to increase the number of possible paths to achieve distinct phenotypes, but their individual or simultaneous occurrence might not necessarily be lethal to the cells (see Discussion). Furthermore, several confounding factors -e.g. the existence of other events that rescue cells from lethality -could also affect these SL relationships. Some examples including BRCA-PARP and how cells are rescued from lethality via loss of 53BP1 are discussed below to further highlight these intricacies.</p><p>The BRCA-PARP combination is the first successful example of a SL relationship that has seen clinical applicability in breast and ovarian cancers, to kill cancer cells deficient in BRCA1/2 (cells with 'BRCAness' property). Here, the PARP1 protein is a key component of the alternative non- overexpression is not necessarily mutually exclusive to BRCA1 loss (i.e. PARP is not overexpressed only to compensate for BRCA1 loss), but their double loss is catastrophic and hence synthetic lethal to cells.</p><p>Intriguingly, reports have also shown that an additional loss of 53BP1 can rescue cells BRCAdeficient cells from lethality despite PARP inhibition <ref type="bibr" target="#b57">[58]</ref>. This is an excellent example of where additional genetic events act as confounding factors to SL relationships, and is also suspected to be a mechanism to acquire drug resistance in cancers.</p><p>Another interesting example is the synthetic lethality upon inhibition of checkpoint kinase CHEK1 MDM2 is a negative regulator of TP53, and its overexpression inactivates TP53 functions.</p><p>Consequently, even if some cancer cells have wild-type TP53, the overexpressing MDM2 prevents activation of TP53-mediated apoptotic program. Hence, inhibition of MDM2 releases the brakes on TP53, thus enabling cells to be arrested and driven down the path of programmed cell death.</p><p>Therefore, here again, TP53-MDM2 does not necessarily show up as mutually exclusive in cancer datasets, but MDM2 inhibition induces lethality in cells by reactivating the TP53-mediated apoptotic program.</p><p>EGFR-KRAS is a slightly different story. Here, cancer cells either harbour either EGFR mutations or alternatively KRAS mutations to confer tumorigenesis, but simultaneous events in both EGFR and KRAS are not additively advantageous to the cells, as also explained in Unni et al. <ref type="bibr" target="#b53">[54]</ref>. Mutations in EGFR and KRAS might be two different ways of conferring cancer phenotypes, but simultaneous mutations in both the genes might be non-optimal for cancer cell survival, and in this way, mutations in EGFR and KRAS are synthetic lethal. This is now covered under Discussion.</p><p>In summary, while synthetic lethality provides a logical explanation for the lack of certain cooccurring (i.e. mutually exclusive) combinations, in general synthetic lethality is a broader concept.</p><p>Moreover, most of the SL-based targets observed in the literature are pharmacologically induced (e.g. via CHEK1 inhibition), but alterations to these targets are not naturally occurring in tumours (CHEK1 is not frequently lost in tumours), and this explains why some of these genes highlighted in the literature do not turn up in our list.</p><p>4. According to the authors' pathway models, I expect that the amplification/upregulation candidates (718 genes identified) would be enriched with oncogenes. The list of oncogenes can be obtained from various resources including the Cancer Gene Census, Vogelstein's paper on 20/20 rules, and so on.</p><p>This simple test would enhance the credibility of the pathway models.</p><p>Four of our identified genes -PIK3CA, KRAS, GNAS and ASXL1 -appear in Vogelstein's list of 'driver genes affected by subtle mutations' (the 20/20 list) <ref type="bibr" target="#b61">[62]</ref>. Three genes -PHOX2B, EXT1 and RECQL4 -appear in Vogelstein's list of 'cancer predisposition genes', and one gene -MYCappears in the list of 'genes affected by amplifications or deletions'. Thus, in total eight of 718 genes in our list appear in Vogelstein's lists, but our list is not enriched with Vogelstein's listed genes.</p><p>Our candidate genes are lethal upon inhibition in the context of DDR defects, as depicted by their relatively higher essentialities specifically in DDR-deficient cell lines. While some of our candidate genes constitute (universal) oncogenes (e.g. KRAS and PIK3CA), the roles of these genes can be understood only by considering the context of DDR defects. Depending on the status of certain DDR genes, our predicted genes can be oncogenic drivers (e.g. TLK2, which seems to be driving luminal breast tumours where PIK3CA expression is not high: Section 3.4), or vulnerability genes on which the survival of cells heavily depends (e.g. SMC4, which is required for structural maintenance of chromosomes and DNA repair, more so in the context of loss of key DDR genes).</p><p>A recent report has noted a context-dependent oncogenic role for BRF2 (not a known oncogene in most cancers) in driving a subset of HER2+ breast tumours which do not express ERRB2/HER2 <ref type="bibr" target="#b62">[63]</ref>;</p><p>the authors call BRF2 an 'alternative driver' of HER2+ tumours.</p><p>Therefore, although not enriched with genes from Vogelstein's 20/20 list of universal oncogenes, our predicted genes include oncogenes that are activated in a context-dependent manner in tumours. A general method based on the frequency of overexpressed/amplified genes will not be able to identify these genes; but by adding a context, we can prioritise them statistically. Our method addresses this by identifying oncogenes in the context of DDR defects.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.</head><p>There exist many methods of inferring synthetic lethality (as reviewed by the authors) and the mutual exclusivity. Although the authors describe limits of previous methods inferring synthetic lethality, it would be relieving to see a reasonable overlap between the author's result and previous methods.</p><p>The following oncogenes -PIK3CA, MYC, EGFR and CCNE1 -from our list are known oncogenes and have also been predicted by earlier methods. These genes are also being pursued as targets in clinical trials. However, other predicted genes from the literature including SMARCB1, MRE11A and ASPSCR1 <ref type="bibr" target="#b18">[19]</ref> that have been inferred from lower-order organisms do not show up in our list. This is because these genes are infrequently altered in human cancers. As mentioned in Discussion, most of the genes predicted from morphologically simpler "model" organisms are highly conserved, and these are rarely altered in human cancers. Several of these genes are also tumour suppressors. As such, they are not worthwhile as anti-cancer targets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Figures</head><p>Figure <ref type="figure">1:</ref> Proportions of synthetic lethal (mutually exclusive) interactions identified for each of the six DDR genes A (a) across all cancers; and (b) in the individual cancers of breast, prostate and ovarian (uterine cancer by itself has too few samples to identify any significant interactions) at three levels of significance (p &lt; 0.01, 0.001 and 0.001). Here, the SL partners B are amplified/upregulated.   <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand plots compare the ranges for GARP scores of our predicted genes B (amplified/upregulated) with that of the entire set (~16000) of profiled genes. While it is difficult to directly compare the two ranges because of the difference in the number of genes in them, for majority of the cell lines the gene B at the 25 th percentile had lower GARP scores than the corresponding gene from the entire profiled set. By χ 2 test, genes B were significantly enriched (p&lt;10 -5 ) within the top-quartile essential genes in these cell lines. The right-hand plots show GE ranks vs ME ranks for genes B in cell lines that are deficient in genes A:   <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand plots compare the ranges for GARP scores of our predicted genes B (deleted/downregulated) with that of the entire set (~16000) of profiled genes. While it is difficult to directly compare the two ranges because of the difference in the number of genes in them, for majority of the cell lines the gene B at the 25 th percentile had lower GARP scores than the corresponding gene from the entire profiled set. By χ 2 test, genes B were significantly enriched (p&lt;10 -5 ) with the top-quartile essential genes in these cell lines.</p><p>The right-hand plots show GE ranks vs ME ranks for genes B in cell lines that are deficient in genes A: (a) BRCA1, (b) BRCA2, and (c) PTEN. between PTEN-/-and PTEN wild-type isogenic cell lines. We considered MCF7, which does not have any known DDR defect, as our control. Comparisons of GARPscore means for genes B between DDR-deficient lines and MCF7 showed significant differences (ANOVA p&lt;0.0001) between these cell lines. Similarly, comparison of GARP scores between two isogenic HCT116-derived cell lines, one with PTEN-/-and the other with wild type PTEN showed significant difference (paired t-test: p&lt;0.0001) between the two cell lines. This analysis indicated that the essentiality/lethality of genes B is specific to DDRdeficient/PTEN-deficient cell lines, and therefore context-dependent on DDR deficiency.</p><p>Figure <ref type="figure">6</ref>: Snapshot of the proportion of cases and Kaplan-Meier survival plots for predicted genes B (amplified/upregulated) using survival data (untreated) from 1000 breast cancer patients, plotted using KMPlotter-breast (<ref type="url" target="http://www.kmplot.com/">http://www.kmplot.com/</ref>  <ref type="bibr" target="#b47">[48]</ref>). The patients are divided into two groups based on the overexpression (upper tertile of expression levels) and underexpression (below the upper tertile of expression levels) for these genes.   <ref type="table">2</ref>: Cell lines and the defects they harbour for DNA-damage response (DDR) genes. Genome-wide (~16000 genes) essentiality data <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref> from ten cancer cell lines that harbour defects (mutations MUT, downregulation DOWN or homologous deletions HOMDEL) in at least one of the DDR genes ATM, BRCA1, BRCA2, PTEN and TP53. Figure 2 Figure 5 </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cell line / Gene</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>homologous end-joining (NHEJ) pathway which functions throughout the cell-cycle to repair doublestrand breaks (DSBs). PARP1 also plays an important role in restarting of stalled forks during DNA replication (S-phase) by directing DSBs (converted from stalled forks) towards BRCA-mediated homologous recombination (HR) pathway for DSB repair. The HR pathway mainly functions during the G1/S phase to repair DSBs arising during DNA replication.Consequently: (i) PARP, being part of the NHEJ machinery, functions throughout the cell cycle, and in general is overexpressed in fast-dividing cancer cells that harbour DNA breaks; but (ii) the functions of PARP and BRCA1-mediated repair overlap specifically during the DNA replication (G1/S-phase). In general, any query on cancer datasets (including Cbioportal for TCGA) would show PARP1 overexpressed in a considerable proportion of tumours. But, the synthetic lethality between BRCA1 and PARP applies to the small window during DNA replication where their functions become compensatory: in the event of loss of BRCA1, further inhibition of PARP results in accumulation of DSBs (because DSBs are not repaired or are repaired erroneously), thus leading to accumulation of lethal levels of DNA damage and consequently cell death. Therefore, PARP</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><figDesc>and cyclin-dependent kinase CDK1 in cells overexpressing the MYC oncogene<ref type="bibr" target="#b58">[59]</ref><ref type="bibr" target="#b59">[60]</ref><ref type="bibr" target="#b60">[61]</ref>. Cells overexpressing MYC display accelerated cell divisions, and the resulting replication stress leads to accumulation of significant levels of DNA damage. Cell-cycle checkpoints arrest these cells with DNA damage and give them time to repair their damaged DNA. Inhibition of CHEK1/CDK results in the abrogation of cell-cycle checkpoints, and consequently the cells are forced to pass through checkpoints unstopped, leading to a genomic catastrophe and cell death. Here again, if we query cancer datasets, CHEK1/CDK being cell-cycle regulators, are seen overexpressed in most aggressive tumours (e.g. triple-negative breast cancers), and but are not necessarily mutually exclusive to MYC overexpression. However, CHEK1/CDK inhibition proves catastrophic to the fast-growing cells, and in that way CHEK1/CDK inhibition is lethal to cells overexpressing MYC.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Proportions of synthetic lethal (mutually exclusive) interactions identified for each of the six DDR genes A (a) across all cancers; and (b) in the individual cancers of breast, prostate and ovarian (uterine cancer by itself has too few samples to identify any significant interactions) at three levels of significance (p &lt; 0.05 and 0.01). Here, the SL partners B are deleted/downregulated.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3:Validation of synthetic lethal interactions against GARP essentiality scores from cell line screens<ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand plots compare the ranges for GARP scores of our predicted genes B (amplified/upregulated) with that of the entire set (~16000) of profiled genes. While it is difficult to directly compare the two ranges because of the difference in the number of genes in them, for majority of the cell lines the gene B at the 25 th percentile had lower GARP scores than the corresponding gene from the entire profiled set. By χ 2 test, genes B were significantly enriched (p&lt;10 -5 ) within the top-quartile essential genes in these cell lines. The right-hand plots show GE ranks vs ME ranks for genes B in cell lines that are deficient in genes A: (a) ATM, (b) BRCA1, (c) BRCA2, (d) PTEN and (e) TP53.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><figDesc>Figure 3:Validation of synthetic lethal interactions against GARP essentiality scores from cell line screens<ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand plots compare the ranges for GARP scores of our predicted genes B (amplified/upregulated) with that of the entire set (~16000) of profiled genes. While it is difficult to directly compare the two ranges because of the difference in the number of genes in them, for majority of the cell lines the gene B at the 25 th percentile had lower GARP scores than the corresponding gene from the entire profiled set. By χ 2 test, genes B were significantly enriched (p&lt;10 -5 ) within the top-quartile essential genes in these cell lines. The right-hand plots show GE ranks vs ME ranks for genes B in cell lines that are deficient in genes A: (a) ATM, (b) BRCA1, (c) BRCA2, (d) PTEN and (e) TP53.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4:Validation of synthetic lethal interactions against GARP essentiality scores from cell line screens<ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. The left-hand plots compare the ranges for GARP scores of our predicted genes B (deleted/downregulated) with that of the entire set (~16000) of profiled genes. While it is difficult to directly compare the two ranges because of the difference in the number of genes in them, for majority of the cell lines the gene B at the 25 th percentile had lower GARP scores than the corresponding gene from the entire profiled set. By χ 2 test, genes B were significantly enriched (p&lt;10 -5 ) with the top-quartile essential genes in these cell lines. The right-hand plots show GE ranks vs ME ranks for genes B in cell lines that are deficient in genes A: (a) BRCA1, (b) BRCA2, and (c) PTEN.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Differential essentiality of genes B (a) between nine DDR-deficient and MCF7 cell lines; and (b)between PTEN-/-and PTEN wild-type isogenic cell lines. We considered MCF7, which does not have any known DDR defect, as our control. Comparisons of GARPscore means for genes B between DDR-deficient lines and MCF7 showed significant differences (ANOVA p&lt;0.0001) between these cell lines. Similarly, comparison of GARP</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 7 :</head><label>7</label><figDesc>Figure 7: Two models for pathway-based targeting of synthetic lethal genes B in conjunction with deleted/downregulated genes A: (a) parallel pathways model where targeting B results in disruption of both survival pathways, and (b) negative feedback-loop model where targeting B shunts of (forward) signals for cell survival.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 1 Figure 2 Figure 5</head><label>125</label><figDesc>Figure 1</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Figure 7</head><label>7</label><figDesc>Figure 7</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="28,0.00,-0.18,243.96,324.18" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="29,0.00,0.05,169.78,319.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="31,0.00,-0.04,387.00,452.04" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="32,0.00,0.35,323.57,164.65" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="33,0.00,0.04,390.00,396.96" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 1 : Number of genomic copy-number and gene-expression cancer samples used in the study.</head><label>1</label><figDesc>The datasets were downloaded for four cancers -breast, prostate, ovarian and uterine -from CBioportal (http://www.cbioportal.org/index.do)<ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref> and TCGA Firehose (http://gdac.broadinstitute.org/), giving a total of 3980 cancer samples.</figDesc><table><row><cell>Tables</cell><cell></cell><cell></cell><cell></cell></row><row><cell>Cancer</cell><cell>Genomic</cell><cell>Gene expression</cell><cell>Total</cell></row><row><cell>Breast</cell><cell>847</cell><cell>1182</cell><cell>2029</cell></row><row><cell>Prostate</cell><cell>152</cell><cell>471</cell><cell>623</cell></row><row><cell>Ovarian</cell><cell>562</cell><cell>266</cell><cell>828</cell></row><row><cell>Uterine</cell><cell>443</cell><cell>57</cell><cell>500</cell></row><row><cell>Total</cell><cell>2004</cell><cell>1976</cell><cell>3980</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>We thank <rs type="person">Professor Kum Kum Khanna</rs> and <rs type="person">Dr Peter Simpson</rs> for valuable discussions. This work is supported by <rs type="funder">Australian National Health &amp; Medical Research Council</rs> project grants <rs type="grantNumber">1028742</rs> and <rs type="grantNumber">1080985</rs> to <rs type="person">Dr Peter T. Simpson</rs>, <rs type="person">Dr Nicola Waddell</rs> and <rs type="funder">MAR</rs>. A preliminary version of this work will be presented as a poster discussion at the San Antonio Breast Cancer Symposium 2015, and SS thanks the <rs type="funder">Ian Potter Foundation (Australia)</rs> for travel support (grant# <rs type="grantNumber">20160303</rs>).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_KmjnxW6">
+					<idno type="grant-number">1028742</idno>
+				</org>
+				<org type="funding" xml:id="_zcHdWYt">
+					<idno type="grant-number">1080985</idno>
+				</org>
+				<org type="funding" xml:id="_89bqh8j">
+					<idno type="grant-number">20160303</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Competing interests</head><p>The authors declare that they have no competing interests.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Authors' contributions</head><p>SS and LW conceived the idea and formalised it. SS and JS performed the analyses. SS drafted the manuscript and the response to reviewers' comments. JS, LW and MAR contributed to writing and revising the manuscript. All authors have read and approved the final manuscript and response letter. </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The origin of variation</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Bridges</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Amer Nat</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page" from="51" to="63" />
+			<date type="published" when="1922">1922</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Principles for the buffering of genetic variation</title>
+		<author>
+			<persName><forename type="first">Jlt</forename><surname>Hartman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Garvik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hartwell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">291</biblScope>
+			<biblScope unit="page" from="1001" to="1004" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Modeling synthetic lethality</title>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Meur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Gentleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">135</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Exploring genetic interactions and networks with yeast</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bussey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Andrews</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Genet</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="437" to="449" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Systematic mapping of genetic interaction networks</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Dixon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Baryshnikova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Andrews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu Rev Genet</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="601" to="625" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The concept of synthetic lethality in the context of anticancer therapy</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename><surname>Kaelin</surname><genName>Jr</genName></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="689" to="698" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Synthetic lethality: General principles, utility and detection using genetic screens in human cells</title>
+		<author>
+			<persName><forename type="first">Smb</forename><surname>Nijman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">FEBS Lett</title>
+		<imprint>
+			<biblScope unit="volume">585</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="6" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Applying synthetic lethality for the selective targeting of cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Mclornan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>List</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Mufti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New Eng J Med</title>
+		<imprint>
+			<biblScope unit="volume">371</biblScope>
+			<biblScope unit="page" from="1725" to="1735" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Targeting the DNA repair defect in BRCA mutant cells as a therapeutic strategy</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Farmer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">434</biblScope>
+			<biblScope unit="page" from="917" to="921" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The underlying mechanism for the PARP and BRCA synthetic lethality: clearing up the misunderstandings</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Helleday</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Oncol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="387" to="393" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A finescale dissection of the DNA double-strand break repair machinery and its implications for breast cancer therapy</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Srihari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lê</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Chevenix-Trench</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Simpson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">T</forename><surname>Ragan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Khanna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucl Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="6106" to="6127" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">How many more breast cancer predisposition genes are there?</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Easton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="14" to="17" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Conserved pathways within bacteria and yeast as revealed by global protein network alignment</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Kelley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sharan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Karp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sittler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Root</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename><surname>Stockwell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ideker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="11394" to="11399" />
+			<date type="published" when="2003">2003</date>
+			<pubPlace>USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Systematic interpretation of genetic interactions using protein networks</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kelley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ideker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="561" to="566" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Pathway redundancy and protein essentiality revealed in the Saccharomyces cerevisiae interaction networks</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Ulitsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Shamir</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">104</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Mapping genetically compensatory pathways from synthetic lethal interactions in yeast</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Tarone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="1922">2008. 1922</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Fault tolerance in protein interaction networks: stable bipartite subgraphs and redundant pathways</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Brady</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Maxwell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Daniels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Cowen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">e5364</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Evaluating between-pathway models with expression data</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Hescott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mdm</forename><surname>Leiserson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Cowen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">K</forename><surname>Slonin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Comp Biol</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="477" to="487" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A comparative genomic approach for identifying synthetic lethal interactions in human cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Deshpande</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Asiedu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Klebig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sutor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kuzmin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nelson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="6128" to="6136" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">An evolutionarily conserved synthetic lethal interaction network identifies FEN1 as a broad-spectrum target for anticancer therapeutic development</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Van Pel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">J</forename><surname>Barrett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shimizu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">V</forename><surname>Sajesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Guppy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Pfeifer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Genet</title>
+		<imprint>
+			<biblScope unit="volume">2013</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1003254</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Saccharomyces cerevisiae genetics predicts candidate therapeutic genetic interactions at the mammalian replication fork</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Van Pel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">C</forename><surname>Stirling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Minaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sipahimalani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hieter</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="273" to="282" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">DRYGIN: a database of quantitative genetic interaction networks in yeast</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Koh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Baryshnikova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Toufighi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Bader</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="502" to="507" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">DNA double-strand break repair as determinant of cellular radiosensitivity to killing and target in radiation therapy</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Mladenov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Magin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Soni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Illiakis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Oncol</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Finding friends and enemies in an enemies-only network: a graph diffusion kernel for predicting novel genetic interactions and co-complex membership from yeast genetic interactions</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Qi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Suhail</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Y</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Boeke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Bader</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1991" to="2004" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Mining protein networks for synthetic genetic interactions</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Paladugu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Raval</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinf</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">426</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Understanding and predicting synthetic lethal genetic interactions in Saccharomyces cerevisiae using domain genetic interactions</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Luo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">73</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">In silico prediction of synthetic lethality by meta-analysis of genetic interactions, functions, and pathways in yeast and human cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">K</forename><surname>Kwoh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Inform</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">Suppl 3</biblScope>
+			<biblScope unit="page" from="71" to="80" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Predicting essential genes and synthetic lethality via influence propagation in signalling pathways of cancer cell fates</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">K</forename><surname>Kwoh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Bioinf Comp Biol</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">1541002</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Determination of synthetic lethal interactions in KRAS oncogene-dependent cancer cells reveals novel therapeutic targeting strategies</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Steckel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Molina-Arcas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Weigelt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">H</forename><surname>Warne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kuznetsov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Res</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1227" to="1245" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">GenomeRNAi: a database for cell-based and in vivo RNAi phenotypes, 2013 update</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Pelz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Buhlmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kerr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Horn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boutros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucl Acids Res</title>
+		<imprint>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1021" to="1026" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Essential gene profiles in breast, pancreatic, and ovarian cancer cells</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Marcotte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Suarez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sayad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Karamboulas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Krzyzanowski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discov</title>
+		<imprint>
+			<biblScope unit="volume">2012</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="172" to="189" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A negative genetic interaction map in isogenic cancer cell lines reveals cancer cell vulnerabilities</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Vizeacoumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Arnold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">S</forename><surname>Vizeacoumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chandrashekhar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Buzina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jtf</forename><surname>Young</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">696</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Predicting cancer-specific vulnerability via data-driven detection of synthetic lethality</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Jerby-Arnon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Pfetzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Y</forename><surname>Waldman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mcgarry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>James</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Shanks</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">158</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1199" to="1209" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Genetic interactions reveal the evolutionary trajectories of duplicate genes</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vandersluis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bellay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Musso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Costanzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Papp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Vizeacoumar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">429</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Identifying conserved protein complexes between species by constructing interolog networks</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">V</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Srihari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">W</forename><surname>Leong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinf</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">Suppl 16</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Structure and dynamics of molecular networks: a novel paradigm of drug discovery -a comprehensive review</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Csermely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Korcsmàros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hjm</forename><surname>Kiss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>London</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Nussinov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pharmacol Therapeut</title>
+		<imprint>
+			<biblScope unit="volume">138</biblScope>
+			<biblScope unit="page" from="333" to="408" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Splice variants as cancer biomarkers</title>
+		<author>
+			<persName><forename type="first">Bmn</forename><surname>Brinkman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Biochem</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="584" to="594" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">AKT1, AKT2 and AKT3-dependent cell survival is cell line-specific and knockdown of all three isoforms selectively induces apoptosis in 20 human tumor cell lines</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sandra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kirschmeier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Biol Ther</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="755" to="762" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Systematic tracking of dysregulated modules identifies novel genes in cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Srihari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Ragan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1553" to="1561" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Screens, maps &amp; networks: from genome sequences to personalized medicine</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sandmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boutros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Curr Opin Genet Dev</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="36" to="44" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Integrative analysis of complex cancer genomics and clinical profiles using the cBioPortal</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Aksoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Dogrusoz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dresdner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Sumer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Signal</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">269</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">The cBio Cancer Genomics Portal: an open platform for exploring multidimensional cancer genomics data</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Dogrusoz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Sumer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Aksoy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discov</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page">401</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Network. Comprehensive molecular portraits of human breast tumours</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">490</biblScope>
+			<biblScope unit="page" from="61" to="70" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Network. The Cancer Genome Atlas Pan-Cancer analysis project</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genet</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="1113" to="1120" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Network. Integrated genomic analyses of ovarian carcinoma</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">474</biblScope>
+			<biblScope unit="issue">7353</biblScope>
+			<biblScope unit="page" from="609" to="615" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Network. Comprehensive molecular characterization of urothelial bladder carcinoma</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">507</biblScope>
+			<biblScope unit="page" from="315" to="322" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">GISTIC2.0 facilitates sensitive and confident localization of the targets of focal somatic copy-number alteration in human cancers</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Mermel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="page" from="12" to="R41" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Online survival analysis software to assess the prognostic value of biomarkers using transcriptomic data in non-small-cell lung cancer</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Györffy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Surowiak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Budczies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lánczky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">2013</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">82241</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">GeneCards Version 3: the human gene integrator</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Safran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Dalah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Alexander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Rosen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iny</forename><surname>Stein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shmoish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+		<idno type="DOI">10.1093/database/baq020</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Database</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">GOBO: Gene expression-based Outcome for Breast cancer Online</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ringnér</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Fredlund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Häkkinen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Å</forename><surname>Borg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Staaf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">17911</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<monogr>
+		<title level="m" type="main">Therapeutic targeting of tumor suppressor genes. Cancer</title>
+		<author>
+			<persName><forename type="first">Lgt</forename><surname>Morris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Chan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="page" from="1357" to="1368" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Recent advances in cancer therapy targeting proteins involved in DNA double-strand break repair</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bolderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Richard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S B-B</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Khanna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="6314" to="6320" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Synthetic lethality between CCNE1 amplification and loss of BRCA1</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Etemadmoghadam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Au-Yeung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Alsop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>George</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">48</biblScope>
+			<biblScope unit="page" from="19489" to="19494" />
+			<date type="published" when="2013">2013</date>
+			<pubPlace>USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<monogr>
+		<title level="m" type="main">Evidence that synthetic lethality underlies the mutual exclusivity of oncogenic KRAS and EGFR mutations in lung adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Unni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">W</forename><surname>Lockwood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Zejnullahu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Q</forename><surname>Lee-Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Varmus</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">6907</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Principles of cancer therapy: oncogene and non-oncogene addiction</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Solimini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">136</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="823" to="837" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Oncogene addiction</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">B</forename><surname>Weinstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joe</forename><forename type="middle">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="3077" to="3080" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">An online survival analysis tool to rapidly assess the effect of 22,277 genes on breast cancer prognosis using microarray data of 1809 patients</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Györffy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lanczky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Eklund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Denkert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Budczies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Szallasi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res Treat</title>
+		<imprint>
+			<biblScope unit="volume">123</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="725" to="731" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">BRCA1, PARP, and 53BP1: conditional synthetic lethality and synthetic viability</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Aly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ganesan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Mol Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="66" to="74" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">The cancer therapeutic potential of Chk1 inhibitors: how mechanistic studies impact on clinical trial design</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Eastman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Br J Clin Pharmacol</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="358" to="369" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">MYC pathway activation in triple-negative breast cancer is synthetic lethal with CDK inhibition</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Horiuchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kusdra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">E</forename><surname>Huskey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chandriani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Lenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Gonzalez-Angulo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Exp Med</title>
+		<imprint>
+			<biblScope unit="volume">209</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="676" to="696" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Targeted therapies for triple-negative breast cancer: combating a stubborn disease</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kalimutho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Parsons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mittal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lopez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Srihari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Khanna</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.tips.2015.08.009</idno>
+		<ptr target="http://dx.doi.org/10.1016/j.tips.2015.08.009" />
+	</analytic>
+	<monogr>
+		<title level="j">Trends Pharmacol Sci</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>in press</note>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Cancer genome landscapes</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Papadopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">E</forename><surname>Velculescu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Diaz</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">339</biblScope>
+			<biblScope unit="issue">6127</biblScope>
+			<biblScope unit="page" from="1546" to="1558" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Intra-tumor genetic heterogeneity and alternative driver genetic alterations in breast cancers with heterogeneous HER2 gene amplification</title>
+		<author>
+			<persName><forename type="first">Cky</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">G</forename><surname>Martelotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gauthier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Piscuoglio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">107</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

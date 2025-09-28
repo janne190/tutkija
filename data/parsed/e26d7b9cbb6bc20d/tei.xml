@@ -1,0 +1,2119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A SYSTEMATIC APPROACH TO FEATURIZATION FOR CANCER DRUG SENSITIVITY PREDICTIONS WITH DEEP LEARNING A PREPRINT</title>
+				<funder>
+					<orgName type="full">National Cancer Institute</orgName>
+					<orgName type="abbreviated">NCI</orgName>
+				</funder>
+				<funder ref="#_A3Xd74d">
+					<orgName type="full">Joint Design of Advanced Computing Solutions for Cancer</orgName>
+				</funder>
+				<funder ref="#_VHPMX3V">
+					<orgName type="full">National Cancer Institute, National Institutes of Health</orgName>
+				</funder>
+				<funder ref="#_YjtMQRU">
+					<orgName type="full">Lawrence Livermore National Laboratory</orgName>
+				</funder>
+				<funder ref="#_5xrE8Q8">
+					<orgName type="full">Oak Ridge National Laboratory</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">U.S. Department of Energy (DOE)</orgName>
+				</funder>
+				<funder ref="#_kFUQY3D">
+					<orgName type="full">Los Alamos National Laboratory</orgName>
+				</funder>
+				<funder ref="#_dvJskMP">
+					<orgName type="full">National Institutes of Health</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2020-05-04">4 May 2020</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Austin</forename><surname>Clyde</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Tom</forename><surname>Brettin</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Alexander</forename><surname>Partin</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Maulik</forename><surname>Shaulik</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Hyunseung</forename><surname>Yoo</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Yvonne</forename><surname>Evrard</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Yitan</forename><surname>Zhu</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Fangfang</forename><surname>Xia</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Rick</forename><surname>Stevens</surname></persName>
+						</author>
+						<title level="a" type="main">A SYSTEMATIC APPROACH TO FEATURIZATION FOR CANCER DRUG SENSITIVITY PREDICTIONS WITH DEEP LEARNING A PREPRINT</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2020-05-04">4 May 2020</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">AD18DC94E2AC55020BFC5FDC2F897CB1</idno>
+					<idno type="arXiv">arXiv:2005.00095v2[cs.LG]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>By combining various cancer cell line (CCL) drug screening panels, the size of the data has grown significantly to begin understanding how advances in deep learning can advance drug response predictions. In this paper we train &gt;35,000 neural network models, sweeping over common featurization techniques. We found the RNA-seq to be highly redundant and informative even with subsets larger than 128 features. We found the inclusion of single nucleotide polymorphisms (SNPs) coded as count matrices improved model performance significantly, and no substantial difference in model performance with respect to molecular featurization between the common open source MOrdred descriptors and Dragon7 descriptors. Alongside this analysis, we outline data integration between CCL screening datasets and present evidence that new metrics and imbalanced data techniques, as well as advances in data standardization, need to be developed.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The crux of precision oncology and virtual drug screening lies in the relationship between molecular structure and cancer genetics <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>. It is well studied that cancer genetics may play a role in drug efficacy even across similar cancer types <ref type="bibr" target="#b2">[3]</ref>. In order to understand this relationship, drug screening assays such as the NCI-60 Human Tumor Cell Line Screen were created to drive the precision oncology search for the link. Recently, deep learning has been applied to the problem as a means of modeling the interaction between cell genetics and drug properties <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b6">7]</ref>. We aim to explore the impact of featurization on a small subset of the possible feature space utilizing multiple combined dose response data.</p><p>Classical machine learning models such as Random Forest have been used in typing cancer genetics and even in single agent drug response models <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b8">9,</ref><ref type="bibr" target="#b9">10]</ref>; however, most of these studies create single models based either predicting the response of a single cell given various drugs or predicting the activity of a drug over different cell lines. Few classical models have shown success across a wide range of CCLs and a diverse set of drugs in a single multitask model. Deep learning provides a more natural interface as higher dimensional datasets can be applied and reduced to a lower dimensional representation, where the choice of representation of the data is still important <ref type="bibr" target="#b10">[11]</ref>.</p><p>Prior featurization techniques were studied by Jang et. al, where they systematically analyzed CCL drug sensitivity modeling as a classical machine learning task, by exploring the multitude of feature modalities, algorithms, prediction targets, and more <ref type="bibr" target="#b11">[12]</ref>. Given that they had a small set of drugs available between the studies (138 compound), the models Jang et. al studied did not featurize the drugs in a continuous embedding; rather they were one-hot encoded whether present or not. Overall, in explaining the predictive variance between the over 110,000 models tested, they ranked the factors for variance among models, finding genetic features and the particular compound being predicted to be very explanatory, while the algorithm being considerably less important. Their results were further in line with other work on more general learning problems involving genetic features <ref type="bibr" target="#b12">[13]</ref>.</p><p>While many drug feature representations such as SMILES based encoders <ref type="bibr" target="#b3">[4]</ref> or pharmacophore models <ref type="bibr" target="#b13">[14]</ref> are commonly used in deep learning models, we chose to compare only two variants of molecular descriptors: Mordred and Dragon7, which are some of the more common classical feature representations <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b15">16]</ref>. Deep learning models may be moving toward more natural representations such as graphical representations; however, even the integrated dataset does not offer the sort of drug diversity seen in the papers effectively using these newer representations <ref type="bibr" target="#b16">[17]</ref>.</p><p>Across the recent works, the decision to use RNA-seq in conjunction with images, SMILES, or fingerprints was a choice dictated by the desired model architecture, explainability of the model, or resources available; however, these choices do not span the entire space of representations available for cells nor drugs. Cortés-Ciriano and Bender found introducing convolutional neural networks (CNNs) for the drug image alongside Morgan fingerprints improved performance of cell line sensitivity predictions with a small effect size <ref type="bibr" target="#b4">[5]</ref>. Manica et al. compared fingerprints to the use of SMILES strings, showing an RMSE improvement from 0.122 ± 0.010 their deep baseline to 0.104 ± 0.005 in IC50 predictions with the benefit of an explainability mechanism for improved mechanism of action (MOA) and perturbation study <ref type="bibr" target="#b3">[4]</ref>. <ref type="bibr">Xia et al.</ref> found the use of proteome, expression, and molecular fingerprints to perform the best when studying combinations of drug pairs; however, proteome data is not available at scale of this study <ref type="bibr" target="#b5">[6]</ref>. Chang et al. utilized a virtual docking technique in conjunction with CNNs to achieve r 2 &gt; 0.84 on 244 drugs from GDSC <ref type="bibr" target="#b6">[7]</ref>. Rampášek et al. used gene perturbation data in an autoencoder <ref type="bibr" target="#b17">[18]</ref>. The goal of these models is to provide insight into which drugs and cells should be tested in downstream drug development analysis with, for example, PDX models or organoids.</p><p>In this work, we outline multiple methods for preparation of pan-cancer data, training strategies, and analysis strategies of these models. As opposed to a hyperparameter optimization experiment which would provide a single predictive model, we aim to understand a small section of the overall feature space: primarily which genetic features are most effective and whether or not MOrdred open-source descriptors compare to Dragon7 descriptors. While performing hyperparameter optimization on each individual model is ideal, this is not tractable given the sheer number of simple discrete permutations available. In an attempt to approximate the optimization task, we also sweep over various model architectures, training strategies, and other learning hyperparameter optimization runs on models. Our results aim to provide guidelines for creating deep learning models for CCL models across studies, with the hope that more researchers continue to explore the space.</p><p>In order to facilitate downstream analysis, we are releasing all the code to generate the data from public sources and data collected from the model runs. Details on data preparation and deep learning methods utilized are in the materials and method section<ref type="foot" target="#foot_3">foot_3</ref> .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Results</head><p>We report on the results of models based on predictions on their assigned validation set and metrics. In terms of understanding the parameter space, we ran a series of classical machine learning predictors trained on the hyperparameter configuration to predict our four key metrics: RMSE, r 2 , balanced accuracy, and MCC (Figure <ref type="figure">1</ref>). The results indicate standard deep learning hyperparameters to play the most important role in variance, rather than specific feature information, as optimizer, model architecture, training strategy, and dropout all are more predictive using SNPs or the featurization of drugs or cells.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Features Representation</head><p>The inclusion of SNPs improves performance on cell validation split models in RMSE, r 2 , MCC, and balanced accuracy (Table <ref type="table" target="#tab_0">1</ref>). There was no calculated metric in our test suite which reported a worse score when SNPs were included (at 100% and 99% percentiles). For the on cell validation method, the independent t-test shows significant improvement RMSE and r 2 scores with the inclusion of SNP features (p &lt; 10 -5 ), and less significant improvement for balanced accuracy and MCC (p &lt; 0.17 and p &lt; 0.02 respectively). For drug validation models, the RMSE and r 2 are again significantly different with the inclusion of SNP features (p &lt; 0.003 and p &lt; 0.0005) and not as significant for balanced accuracy and MCC (p &lt; 0.01 and p &lt; 0.3).</p><p>Scaling methods did not seem to have a large effect on the variance between models besides source scaling seemed to improve measures slightly (Table <ref type="table" target="#tab_1">2</ref>. According to an ANOVA the null hypothesis of similarity among scaling methods is Figure <ref type="figure">1</ref>: (Left) The AUC distribution of pan-cancer data frame. With this scheme, the training distribution has 3.86% responders. While our cutoff of 0.5 is arbitrary, learning to distinguish this slice along with a regression-based training strategy will prevent standard regression metrics from appearing much better than they are on the skewed portion of the dataset. (Right)Relative feature importance for hyperparameters used in model training for predicting validation metric using decision trees. The r 2 for those models were &gt; 0.9 on cell validation metrics, and &gt; 0.6 for drug validation metrics. Optimizer, model type, and dropout were among the top three features, though the training strategy very important when predicting balanced accuracy. not rejected for either validation method (p &lt; 0.14). Cell frame splits did not have any noticeable differences amongst them (Table <ref type="table">3</ref>). According to an ANOVA test for fit, there is no significant difference among cell validation methods (p &lt; 0.31) and the drug validation method shows a possible difference but nothing significant (p &lt; 0.06).</p><p>The different chemical informatics package used to features the molecules did not have a significant effect on the validation scores (Table <ref type="table" target="#tab_3">4</ref>). For on cell validation models, no reported metric rejects the hypothesis that all featurization are the same for p &lt; 0.09; however, for on drug validation RMSE and r 2 scores are effected by featurization to an extent (p &lt; 0.0001). We applied post hoc analysis to these two metrics using John Turkey's HSD analysis which shows Dragon7 and MOrdred slightly different on r 2 and RMSE (p &lt; 0.05). The use of both MOrdred and Dragon7 however is significantly different from just using Dragon7 on both metrics (p &lt; 0.01).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Discussion</head><p>We first comment on the overall model performance of a few models created in this study. Second, we evaluate prior claims that feature representation should matter as the primary explanation of variance between models. We finally evaluate the three significant findings to consider in future research when building DNN models on CCL sensitivity predictions such as the drug featurization, training strategies, and the inclusion of SNPs.</p><p>In general, we found the best models to perform quite well on the validation data in both regression and classification contexts. There are models with validation scores on unseen cells of r 2 &gt; 0.7 and balanced accuracy &gt; 90%, and there are models with validation on unseen drugs with r 2 &gt; 0.55 and balanced accuracy &gt; 84%. The cross-study performance of the two best cell validation models (Table <ref type="table" target="#tab_5">6</ref>) are on par with several other studies, though not more predictive on a single drug basis. The models in table 6 are also top ranked if a simple average is taken across the cross-study measures as well. Models validated with unseen cells outperform models trained with unseen drugs in, however the performance varies across the studies where (Figure <ref type="figure" target="#fig_0">2</ref>). Given classical machine learning methods were generally capable of single drug predictions, we expected the cell validation performance to be better than the drug validation. Drug validation is a harder problem given the diversity of chemical space-a model that is largely successful on the drug validation problem can be used as a virtual screening tool for compounds. While it may appear the CCLE samples performed better with drug validation, this is an anomaly given at most two CCLE drugs appeared in that validation set.</p><p>Considering the case of a classification problem is often more actionable than the regression case for drug discovery and virtual screening tasks. The specific task of the model would be to filter models molecules based on their expected performance on CCLs which can be done at massive scale and quickly on a GPU, where inference times for these models Table 3: Metric comparison at 99-percentile of grouped by the model validation strategy and the RNA-seq feature set used. Rows do not represent a single model with those three metrics, rather a model exists with one of those metrics. Validation Method RNA-seq Feature Set RMSE r 2 score Balanced Accuracy MCC On Cell lincs1000 0.084 0.708 0.895 0.567 oncogenes 0.084 0.706 0.891 0.574 oncogenes &amp; lincs1000 0.085 0.708 0.894 0.568 On Drug lincs1000 0.108 0.478 0.796 0.482 oncogenes 0.107 0.478 0.788 0.463 oncogenes &amp; lincs1000 0.108 0.487 0.810 0.478 While other techniques such as virtual docking and simulation experiments can perform similar tasks by rank-ordering large virtual libraries, we propose the screening results from these models' predictions can be another measure designers of CCL panels and initial drug datasets can employ. The use of these models in the creation of new CCL panels would hopefully be able to balance the distribution of responders versus non-responders further. Given the models are regressors, a cutoff can be selected both at training time for using the balanced data sampling strategy and used afterwards for a sensitivity detection cutoff (we used 0.5, for example). Type I error (false positives) is a more costly error in the precision medicine task where the assignment of an incorrect drug is a wasted treatment opportunity, while type II error (false negatives) is costly in the virtual library screening where missing a potential lead at an early stage is a costly error. Of course, both errors should be considered for either task, but we aim to highlight the diversity of models possible just by training a large collection of DNN models. By altering the regression cutoff to 0.3, one can achieve &gt; 90% balanced accuracy on the validation screening problem. We believe the cost analysis of virtual screening models is beneficial to researchers, where the choice of model used in screening should come from the task at hand, not necessarily the best state of the art performance. Further work can be done to introduce uncertainty quantification into these models using techniques in <ref type="bibr" target="#b18">[19]</ref>.</p><p>While the prior classical assessment viewed the input data as the most significant point of variance, our results indicate the parameterization of the deep learning problem itself to be the largest explanation of variance. Based on the results, we see the transition from classical machine learning to deep learning will require a shift in focus from pure-feature engineering to deep learning hyperparameter optimization. Although we did not test discordant feature sets (all genetic features were super sets of each other, and the drug features techniques were both descriptor and fingerprint methods), one would expect to see a large variance across them, though the predictive signal seems stable across all input features. This implies better representations exist for drugs and cells, or perhaps the features we have selected are optimal and a smaller set can be created.</p><p>While the hyperparameter decision tree ranked non-feature related aspects higher than the cell and drug featurizations, the result from the percentile and ANOVA analysis should not be understated, attributing significant to use of SNP data. For instance, the quantile analysis shows a greater difference in MCC on cell validation for the inclusion of SNPs than the differences between MCC for the various model architectures; yet, the decision tree feature importance for the cell validation ranks model architecture as a more useful predictor than the inclusion of SNP frames. We believe this should be read a probability difference, rather than a discrepancy. The decision tree is attempting to model the entire distribution of models we trained, so the fact that the optimizer has a big impact is only due to the fact that SGD is more likely to not converge or converge to the optimum point without hyperparameter optimization while Adam is likely to converge to the same point. In a sense, for researchers getting into deep learning, time spent understanding hyperparameters of deep neural networks has a higher probability of paying off than feature engineering initially. The quantile analysis, however, does indicate there are pay-offs to exploring feature sets, only if one is willing to pay the computational cost of hyperparameter sweeps or optimization.</p><p>The results from this study indicate the choice of handling batch effect, general architecture, drug descriptors and modalities, and even the genetic features provided do not seem to impact the performance of the best models. The case of model architecture, dropout, and optimizers this result is not unexpected, as in general optimizers and dropout strategies should have minimal effect on the overall model capacity. Given the various model architectures were designed to have similar number of parameters, it seemed they were not differentiable in the case of general well performance. Batch effect handling, for example, employs a standard neural network to reduce the batch effect in the case of the combat scores; though this would be possible to occur within the first few layers of the network. To check, we present the by study scores of the models in the validation set split by the batch effect standardization procedure (Table <ref type="table" target="#tab_4">5</ref>) which again do not seem to indicate a noticeable effect. Other aspects such as dropout and optimizer do not have a global effect on models as we trained many models, however there are smaller effects such as the Adam optimizer generally performing better than SGD but this may be due to the lack of global parameter optimization, adjusting factors such as batch size and learning rate as it is well studied that SGD requires careful selection of learning schedule <ref type="bibr" target="#b19">[20]</ref>.</p><p>As a minor point, the choice of RNA-seq genes to use in the model was not an important consideration for model variance. There is that no superset of LINCS1000 gene set clearly outperformed any other set. This is, however, by design of the LINCS1000 gene set, as the selection of genetic features was created to recover most information contained in the transcriptome <ref type="bibr" target="#b20">[21]</ref>. Given the ability of the network to learn at such a high drop out rate, the learned weights should have optimal sparse networks. We have shown that an optimal random subset of RNA-seq sizes is desirable.</p><p>The SNPs improved performance all around, when looking at aggregated test statistics. The results suggest that SNPs improved regression metric performance as well as classification metric performance, regardless of the validation strategy. It is observed that the NCI-60 cell line show over 100x mutation rates over other sources used. In order to examine if this artifact affected the results, we again break down the performance by cross study. We see that breakdown by study in the analysis further illustrates complexities around this type of study. The results in figure <ref type="figure" target="#fig_2">3</ref> indicate however the inclusions of SNPs do not increase the performance across every study when aggregated from validation data. The cross-study results indicate that the larger mutation profile of the NCI-60 is not skewing the result indicating SNPs boost model performance on the cell validation split.</p><p>Both MOrderd and Dragon7 are fingerprint and descriptor based methods, with a great overlap between the two in terms of chemiformatics information found. An interesting component is the discrepancy between the cell and drug validation measures. When broken down by cross study, GDSC predictive performance is hurt severely when validating on drugs, and general predictions on unseen drugs is less powerful than unseen cells. We believe this is an indication that the models are not learning a useful representation of drugs, and further analysis of different drug modalities should be undertaken, such as images and fingerprints in <ref type="bibr" target="#b4">[5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Conclusion</head><p>We performed a large-scale sweep over feature types and training strategies for drug response prediction models. In doing so, we present a technique of training and testing across various cancer cell line screens. Despite the number of models trained and evaluated, we only comment on cancer drug response models using RNAseq, SNPs, and chemical descriptor methods. At this scale, we argue there is enough statistical (and observed) variance for researchers creating models without the ability to perform large-scale hyperparameter optimization and architecture sweeps to take into consideration. Of course, these results may disagree with the finding of others as one-off model optimizations will create different results, as we base our results on 99 th percentile rather than one-off model scores. Further hyperparameter optimization should take place from this starting point. We found the inclusion of SNPs to be a significant factor for model performance. Contrary to previous studies, we do not find features to be the largest explanation for variance across models. We believe further work must done both in terms of architecture searches, data standardization, and evaluation across multiple data sources.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method 4.1 Data</head><p>In this work, we curated a collection of cancer cell line screens from four different data sources. We use the Genomics of Drug Sensitivity (GDSC) <ref type="bibr" target="#b21">[22]</ref>, NCI-60 Human Tumor Cell Lines Screen (NCI-60) [23], the Cancer Cell Line Encyclopedia (CCLE) [24], Cancer Therapeutics Response Portal (CTRP) <ref type="bibr" target="#b23">[25]</ref>, and the Genentech Cell Line Screening Initiative (gSCI) <ref type="bibr" target="#b24">[26]</ref>. Each dataset consists of a panel of cancer cell lines tested of drugs. The datasets span size and specificity, as the NCI-60 contains the widest set of drugs, and the smallest set of cells. The datasets individually overlap both on some cells and drugs.</p><p>Cancer types across the datasets were not reported uniformly and contained some missing data. Using an autoencoder on RNA-seq data from the Genomic Data Commons <ref type="bibr" target="#b25">[27]</ref>, we were able to generate type-like labels for all RNA-seq data in our uniform dataset. Due to the imbalanced representation of various cancer types, the data was limited to the 21 most prevalent cancer types represented in the combined data frames. We applied a standard cancer type clustering technique to determine this source similarity metric (figure 4.1) [?].</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Data Preprocessing</head><p>RNA-seq profiles are not provided in standard format by CTRP, gSCI, and GDSC; however, there is a mapping from cells in CCLE and NCI-60 to obtain RNA-seq profiles. After mapping and aligning to the set of drugs from each data frame, the cell response metric was standardized. The NCI-60 reports a dose-response metric based on cell growth after drug application.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.1">Cell Profile Processing</head><p>The gene expression datasets for cancer cell lines, generated using RNA-seq and mutation data, were collected from the following sources: NCI-60, CCLE, and GDSC. The CTRP and gCSI drug response datasets were generated using the cell lines from CCLE dataset. Hence, for those, we used the gene expression and mutation data from the matching cell lines in the CCLE dataset. We refer to two featurization for cells, the RNA-seq for the expression data and single   The gene expression values were represented as fragments per kilobase of transcript per million (FPKM) values. To create varying gene lists, three datasets were created. The original contains a standard set of genes by an inner join of all the data sets (19,000 features), onco-gene set, and a LINCS1000 set. The LINCS1000 set was derived from the gene in The Library of Integrated Network-Based Cellular Signatures (LINCS) 1000 gene set <ref type="bibr" target="#b26">[28]</ref>. The onco-gene set was created from a list of 2054 genes derived from the following three sources: i) 976 "landmark" human genes from high-throughput gene expression assay used in The Library of Integrated Network-Based Cellular Signatures (LINCS) 1000 study, ii) 470 high-confidence cancer genes identified in GDSC1000 study <ref type="bibr" target="#b27">[29]</ref>, and iii) 1020 genes considered to be cancer genes by OncoKB <ref type="bibr" target="#b28">[30]</ref>.</p><p>The genes were filtered based on the genes int he respective dataset list and the FPKM values were transformed into log TPM values by log FPKM • 106/Sum of all FPKM values , and batch effect procresssed according to a few different methods.</p><p>When batch effects are in the data frame, the biological signal is not as strong as the effect coming from the various batches (figure <ref type="figure" target="#fig_4">5</ref>. This effects the downstream analysis such as differential expression and predictive modeling resulting in bias and unpredictable behavior. In order to manage batch effects between the different RNA-seq profiling, we tested three approaches: whole frame scaling, source scaling, and combat scores. Whole frame scaling, or applying no batch effect handling method, merges the combined RNA-seq expression values and scaling each feature to unit norm. Source scaling scales each feature to unit norm by the source rather than the combined data frame. Combat scaling come from combat algorithm from Johnson <ref type="bibr" target="#b29">[31]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Target Processing</head><p>Ideally, the target metric chosen correlates to growth inhibition used in the NCI-60 dataset for drug response measure given the NCI-60 is the largest data source used. The growth response data for NCI-60 cell lines is prepared by applying the compound at five different dosages to the tumor <ref type="bibr" target="#b30">[32]</ref>. By staining the cancer cells and measuring the absorbency with automated plate reader, they obtained the absorbency at time-zero, T z , the control absorbency, C, and the absorbency after the application of the drug, T i . Growth response used in the datasets is computed as Percentage Growth Inhibition (PGI) by PGI = 100 Ti-Tz C-Tz</p><formula xml:id="formula_0">T i ≥ T z 100 Ti-Tz Tz T i &lt; T z . (<label>1</label></formula><formula xml:id="formula_1">)</formula><p>The PGI value is the target prediction value of most learning problems related to the NCI-60 dataset.</p><p>From the PGI values across the different dosages, three values are computed related to the compound and cell. First, Growth inhibition of 50% (GI50) is calculated from setting the PGI to 50% and solving for T i in Equation <ref type="formula" target="#formula_0">1</ref>. The Total Growth Inhibition (TGI) is calculated by finding the concentration of the drug where T i = T z . Lastly the 50% lethal concentration (LC50) is the concentration of drug resulting in a 50% reduction in the measured protein at the end of the drug treatment as compared to that at the beginning, which is the T i dosage so (T i -T z)/T z = -0.5.</p><p>However, this metric requires each sample is associated with a cell, drug, and a dosage. In order to remove the dependency on dosage as the interest in cell lines is skewed toward drug screening and further downstream precision medicine where dosage is not a preliminary question, we formulate a dose-independent drug response metric for the datasets provided by some data sources such as CCLE.</p><p>For each dataset, we fit the dose dependent response to a hill curve with E ∞ , EC50, and hill sloop binding cooperatively (HS) (table <ref type="table" target="#tab_3">4</ref>.3). From the fit curve, we computed AUC -area under growth curve for a fixed dose range between 4 and 10 -log 10 (M ), IC50 -drug dose to have 50% growth, EC50se -standard error of the estimated EC50, R2fit -R2 score between the unclipped, real growths and fitted growth values, AUC1 -area under growth curve for the measured dose range in a study, AAC1 -area above growth curve for the measured dose range in a study, and DDS1 -drug sensitivity score <ref type="bibr" target="#b31">[33]</ref>.</p><p>While all the metrics are highly correlated, in this paper, we study AUC for a fixed dose range across all studies from 4 to 10 -log 10 (M ). A value of 1 for AUC indicates a cell does not respond at dosages while a value of 0 indicates a cell responds completely at all dosages. Given most cell lines do not respond to a particular drug, the predictive target AUC is highly skewed (Figure <ref type="figure">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Molecular Representations</head><p>The representation of molecules plays a crucial role in response prediction for it directly indicates what kind and how much information will be given into the deep learning models during training and inference.</p><p>We can divide the representations into engineered (knowledge-based) or non-engineered ones based on whether the featurization process involves the domain knowledge on molecular chemistry; alternatively, from the learning and data presentation point of view, the molecular representations can be either euclidean (vectors, tensors, voxels, etc.)or geometric (meshes, graphs, point clouds, etc.) ones.</p><p>The most basic but yet still effective representation of molecules is SMILES string. Introduced in <ref type="bibr" target="#b32">[34]</ref> in the late 1980s, SMILES (simplified molecular-input line-entry system) converts molecules into unique and human-understandable ASCII strings based on a given set of rules, which can be then processed with the methods and models in natural language processing. In our experiment, we used the canonical SMILES string, encoded them based on characters, then fed the vectors into deep learning models. Successful results has been demonstrated <ref type="bibr" target="#b33">[35,</ref><ref type="bibr" target="#b34">36,</ref><ref type="bibr" target="#b35">37]</ref> with this approach despite the fact that this vector representation requires minimal domain knowledge.</p><p>Molecular fingerprint is a widely used method of encoding molecules based on the presence or absence of particular substructures. There are different ways to implement such substructure encoding, some of them are non-exhaustive such as MACCS, which only has 166 structural key, while the others are exhaustive but differs in searching patterns (circular-, path-, or tree-based searching) and substructure specifications (such as the number of atoms in substructure).</p><p>In our experiment, we used ECFP <ref type="bibr" target="#b36">[38]</ref>, one of the most commonly used fingerprint, with different substructure size and vector dimensions to search for the most effective ECFP features for drug response.</p><p>Molecular descriptor is a broad definition, which usually requires more domain knowledge and feature-engineering to generate. Generally speaking, any numeric representation that can "describe" the molecules in a certain way, is a descriptor. For the sake of better performance, a good set of descriptors often covers a wide range of molecular properties, some of which are rather complex and demands understanding of chemistry at a very deep level to design. In our experiment, we have tried Mordred <ref type="bibr" target="#b37">[39]</ref> and Dragon descriptors, both of which are highly popular and widely used in other works. In this work, we limit the exploration to molecular descriptors from MOrdered and Dragon7 code bases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">DNN Models</head><p>Unlike classical algorithms studied in previous sweeps over this problem, deep neural networks are highly parameterized over architecture and training strategy <ref type="bibr" target="#b38">[40]</ref>. A study of greater scale could be done just exploring the question of architecture and training strategy for a single set of features and data. Arbitrarily, we selected three model architectures based on experience from training models on the data, with the hope the three models are different enough to capture any interesting variance between them.</p><p>We present three model architectures, a deep model, a model with a differential dropout scheme (inspired by the observations from <ref type="bibr" target="#b39">[41]</ref>), and a model with a sigmoid channel gated attention mechanism. The standard deep model is a simple ReLU based multi-layer perceptron (MLP). The differential dropout model is the same model except the dropout rates decrease to zero toward the output layer. The multiplicative channel gating is a two tower MLP, one for the genetic features of the cell and one for the drug features. The towers are combined using a multiplicative channel gate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.1">Multiplicative Channel Gating</head><p>Attention mechanisms are used successfully in natural language processing (NLP) applications. Attention layers in NLP take as input a set of keys, values, and queries and attend to certain parts of the sequence to highlight important parts of the prediction <ref type="bibr" target="#b40">[42]</ref>. Image attention expands the use case to images. Image attention has been used for image captioning where the model "attends" to a region in the image to predict word used to caption that part of the image <ref type="bibr" target="#b41">[43]</ref>. We consider a self-attention mechanism between linear layers of a network, where an activation function (sigmoid, tanh, softmax, etc.) is applied to one channel and multiplied onto another, effectively attending to certain values of the activation. We employ a variety of generic activation functions such as sigmoid, tanh, or softmax. Unlike a standard self-attention implementation such as the one used in Monica et. al <ref type="bibr" target="#b3">[4]</ref>, we do not enforce the use of softmax which can dimension the value of the gradients for non-sequence data. By using a sigmoid or tanh function, each channel is gated with the possibility of decreasing the value, though there is no restriction on how much information passes through the layer, unlike a softmax function.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.2">Model Training</head><p>Three training methods were used across all models. Training was performed using Pytorch <ref type="bibr" target="#b42">[44]</ref>. All models were trained on Summit, where each model used a single NVIDIA Volta V100. The models were dispatched for training and scoring using the Cancer Distributed Learning Environment (CANDLE) Supervisor <ref type="bibr" target="#b43">[45]</ref>. Two optimizers, stochastic gradient descent (SGD) and Adam optimizer were tested with the learning rate initially set to 8e-4 for both <ref type="bibr" target="#b44">[46]</ref>. The learning rate was reduced by a quarter when the validation loss did not decrease for over 20 epochs. The batch size was not varied and set to 512. Each model was set to train for 400 epochs, and stop early if validation loss stopped decreasing after 10 epochs. We trained using Huber loss (Smooth L1 loss) with δ = 1 <ref type="bibr" target="#b45">[47]</ref>.</p><p>Besides the standard vanilla training procedure, two other training variations were used. Due to the high imbalance of positive leads (AUC ≤ 0.5), an imbalanced data sampling strategy was used for each batch or a weighted loss function <ref type="bibr" target="#b46">[48,</ref><ref type="bibr" target="#b47">49]</ref>. Imbalanced data sampling fills each batch with a balanced number of responders and non-responders. The drawback of this method is the model sees some data more than others which may lead to over-fitting on the smaller class. Loss weighting is generally used for classification where different weights are applied to different target predictions. As the models in this study are trained for a regression task, loss weighting for this context involves multiplying the loss of each batch by 1 -y, the target, in order to produce stronger gradients for non-responders and weaker gradients for responders-the idea coming from the the responders, having few examples, not being able to influence the gradient enough to push the model towards learning the smaller class. Neither strategy was tested in conjunction with the other.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.3">Model Training</head><p>Three training methods were used across all models. Training was performed using Pytorch <ref type="bibr" target="#b42">[44]</ref>. All models were trained on Summit, where each model used a single NVIDIA Volta V100. The models were dispatched for training and scoring using the Cancer Distributed Learning Environment (CANDLE) Supervisor <ref type="bibr" target="#b43">[45]</ref>. Two optimizers, stochastic gradient descent (SGD) and Adam optimizer were tested with the learning rate initially set to 8e-4 for both <ref type="bibr" target="#b44">[46]</ref>. The learning rate was reduced by a quarter when the validation loss did not decrease for over 20 epochs. The batch size was not varied and set to 512. Each model was set to train for 400 epochs, and stop early if validation loss stopped decreasing after 10 epochs. We trained using Huber loss (Smooth L1 loss) with δ = 1 <ref type="bibr" target="#b45">[47]</ref>.</p><p>Besides the standard vanilla training procedure, two other training variations were used. Due to the high imbalance of positive leads (AUC ≤ 0.5), an imbalanced data sampling strategy was used for each batch or a weighted loss function <ref type="bibr" target="#b46">[48,</ref><ref type="bibr" target="#b47">49]</ref>. Imbalanced data sampling fills each batch with a balanced number of responders and non-responders. The drawback of this method is the model sees some data more than others which may lead to over-fitting on the smaller class. Loss weighting is generally used for classification where different weights are applied to different target predictions. As the models in this study are trained for a regression task, loss weighting for this context involves multiplying the loss of each batch by 1 -y, the target, in order to produce stronger gradients for non-responders and weaker gradients for responders-the idea coming from the responders, having few examples, not being able to influence the gradient enough to push the model towards learning the smaller class. Neither strategy was tested in conjunction with the other.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6">Model Evaluation</head><p>Prior works have utilized strict and non-strict partitioning for both cell lines and drugs in the training and testing set. Outside of pure model performance testing, there are two use cases we targeted: drug screening and precision medicine screening. For drug screening, panels are often performed against the set collection of cell lines to determine if a drug should move on to PDX models for further testing. In this case, we partition the training and test set by unique molecules, and use a 3-fold cross validation where each fold consist of entirely different molecules. For precision medicine, there is a list of approved drugs or known agents and the medical question is regarding which treatment to offer to a cell. In this case, the 3-fold cross validation is done over the unique cell lines, where each fold consists of unique cells not in any other fold. For the sake of testing more models and feature combinations, we did not perform a completely strict model evaluation of unseen drugs and cells as the use case is outside the scope of this research.</p><p>While this problem is posed as a regression problem as the AUC values are continuous on 0 &lt; AU C ≤ 1, viewing the problem as classification links it directly to application of the model. Due to the extreme skew of the training/testing distributions, r 2 and root mean squared error (RMSE) may not represent whether or not the model performs well in the region of interest (the model may minimize residuals over a large mass of the data, ignoring the residuals separating interesting response from no response). By artificially selecting a cutoff, 0.5, we can determine for the case of drug screening or precision medicine whether or not the model is learning to distinguish a responder cell/drug or a non-responder. The balance between type I and type II error is a calculation that is use-case specific and the selection of the feature set and model from our sweep will require consideration of this trade-off. We further justify this unusual approach to classification by the result from Jang et. al indicating discretized target variables created less performant models from <ref type="bibr" target="#b11">[12]</ref> 4.7 Analysis of Results</p><p>In order to test thoroughly the various proposed feature and training combinations, we tested the full combination space. Given 198 feature sets entailing various scaling, cell profile types, and drug representations, we ran each feature set on each model, with three different training strategies, top six and top 21 datasets, and three cross validation folds. In total, we ran 35,320 models on Summit. We gathered the results, and concatenates the predictions on each training fold from the model to estimate average statistics for the model.</p><p>At this scale of models, some models (15%) did not converge or provide reasonable results. Incorporating those failures into the overall performance of a model would not encapsulate the possible performance given hyper-parameter tuning and detailed work with a given configuration. We present models ranked by balanced accuracy and MCC to illustrate classification performance with post-processing binning and r 2 scores to illustrate the predictive power of the regression view of the problem.</p><p>After gathering data, we removed models we believed to have not converged or over fit based on having one of the following criteria: TPR or FPR of 1.0, negative or zero r 2 score, or a loss outside the 85th quantile. This removed 2045 models from the data for analysis.</p><p>In the results section, we highlight comparisons between the drug validation models and the cell validation models. The drug validations did not perform nearly as well as the cell validation models. We believe drug validation is a harder test on the model as the test is based on drug discovery rather than preclinical screening for a fixed set of drugs. For metrics such as Mathew correlation coefficient (MCC) and r 2 score we report 99th percentile, and for root mean squared error we report (0.01) percentile. We report multiple metrics as different purposes may arise for these models. We chose to report at 99th percentile versus best models found, as it is unclear with limited resources a researcher could reproduce the best model, and we aim to discuss approaches to the problem that can be taken out of the box and be performant.    </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Comparison of the models' performances between validation methods over all converged trained models broken down by sample's originating study.</figDesc><graphic coords="7,94.16,217.83,210.60,292.66" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>Manica et al. marks  the distinction between a strict and lenient split by cell and drug identity in the training set<ref type="bibr" target="#b3">[4]</ref>. Chang et al. used a leniant (random on both cells and drugs) split for the validation data<ref type="bibr" target="#b6">[7]</ref>. Given our dose-independent prediction target, a specific cell and specific drug constitutes a single training example only in terms of model training and testing.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Cross study analysis of SNPs, 98th percentile and max for each score.</figDesc><graphic coords="15,107.59,78.50,396.82,227.14" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Counts of cells based on type from each dataset used in the training data. Each data source contains other types not included, but we limit ourselves to the top 21 and top six cancer types. The types were determined based on clustering of RNA-seq using the autoencoder clustering method. While the method is not the same as a somatic tissue type or diagnosis, the type provides an indication of the diversity between data sources when attempting to balance data across classes.</figDesc><graphic coords="15,191.37,346.64,226.77,169.26" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: First two components from PCA on CCLE, GDC, and NCI-60 cell lines from our combined data frame. Without standardization, some batch effects are clear between NCI-60 and CCLE cell lines. The two methods tested seem to eliminate an obvious skew towards various batches.</figDesc><graphic coords="16,72.00,298.10,468.00,156.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 :</head><label>1</label><figDesc>Metric comparison at 99-percentile of grouped by the model validation strategy and the inclusion of SNPs. Rows do not represent a single model with those three metrics, rather a model exists with one of those metrics. A t-test for difference between group means shows a significant difference in r 2 scores p = 1.9e -18 and 0.0005 for cell and drug validation methods respectively.Validation Method SNPs Included RMSE r 2 score Balanced Accuracy MCC</figDesc><table><row><cell>On Cell</cell><cell>False True</cell><cell>0.086 0.083</cell><cell>0.675 0.712</cell><cell>0.889 0.896</cell><cell>0.553 0.577</cell></row><row><cell>On Drug</cell><cell>False True</cell><cell>0.108 0.107</cell><cell>0.448 0.495</cell><cell>0.792 0.807</cell><cell>0.460 0.487</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 :</head><label>2</label><figDesc>Metric comparison at 99-percentile of grouped by the model validation strategy and the scaling method used. Rows do not represent a single model with those three metrics, rather a model exists with one of those metrics.Validation Method RNA-seq Scaling Method RMSE r 2 score Balanced Accuracy MCC</figDesc><table><row><cell></cell><cell>Combat</cell><cell>0.084</cell><cell>0.708</cell><cell>0.893</cell><cell>0.568</cell></row><row><cell>On Cell</cell><cell>None</cell><cell>0.084</cell><cell>0.703</cell><cell>0.893</cell><cell>0.565</cell></row><row><cell></cell><cell>Source Scaled</cell><cell>0.084</cell><cell>0.710</cell><cell>0.891</cell><cell>0.568</cell></row><row><cell></cell><cell>Combat</cell><cell>0.107</cell><cell>0.484</cell><cell>0.797</cell><cell>0.478</cell></row><row><cell>On Drug</cell><cell>None</cell><cell>0.110</cell><cell>0.470</cell><cell>0.795</cell><cell>0.474</cell></row><row><cell></cell><cell>Source Scaled</cell><cell>0.108</cell><cell>0.494</cell><cell>0.796</cell><cell>0.473</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4 :</head><label>4</label><figDesc>Metric comparison at 99-percentile of grouped by the model validation strategy and the drug featurization method used. Rows do not represent a single model with those three metrics, rather a model exists with one of those metrics.</figDesc><table><row><cell cols="2">Validation Method Drug Featurization</cell><cell cols="4">RMSE r 2 score Balanced Accuracy MCC</cell></row><row><cell></cell><cell>Dragon7 Descriptors</cell><cell>0.084</cell><cell>0.706</cell><cell>0.894</cell><cell>0.570</cell></row><row><cell>On Cell</cell><cell>Mordred Descriptors</cell><cell>0.084</cell><cell>0.708</cell><cell>0.889</cell><cell>0.568</cell></row><row><cell></cell><cell>Mordred and Dragon7 Descriptors</cell><cell>0.084</cell><cell>0.709</cell><cell>0.896</cell><cell>0.567</cell></row><row><cell></cell><cell>Dragon7 Descriptors</cell><cell>0.108</cell><cell>0.478</cell><cell>0.793</cell><cell>0.466</cell></row><row><cell>On Drug</cell><cell>Mordred Descriptors</cell><cell>0.107</cell><cell>0.473</cell><cell>0.811</cell><cell>0.481</cell></row><row><cell></cell><cell cols="2">Mordred and Dragon7 Descriptors 0.107</cell><cell>0.491</cell><cell>0.793</cell><cell>0.471</cell></row></table><note><p>well outperform standard virtual docking libraries (approx. 5000 samples per second, less if featurizing molecule on the fly).</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 5 :</head><label>5</label><figDesc>Breakdown of data standardization techniques across the different studies in the validation data.</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell cols="2">Balanced Accuracy</cell><cell></cell><cell cols="2">r 2 Score</cell><cell></cell></row><row><cell cols="2">validation scaling</cell><cell>All</cell><cell cols="3">CCLE GDSC NCI-60</cell><cell>All</cell><cell cols="3">CCLE GDSC NCI-60</cell></row><row><cell></cell><cell>Combat</cell><cell cols="2">0.893 0.914</cell><cell>0.912</cell><cell>0.902</cell><cell cols="2">0.708 0.729</cell><cell>0.619</cell><cell>0.749</cell></row><row><cell>On Cell</cell><cell>None</cell><cell cols="2">0.893 0.918</cell><cell>0.906</cell><cell>0.904</cell><cell cols="2">0.703 0.73</cell><cell>0.617</cell><cell>0.743</cell></row><row><cell></cell><cell>Source Scaled</cell><cell cols="2">0.891 0.91</cell><cell>0.904</cell><cell>0.899</cell><cell>0.71</cell><cell>0.727</cell><cell>0.617</cell><cell>0.747</cell></row><row><cell></cell><cell>Combat</cell><cell cols="2">0.797 0.945</cell><cell>0.799</cell><cell>0.854</cell><cell cols="2">0.484 0.762</cell><cell>0.378</cell><cell>0.607</cell></row><row><cell>On Drug</cell><cell>None</cell><cell cols="2">0.795 0.944</cell><cell>0.794</cell><cell>0.854</cell><cell>0.47</cell><cell>0.761</cell><cell>0.388</cell><cell>0.598</cell></row><row><cell></cell><cell>Source Scaled</cell><cell cols="2">0.796 0.946</cell><cell>0.808</cell><cell>0.839</cell><cell cols="2">0.501 0.748</cell><cell>0.397</cell><cell>0.602</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 6 :</head><label>6</label><figDesc>SNPs) for the mutation data. The SNP data was prepared as counts rather than binary indictor of presence or absence.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">Best Regression Model</cell><cell></cell><cell></cell><cell cols="2">Best Classification Model</cell><cell></cell></row><row><cell></cell><cell cols="4">r 2 score RMSE Balanced Accuracy MCC</cell><cell cols="4">r 2 score RMSE Balanced Accuracy MCC</cell></row><row><cell>All</cell><cell>0.73</cell><cell>0.078</cell><cell>0.69</cell><cell>0.47</cell><cell>0.56</cell><cell>0.104</cell><cell>0.91</cell><cell>0.59</cell></row><row><cell cols="2">CCLE 0.70</cell><cell>0.086</cell><cell>0.71</cell><cell>0.53</cell><cell>0.68</cell><cell>0.087</cell><cell>0.90</cell><cell>0.69</cell></row><row><cell cols="2">GDSC 0.57</cell><cell>0.098</cell><cell>0.74</cell><cell>0.53</cell><cell>0.52</cell><cell>0.106</cell><cell>0.87</cell><cell>0.60</cell></row><row><cell cols="2">NCI60 0.76</cell><cell>0.075</cell><cell>0.68</cell><cell>0.45</cell><cell>0.56</cell><cell>0.103</cell><cell>0.92</cell><cell>0.58</cell></row></table><note><p>Individual metrics for cell split validation for two of most useful models. The regression model is a differential dropout model with an initial dropout rate of 0.45, trained with the top 21 cancer type samples using loss weighting on the samples. Cells were featurized with SNPs and RNA-seq from the LINCS1000 subset, and chemicals were featurized by Dragon7 descriptors. The classification model is trained only on the top 6 cancer types and is the standard MLP model with a dropout rate of 0.2. Cells were featurized with SNPs and RNA-seq from the LINCS1000 subset, and chemicals were featurized by MOrdred descriptors. Both models used the Adam optimizer.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 7 :</head><label>7</label><figDesc>± 0.39 1.88 ± 1.53 NCI-60 0.80 ± 43.16 0.36 ± 0.36 1.93 ± 1.47 gCSI 0.82 ± 0.31 0.34 ± 0.33 1.90 ± 1.28Dose independent fitting results. E ∞ and HS are parameters from the fit, and r 2 is from the result of the hill curve fit on a per-drug , per-cell basis. The NCI-60's large standard deviation comes from a few extreme outliers that were removed.</figDesc><table><row><cell cols="2">Source r 2 fit</cell><cell>E ∞</cell><cell>HS</cell></row><row><cell>CCLE</cell><cell>0.71 ± 1.35</cell><cell cols="2">0.31 ± 0.35 1.93 ± 1.50</cell></row><row><cell>CTRP</cell><cell>0.70 ± 0.36</cell><cell cols="2">0.33 ± 0.38 2.01 ± 1.53</cell></row><row><cell>GDSC</cell><cell>0.63 ± 0.40</cell><cell>0.40</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>Department of Computer Science, University of Chicago, Chicago, IL, United States.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1"><p>Computing, Environment, and Life Sciences, Argonne National Laboratory, Lemont, IL, United States.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_2"><p>Applied Development and Research Directorate, Frederick National Laboratory for Cancer Research, Frederick, MD, United States. ‡ Primary contact PI Rick Stevens stevens@anl.gov</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_3"><p>Please see https://github.com/DOE-NCI-Pilot1/CCLFeatureComparison</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgement</head><p>This work has been supported in part by the <rs type="funder">Joint Design of Advanced Computing Solutions for Cancer</rs> (<rs type="grantNumber">JDACS4C</rs>) program established by the <rs type="funder">U.S. Department of Energy (DOE)</rs> and the <rs type="funder">National Cancer Institute (NCI)</rs> of the <rs type="funder">National Institutes of Health</rs>. This work was performed under the auspices of the <rs type="institution">U.S. Department of Energy by Argonne National Laboratory</rs> under Contract <rs type="grantNumber">DE-AC02-06-CH11357</rs>, <rs type="funder">Lawrence Livermore National Laboratory</rs> under Contract <rs type="grantNumber">DE-AC52-07NA27344</rs>, <rs type="funder">Los Alamos National Laboratory</rs> under Contract <rs type="grantNumber">DE-AC5206NA25396</rs>, and <rs type="funder">Oak Ridge National Laboratory</rs> under Contract <rs type="grantNumber">DE-AC05-00OR22725</rs>. This project has been funded in whole or in part with federal funds from the <rs type="funder">National Cancer Institute, National Institutes of Health</rs>, under Contract No. <rs type="grantNumber">HHSN261200800001E</rs>. The content of this publication does not necessarily reflect the views or policies of the <rs type="institution">Department of Health and Human Services</rs>, nor does mention of trade names, commercial products, or organizations imply endorsement by the <rs type="institution">U.S. Government</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_A3Xd74d">
+					<idno type="grant-number">JDACS4C</idno>
+				</org>
+				<org type="funding" xml:id="_dvJskMP">
+					<idno type="grant-number">DE-AC02-06-CH11357</idno>
+				</org>
+				<org type="funding" xml:id="_YjtMQRU">
+					<idno type="grant-number">DE-AC52-07NA27344</idno>
+				</org>
+				<org type="funding" xml:id="_kFUQY3D">
+					<idno type="grant-number">DE-AC5206NA25396</idno>
+				</org>
+				<org type="funding" xml:id="_5xrE8Q8">
+					<idno type="grant-number">DE-AC05-00OR22725</idno>
+				</org>
+				<org type="funding" xml:id="_VHPMX3V">
+					<idno type="grant-number">HHSN261200800001E</idno>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Genetic polymorphism and function of glutathione s-transferases in tumor drug resistance</title>
+		<author>
+			<persName><forename type="first">Hui-Wen</forename><surname>Lo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francis</forename><surname>Ali-Osman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current opinion in pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="367" to="374" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Relationship between the gstm1 genetic polymorphism and susceptibility to bladder, breast and colon cancer</title>
+		<author>
+			<persName><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wyllie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Barnes</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wolf</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Spurr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Carcinogenesis</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1821" to="1824" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Genetic determinants of cancer drug efficacy and toxicity: practical considerations and perspectives</title>
+		<author>
+			<persName><forename type="first">Myrna</forename><surname>Candelaria</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lucia</forename><surname>Taja-Chayeb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Claudia</forename><surname>Arce-Salinas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Silvia</forename><surname>Vidal-Millan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alberto</forename><surname>Serrano-Olvera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alfonso</forename><surname>Duenas-Gonzalez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Anti-cancer drugs</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="923" to="933" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Towards explainable anticancer compound sensitivity prediction via multimodal attention-based convolutional encoders</title>
+		<author>
+			<persName><forename type="first">Matteo</forename><surname>Manica</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ali</forename><surname>Oskooei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jannis</forename><surname>Born</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vigneshwari</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Sáez-Rodríguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">María</forename><surname>Rodríguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Martínez</forename></persName>
+		</author>
+		<idno type="arXiv">arXiv:1904.11223</idno>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">KekuleScope: prediction of cancer cell line sensitivity and compound potency using convolutional neural networks trained on compound images</title>
+		<author>
+			<persName><forename type="first">Isidro</forename><surname>Cortés</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">-Ciriano</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Bender</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Cheminformatics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Predicting tumor cell line response to drug pairs with deep learning</title>
+		<author>
+			<persName><forename type="first">Fangfang</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maulik</forename><surname>Shukla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Brettin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cristina</forename><surname>Garcia-Cardona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Judith</forename><surname>Cohn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonathan</forename><forename type="middle">E</forename><surname>Allen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergei</forename><surname>Maslov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susan</forename><forename type="middle">L</forename><surname>Holbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">H</forename><surname>Doroshow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yvonne</forename><forename type="middle">A</forename><surname>Evrard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><forename type="middle">A</forename><surname>Stahlberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rick</forename><forename type="middle">L</forename><surname>Stevens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Cancer drug response profile scan (cdrscan): a deep learning model that predicts drug effectiveness from cancer genomic signature</title>
+		<author>
+			<persName><forename type="first">Yoosup</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hyejin</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hyun-Jin</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seungju</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kwee-Yum</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tae</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Soon</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jongsun</forename><surname>Jung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jae-Min</forename><surname>Shin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific reports</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">8857</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Machine Learning Prediction of Cancer Cell Sensitivity to Drugs Based on Genomic and Chemical Properties</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Michael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pedro</forename><forename type="middle">J</forename><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Ballester</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">61318</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Functional random forest with applications in dose-response predictions</title>
+		<author>
+			<persName><forename type="first">Raziur</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saugato</forename><surname>Rahman Dhruba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Souparno</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ranadip</forename><surname>Pal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific reports</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1628</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Comparison and validation of genomic predictors for anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Papillon-Cavanagh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><forename type="middle">De</forename><surname>Jay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nehme</forename><surname>Hachem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Catharina</forename><surname>Olsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gianluca</forename><surname>Bontempi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jwl</forename><surname>Hugo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Aerts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Quackenbush</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Haibe-Kains</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Medical Informatics Association</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="597" to="602" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">An analysis of single-layer networks in unsupervised feature learning</title>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Coates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Honglak</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the fourteenth international conference on artificial intelligence and statistics</title>
+		<meeting>the fourteenth international conference on artificial intelligence and statistics</meeting>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="215" to="223" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Systematic assessment of analytical methods for drug sensitivity prediction from cancer cell line data</title>
+		<author>
+			<persName><forename type="first">In Sock</forename><surname>Jang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elias</forename><forename type="middle">Chaibub</forename><surname>Neto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Justin</forename><surname>Guinney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">H</forename><surname>Friend</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2014">2014. 2014</date>
+			<publisher>World Scientific</publisher>
+			<biblScope unit="page" from="63" to="74" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">The microarray quality control (maqc)-ii study of common practices for the development and validation of microarray-based predictive models</title>
+		<author>
+			<persName><forename type="first">Leming</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wendell</forename><forename type="middle">D</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fabien</forename><surname>Campagne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhining</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">J</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhenqiang</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tzu-Ming</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Federico</forename><forename type="middle">M</forename><surname>Goodsaid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lajos</forename><surname>Pusztai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page">827</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Shape-based generative modeling for de novo drug design</title>
+		<author>
+			<persName><forename type="first">Miha</forename><surname>Skalic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">José</forename><surname>Jiménez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Davide</forename><surname>Sabbadin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gianni</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fabritiis</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of chemical information and modeling</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1205" to="1214" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Mordred: a molecular descriptor calculator</title>
+		<author>
+			<persName><forename type="first">Hirotomo</forename><surname>Moriwaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yu-Shi</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Norihito</forename><surname>Kawashita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tatsuya</forename><surname>Takagi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of cheminformatics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">4</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Dragon software: An easy approach to molecular descriptor calculations</title>
+		<author>
+			<persName><forename type="first">Andrea</forename><surname>Mauri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Viviana</forename><surname>Consonni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manuela</forename><surname>Pavan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roberto</forename><surname>Todeschini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Match</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="237" to="248" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Towards gene expression convolutions using gene interaction graphs</title>
+		<author>
+			<persName><forename type="first">Francis</forename><surname>Dutil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Paul Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Martin</forename><surname>Weiss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Georgy</forename><surname>Derevyanko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1806.06975</idno>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Dr. vae: improving drug response prediction via modeling of drug perturbation effects</title>
+		<author>
+			<persName><forename type="first">Ladislav</forename><surname>Rampášek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Hidru</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petr</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Goldenberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Simple and scalable predictive uncertainty estimation using deep ensembles</title>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Balaji Lakshminarayanan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Pritzel</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Blundell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="6402" to="6413" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Matthew</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Zeiler</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1212.5701</idno>
+		<title level="m">Adadelta: an adaptive learning rate method</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">The library of integrated networkbased cellular signatures nih program: system-level cataloging of human cells response to perturbations</title>
+		<author>
+			<persName><forename type="first">Alexandra B</forename><surname>Keenan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sherry</forename><forename type="middle">L</forename><surname>Jenkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kathleen</forename><forename type="middle">M</forename><surname>Jagodnik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Koplev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Denis</forename><surname>Torre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zichen</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Moshe</forename><forename type="middle">C</forename><surname>Anders B Dohlman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Silverstein</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lachmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell systems</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="13" to="24" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells</title>
+		<author>
+			<persName><forename type="first">Wanjuan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nidhi</forename><surname>Bindal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dave</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">Richard</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sridhar</forename><surname>Ramaswamy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">Andrew</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">A</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="955" to="D961" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Jordi</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giordano</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kavitha</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungjoon</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><forename type="middle">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Lehár</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dmitriy</forename><surname>Sonkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anupama</forename><surname>Reddy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manway</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lauren</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">E</forename><surname>Monahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paula</forename><surname>Morais</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jodi</forename><surname>Meltzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Korejwa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Judit</forename><surname>Jané-Valbuena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Felipa</forename><forename type="middle">A</forename><surname>Mapa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Thibault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eva</forename><surname>Bric-Furlong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pichai</forename><surname>Raman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Shipway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jill</forename><surname>Engels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guoying</forename><forename type="middle">K</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianjun</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melanie</forename><surname>Aspesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kalpana</forename><surname>De Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">D</forename><surname>Jagtap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hatton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuele</forename><surname>Palesc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Supriya</forename><surname>Olo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Scott</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carrie</forename><surname>Mahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">C</forename><surname>Sougnez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ted</forename><surname>Onofrio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Liefeld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wendy</forename><surname>Macconaill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Winckler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanxin</forename><surname>Reich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jill</forename><forename type="middle">P</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stacey</forename><forename type="middle">B</forename><surname>Mesirov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gad</forename><surname>Gabriel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristin</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivien</forename><surname>Ardlie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vic</forename><forename type="middle">E</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barbara</forename><forename type="middle">L</forename><surname>Myer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Weber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Porter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Warmuth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jennifer</forename><forename type="middle">L</forename><surname>Finan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Todd</forename><forename type="middle">R</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">William</forename><forename type="middle">R</forename><surname>Morrissey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Sellers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Levi</forename><forename type="middle">A</forename><surname>Schlegel</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Garraway</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A comprehensive transcriptional portrait of human cancer cell lines</title>
+		<author>
+			<persName><forename type="first">Christiaan</forename><surname>Klijn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Durinck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><forename type="middle">W</forename><surname>Stawiski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><forename type="middle">M</forename><surname>Haverty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhaoshi</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hanbin</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeremiah</forename><surname>Degenhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oleg</forename><surname>Mayba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Gnad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinfeng</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregoire</forename><surname>Pau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jens</forename><surname>Reeder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kiran</forename><surname>Mukhyala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Suresh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mamie</forename><surname>Selvaraj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">J</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">J</forename><surname>Zynda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><forename type="middle">D</forename><surname>Brauer</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gerard</forename><surname>Robert C Gentleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">L</forename><surname>Manning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Yauch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Bourgon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zora</forename><surname>Stokoe</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Modrusan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Frederic</forename><forename type="middle">J</forename><surname>Richard M Neve</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>De Sauvage</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Somasekar</forename><surname>Settleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zemin</forename><surname>Seshagiri</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="306" to="312" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Correlating chemical sensitivity and basal gene expression reveals mechanism of action</title>
+		<author>
+			<persName><forename type="first">Brinton</forename><surname>Matthew G Rees</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaime</forename><forename type="middle">H</forename><surname>Seashore-Ludlow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Drew</forename><forename type="middle">J</forename><surname>Cheah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edmund</forename><forename type="middle">V</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shubhroz</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sarah</forename><surname>Gill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">E</forename><surname>Javaid</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Coletti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Victor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicole</forename><forename type="middle">E</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christian</forename><forename type="middle">K</forename><surname>Bodycombe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Soule</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ava</forename><surname>Alexander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joanne</forename><forename type="middle">D</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kotz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benito</forename><surname>Suk-Yee Hon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ted</forename><surname>Munoz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vlado</forename><surname>Liefeld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">A</forename><surname>Dančík</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Clary</forename><forename type="middle">B</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><forename type="middle">A</forename><surname>Clish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michelle</forename><surname>Bittker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bridget</forename><forename type="middle">K</forename><surname>Palmer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">A</forename><surname>Wagner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alykhan</forename><forename type="middle">F</forename><surname>Clemons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stuart</forename><forename type="middle">L</forename><surname>Shamji</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Schreiber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Chemical Biology</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="1986">1986. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Toward a shared vision for cancer genomic data</title>
+		<author>
+			<persName><forename type="first">Allison</forename><forename type="middle">P</forename><surname>Robert L Grossman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vincent</forename><surname>Heath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Harold</forename><forename type="middle">E</forename><surname>Ferretti</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Varmus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Warren</forename><forename type="middle">A</forename><surname>Douglas R Lowy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Louis</forename><forename type="middle">M</forename><surname>Kibbe</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Staudt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">375</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1109" to="1112" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Data portal for the library of integrated network-based cellular signatures (lincs) program: integrated access to diverse large-scale cellular perturbation response data</title>
+		<author>
+			<persName><forename type="first">Amar</forename><surname>Koleti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raymond</forename><surname>Terryn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vasileios</forename><surname>Stathias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Caty</forename><surname>Chung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Daniel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">P</forename><surname>Cooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dušica</forename><surname>Turner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Vidović</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tanya</forename><forename type="middle">T</forename><surname>Forlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alessandro D'</forename><surname>Kelley</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Urso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="558" to="D566" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theo</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">J</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Graham</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Schubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanne</forename><surname>Aben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuel</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Syd</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Cokelaer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ewald</forename><surname>Van Dyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Holger</forename><surname>Heshani De Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xianming</forename><surname>Heyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Regina</forename><forename type="middle">K</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingsong</forename><surname>Egan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tatiana</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xeni</forename><surname>Mironenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Mitropoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinhua</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tinghu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergi</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maryam</forename><surname>Sayols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Soleimani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nuria</forename><surname>Tamborero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petra</forename><surname>Lopez-Bigas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manel</forename><surname>Ross-Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathanael</forename><forename type="middle">S</forename><surname>Esteller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">A</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>Lodewyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Wessels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><forename type="middle">J</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Garnett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">A Landscape of Pharmacogenomic Interactions in Cancer. Cell</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="page" from="740" to="754" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Chronic Myeloid Disorders Working Group of the International Cancer Genome Consortium</title>
+		<author>
+			<persName><forename type="first">Chi</forename><forename type="middle">C</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Inigo</forename><surname>Martincorena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Alistair</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mamunur</forename><surname>Rust</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Constantine</forename><surname>Rashid</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Alifrangis</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ludmil B Alexandrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christina</forename><surname>Jessamy C Tiffen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">;</forename><surname>Kober</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><forename type="middle">E</forename><surname>Anthony R Green</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jyoti</forename><surname>Massie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stella</forename><surname>Nangalia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hartmut</forename><surname>Lempidaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Konstanze</forename><surname>Döhner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sarah</forename><forename type="middle">J</forename><surname>Döhner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Bray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elli</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><forename type="middle">J</forename><surname>Papaemmanuil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">J</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Adams</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page">2846</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note>Inactivating CUX1 mutations promote tumorigenesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Adjusting batch effects in microarray expression data using empirical Bayes methods</title>
+		<author>
+			<persName><forename type="first">W</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evan</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ariel</forename><surname>Rabinovic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biostatistics</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="118" to="127" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Some practical considerations and applications of the national cancer institute in vitro anticancer drug discovery screen</title>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenneth</forename><forename type="middle">D</forename><surname>Paull</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drug Development Research</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="91" to="109" />
+			<date type="published" when="1995-02">February 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Quantitative scoring of differential drug sensitivity for individually optimized anticancer therapies</title>
+		<author>
+			<persName><forename type="first">Bhagwan</forename><surname>Yadav</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tea</forename><surname>Pemovska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Agnieszka</forename><surname>Szwajda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evgeny</forename><surname>Kulesskiy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mika</forename><surname>Kontro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Riikka</forename><surname>Karjalainen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mamun</forename><surname>Muntasir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Disha</forename><surname>Majumder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Astrid</forename><surname>Malani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonathan</forename><surname>Murumägi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kimmo</forename><surname>Knowles</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Caroline</forename><surname>Porkka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olli</forename><surname>Heckman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Krister</forename><surname>Kallioniemi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tero</forename><surname>Wennerberg</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Aittokallio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific Reports</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">5193</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Environmental Research Laboratory (Duluth. SMILES, a Line Notation and Computerized Interpreter for Chemical Structures</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Veith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Weininger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Minn</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Environmental research brief</title>
+		<imprint>
+			<date type="published" when="1987">1987</date>
+		</imprint>
+		<respStmt>
+			<orgName>U.S. Environmental Protection Agency, Environmental Research Laboratory</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">Chemception: A Deep Neural Network with Minimal Chemistry Knowledge Matches the Performance of Expert-developed QSAR/QSPR Models</title>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Garrett B Goh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abhinav</forename><surname>Siegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathan</forename><forename type="middle">O</forename><surname>Vishnu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathan</forename><surname>Hodas</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Baker</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">DeepCCI: End-to-end Deep Learning for Chemical-Chemical Interaction Prediction</title>
+		<author>
+			<persName><forename type="first">Sunyoung</forename><surname>Kwon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungroh</forename><surname>Yoon</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="203" to="212" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Convolutional neural network based on SMILES representation of compounds for detecting chemical motif</title>
+		<author>
+			<persName><forename type="first">Maya</forename><surname>Hirohara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yutaka</forename><surname>Saito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuki</forename><surname>Koda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kengo</forename><surname>Sato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yasubumi</forename><surname>Sakakibara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">526</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Extended-Connectivity Fingerprints</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Rogers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><surname>Hahn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Chemical Information and Modeling</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="page" from="742" to="754" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Mordred: a molecular descriptor calculator</title>
+		<author>
+			<persName><forename type="first">Hirotomo</forename><surname>Moriwaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yu-Shi</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Norihito</forename><surname>Kawashita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tatsuya</forename><surname>Takagi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Cheminformatics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A primer on deep learning in genomics</title>
+		<author>
+			<persName><forename type="first">James</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mikael</forename><surname>Huss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abubakar</forename><surname>Abid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pejman</forename><surname>Mohammadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ali</forename><surname>Torkamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Amalio</forename><surname>Telenti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Improving deep neural networks by using sparse dropout strategy</title>
+		<author>
+			<persName><forename type="first">Mingming</forename><surname>Hao Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenju</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhanlei</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Liang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2014 IEEE China Summit &amp; International Conference on Signal and Information Processing (ChinaSIP)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="21" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">Attention Is All You Need</title>
+		<author>
+			<persName><forename type="first">Ashish</forename><surname>Vaswani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Shazeer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Niki</forename><surname>Parmar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jakob</forename><surname>Uszkoreit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Llion</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aidan</forename><forename type="middle">N</forename><surname>Gomez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lukasz</forename><surname>Kaiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Illia</forename><surname>Polosukhin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<author>
+			<persName><forename type="first">Kelvin</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Ba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><surname>Kiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyunghyun</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Courville</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruslan</forename><surname>Salakhutdinov</surname></persName>
+		</author>
+		<title level="m">Richard Zemel, and Yoshua Bengio. Show, Attend and Tell: Neural Image Caption Generation with Visual Attention</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Paszke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sam</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Soumith</forename><surname>Chintala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><surname>Chanan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zachary</forename><surname>Devito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zeming</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alban</forename><surname>Desmaison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Antiga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Lerer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">CANDLE/Supervisor: a workflow framework for machine learning applied to cancer research</title>
+		<author>
+			<persName><forename type="first">Justin</forename><forename type="middle">M</forename><surname>Wozniak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rajeev</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Prasanna</forename><surname>Balaprakash</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonathan</forename><surname>Ozik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nicholson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Collier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fangfang</forename><surname>Bauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rick</forename><surname>Brettin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamaludin</forename><surname>Stevens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cristina</forename><forename type="middle">Garcia</forename><surname>Mohd-Yusof</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Brian</forename><surname>Cardona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Van Essen</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Baughman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">491</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">Adam: A Method for Stochastic Optimization</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Diederik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Kingma</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ba</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Robust Estimation of a Location Parameter</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Peter</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Huber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Mathematical Statistics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="73" to="101" />
+			<date type="published" when="1964">1964</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<monogr>
+		<title level="m" type="main">What is the Effect of Importance Weighting in Deep Learning?</title>
+		<author>
+			<persName><forename type="first">Jonathon</forename><surname>Byrd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zachary</forename><forename type="middle">C</forename><surname>Lipton</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+		<title level="m" type="main">Improved Sampling Techniques for Learning an Imbalanced Data Set</title>
+		<author>
+			<persName><forename type="first">Maureen</forename><surname>Lyndel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lauron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaderick</forename><forename type="middle">P</forename><surname>Pabico</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

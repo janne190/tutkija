@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Comparative study of under-expressed prognostic biomarkers and pivotal signaling pathways in colon cancer and ulcerative colitis using integrated bioinformatics approach</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><roleName>Dr</roleName><forename type="first">Sedigheh</forename><surname>Behrouzifar</surname></persName>
+							<email>sedighehbehrouzifar@gmail.com</email>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Department of Medical Sciences</orgName>
+								<orgName type="department" key="dep2">Shahrood Branch</orgName>
+								<orgName type="institution">Islamic Azad University</orgName>
+								<address>
+									<settlement>Shahrood</settlement>
+									<country key="IR">Iran</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Comparative study of under-expressed prognostic biomarkers and pivotal signaling pathways in colon cancer and ulcerative colitis using integrated bioinformatics approach</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">BFB70348D49AE6DB3084E5CB5CDA2962</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>biomarker</term>
+					<term>signaling pathway</term>
+					<term>overall survival</term>
+					<term>ulcerative colitis</term>
+					<term>colon cancer Save translation</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Colon cancer is a prevalent gastrointestinal malignancy arising in the colon. Ulcerative colitis(UC) is one of the risk factors of colorectal cancer. The detection of under-expressed biomarkers and molecular mechanisms in UC and colon cancer can lead to effective management of colitis-associated cancer.</head><p>A total of two mRNA expression datasets (GSE87473 and GSE44076) were downloaded from the Gene Expression Omnibus (GEO) database. GSE87473 contains 21 healthy samples, 27 extensive ulcerative colitis samples and 60 limited ulcerative colitis samples. GSE44076 contains 98 colon cancer samples and 98 healthy samples. GEO2R was used to screen differentially expressed genes (DEGs) between extensive ulcerative colitis samples and healthy samples, limited ulcerative colitis samples and healthy samples, and colon cancer samples and healthy samples. The inclusion criteria for DEGs included an adjusted p-value &lt;0.05 and a log(2) fold change &lt;-2. Venn diagram of DEGs was depicted for every three groups (extensive ulcerative colitis, limited ulcerative colitis and colon cancer). Protein-protein interaction (PPI) network of DEGs in every three groups was constructed using STRING online database. The DEGs of each group were imported to Cytoscape software separately and the hub genes were screened. Then, the Enrichr web server was used to perform KEGG (Kyoto Encyclopedia of Genes and Genomes) enrichment analyses and adjusted p-value&lt;0.05 was considered statistically significant. Furthermore, Kaplan-Meier curve in GEPIA (<ref type="url" target="http://gepia.cancer-pku.cn/">http://gepia.cancer-pku.cn/</ref>) was used for analyzing the overall survival (OS) of hub genes. In extensive ulcerative colitis, limited ulcerative colitis and colon cancer groups, 95,69 and 635 underexpressed genes with adjusted p-value&lt;0.05 and log(2) fold change&lt;-2 were detected respectively. Using Cytoscape software, the genes with degree&gt; 15 including CLCA1, SLC26A3, SI, KIT, HPGDS, NR1H4, ADIPOQ, PPARGC1A, GCG, MS4A12, GUCA2A and FABP1 were screened as hub underexpressed genes in colon cancer. In extensive ulcerative colitis, the genes with degree&gt;5 including ABCB1, ABCG2, UGT1A6, CYP2B6 and AQP8 were identified as hub genes. Moreover, the genes including NR1H4, CYP2B6, ABCB1, ABCG2, UGT2A3 and PLA2G12B were detected as hub genes with degree&gt;5 in limited ulcerative colitis. According to inclusion criteria and venn diagram, the downregulated gene NR1H4 was common gene in limited ulcerative colitis and colon cancer. The genes MS4A12 and GUCA2A were common genes in extensive ulcerative colitis and colon cancer. The genes CLCA1, SLC26A3, SI, KIT, HPGDS, ADIPOQ, PPARGC1A, PPARGC1A, GCG and FABP1 were 2 distinctive genes in colon cancer. The genes UGT1A6 and CYP2B6 were common genes in extensive ulcerative colitis and limited ulcerative colitis, and the genes ABCB1, ABCG2, AQP8, and UGT2A3 were common genes in three groups. According to KEGG enrichment analysis, hub under-expressed genes in colon cancer were enriched in the pathways including Pancreatic secretion, Mineral absorption, Drug metabolism, Metabolism of xenobiotics by cytochrome P450, Arachidonic acid metabolism, Bile secretion, PPAR signaling pathway, Adipocytokine signaling pathway and cAMP signaling pathway. The hub genes in extensive and limited ulcerative colitis were enriched in Bile secretion, ABC transporters, Steroid hormone biosynthesis, Retinol metabolism, Metabolism of xenobiotics by cytochrome P450, Drug metabolism, Chemical carcinogenesis and Fat digestion and absorption. According to survival analysis, CLCA1 (Calcium-activated chloride channel regulator 1), PPARGC1A (Peroxisome proliferatoractivated receptor gamma coactivator 1-alph) and AQP8 (Aquaporin-8) were with poor overall survival. The current in silico study showed that downregulation of CLCA1, PPARGC1A and AQP8 genes may increase cancer cell invasion and metastasis ability. The recent researches showed that CLCA1 overexpression inhibited colorectal cancer aggressiveness, and overexpression of AQP8 reduced cell proliferation, migration and invasion in colon cancer. The role of downregulation of PPARGC1A gene in poor survival of patients with colon cancer has not been revealed yet.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1-Introduction:</head><p>Ulcerative colitis (UC), is a chronic inflammatory disorder of the large intestine. UC was first defined in the 1800s by Samuel Wilks. Prevalence of UC is increasing in Asia <ref type="bibr" target="#b0">(1)</ref>. When the diagnosis is made, most UC patients are between the ages of 30 and 40. The clinical features of the disease include abdominal pain, diarrhea, and hematochezia <ref type="bibr" target="#b1">(2)</ref>. Approximately 50% of UC patients don't have an advancing disease course <ref type="bibr" target="#b2">(3)</ref>. Patients with UC have a 2.4-fold higher risk of colon cancer than the general population <ref type="bibr" target="#b3">(4)</ref>. Colorectal cancer (CRC) is the third most prevalent cancer worldwide <ref type="bibr" target="#b4">(5)</ref>.</p><p>The main risk factors for colon cancer are high fat diet and low fiber diet, and genetic factors may be involved in the progression of colon cancer <ref type="bibr" target="#b5">(6)</ref>. In spite of decades of effort, the intricate pathogenesis of UC is not yet fully identified <ref type="bibr" target="#b6">(7)</ref>. According to recent studies, the application of non-steroidal antiinflammatory drugs may decrease the probability of UC transforming into colorectal cancer <ref type="bibr" target="#b7">(8)</ref>.</p><p>Moreover, recent advances in biologically targeted therapies have resulted in improved disease management, and surgery is needed in only some patients <ref type="bibr" target="#b8">(9)</ref>. The treat-to-target approach has shifted the goal of UC treatment from symptomatic management to support targeting therapy to prevent long-term disease complications <ref type="bibr" target="#b9">(10)</ref>. Also, remarkable progress has been made in the development of biomarkerdriven therapies for patients with multiple cancer types. However, precision oncology for patients with colorectal cancer is controversial <ref type="bibr" target="#b10">(11)</ref>. Biomarkers play an important role in assessing and management of diseases. Hence, identifying predictor biomarkers of disabling diseases is important to beginning a target-based treatment.</p><p>Exploring the mechanisms underlying the progression of colon cancer and achieving medications or drug combinations that can stop advancement of UC toward colon cancer would be required. Therefore, identifying and screening key target proteins (biomarkers) as well as insight into the biological pathways involved in the pathogenesis and progression of disease in order to improve response to treatment is important.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2-Materials and methods:</head><p>A total of two mRNA expression datasets (GSE87473 and GSE44076) were downloaded from the Gene Expression Omnibus (GEO) database. GSE87473 contains 21 healthy samples, 27 extensive ulcerative colitis samples and 60 limited ulcerative colitis samples. GSE44076 contains 98 colon cancer samples and 98 healthy samples. GEO2R was used to screen differentially expressed genes (DEGs) between extensive ulcerative colitis samples and healthy samples, limited ulcerative colitis samples and healthy samples, and colon cancer samples and healthy samples.</p><p>The inclusion criteria for DEGs included an adjusted p-value &lt;0.05 and a log(2) fold change &lt;-2. Venn diagram of DEGs was depicted for every three groups (extensive ulcerative colitis, limited ulcerative colitis and colon cancer). Protein-protein interaction (PPI) network of DEGs in every three groups was constructed using STRING online database. The DEGs of each group were imported to Cytoscape software separately and the hub genes were screened. Then, the Enrichr web server was used to perform KEGG (Kyoto Encyclopedia of Genes and Genomes) enrichment analyses and adjusted p-value&lt;0.05 was considered statistically significant. Furthermore, Kaplan-Meier curve in GEPIA (<ref type="url" target="http://gepia.cancer-">http://gepia.cancer-</ref>pku.cn/) was used for analyzing the overall survival (OS) of hub genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3-Results:</head><p>In extensive ulcerative colitis, limited ulcerative colitis and colon cancer groups, 95,69 and 635 underexpressed genes with adjusted p-value&lt;0.05 and log(2) fold change&lt;-2 were detected respectively. Using Cytoscape software, the genes with degree&gt; 15 including CLCA1, SLC26A3, SI, KIT, HPGDS, NR1H4, ADIPOQ, PPARGC1A, GCG, MS4A12, GUCA2A and FABP1 were screened as hub under-expressed genes in colon cancer (Figure <ref type="figure">1</ref>). In extensive ulcerative colitis, the genes with degree&gt;5 including ABCB1, ABCG2, UGT1A6, CYP2B6 and AQP8 were identified as hub genes (Figure <ref type="figure">2</ref>). Moreover, the genes including NR1H4, CYP2B6, ABCB1, ABCG2, UGT2A3 and PLA2G12B were detected as hub genes with degree&gt;5 in limited ulcerative colitis (Figure <ref type="figure">3</ref>).</p><p>According to inclusion criteria and venn diagram (Figure <ref type="figure">4</ref>), the downregulated gene NR1H4 was common gene in limited ulcerative colitis and colon cancer. The genes MS4A12 and GUCA2A were common genes in extensive ulcerative colitis and colon cancer. The genes CLCA1, SLC26A3, SI, KIT, HPGDS, ADIPOQ, PPARGC1A, PPARGC1A, GCG and FABP1 were distinctive genes in colon cancer.</p><p>The genes UGT1A6 and CYP2B6 were common genes in extensive ulcerative colitis and limited ulcerative colitis, and the genes ABCB1, ABCG2, AQP8 and UGT2A3 were common genes in three groups. According to KEGG enrichment analysis, hub under-expressed genes in colon cancer were </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4-Discussion:</head><p>In the present study, Calcium-activated chloride channel regulator 1 (CLCA1), Chloride anion exchanger (SLC26A3), Sucrase-isomaltase, intestinal (SI), Mast/stem cell growth factor receptor Kit (KIT), Hematopoietic prostaglandin D synthase (HPGDS), Bile acid receptor (NR1H4), Adiponectin (ADIPOQ), Peroxisome proliferator-activated receptor gamma coactivator 1-alpha (PPARGC1A), Proglucagon (GCG), Membrane-spanning 4-domains subfamily A member 12 (MS4A12), Guanylin (GUCA2A) and Fatty acid-binding protein (FABP1) exhibited the highest interaction degree in colon cancer. The recent researches showed that CLCA1 overexpression inhibited colorectal cancer aggressiveness <ref type="bibr" target="#b11">(12)</ref>. In agreement with the present study, Beata and colleagues identified CLCA1, SLC26A3 and FABP1 as hub genes that were downregulated in colorectal carcinoma <ref type="bibr" target="#b12">(13)</ref>. One recent research revealed that CLCA1 acts as a tumor suppressor gene by suppressing Bcl-2 overexpression. In 6 this study, there was a correlation between downregulation of CLCA1 and poorer prognosis in colorectal carcinoma <ref type="bibr" target="#b13">(14)</ref>. In the study of Bo Yang and colleagues, knockdown of CLCA1 with siRNA considerably inhibited cell differentiation and promoted cell proliferation in Caco-2 cultures <ref type="bibr" target="#b14">(15)</ref>. In present study, KEGG enrichment analysis showed that CLCA1 gene was significantly enriched in the pathway "pancreatic secretion".</p><p>The results of one study uncovered that, SLC26A3 overexpression can inhibit growth of cancer cell lines in vitro <ref type="bibr" target="#b15">(16)</ref>. According to KEGG enrichment analysis, SLC26A3 gene was enriched in the pathways including "pancreatic secretion" and "mineral absorption".</p><p>Yamazaki and colleagues reported a correlation between poorer prognosis and lower expression levels of FABP1 in liver metastasis <ref type="bibr" target="#b16">(17)</ref>. Moreover, in the study of Kheirelseid and colleagues, the downregulation of FABP1 in colorectal carcinogenesis has been reported <ref type="bibr" target="#b17">(18)</ref>. According to KEGG enrichment analysis, FABP1 gene was enriched in "PPAR signaling pathway".</p><p>Koichi Iwanaga and colleagues exhibited that under-expression of HPGDS aggravated colitis and accelerated tumor formation in mice <ref type="bibr" target="#b18">(19)</ref>. According to KEGG enrichment analysis, HPGDS gene was enriched in the pathways including "drug metabolism", "metabolism of xenobiotics by cytochrome P450" and "arachidonic acid metabolism".</p><p>In the study of Yun Jeong Lee and colleagues, NR1H4 KO cells showed impaired cell proliferation and increased apoptotic cell death compared to control colon cancer cells <ref type="bibr" target="#b19">(20)</ref>. Based on the present study, this gene was common gene in limited ulcerative colitis and colon cancer. NR1H4 gene was enriched in the pathway "bile secretion".</p><p>A low serum level of ADIPOQ is associated with an increased risk of various types of malignancies including colorectal cancer <ref type="bibr" target="#b20">(21)</ref>. According to recent studies, ADIPOQ is inversely associated with tumor grade in colorectal cancer patients <ref type="bibr" target="#b21">(22,</ref><ref type="bibr" target="#b22">23,</ref><ref type="bibr" target="#b23">24)</ref>. In the present study, ADIPOQ gene was enriched in the pathways including "PPAR signaling pathway" and "adipocytokine signaling pathway".</p><p>In a recent study, GCG was found to be significantly downregulated in colon and rectum adenocarcinomas compared with healthy control samples. GCG gene was shown to be related to the prognostic outcomes of this cancer <ref type="bibr" target="#b24">(25)</ref>. Based on the present study, GCG gene was enriched in the "cAMP signaling pathway". MS4A12 participates in cell membrane composition, cell differentiation, proliferation, and cell cycle regulation <ref type="bibr" target="#b25">(26)</ref>. low expression of MS4A12 had a poor survival, suggesting that MS4A12 might be a molecular marker for diagnosis and prognosis <ref type="bibr" target="#b26">(27)</ref>. One recent study exhibited that PPARGC1A acts as a tumor suppressor in hepatocellular carcinoma (28). Based on the present study, PPARGC1A gene was enriched in the pathway "adipocytokine signaling pathway".</p><p>Recent studies have demonstrated a link between GUCY2C silencing and intestinal dysfunction and tumorigenesis. GUCA2A binds and activates GUCY2C to regulate proliferation and metabolism in intestine <ref type="bibr" target="#b28">(29)</ref>. In the present study, the genes MS4A12 and GUCA2A were common genes in extensive ulcerative colitis and colon cancer. In the recent research of Jing Han and colleagues, primary colorectal cancer patients with lower expression of CLCA4 and MS4A12 had poorer overall survivals <ref type="bibr" target="#b25">(26)</ref>.</p><p>According to the study of Hui Zhang and colleagues, GUCA2A can be a candidate marker of poor prognosis in patients with colorectal cancer and further studies are needed to detect molecular mechanism through which GUCA2A plays a role in colorectal cancer <ref type="bibr" target="#b29">(30)</ref>.</p><p>The present study revealed that the genes UGT1A6 and CYP2B6 were common genes in extensive ulcerative colitis and limited ulcerative colitis, and the genes ABCB1, ABCG2, AQP8 and UGT2A3 were common genes in three groups. In contrast to present study, a recent study showed that UGT2A3 gene was as top ten upregulated genes in ulcerative colitis <ref type="bibr" target="#b30">(31)</ref>.</p><p>Based on the present study, UGT1A6 and UGT2A3 genes were enriched in the pathways including "bile secretion", "steroid hormone biosynthesis", "retinol metabolism", "metabolism of xenobiotics by cytochrome P450", "ascorbate and aldarate metabolism", "pentose and glucuronate interconversions", "drug metabolism" and "porphyrin and chlorophyll metabolism". The present study showed that CYP2B6 gene was enriched in the pathways including "Retinol metabolism", "Metabolism of xenobiotics by cytochrome P450" and "Drug metabolism". Furthermore, ABCB1 (MDR1) and ABCG2 genes were enriched in the pathways including "bile secretion" and "ABC transporters". Recently, single nucleotide polymorphisms (SNPs) of multi-drug resistance 1 (MDR1) gene were found to be related to the pathogenesis of ulcerative colitis <ref type="bibr" target="#b31">(32)</ref>. A recent study exhibited that AQP8 expression is reduced in the ileum and colon of UC patients <ref type="bibr" target="#b32">(33)</ref>. In another recent study, overexpression of AQP8 reduced colorectal cancer cell proliferation, migration and invasion in vitro <ref type="bibr" target="#b33">(34)</ref>. Based on the present study, AQP8 gene was enriched in the pathway "bile secretion".</p><p>In the present study, overall survival of key genes in colon cancer, extensive and limited ulcerative colitis was evaluated by Kaplan-Meier curve. CLCA1, PPARGC1A and AQP8 were with poor overall survival.</p><p>The role of downregulation of PPARGC1A gene in poor survival of patients with colon cancer has not been revealed yet.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion:</head><p>In present study, novel prognostic genes and key biological pathways were uncovered in colon cancer, extensive and limited ulcerative colitis using systems biology approach. Hence, performing in vitro and in vivo researches to verify the results is essential. 10 Extensive  </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><figDesc>enriched in the pathways including Pancreatic secretion, Mineral absorption, Drug metabolism, Metabolism of xenobiotics by cytochrome P450, Arachidonic acid metabolism, Bile secretion, PPAR signaling pathway, Adipocytokine signaling pathway and cAMP signaling pathway. The hub genes in extensive and limited ulcerative colitis were enriched in Bile secretion, ABC transporters, Steroid hormone biosynthesis, Retinol metabolism, Metabolism of xenobiotics by cytochrome P450, Drug metabolism, Chemical carcinogenesis and Fat digestion and absorption. According to survival analysis, CLCA1, PPARGC1A and AQP8 were with poor overall survival (Figure 5).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure1: 10 ExtensiveFigure2:Figure3:</head><label>10</label><figDesc>Figure1: The protein-protein network in colon cancer. The pink nodes represent DEGs in colon cancer. The edges represent the interactions between them and size of pink nodes is proportional to Degree centrality of the proteins.</figDesc><graphic coords="9,58.20,188.85,464.75,410.65" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Overall survival of key genes in colon cancer, extensive and limited ulcerative colitis was evaluated by Kaplan-Meier curve. CLCA1, PPARGC1A and AQP8 were with poor overall survival.</figDesc><graphic coords="13,159.81,376.66,235.37,233.33" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="10,136.80,143.35,375.50,444.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="12,133.70,196.30,310.10,304.15" type="bitmap" /></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Ulcerative colitis</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Ordás</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Eckmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Talamini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lancet</title>
+		<imprint>
+			<biblScope unit="volume">380</biblScope>
+			<biblScope unit="page" from="1606" to="1619" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Ulcerative Colitis-Induced Colorectal Carcinoma: A Deleterious Concatenation</title>
+		<author>
+			<persName><forename type="first">Ana</forename><forename type="middle">P</forename><surname>Rivera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gabriela</forename><surname>Vanessa Flores Monar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamza</forename><surname>Islam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cureus</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">22636</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Treatment Targets in Ulcerative Colitis: Is It Time for All In, including Histology?</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wetwittayakhlang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lontai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gonczi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Med</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">23</biblScope>
+			<biblScope unit="page">5551</biblScope>
+			<date type="published" when="2021-12">2021 Dec</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Colorectal cancer prevention in patients with ulcerative colitis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lopez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Pouillon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Beaugerie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Best Pract Res Clin Gastroenterol</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">33</biblScope>
+			<biblScope unit="page" from="103" to="109" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The inflammatory pathogenesis of colorectal cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schmitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Greten</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Immunol</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="653" to="667" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Secondary colon cancer in patients with ulcerative colitis: a systematic review and meta-analysis</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gan</surname></persName>
+		</author>
+		<idno type="DOI">10.21037/jgo-21-800</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Gastrointest Oncol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2882" to="2890" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Colonic Mucosal Transcriptomic Changes in Patients with Long-Duration Ulcerative Colitis Revealed Colitis-Associated Cancer Pathways</title>
+		<author>
+			<persName><forename type="first">Den</forename><surname>Low</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohd</forename><surname>Mokhtar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raja</forename><surname>Ali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Crohns Colitis</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="755" to="763" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Research progress on the carcinogenesis mechanism of inflammation in ulcerative colitis: a narrative review</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann Palliat Med</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="11994" to="12002" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The Role of Biomarkers in Surgery for Ulcerative Colitis: A Review</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Matson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ramamoorthy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lopez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Med</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">15</biblScope>
+			<biblScope unit="page">3362</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">STRIDE-II: An Update on the Selecting Therapeutic Targets in Inflammatory Bowel Disease (STRIDE) Initiative of the International Organization for the Study of IBD (IOIBD): Determining Therapeutic Goals for Treat-to-Target Strategies in IBD</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Turner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ricciuto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lewis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gastroenterology</title>
+		<imprint>
+			<biblScope unit="volume">160</biblScope>
+			<biblScope unit="page" from="1570" to="1583" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Precision oncology in metastatic colorectal cancer -from biology to medicine</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Nicolantonio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Vitiello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Marsoni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="506" to="525" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">CLCA1 suppresses colorectal cancer aggressiveness via inhibition of the Wnt/beta-catenin signaling pathway</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Commun Signal</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Quantitative analysis of gene expression in fixed colorectal carcinoma samples as a method for biomarker validation</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ostasiwicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ostasiwicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Dus-Szachniewicz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Med Rep</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="5084" to="5092" />
+			<date type="published" when="2016-06">2016 Jun</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Low expression of chloride channel accessory 1 predicts a poor prognosis in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer</title>
+		<imprint>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="page" from="1570" to="1580" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">The transition from proliferation to differentiation in colorectal cancer is regulated by the calcium activated chloride channel A1</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Mccaig</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">60861</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note>Apr</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">The colon anion transporter, down-regulated in adenoma, induces growth suppression that is abrogated by E1A</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Chapman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Knoepp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Byeon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="page" from="5083" to="5088" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Liver fatty acid-binding protein is a new prognostic factor for hepatic resection of colorectal cancer metastases</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Yamazaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kanda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sakai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Surg Oncol</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="page" from="83" to="87" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Identification of endogenous control genes for normalisation of real-time quantitative PCR data in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Kheirelseid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Newell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Kerin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Miller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Mol Biol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">12</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Mast cell-derived prostaglandin D2 inhibits colitis and colitis-associated colon cancer in mice</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Iwanaga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nakamura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Maeda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="3011" to="3019" />
+			<date type="published" when="2014-06-01">2014 Jun 1</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">The Role of Nuclear Receptor Subfamily 1 Group H Member 4 (NR1H4) in Colon Cancer Cell Survival through the Regulation of c-Myc Stability</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eun</forename><forename type="middle">-</forename><surname>Young</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bo</forename><surname>Hee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Cells</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="459" to="468" />
+			<date type="published" when="2020-05-31">2020 May 31</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Adiponectin and colorectal cancer</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Otani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ishihara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yamaguchi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Surg Today</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="151" to="158" />
+			<date type="published" when="2017-02">2017 Feb</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Adiponectin Is Inversely Associated With Tumour Grade in Colorectal Cancer Patients</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Polito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Nigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fei</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Anticancer Res</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="3751" to="3757" />
+			<date type="published" when="2020-07">2020 Jul</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">New insights into molecular pathways in colorectal cancer: Adiponectin, interleukin-6 and opioid signaling</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Świerczyński</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Szymaszkiewicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fichna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochim Biophys Acta Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">1875</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">188460</biblScope>
+			<date type="published" when="2021-01">2021 Jan</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">The bifurcated role of adiponectin in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jin</forename><forename type="middle">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Life Sci</title>
+		<imprint>
+			<biblScope unit="volume">278</biblScope>
+			<biblScope unit="page">119524</biblScope>
+			<date type="published" when="2021-08-01">2021 Aug 1</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">The Regulatory Role of Neuropeptide Gene Glucagon in Colorectal Cancer: A Comprehensive Bioinformatic Analysis</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Miao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Dis Markers</title>
+		<imprint>
+			<biblScope unit="page">4262600</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">CLCA4 and MS4A12 as the significant gene biomarkers of primary colorectal cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<idno>BSR20200963</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biosci Rep</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Decreased expression of MS4A12 inhibits differentiation and predicts early stage survival in colon cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">Y</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">C</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neoplasma</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="65" to="73" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Peroxisome proliferator-activated receptor gamma coactivator-1 alpha acts as a tumor suppressor in hepatocellular carcinoma</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Tumour Biol</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">1010428317695031</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Guanylyl cyclase C signaling axis and colon cancer prevention</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pattison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Merlino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Blomain</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">World J Gastroenterol</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">36</biblScope>
+			<biblScope unit="page" from="8070" to="8077" />
+			<date type="published" when="2016-09-28">2016 Sep 28</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Integrated Analysis of Oncogenic Networks in Colorectal Cancer Identifies GUCA2A as a Molecular Marker</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochem Res Int</title>
+		<imprint>
+			<biblScope unit="page">6469420</biblScope>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Colonic Mucosal Transcriptomic Changes in Patients with Long-Duration Ulcerative Colitis Revealed Colitis-Associated Cancer Pathways</title>
+		<author>
+			<persName><forename type="first">Den</forename><surname>Ngah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Low</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohd</forename><surname>Mokhtar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Crohns Colitis</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="755" to="763" />
+			<date type="published" when="2019-05">2019 May</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">CTLA-4 and MDR1 polymorphisms increase the risk for ulcerative colitis: A meta-analysis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">World J Gastroenterol</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">34</biblScope>
+			<biblScope unit="page" from="10025" to="10040" />
+			<date type="published" when="2015-09-14">2015 Sep 14</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Reduced expression of aquaporins in human intestinal mucosa in early stage inflammatory bowel disease</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ricanek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lunde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frye</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Exp Gastroenterol</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="49" to="67" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Identification of the AQP8-miR-92a network associated with the aggressive traits of colorectal cancer</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bo</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochem Biophys Res Commun</title>
+		<imprint>
+			<biblScope unit="volume">527</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="218" to="225" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

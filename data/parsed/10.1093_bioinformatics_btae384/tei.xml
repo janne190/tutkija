@@ -1,0 +1,1593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">CIBRA identifies genomic alterations with a system-wide impact on tumor biology</title>
+				<funder ref="#_mD84qDr">
+					<orgName type="full">Hartwig Medical Foundation</orgName>
+					<orgName type="abbreviated">HMF</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Center of Personalized Cancer Treatment</orgName>
+					<orgName type="abbreviated">CPCT</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">TCGA Research Network</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2024-03-06">6 Mar 2024</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Soufyan</forename><surname>Lakbir</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Bioinformatics group</orgName>
+								<orgName type="department" key="dep2">Department of Computer Science</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+								<address>
+									<addrLine>De Boelelaan 1105, Amsterdam, 1081HV</addrLine>
+									<settlement>Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Translational Gastrointestinal Oncology group</orgName>
+								<orgName type="department" key="dep2">Department of Pathology</orgName>
+								<orgName type="institution">Netherlands Cancer Institute</orgName>
+								<address>
+									<addrLine>Plesmanlaan 121</addrLine>
+									<postCode>1066CX</postCode>
+									<settlement>Amsterdam Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">AI Technology for Life group</orgName>
+								<orgName type="department" key="dep2">Department of Information and Computing Sciences</orgName>
+								<orgName type="department" key="dep3">Department of Biology</orgName>
+								<orgName type="institution">Utrecht University</orgName>
+								<address>
+									<addrLine>Heidelberglaan 8</addrLine>
+									<postCode>3584CS</postCode>
+									<settlement>Utrecht Utrecht</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Caterina</forename><surname>Buranelli</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Bioinformatics group</orgName>
+								<orgName type="department" key="dep2">Department of Computer Science</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+								<address>
+									<addrLine>De Boelelaan 1105, Amsterdam, 1081HV</addrLine>
+									<settlement>Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Translational Gastrointestinal Oncology group</orgName>
+								<orgName type="department" key="dep2">Department of Pathology</orgName>
+								<orgName type="institution">Netherlands Cancer Institute</orgName>
+								<address>
+									<addrLine>Plesmanlaan 121</addrLine>
+									<postCode>1066CX</postCode>
+									<settlement>Amsterdam Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Gerrit</forename><forename type="middle">A</forename><surname>Meijer</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Translational Gastrointestinal Oncology group</orgName>
+								<orgName type="department" key="dep2">Department of Pathology</orgName>
+								<orgName type="institution">Netherlands Cancer Institute</orgName>
+								<address>
+									<addrLine>Plesmanlaan 121</addrLine>
+									<postCode>1066CX</postCode>
+									<settlement>Amsterdam Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jaap</forename><surname>Heringa</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Bioinformatics group</orgName>
+								<orgName type="department" key="dep2">Department of Computer Science</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+								<address>
+									<addrLine>De Boelelaan 1105, Amsterdam, 1081HV</addrLine>
+									<settlement>Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Remond</forename><forename type="middle">J A</forename><surname>Fijneman</surname></persName>
+							<email>r.fijneman@nki.nl</email>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Translational Gastrointestinal Oncology group</orgName>
+								<orgName type="department" key="dep2">Department of Pathology</orgName>
+								<orgName type="institution">Netherlands Cancer Institute</orgName>
+								<address>
+									<addrLine>Plesmanlaan 121</addrLine>
+									<postCode>1066CX</postCode>
+									<settlement>Amsterdam Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sanne</forename><surname>Abeln</surname></persName>
+							<email>s.abeln@uu.nl</email>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Bioinformatics group</orgName>
+								<orgName type="department" key="dep2">Department of Computer Science</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+								<address>
+									<addrLine>De Boelelaan 1105, Amsterdam, 1081HV</addrLine>
+									<settlement>Noord-Holland</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">AI Technology for Life group</orgName>
+								<orgName type="department" key="dep2">Department of Information and Computing Sciences</orgName>
+								<orgName type="department" key="dep3">Department of Biology</orgName>
+								<orgName type="institution">Utrecht University</orgName>
+								<address>
+									<addrLine>Heidelberglaan 8</addrLine>
+									<postCode>3584CS</postCode>
+									<settlement>Utrecht Utrecht</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">CIBRA identifies genomic alterations with a system-wide impact on tumor biology</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2024-03-06">6 Mar 2024</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">4769B8D0F5190E106405FE2018512771</idno>
+					<idno type="arXiv">arXiv:2403.03829v1[q-bio.GN]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Mutation Impact</term>
+					<term>Multi-omics Integration</term>
+					<term>Structural Variants</term>
+					<term>Cancer Research</term>
+					<term>Gene Expression</term>
+					<term>Genomic Alterations</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Background: Genomic instability is a hallmark of cancer, leading to many somatic alterations. Identifying which alterations have a system-wide impact is a challenging task. Nevertheless, this is an essential first step for prioritizing potential biomarkers. We developed CIBRA (Computational Identification of Biologically Relevant Alterations), a method that determines the system-wide impact of genomic alterations on tumor biology by integrating two distinct omics data types: one indicating genomic alterations (e.g., genomics), and another defining a systemwide expression response (e.g., transcriptomics). CIBRA was evaluated with genome-wide screens in 33 cancer types using primary and metastatic cancer data from the Cancer Genome Atlas and Hartwig Medical Foundation. Results: We demonstrate the capability of CIBRA by successfully confirming the impact of point mutations in experimentally validated oncogenes and tumor suppressor genes. Surprisingly, many genes affected by structural variants were identified to have a strong system-wide impact (30.3%), suggesting that their role in cancer development has thus far been largely underreported. Additionally, CIBRA can identify impact with only ten cases and controls, providing a novel way to prioritize genomic alterations with a prominent role in cancer biology. Conclusions: Our findings demonstrate that CIBRA can identify cancer drivers by combining genomics and transcriptomics data. Moreover, our work shows an unexpected substantial system-wide impact of structural variants in cancer. Hence, CIBRA has the potential to preselect and refine current definitions of genomic alterations to derive more nuanced biomarkers for diagnostics, disease progression, and treatment response. CIBRA is available at <ref type="url" target="https://github.com/AIT4LIFE-UU/CIBRA">https://github.com/AIT4LIFE-UU/CIBRA</ref> </p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Cancer is characterized by genomic instability leading to many somatic alterations, ranging from single nucleotide variants (SNVs) to large-scale somatic copy number aberrations (SCNAs) and structural variants (SVs) <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>. While the majority of alterations have no defined impact on tumor biology, a few alterations contribute to the development and progression of cancer <ref type="bibr" target="#b1">[2]</ref>. Computationally identifying these key somatic alterations with a major impact on tumor biology is challenging <ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref>. Generally, there are two types of computational approaches for identifying biologically relevant alterations: frequency-based methods and impact prediction methods.</p><p>Frequency-based methods such as MutSigCV <ref type="bibr" target="#b5">[6]</ref>, OncodriveFM <ref type="bibr" target="#b6">[7]</ref>, OncodriveCLUST <ref type="bibr" target="#b7">[8]</ref>, and MutSig-CL <ref type="bibr" target="#b8">[9]</ref> identify biologically relevant alterations through enrichment of alterations, for example, at the population level or sublocalized within a protein <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref><ref type="bibr" target="#b11">[12]</ref>. They rely on the rationale that tumorigenesis follows a Darwinian evolution characterized by variation and selection <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b3">4]</ref>. However, frequency-based methods rely on large cohorts to identify biologically relevant alterations. This leaves the potential role of many low-frequency alterations in cancer to be discovered. Replication timing, chromatin structure, methylation status, or low-complexity regions can all influence the rate of alterations throughout the genome, leading to hot spots, such as fragile sites for SVs. Due to these factors, low-frequency alterations and SVs pose a challenge for frequency-based methods <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b12">13]</ref>.</p><p>Impact prediction methods such as SIFT <ref type="bibr" target="#b13">[14]</ref>, PolyPhen <ref type="bibr" target="#b14">[15]</ref>, or the more recent AlphaMissense <ref type="bibr" target="#b15">[16]</ref> can effectively estimate the potential impact of variants on the protein and, its pathogenicity <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref>. However, these methods can only assess the impact of missense SNVs within a coding region, making it impossible to assess the impact of, for example, SVs and non-coding variants.</p><p>In this work, we explore the idea of using gene expression levels to systematically assess the biological impact of genomic alterations; this approach can address many of the shortcomings listed above. The transcriptome is a phenotypic representation of the cellular system, which can reflect the status of cellular processes, as well as tissue composition <ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref>. The key idea is to observe if a genomic alteration is associated with a system-wide change in gene expression levels. Previously, we have shown that transcriptomics data can be used to predict system-wide changes, such as genomic instability, by training a random-forest model to predict the tumor break load <ref type="bibr" target="#b21">[22]</ref>. Moreover, the work from <ref type="bibr" target="#b22">Crawford et al. (2022)</ref> and <ref type="bibr" target="#b23">Aben et al. (2018)</ref> highlighted that among omics data modalities, the transcriptome can most closely reflect the system-wide change caused by genomic alterations <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b23">24]</ref>. As such, we hypothesize that biologically relevant genomic alterations elicit characteristic changes through the system, reflecting the genomic change, whereas alterations without an impact will have no defined systemic change on the system. By assessing the degree of change in the system, we can determine the extent of impact of a genomic alteration. This approach can complement current methods in identifying the impact of low-frequency alterations and SVs, which can aid our understanding of cancer biology, consequences for clinical behaviour, and ultimately personalised care <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b25">26]</ref>.</p><p>In this study, we introduce a novel computational method, CIBRA (Computational Identification of Biologically Relevant Alterations), that identifies the system-wide impact of genomic alterations by integrating genomics with transcriptomics data. First, to validate if CIBRA can identify known tumor suppressor genes and oncogenes, we performed a pan-cancer genome-wide screen of coding SNVs in primary cancers <ref type="bibr" target="#b26">[27]</ref>. Next, to assess the impact of SVs in cancer, we conducted a genome-wide screen on genes affected by SVs in metastatic colorectal, breast, and lung cancer <ref type="bibr" target="#b27">[28]</ref>. In addition, we explored the capability of CIBRA to identify the most impactful type of alteration and gene subregion of known oncogenes and tumor suppressor genes. Lastly, we show an additional utility of CIBRA, the similarity score, that assesses the categorical similarity in terms of the observed system-wide impact between different variants within the same gene, or between different genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">CIBRA scores</head><p>CIBRA probes system-wide responses based on samples with (cases) and without (controls) genomic alterations using a Beta-Uniform mixture model <ref type="bibr" target="#b28">[29]</ref> to decompose the p-value distribution generated from differential expression (DE) analysis. CIBRA has two scores, the CIBRA impact score (Fig. <ref type="figure">1</ref>) and the similarity score (Fig. <ref type="figure">2</ref>). For the CIBRA impact score, two measures are calculated: the significant area between the Beta and Uniform component of the Beta-Uniform Fig. <ref type="figure">1</ref>: Flowchart of the CIBRA impact score calculation. As input CIBRA takes expression data and a group definition in terms of cases and controls: for example, mutated vs. WT samples for a specific genomic alteration. These inputs are used to perform differential expression (DE) analysis between the cases and controls. The p-value distribution generated from the DE analysis is subsequently decomposed by fitting a Beta-Uniform mixture model. From the model, the CIBRA impact score termed the significant area is calculated by taking the integral between the Beta and Uniform components of the mixture model, depicted as the green area in the third panel. Finally, the statistical significance of the impact measure is assessed with a permutation test. Fig. <ref type="figure">2</ref>: Flowchart of the CIBRA similarity score calculation. Gene expression data and group definitions with shared controls were used to perform differential expression (DE) analysis. Using the generated log2 fold changes (FC) and adjusted p-values, five DE states (DEs): highly upregulated (HU), moderately upregulated (MU), moderately downregulated (MD), highly downregulated (HD) and not significant (NS) were assigned per condition for each gene given the corresponding pvalue and fold change. With the vectors of DEs, a similarity and anti-similarity score is calculated between the conditions and visualized using a similarity matrix. A permutation test is performed to estimate the significance of the similarity and anti-similarity scores.</p><p>mixture model and the proportion of p-values below a given p-value threshold τ . The statistical significance of the impact measures is assessed by performing 1000 sample permutations and assessing the observed impact score with respect to the permutation distribution (Fig. <ref type="figure">1</ref>). For the CIBRA similarity score, group definitions with shared controls are used to perform differential expression analysis. The generated log 2 fold changes and adjusted p-values are used to define differential expression (DE) states. These states assign genes in whether they are significantly up-or down-regulated or if they are not significantly changed. From the list of DE states, a similarity and anti-similarity score is calculated between the conditions (Fig. <ref type="figure">2</ref>). The significance of the scores is assessed with a permutation test.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.1">Differential expression analysis</head><p>To assess the system-wide response of biological alterations, first, a differential expression (DE) analysis was performed. Any DE analysis method that outputs a valid p-value distribution for omics data, i.e. a p-value distribution that is uniform under the null hypothesis can be used with CIBRA. In this work, DESeq2 (version 1.38.2, default parameters, <ref type="bibr" target="#b29">[30]</ref>), edgeR (version 3.40.1, default parameters, <ref type="bibr" target="#b30">[31]</ref>) and Limma-Voom (version 3.54.0, default parameters) were assessed. The results reported within this work have been generated using DESeq2, as we have observed that it tends to mostly give valid p-value distributions and is capable of being executed in parallel. EdgeR tended to also mostly show a valid p-value distribution. Limma-Voom gave more invalid pvalue distributions with an inflation of 1 using our data compared to the other two methods. Zero variance and low count genes (&lt; 10 total counts) were excluded from the analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.2">Beta-Uniform mixture model</head><p>To estimate the system-wide effect size of a genomic alteration, the p-value distribution derived from DE analysis was decomposed using a Beta-Uniform mixture model <ref type="bibr" target="#b28">[29]</ref>. The model is a composite of the Beta distribution with parameter β = 1 and a uniform distribution. The mixture model has a probability density function (pdf), which can be calculated as:</p><formula xml:id="formula_0">f (x | α, λ) = λ + (1 -λ)αx (α-1) f or x, λ, α ∈ (0, 1)</formula><p>(1) where the probability of x is dependent on the shape parameters λ and α for x, λ, α ∈ (0, 1). The Beta-Uniform mixture model was fitted using the R package BioNet (version 1.58.0, <ref type="bibr" target="#b31">[32]</ref>).</p><p>For the Beta-Uniform mixture model, under the null hypothesis that the genomic alteration has no system-wide expression change, the model will lead to a Uniform function with λ = 1. Under the alternative hypothesis that the genomic alteration has a system-wide expression change, the function will acquire density for small p-values and 0 ≤ λ &lt; 1. The larger the signal, the larger the density the function will acquire. Given these hypotheses, we have derived two signal measures that capture the system-wide expression change: the CIBRA impact score termed the significant area and the proportion.</p><p>CIBRA impact score (significant area): The significant area is the integral between the Beta and Uniform components calculated as:</p><formula xml:id="formula_1">1 0 f (x)dx = α(1 -λ)(x α-1 -1) f or λ, α ∈ (0, 1)<label>(2)</label></formula><p>where λ and α are the estimated shape parameters of the Beta-Uniform mixture model. The significant area indicates the extent of p-values that arise from the alternative component, indicating the extent of change in the system. Under the null hypothesis of no system-wide change, the significant area is expected to be 0, while it increases with an increasing change in the system up to a theoretical maximum of 1 (Fig. <ref type="figure">1A</ref>).</p><p>CIBRA impact score (proportion): the proportion of p-values smaller than a significant threshold value (τ ). In this study, the threshold τ was set to 0.1. The proportion has been taken as a signal measure to accommodate and detect biases in the p-value distribution. If the p-value distribution shows a shift in values toward 1, given the characteristics of p-values, the distribution is deemed invalid. The proportion reflects this bias, as a shift in p-values toward 1 results in fewer p-values below τ , because if there is no signal in the data, a p-value distribution tends to behave uniform. As such, the proportion should be τ under the null hypothesis, and if below τ , is an indication of an invalid p-value distribution. The proportion can range from 0 to 1.</p><p>The significant area is the measure that describes the extent of the system-wide impact and will be referred to as the CIBRA impact score in this manuscript, while the proportion can give an indication of the extent of significant changes in the system. In addition, the proportion can be used to determine whether the observed values are valid.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.3">Permutation test</head><p>To estimate the significance of the CIBRA impact scores given the variation present in the dataset, a permutation test was performed. For all data platforms (TCGA and HMF) and cancer types, at least 1000 sample permutations were made with a case-control parameter grid with 30 steps for the case size and 5 steps for the control size, both starting at 10 and increasing up to the maximum number of samples. The overall distributions for the CIBRA impact scores were found to be well-fitted by a gamma distribution, as shown in Fig. <ref type="figure">S1</ref>. The cancer type and data platform are confounding factors shifting the distribution (Fig. <ref type="figure">S2</ref>; p &lt; 0.0001) when taken in a Gamma regression model fitted using a generalized linear model (GLM) with family Gamma and an inverse link function. As such, the permutation distribution must be generated for each cohort (i.e., for each cancer type). The influence of the number of cases and controls on the characteristics of the permutation distribution was also assessed. Given that the case and control sizes are general properties shared between cancer types and data platforms, the influence of case and control sizes has been assessed on one data set. A GLM with family Gamma and an inverse link function was fitted on the CIBRA impact scores calculated from metastatic colorectal cancer data (HMF). No significant relationship was found between the number of cases and controls and the CIBRA impact scores. As such, a generic permutation distribution could be made for each cohort. However, a low number of cases and controls does result in more invalid CIBRA impact scores, i.e., a proportion below τ , meaning an invalid p-value distribution, as shown in Fig. <ref type="figure" target="#fig_2">S3</ref>. Moreover, for less than 8 cases/controls, DESeq2 failed to perform DE analysis on our data. As such, we recommend at least 10 cases/control to have reliable results. To estimate the significance of the signal measures, the signal measures are compared to a Gamma distribution fitted against the corresponding 1000 permutations of the cancer type and data platform. The fit was estimated using the R package fitdistrplus (version 1.1-8, <ref type="bibr" target="#b32">[33]</ref>, parameters: distr="gamma").</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">CIBRA similarity score</head><p>To assess the similarity in system-wide expression impact between two alterations, e.g., two different variants within the same gene, we derived a similarity score. The similarity score uses the adjusted p-values (p) and log 2 fold changes (FC) generated from DE analysis to estimate the distance between two alterations within this space. For DE analysis, shared controls are needed as the similarity score assumes a shared reference point as shown in the flow chart depicted in Fig. <ref type="figure" target="#fig_0">S4</ref>. To calculate the CIBRA similarity score, first, the p-value/fold change space was divided into 5 regions: highly upregulated (HU), moderately upregulated (MU), highly downregulated (HD), moderately downregulated (MD) and not significant (NS) (Fig. <ref type="figure" target="#fig_0">S4</ref>). Genes within this space are assigned DE states (DE s ) using the boundaries in equation 3. The equation assigns a score based on the coordinates of the gene within the fold change (FC) and adjusted p-value (p) space for the given condition. Following this step, a vector of DE s is generated for each condition. The boundaries that divide the regions are common demarcations for volcano plots in RNA-Seq data analysis to identify substantially changed genes.</p><formula xml:id="formula_2">DE s (p, F C) =                HU if F C ≥ 1 and p ≤ 0.05 M U else if 0 &lt; F C &lt; 1 and p ≤ 0.05 N S else if p &gt; 0 M D else if 0 &gt; F C &gt; -1 and p ≤ 0.05 HD else if F C ≤ -1 and p ≤ 0.05<label>(3)</label></formula><p>To calculate the similarity between the two conditions, first, the frequency of DE s combinations between the two conditions is calculated. This contingency table is a 5x5 matrix termed N . A weight matrix representing the similarity (D + ) and anti-similarity (D -) relationships between the DE s is multiplied with the contingency table (N ) to calculate the directional similarity scores d + and d -as described with equations 4 and 5 and shown in Fig. <ref type="figure" target="#fig_0">S4</ref>.</p><formula xml:id="formula_3">d + = s i=1 s j=1 D + ij N ij<label>(4)</label></formula><formula xml:id="formula_4">d -= s i=1 s j=1 D - ij N ij<label>(5)</label></formula><p>To assess the significance of the similarity between the two conditions, a permutation test was performed. A total of 10000 condition permutations were calculated to generate a positive and negative directional similarity score distribution. Random gene definitions from genome-wide screens were taken as conditions for permutations with shared controls. To assess the correlation between the DE s of the two conditions, the Spearman correlation measure was calculated to assess the correlation between the two DE s vectors. Given that the DE s are discrete, a Spearman correlation measure was deemed more suitable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Machine Learning</head><p>To assess if the impact of a genomic alteration could also be investigated by a machine learning model, we trained a random forest model that predicts the genomic alteration status from transcriptomics data. If the transcriptomics data contain an expression signal associated with the alteration, it should be possible to train such a machine-learning model with a reasonable performance. In this work, transcriptomics data has been used as a measure of the system changes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.1">RNA-seq processing</head><p>RNA-seq counts were pre-processed by removing zero variance genes and mapping ENSEMBL identifiers to HUGO gene symbols. Transcripts without HUGO gene symbol annotations were removed. The highest expressed transcript per gene was retained as the gene count. The count data were normalized using the TMM normalization method from the R package edgeR (version 3.40.1, default parameters, <ref type="bibr" target="#b30">[31]</ref>) and transformed to scaled log counts per million (logCPM) values.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.2">Random forest model</head><p>A Random Forest classifier was built using the Classification and Regression Training R package caret (version 6.0.93, <ref type="bibr" target="#b33">[34]</ref>). The model was trained using a 70%/30% train-test split with a 10x repeated 5-fold cross-validation (CV) loop on the training set for feature selection and parameter tuning. Recursive feature elimination (RFE) was performed with a 10-300 feature range with 25 steps. The area under the precision-recall curve (PRCAUC) calculated with the R package PRROC (version 1.3.1, <ref type="bibr" target="#b34">[35]</ref>) was used as a performance metric. Parameter tuning was performed using the internal tuning step of the caret train function with a 10-value vector for the parameter 'mtry'. The final model performance was evaluated with the 30% test set using the area under the receiver operating characteristic curve (ROCAUC) and the PRCAUC as performance measures.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.3">Permutation testing</head><p>To assess if the performance of the ML model was significantly better than random, a permutation test was performed with 100 class label permutations. The performance of the original model was compared to the permutation performance distribution. A p-value was calculated as the fraction of permutations with a performance higher than or equal to the original model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Data</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.1">The Cancer Genome Atlas</head><p>Public data from The Cancer Genome Atlas (TCGA) were gathered from the Genome Data Commons (GDC) portal for 33 cancer types <ref type="bibr" target="#b26">[27]</ref>. Available processed single nucleotide variant calls using whole-exome sequencing data were retrieved using the R package TCGAbiolinks (version 2.25.3, <ref type="bibr" target="#b35">[36]</ref>), with query parameters: data.category = "Simple Nucleotide Variation", data.type = "Masked Somatic Mutation", legacy = FALSE, access = "open" and workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking". Available RNA-Seq data were retrieved with the query parameters: data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification" and workflow.type = "STAR -Counts". Clinical data and tumor mutational burden (TMB) were retrieved from cBioPortal <ref type="bibr" target="#b36">[37]</ref><ref type="bibr" target="#b37">[38]</ref><ref type="bibr" target="#b38">[39]</ref>. 'Silent' variants indicated by the variant classification provided in the Mutation Annotation Format (MAF) file were removed from the genome-wide screen analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.2">The Hartwig Medical Foundation</head><p>From the Hartwig Medical Foundation (HMF), whole genome sequencing (WGS) data was retrieved from 610 metastatic colorectal cancer samples, 996 metastatic breast cancer samples, and 551 metastatic lung cancer samples. RNA sequencing data was available from 394 metastatic colorectal cancer samples, 332 metastatic breast cancer samples, and 127 metastatic lung cancer samples. WGS data was processed with the PURPLE-GRIDDS-LINX pipeline from HMF as previously described <ref type="bibr" target="#b27">[28]</ref> to generate SNV, SV, and SCNA calls. RNA sequencing data were analyzed with Isofox (version 1.5, Isofox GitHub) to generate transcript counts. 'Silent' variants indicated by the SnpEff (version 4.3) canonical transcript summary were removed from the SNV calls in all further analyses that indicated coding variants. SV calls were only retained when they passed all filters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">CIBRA genome-wide screen: application to identify the impact of known and novel genomic alterations</head><p>To evaluate the capability of CIBRA to detect known and novel genomic alterations with a systemwide impact, a gene-level genome-wide screen was performed using data from the TCGA and HMF. Cancer driver annotations were obtained from the COSMIC Cancer Gene Census database <ref type="bibr" target="#b39">[40]</ref>.</p><p>Only Tier 1 genes were used for annotations. Multiple testing correction was performed using the Benjamini-Hochberg correction <ref type="bibr" target="#b40">[41]</ref>.</p><p>HMF: For the HMF data consisting of breast, lung, and colorectal cancer, gene alteration definitions were constructed on four levels: SNVs, SVs, SCNAs, and any of the aforementioned alterations. For the definition, any alteration, a binary labeling was constructed where if either an SNV, SV, or SCNA occurs in the gene, the gene is given the state '1'. If none of the alterations occur within the gene, the gene is given the state '0'. The same labeling was performed for the SNV, SV, and SCNA definitions. However, the definition is only constrained to the occurrence of the given alteration within the gene. Gene annotations were retrieved using the R package AnnotationHub (version 3.6.0, <ref type="bibr" target="#b41">[42]</ref>) with the query: "AH10684".</p><p>TCGA: For the TCGA data on a pan-cancer level, gene alteration definitions were only constructed for coding SNVs. Variants classified as 'silent' were excluded from the definitions. Binary labeling was performed where genes affected by SNVs were labeled as '1' and '0' otherwise. To reduce heterogeneity within cohorts, samples with a tumor mutational burden (TMB) &gt; 10, termed 'high' TMB samples, were excluded from the analyses. Gene annotations were retrieved using the R package AnnotationHub with the query: "AH98495"</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6">Refining genomic alterations on mutation type and genomic location using CIBRA</head><p>While we can define genomic alterations at the gene level, we can also zoom in and make the alterations more concrete. In this work, two ways to refine genomic alterations were assessed: Mutation type: For mutation type, the effect of SNVs classified according to their coding effects: non-coding, synonymous, missense, splice and nonsense or frameshift, SVs defined in deletions, duplications, insertions, inversions and translocations, and SCNAs in gains and losses as depicted have been assessed. The nuanced effects of mutation types have been assessed in the genes APC, TP53, KRAS, BRAF, PIK3CA, and TTN using data from microsatellite-stable CRC (HMF).</p><p>Genomic Location: For the location of alterations, 4 levels have been defined: coding regions, exons, domains, and amino acid positions. The location annotations were retrieved using the R package AnnotationHub. For domain annotations, the R packages EnsDb.Hsapiens.v75 (version 2.99.0) and EnsDb.Hsapiens.v86 (version 2.99.0) were used. A use case of the sublocation was assessed on the gene KRAS using data from metastatic microsatellite stable CRC (HMF).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.7">CIBRA similarity score: application to assess the similarity of biologically relevant alterations</head><p>To assess the similarity in system-wide expression change between two conditions, a similarity score was calculated as described in section 2.2. The similarity score was calculated for two use cases using data from metastatic microsatellite-stable CRC (HMF): KRAS codon 12 compared to codon 13 variants and KRAS codon 12 compared to BRAF codon 600 variants. For the two use cases, the shared control was wild-type for both conditions. The CIBRA impact score was calculated for each condition of the two use cases as described in section 2.1. The generated p-values and fold changes were used to calculate the CIBRA similarity score as described in section 2.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Computational Identification of Biologically Relevant Alterations (CIBRA)</head><p>In this work, we developed a computational workflow, CIBRA, to identify the system-wide impact of a genomic alteration. Fig. <ref type="figure">1</ref> shows the overall workflow of CIBRA. CIBRA takes as input gene expression data and a group definition in terms of cases and controls: for example, mutated vs. WT samples for a specific genomic alteration. These inputs are used to perform differential expression (DE) analysis between the cases and controls. The p-value distribution generated from the DE analysis is subsequently decomposed by fitting a Beta-Uniform mixture model to determine the system-wide impact. From the model, the CIBRA impact score termed the significant area is calculated by taking the integral between the Beta and Uniform components of the mixture model. Hence, the CIBRA score reflects the fraction of genes with altered expression, representing the system-wide impact of the genomic alteration. Finally, the statistical significance of the impact measure is assessed with a permutation test.</p><p>3.2 CIBRA identifies the system-wide impact of known cancer genes</p><p>In order to assess the ability of CIBRA to identify known tumor suppressor genes and oncogenes, the impact of coding SNVs was measured by performing genome-wide screens in 33 cancer types using data from The Cancer Genome Atlas (TCGA). First, coding SNVs retrieved from processed whole exome sequencing data (WES) were grouped at the gene level. A gene is considered to be affected in a sample if a coding SNV is present within the gene. The system-wide impact was evaluated for any protein-coding gene within the genome with at least 10 cases within the cancer type tested using transcriptomics data. Of all genes affected by coding SNVs, 8.9% (92) were identified to have a significant system-wide impact with an adjusted p-value ≤ 0.01. From these genes, 54.3% <ref type="bibr" target="#b49">(50)</ref> are experimentally validated oncogenes and tumor suppressor genes registered in the COSMIC cancer gene census <ref type="bibr" target="#b39">[40]</ref>. An overview of the top 50 genes ordered on the CIBRA impact score is shown in Fig. <ref type="figure">3A</ref>. Of the 50 top scoring genes, most (80%) are known cancer genes. However, some genes such as General Transcription Factor IIi (GTF2I ) and Collagen Type XI Alpha 1 Chain (COL11A1 ) are not (yet) registered as known tumor suppressor genes and oncogenes in the COSMIC cancer gene census database. Nevertheless, GTF2I has gained recent attention as a characteristic cancer gene associated with spindle cell morphology in thymomas <ref type="bibr" target="#b42">[43]</ref><ref type="bibr" target="#b43">[44]</ref><ref type="bibr" target="#b44">[45]</ref>. Similarly, mutated Col11A1 has been reported to accelerate neoplastic invasion in cutaneous squamous cell carcinomas <ref type="bibr" target="#b45">[46]</ref>. In general, these results show that CIBRA is capable of detecting the impact of known biologically relevant genes affected by SNVs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Structural variants have a significant system-wide impact in metastatic cancer</head><p>Next, we assessed the biological impact of genomic alterations that have been difficult to find using frequency-based detection methods, such as SCNAs and SVs. A genome-wide screen of genes affected by SNV, SCNA, SV, or any of the alterations mentioned before was performed on metastasized breast, lung, and colorectal cancer (CRC) using data from the Hartwig Medical Foundation (HMF). The availability of both deep-WGS data and matched RNA-seq data allowed us to assess the impact of SNVs, SCNAs, and SVs using CIBRA. From the genome-wide screen, 16.5% (598) of genes affected by any of the three alteration types were identified to have a significant systemwide impact with an adjusted p-value ≤ 0.01 (Fig. <ref type="figure">3</ref> B. SVs show to often have a large effect on the system, with 30.3% (421) of genes affected by SVs having a significant system-wide impact, especially in CRC (Fig. <ref type="figure">3</ref> B. However, from the list of alterations with a significant system-wide impact, only 12.4% (74) are registered in the COSMIC cancer gene census. After the inclusion of SVs and SCNAs, most significant CIBRA hits are not registered as oncogenes and tumor suppressor genes (Fig. <ref type="figure">3B</ref>). Only 8.8% (37) of the genes affected by SVs were registered. In particular, two genes located within genomic regions referred to as 'common fragile sites', Mono-ADP Ribosylhydrolase 2 (MACROD2 ) and Parkin RBR E3 Ubiquitin Protein Ligase (PRKN, also known as PARK2 ) are among the top 10 genes. Although common fragile sites are genomic regions prone to accumulate SVs under replicative stress, PRKN shows a significant CRC-specific signal. Moreover, MACROD2 shows a significant effect in CRC and breast cancer. These results show that SVs have a significant system-wide impact in colorectal, breast, and lung cancer to a degree similar to that of known oncogenes and tumor suppressor genes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Assessing gene impact by coding effect and SCNA status</head><p>Thus far, we have explored the impact of genomic alterations at the gene level. However, CIBRA can also be used to investigate if a certain type of mutation has more impact than other alterations in the same gene. Here, we explore how CIBRA can be used to identify the most impactful mutation type by systematically testing different SNVs, classified according to their coding effect, for known tumor suppressor genes (APC and TP53 ) and oncogenes (BRAF ) in metastasized microsatellite stable CRC. First, the impact of SNVs classified according to their coding effect was assessed. The overall system-wide impact of SNVs can be decomposed into their underlying coding effects showing stronger and weaker signals (Fig. <ref type="figure" target="#fig_0">4A</ref>). For example, if we consider all SNVs in BRAF, we obtain a non-significant CIBRA score (0.144, p &gt; 0.05). However, if we focus only on missense variants, a significant high impact score can be observed (CIBRA score: 0.360, p ≤ 0.0001). This is consistent with the expectations of the oncogene BRAF, where missense variants, specifically V600E, have been reported to be oncogenic variants in colorectal cancer <ref type="bibr" target="#b46">[47]</ref><ref type="bibr" target="#b47">[48]</ref><ref type="bibr" target="#b48">[49]</ref>. On the other hand, the frequently mutated gene TTN shows no improvement in signal when refining the type of mutation in Fig. <ref type="figure">3</ref>: Sorted gene overview of the top 50 CIBRA impact-scoring genes from genome-wide screens. A) An overview of CIBRA impact scores for genes affected by SNVs for primary cancer samples from 33 cancer types (TCGA). High-TMB samples (&gt; 10 TMB) were excluded to create more homogeneous cohorts. The genes were sorted by impact score. B) An overview of CIBRA impact scores for genes affected by genomic alterations in metastatic breast, colorectal (CRC) and lung cancer (HMF). The CIBRA score for any type of genomic alteration (highlighted in gray) and specific alterations (SNV, SCNA, and SV) are shown. Row annotations indicate the driver role of genes classified in tumor suppressor genes (TSG; purple), oncogenes (green), either (orange), and fusions (pink) retrieved from the COSMIC cancer gene census database. Dot color indicates the CIBRA impact score, the dot edge color indicates the significance of the CIBRA impact score assessed with a permutation test, and the size of the dot indicates the prevalence (%) of genomic alteration with a minimum of 10 cases.</p><p>colorectal cancer. This aligns with the notion that due to the size of TTN there is an accumulation of mutations associated with the tumor mutational burden without a defined effect in colorectal cancer <ref type="bibr" target="#b49">[50,</ref><ref type="bibr" target="#b50">51]</ref>. A trend similar to BRAF can be observed in TP53, where the splice variants show the highest impact score (CIBRA score: 0.334, p ≤ 0.0001). However, for tumor suppressor genes such as APC and TP53 another refinement layer is needed. If we include SCNA status along with the SNV coding effect, the CIBRA impact score increases for both APC and TP53 (Fig. <ref type="figure" target="#fig_0">4B</ref>). A loss in conjunction with a coding SNV shows the highest CIBRA impact score. For example, for APC, the highest impact score was reached with the combination of nonsense or frameshift variants and copy number loss (CIBRA score: 0.378, p &lt; 0.0001), while with only nonsense or frameshift variants, the impact score was similar to the effect of only copy number loss (CIBRA score: 0.245, p &lt; 0.005). A similar effect can be observed for TP53. This reaffirms the notion that tumor suppressor genes require two hits to have the most effect and shows that CIBRA can detect this property <ref type="bibr" target="#b51">[52]</ref><ref type="bibr" target="#b52">[53]</ref><ref type="bibr" target="#b53">[54]</ref>. Hence, refining on coding effect enables us to observe which type of alterations have the most impact within a gene.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Refining gene impact by zooming in on genomic location</head><p>The most impactful mutation within a cancer gene could be identified by refining on mutation type. However, the genomic location of an alteration can also influence the impact. To exemplify this, we explored the impact of mutations within subregions in KRAS and BRAF. If we focus on KRAS and dissect the coding variants on their genomic location, only codon 12 (G12) variants showed a significant system-wide impact in metastatic microsatellite stable CRC (CIBRA score: 0.32, p &lt; 0.001; Fig. <ref type="figure" target="#fig_0">4C</ref>). This is in line with the distinct clinical behavior between codon 12 and 13 <ref type="bibr" target="#b54">[55,</ref><ref type="bibr" target="#b55">56]</ref>. Moreover, codon 12 variants show an impact to a similar extent as BRAF codon 600 variants (CIBRA score: 0.37, p &lt; 0.001; Fig. <ref type="figure" target="#fig_0">4C</ref>). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6">Distinct expressional similarity pattern between KRAS and BRAF coding variants in metastatic colorectal cancer</head><p>To assess if two alterations have the same gene expression patterns, CIBRA can derive a similarity score between the distinct genomic alterations. The CIBRA similarity score compares two genomic alterations in contrast to the same control condition and quantifies the extent of similarity between the two conditions. For the CIBRA similarity score, group definitions with shared controls are used to first perform differential expression analysis. Second, the generated log 2 fold changes and adjusted p-values are used to assign genes per condition to differential expression states. The differential expression states are five directional states that range from highly downregulated to highly upregulated (Fig. <ref type="figure">2</ref>). By capturing the DE genes in these five categories, only large changes will be considered in the similarity score. Last, a similarity and anti-similarity score is calculated from the differential expression states (Fig. <ref type="figure">2</ref>).</p><p>To illustrate the similarity score, variants within the same gene and variants between different genes are compared. For the within-gene comparison, KRAS codon 12 and codon 13 variants are considered using data from microsatellite stable metastatic CRC. No significant similarity was observed between codons 12 and 13 (d + = 114, p &gt; 0.05; Fig. <ref type="figure">5A</ref> &amp; <ref type="figure">B</ref>). This difference can be mainly attributed to the lack of DE genes for codon 13 that are observed for codon 12. This highlights that codon 12 variants have a stronger distinct effect on the system. However, there are also a few significant DE genes for codon 13 that are also captured by codon 12 as shown by the light diagonal line in Fig. <ref type="figure">5B</ref>. On the other hand, if we focus more closely on KRAS G12 and Fig. <ref type="figure">5</ref>: Biological similarity assessment between two genomic alterations (conditions) in metastatic microsatellite stable colorectal cancer (HMF). A) Linked volcano plot showing the log2 fold change (FC) and the adjusted p-value of genes differentially expressed between KRAS G12 variants (red) and WT and KRAS G13 variants (blue) and WT. The similarity (orange), anti-similarity (purple), and dissimilarity (gray) states are shown by the colored links between the corresponding genes. B) Categorical DE similarity pattern between KRAS G12 and G13 variants compared to KRAS WT. The color indicates the log-transformed number of events (genes) corresponding to the DE state combinations. The dot color indicates the type of similarity present in the pattern, and the intensity is proportional to the p-value of the similarity score with an upper bound of 0.001. The directional similarity has been reported as similarity and anti-similarity with the corresponding p-value assessed with a permutation test. C) Linked volcano plot showing the log2 fold change (FC) and adjusted p-value of genes differentially expressed between BRAF V600 variants and KRAS and BRAF WT (red) and KRAS G12 variants and WT (blue). D) Categorical DE similarity pattern between KRAS G12 and BRAF V600 variants compared to KRAS and BRAF WT samples. BRAF V600 variants, two genes in the same pathway with a significant system-wide impact, a distinct significant pattern of similarity (d + = 662.5, p &lt; 0.001) and anti-similarity (d -= -35, p &lt; 0.01) can be observed (Fig. <ref type="figure">5C</ref> &amp; <ref type="figure">D</ref>). This highlights that although both genes are part of the EGFR pathway, they show a different effect on the system in metastatic microsatellite stable CRC. This is in line with the different clinical behaviors reported between KRAS and BRAF variants in CRC <ref type="bibr" target="#b56">[57,</ref><ref type="bibr" target="#b57">58]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7">CIBRA versus Machine learning (RF)</head><p>Last, an alternative method was evaluated to determine the impact of genomic alterations. We hypothesized that if a mutation has an impact on the expression levels of the biological system, it should be possible to predict the mutation status of a sample from the genome-wide expression profile. As such, a machine learning model was trained to predict the mutation status of five known cancer genes given transcriptomics data. The performance of such a machine learning model was compared with the CIBRA impact score for five known cancer genes in metastatic CRC: TP53, APC, KRAS, BRAF, and PIK3CA, as well as a gene often mutated due to its size, TTN, with no reported impact. The model performance to predict the mutation status of the six assessed genes is shown in Table <ref type="table">S1</ref>. Various definitions of mutations have been evaluated, including the combination of SNV and SCNA in the tumor suppressor genes TP53 and APC. The mutation status of the cancer genes is indeed predictable from their expression profiles as shown by the receiver operating characteristic area under the curve (ROC AUC) scores (Table <ref type="table">S1</ref>). However, not all mutation definitions could be assessed using the machine learning approach, as the machine learning model needed at least 50 cases and controls to be reasonably trained and validated. In contrast, the CIBRA impact score can be calculated for all genomic alterations in table S1, and could calculate the impact score with a minimum of 10 cases and controls (Fig. <ref type="figure" target="#fig_2">S3</ref>). Moreover, CIBRA was able to identify the system-wide impact of all cancer genes evaluated and confirms that TTN does not have a system-wide impact in CRC, as also observed with the machine learning model. Overall, these results show that both machine learning models and the CIBRA impact score can be used as impact indicators for genomic alterations, while the CIBRA impact score is preferred when a small number of samples are available for a specific alteration.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Discussion</head><p>Identifying alterations with a system-wide impact is a challenging task. CIBRA integrates two different omics data types to determine the system-wide impact of genomic alterations. By integrating multi-omics data, CIBRA was able to identify the majority of known tumor suppressor genes and oncogenes from a pan-cancer genome-wide screen of primary cancers. Notably, when we applied CIBRA on a genome-wide screen of genes affected by SNVs, SCNAs, and SVs using data from metastatic colorectal, breast, and lung cancer, many genes affected by SVs showed a significant system-wide impact to a similar extent to known cancer genes such as TP53 and APC. This finding suggests that the impact of structural variants has been largely underestimated. Furthermore, CIBRA could systematically refine genomic alterations on genomic sublocations and mutation types to narrow impactful mutations. Finally, CIBRA could facilitate the evaluation of similarities between genomic alterations in terms of their impact. The systematic identification of the most impactful type of mutation and gene subregion can facilitate the prioritization and design of focused experimental assays to validate the observed system-wide impact and allow for the reassessment of their clinical implications.</p><p>From the pan-cancer genome-wide screen of primary cancers, many tumor suppressor genes and oncogenes showed a significant system-wide change in the transcriptome. We hypothesized that biologically relevant alterations elicit large changes throughout the system. As hallmarks of cancer are central components of the cell and the tumor, disruption of these processes can induce large trickle-down effects through the system, explaining the many known cancer genes found with a large system-wide effect <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b58">59]</ref>. Although cancer genes are often key components of hallmarks of cancer, genomic alterations within these genes do not necessarily necessitate a large change in the system <ref type="bibr" target="#b59">[60]</ref>. CIBRA was able to detect these trickle-down effects from cancer genes and verified our hypothesis that cancer genes can elicit such large effects through the system. Notably, not all of the highest-scoring genes are registered tumor suppressor genes and oncogenes, such as GTF2I and COL11A1. However, even though they are not registered in the cosmic cancer gene census, recent studies have shown the tumorigenic potential of GTF2I in thymoma and COL11A1 in squamous cell carcinomas <ref type="bibr" target="#b42">[43]</ref><ref type="bibr" target="#b43">[44]</ref><ref type="bibr" target="#b44">[45]</ref><ref type="bibr" target="#b45">[46]</ref><ref type="bibr" target="#b60">61]</ref>. On the other hand, from our metastatic breast, colorectal, and lung cancer screens, SVs emerged as having a significant system-wide impact on cancer. Notably, genes within common fragile sites, such as PRKN and MACROD2, which are among the top 10 scoring genes, showed an exorbitant impact in metastasized CRC, highlighting their potential relevance in cancer. MACROD2 has been reported to promote chromosomal instability, positioning it as a potential tumor suppressor gene <ref type="bibr" target="#b61">[62]</ref>. Variants within PRKN have been reported to result in mitotic instability, contributing to oncogenesis <ref type="bibr" target="#b62">[63]</ref>. Our findings suggest that the impact of SVs in cancer has thus far been underreported, and more attention is needed for SVs in the field of cancer biology and precision oncology.</p><p>Although the system-wide impact can be the result of changes at different levels of the system, from cells to tissue and its microenvironment. There are also some limitations to the CIBRA methodology. First, an absence of impact is not an indication of no importance, as the variant may play a relevant role in another setting, such as early in cancer progression. When assessing the impact of the variant in the metastasized setting, the impact of the variant may be overlooked. Moreover, the homogeneity of the set of samples influences the power of the CIBRA impact and similarity scores. The more homogeneous the set of samples, the better the signal-to-noise ratio becomes. Finally, the pattern of similarity depends on the setting of the samples used. To gain a full understanding of the similarity pattern, different contexts have to be assessed, such as different cancer types or stages. Overall, both the systematic refinement of mutation type and gene subregion and the similarity score are powerful tools to help improve our understanding of cancer biology.</p><p>In this work, we have shown that the impact of genomic alterations can be determined in two ways by integrating multi-omics data: a statistical method that determines the system-wide impact of genomic alterations, i.e., CIBRA, and a machine learning model that identifies characteristic changes in the system associated with the genomic alteration. Machine learning methods such as a random forest model have the strength that they can identify non-linear relationships that do not necessarily consist of system-wide effects, allowing them to identify a wider range of cancer gene effects. However, these methods require sufficient data to train and validate a model, limiting their scope of use. In contrast, CIBRA is able to determine the system-wide impact of any genomic alteration with at least 10 cases and controls, allowing us to explore a wider and deeper space, given the assumption that the genomic alteration has its impact in a linear system-wide effect.</p><p>Systematically refining the definition of alterations on mutation type and genomic location can be helpful in two aspects: first, to prioritize and design focused experiments for validating causative relationships, and second, to select potential biomarkers for clinical testing and validation. Due to the limited size of patient cohorts, clinical data is often insufficient to fully explore the potential biomarker space, limiting the identification or refinement of potential biomarkers <ref type="bibr" target="#b63">[64]</ref>. CIBRA enables the prioritization of biomarkers by pre-selecting and refining their definition. In this way, noisy definitions can be cleared to allow for more effective testing and validation of clinical markers with limited clinical data. In this scenario, clinical data are used more effectively to test and validate potential biomarkers than for discovery. Therefore, a preliminary screening and refinement of genes affected by alterations, as demonstrated in this manuscript, can provide a valuable first step to direct further exploration and validation for the identification of biomarkers for personalized care.</p><p>In conclusion, CIBRA is a versatile method for identifying genomic alterations with a systemwide impact on tumor biology and has the potential to help in our understanding of diseaseassociated genomic alterations.</p><p>from Sentinel CH. SpA, non-financial support from Personal Genome Diagnostics (PGDX), nonfinancial support from DELFI, other from Hartwig Medical Foundation, grants from CZ (OWM Centrale Zorgverzekeraars groep Zorgverzekeraar u.a), other from Royal Philips, other from Glaxo-SmithKline, other from Keosys SARL, other from Open Clinica LLC, other from Roche Diagnostics Nederland BV, other from The Hyve BV, other from Open Text, other from SURFSara BV, other from Vancis BV, other from CSC Computer Sciences BV, outside the submitted work; In addition, G.A.M. has several patents pending. The other authors declare no potential conflicts of interest.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplemental material</head><p>Table <ref type="table">S1</ref>: Comparing the CIBRA score and machine learning models to identify the impact of genomic alterations using transcriptomics data. Both the CIBRA impact score and a random forest (RF) classification model performance score were used to assess the impact of coding SNVs, SCNAs, the combination (SNV + SCNA), or any alteration in TP53, APC, KRAS, BRAF, PIK3CA, and TTN. The impact is measured with the significant area for CIBRA and the receiver operating characteristic area under the curve (ROC AUC) for the RF model. Significance is determined through a permutation test for both methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CIBRA</head><p>Machine Learning (RF)</p><p>Gene Alteration Cases (samples) Significant area (score) p-value ROCAUC (score) p-value TP53 only SNV 35 0.094 0.38 -only SCNA 133 0.298 0.007 0.92 ≤ 0.01 SNV &amp; SCNA 144 0.378 0.001 0.94 ≤ 0.01 any alteration 327 0.327 0.004 0.95 ≤ 0.01 APC only SNV 173 0.306 0.006 0.86 ≤ 0.01 only SCNA 48 0.329 0.004 --SNV &amp; SCNA 67 0.383 0.001 0.88 ≤ 0.01 any alteration 303 0.357 0.003 0.80 ≤ 0.01 KRAS only SNV 163 0.210 0.05 0.84 ≤ 0.01 any alteration 165 0.212 0.04 0.81 ≤ 0.01 BRAF only SNV 51 0.280 0.01 0.74 ≤ 0.01 any alteration 61 0.214 0.04 0.75 ≤ 0.01 PIK3CA only SNV 60 0.325 0.004 0.61 0.16 any alteration 61 0.319 0.004 0.66 0.01 TTN only SNV 210 0 1 0.52 0.38 any alteration 219 0 1 0.4 0.93 Gamma density function Density 0.05 0.15 0.25 0.35 0 2 4 6 8 0.00 0.10 0.20 0.30 0.05 0.15 0.25 0.35 Q-Q plot Empirical quantiles 0.05 0.25 0.35 0.0 0.2 0.4 0.6 0.8 1.0 Gamma CDF 0.15 CDF 0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0 A B 0 5 10 15 20 0.1 0.2 0.3 proportion density b hmf crc hmf crc tcga lu hmf 0 5 10 0.0 0.1 0.2 0.3 0.4 density b hmf crc hmf crc tcga l hmf Fig. S2: Permutation distribution of the signal measures for different cancer types and datasets. A)Histogram overlaid</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>P-P plot</head><p>with the density of the distribution for the proportion calculated for 1000 sample permutations for primary (crc tcga) and metastatic colorectal (crc hmf), breast (brca hmf), and lung (luad hmf) cancer. B) Histogram overlayed with the density of the distribution for the significant area calculated for 1000 sample permutations for primary (crc tcga) and metastatic colorectal (crc hmf), breast (brca hmf), and lung (luad hmf) cancer. Cancer type has an influence on the shape and position of the permutation distribution. The more heterogeneous the cohort, the wider the distribution. This is especially clear for the primary colorectal cancer dataset consisting of multiple stages of the disease. As such, generating the sample permutation distribution for each cancer type and dataset is advised. DE state assignment (DE s ) DE analysis Similarity score Data 0 0 0 0.5 1 0 0 0 1 0.5 0 0 0 0 0 0.5 1 0 0 0 1 0.5 0 0 0 HU MU NS MD HD HD MD NS MU HU -1 -0.5 0 0 0 -0.5 -1 0 0 0 0 0 0 0 0 0 0 0 -1 -0.5 0 0 0 -0.5 -1 HU MU NS MD HD HD MD NS MU HU Condition 1 Condition 1 Condition 2 Condition 2 N D + D - x = = d + d - Condition 1 Condition 2 cases controls controls cases Fig. S4: Flowchart of the CIBRA similarity score calculation. Expression data and group definitions with shared controls are used to perform differential expression analysis (DE) similar to the impact score calculation. Using the generated log2 fold changes (FC) and adjusted p-values, DE states (DEs) are defined for each gene given the corresponding p-value and fold change for both conditions. To calculate the similarity between the two conditions, a contingency table (N ) is generated between the DEs of the two conditions. The frequency of the combination of DEs is shown by a heatmap. A similarity (D + ) and anti-similarity (D -) weight matrix is multiplied with the contingency table (N ) to calculate the directional similarity scores d + and d -. A permutation test is performed to estimate the significance of the d + and d -scores.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 4 :</head><label>4</label><figDesc>Fig. 4: Refining genomic alterations by mutation type and genomic location for the identification of impactful alterations using CIBRA. A) CIBRA impact score for SNVs dissected in their underlying coding effects: non-coding, synonymous, missense, splice, and nonsense or frameshift for 4 frequently mutated genes in metastatic colorectal cancer: APC, TP53, BRAF, and TTN using data from metastatic microsatellite stable CRC. Two of the genes, APC and TP53, are known tumor suppressor genes. BRAF is a known oncogene, and TTN is a recurrently mutated gene without a known cancerassociated function in CRC. B) CIBRA impact score for SCNAs combined with SNV coding effects for the TSGs APC and TP53 in metastatic microsatellite stable CRC. C) CIBRA impact score visualization of KRAS codon 12 (G12), 13 (G13) and BRAF codon 600 (V600) mutations. A, B &amp; C) Shaded gray area: the impact score of the overall effect of SNVs or SCNAs. Gray dot: median permutation CIBRA score, with the error bars representing the IQR. Dot color: significance of the CIBRA score assessed by a permutation test. Dot size: prevalence of the alteration (%).</figDesc><graphic coords="10,127.56,45.35,340.16,361.83" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. S1 :Fig. S2 :</head><label>S1S2</label><figDesc>Fig.S1: Distribution characteristics of the significant area and proportion from 1000 sample permuted data fitted by a Gamma distribution. A) Histogram of the sample permutation distribution of the proportion with a Gamma density function overlaid. B) Q-Q plot showing the theoretical quantiles of the fitted Gamma distribution plotted against the empirical quantiles of the proportion from the sample permuted data. C) The fitted Gamma cumulative density function (CDF) plotted against the proportion. D) P-P plot of the theoretical probabilities of the fitted Gamma distribution against the Empirical probabilities of the proportion. E) Histogram of the sample permutation distribution of the significant area with a Gamma density function overlaid. F) Q-Q plot showing the theoretical quantiles of the fitted Gamma distribution plotted against the empirical quantiles of the significant area from the sample permuted data. G) The fitted Gamma cumulative density function (CDF) plotted against the significant area. H) P-P plot of the theoretical probabilities of the fitted Gamma distribution against the Empirical probabilities of the significant area. The distribution characteristics show that a Gamma distribution fits well with the CIBRA impact scores: significant area and proportion.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. S3 :</head><label>S3</label><figDesc>Fig.S3: Number of cases plotted against the number of controls that resulted in an invalid proportion below the threshold τ assessed with 1000 sample permutations. The threshold τ used in this manuscript is 0.1. Sample permutations with fewer than 10 cases resulted in invalid signal measures. The number of cases between 3 and 8 could not be assessed with DESeq2, as they resulted in errors.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="3,85.04,45.35,425.19,145.53" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="3,85.04,272.72,425.21,205.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="9,85.04,45.36,425.18,302.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="11,85.04,45.35,425.22,428.40" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgments. This publication and the underlying study have been made possible partly through data requested (<rs type="grantNumber">DR-072</rs>) and made available by the <rs type="funder">Hartwig Medical Foundation (HMF)</rs> and the <rs type="funder">Center of Personalized Cancer Treatment (CPCT)</rs>. The results shown here are in part based on data generated by the <rs type="funder">TCGA Research Network</rs> (<ref type="url" target="https://www.cancer.gov/tcga">https://www.cancer.gov/tcga</ref>). We thank <rs type="person">Libio Goncalves Braz</rs> from the <rs type="affiliation">department of Information and Computing Sciences from Utrecht University</rs> for testing the usability of the package on multiple systems.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_mD84qDr">
+					<idno type="grant-number">DR-072</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data availability. All datasets analyzed in this study are publicly available. The data generated in this study are available within this article, its supplementary data files, and the code and data repositories.</p><p>Code availability. Our R package CIBRA is available at <ref type="url" target="https://github.com/AIT4LIFE-UU/CIBRA">https://github.com/AIT4LIFE-UU/  CIBRA</ref>.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Author Contributions. S.L. has contributed to the conceptualization, formal analysis, validation, investigation, visualization, methodology, writing of the original draft, and software development. C.B. has contributed to the formal analysis, investigation, methodology, and review of the writing. G.A.M. and J.H. have contributed to the conceptualization, supervision, review of the writing, and funding acquisition. R.J.A.F. has contributed to the conceptualization, supervision, funding acquisition, writing of the original draft, and review of the writing. S.A. has contributed to the conceptualization, supervision, funding acquisition, writing of the original draft, review of the writing, and methodology.</p><p>Competing interests. R.J.A.F. reports grants and non-financial support from Personal Genome Diagnostics, non-financial support from Delfi Diagnostics, grants from MERCK BV, grants and non-financial support from Cergentis BV, outside the submitted work; In addition, R.J.A.F. has several patents pending. S.A. reports grants and non-financial support from Cergentis BV and a patent pending, outside the submitted work. S.L. reports non-financial support from Cergentis BV and a patent pending, outside the submitted work. J.H. reports a patent pending, outside the submitted work. G.A.M. is co-founder and board member (CSO) of CRCbioscreen BV, CSO of Health-RI (Dutch National Health Data Infrastructure for Research &amp; innovation), and member of the supervisory board of IKNL (Netherlands Comprehensive Cancer Organisation). G.A.M. nonfinancial support from Exact Sciences, non-financial support from Sysmex, non-financial support</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">A compendium of mutational cancer driver genes</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Martínez-Jiménez</surname></persName>
+		</author>
+		<idno>Number: 10 Publisher</idno>
+		<ptr target="https://www.nature.com/articles/s41568-020-0290-x" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Cancer</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="555" to="572" />
+			<date type="published" when="2020">2020</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Comparative assessment of genes driving cancer and somatic evolution in non-cancer tissues: an update of the Network of Cancer Genes (NCG) resource</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dressler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biology</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page">35</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Comparison of algorithms for the detection of cancer drivers at subgene resolution</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Porta-Pardo</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/nmeth.4364" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="782" to="788" />
+			<date type="published" when="2017">2017</date>
+			<publisher>Number: 8 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Cancer driver mutations: predictions and reality</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ostroverkhova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Przytycka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Panchenko</surname></persName>
+		</author>
+		<ptr target="https://www.cell.com/trends/molecular-medicine/abstract/S1471-4914" />
+	</analytic>
+	<monogr>
+		<title level="j">Trends in Molecular Medicine</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="67" to="69" />
+			<date type="published" when="2023">2023</date>
+			<publisher>Elsevier</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Mutational heterogeneity in cancer and the search for new cancerassociated genes</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lawrence</surname></persName>
+		</author>
+		<ptr target="http://www.nature.com/articles/nature12213" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">499</biblScope>
+			<biblScope unit="page" from="214" to="218" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Functional impact bias reveals cancer drivers</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lopez-Bigas</surname></persName>
+		</author>
+		<ptr target="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3505979/" />
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page">169</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Onco-driveCLUSTL: a sequence-based clustering method to identify cancer drivers</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Arnedo-Pac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mularoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Muiños</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lopez-Bigas</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btz501</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/btz501" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="4788" to="4790" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Discovery and saturation analysis of cancer genes across 21 tumour types</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lawrence</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/nature12912" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">505</biblScope>
+			<biblScope unit="page" from="495" to="501" />
+			<date type="published" when="2014">2014</date>
+			<publisher>Number: 7484 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.1235122</idno>
+		<ptr target="https://www.science.org/doi/10.1126/science.1235122" />
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Genome Landscapes. Science</title>
+		<imprint>
+			<biblScope unit="volume">339</biblScope>
+			<biblScope unit="page" from="1546" to="1558" />
+			<date type="published" when="2013">2013</date>
+			<publisher>American Association for the Advancement of Science</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">MuSiC: Identifying mutational significance in cancer genomes</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">D</forename><surname>Dees</surname></persName>
+		</author>
+		<ptr target="https://genome.cshlp.org/content/22/8/1589.Com-pany" />
+	</analytic>
+	<monogr>
+		<title level="j">Genome Research</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="1589" to="1598" />
+			<date type="published" when="2012">2012</date>
+			<publisher>Cold Spring Harbor Laboratory Press Publisher: Cold Spring Harbor Lab</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Protein-structure-guided discovery of functional mutations across 19 cancer types</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Niu</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/ng.3586" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="827" to="837" />
+			<date type="published" when="2016">2016</date>
+			<publisher>Number: 8 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Genome-wide mapping of somatic mutation rates uncovers drivers of cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Sherman</surname></persName>
+		</author>
+		<idno>41587-022-01353-8. Number: 11 Publisher</idno>
+		<ptr target="https://www.nature.com/articles/s" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="1634" to="1643" />
+			<date type="published" when="2022">2022</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">SIFT: predicting amino acid changes that affect protein function</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">C</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Henikoff</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/nar/gkg509</idno>
+		<ptr target="https://doi.org/10.1093/nar/gkg509" />
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="3812" to="3814" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A method and server for predicting damaging missense mutations</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A</forename><surname>Adzhubei</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/nmeth0410-248" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="248" to="249" />
+			<date type="published" when="2010">2010</date>
+			<publisher>Number: 4 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Accurate proteome-wide missense variant effect prediction with AlphaMissense</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.adg7492</idno>
+		<ptr target="https://www.science.org/doi/10.1126/science.adg7492" />
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">381</biblScope>
+			<biblScope unit="page">7492</biblScope>
+			<date type="published" when="2023">2023</date>
+			<publisher>American Association for the Advancement of Science</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Modeling RAS phenotype in colorectal cancer uncovers novel molecular traits of RAS dependency and improves prediction of response to targeted agents in patients</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Guinney</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clinical Cancer Research: An Official Journal of the American Association for Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="265" to="272" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Machine Learning Detects Pan-cancer Ras Pathway Activation in The Cancer Genome Atlas</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Way</surname></persName>
+		</author>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S2211124718303899" />
+	</analytic>
+	<monogr>
+		<title level="j">Cell Reports</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="172" to="180" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Identification of pan-cancer Ras pathway activation with deep learning</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K.-C</forename><surname>Wong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Briefings in Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>bbaa</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Genomic and Molecular Landscape of DNA Damage Repair Deficiency across The Cancer Genome Atlas</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S2211124718304376" />
+	</analytic>
+	<monogr>
+		<title level="j">Cell Reports</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="239" to="254" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Prediction of PIK3CA mutations from cancer gene expression data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PloS One</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">241514</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Tumor Break Load is a biologically relevant feature of genomic instability with prognostic value in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lakbir</surname></persName>
+		</author>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S0959804922007742" />
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Cancer</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Widespread redundancy in -omics profiles of cancer mutation states</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Christensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chikina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Greene</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biology</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page">137</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">iTOP: inferring the topology of omics data</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Aben</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/bty636</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/bty636" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="988" to="996" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Structural variant detection in cancer genomes: computational challenges and perspectives for precision oncology</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A E M</forename><surname>Van Belzen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schönhuth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kemmeren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Hehir-Kwa</surname></persName>
+		</author>
+		<idno>41698-021-00155-6. Number: 1 Publisher</idno>
+		<ptr target="https://www.nature.com/articles/s" />
+	</analytic>
+	<monogr>
+		<title level="j">Precision Oncology</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2021">2021</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Findings from precision oncology in the clinic: rare, novel variants are a significant contributor to scaling molecular diagnostics</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Doig</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s12920-022-01214-y</idno>
+		<ptr target="https://doi.org/10.1186/s12920-022-01214-y" />
+	</analytic>
+	<monogr>
+		<title level="j">BMC Medical Genomics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">70</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Toward a Shared Vision for Cancer Genomic Data</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Grossman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">375</biblScope>
+			<biblScope unit="page" from="1109" to="1112" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Pan-cancer whole-genome analyses of metastatic solid tumours</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Priestley</surname></persName>
+		</author>
+		<ptr target="http://www.nature.com/articles/s41586-019-1689-y" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">575</biblScope>
+			<biblScope unit="page" from="210" to="216" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Estimating the occurrence of false positives and false negatives in microarray studies by approximating and partitioning the empirical distribution of p-values</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pounds</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Morris</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="1236" to="1242" />
+			<date type="published" when="2003">2003</date>
+			<pubPlace>Oxford, England</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Love</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Anders</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s13059-014-0550-8</idno>
+		<idno>13059-014-0550-8. Publisher: BioMed Central</idno>
+		<ptr target="http://genomebiology.biomedcentral.com/articles/10.1186/s" />
+	</analytic>
+	<monogr>
+		<title level="j">Genome biology</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">550</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">edgeR: a Bioconductor package for differential expression analysis of digital gene expression data</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Robinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Mccarthy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">K</forename><surname>Smyth</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btp616</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/btp616" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="139" to="140" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">BioNet: an R-Package for the functional analysis of biological networks</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Beisser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Klau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Dandekar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Dittrich</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btq089</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/btq089" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="1129" to="1130" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">fitdistrplus: An R Package for Fitting Distributions</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Delignette-Muller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dutang</surname></persName>
+		</author>
+		<idno type="DOI">10.18637/jss.v064.i04</idno>
+		<ptr target="https://doi.org/10.18637/jss.v064.i04" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="1" to="34" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Mutation-specific effects of NRAS oncogenes in colorectal cancer cells</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kuhn</surname></persName>
+		</author>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S2212492620300890" />
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Biological Regulation</title>
+		<imprint>
+			<biblScope unit="volume">79</biblScope>
+			<biblScope unit="page">100778</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">PRROC: computing and visualizing precision-recall and receiver operating characteristic curves in R</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Grau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Grosse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Keilwagen</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btv153</idno>
+		<ptr target="https://doi.org/10.1093/bioinformatics/btv153" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="2595" to="2597" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">TCGAbiolinks: an R/Bioconductor package for integrative analysis of TCGA data</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Colaprico</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/nar/gkv1507</idno>
+		<ptr target="https://doi.org/10.1093/nar/gkv1507" />
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page">71</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">The cBio Cancer Genomics Portal: An Open Platform for Exploring Multidimensional Cancer Genomics Data</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<idno type="DOI">10.1158/2159-8290.CD-12-0095</idno>
+		<ptr target="https://doi.org/10.1158/2159-8290.CD-12-0095" />
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discovery</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="401" to="404" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Integrative analysis of complex cancer genomics and clinical profiles using the cBioPortal</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science Signaling</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Pan-Cancer analysis project</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Weinstein</surname></persName>
+		</author>
+		<idno>Number: 10 Publisher</idno>
+		<ptr target="https://www.nature.com/articles/ng.2764" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="1113" to="1120" />
+			<date type="published" when="2013">2013</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">The COSMIC Cancer Gene Census: describing genetic dysfunction across all human cancers</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sondka</surname></persName>
+		</author>
+		<idno>41568-018-0060-1. Number: 11 Publisher</idno>
+		<ptr target="https://www.nature.com/articles/s" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="696" to="705" />
+			<date type="published" when="2018">2018</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Controlling the false discovery rate: a practical and powerful approach to multiple testing</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Benjamini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hochberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society Series</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="page" from="289" to="300" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Morgan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shepherd</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Annotationhub</surname></persName>
+		</author>
+		<title level="m">Client to access AnnotationHub resources</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Human thymoma-associated mutation of the GTF2I transcription factor impairs thymic epithelial progenitor differentiation in mice</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">B</forename><surname>Giorgetti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nusser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Boehm</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/s42003-022-04002-7" />
+	</analytic>
+	<monogr>
+		<title level="j">Communications Biology</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2022">2022</date>
+			<publisher>Number: 1 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A specific missense mutation in GTF2I occurs at high frequency in thymic epithelial tumors</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Petrini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="844" to="849" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">GTF2I mutation in micronodular thymoma with lymphoid stroma</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bille</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Fryer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wallace</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Nonaka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Clinical Pathology</title>
+		<imprint>
+			<biblScope unit="page" from="2022" to="208655" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Mutant collagen COL11A1 enhances cancerous invasion</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Lee</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/s41388-021-02013-y" />
+	</analytic>
+	<monogr>
+		<title level="j">Oncogene</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="6299" to="6307" />
+			<date type="published" when="2021">2021</date>
+			<publisher>Number: 44 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Encorafenib, Binimetinib, and Cetuximab in BRAF V600E-Mutated Colorectal Cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kopetz</surname></persName>
+		</author>
+		<idno type="DOI">10.1056/NEJMoa1908075</idno>
+		<ptr target="https://doi.org/10.1056/NEJMoa1908075" />
+	</analytic>
+	<monogr>
+		<title level="j">Publisher: Massachusetts Medical Society</title>
+		<imprint>
+			<biblScope unit="volume">381</biblScope>
+			<biblScope unit="page" from="1632" to="1643" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>New England Journal of Medicine</note>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">KRAS codon 61, 146 and BRAF mutations predict resistance to cetuximab plus irinotecan in KRAS codon 12 and 13 wild-type metastatic colorectal cancer</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Loupakis</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/6605177" />
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Cancer</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="page" from="715" to="721" />
+			<date type="published" when="2009">2009</date>
+			<publisher>Nature Publishing Group</publisher>
+			<pubPlace>Number: 4 Publisher</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Mutations of the BRAF gene in human cancer</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Davies</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/nature00766" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">417</biblScope>
+			<biblScope unit="page" from="949" to="954" />
+			<date type="published" when="2002">2002</date>
+			<publisher>Number: 6892 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Spontaneous mutations in the single TTN gene represent high tumor mutation burden</title>
+		<author>
+			<persName><forename type="first">J.-H</forename><surname>Oh</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/s41525-019-0107-6" />
+	</analytic>
+	<monogr>
+		<title level="j">Genomic Medicine</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2020">2020</date>
+			<publisher>Number: 1 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Comprehensive molecular characterization of human colon and rectal cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Muzny</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nature11252</idno>
+		<ptr target="http://dx.doi.org/10.1038/nature11252" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">487</biblScope>
+			<biblScope unit="page" from="330" to="337" />
+			<date type="published" when="2012">2012</date>
+			<publisher>Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">The two &quot;hit&quot; and multiple &quot;hit&quot; theories of carcinogenesis</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Ashley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Cancer</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="313" to="328" />
+			<date type="published" when="1969">1969</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Tumor Suppressors Having Oncogenic Functions: The Double Agents</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Datta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Basu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Ghosh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cells</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">46</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">A continuum model for tumour suppression</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Knudson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">P</forename><surname>Pandolfi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">476</biblScope>
+			<biblScope unit="page" from="163" to="169" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Specific mutations in KRAS codon 12 are associated with worse overall survival in patients with advanced and recurrent colorectal cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">P</forename><surname>Jones</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/bjc201737" />
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Cancer</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page" from="923" to="929" />
+			<date type="published" when="2017">2017</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">KRAS Codon 12 and 13 Mutations in Relation to Disease-Free Survival in BRAF-Wild-Type Stage III Colon Cancers from an Adjuvant Chemotherapy Trial (N0147 Alliance)</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Yoon</surname></persName>
+		</author>
+		<idno type="DOI">10.1158/1078-0432.CCR-13-3140</idno>
+		<ptr target="https://doi.org/10.1158/1078-0432.CCR-13-3140" />
+	</analytic>
+	<monogr>
+		<title level="j">Clinical Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="3033" to="3043" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">BRAFV600E drives dedifferentiation in small intestinal and colonic organoids and cooperates with mutant p53 and Apc loss in transformation</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Reischmann</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/s41388-020-01414-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Oncogene</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="6053" to="6070" />
+			<date type="published" when="2020">2020</date>
+			<publisher>Number: 38 Publisher: Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Similar but different: distinct roles for KRAS and BRAF oncogenes in colorectal cancer development and therapy resistance</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Morkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Riemer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bläker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sers</surname></persName>
+		</author>
+		<ptr target="https://www.oncotarget.com/article/4750/text/" />
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="20785" to="20800" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>Publisher: Impact Journals</note>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Hallmarks of Cancer: New Dimensions</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<ptr target="https://aacrjournals.org/cancerdiscovery/article/12/1/31/675608/Hallmarks-of-Cancer-New-DimensionsHallmarks-of" />
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discovery</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="31" to="46" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Oncogenic Signaling Pathways in The Cancer Genome Atlas</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sanchez-Vega</surname></persName>
+		</author>
+		<ptr target="https://linkinghub.elsevier.com/retrieve/pii/S0092867418303593" />
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">173</biblScope>
+			<biblScope unit="page">10</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Thymic epithelial tumors: examining the GTF2I mutation and developing a novel prognostic signature with LncRNA pairs to predict tumor recurrence</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC genomics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page">656</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">MACROD2 Haploinsufficiency Impairs Catalytic Activity of PARP1 and Promotes Chromosome Instability and Growth of Intestinal Tumors</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sakthianandeswaren</surname></persName>
+		</author>
+		<idno type="DOI">10.1158/2159-8290.CD-17-0909</idno>
+		<ptr target="https://doi.org/10.1158/2159-8290.CD-17-0909" />
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discovery</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="988" to="1005" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Somatic mutations of the Parkinson&apos;s disease-associated gene PARK2 in glioblastoma and other human malignancies</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Veeriah</surname></persName>
+		</author>
+		<ptr target="http://www.nature.com/articles/ng.491" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="77" to="82" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Pitfalls in Cancer Biomarker Discovery and Validation with Emphasis on Circulating Tumor DNA</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Fiala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">P</forename><surname>Diamandis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kulasingam</surname></persName>
+		</author>
+		<idno type="DOI">10.1158/1055-9965.EPI-20-0074</idno>
+		<ptr target="https://doi.org/10.1158/1055-9965.EPI-20-0074" />
+	</analytic>
+	<monogr>
+		<title level="j">Biomarkers &amp; Prevention</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="2568" to="2574" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Cancer Epidemiology</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

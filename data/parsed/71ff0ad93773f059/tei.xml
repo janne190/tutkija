@@ -1,0 +1,2048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Comprehensive interrogation of gene lists from genome-scale cancer screens with oncoEnrichR Authors</title>
+				<funder ref="#_tdXQ3Dv">
+					<orgName type="full">Norwegian Cancer Society</orgName>
+				</funder>
+				<funder ref="#_zcefjTT">
+					<orgName type="full">Research Council of Norway through its Centers of Excellence funding scheme</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Sigve</forename><surname>Nakken</surname></persName>
+							<email>sigven@ifi.uio.no</email>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Department of Tumor Biology</orgName>
+								<orgName type="department" key="dep2">Institute for Cancer Research</orgName>
+								<orgName type="institution">Oslo University Hospital</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Institute of Clinical Medicine</orgName>
+								<orgName type="department" key="dep2">Faculty of Medicine</orgName>
+								<orgName type="laboratory">Centre for Cancer Cell Reprogramming</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">Centre for Bioinformatics</orgName>
+								<orgName type="department" key="dep2">Department of Informatics</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sveinung</forename><surname>Gundersen</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">Centre for Bioinformatics</orgName>
+								<orgName type="department" key="dep2">Department of Informatics</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Fabian</forename><forename type="middle">L M</forename><surname>Bernal</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">University Center for Information Technology</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Dimitris</forename><surname>Polychronopoulos</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department">Early Data Science and Computational Oncology, Research and Early Development, Oncology R&amp;D</orgName>
+								<orgName type="institution">AstraZeneca</orgName>
+								<address>
+									<region>Cambridge, UK</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Eivind</forename><surname>Hovig</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Department of Tumor Biology</orgName>
+								<orgName type="department" key="dep2">Institute for Cancer Research</orgName>
+								<orgName type="institution">Oslo University Hospital</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">Centre for Bioinformatics</orgName>
+								<orgName type="department" key="dep2">Department of Informatics</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jørgen</forename><surname>Wesche</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Department of Tumor Biology</orgName>
+								<orgName type="department" key="dep2">Institute for Cancer Research</orgName>
+								<orgName type="institution">Oslo University Hospital</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Institute of Clinical Medicine</orgName>
+								<orgName type="department" key="dep2">Faculty of Medicine</orgName>
+								<orgName type="laboratory">Centre for Cancer Cell Reprogramming</orgName>
+								<orgName type="institution">University of Oslo</orgName>
+								<address>
+									<country key="NO">Norway</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><surname>Affiliations</surname></persName>
+						</author>
+						<title level="a" type="main">Comprehensive interrogation of gene lists from genome-scale cancer screens with oncoEnrichR Authors</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">2ACA7CE98992F320EF53404410F5C86A</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>CRISPR</term>
+					<term>hit prioritization</term>
+					<term>screen interpretation</term>
+					<term>gene set analysis</term>
+					<term>genome-scale screening</term>
+					<term>cancer relevance</term>
+					<term>drug discovery</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Genome-scale screening experiments in cancer produce long lists of candidate genes that require extensive interpretation for biological insight and prioritization for follow-up studies. Interrogation of gene lists frequently represents a significant and time-consuming undertaking, in which experimental biologists typically combine results from a variety of bioinformatics resources in an attempt to portray and understand cancer relevance. As a means to simplify and strengthen the support for this endeavor, we have developed oncoEnrichR, a flexible bioinformatics tool that allows cancer researchers to comprehensively interrogate a given gene list along multiple facets of cancer relevance. oncoEnrichR differs from general gene set analysis frameworks through the integration of an extensive set of prior knowledge specifically relevant for cancer, including ranked gene-tumor type associations, literature-supported proto-oncogene and tumor suppressor gene annotations, target druggability data, regulatory interactions, synthetic lethality predictions, as well as prognostic associations, gene aberrations, and co-expression patterns across tumor types. The software produces a structured and user-friendly analysis report as its main output, where versions of all underlying data resources are explicitly logged, the latter being a critical component for reproducible science. We demonstrate the usefulness of oncoEnrichR through interrogation of two candidate lists from proteomic and CRISPR screens. oncoEnrichR is freely available as a web-based workflow hosted by the Galaxy platform (<ref type="url" target="https://oncotools.elixir.no">https://oncotools.elixir.no</ref>), and can also be accessed as a stand-alone R package (<ref type="url" target="https://github.com/sigven/oncoEnrichR">https://github.com/sigven/oncoEnrichR</ref>).</p><p>Significance: oncoEnrichR is a comprehensive and user-friendly report engine for the interpretation and prioritization of candidate hits generated by genome-scale screens in cancer.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>The search for novel cancer-implicated genes is currently fueled by data-driven high-throughput genome-scale screening studies, exemplified by the various types of gene perturbation experiments possible with the CRISPR/Cas9 technology <ref type="bibr">(1)</ref>. Most high-throughput screens typically produce the same conceptual output, in the form of dozens or hundreds of candidate genes ranked by effect sizes.</p><p>A significant challenge in this respect is to aggregate sufficient prior knowledge regarding the candidate hits, both individually and at a systems level, in order to enable an optimal prioritization of genes for in-depth experimental validation. General gene set enrichment resources are frequently used for this task, as well as portals that permit exploration of large-scale cancer omics data <ref type="bibr">(2)</ref><ref type="bibr">(3)</ref><ref type="bibr">(4)</ref><ref type="bibr">(5)</ref>.</p><p>Nevertheless, users often end up with a fragmented approach, where they need to combine results from a diverse set of annotation tools <ref type="bibr">(5)</ref>. The whole interpretation process is generally impeded by a lack of dedicated frameworks that can systematically prioritize a collection of candidate hits with respect to their cancer relevance, a key element in the interrogation of hits from screens conducted in a cancer setting.</p><p>We have developed oncoEnrichR, a user-friendly gene set interpretation workflow in which a diverse suite of annotation and prioritization modules highlight the cancer relevance of candidate hits, both quantitatively through global and tumor-type specific rank scores, but also qualitatively through multiple annotations that underscore potential tumorigenic roles and drug-target opportunities. The gene-centric modules of oncoEnrichR are supplemented with system-level features that offer insights from a candidate list at the level of signaling pathways, molecular gene signatures, as well as regulatory interactions and the protein interactome. A structured and interactive gene set report, highly configurable by the user, is readily available as the main output per analysis.</p><p>Here we describe the various analysis modules available in oncoEnrichR, and demonstrate through use cases how it can function as a valuable platform for candidate hit interpretation in cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Materials and Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data collection</head><p>The backend of oncoEnrichR is based on the integration of cancer-relevant properties of human genes and their interrelationships from &gt; 20 publicly available knowledge resources. The main objective here is to provide a breadth of large-scale molecular datasets that cover key dimensions in our current comprehension of cancer relevance (a complete overview is provided in Supplementary Table <ref type="table">1</ref>).</p><p>Conceptually, the datasets can be broadly categorized as i) interactions, such as protein-protein or transcription factor-target interactions, ii) collections, like protein complexes and biological pathways, and iii) basic annotations, including descriptive types, for instance tumor suppressor gene or cancer hallmark annotation, and quantitative types, such as those derived from large-scale omics datasets, e.g. percent tumor samples in TCGA with a homozygous deletion for a given gene. The preparation of all data sources is outlined in detail in Supplementary Methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gene-cancer association rank</head><p>We exploited data from the powerful Open Targets Platform (OTP) to create a quantitative ranking of genes with respect to cancer relevance. OTP provides an aggregated association score (range 0-1) between phenotypes (in the form of Experimental Factor Ontology (EFO) terms) and human genes based on a range of evidence sources, e.g. genetic associations, text mining, or data from animal models <ref type="bibr">(6,</ref><ref type="bibr">7)</ref>. In order to identify association scores restricted to cancer phenotypes, we developed a semi-manually curated mapping between EFO terms and 32 primary tumor types/tissues (breast, colon/rectum, lung etc.), using OncoTree as the starting point <ref type="bibr">(8)</ref>. This mapping allowed us further to compute a scaled rank with respect to the association between any given gene and a primary tumor type, and also globally, i.e. pan-cancer (see Supplementary Methods, and Supplementary Figure <ref type="figure" target="#fig_0">1</ref>)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability Statement</head><p>All source code for oncoEnrichR is publicly available at <ref type="url" target="https://github.com/sigven/oncoEnrichR">https://github.com/sigven/oncoEnrichR</ref>. User documentation is provided at <ref type="url" target="https://sigven.github.io/oncoEnrichR">https://sigven.github.io/oncoEnrichR</ref>. The raw molecular datasets that are integrated in the data backend of oncoEnrichR, as well as code for preprocessing procedures, are available at <ref type="url" target="https://doi.org/10.5281/zenodo.7116316">https://doi.org/10.5281/zenodo.7116316</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Architecture</head><p>The oncoEnrichR gene set interpretation tool has been developed as an R package, and functions conceptually as a workflow of four main steps (Figure <ref type="figure" target="#fig_0">1</ref>). The web interface to oncoEnrichR is facilitated by the Galaxy platform (<ref type="url" target="https://oncotools.elixir.no">https://oncotools.elixir.no</ref>), which ensures a reproducible and collaborative analysis framework <ref type="bibr">(9)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Input and output</head><p>The main user input to the tool is a basic list of human gene identifiers, with an upper limit of 500 entries. To cater for ease of use, multiple commonly used identifier types are permitted, e.g. official gene symbols, UniProt accessions, as well as transcript, gene, or protein identifiers (RefSeq/Ensembl). Importantly, oncoEnrichR can also map historical gene aliases towards their upto-date primary symbol designations, a feature that is often necessary in the processing of usergenerated gene lists.</p><p>An optional specification of a background gene set for use in gene set enrichment analysis is further available, which ensures that enrichment results can be interpreted correctly with respect to the nature of the underlying screen. The user can also configure multiple parameters of the individual analysis modules, exemplified by significance thresholds in enrichment analysis or confidence thresholds for queried protein-protein interactions. Finally, the user can flexibly choose any combination of modules to be run and included as output in the final report, in that sense allowing the user to control the focus and scope of the gene set analysis.</p><p>The output of the oncoEnrichR workflow is two-fold. A stand-alone, structured HTML report is provided as the main output, enabling user interaction with the resulting visualizations and ranked tables provided for each individual analysis module (outlined below). Moreover, a multi-sheet Excel workbook with all annotations, interactions and enrichment results is readily available. To cater to transparency, all versions of underlying software and databases are provided in the output files.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Analysis modules</head><p>A candidate gene set can currently be interrogated with oncoEnrichR through 16 different analysis modules (Supplementary Table <ref type="table">1</ref>). In general, each module considers the candidate set through a particular perspective on gene function or cancer relevance, and makes up an individual section in the output report. A small, educational user guide is populated for each section in the report, giving the user a basic introduction to the type of analysis performed and underlying databases used. Here, we briefly outline the various types of modules that are offered by oncoEnrichR, with a focus on what they provide regarding functional insights and cancer relevance for the gene set in question.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gene function, tumor-type associations, and drug-target opportunities</head><p>A significant number of genes in the human genome are still poorly characterized with respect to function, and members of this set typically show up in candidate lists from high-throughput screens.</p><p>Given that such uncharacterized genes provide a level of novelty for potential follow-up experiments, oncoEnrichR features a dedicated Poorly characterized genes module that highlights and ranks such entries, essentially considering genes with a lack of curated Gene Ontology (GO) annotations or gene summary descriptions.</p><p>In the Cancer associations module, the user can interrogate the candidate hits with respect to current knowledge on genes with tumorigenic roles. Genes are classified as tumor suppressor genes, proto-oncogenes, or potential cancer drivers, utilizing support from multiple resources (Supplementary Methods, 10-13). All genes are ranked within the candidate set according to their overall strength of association to cancer, and where the association metric is based upon aggregated evidence from multiple data types, such as text mining, genetic associations, or animal models (Figure <ref type="figure" target="#fig_1">2A</ref>). A dedicated heatmap is furthermore showing the relative strength of association of candidate genes towards distinct tumor types (Figure <ref type="figure" target="#fig_1">2B</ref>). A separate Cancer hallmarks module indicates whether the different hallmarks of cancer are promoted or suppressed by members of the candidate set, including links to associated literature. Targeted drugs, both in early and late clinical development, that are specifically indicated for one or more cancer conditions, are listed in a Drug association module. This module also allows the user to prioritize the complete set of candidates with respect to their drug targeting potential, based on comprehensive target tractability data.</p><p>The workflow contains two additional modules that can aid the identification of therapeutic targets within the candidate set. In the Gene fitness effects module, the tool shows which candidate targets are required for cellular fitness in different molecular contexts, lending upon data from largescale CRISPR-Cas9 whole-genome dropout screens in human cancer cell lines <ref type="bibr">(14)</ref>. Importantly, the intersection of candidate hits with such genetic screen data also indicates relevant cell lines to be used in experimental follow-up studies. The integration of fitness effects with target tractability data and known molecular biomarkers allows for further prioritization of candidate hits as therapeutic targets (Figure <ref type="figure" target="#fig_1">2C</ref>). On top of that, oncoEnrichR incorporates recent machine learning predictions on synthetic lethality in cancer cell lines, effectively allowing the prioritization of candidate hits that are involved in such interactions, either as internal interactions within the candidate set or through interactions with other genes <ref type="bibr">(15)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Functional enrichment, subcellular localization, and molecular interactions</head><p>Exploring the candidate set through a systems perspective can often give important biological insights, and has become a common approach for the interpretation of gene lists, particularly within complex diseases such as cancer. In oncoEnrichR, system level analyses of the candidate set are provided through a series of modules. A Functional enrichment module offers enrichment/overrepresentation analysis of the candidate gene set towards Gene Ontology (GO), multiple pathway databases, and established cancer-relevant gene signatures (Supplementary Table <ref type="table">2</ref>). As mentioned above, the user can supply a dedicated background gene set to be used in the enrichment analysis, and configure enrichment significance thresholds.</p><p>An interactive protein-protein interaction (PPI) network of the candidate set is provided based on available data from the STRING resource <ref type="bibr">(16)</ref>. Here, the tool shows both internal interactions within the candidate set, and the most significant interactions with non-candidate set proteins.</p><p>Importantly, the user can configure the confidence threshold of retrieved interactions. In the network provided by the PPI module, the roles of cancer genes are explicitly color-coded, and the user may also opt to attach targeted cancer drugs to the nodes in the network (Figure <ref type="figure" target="#fig_1">2D</ref>). The PPI module further allows local community structures in the network to be interrogated, and all proteins in the candidate set are ranked according to their level of centrality (i.e. number of interactions) in the network.</p><p>A protein complex module further considers both curated and predicted protein complexes from multiple databases, catering for a ranking of the most cancer-relevant protein complexes with respect to candidate set members, including links to supporting literature. A subcellular compartment module offers annotation of the subcellular localization patterns for proteins in the query set, in which a subcellular anatogram provides an effective heatmap that indicates the most common subcellular compartments among proteins found in the candidate list (Figure <ref type="figure" target="#fig_1">2E</ref>).</p><p>Considering the importance of inter-and intracellular signaling in cancer, oncoEnrichR integrates data on curated ligand-receptor interactions, as well as data on genes involved in transcriptional regulation. The latter set of interactions can be shown through a network, indicating the presence of directed transcription-factor (TF)-target relationships among members of the candidate set (Figure <ref type="figure" target="#fig_1">2F</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gene mutation frequencies, co-expression patterns, and prognostic associations</head><p>Through the use of large-scale genomics data from The Cancer Genome Atlas (TCGA), candidate hits can be interrogated and prioritized for aberration frequencies in different tumor types (somatic copy number events and point mutations/indels), a well-known indication of cancer relevance <ref type="bibr">(17)</ref>.</p><p>The user can further examine the presence of known somatic mutation hotspots within candidate genes, and identify the amino acid sites that harbor loss-of-function variants in tumor samples. Genes in the candidate set that are found significantly co-expressed with known cancer genes in various tumor types are further highlighted in a separate section.</p><p>Expression profiling data from healthy tissues (Human Protein Atlas (HPA) and Genotype-Tissue Expression Project) are included in oncoEnrichR to portray tissue-and cell-type specific expression patterns for the candidate genes, which in turn may reveal enrichment of particular tissues/cell-types <ref type="bibr">(18,</ref><ref type="bibr">19)</ref>.</p><p>It is well known that expression levels and genomic aberrations of particular protein-coding genes are associated with overall patient survival in a number of tumor types <ref type="bibr">(20)</ref>. In the Prognostic associations module, oncoEnrichR shows both favorable and unfavorable prognostic associations of hits in the candidate set, considering either expression or methylation levels, or mutation or copynumber status of these genes across tumor samples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Use cases</head><p>To showcase the usability of oncoEnrichR in the biological interpretation of gene lists, we explored the output of the tool using two candidate hit lists coming from CRISPR and protein proximity screens, respectively (complete output reports are available at <ref type="url" target="https://doi.org/10.5281/zenodo.7115732">https://doi.org/10.5281/zenodo.7115732</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CRISPR screen: resistance to EGFR inhibition</head><p>We initially interrogated a list of n = 57 hits originating from a CRISPR/Cas9 screen looking for novel drug resistance genes in non-small cell lung cancer <ref type="bibr">(21)</ref>. Of note, the set of 57 hits came here out of a domain-specific recommendation system, subsequently assessed by five independent domain experts with regard to their relevance as potential drivers of resistance to EGFR inhibition. The aim of the oncoEnrichR analysis in this context was thus to showcase how the tool can validate the relevance of known resistance markers, and add supporting evidence and perspectives on previously unknown markers (see also Figure <ref type="figure" target="#fig_2">3</ref> in ( <ref type="formula">21</ref>)) .</p><p>The report produced with oncoEnrichR confirms the strong cancer relevance of wellestablished resistance markers, including multiple known tumor suppressor genes (e.g. TP53, PTEN, NF1/2, SMARCA4) and proto-oncogenes (e.g. KRAS, ERBB2, MET, MAPK1, CDK4), as can be seen in the Cancer associations section. Three of the previously unknown resistance markers (CIC, EZH2 and CREBBP), are indicated to carry both oncogenic and tumor suppressive roles, a matter which can be further explored in the linked supporting literature from CancerMine, and also through entries shown in the Cancer Hallmarks evidence section. The tumor type-specific association overview (Figure <ref type="figure" target="#fig_2">3A</ref>) provides further an opportunity to find candidates for which the current available evidence of association to lung cancer is weak (e.g. LZTR1 and FOSL1), and also other candidates which are strongly associated to selected tumor types (e.g. CYP1A1 in prostate cancer, SQSTM1 in sarcoma).</p><p>The Drug associations section highlights the availability of a large collection of anti-cancer drugs, which confirms how several of the unknown resistance markers can be targeted by various inhibitors (e.g. Tazemetostat (EZH2), Infigratinib/Erdafitinib (FGFR4)). An important consideration with respect to potential drug targets is their level of interactivity with other proteins, and through its interactome hub score calculation oncoEnrichR highlights the centrality of the SRC protein (Figure <ref type="figure" target="#fig_2">3B</ref>). Furthermore, oncoEnrichR allows the interrogation of predicted synthetic lethality of multiple candidate hits, here exemplified through MAPK1/MAPK3 and CREBBP/EP300 interactions (Figure <ref type="figure" target="#fig_2">3C</ref>). Finally, exploring potential prognostic associations can provide important supplementary evidence for selection of follow-up candidates. oncoEnrichR indicates that high expression of three candidate hits are significantly associated with poor survival in lung cancer (Figure <ref type="figure" target="#fig_2">3D</ref>), interestingly also FOSL1, for which there was weak overall evidence in the Cancer Associations section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Protein proximity screen: FGFR1 interaction network</head><p>We have previously performed a proximity labeling BioID experiment using FGFR1 (fibroblast growth factor receptor 1) as the bait, where the potential interaction partners were analyzed by Enrichr and BioGrid at the time <ref type="bibr">(22)</ref>. As aberrant FGF signaling is implicated in multiple tumor types <ref type="bibr">(23,</ref><ref type="bibr">24)</ref>, we wanted to use oncoEnrichR to reassess the dataset and further elucidate FGFR1 networks in cancer.</p><p>Proteins associating with FGFR1 upon stimulation with the activating ligand (FGF1) were subjected to oncoEnrichR analysis (n=74 proteins). oncoEnrichR successfully imported gene names from the Maxquant proteomic output file. As the screen was done several years ago, a few names were now obsolete (n=6), but they were all successfully updated by oncoEnrichR with the current official gene names (Query verification module).</p><p>Several features in oncoEnrichR proved useful for the validation of screen hits. For example, the Protein-protein interaction module revealed previously identified interactions. In the case of FGFR1, the proximal interaction network included the previously reported interactions of FRS2 and PLCG1 (Figure <ref type="figure" target="#fig_3">4A</ref>). Moreover, FGFR1 is known to localize to the secretory pathway, the plasma membrane, the endosomal system and the nucleus. These localizations were clearly reflected in the subcellular anatogram showing that the majority of the hits in the BioID screen localized to these compartments (Figure <ref type="figure" target="#fig_3">4B</ref>). As such, the subcellular compartment module may help in validating the results from the screen, but also point to new cell localizations for baits, via their interaction partners.</p><p>For example, the reported focal adhesion sites could imply a new localization and function of FGFR1 with respect to focal adhesions. Finally, gene set enrichment analyses indicated the expected protein networks (e.g. secretory pathway, endosomes, clathrin-coated vesicle), as well as some new unexplored functions (e.g. focal adhesions).</p><p>A useful feature in oncoEnrichR is the annotation of hits as tumor suppressors or oncogenes, including previously generated knowledge from different tumor models. oncoEnrichR also informs on druggability and suggests matching inhibitors which can be used to validate and further investigate hits. For instance, oncoEnrichR reports on the cancer associations of IDO1 (indoleamine 2,3dioxygenase 1), a strong hit in the screen, and suggest inhibitors that can be used to target this protein (e.g. Epacadostat and Linrodostat), providing an easy way to test its role in biological experiments (Figure <ref type="figure" target="#fig_3">4C</ref>). Interestingly, CCNE1, an important oncogene involved in cell cycle progression, could possibly also be involved in FGFR1 signal transduction, as it was found as a strong hit in the screen.</p><p>Large-scale CRISPR/Cas9 screen data found in the Gene fitness effects module can be used to suggest which cancer cell lines are dependent on your genes of interest. For instance, in the case of CCNE1, cell lines derived from ovary cancer depend on this gene, and oncoEnrichR shows a list of cell lines that can be used for further studies. Of note, CCNE1 is amplified in ovary cancer (21% of cases), as shown in the Tumour aberration frequencies module (Figure <ref type="figure" target="#fig_3">4D</ref>).</p><p>oncoEnrichR also lists proteins where no or little evidence for function have been found, thereby highlighting proteins that could be the starting point for additional research projects. In the FGFR1 dataset, we identified several proteins with a poorly defined function (e.g. CSTPP1, C2CD4C, PRR14L and CRACDL, Figure <ref type="figure" target="#fig_3">4E</ref>). Interestingly, C2CD4C was found to be frequently deleted in several cancers (e.g. 6% in cervix cancer), which may suggest a potential role as a tumor suppressor.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Discussion</head><p>Building upon existing data integration frameworks and multiple large-scale omics datasets, we have developed a feature-rich gene set interpretation tool that allows researchers to systematically interpret and prioritize long lists of candidate genes for cancer relevance. The frequently time-consuming nature of gene list interpretation can in part be attributed to a scarcity of single tools that comprehensively organize existing knowledge in the context of cancer. In this regard, we believe that oncoEnrichR, through its broad harvest of prior molecular knowledge and its multifaceted and interactive analysis report, fills an important gap. Moreover, the dual availability of the tool (i.e. web and command-line), makes it attractive for use both by researchers with a non-computational background, and for bioinformaticians that are developing complete screening analysis pipelines.</p><p>The output of a gene set analysis performed with oncoEnrichR reflects the current, temporary state of molecular cancer knowledge harvested from publicly available databases, for which update frequencies vary considerably (see Supplementary Table <ref type="table">2</ref>). Considering future maintenance and updates of oncoEnrichR, we have established and made available a suite of data preprocessing and quality control procedures that can be run on a regular basis (see Data Availability Statement).</p><p>Furthermore, the modular nature of the tool and output report sections will simplify the potential addition of new functionality that can further enhance the mapping of cancer relevance.</p><p>Like any gene set interpretation tool, we acknowledge that the user needs to interpret the output carefully with reference to the screen that produced the candidate hits. While the simple, unranked gene list input makes oncoEnrichR easy to use, we recognize that an input list that incorporates effect size or rank from the originating screen will open the way for more sophisticated approaches of hit prioritization.</p><p>Importantly, genome-scale screens in cancer have many different objectives, and while oncoEnrichR is not tailored to a specific type of screen or designed to rank the hits according to a particular scientific question, we believe that the multiple perspectives provided by the tool can offer significant interpretation and prioritization support across a wide range of screening applications. processing steps: 1) conversion and harmonization of gene/protein query identifiers, 2) annotation, membership and enrichment analyses of the query set against a comprehensive collection of cancerrelevant databases, 3) visualization of analysis results, and 4) report generation, either as HTML or Excel. oncoEnrichR analysis modules when analyzing a set of n = 134 c-MYC interacting partners (25). The complete oncoEnrichR report for this example gene set is available for download at <ref type="url" target="https://doi.org/10.5281/zenodo.7115745">https://doi.org/10.5281/zenodo.7115745</ref>. A. Overall rank of query set proteins with respect to cancer relevance, considering the built-in pan-cancer gene rank score of oncoEnrichR. Users can also interrogate/filter the query set with respect to classifications as proto-oncogene/tumor suppressor genes, and view supporting literature. B. A heatmap of cancer relevance among query set members, measured on a per tumor-type basis according to oncoEnrichR's rank score. C. Target priority scores of query set members from Project Score, considering the combination of gene fitness scores in cancer cell lines and the availability of known biomarkers. D. An interactive protein-protein interaction network of query set members (shaped as circles), expanded with the most important interacting nonquery set proteins (squares). Cancer gene roles are color-coded (tumor suppressors in green, protooncogenes in red, dual roles in black), and targeted drugs can be attached to the network. E. A subcellular heatmap of query set members, showcasing the most abundant subcellular compartments for the hits analyzed. F. Network of known regulatory interactions (transcription factor-target) for members of the query set. oncoEnrichR HTML report, analyzing N = 57 candidate drivers of EGFRi resistance (complete reports available at <ref type="url" target="https://doi.org/10.5281/zenodo.7115732">https://doi.org/10.5281/zenodo.7115732</ref>). A. Tumor-type association rank for all candidate hits found, confirming the strong cancer relevance of multiple known resistance markers. B. Ranking of candidate hits according to protein-protein network centrality scores, indicating the vast interactome of SRC. C. Predicted synthetic lethality interactions among members of the candidate set. D. Prognostic gene expression associations for candidate genes in lung cancer patients. the oncoEnrichR HTML report, analyzing N = 74 proteins found through a protein proximity screen using FGFR1 as the bait (complete reports available at <ref type="url" target="https://doi.org/10.5281/zenodo.7115732">https://doi.org/10.5281/zenodo.7115732</ref>). A. Protein-protein interaction network, validating the proximal interaction partners of FGFR1. Query set members as circles, interacting non-query set proteins as squares, cancer gene roles are color-coded (tumor suppressors in green, proto-oncogenes in red, dual roles in black). B. Subcellular anatogram indicating main localization of hits (secretory pathway, the plasma membrane, the endosomal system and the nucleus). C. Cancer drugs in early or late phase development targeted against members of the query set. D. High-level amplifications of query set members found in tumor samples from TCGA cohorts, showcasing considerable frequency of CCNE1 amplifications in samples originating from the ovary/fallopian tube. E. List of genes with poorly defined or unknown functions detected in the query set, indicated through lack of gene summary descriptions or Gene Ontology (GO) terms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Figures</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Schematic overview of the oncoEnrichR workflow. The tool consists of four key</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Examples of analysis output from the oncoEnrichR workflow. Output views from</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. CRISPR use case analysis -EGFRi resistance drivers. Specific output views from the</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. Proteomics use case analysis -FGFR1 signaling network. Specific output views from</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="36,56.15,105.65,483.00,303.15" type="bitmap" /></figure>
+		</body>
+		<back>
+
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgements</head></div>
+			</div>
+
+
+			<div type="funding">
+<div><p>Funding: This work was supported by the <rs type="funder">Research Council of Norway through its Centers of Excellence funding scheme</rs> [grant number: <rs type="grantNumber">262652</rs>]. JW was funded by the <rs type="funder">Norwegian Cancer Society</rs> (project number <rs type="grantNumber">198093</rs>). The authors wish to acknowledge the <rs type="institution">University Center for Information Technology (USIT)</rs> at the <rs type="institution">University of Oslo</rs> for infrastructure support, <rs type="person">ELIXIR Norway</rs> for support with <rs type="institution">Galaxy development, Carlos Company (AstraZeneca UK)</rs> for feedback on the manuscript, and <rs type="person">Dr. Ultan McDermott</rs> (<rs type="affiliation">Oncology R&amp;D, AstraZeneca UK</rs>) for valuable feedback and input on functionality.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_zcefjTT">
+					<idno type="grant-number">262652</idno>
+				</org>
+				<org type="funding" xml:id="_tdXQ3Dv">
+					<idno type="grant-number">198093</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Author contributions</head><p>Design and concept: SN, JW. Data preparation and software implementation: SN. Galaxy platform infrastructure: FB, SG, EH. Testing and use case analysis: JW, DP. Wrote the manuscript: SN. All authors read, commented on, and approved the final manuscript.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Competing interests</head><p>DP is a full-time employee and shareholder of AstraZeneca.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Materials</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Comprehensive interrogation of gene lists from genome-scale cancer screens with oncoEnrichR</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nakken et al., 2022</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Dataset collections</head><p>Here, we outline the type of knowledge databases that are integrated in oncoEnrichR, including quality control (QC) and pre-processing steps of the raw data, and also how the various datasets can be restricted/filtered (through confidence thresholds etc.) when conducting a gene set analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Target-cancer associations</head><p>Direct associations between human genes and phenotypes/diseases were retrieved from the Open Targets Platform (OTP, <ref type="url" target="https://platform.opentargets.org/downloads/data">https://platform.opentargets.org/downloads/data</ref>, <ref type="bibr">(1)</ref>. Here, associations are quantified as numerical scores in the range 0-1, with larger values indicating a stronger association between the gene and the phenotype (<ref type="url" target="https://platform-docs.opentargets.org/associations#overall">https://platform-docs.opentargets.org/associations#overall</ref>).</p><p>Phenotypes from OTP were provided as Experimental Factor Ontology (EFO) terms. For each OTP association, we integrated the underlying data type evidence, examples being genetic associations, text mining, pathway associations, or animal models. Next, in order to focus on the subset of associations with strongest confidence in underlying evidence, we considered only associations with support from at least two data types, and with an overall association score &gt;= 0.05. Finally, in order to limit associations to cancer phenotypes, we set up a curated mapping between EFO terms and n = 32 primary tumor types/sites, using OncoTree as a starting point (the complete mapping is available at <ref type="url" target="https://github.com/sigven/oncoPhenoMap">https://github.com/sigven/oncoPhenoMap</ref>). This produced a final list of n = 33,369 associations between genes and cancer phenotype terms.</p><p>In order to establish an overall ranking of genes with respect to cancer relevance, we summarized, for each tumor type, the potential multiple OTP association scores found per gene, and computed a scaled rank between 0 and 1 (i.e. gene-tumor type rank). Next, we computed a global (i.e. pancancer) gene-cancer rank per gene by summarizing the gene-tumor type rank found across tumor types, with all genes ultimately ranked and scaled between 0 and 1 (Supplementary Figure <ref type="figure">S1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Target-drug associations</head><p>The Drug dataset in JSON format was downloaded from the Open Targets Platform. This dataset contains records that link drug molecule identifiers (ChEMBL compounds) with disease indications (Experimental Factor Ontology (EFO) terms), as well as the identity of the molecular target. We further combined this dataset with the Drug -indication dataset from OTP, which contains information with respect to the maximum clinical trial phase of a particular drug for a given indication/disease. Finally, drugs indicated specifically for cancer phenotypes were established by intersecting the raw drug dataset from OTP with our curated mapping of phenotype terms per primary tumor type (defined above). Targeted cancer drugs were categorized as being in either early (max phase 1 or 2) or late clinical development (max phase 3 or 4). To indicate other potential prospects for drug targeting, we also included target tractability data from OTP, indicating whether proteins are generally amenable for targeting by antibodies or small molecules (<ref type="url" target="https://platform-">https://platform-</ref>docs.opentargets.org/target/tractability).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Tumor suppressor, proto-oncogene, and cancer driver gene annotation</head><p>In order to annotate genes with roles as proto-oncogenes, tumor suppressors, or cancer drivers, we combined evidence from three sources; curated annotations from Cancer Gene Census (CGC v96) and Network of Cancer Genes (NCG 7.0), and literature-mining data from CancerMine <ref type="bibr">(2)</ref><ref type="bibr">(3)</ref><ref type="bibr">(4)</ref>. From CancerMine (v48), we downloaded all PubMed identifiers (PMIDs) for which there were sentence level evidence (probability &gt; 0.8) for a role of a gene as tumor suppressor, proto-oncogene, or cancer driver. Next, we set up a scheme in which annotations either required support from multiple PMIDs in CancerMine, or through existing curated annotations in NCG or CGC (yet with potentially fewer supporting PMIDs in CancerMine). Specifically, the classification of proto-oncogenes/tumor suppressors was done according to the following scheme:</p><p>-Existing annotation as proto-oncogene/tumor suppressor in CGC or NCG, or evidence from &gt;=15 distinct PMIDs (CancerMine) that suggested an oncogenic/tumor suppressor role for a given gene -Status as proto-oncogene was ignored if a given gene had three times as much (literature evidence/PMIDs) support for a role as a tumor suppressor gene (and vice versa for tumor suppressors)</p><p>-Proto-oncogenes/tumor suppressor candidates that were found in a curated list of false positive cancer driver predictions were excluded <ref type="bibr">(5)</ref>.</p><p>The above strategy resulted in a total of n = 401 proto-oncogenes, n = 359 tumor suppressor genes, and with n = 83 of them classified with dual roles.</p><p>For cancer driver gene classification, we considered the union of predictions from IntOGen (v2022-02-01) and NCG 7.0 <ref type="bibr">(3,</ref><ref type="bibr">6)</ref>. For NCG, we only considered drivers annotated as "canonical cancer genes". Similar to the approach employed for proto-oncogenes and tumor suppressor genes, we ignored candidates that were found in a curated list of false positive driver predictions <ref type="bibr">(5)</ref>. Based on the outlined approach, a total of n = 722 genes were classified as cancer drivers. For each cancer driver prediction, we also appended available literature evidence from CancerMine.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer hallmark evidence</head><p>The hallmarks of cancer comprise six biological capabilities acquired during the multistep development of human tumors <ref type="bibr">(7)</ref>. Cancer hallmark annotations per gene were collected from the Open Targets Platform (1), as found by parsing raw JSON files with target data (<ref type="url" target="https://platform.opentargets.org/downloads/data">https://platform.opentargets.org/downloads/data</ref>)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Targets of unknown function</head><p>A dedicated section in oncoEnrichR highlights candidate targets for which the gene function is poorly characterized or unknown. We considered the following properties as evidence for a poorly characterized gene; i) missing gene summary in NCBI Gene/UniProt, or a gene name designated as "uncharacterized" or "open reading frame" , ii) limited number (&lt;= 1) of annotated, manually reviewed (non-IEA) gene ontology terms, coming from either the molecular function (MF) or biological process (BP) sub-ontologies. A total of n = 3,122 protein-coding human genes were assigned an unknown/poorly defined function according to this scheme.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Copy number amplifications/homozygous deletions</head><p>Somatic copy number amplifications and homozygous deletions, coming from Affymetrix SNP 6.0 (SNP6) array data, were retrieved from The Cancer Genome Atlas (TCGA, Genomics Data Commons, release 34), using the R package TCGAbiolinks <ref type="bibr">(8)</ref>. We considered the thresholded copynumber status of protein-coding genes as assessed by the GISTIC2 pipeline (function getGistic() in TCGAbiolinks), limited to high-level amplifications (GISTIC2 CNA value of 2) and homozygous deletions (GISTIC2 CNA value equal to -2). All CNA events were organized on a per-tumor type basis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Recurrent SNVs/InDels</head><p>Recurrent (occurring in more than one tumor sample) somatic point mutations and indels were collected from TCGA, using TCGABiolinks (Genomic Data Commons release 34). All mutations and indels were further annotated with known mutation hotspots (cancerhotspots.org <ref type="bibr">(9)</ref>, protein domains from Pfam <ref type="bibr">(10)</ref>, and their predicted status as loss-of-function variants, using the LOFTEE algorithm <ref type="bibr">(11)</ref>. Only protein-altering and canonical splice site variants were included, and variants were organized on a per-tumor type basis, allowing for variant interrogation in specific tumor types. In total, n = 240,985 recurrent, protein-coding variants from TCGA were included.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Co-expression (RNA-seq)</head><p>Co-expression correlation coefficients between protein-coding genes in tumors were calculated using RNAseq data available from TCGA cohorts. Raw expression values (TPM) were downloaded using TCGABiolinks (Genomic Data Commons release 34), and log-transformed (log2(TPM + 1)). Genevs-gene expression correlation coefficients (Spearman's rank) were calculated for each TCGA cohort.</p><p>We focused specifically on co-expressed genes with a potential cancer relevance, by limiting pairs of co-expressed genes to those that included either a tumor suppressor, an oncogene, or a predicted cancer driver (i.e. using the annotations outlined in section Tumor suppressor/oncogene/cancer driver annotation above). Only pairs with strong correlation coefficients (r &gt;= 0.7 or r &lt;= -0.7) and an associated p-value &lt; 1.0e-6 were included (in total n = 5,856,802 pairs).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Molecular signatures / Gene Ontology (GO) / pathway annotations</head><p>We collected pathway annotations and molecular gene signatures from multiple databases. Gene signature collections found in the Molecular Signatures Database (MSigDB (v2022.1.Hs) were downloaded, which included multiple cancer-relevant signature collections, such as oncogenic signature gene sets, and computationally-derived cancer modules <ref type="bibr">(12,</ref><ref type="bibr">13)</ref>. MSigDB was also used as a source for Gene Ontology annotations. Biological pathway annotations from WikiPathways (release 2022-09-10), and KEGG (release 2022-08-09), were downloaded separately from MSigDb, ensuring most up-to-date annotations <ref type="bibr">(14,</ref><ref type="bibr">15)</ref>. Signaling pathway annotations from NetPath (<ref type="url" target="http://www.netpath.org/">http://www.netpath.org/</ref>) were also included <ref type="bibr">(16)</ref>.</p><p>All pathway and signature datasets were used for gene set enrichment or over-representation analysis of the user-defined candidate geneset. Geneset over-representation analysis was conducted with clusterProfiler <ref type="bibr">(17)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Protein-protein interactions</head><p>Protein-protein interactions in oncoEnrichR are directly retrieved from the STRING resource, utilizing their publicly available API (<ref type="url" target="https://string-db.org/cgi/help?subpage=api">https://string-db.org/cgi/help?subpage=api</ref>) for network retrieval <ref type="bibr">(18)</ref>. In the protein-protein interactome module of oncoEnrichR, users provide a required (minimum) interaction score threshold for proteins to be included in the network, and further a selected number of proteins (between 1 and 50), so that the network can be expanded with important interacting proteins connected to the initial network formed by the input set. Importantly, the proteins/nodes in the network that are not part of the candidate set can be distinguished by means of a different shape (squares rather than circles).</p><p>Community structures in the protein-protein interaction network are identified with the fastgreedy.community method in the igraph R package <ref type="bibr">(19)</ref>. Network centrality scores (i.e. indicating "hub" proteins with respect to interaction) are calculated according to the method by Kleinberg <ref type="bibr">(20)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cell-type and tissue-specific expression patterns</head><p>Tissue-specific gene expression patterns were collected from The Human Protein Atlas (HPA) <ref type="bibr">(21)</ref>.</p><p>Consensus transcript expression levels (nTPM) summarized per gene in 55 tissues based on transcriptomics data from HPA and Gene Expression Tissue (GTEx) project were downloaded (HPA release 21). Based on the expression profile across tissues, each gene was further assigned to one of five tissue specificity categories: tissue enriched, group enriched, tissue enhanced, low tissue specificity, not detected. The latter was accomplished using the teGeneRetrieval method in the R package TissueEnrich, using a fold-change threshold of four to define enriched, group enriched and enhanced categories <ref type="bibr">(22)</ref>.</p><p>RNA single cell type data was downloaded from the Human Protein Atlas (HPA release 21), comprising transcript expression levels summarized per gene in 76 cell types from 26 datasets.</p><p>Similar to the approach used for tissue types, we used TissueEnrich to classify genes into five specificity categories, i.e. cell type enriched, cell type enhanced etc.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gene fitness effects and target priority scores</head><p>Gene fitness effects, as estimated from genome-scale CRISPR-Cas9 drop-out screens in &gt; 800 human cancer cell lines, were downloaded from Project Score, released june 2021 <ref type="bibr">(23)</ref>. For each cell line, we collected significant fitness scores per gene, in the form of gene-level Bayes Factor (BF) values, which is a quantitative measure of the cell viability effect elicited by CRISPR-Cas9 mediated cell inactivation. A total of n = 1,581,786 gene and cell-line specific BF values (&lt;0) were retrieved. In oncoEnrichR, users may set an upper threshold on the BF value for fitness data retrieved per gene.</p><p>We downloaded target priority scores provided per gene, which scores the potential of a gene as a therapeutic target in a given cancer type (scale 0-100, n = 15,661 scores in total). This score exploits primarily the size and significance of the CRISPR-derived fitness effects, but also the prevalence of existing genomic biomarkers <ref type="bibr">(24)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Subcellular localization</head><p>Subcellular localization annotations were retrieved from ComPPI <ref type="bibr">(25)</ref>. Here, each gene is annotated towards subcellular compartments at major and minor levels. There are six major compartment levels (cytosol, nucleus, extracellular, membrane, secretory-pathway, and mitochondrion), and the annotation of a gene towards a major compartment level is provided with a score/confidence from 0-1. Within each major compartment, there can exist multiple minor level annotations in the form of GO terms, and where the confidence of each minor level annotation is indicated by the number of databases (e.g. HPA, GO, LOCATE, eSLDB etc.) that support it. In oncoEnrichR, we restrict major compartment annotations to those with a score &gt;= 0.8. Furthermore, users have the possibility to set a minimum threshold with respect to the confidence (number of underlying databases/sources, <ref type="bibr">[1]</ref><ref type="bibr">[2]</ref><ref type="bibr">[3]</ref><ref type="bibr">[4]</ref><ref type="bibr">[5]</ref><ref type="bibr">[6]</ref> for each target-localization annotation occurring at the detailed/minor level.</p><p>In order to visualize the tendency of subcellular localization for a given candidate list, we utilized gganatogram <ref type="bibr" target="#b50">(26)</ref>. This software focuses on n = 24 subcellular structures for visualization (<ref type="url" target="https://github.com/jespermaag/gganatogram#cellular-structures">https://github.com/jespermaag/gganatogram#cellular-structures</ref>). We manually created a mapping between GO terms provided by ComPPI towards the subcellular structures visualized with gganatogram.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Regulatory interactions</head><p>Regulatory interactions (transcription factor -target) were retrieved from the DoroThEA resource <ref type="bibr" target="#b51">(27)</ref>; a global set of regulatory interactions (n = 273,572), many of which are inferred from gene expression patterns in normal tissues (GTEx), and a cancer-focused set (n = 213,230), the latter inferred from gene expression patterns in tumors (TCGA). In oncoEnrichR, users have the possibility to set a minimum threshold with respect to the confidence (levels A/B/C/D, with A being strongest) for the TF-target interactions shown.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Prognostic associations</head><p>Prognostic associations were collected from two different sources, the Human Protein Atlas (HPA), and <ref type="url" target="https://survival.cshl.edu/">https://survival.cshl.edu/</ref>  <ref type="bibr" target="#b52">(28,</ref><ref type="bibr" target="#b53">29)</ref>.</p><p>From HPA, we collected significant results (p &lt;= 0.001) from correlation analyses of mRNA expression levels of human genes in tumor tissue versus clinical outcome (survival) for ~8,000 cancer patients (underlying data from TCGA). These data allow for the interrogation of both favorable and unfavorable genes, the latter set referring to genes for which a higher relative expression in a given tumor type gives significantly lower survival for the patients. We further downloaded recently established data from <ref type="bibr" target="#b52">(28)</ref>, in which Cox proportional hazards models were generated to link the expression, copy number, methylation, or mutation status of every gene in the genome with patient outcome in 16 different cancer types profiled by the TCGA. Here, survival associations were proved as Z scores (Wald statistic), indicating whether the coefficient of a given variable (e.g. gene CNA status) is significantly different from zero.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Protein complexes</head><p>We collected data on human protein complexes from OmniPath, which contains records from multiple databases, primarily CORUM, ComplexPortal, Compleat, and hu.MAP2 <ref type="bibr" target="#b54">(30)</ref><ref type="bibr" target="#b55">(31)</ref><ref type="bibr" target="#b56">(32)</ref><ref type="bibr" target="#b57">(33)</ref><ref type="bibr" target="#b58">(34)</ref>. We removed several duplicate entries, and restricted complexes to those with more than two participating proteins (resulting in a total of n = 8,096 complexes). Since the hu.MAP2 resource is based solely on computational predictions, we gathered these entries in a separate collection, so that the user could explore these independently from the other (curated) entries. Finally, we assigned a score per complex, indicating the overall cancer relevance of the participating members, specifically the mean pancancer gene rank (as outlined above in the section Target-cancer associations).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Ligand-receptor interactions</head><p>Ligand-receptor interactions (n = 1,939) were collected from the CellChatDB resource <ref type="bibr" target="#b59">(35)</ref>. In the oncoEnrichR module for such interactions, we only show interactions where both ligand and receptor are found in the candidate set.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Synthetic lethality predictions</head><p>We downloaded recently published predictions for synthetic lethality interactions in human cancer cell lines <ref type="bibr" target="#b60">(36)</ref>. Here, human gene paralogs were predicted as potentially synthetic lethal based on a number of features, most prominently shared protein-protein interactions, and percent sequence identity. A total of n = 36,648 predictions were provided with a prediction score and percentile, indicating how strong the evidence is for a potential synthetic lethality interaction. In oncoEnrichR, we show synthetic lethality interactions in which both members are part of the candidate set, as well as instances where only one member of the interaction is part of the candidate set.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Use case reports</head><p>We explored the usability of the oncoEnrichR workflow for two candidate lists, one coming from a CRISPR screen investigating drug resistance in lung cancer, and another coming from a proteomics screen probing the interacting partners of FGFR1 upon stimulation with the activating ligand FGF1.</p><p>The complete HTML reports and Excel output of both candidate lists can be downloaded from the following URL: <ref type="url" target="https://doi.org/10.5281/zenodo.7115732">https://doi.org/10.5281/zenodo.7115732</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Figures</head><p>Supplementary Figure <ref type="figure">S1</ref>. Generation of gene-cancer association ranks. By combining genephenotype term association scores from the Open Targets Platform (upper left) with a curated mapping of phenotype terms toward primary tumor sites (<ref type="url" target="https://github.com/sigven/oncoPhenoMap">https://github.com/sigven/oncoPhenoMap</ref>), we established a global/pan-cancer rank of genes with respect to cancer relevance, and also a tumortype specific ranking, the latter reflecting the strength of association between a gene and a particular tumor type. <ref type="table">Table 1:</ref> Overview of Scientific Questions addressed by oncoEnrichR <ref type="url" target="https://docs.google.com/spreadsheets/d/1SBQ0Yn5pYB3XzxwJIsayTvwT71RHPxC9/">https://docs.google.com/spreadsheets/d/1SBQ0Yn5pYB3XzxwJIsayTvwT71RHPxC9/</ref>  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Tables</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">High-content CRISPR screening</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Datlinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Chardon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Coelho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Lawson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Methods Primers</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1" to="23" />
+			<date type="published" when="2022">2022</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Dogrusoz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Sumer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Aksoy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Discov</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="401" to="404" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">GEPIA2: an enhanced web server for large-scale expression profiling and interactive analysis</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="556" to="560" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Systematic and integrative analysis of large gene lists using DAVID bioinformatics resources</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Sherman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Lempicki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Protoc</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="44" to="57" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Metascape provides a biologist-oriented resource for the analysis of systems-level datasets</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Pache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Khodabakhshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Tanaseichuk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">1523</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Modeling sample variables with an Experimental Factor Ontology</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Malone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Holloway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Adamusiak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kapushesky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kolesnikov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="1112" to="1118" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Open Targets Platform: supporting systematic drug-target identification and prioritisation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ochoa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hercules</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Carmona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Suveges</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Uriarte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Malangone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1302" to="1310" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">OncoTree: A Cancer Classification System for Precision Oncology</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kundra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sheridan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Sirintrapun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ochoa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JCO Clin Cancer Inform</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="221" to="230" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The Galaxy platform for accessible, reproducible and collaborative biomedical analyses: 2018 update</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Afgan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Baker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Batut</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Van Den Beek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bouvier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cech</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="W537" to="544" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The COSMIC Cancer Gene Census: describing genetic dysfunction across all human cancers</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sondka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bamford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Ward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Dunham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="696" to="705" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The Network of Cancer Genes (NCG): a comprehensive catalogue of known and candidate cancer genes from cancer sequencing screens</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Repana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nulsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dressler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bortolomeazzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Venkata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tourna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">CancerMine: a literature-mined resource for drivers, oncogenes and tumor suppressors in cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Grewal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sjm</forename><surname>Jones</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Methods</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="505" to="507" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A compendium of mutational cancer driver genes</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Martínez-Jiménez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Muiños</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sentís</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Deu-Pons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Reyes</forename><forename type="middle">-</forename><surname>Salazar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Arnedo-Pac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="555" to="572" />
+			<date type="published" when="2020">2020</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Project Score database: a resource for investigating cancer cell dependencies and prioritizing therapeutic targets</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dwane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Van Der Meer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res. Oxford Academic</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1365" to="1372" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Comprehensive prediction of robust synthetic lethality between paralog pairs in cancer cell lines</title>
+		<author>
+			<persName><forename type="first">De</forename><surname>Kegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Quinn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Syst</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="1144" to="1159" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>e6</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">STRING: known and predicted protein--protein associations, integrated and transferred across organisms</title>
+		<author>
+			<persName><forename type="first">Von</forename><surname>Mering</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Jensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Snel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Krupp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Foglierini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="433" to="437" />
+			<date type="published" when="2005">2005</date>
+			<publisher>Oxford University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Pan-Cancer analysis project</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Weinstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Collisson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mills</forename><surname>Shaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Ozenberger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Genet</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="1113" to="1120" />
+			<date type="published" when="2013">2013</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+		<respStmt>
+			<orgName>The Cancer Genome Atlas Research Network</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">TissueEnrich: Tissue-specific gene enrichment analysis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tuteja</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="1966" to="1967" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Towards a knowledgebased Human Protein Atlas</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Uhlen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Oksvold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fagerberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lundberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jonasson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Forsberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="1248" to="1250" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Genome-wide identification and analysis of prognostic features in human cancers</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Sheltzer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page">110569</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Knowledge graph-based recommendation framework identifies drivers of resistance in EGFR mutant non-small cell lung cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gogleva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Polychronopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pfeifer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Poroshin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ughetto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Martin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">1667</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Protein Tyrosine Phosphatase Receptor Type G (PTPRG) Controls Fibroblast Growth Factor Receptor (FGFR) 1 Activity and Influences Sensitivity to FGFR Kinase Inhibitors</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kostas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Haugsten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Sørensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Szybowska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Fiorito</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Cell Proteomics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="850" to="870" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Mechanisms of FGFR-mediated carcinogenesis</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Ahmad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Iwata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">Y</forename><surname>Leung</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochim Biophys Acta</title>
+		<imprint>
+			<biblScope unit="volume">1823</biblScope>
+			<biblScope unit="page" from="850" to="860" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Dysregulated FGF signalling in neoplastic disorders</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tanner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">P</forename><surname>Grose</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin Cell Dev Biol</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="page" from="126" to="135" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">BioID identifies novel c-MYC interacting partners in cultured cells and xenograft tumors</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dingar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kalkat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P-K</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Srikumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">B</forename><surname>Tu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Proteomics</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="page" from="95" to="111" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Open Targets Platform: supporting systematic drug-target identification and prioritisation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ochoa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hercules</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Carmona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Suveges</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Uriarte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Malangone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1302" to="1310" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">CancerMine: a literature-mined resource for drivers, oncogenes and tumor suppressors in cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Grewal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sjm</forename><surname>Jones</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Methods</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="505" to="507" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">The Network of Cancer Genes (NCG): a comprehensive catalogue of known and candidate cancer genes from cancer sequencing screens</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Repana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nulsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dressler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bortolomeazzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Venkata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tourna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">The COSMIC Cancer Gene Census: describing genetic dysfunction across all human cancers</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sondka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bamford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Ward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Dunham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="696" to="705" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Comprehensive Characterization of Cancer Driver Genes and Mutations</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tokheim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Porta-Pardo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sengupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bertrand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Weerasinghe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">173</biblScope>
+			<biblScope unit="page" from="371" to="385" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note>e18</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">A compendium of mutational cancer driver genes</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Martínez-Jiménez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Muiños</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sentís</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Deu-Pons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Reyes</forename><forename type="middle">-</forename><surname>Salazar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Arnedo-Pac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="555" to="572" />
+			<date type="published" when="2020">2020</date>
+			<publisher>Nature Publishing Group</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">TCGAbiolinks: an R/Bioconductor package for integrative analysis of TCGA data</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Colaprico</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Olsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Garofano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cava</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Garolini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page">71</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Identifying recurrent mutations in cancer reveals widespread lineage diversity and mutational specificity</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Asthana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Chapman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kandoth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="155" to="163" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Pfam: the protein families database</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Finn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bateman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Clements</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Coggill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">Y</forename><surname>Eberhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Eddy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="222" to="230" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">The mutational constraint spectrum quantified from variation in 141,456 humans</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">J</forename><surname>Karczewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Francioli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">B</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Alföldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">581</biblScope>
+			<biblScope unit="page" from="434" to="443" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tamayo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">K</forename><surname>Mootha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mukherjee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Ebert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Gillette</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci U S A</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="page" from="15545" to="15550" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Molecular signatures database (MSigDB) 3.0</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Liberzon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pinchback</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thorvaldsdóttir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tamayo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Mesirov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="1739" to="1740" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">KEGG: kyoto encyclopedia of genes and genomes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kanehisa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Goto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="27" to="30" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">WikiPathways: a multifaceted pathway database bridging metabolomics to other omics research</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">N</forename><surname>Slenter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kutmon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hanspers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Riutta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Windsor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Nunes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res. Oxford Academic</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="661" to="667" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">NetPath: a public resource of curated signal transduction pathways</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kandasamy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Mohan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Raju</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Keerthikumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gss</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Venugopal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">R3</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">clusterProfiler: an R package for comparing biological themes among gene clusters</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L-G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q-Y</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">OMICS</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="284" to="287" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">STRING: known and predicted protein--protein associations, integrated and transferred across organisms</title>
+		<author>
+			<persName><forename type="first">Von</forename><surname>Mering</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Jensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Snel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Krupp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Foglierini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="433" to="437" />
+			<date type="published" when="2005">2005</date>
+			<publisher>Oxford University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Finding community structure in very large networks</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Clauset</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mej</forename><surname>Newman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Moore</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev E Stat Nonlin Soft Matter Phys</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page">66111</biblScope>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Authoritative sources in a hyperlinked environment</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Kleinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J ACM</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="604" to="632" />
+			<date type="published" when="1999">1999</date>
+			<publisher>Association for Computing Machinery</publisher>
+			<pubPlace>New York, NY, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Proteomics. Tissue-based map of the human proteome</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Uhlén</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fagerberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Hallström</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lindskog</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Oksvold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mardinoglu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">347</biblScope>
+			<biblScope unit="page">1260419</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">TissueEnrich: Tissue-specific gene enrichment analysis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tuteja</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="1966" to="1967" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Prioritization of cancer therapeutic targets using CRISPR-Cas9 screens</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Picco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Beaver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Migliardi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">568</biblScope>
+			<biblScope unit="page" from="511" to="516" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Project Score database: a resource for investigating cancer cell dependencies and prioritizing therapeutic targets</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dwane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Behan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Van Der Meer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res. Oxford Academic</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1365" to="1372" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">ComPPI: a cellular compartment-specific database for protein-protein interaction network analysis</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Veres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Gyurkó</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Thaler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">Z</forename><surname>Szalay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Fazekas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Korcsmáros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="485" to="493" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<monogr>
+		<title level="m" type="main">gganatogram: An R package for modular visualisation of anatograms and tissues based on ggplot2. F1000Res</title>
+		<author>
+			<persName><forename type="first">Jlv</forename><surname>Maag</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">1576</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Benchmark and integration of resources for the estimation of human transcription factor activities</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Garcia-Alonso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Holland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Ibrahim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Turei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="1363" to="1375" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Genome-wide identification and analysis of prognostic features in human cancers</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Sheltzer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page">110569</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">A pathology atlas of the human cancer transcriptome</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Uhlen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Sjöstedt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fagerberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bidkhori</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.aan2507</idno>
+		<ptr target="http://dx.doi.org/10.1126/science.aan2507" />
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">357</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note>Internet</note>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">CORUM: the comprehensive resource of mammalian protein complexes-2019</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Giurgiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Reinhard</forename><forename type="middle">J</forename><surname>Brauner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Dunger-Kaltenbach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Fobo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Frishman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res. Narnia</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="559" to="563" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Complex Portal 2018: extended content and enhanced visualization tools for macromolecular complexes</title>
+		<author>
+			<persName><forename type="first">Bhm</forename><surname>Meldal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bye-A-Jee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gajdoš</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Hammerová</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Horáčková</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Melicher</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res. Oxford Academic</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="550" to="558" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Protein complex-based analysis framework for high-throughput data sets</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vinayagam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kulkarni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Roesel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sopko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Mohr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Signal</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">5</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">MAP 2.0: integration of over 15,000 proteomic experiments builds a global compendium of human multiprotein assemblies</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Drew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Wallingford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Marcotte</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page">e10016</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">OmniPath: guidelines and gateway for literaturecurated signaling pathway resources</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Türei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Korcsmáros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Methods</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="966" to="967" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Inference and analysis of cell-cell communication using CellChat</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Guerrero-Juarez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C-H</forename><surname>Kuan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">1088</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Comprehensive prediction of robust synthetic lethality between paralog pairs in cancer cell lines</title>
+		<author>
+			<persName><forename type="first">De</forename><surname>Kegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Quinn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Syst</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="1144" to="1159" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>e6</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

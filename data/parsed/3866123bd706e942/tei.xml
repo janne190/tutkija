@@ -1,0 +1,1732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Computational methods for cancer driver discovery: A survey</title>
+				<funder ref="#_J2f2Mfa">
+					<orgName type="full">ARC DECRA</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Australian Government Research Training Program</orgName>
+					<orgName type="abbreviated">RTP</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">University of South Australia</orgName>
+				</funder>
+				<funder ref="#_WzPDdZd">
+					<orgName type="full">Australian Research Council</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2020-07-02">2 Jul 2020</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Viet</forename><forename type="middle">Hoang</forename><surname>Vu</surname></persName>
+						</author>
+						<author>
+							<persName><surname>Pham</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">UniSA STEM</orgName>
+								<orgName type="institution" key="instit2">University of South Australia</orgName>
+								<address>
+									<postCode>5095</postCode>
+									<settlement>Mawson Lakes</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Lin</forename><surname>Liu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">UniSA STEM</orgName>
+								<orgName type="institution" key="instit2">University of South Australia</orgName>
+								<address>
+									<postCode>5095</postCode>
+									<settlement>Mawson Lakes</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Cameron</forename><surname>Bracken</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Centre for Cancer Biology, SA Pathology</orgName>
+								<address>
+									<postCode>5000</postCode>
+									<settlement>Adelaide</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Medicine</orgName>
+								<orgName type="institution">The University of Adelaide</orgName>
+								<address>
+									<postCode>5005</postCode>
+									<settlement>Adelaide</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Gregory</forename><surname>Goodall</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Centre for Cancer Biology, SA Pathology</orgName>
+								<address>
+									<postCode>5000</postCode>
+									<settlement>Adelaide</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Medicine</orgName>
+								<orgName type="institution">The University of Adelaide</orgName>
+								<address>
+									<postCode>5005</postCode>
+									<settlement>Adelaide</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jiuyong</forename><surname>Li</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">UniSA STEM</orgName>
+								<orgName type="institution" key="instit2">University of South Australia</orgName>
+								<address>
+									<postCode>5095</postCode>
+									<settlement>Mawson Lakes</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Thuc</forename><forename type="middle">Duy</forename><surname>Le</surname></persName>
+							<email>thuc.le@unisa.edu.au</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">UniSA STEM</orgName>
+								<orgName type="institution" key="instit2">University of South Australia</orgName>
+								<address>
+									<postCode>5095</postCode>
+									<settlement>Mawson Lakes</settlement>
+									<region>SA AU</region>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Computational methods for cancer driver discovery: A survey</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2020-07-02">2 Jul 2020</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">F19662E7253837B8FAD6417731D202B7</idno>
+					<idno type="DOI">10.1093/bioinformatics/xxxxxx</idno>
+					<idno type="arXiv">arXiv:2007.00887v1[q-bio.GN]</idno>
+					<note type="submission">Received on XXXXX; revised on XXXXX; accepted on XXXXX</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>cancer driver</term>
+					<term>cancer driver discovery</term>
+					<term>computational method</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Motivation: Uncovering the genomic causes of cancer, known as cancer driver genes, is a fundamental task in biomedical research. Cancer driver genes drive the development and progression of cancer, thus identifying cancer driver genes and their regulatory mechanism is crucial to the design of cancer treatment and intervention. Many computational methods, which take the advantages of computer science and data science, have been developed to utilise multiple types of genomic data to reveal cancer drivers and their regulatory mechanism behind cancer development and progression. Due to the complexity of the mechanistic insight of cancer genes in driving cancer and the fast development of the field, it is necessary to have a comprehensive review about the current computational methods for discovering different types of cancer drivers. Results: We survey computational methods for identifying cancer drivers from genomic data. We categorise the methods into three groups, methods for single driver identification, methods for driver module identification, and methods for identifying personalised cancer drivers. We also conduct a case study to compare the performance of the current methods. We further analyse the advantages and limitations of the current methods, and discuss the challenges and future directions of the topic. In addition, we investigate the resources for discovering and validating cancer drivers in order to provide a one-stop reference of the tools to facilitate cancer driver discovery. The ultimate goal of the paper is to help those interested in the topic to establish a solid background to carry out further research in the field.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Identifying cancer driver genes (cancer drivers for short) is vital since these genes play a significant role in the development of cancer. Understanding cancer drivers and their regulatory mechanism is crucial to the design of effective cancer treatments.</p><p>Classical methods of identifying cancer driver genes are based on detecting the mutations in the DNA sequences of coding genes in wetlab experiments. There are many mutation types in the genome such as single-nucleotide variants (SNVs), structural variants (SVs), insertions and deletions (indels), and copy number aberrations (CNAs) <ref type="bibr" target="#b11">(Dimitrakopoulos and Beerenwinkel, 2017)</ref>. These mutations may cause normal cells to transform to tumour cells, resulting in the development of cancer. For example, it has been confirmed that mutations in genes VHL and MET cause kidney cancer <ref type="bibr" target="#b37">(Linehan et al., 2010)</ref> and mutations in genes AKT1 and BRCA1 are related to breast cancer <ref type="bibr" target="#b49">(Stephens et al., 2012)</ref>. However, many mutated genes are not driver genes and may not regulate the progression of cancer. The reason is that not all mutations in the genome contribute to cancer development. Mutations which play a significant role in cancer progression are called driver mutations while mutations Fig. <ref type="figure">1</ref>. Cancer drivers and genes with mutations. Genes with driver mutations are cancer drivers. Some genes which do not contain mutations but regulate driver mutations to develop cancer are also considered as cancer drivers.</p><p>Given the complexity of the regulation by cancer drivers and the large number of genes, over ten thousand, detecting cancer driver genes is challenging with the wet-lab experiments and many computational methods utilising multiple types of genomic data have been developed to reveal cancer drivers and their regulatory mechanism behind the cancer development <ref type="bibr" target="#b12">(Fattore et al., 2016;</ref><ref type="bibr" target="#b18">Gasparini et al., 2015;</ref><ref type="bibr" target="#b39">Papaemmanuil et al., 2016;</ref><ref type="bibr" target="#b45">Rassenti et al., 2017)</ref>. Cancer driver discovery methods are increasingly popular recently because of the fast development of computer science and significant revolution of DNA sequencing techniques. Taking these advantages, numerous methods have been proposed to detect cancer driver genes. For example, MutSigCV <ref type="bibr" target="#b35">(Lawrence et al., 2013)</ref> investigates the significance of mutations in genes to predict cancer drivers, OncodriveFM <ref type="bibr" target="#b49">(Gonzalez-Perez and Lopez-Bigas, 2012)</ref> and <ref type="bibr">OncodriveCLUST (Tamborero et al., 2013)</ref> evaluate the functional influence and clustering of gene mutations respectively, DriverNet <ref type="bibr" target="#b3">(Bashashati et al., 2012)</ref>, MEMo <ref type="bibr" target="#b8">(Ciriello et al., 2012)</ref>, and CBNA <ref type="bibr" target="#b41">(Pham et al., 2019)</ref> examine the role of genes in gene regulatory networks. Due to the large number of the current computational methods for cancer driver discovery, it may take the huge amount of effort for people to find a good resource to know the state-of-the-art methods, and thus a review is necessary and helpful.</p><p>There have been previous works <ref type="bibr" target="#b11">(Dimitrakopoulos and Beerenwinkel, 2017)</ref> reviewing the computational methods for identifying single cancer drivers at the population level. However, it is important to gain mechanistic insight into how cancer drivers work together in driving cancer. Besides, cancer drivers of each patient may be different from others since cancer is a heterogeneous disease, each patient has a different genome and the disease of each patient may be driven by different cancer driver genes. Thus, we also need to consider cancer driver modules and personalised cancer drivers (i.e. cancer drivers for a specific patient). In addition, there are numerous new cancer driver identification methods which have been developed since then. Therefore, it is required to have a more comprehensive review about the current computational methods for identifying cancer drivers.</p><p>In this paper, we survey computational methods for discovering both single cancer drivers and cancer driver modules at the population level and the individual level as well. We then analyse the advantages/disadvantages of the current methods and identify challenges of the field. To facilitate the development of new computational methods for cancer driver detection, we survey resources which can be used as tools in conducting cancer driver research and validating predicted cancer drivers. In addition, with the case study conducted to compare the performance of the current methods in this paper, we believe it will be useful for researchers, who are interested or work in the field, to develop their new methods.</p><p>The paper is structured as follows. In Section 2, we review computational methods for identifying single and cancer driver modules from genomic data, including cancer drivers for both the population and individuals. We summarise the current available sources which can be used for conducting cancer driver researches as well as validating the results in Section 3. In Section 4, we carry out a case study. Finally, we analyse the current methods to identify their advantages and limitations then discuss future directions and challenges of the field in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Cancer driver discovery methods</head><p>The current computational methods use a wide range of genomic data types, including mutations, gene expression, pathways, etc. to discover different types of cancer drivers. Thus, we categorise the methods into various categories and sub-categories. The diagram of the categorisation is shown in Figure <ref type="figure">2</ref> and the summary of the methods is presented in Table <ref type="table" target="#tab_1">1</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer driver module identification</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer driver discovery methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Single cancer driver identification</head><p>Personalised cancer driver identification</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mutation-based methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Network-based methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mutation significance</head><p>Functional impact of mutations Location of mutations Others Mutual exclusivity Others Fig. 2. Categorisation of cancer driver discovery methods. The methods are categorised in three groups: Single cancer driver identification, Cancer driver module identification, and Personalised cancer driver identification. Single cancer driver identification includes two sub-groups: Mutation-based methods and Network-based methods. Mutation-based methods discover cancer drivers using mutation significance, functional impact of mutations, location of mutations, etc. Most cancer driver module identification methods use the mutual exclusivity of mutations to identify modules of cancer drivers.</p><p>In the categorisation, we differentiate single cancer drivers from modules of cancer drivers since there is evidence showing that some genes work in concert to influence different biological processes (e.g. EMT) <ref type="bibr" target="#b9">(Cursons et al., 2017)</ref> and in some biological processes, the regulation of single genes might not have significant impacts but the regulation of groups of genes does. Furthermore, as cancer is a heterogeneous disease, each patient may have a different morphology and clinical outcome. For instance, two patients, who have the same cancer type and receive the same treatment, may experience different outcomes. The reason is that the genome of each patient is different and each patient's disease may i i "review-main" -2020/7/3 -0:41 -page 3 -#3 MutSigCV <ref type="bibr" target="#b35">(Lawrence et al., 2013)</ref> Assesses the significance of mutations in DNA sequencing in order to discover cancer driver genes. Mutation-based methods (Using functional impact of mutations) OncodriveFM (Gonzalez-Perez and Lopez-Bigas, 2012) Uses the functional impact of mutations of genes to detect cancer drivers with the hypothesis that any bias of variations with a significantly functional impact in genes can be used to identify candidate driver genes. OncodriveFML <ref type="bibr" target="#b37">(Mularoni et al., 2016)</ref> Uses the functional impact of gene mutations to reveal both coding and non-coding cancer drivers. DriverML <ref type="bibr" target="#b27">(Han et al., 2019)</ref> Uses the functional impact of mutations to unravel cancer drivers through a supervised machine learning approach. Mutation-based methods (Using location of mutations) ActiveDriver <ref type="bibr" target="#b46">(Reimand and Bader, 2013)</ref> Looks at the enrichment of mutations in externally defined regions to uncover cancer driver genes. <ref type="bibr">OncodriveCLUST (Tamborero et al., 2013)</ref> Detects cancer genes with a large bias in clustering mutations based on the idea that gain-of-function mutations usually cluster in particular protein sections and these mutations contribute to the development of cancer cells. Mutation-based methods (Others: Combining with gene expression, pathways)</p><formula xml:id="formula_0">i i i i i i</formula><p>IntOGen-mutations <ref type="bibr" target="#b19">(Gonzalez-Perez et al., 2013)</ref> Uses somatic mutations, gene expression, and tumour pathways to identify cancer drivers for various tumour types by combining OncodriveFM (Gonzalez-Perez and Lopez-Bigas, 2012) and <ref type="bibr">OncodriveCLUST (Tamborero et al., 2013)</ref>. PathScan <ref type="bibr" target="#b57">(Wendl et al., 2011)</ref> Combines genomic mutations with the information of genes in known pathways to uncover cancer driver genes. Sakoparnig et al. <ref type="bibr" target="#b48">(Sakoparnig et al., 2015)</ref> Introduces a computational method to detect genomic alterations with low occurrence frequencies based on mutation timing. CONEXIC <ref type="bibr" target="#b0">(Akavia et al., 2010)</ref> Applies a score-guided search to detect combinations of modulators which reflect the expression of a gene module in a set of tumour samples then it identifies those which have the highest score in amplified or deleted regions. ncDriver <ref type="bibr" target="#b28">(Hornshoj et al., 2018)</ref> Screens non-coding mutations with conservations and cancer specificity to reveal non-coding cancer drivers. Network-based methods <ref type="bibr" target="#b53">Vinayagam et al. (Vinayagam et al., 2016)</ref> Applies controllability analysis on the directed network of human protein-protein interaction to identify disease genes. CBNA <ref type="bibr" target="#b41">(Pham et al., 2019)</ref> Identifies coding and miRNA cancer drivers by analysing the controllability of the miRNA-TF-mRNA network and mutation data. DriverNet <ref type="bibr" target="#b3">(Bashashati et al., 2012)</ref> Uncovers cancer drivers by evaluating the influence of mutations on transcriptional networks in cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer driver module identification</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Using mutual exclusivity of mutations</head><p>CoMEt <ref type="bibr" target="#b36">(Leiserson et al., 2015)</ref> Identifies cancer genes by using the exact statistical test to test mutual exclusivity of genomic events and applies techniques to do simultaneous analysis for mutually exclusive alterations. WeSME <ref type="bibr" target="#b32">(Kim et al., 2017)</ref> Discovers cancer drivers by evaluating the mutual exclusivity of mutations of gene pairs. MEMo <ref type="bibr" target="#b8">(Ciriello et al., 2012)</ref> Analyses mutual exclusivity of mutated genes in subnetworks to identify mutual exclusivity modules in cancer. Others: Using mutations, gene expression, gene network iMCMC <ref type="bibr" target="#b62">(Zhang et al., 2013)</ref> Uses the cancer genomic data including mutations, CNAs, and gene expression from cancer patients to identify mutated core modules in cancer. NetBox <ref type="bibr" target="#b5">(Cerami et al., 2010)</ref> Uses biological networks to assess network modules statistically and identify core pathways in GBM. TieDIE <ref type="bibr" target="#b40">(Paull et al., 2013)</ref> Applies network diffusion to discover the relationship of genomic events and changes in cancer subtypes. <ref type="bibr" target="#b26">Hamilton et al. (Hamilton et al., 2013)</ref> Uses the pan-cancer dataset of TCGA and the miRNA target data of AGO-CLIP to detect a pan-cancer oncogenic miRNA superfamily with a central core seed motif. Personalised cancer driver identification DawnRank <ref type="bibr" target="#b29">(Hou and Ma, 2014)</ref> A ranking framework which applies PageRank to evaluate the impact of genes in an interaction network to detect cancer drivers. SCS <ref type="bibr" target="#b22">(Guo et al., 2018)</ref> Detects the minimal set of mutated genes controlling the maximal differentially expressed genes as cancer drivers. PNC <ref type="bibr" target="#b23">(Guo et al., 2019)</ref> Identifies cancer drivers as the minimum gene set which covers all the edges based on a bipartite graph. be driven by different driver genes, leading to a strong need to study cancer driver genes specific to an individual patient. Thus, we categorise the current computational methods for cancer driver discovery into three groups, including methods to identify single cancer drivers, methods to identify cancer driver modules, and methods to discover personalised cancer drivers (i.e. cancer drivers for a specific patient</p><p>). In addition, based on the key techniques used in the methods, we divide single cancer driver identification methods into two sub-groups, including mutationbased methods and network-based methods. Mutation-based methods use different characteristics of mutations such as mutation significance, functional impact of mutations, location of mutations to discover cancer drivers while network-based methods evaluate the role of genes in biological networks to predict cancer drivers. Most of cancer driver module identification methods use the mutual exclusivity of mutations to identify i i "review-main" -2020/7/3 -0:41 -page 4 -#4 i i i i i i 4 Pham et al.</p><p>modules of cancer drivers. We will discuss the detail of the methods in the following sections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Single cancer driver identification</head><p>Most current methods identify single cancer drivers at the population level. In general, they can be grouped in mutation-based methods and network-based methods. Mutation-based methods use the characteristics of mutations (e.g. the significance of mutations in genes, the functional impacts of mutations, the recurrence of mutations in genes, etc.) to identify cancer driver genes while network-based methods use gene networks to assess the role of genes then combine with the mutation information to predict cancer drivers. The general idea of the network-based methods is illustrated in Figure <ref type="figure" target="#fig_0">3</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Evaluate genes</head><p>Combine Networks Mutations Gene roles </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cancer drivers</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.1">Mutation-based methods</head><p>Mutation-based methods use the characteristics of mutations in genes to discover cancer driver genes. Based on the characteristics of mutations used in the methods, we divide them into four sub-groups, including using the significance of mutations in genes, using the functional impacts of mutations, using the recurrence of mutations, and others. Other methods combine the mutation information of genes with gene expression and tumour pathways to detect cancer drivers. The details of methods in the four sub-groups are discussed as below.</p><p>A. Using the significance of mutations in genes MutSigCV <ref type="bibr" target="#b35">(Lawrence et al., 2013)</ref> is a method to discover cancer drivers by assessing the significance of mutations in genes. Cancer drivers predicted by MutSigCV are mutated more frequently than expected by chance based on inferred background mutation processes. However, MutSigCV has a limitation since although some genes have a high degree of mutations, these mutations are passenger mutations and do not contribute to the cancer development.</p><p>B. Using the functional impacts of mutations OncodriveFM (Gonzalez-Perez and Lopez-Bigas, 2012) uses the functional impact of genomic mutations to detect cancer drivers instead of evaluating the significance of mutations in genes like MutSigCV. OncodriveFM hypothesises that any bias of variations (i.e. mutations) in genes with a significantly functional impact may be an indicator for identifying candidate driver genes. The significant point of this method is that instead of assessing how many mutations a gene has, it evaluates how biased mutations with highly functional impacts are. Thus, it can detect driver genes having mutations with low recurrence but their mutations play a significant role in the cancer development.</p><p>Similar to OncodriveFM, OncodriveFML (Mularoni et al., 2016) also uses the functional impact of mutations to discover cancer drivers. However, while OncodriveFM only uses coding gene mutations, OncodriveFML is designed to analyse both coding and non-coding mutations. The OncodriveFML framework is then applied to 19 tumour datasets and uncovers well-known coding drivers like TP53, KEAP1, ARID2, and RUNX1 with high functional impacts. It also identifies noncoding drivers such as MALAT1 and MIAT. In particular, MALAT1 is a lncRNA which has been proved to be involved in lung adenocarcinomas and MIAT is a non-protein-coding transcript related to myocardial infarction.</p><p>Another method assessing the functional impact of gene mutations to unravel cancer driver is DriverML <ref type="bibr" target="#b27">(Han et al., 2019)</ref>. Different from OncodriveFM and OncodriveFML, DriverML assumes that the functional impact of mutations is affected by mutation types. Thus, it proposes a method to detect cancer drivers by scoring functional influences of alterations based on mutation types. The method uses various properties to weight the impact of mutation types and it obtains optimised weight parameters by using a supervised machine learning approach with pan-cancer training data.</p><p>C. Using the recurrence of mutations in genes Instead of using the functional impact of mutations like OncodriveFM, OncodriveFML, and DriverML, other methods identify cancer drivers based on the location of mutations such as ActiveDriver <ref type="bibr" target="#b46">(Reimand and Bader, 2013)</ref> and <ref type="bibr">OncodriveCLUST (Tamborero et al., 2013)</ref>. ActiveDriver discovers cancer driver genes by detecting the enrichment of somatic mutations in post-translationally modified sites, including phosphorylation, acetylation, and ubiquitination sites. OncodriveCLUST is based on the fact that gain-of-function mutations usually cluster in particular protein sections and these mutations contribute to the development of cancer cells. Thus, it detects cancer genes with a large bias in clustering mutations. The method is applied to the database of Catalogue of Somatic Mutations in Cancer (COSMIC) <ref type="bibr" target="#b13">(Forbes et al., 2010)</ref> and then the result is validated with the Cancer Gene Census (CGC) <ref type="bibr" target="#b16">(Futreal et al., 2004)</ref>. As this method bases on the mutation clustering, it cannot identify cancer drivers whose mutations are distributed across the sequence. In addition, to have a good result, it requires a large number of observed mutations. Thus, this method should be used to complement results of other methods in detecting cancer drivers.</p><p>D. Others: Combining with gene expression, pathways, etc.</p><p>The platform IntOGen-mutations (Gonzalez-Perez et al., 2013) is developed based on OncodriveFM and OncodriveCLUST to discover cancer drivers for various tumour types. This platform uses somatic mutations, gene expression, and tumour pathways as the input parameters. It takes the advantages of both methods using the functional impact of mutations and methods using the location of mutations by applying OncodriveFM to identify driver genes which are biased significantly toward mutations with high functional impacts and applying OncodriveCLUST to detect driver genes which have mutations highly concentrating in specific regions of proteins.</p><p>Also using mutational infomation in detecting cancer genes, PathScan <ref type="bibr" target="#b57">(Wendl et al., 2011)</ref> combines mutations with the information of genes in known pathways. PathScan tests the scenario in which pathway mutations contribute to the development of tumour. In addition, other methods combine mutations with existing knowledge of gene function or network structure, or finding mutually exclusive mutations, etc. For instance, Sakoparnig et al. <ref type="bibr" target="#b48">(Sakoparnig et al., 2015)</ref> introduce a computational method to detect genomic alterations with low occurrence frequencies based on mutation timing.</p><p>i i "review-main" -2020/7/3 -0:41 -page 5 -#5 i i i i i i Cancer Driver Discovery 5</p><p>Especially, some methods combine a wide range of data types in order to identify cancer drivers more effectively. For example, in <ref type="bibr" target="#b0">(Akavia et al., 2010)</ref>, the authors develop a computational framework which uses CNVs and gene expression as the inputs to uncover cancer drivers. The framework is named COpy Number and EXpression In Cancer (CONEXIC). It applies a score-guided search to detect combinations of modulators which reflect the expression of a gene module in a set of tumour samples. Then it identifies those having the highest score in amplified or deleted regions on chromosome. The authors hypothesise that in case the expression of gene A and its copy number are related, the copy number variation likely results in changes in expression of gene A and there is a high probability that A is a driver candidate and it regulates other genes. The authors apply this framework to the dataset of melanoma and detect exactly its known cancer drivers.</p><p>ncDriver <ref type="bibr" target="#b28">(Hornshoj et al., 2018)</ref> identifies non-coding cancer drivers with a two-stage procedure. The first stage is mutational recurrence test which uses mutations (including indels and SNVs) and genomic elements as the inputs to detect elements with mutational recurrence. The second stage is to assess whether mutations of each element have a significant cancer-specific distribution and significant bias for highly conserved positions of each element, then it finds out if the conservation level of mutations is significantly large comparing to the overall conservation distribution. This procedure is applied to the pan-cancer whole-genome dataset to identify cancer drivers and significant non-coding drivers identified by the method are MIR142 lncRNA and XRNU5A-1 sncRNA.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>E. Analysis</head><p>Although all the methods above base on mutation data to identify cancer drivers, each has a different approach. MutSigCV evaluates the significance of mutations in genes to detect cancer drivers. However, some genes are mutated significantly but most of their mutations are passenger mutations, which do not progress cancer. Thus, these genes are not cancer driver genes. To eliminate passenger mutations, ActiveDriver and OncodriveCLUST consider the location of mutations. Although these methods can reduce the false positives in predicting driver mutations, they may overlook cancer drivers with mutations distributing across the protein since they only evaluate mutations which are concentrated in particular protein sections. Instead of using the location of mutations, other methods use different strategies. For instance, OncodriveFM, OncodriveFML, and DriverML utilise the functional impact of genomic mutations to evaluate the importance of mutated genes to discover cancer drivers. Sakoparnig et al. <ref type="bibr" target="#b48">(Sakoparnig et al., 2015)</ref> bases on the timing of mutations, PathScan combines with the pathway data, and CONEXIC combines with the gene expression data. There are also methods which use an integrated approach such as IntOGen-mutations, which considers both the functional impact of mutations and their clustering as well. Furthermore, since mutations in both coding regions and non-coding regions play a significant role in cancer development, cancer drivers can be coding or non-coding elements. Some methods like OncodriveFML and ncDriver are developed to detect non-coding cancer drivers.</p><p>As these methods evaluate different aspects of mutations to identify cancer drivers, they can detect several validated cancer drivers. The novel cancer drivers identified by these methods are potential and they can be used in wet-lab experiments to confirm their role in cancer progression. However, although these methods can be easily applied to different mutation datasets, mutation databases are incomplete and the applications of these methods are limited.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.2">Network-based methods</head><p>In general, network-based methods evaluate the role of genes in biological networks and then combine with the muttaion information of genes to predict cancer drivers. There are three methods in this group, including Vinayagam et al. <ref type="bibr" target="#b53">(Vinayagam et al., 2016)</ref>, CBNA <ref type="bibr" target="#b41">(Pham et al., 2019)</ref>, and DriverNet <ref type="bibr" target="#b3">(Bashashati et al., 2012)</ref>. The details of these methods are discussed as below.</p><p>A. The details of methods Vinayagam et al. <ref type="bibr" target="#b53">(Vinayagam et al., 2016)</ref> applies controllability analysis on the directed network, i.e., the network with directed edges, of human protein-protein interaction (PPI). The input network includes nodes which are proteins and edges which are interactions between proteins. The controllability analysis categorises nodes into the three types which are "indispensable", "dispensable", or "neutral" based on their impact on minimum driver node set (MDS), i.e., the minimum node set driving the whole network. Indispensable nodes are nodes which make the number of MDS increased when the nodes are removed from the network, while dispensable nodes make the number of MDS decreased. The removal of neutral nodes from the network has no effect on the number of driver nodes. Then the study analyses the controllability of perturbated network to identify sensitive indispensable nodes, i.e., indispensable nodes in the original network but not in the perturbated network. These sensitive indispensable nodes are the candidate cancer drivers.</p><p>Also inspired by the network controllability, CBNA <ref type="bibr" target="#b41">(Pham et al., 2019)</ref> analyses the controllability of a gene regulatory network to discover cancer drivers. However, the network built by CBNA is a miRNA-TF-mRNA network which consists of microRNAs (miRNAs), Transcription Factors (TFs), and mRNAs. Since this network is constructed from the expression data of miRNAs/mRNAs of cancer patients and the existing gene interaction databases such as PPI <ref type="bibr" target="#b52">(Vinayagam et al., 2011)</ref>, miRTarBase <ref type="bibr" target="#b7">(Chou et al., 2016)</ref>, and TransmiR <ref type="bibr" target="#b55">(Wang et al., 2010)</ref>, it is more reliable and specific to a cancer type. In addition, different from the method of Vinayagam et al. <ref type="bibr" target="#b53">(Vinayagam et al., 2016)</ref>, CBNA analyses the network controllability to indicate critical nodes of the network, i.e. nodes increase the number of the minimum node set controlling the whole network if they are removed from the network, then combining with the mutation data to identify cancer drivers. As CBNA uses the miRNA-TF-mRNA network, it can identify both coding and miRNA driver genes. Furthermore, it can also be used to discover drivers for a cancer type or cancer subtype.</p><p>Instead of evaluating the controllability of a subset of nodes of a gene network like Vinayagam et al. <ref type="bibr" target="#b53">(Vinayagam et al., 2016)</ref> and CBNA <ref type="bibr" target="#b41">(Pham et al., 2019)</ref>, DriverNet <ref type="bibr" target="#b3">(Bashashati et al., 2012)</ref> considers the influence of mutated genes on other genes in a network. DriverNet integrates different data types, including genome data (i.e. non-synonym SVNs, indels, and copy number variation), influence graph of biological pathway information, and gene expression. It constructs a bipartite graph of genes to detect the effect of mutated genes on genes which have an outlying expression. The putative drivers are mutated genes which impact on a high number of outlying-expression genes in several patients. The method is applied to four cancer datasets, including glioblastoma, breast, triple negative breast, and serous ovarian, and it reveals various candidate cancer drivers related to transcriptional networks.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Analysis</head><p>The three methods above use biological networks to predict single cancer drivers, other methods using networks to discover cancer driver modules or personalised cancer drivers are discussed in Section 2.2 and 2.3 respectively. In general, network-based methods evaluate the role of genes in the whole networks to predict cancer drivers. Various techniques are used to analyse the networks such as network controllability in Vinayagam et al. and CBNA or the influence of genes in DriverNet. These methods can elucidate molecular mechanisms in cancer development at the network level, but they need large datasets to produce reliable results. In addition, the networks used in some methods (i.e. <ref type="bibr">Vinayagam et al. and DriverNet)</ref> are not specific to any cancer type, thus they may miss some important information which is specific to a cancer type. Another limitation of i i "review-main" -2020/7/3 -0:41 -page 6 -#6</p><formula xml:id="formula_1">i i i i i i 6</formula><p>Pham et al.</p><p>network-based methods like DriverNet is predicting genes which affect other genes' expression as cancer drivers, because some cancer drivers may not alter the expression of other genes or other genes accidentally change other genes' expression although they are not cancer drivers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Cancer driver module identification</head><p>Recently, several methods have been developed to discover cancer drivers in modules. Most of the methods identifying cancer driver modules use mutual exclusivity of mutations. Thus, we divide methods for identifying cancer driver modules into two sub-groups: using mutual exclusivity of mutations and others. Other methods use mutations, gene expression, gene network, etc. to detect cancer driver modules. The details of methods in the two sub-groups are discussed as below.</p><p>A. Using mutual exclusivity of mutations CoMEt (the Combinations of Mutually Exclusive Alterations) <ref type="bibr" target="#b36">(Leiserson et al., 2015)</ref> uses mutual exclusivity technique to detect cancer driver modules. Because different cancer patients have different combinations of genomic alterations which develop the disease, CoMEt detects combinations of alterations (i.e. modules of mutated genes) in the same pathway, which are mutual exclusive across samples. The method uses the exact statistical test to test mutual exclusivity and it does simultaneous analysis for mutually exclusive alterations specific to cancer subtypes. The advantage of this method is that it has a low computational complexity. Similarly, WeSME <ref type="bibr" target="#b32">(Kim et al., 2017</ref>) also assesses the mutual exclusivity of mutations of genes to detect cancer drivers. However, instead of evaluating genes in the same pathway, WeSME only considers gene pairs and the gene pairs whose mutations have a significantly mutual exclusivity are considered as modular candidate cancer drivers.</p><p>MEMo (Mutual Exclusivity Modules) <ref type="bibr" target="#b8">(Ciriello et al., 2012)</ref> applies mutual exclusivity technique in biological networks to identify oncogenic network modules. According to <ref type="bibr" target="#b8">(Ciriello et al., 2012)</ref>, although individual tumours of the same cancer type may have different genomic alterations, these alterations just happen in a restricted number of pathways. In addition, alterations in the same pathway are not likely to exist in the same patient. Based on these, MEMo does correlation analysis and applies statistical tests to detect network modules based on three criteria: (1) genes in a network module are altered across the sample; (2) member genes tend to join into the same biological process; (3) alterations in modules are mutually exclusive. The method is applied to the glioblastoma multiforme (GBM) dataset and detects successfully known network modules, i.e., groups of cancer drivers, in GBM.</p><p>B. Others: Using mutations, gene expression, gene network, etc. iMCMC (an approach to identify Mutated Core Modules in Cancer) <ref type="bibr" target="#b62">(Zhang et al., 2013)</ref> is developed to uncover groups of genes driving cancer using the cancer genomic data from cancer patients. The method uses somatic mutation, CNV, and gene expression to build a gene network. Then, it identifies coherent subnetworks (modules) from the network through an optimisation model by selecting vertices and edges with high weights. Finally, the significance of subnetworks is assessed by performing a random test and the mutual exclusivity of subnetworks is tested by adopting Markov chain Monte Carlo permutation strategy. The method is applied to the GBM and the ovarian carcinoma (OV) datasets from TCGA. Many discovered core modules are related to known pathways and most of the identified genes are cancer driver genes which are already reported relating to cancer pathogenesis in other research.</p><p>NetBox <ref type="bibr" target="#b5">(Cerami et al., 2010)</ref> uses biological networks in studying drivers for GBM. It introduces a network-based method to detect oncogenic processes and cancer driver genes. The hypothesis of the approach is that biological networks include multiple functional modules, and tumours target specific functional modules. The method analyses sequence mutations, CNVs, an interaction network including both PPIs and signalling pathways to identify and assess network modules statistically.</p><p>Another method to identify cancer driver modules is TieDIE (Tied Diffusion Through Interacting Events) <ref type="bibr" target="#b40">(Paull et al., 2013)</ref>. TieDIE applies network diffusion to discover the relationship of genomic events and changes in cancer subtypes. The approach collects a subnetwork of PPIs, interactions of genomic perturbations, predicted transcription factor-totarget connections, and transcriptomic states from literature. The method is applied to the breast adenocarcinoma (BRCA) dataset of TCGA and it detects signalling pathways and interlinking genes corresponding to cancer signalling.</p><p>The methods above identify coding cancer driver modules. However, because non-coding RNAs (e.g. miRNAs) can modulate tumorigenesis by promoting or suppressing specific genes and various cancer types have overlaps in oncogenic pathways, a group of miRNAs which drives or suppresses tumorigenesis in different tumour types may exist. Hamilton et al. <ref type="bibr" target="#b26">(Hamilton et al., 2013)</ref> use the pan-cancer dataset of TCGA and the miRNA target data of Argonaute Crosslinking Immunoprecipitation (AGO-CLIP) <ref type="bibr" target="#b6">(Chi et al., 2009;</ref><ref type="bibr" target="#b24">Hafner et al., 2010</ref><ref type="bibr" target="#b25">Hafner et al., , 2012) )</ref> to detect pancancer miRNA drivers. The idea is that the set of cancer miRNA drivers will modulate tumorigenesis and share a central core seed motif. The result shows that an oncogenic miRNA superfamily, which includes miR-17, miR-18, miR-19, miR-93, miR-130, miR-210, and miR-455, coregulates tumour suppressors through a GUGC core motif.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. Analysis</head><p>As can be seen from the methods above, most of the methods use mutual exclusivity of mutations to identify cancer driver modules. With this technique, the mutation from only one member in an identified module is enough to trigger cancer progression <ref type="bibr" target="#b32">(Kim et al., 2017)</ref>. Thus, the identified drivers in a module may not work together to regulate their targets to drive cancer. However, as discussed above, genes should collaborate to increase their influence on target genes to progress cancer. Therefore, it is necessary to develop novel methods to discover cancer driver groups whose members work in concert to initialise and develop cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Personalised cancer driver identification</head><p>The methods discussed in Section 2.1 and 2.2 discover cancer drivers at the population level. Since different patients possess different genomes and their diseases might be driven by different driver genes, it is necessary to investigate cancer drivers which are specific to an individual patient (i.e. personalised cancer drivers). There are three methods in this group, including DawnRank <ref type="bibr" target="#b29">(Hou and Ma, 2014)</ref>, SCS <ref type="bibr" target="#b22">(Guo et al., 2018)</ref>, and PNC <ref type="bibr" target="#b23">(Guo et al., 2019)</ref>. All of them base on gene regulatory networks to predict personalised cancer drivers. The details of these methods are discussed as below.</p><p>A. The details of methods A representative of methods for identifying personalised cancer drivers is DawnRank <ref type="bibr" target="#b29">(Hou and Ma, 2014)</ref>. In general, the idea of the method is that mutations in genes which have higher connectivity in an interaction network are more impactful. DawnRank uses the information of gene expression and gene network as the inputs. In particular, it is a ranking framework which applies PageRank <ref type="bibr" target="#b4">(Brin and Page, 1998;</ref><ref type="bibr" target="#b38">Page et al., 1998)</ref> to evaluate the impact of genes on the gene network. The impact is presented in terms of network connectivity and the number of downstream genes expressed differentially. The higher the rank of a gene is, the more downstream genes it has effects on in the gene network. Ranks of genes are then combined with somatic alteration data like copy number variations to detect driver alterations. Although DawnRank bases on the same gene regulatory network for all patients, it assesses the impact of genes in each patient using the patient's gene expression data to detect personalised i i "review-main" -2020/7/3 -0:41 -page 7 -#7 Profiles human tumours to discover molecular aberrations in DNA, XRNA, protein, and epigenetic levels. ICGC <ref type="bibr" target="#b61">(Zhang et al., 2011)</ref> <ref type="url" target="https://icgc.org/">https://icgc.org/</ref> A data portal of cancer gemomics of 50 cancer types. cBioPortal <ref type="bibr" target="#b17">(Gao et al., 2013)</ref> <ref type="url" target="http://www.cbioportal.org/">http://www.cbioportal.org/</ref> A web interface for accessing cancer genomic data and analysing the data. Cancer3D <ref type="bibr" target="#b42">(Porta-Pardo et al., 2015)</ref> <ref type="url" target="http://cancer3d.org/search">http://cancer3d.org/search</ref> Contains mutations of more than 14,700 proteins and they are mapped to over 24,300 proteins of the Protein Data Bank <ref type="bibr" target="#b47">(Rose et al., 2013)</ref>. CCLE <ref type="bibr" target="#b2">(Barretina et al., 2012)</ref> <ref type="url" target="https://portals.broadinstitute.org/ccle">https://portals.broadinstitute.org/ccle</ref> Includes SNVs, CNAs, and gene expression. COSMIC <ref type="bibr" target="#b15">(Forbes et al., 2015)</ref> <ref type="url" target="https://cancer.sanger.ac.uk/cosmic">https://cancer.sanger.ac.uk/cosmic</ref> Contains cancer mutations, including manually curated expert data and data from sequencing projects. For validating predicted results CGC <ref type="bibr" target="#b16">(Futreal et al., 2004)</ref> <ref type="url" target="https://cancer.sanger.ac.uk/census">https://cancer.sanger.ac.uk/census</ref> Provides a list of cancer genes, which has been well established for cancer development. AGCOH <ref type="bibr" target="#b30">(Huret et al., 2000)</ref> <ref type="url" target="http://atlasgeneticsoncology.org/">http://atlasgeneticsoncology.org/</ref> Contains about 1,500 cancer genes merged from numerous collaborative projects. NCG <ref type="bibr" target="#b1">An et al. (2016)</ref> <ref type="url" target="http://ncg.kcl.ac.uk/">http://ncg.kcl.ac.uk/</ref> Comprises more than 500 known cancer genes and over 1,000 candidate cancer genes. DGIdb <ref type="bibr" target="#b20">(Griffith et al., 2013)</ref> <ref type="url" target="http://www.dgidb.org/">http://www.dgidb.org/</ref> Includes cancer drivers and drug-gene interactions. OncomiR <ref type="bibr" target="#b58">(Wong et al., 2018)</ref> <ref type="url" target="http://www.oncomir.org/">http://www.oncomir.org/</ref> A web interface for investigating miRNA dysregulation in cancer.</p><p>cancer drivers. The algorithm has been applied to TCGA datasets and it shows an effectiveness in detecting cancer drivers.</p><p>To assess the impact of genes in each patient, DawnRank uses the gene expression data of each patient, but it bases on the same gene regulatory network of all patients. As a result, it may miss important information of gene regulation of each patient. Thus, to detect personalised cancer drivers, SCS <ref type="bibr" target="#b22">(Guo et al., 2018)</ref> builds a gene regulatory network for each patient from the patient's gene expression data and its neighbour's gene expression data (i.e. the corresponding normal sample's gene expression data). SCS detects cancer driver genes as the minimal set of mutated genes which impacts on the maximal differentially expressed genes. Like SCS, PNC <ref type="bibr" target="#b23">(Guo et al., 2019)</ref> also uses the gene expression data of a patient and its neighbour to construct personalised networks. Nevertheless, PNC only selects edges which are different between the tumour and normal state. It then converts the gene regulatory network to a bipartite graph in which, nodes on the top represent genes and nodes on the bottom represent edges. PNC predicts cancer driver genes as the minimum gene set on the top of the bipartite graph which covers all the edges on the bottom.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Analysis</head><p>Although these methods can discover personalised cancer drivers, they still have some limitations. DawnRank bases on the same gene network of all patients. It ignores the network information specific to an individual patient, leading to false positives in its results. On the other hand, SCS and PNC use the genetic data of each patient to construct personalised gene networks. However, they require the genetic data of a pair of samples (i.e. a tumour and its tumour neighbour), but identifying the neighbour of a tumour is challenging and it is not always existing. In addition, these methods only discover coding cancer drivers while non-coding genes (e.g. miRNAs) can also be cancer drivers as discussed above.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Resources for cancer driver research</head><p>There are two types of resources for developing computational methods for cancer driver discovery, including input data to a method and resource for validation. As input, it can be gene expression data, network data, mutation data, etc. For validation, it can be a database with ground truth or partial ground truth. The resources are summarised in Table <ref type="table" target="#tab_3">2</ref>.</p><p>For input data, several databases have been developed from cancer sequencing projects and they provide rich data used in cancer driver identification methods. TCGA <ref type="bibr" target="#b31">(Institute, 2018</ref>) is a significant project in this area. The TCGA project profiles and analyses human tumours to uncover molecular aberrations in DNA, XRNA, protein, and epigenetic levels <ref type="bibr" target="#b31">(Institute, 2018)</ref>. TCGA data can be accessed through the Genomic Data Commons (GDC) data portal <ref type="bibr" target="#b21">(Grossman et al., 2016)</ref>. ICGC data portal is also a resource for cancer genomics data and it contains the data of genomic abnormalities of 50 cancer types <ref type="bibr" target="#b61">(Zhang et al., 2011)</ref>. Another data portal for cancer genomics is cBioPortal <ref type="bibr" target="#b17">(Gao et al., 2013)</ref>, which provides a web interface for accessing cancer genomic datasets, as well as for analysing and visualising the data online.</p><p>There are also some other resources which can be used for cancer driver discovery such as the Cancer3D <ref type="bibr" target="#b42">(Porta-Pardo et al., 2015)</ref>, the Cancer Cell Line Encyclopedia (CCLE) <ref type="bibr" target="#b2">(Barretina et al., 2012)</ref>, and the COSMIC database <ref type="bibr" target="#b15">(Forbes et al., 2015)</ref>. Cancer3D is a database which focuses on the influence of mutations on the structure of proteins and it provides the information for users to analyse distribution patterns of mutations and their relationship with changes in drug activity <ref type="bibr" target="#b42">(Porta-Pardo et al., 2015)</ref>. It contains mutations of more than 14,700 proteins, which are mapped to over 24,300 proteins in the Protein Data Bank <ref type="bibr" target="#b47">(Rose et al., 2013)</ref>. The CCLE includes SNVs, CNAs, and gene expression <ref type="bibr" target="#b2">(Barretina et al., 2012)</ref>. The COSMIC database is a large and comprehensive source for investigating the mutational impact in cancer. It contains records of cancer mutations including both manually curated expert data and data from sequencing projects like TCGA or ICGC <ref type="bibr" target="#b15">(Forbes et al., 2015</ref><ref type="bibr" target="#b14">(Forbes et al., , 2011))</ref>. It has more than two million coding point mutations and over six million non-coding mutations <ref type="bibr" target="#b15">(Forbes et al., 2015)</ref>.</p><p>For validating identified cancer drivers, several databases can be used currently like CGC <ref type="bibr" target="#b16">(Futreal et al., 2004)</ref> in the COSMIC database. The CGC provides a gene list which has been well established for cancer progression. This list was collected through a census of genes which are mutated or implicated causally in cancer progression <ref type="bibr" target="#b16">(Futreal et al., 2004)</ref>. These genes are also called cancer genes. Beside CGC in COSMIC, there are several sources which can be used for validating cancer drivers. The Atlas of Genetics and Cytogenetics in Oncology and Haematology (AGCOH) is another source for this purpose <ref type="bibr" target="#b30">(Huret et al., 2000)</ref>. It comprises around 1,500 cancer genes which are merged results from i i "review-main" -2020/7/3 -0:41 -page 8 -#8</p><formula xml:id="formula_2">i i i i i i 8 Pham et al.</formula><p>numerous collaborative projects <ref type="bibr" target="#b30">(Huret et al., 2000)</ref>. The Network of Cancer Genes (NCG) is an online database of cancer genes with over 500 known cancer genes and more than 1,000 candidate cancer genes <ref type="bibr" target="#b1">An et al. (2016)</ref>. Known cancer genes are genes which have already been confirmed through experiments while candidate cancer genes are those using statistical methods. One more database about disease genes is the Drug-Gene Interaction database (DGIdb) <ref type="bibr" target="#b20">(Griffith et al., 2013)</ref>. It contains not only cancer drivers but also the information about drugs and drug-gene interactions <ref type="bibr" target="#b20">(Griffith et al., 2013)</ref>.</p><p>At the present, while coding drivers are well established in cancer research, non-coding drivers are not. In <ref type="bibr" target="#b58">(Wong et al., 2018)</ref>, the authors have recently introduced OncomiR, which is a resource for investigating miRNA dysregulation in cancer through a web interface. It does statistical analyses based on RNA-seq, miRNA-seq, and clinical information from TCGA to discover miRNAs which are related to cancer progression. Although this database may not be used as a ground truth to validate miRNA cancer drivers, it can be used as a channel to explore miRNA dysregulation in detecting miRNA cancer drivers. To validate non-coding cancer drivers now, it is required to examine the literature manually <ref type="bibr" target="#b10">(Cuykendall et al., 2017;</ref><ref type="bibr" target="#b43">Poulos et al., 2015)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Comparative study</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Performance of methods in identifying cancer drivers</head><p>In this section, we present a comparative study to compare the performance of some methods above. As there is not a ground truth to compare the results of methods for discovering cancer driver modules, we only select five methods for identifying single cancer drivers and three methods for identifying personalised cancer drivers for the comparison, including ActiveDriver <ref type="bibr" target="#b46">(Reimand and Bader, 2013)</ref>, DawnRank <ref type="bibr" target="#b29">(Hou and Ma, 2014)</ref>, DriverML <ref type="bibr" target="#b27">(Han et al., 2019)</ref>, DriverNet <ref type="bibr" target="#b3">(Bashashati et al., 2012)</ref>, MutSigCV <ref type="bibr" target="#b35">(Lawrence et al., 2013)</ref>, OncodriveFM (Gonzalez-Perez and Lopez-Bigas, 2012), PNC <ref type="bibr" target="#b23">(Guo et al., 2019)</ref>, and SCS <ref type="bibr" target="#b22">(Guo et al., 2018)</ref>. These methods represent for different approaches in detecting cancer driver genes. ActiveDriver, DriverML, MutSigCV, and OncodriveFM are mutation-based methods while DawnRank, DriverNet, PNC, and SCS are network-based methods. In addition, DawnRank, PNC, and SCS identify personalised cancer drivers while other five methods identify cancer drivers at the population level. Although DawnRank, PNC, and SCS detect cancer drivers for each patient, they all have a method to aggregate the results of individual patients to predict cancer drivers for the population. Thus, we can compare these three methods with the others. The comparison is performed based on the results of the eight methods in identifying drivers for breast invasive carcinoma (BRCA), lung adenocarcinoma (LUAD), lung squamous cell carcinoma (LUSC), kidney renal clear cell carcinoma (KIRC), head and neck squamous cell carcinoma (HNSC). We obtain the predicted cancer drivers of the eight methods for the selected five cancer types from <ref type="bibr" target="#b23">(Guo et al., 2019)</ref>.</p><p>The cancer drivers predicted by the methods are validated with the CGC from the COSMIC database as this database has catalogued the confirmed cancer drivers. The performance of a method is measured using F 1 Score based on the number of discovered cancer drivers that are validated by the CGC. The F 1 Score indicates the enrichment ability of discovered cancer drivers in the gold standard (i.e. the CGC) and it is computed based on Precision P and Recall R as shown in Eq. 1. The higher the F 1 Score a method has, the better the method is.</p><formula xml:id="formula_3">F 1 Score = 2 * P * R P + R .<label>(1)</label></formula><p>In Eq. 1, P (Precision) shows the fraction of predicted driver genes in the CGC among the predicted driver genes and R (Recall) indicates the fraction of predicted driver genes in the CGC among the driver genes in the CGC. As F 1 Score is computed from Precision P and Recall R, it will indicate both the ability to predict exactly cancer drivers and the ability to predict many confirmed cancer drivers of a method.</p><p>The comparison result is shown in Figure <ref type="figure" target="#fig_2">4</ref> and the details are shown in Table <ref type="table" target="#tab_4">3</ref>. It can be seen that with the four data sets of BRCA, LUAD, LUSC, and KIRC samples, PNC outperforms the other methods and with HNSC, ActiveDriver has the best performance.   <ref type="figure">5</ref> shows the overlap between the validated cancer drivers discovered by each pair of the methods, for each of the five cancer types. It can be seen that there is little overlap among the results of the methods. For example, in breast cancer, only one cancer driver (TP53) is identified by all the five methods, two cancer drivers (CDH1 and PIK3CA) are detected by four methods (DriverML, DriverNet, MutSigCV, and OncodriveFM), and eight cancer drivers (GATA3, NCOR1, PTEN, ARID1A, FOXA1, PIK3R1, CTCF, and ERBB2) are predicted by three methods. As the results of these methods are complementary, they should be used together to maximize the overall performance of the cancer driver prediction. In addition, it should be pointed out that although i i "review-main" -2020/7/3 -0:41 -page 9 -#9 i i i i i i Cancer Driver Discovery 9</p><p>the CGC is popular in validating cancer drivers in cancer research, it is incomplete in the sense that the database is constantly being updated when new cancer drivers come to light. Therefore, although some of the predicted cancer drivers cannot be validated with existing knowledge, they can be novel cancer drivers which is worth wet-lab experiments to confirm their roles in progressing cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Identified cancer drivers enriched significantly in GO biological processes and KEGG pathways</head><p>Taking breast cancer as an example, we combine all the breast cancer drivers predicted by the five methods at the population level (i.e. DriverML, ActiveDriver, DriverNet, MutSigCV, and OncodriveFM), which results in altogether 509 cancer drivers. Among them, 63 drivers are predicted by at least two of the five methods. We use Enrichr <ref type="bibr" target="#b33">(Kuleshov et al., 2016)</ref> to do enrichment analysis of these 63 drivers. Table <ref type="table">4</ref> and Table <ref type="table" target="#tab_5">5</ref> show the GO biological processes and KEGG pathways in which these cancer drivers are significantly enriched (adjusted p-value &lt; 0.05). Among the 63 driver genes, 16 genes (25.4%) are enriched in 7 GO biological processes and 15 genes (23.8%) are enriched in 26 KEGG pathways related to breast cancer.</p><p>It indicates that the predicted cancer drivers are closely associated with the biological condition of breast cancer and biologically meaningful.</p><p>Table <ref type="table">4</ref>. GO biological processes involved in breast cancer in which the predicted cancer drivers are enriched Term #Genes p-value GO:0045598 regulation of fat cell differentiation 5 2.0e-03 GO:0045596 negative regulation of cell differentiation 6 3.6e-03 GO:0045604 regulation of epidermal cell differentiation 3 1.2e-02 GO:0042127 regulation of cell proliferation 10 2.5e-02 GO:0045599 negative regulation of fat cell differentiation 3 2.8e-02 GO:0045580 regulation of T cell differentiation 3 2.9e-02 GO:2000736 regulation of stem cell differentiation 4 3.1e-02</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Identified cancer drivers are useful in predicting survival</head><p>Since the predicted cancer driver genes likely cause carcinogenesis, they could be used as biomarkers to classify tumours. To explore this concept, we use the predicted drivers to stratify breast cancer patients. Among the 63 predicted cancer drivers above, there are four significant genes, AKT1, PTEN, CDKN1B, and TP53, which are enriched in both GO biological processes and KEGG pathways. For instance, AKT1 are enriched in two GO biological processes and 25 KEGG pathways, PTEN are enriched in two GO biological processes and five KEGG pathways. Thus, we use these four genes for this analysis. In addition, we obtain the BRCA gene expression data and clinical data from <ref type="bibr" target="#b63">(Zhang et al., 2019)</ref>, and use the Similarity Network Fusion (SNF) method <ref type="bibr" target="#b54">(Wang et al., 2014;</ref><ref type="bibr">Xu et al., 2017b)</ref>, a popular method for discovering the similarities among patients, to cluster cancer patients. The SNF takes expression of these four genes as input and outputs subtypes of cancer patients. We then analyse the survival outcomes of patients in the classified subtypes. The results indicate that the survival level of patients in different classified subtypes are significantly different (p-value = 0.0245) as shown in Figure <ref type="figure">6</ref>. Furthermore, the clustering display shows the similarity of samples in each identified subtype and the silhouette plot indicates a good clustering with a large average silhouette width (0.76). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Gaps and future directions</head><p>From the discussion above, we see that there are a wide range of computational methods for identifying cancer drivers from genomic data.</p><p>In this paper, we categorise the methods into three groups: methods for identifying single cancer drivers (including mutation-based methods and network-based methods), methods for identifying cancer driver modules, and methods for identifying personalised cancer drivers. Although these methods have detected successfully various cancer drivers, there are still several gaps in the research of the field. Firstly, most of the current methods focus on coding mutations to identify coding cancer drivers while non-coding cancer drivers are not fully examined and the number of methods for identifying non-coding drivers is limited. However, non-coding cancer drivers are important because protein-coding regions account for only around two percent of the human genome. The large part of mutations exist in non-coding regions and these mutations can regulate the expression of genes and drive cancer <ref type="bibr" target="#b44">(Puente et al., 2015;</ref><ref type="bibr" target="#b56">Weinhold et al., 2014)</ref>. In addition to the limited number of non-coding cancer driver identification methods, the current methods focus much on non-coding mutations, i.e., correlations of mutations in noncoding elements with other factors like survival <ref type="bibr" target="#b28">(Hornshoj et al., 2018)</ref>. Nevertheless, cancer drivers can be non-coding RNAs without mutations but they can regulate other genes to progress cancer, thus it is required to investigate non-coding RNAs with and without mutations to detect non-coding cancer drivers.</p><p>Secondly, some methods have been developed to identify groups of cancer drivers <ref type="bibr" target="#b8">(Ciriello et al., 2012;</ref><ref type="bibr" target="#b62">Zhang et al., 2013)</ref>, but they are mostly based on mutations to detect mutated modules, called cancer driver modules. Since in a module, the mutation of a member is sufficient to develop cancer, the identified drivers in a module may not in fact work together to regulate their targets to drive cancer. However, there 0 50 100 150 200 0.0 0.2 0.4 0.6 0.8 1.0 Survival analysis (Number of clusters: 2) Survival time (Months) Survival probability Subtype 1 Subtype 2 p-value = 0.0245 group 1 2 0.02 0.04 0.06 0.08 0.1 Clustering display Silhouette width si -0.4 0.0 0.2 0.4 0.6 0.8 1.0 Silhouette plot Average silhouette width : 0.76 n = 753 2 clusters Cj j : nj | avei∈Cj si 1 : 220 | 0.85 2 : 533 | 0.72 Fig. 6. Survival curves, clustering display, and silhouette plot. Survival curves are for</p><p>cancer subtypes identified by using the four predicted cancer drivers, including AKT1, PTEN, CDKN1B, and TP53. The survival curves show the significant difference in the survivals of patients of the two subtypes (p-value = 0.0245). The clustering display indicates a highly qualified clustering with the similarity of samples in each subtype (i.e. Light dots show the similarity of samples). The silhouette plot has a large average silhouette width (0.76/1), indicating the clustering validity when using these four genes. is evidence that some genes work in concert to regulate other genes' expression and influence different biological processes, such as the cooperation of miRNAs in EMT, the transformation of epithelial cells into mesenchymal cells <ref type="bibr" target="#b9">(Cursons et al., 2017;</ref><ref type="bibr" target="#b34">Lamouille et al., 2014)</ref>. In addition, in some biological processes, the regulation of single genes might not have significant impacts and research has emerged to use wetlab experiments to investigate the regulatory of group-based regulators in biological processes. All of these highlight the importance of studying biological factors in groups, and computational methods which utilise a variety of data and techniques are in demand for investigating groups of cancer drivers.</p><p>Finally, although there have been methods for detecting personalised cancer drivers <ref type="bibr" target="#b22">(Guo et al., 2018</ref><ref type="bibr" target="#b23">(Guo et al., , 2019;;</ref><ref type="bibr" target="#b29">Hou and Ma, 2014)</ref>, they still have some limitations. Some methods, such as DawnRank, use the gene network of the population to predict personlaised cancer drivers. This leads to that they may ignore the information of the gene network specific to an individual patient and they may discover many false positives in their results. Other methods, such as SCS and PNC, use the personal genetic data to build personalised gene networks but they need the genetic data of a sample pair (i.e. a cancer patient and its neighbour in the nomal state). The neighbour of a cancer patient is not always existing. Thus, the application of these methods is limited. Furthermore, these methods only detect coding cancer drivers while it is also necessary to identify non-coding cancer drivers as the discussion above. All of these indicate that there is a strong need to develop novel computational methods for detecting personalised coding/non-coding cancer drivers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Recommendation and conclusion</head><p>We have investigated a wide range of computational methods for identifying cancer drivers from genomic data. In addition, the advantages and limitations of the surveyed methods are analysed, based on which we identify various opportunities for the development of the research in the field. It is clear that the research in computational approach to cancer driver identification is still in its growth phase. Much more work needs to be done and many opportunities exist in this area. Nevertheless, there are also different challenges in advancing the research in cancer driver identification. Identifying exactly biological factors which drive cancer</p><p>i i "review-main" -2020/7/3 -0:41 -page 11 -#11 i i i i i i Cancer Driver Discovery 11</p><p>is quite complicated. Future research needs to focus on both coding and non-coding datasets to identify candidate cancer drivers. To improve the accuracy of the novel computational methods, we should combine different types of data such as gene expression, mutations, and clinical information, etc. to detect cancer drivers.</p><p>We have also surveyed available resources which can be used in the research of discovering cancer drivers. The existing resources are plentiful but they are fragmented. Thus, to utilise cancer data more effectively for the research, it requires to have policies to achieve better data sharing. In addition, another difficulty when developing computational methods for uncovering non-coding cancer drivers is the validation. The reason is that most of the current databases are for coding cancer drivers and there is no one for non-coding cancer drivers. Therefore, we make an urgent call for the building of databases for non-coding drivers given their crucial role in the success of the research in the field.</p><p>To evaluate the performance of some current methods in detecting cancer drivers as well as provide an example of the evaluation of cancer driver discovery methods for the researchers who would like to penetrate the field, a comparative study has been conducted. From the results of the experiment in the comparative study, it can be seen that each method can uncover different cancer drivers and the overlaps between the results of the methods are small. Therefore, the methods are complementary, and we should use them together to maximize the effectiveness of cancer driver prediction of the methods. This is also an indicator for the different approaches of the methods and to achieve a significant result, novel methods should combine various resources and techniques in detecting cancer drivers.</p><p>In conclusion, although there are numerous computational methods for discovering cancer drivers now, there exist various gaps and opportunities for advancing the research of the field. However, due to the complexity of cancer initialisation and development, identifying cancer drivers faces many challenges. Through this paper, we hope that we can help researchers who are interested in the filed to establish a solid background and motivate them to tackle the current challenges.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Network-based methods. Network-based methods evaluate the role of genes in gene regulatory networks by using different techniques and combine with the mutations of genes to predict cancer drivers.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Comparison of F 1 Score of ActiveDriver, DawnRank, DriverML, DriverNet, MutSigCV, OncodriveFM, PNC, and SCS in identifying coding cancer drivers at the population level. The x-axis indicates the eight methods and the y-axis shows the F 1 Score.The results are based on the cancer driver prediction for the five cancer types, including BRCA, LUAD, LUSC, KIRC, and HNSC, of the eight methods.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 5 .Fig. 6 .</head><label>56</label><figDesc>Fig. 5. Overlap among the cancer drivers predicted by different methods. The charts illustrate the overlap among the cancer drivers at the population level predicted by the five methods (DriverML, ActiveDriver, DriverNet, MutSigCV, and OncodriveFM) w.r.t the five cancer types, including BRCA, LUAD, LUSC, KIRC, and HNSC. In each chart, the horizontal bars at the bottom left show the number of detected cancer drivers validated by the CGC, the vertical bars and the dotted lines show the overlap of the validated cancer drivers of the methods. If there is not an overlap, it will be a black dot.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1 .</head><label>1</label><figDesc>Summary of methods for identifying cancer drivers</figDesc><table><row><cell>Cancer Driver Discovery</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 2 .</head><label>2</label><figDesc>Summary of resources for identifying cancer drivers and validating the predicted results</figDesc><table><row><cell>i</cell></row><row><cell>i</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 3 .</head><label>3</label><figDesc>F1Score of the eight methods in predicting drivers for the five cancer types</figDesc><table><row><cell>No. Method</cell><cell cols="2">BRCA LUAD LUSC KIRC HNSC</cell></row><row><cell>1 ActiveDriver</cell><cell cols="2">0.056 0.029 0.037 0.045 0.080</cell></row><row><cell>2 DawnRank</cell><cell cols="2">0.045 0.043 0.040 0.040 0.043</cell></row><row><cell>3 DriverML</cell><cell cols="2">0.077 0.027 0.016 0.052 0.005</cell></row><row><cell>4 DriverNet</cell><cell cols="2">0.007 0.009 0.013 0.025 0.002</cell></row><row><cell>5 MutSigCV</cell><cell cols="2">0.066 0.032 0.014 0.016 0.034</cell></row><row><cell cols="3">6 OncodriveFM 0.023 0.030 0.010 0.015 0.045</cell></row><row><cell>7 PNC</cell><cell cols="2">0.153 0.153 0.141 0.094 0.025</cell></row><row><cell>8 SCS</cell><cell>NA 0.011 0.005 0.008</cell><cell>NA</cell></row><row><cell cols="3">Moreover, to see if the methods detect similar cancer drivers, we</cell></row><row><cell cols="3">compare the results of the five methods used for identifying cancer</cell></row><row><cell cols="3">drivers at the population level (i.e. DriverML, ActiveDriver, DriverNet,</cell></row><row><cell cols="2">MutSigCV, and OncodriveFM). Figure</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 5 .</head><label>5</label><figDesc>KEGG pathways involved in breast cancer in which the predicted cancer drivers are enriched</figDesc><table><row><cell>Term</cell><cell>#Genes p-value</cell></row><row><cell>ErbB signaling pathway</cell><cell>6 5.3e-06</cell></row><row><cell>Thyroid hormone signaling pathway</cell><cell>6 2.8e-05</cell></row><row><cell>Sphingolipid signaling pathway</cell><cell>6 3.1e-05</cell></row><row><cell>Neurotrophin signaling pathway</cell><cell>6 3.0e-05</cell></row><row><cell>PI3K-Akt signaling pathway</cell><cell>8 1.7e-04</cell></row><row><cell>AGE-RAGE signaling pathway in diabetic complications</cell><cell>5 1.7e-04</cell></row><row><cell>HIF-1 signaling pathway</cell><cell>5 1.7e-04</cell></row><row><cell>FoxO signaling pathway</cell><cell>5 5.1e-04</cell></row><row><cell>Fc epsilon RI signaling pathway</cell><cell>4 5.2e-04</cell></row><row><cell>Toll-like receptor signaling pathway</cell><cell>4 2.2e-03</cell></row><row><cell>TNF signaling pathway</cell><cell>4 2.7e-03</cell></row><row><cell>Relaxin signaling pathway</cell><cell>4 4.6e-03</cell></row><row><cell>VEGF signaling pathway</cell><cell>3 5.1e-03</cell></row><row><cell>Estrogen signaling pathway</cell><cell>4 5.3e-03</cell></row><row><cell>mTOR signaling pathway</cell><cell>4 7.3e-03</cell></row><row><cell>Prolactin signaling pathway</cell><cell>3 7.4e-03</cell></row><row><cell>B cell receptor signaling pathway</cell><cell>3 7.6e-03</cell></row><row><cell>p53 signaling pathway</cell><cell>3 7.8e-03</cell></row><row><cell>MAPK signaling pathway</cell><cell>5 1.2e-02</cell></row><row><cell>T cell receptor signaling pathway</cell><cell>3 1.8e-02</cell></row><row><cell>Rap1 signaling pathway</cell><cell>4 1.8e-02</cell></row><row><cell>C-type lectin receptor signaling pathway</cell><cell>3 1.9e-02</cell></row><row><cell>AMPK signaling pathway</cell><cell>3 2.6e-02</cell></row><row><cell>Apelin signaling pathway</cell><cell>3 3.5e-02</cell></row><row><cell>Insulin signaling pathway</cell><cell>3 3.4e-02</cell></row><row><cell>Phospholipase D signaling pathway</cell><cell>3 4.1e-02</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>This research is supported by the <rs type="funder">Australian Government Research Training Program (RTP) Scholarship</rs> and the <rs type="institution">Vice Chancellor &amp; President</rs>'s Scholarship offered by the <rs type="funder">University of South Australia</rs>.</p></div>
+			</div>
+			<div type="funding">
+<div><head>Funding</head><p>The <rs type="funder">ARC DECRA</rs> (No: <rs type="grantNumber">200100200</rs>) and the <rs type="funder">Australian Research Council</rs> <rs type="grantName">Discovery Grant</rs> (No: <rs type="grantNumber">DP170101306</rs>).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_J2f2Mfa">
+					<idno type="grant-number">200100200</idno>
+				</org>
+				<org type="funding" xml:id="_WzPDdZd">
+					<idno type="grant-number">DP170101306</idno>
+					<orgName type="grant-name">Discovery Grant</orgName>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Biographical note</head><p>Vu Viet Hoang Pham is a PhD student at UniSA STEM. He received his Master of Information Technology in 2017 at Deakin University. His research interests are causal inference and its applications in Bioinformatics.</p><p>Lin Liu is an associate professor at UniSA STEM. She received her bachelor and master degrees in Electronic Engineering from Xidian University, China in 1991 and 1994 respectively, and her PhD degree in computer systems engineering UniSA in 2006. Her research interests include data mining, causal discovery and their applications in bioinformatics.</p><p>Cameron Bracken is a lab head at the Centre for Cancer Biology, an alliance between SA Pathology and University of South Australia. His research interests are the mechanisms that non-coding RNAs regulate EMT.</p><p>Gregory Goodall is a professor at Centre for Cancer Biology, an alliance of SA Pathology and University of South Australia. He is a world leader in the biology of RNA and cancer progression. He has combined innovation with thoroughness to make discoveries that open new areas in RNA biology for development and exploitation. He has made seminal contributions to the understanding of mechanisms governing gene activity in cancer, through control of mRNA activity, regulation of gene expression by microRNAs, and most recently his discovery of the regulation of circular RNAs. These breakthroughs have widespread implications for understanding gene regulation in biology, particularly in immunity and cancer.</p><p>Jiuyong Li is a professor at UniSA STEM. He received his PhD degree in computer science from the Griffith University, Australia <ref type="bibr">(2002)</ref>. His research interests are in the fields of data mining, privacy preserving and bioinformatics. His research has been supported by six prestigious Australian Research Council Discovery grants since 2005 and he has published more than 100 research papers.</p><p>Thuc Duy Le is a senior lecturer at UniSA STEM. He is also an ARC DECRA fellow in Bioinformatics. He received his PhD degree in Computer Science (Bioinformatics) in 2014 at UniSA. His research interests are causal inference and its applications in bioinformatics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Key points</head><p>• Providing a comprehensive survey of cancer driver discovery methods • Categorising methods for identifying cancer drivers into three groups: methods for identifying single cancer drivers, methods for identifying cancer driver modules, and methods for identifying personalised cancer drivers • Introducing several resources for cancer driver identification research • Performing a case study to compare the performance of the current methods for identifying cancer drivers and analysing their results • Analysing the advatages and limitations of the current methods as well as identifying the opportunities and challenges in developing reliable cancer driver discovery methods </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">An integrated approach to uncover drivers of cancer</title>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">D</forename><surname>Akavia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Litvin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1005" to="1017" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Ncg 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>An</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Dall'olio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Mourikis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="992" to="D999" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">The cancer cell line encyclopedia enables predictive modeling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Drivernet: uncovering the impact of somatic driver mutations on transcriptional networks in cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bashashati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Haffari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome biology</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="124" to="R124" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The anatomy of a large-scale hypertextual web search engine</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Brin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Page</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Netw. ISDN Syst</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">1-7</biblScope>
+			<biblScope unit="page" from="107" to="117" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Automated network analysis identifies core pathways in glioblastoma</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Demir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Schultz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLOS ONE</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">8918</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Ago hits-clip decodes mirna-mrna interaction maps</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Chi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Zang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mele</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">460</biblScope>
+			<biblScope unit="issue">7254</biblScope>
+			<biblScope unit="page" from="479" to="486" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">mirtarbase 2016: updates to the experimentally validated mirna-target interactions database</title>
+		<author>
+			<persName><forename type="first">C.-H</forename><surname>Chou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N.-W</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shrestha</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="239" to="D247" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Mutual exclusivity analysis identifies oncogenic network modules</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ciriello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sander</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Research</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="398" to="406" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Post-transcriptional control of emt is coordinated through combinatorial targeting by multiple micrornas</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cursons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Pillman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Scheer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note>bioRxiv</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Non-coding genetic variation in cancer</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">N</forename><surname>Cuykendall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Rubin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Khurana</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current Opinion in Systems Biology</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="9" to="15" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Computational approaches for the identification of cancer genes and pathways</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Dimitrakopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Beerenwinkel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Systems Biology and Medicine</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1364</biblScope>
+			<date type="published" when="2017">2017</date>
+			<publisher>Wiley Interdisciplinary Reviews</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">p controls melanoma progression and resistance to target therapy</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fattore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mancini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Acunzo</surname></persName>
+		</author>
+		<idno>mir-579-3</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="issue">34</biblScope>
+			<biblScope unit="page">5005</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Cosmic (the catalogue of somatic mutations in cancer): a resource to investigate acquired mutations in human cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bindal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="652" to="D657" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Cosmic: mining complete cancer genomes in the catalogue of somatic mutations in cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bindal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bamford</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="945" to="D950" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Cosmic: exploring the world&apos;s knowledge of somatic mutations in human cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Gunasekaran</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="805" to="D811" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A census of human cancer genes</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Coin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marshall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature reviews. Cancer</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="177" to="183" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Integrative analysis of complex cancer genomics and clinical profiles using the cbioportal</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Aksoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Dogrusoz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science Signaling</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">269</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">microrna classifiers are powerful diagnostic/prognostic tools in alk-, egfr-, and kras-driven lung cancers</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Gasparini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cascione</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Landi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<editor>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Perez</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">N</forename><surname>Lopez-Bigas</surname></persName>
+		</editor>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">48</biblScope>
+			<biblScope unit="page" from="169" to="e169" />
+			<date type="published" when="2012">2015. 2012</date>
+		</imprint>
+	</monogr>
+	<note>Functional impact bias reveals cancer drivers Nucleic Acids Research</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Intogen-mutations identifies cancer drivers across tumor types</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gonzalez-Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Perez-Llamas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Deu-Pons</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">1081</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Dgidb: mining the druggable genome</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Griffith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">L</forename><surname>Griffith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Coffman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">1209</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Toward a shared vision for cancer genomic data</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Grossman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Heath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ferretti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">375</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1109" to="1112" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Discovering personalized driver mutation profiles of single samples in cancer by network control strategy</title>
+		<author>
+			<persName><forename type="first">W.-F</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S.-W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-L</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1893" to="1903" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A novel network control model for identifying personalized driver genes in cancer</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zeng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput Biol</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">1007520</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Transcriptome-wide identification of rna-binding protein and microrna target sites by par-clip</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hafner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Landthaler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Burger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="129" to="141" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Genome-wide identification of mirna targets by par-clip</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hafner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lianoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tuschl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Methods</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="94" to="105" />
+			<date type="published" when="2012">2012</date>
+			<pubPlace>San Diego, Calif</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Identification of a pan-cancer oncogenic microrna superfamily anchored by a central core seed motif</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Hamilton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Rajapakshe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Hartig</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Communications</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">2730</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Driverml: a machine learning algorithm for identifying driver genes in cancer sequencing studies</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Qian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="45" to="e45" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Pan-cancer screen for mutations in non-coding elements with conservation and cancer specificity reveals correlations with expression and survival</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hornshoj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Nielsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Sinnott-Armstrong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genomic Medicine</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Dawnrank: discovering personalized driver genes in cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Medicine</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">56</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Atlas of genetics and cytogenetics in oncology and haematology, an interactive database</title>
+		<author>
+			<persName><forename type="first">J.-L</forename><surname>Huret</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Minor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Dorkeld</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="349" to="351" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">The cancer genome atlas</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">H G</forename><surname>Institute</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Wesme: uncovering mutual exclusivity of cancer drivers and beyond</title>
+		<author>
+			<persName><forename type="first">Y.-A</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Madan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Przytycka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="814" to="821" />
+			<date type="published" when="2017">2017</date>
+			<pubPlace>Oxford, England</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Enrichr: a comprehensive gene set enrichment analysis web server 2016 update</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">V</forename><surname>Kuleshov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Rouillard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="90" to="97" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Molecular mechanisms of epithelial-mesenchymal transition</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lamouille</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Derynck</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature reviews. Molecular cell biology</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="178" to="196" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Mutational heterogeneity in cancer and the search for new cancer-associated genes</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lawrence</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Stojanov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Polak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">499</biblScope>
+			<biblScope unit="issue">7457</biblScope>
+			<biblScope unit="page" from="214" to="218" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Comet: a statistical approach to identify combinations of mutually exclusive alterations in cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D M</forename><surname>Leiserson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-T</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vandin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biology</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">160</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Oncodrivefml: a general framework to identify coding and non-coding regions with cancer driver mutations</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">M</forename><surname>Linehan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Srinivasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">S</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mularoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sabarinathan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Deu-Pons</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Urology</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">128</biblScope>
+			<date type="published" when="2010">2010. 2016</date>
+		</imprint>
+	</monogr>
+	<note>The genetic basis of kidney cancer: a metabolic disease Genome Biology</note>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<title level="m" type="main">The PageRank Citation Ranking: Bringing Order to the Web</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Page</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Brin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Motwani</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Genomic classification and prognosis in acute myeloid leukemia</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Papaemmanuil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gerstung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bullinger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">374</biblScope>
+			<biblScope unit="issue">23</biblScope>
+			<biblScope unit="page" from="2209" to="2221" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Discovering causal pathways linking genomic events to transcriptional states using tied diffusion through interacting events (tiedie)</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Paull</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Carlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Niepel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">21</biblScope>
+			<biblScope unit="page" from="2757" to="2764" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Cbna: A control theory based method for identifying coding and non-coding cancer drivers</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">V H</forename><surname>Pham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">P</forename><surname>Bracken</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLOS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">1007538</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Cancer3d: understanding cancer mutations through protein structures</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Porta-Pardo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hrabe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Godzik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="968" to="D973" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">The search for cis-regulatory driver mutations in cancer genomes</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Poulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Sloane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Hesson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">32</biblScope>
+			<biblScope unit="page" from="32509" to="32525" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Non-coding recurrent mutations in chronic lymphocytic leukaemia</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Puente</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Valdes-Mas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">526</biblScope>
+			<biblScope unit="page">519</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Microrna dysregulation to identify therapeutic target combinations for chronic lymphocytic leukemia</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Z</forename><surname>Rassenti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Balatti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Ghia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">114</biblScope>
+			<biblScope unit="issue">40</biblScope>
+			<biblScope unit="page">10731</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Systematic analysis of somatic mutations in phosphorylation signaling predicts novel cancer drivers</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Reimand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Bader</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular systems biology</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="637" to="637" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">The rcsb protein data bank: new resources for research and education</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">W</forename><surname>Rose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Bluhm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="issue">Database</biblScope>
+			<biblScope unit="page" from="475" to="D482" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Identification of constrained cancer driver genes based on mutation timing</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sakoparnig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Fried</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Beerenwinkel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLOS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1004027</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Oncodriveclust: exploiting the positional clustering of somatic mutations to identify cancer genes</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Stephens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Tarpey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Davies</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">486</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="2238" to="2244" />
+			<date type="published" when="2012">2012. 2013</date>
+		</imprint>
+	</monogr>
+	<note>The landscape of cancer genes and mutational processes in breast cancer Nature</note>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Evaluating the evaluation of cancer driver genes</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Tokheim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Papadopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="issue">50</biblScope>
+			<biblScope unit="page" from="14330" to="14335" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Computational methods for characterizing cancer mutational heterogeneity</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vandin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Genet</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">83</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">A directed protein interaction network for investigating intracellular signal transduction</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vinayagam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Stelzl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Foulle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Signal</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">189</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+	<note>rs8</note>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Controllability analysis of the directed human protein interaction network identifies disease genes and drug targets</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vinayagam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Gibson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-J</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page">4976</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Similarity network fusion for aggregating data types on a genomic scale</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Mezlini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Demir</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="333" to="337" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Transmir: a transcription factormicrorna regulation database</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Qiu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="119" to="122" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Genome-wide analysis of non-coding regulatory mutations in cancer</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Weinhold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jacobsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Schultz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1160" to="1165" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Pathscan: a tool for discerning mutational significance in groups of putative cancer genes</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Wendl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Wallis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1595" to="1602" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Oncomir: an online resource for exploring pan-cancer microrna dysregulation</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">W</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="713" to="715" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Enhancement of proliferation and invasion of gastric cancer cell by kdm5c via decrease in p53 expression</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Technology in cancer research &amp; treatment</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="141" to="149" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Cancersubtypes: an r/bioconductor package for molecular cancer subtype identification, validation and visualization</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="3131" to="3133" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">International cancer genome consortium data portal: a one-stop shop for cancer genomics data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Baran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cros</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Database</title>
+		<imprint>
+			<biblScope unit="page" from="26" to="026" />
+			<date type="published" when="2011">2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Identification of mutated core cancer modules by integrating somatic mutation, copy number variation, and gene expression data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Syst Biol</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note>Suppl 2, S4</note>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Identifying mirna synergism using multiple-intervention causal inference</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">V H</forename><surname>Pham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">23</biblScope>
+			<biblScope unit="page">613</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

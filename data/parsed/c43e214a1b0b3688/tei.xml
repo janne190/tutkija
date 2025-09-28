@@ -1,0 +1,1577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">An Immune-related lncRNAs Model for Prognostic of SKCM Patients Base on Cox Regression and Coexpression Analysis</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Wenjie</forename><surname>Jiang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Information Science and Technology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute of Computational Biology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Chang</forename><surname>Lu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Information Science and Technology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute of Computational Biology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jing</forename><surname>Qu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Information Science and Technology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute of Computational Biology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Xiaoyu</forename><surname>Mei</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Information Science and Technology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute of Computational Biology</orgName>
+								<orgName type="institution">Northeast Normal University</orgName>
+								<address>
+									<postCode>130117</postCode>
+									<settlement>Changchun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">An Immune-related lncRNAs Model for Prognostic of SKCM Patients Base on Cox Regression and Coexpression Analysis</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B7240FABF3308BA5A87EA8AFEA1EBC96</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>SKCM Cox-regression analysis 4 immune-related lncRNAs model</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Skin Cutaneous SKCM (SKCM) is a high-risk skin cancer having an outstanding recurrence rate. The lethal rate of SKCM remains in a high level even after various therapy approaches had been applied to the patients. Currently, the prognostic is one important part of the SKCM therapy, many efforts had been made for the purpose, but it keeps as a challenging problem. In some cancer studies, the expression of lncRNA is observed to correlate with cancer, it is a promising approach to improve the prognostic therapy of SKCM.</p><p>In this study, we proposed a 4 immune-related lncRNAs model for SKCM prognosis prediction, where, data on SKCM of TCGA were used, A prognostic model for SKCM was built, separately solved Survival analysis and independent prognosis problems. The method found that the ROC score of the model reached 0.749, our method was proved to have excellent performance in prognostic, and indicating 4 immune-related lncRNAs may play a unique role in the carcinogenesis of SKCM. The highlights are the calculation method is suitable for processing the selected data and Immune-related lncRNAs were creatively selected to construct the model.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction:</head><p>Skin cancer is the most common of all cancers. SKCM accounts for only 2 percent of skin cancer <ref type="bibr" target="#b0">[1]</ref> but is responsible for the majority of skin cancer deaths. Advances in screening and the development of anti-cancer strategies, the treatment <ref type="bibr" target="#b1">[2]</ref> of SKCM has improved significantly. However, SKCM still has a high recurrence rate <ref type="bibr" target="#b2">[3]</ref> . Research shows that tumor thickness <ref type="bibr" target="#b3">[4]</ref> , the depth related to skin structures <ref type="bibr" target="#b4">[5]</ref> , the type of SKCM <ref type="bibr" target="#b5">[6]</ref> , the presence of ulceration <ref type="bibr" target="#b6">[7]</ref> , presence of lymphatic <ref type="bibr" target="#b8">[8]</ref> , presence of tumor-infiltrating lymphocytes <ref type="bibr" target="#b9">[9]</ref> , the location of lesions <ref type="bibr" target="#b10">[10]</ref> , presence of satellite lesions <ref type="bibr" target="#b11">[11]</ref> , the presence of regional <ref type="bibr" target="#b12">[12]</ref> and other factors affect the prognosis of SKCM.</p><p>Although many biomarkers have been found for the prognosis of SKCM, the pathological of SKCM <ref type="bibr" target="#b13">[13]</ref> is complex, so the prognosis is still a difficult problem. Now, it is necessary to construct a new risk prediction model for SKCM to improve the treatment level of SKCM patients. The expression of LncRNAs is associated with cancer. Further, immune-related lncRNAs are significantly correlated with cancer <ref type="bibr" target="#b14">[14]</ref> . So, it is necessary to establish an immune-related lncRNA model to predict SKCM survival.</p><p>In the post-genome era, many genome sequencing technologies have emerged <ref type="bibr" target="#b16">[15]</ref> . These tools provide new ideas and insights for the diagnosis and prognosis of tumors. These next-generation sequencing methods and data can help better identify clinical biomarkers for cancer. The discovery of long non-coding RNA (lncRNA) has dramatically changed our understanding of cancer. LncRNA expression and dysregulation are more specific to cancer type than proteincoding genes <ref type="bibr" target="#b17">[16]</ref> . Recent studies have shown that lncRNA plays an essential role in gene regulation and tumorigenesis, including proliferation, adhesion, migration, and apoptosis <ref type="bibr" target="#b18">[17]</ref> . Considering the heterogeneity of SKCM and the complexity of non-coding RNA, a set of lncRNA biomarkers may be more accurate and stable for prognosis. Li, H et al. <ref type="bibr" target="#b19">[18]</ref> constructed a 7-lncRNA model based on the Cancer Genome Atlas (TCGA) database, which may be able to predict the Overall Survival (OS) of breast cancer patients with high diagnostic accuracy. Liu, Z et al. <ref type="bibr" target="#b20">[19]</ref> screened eight genes (IGHA1, IGHGP, IGKV2 28, IGLL3P, IGLV3 10, AZGP1P1, LINC00472, and SLC16A6P1) by univariate cox-regression analysis, and established a prognosis model for breast cancer from TCGA.</p><p>In this study, we screened the differentially-expressed lncRNAs associated with SKCM from the TCGA database. Then, immune-related lncRNAs were screened by co-expression and developed an immune-related lncRNA model to predict the prognosis of SKCM patients. It is well known that lncRNA can directly or indirectly affect the function of proteins and cells because they are involved in the regulation of mRNA.Therefore, we further explored the role of lncRNA in the model by studying the function of lncRNA-related mRNAs. In summary, the application of lncRNA provides a deeper understanding of the prognosis of BRCA, and that may help guide treatment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>MATERIALS AND METHODS: Data Source</head><p>Obtain the transcription data and clinical information of SKCM patients from TCGA <ref type="bibr" target="#b21">[20]</ref> . There were 470 cases with clinical data, and 449 cases with incomplete data were excluded. A total of 472 transcriptional data samples were collected, including one healthy sample and 471 SKCM samples. The SKCM samples with incomplete prognostic information were deleted. A total of 447 SKCM samples are selected. At last, there are 360 cases for model building and 87 cases for model validation. As the data is retrieved from the TCGA database (a public database), further ethical certification does not apply to our research. Data collection and processing are in line with TCGA's data policy for personal protection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Identification of lncRNA and mRNA</head><p>We from NCBI <ref type="bibr" target="#b22">[21]</ref> Obtain the human genome annotation file (human.gtf) and determine the type of gene according to the gene_biotype item in the data. We screen the corresponding gene in transcriptome data by examining gene_biotype to determine its species.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Found immune-related lncRNA and lncRNA -Related mRNA by co-expression</head><p>Immune-related lncRNAs are closely related to cancer. To better explore the role of lncRNA in the risk assessment model, the Pearson correlation-based co-expression method <ref type="bibr" target="#b23">[22]</ref> was used to found immune-related lncRNA. According to cor &gt; 0.4 and P-value &lt; 0.001, the related immune-related lncRNA was screened for building model, and the lncRNA-related mRNA were searched using the same method and criteria.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The definition of immune-related lncRNA related prediction model</head><p>Based on the prognostic characteristics of lncRNA, an immune-related lncRNA prognostic model was constructed. The correlation between the expression level of lncRNA and the Overall Survival rate was studied by univariate and multivariate Cox-regression analysis. Single variable Cox proportional hazard regression analysis was performed with the R-survival. The lncRNA was considered significant when the p-value was &lt;0.001 in the univariate Cox-regression analysis， and then, the result was selected for multivariate Cox-regression analysis. Finally, Cox regression analysis was carried out to evaluate the effect of the gene as an independent prognostic factor on the survival rate of patients. The lncRNA-based prognostic risk score was used to calculate a multivariate cox-regression model based on a linear combination of regression coefficients and its expression level <ref type="bibr" target="#b24">[23]</ref> .</p><formula xml:id="formula_0">𝑟𝑖𝑠𝑘 𝑆𝑐𝑜𝑟𝑒 = ∑ 𝐸𝑥𝑝 𝑖 × 𝑁 𝑖=1 𝛽 𝑖</formula><p>LncRNA was selected by optimizing the AIC value. The survival data of 447 patients with SKCM were divided into high-risk groups and low-risk groups. Kaplan-Meier (KM) survival curve <ref type="bibr" target="#b25">[24]</ref> was generated to evaluate the Overall Survival of low-risk or high-risk cases, and the ROC curve was analyzed to calculate AUC <ref type="bibr" target="#b26">[25]</ref> value to evaluate the prediction ability of the model. We compared the prediction performance of the 4 immune-related lncRNAs model and traditional clinical risk factors (including age, T, N, M, stage, and er) by univariate and multivariate Cox analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Principal component analysis</head><p>To verify the significant differences in expression between high-risk and low-risk patients, the PCA algorithm <ref type="bibr" target="#b27">[26]</ref> was used to conduct dimensional reduction of risk model lncRNA, immune lncRNA, immune genes and all genes of patients, and then 3d visualization.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Go and KEGG analysis of lncRNA related mRNA</head><p>To understand the underlying biological pathways between lncRNA and the related mRNAs, we use the gene ontology database(GO) for analysis. Finally, go items with significant enrichment were selected for biological function analysis. Kyoto Encyclopedia of Genes and Genomes (KEGG). They were used for path enrichment analysis <ref type="bibr" target="#b28">[27]</ref> .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Derivation of the lncRNA prediction model</head><p>A total of 181 differentially expressed lncRNAs need to be further studied. First of all, we conducted a univariate Cox regression analysis to study the correlation between the differential expression of lncRNA and Overall Survival of SKCM patients. A total of 10 lncRNA was obtained by P-value &lt; 0.001, which was significantly correlated with SKCM patients. As shown in Figure1, There are ten lncRNA that meet the conditions, among which only the Hazard radio value of AC009495.2 &gt; 1, indicating that this is a high-risk lncRNA, while the rest are low-risk lncRNAs. analysis. RS = (-0.32396 × MIR155HG expression level) + (-0.33529 × AL137003.2 expression level) + (0.244771 × AC009495.2 expression level) + (-0.27961 × AC011374.2 expression level).  Figure3(B): Kaplan-Meier survival curve analysis of testing data set Figure3(C): The patient's survival status</p><p>Although the risk associated with lncRNA is not high, they are still relevant in the prognosis model. These lncRNAs constitute the prognosis model of SKCM patients. In 447 patients with SKCM, four risk scores of lncRNA expression were calculated, and the median of prognosis score was used as the grouping threshold. With the median RS as the group threshold, 223 patients with a prognosis score higher than the RS threshold were divided into the high-risk group, and 224 patients with a prognosis score lower than the RS threshold were split into the low-risk group.</p><p>According to the prognostic risk model constructed by four lncRNAs, Kaplan-Meier survival curve analysis was performed on the high-risk group and the low-risk group. It was found that the overall survival rate of the high-risk group was lower and the difference between the two groups was statistically significant(Figure3(A&amp;B)). Besides, The survival rate of the training set and the test set was similar in each year in the KM curve, indicating the model is universal. We can conclude from Figure3(C) that the higher the risk value predicted by the 4 immune-related lncRNAs model, the more patients died. Then, the AUC of the ROC curve was calculated to evaluate the prognosis of the 4 immune-related lncRNAs model. The higher the AUC is, the better the prediction performance of the model is. The AUC of the model was 0.749 in the test data set(Supplementary material 1), indicating that the prediction model was highly sensitive and specific. Besides, we conducted another set of comparative experiments. Instead of using only SKCM immune-related lncRNA, we used all SKCM-related lncRNA to construct the model, and its AUC only reached 0.688.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Clinical correlation analysis</head><p>We plotted the ROC curve Figure4(A) of the clinical data and found that T, stage and N were most associated with risk. We carried out a clinical correlation analysis in the T on four lncRNA, and the results were shown in Figure4(B). It was found that AL137003.2 and MIR155HG were significantly correlated with the T stage. For AL137003.2, the expression is very high at T0, and the expression level from T1 to T4 is roughly the same. For MIR155HG, it can be seen that with the increase of the T phase, except that the expression of T1 and T2 is similar, the overall trend is downward. The clinical correlation analysis of the stage is shown in Figure4(C). MIR155HG was the most associated with risk, and its expression gradually decreased with the increase of stage. T(B), stage(C), and N(D).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The clinical correlation analysis of N is shown in</head><p>Surprisingly, it had the highest AUC value, but no lncRNA was significantly correlated with it. As can be seen from the figure, AC009495.2, AC011374.2, and MIR155HG are all expressed more with the increase of N, so we guess that they may just not reach the threshold, so there is no significant correlation of lncRNA.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A comprehensive evaluation of predictive model performance and conventional clinical risk factors</head><p>We compared the predictive performance of the 4 immune-related lncRNAs model with traditional clinical risk factors, including age，gender，stage，T，M and N. Univariate analysis showed that the age, stage, T, N, M and prediction performance of the 4 immune-related lncRNAs model were firmly related to the prognosis(Figure5(A)). Further multivariate analysis showed that T、N and 4 immune-related lncRNAs models could be used as independent prognostic factors((Figure5(B)).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A B</head><p>Figure5:the Univariate analysis(A) and multivariate analysis(B) of age,gender,stage,T,M,N and RS lncRNA(B), immune genes(C), and all genes(D) principal component analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Visualization of expression differences between high-risk and low-risk patients</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Functional evaluation of lncRNA -associated mRNAs</head><p>Based on SKCM-related lncRNA and mRNA expression data in the TCGA database, Pearson correlation analysis was used to analyze |COR | &gt; 0.25 and P-value &lt; 0.05 as for coexpression analysis. A total of 616 mRNAs were found to be closely correlated with seven lncRNA (Figure <ref type="figure">6</ref>), and the function of lncRNA-related mRNAs was determined by using R org.Hs.eg.db package.</p><p>Results mainly included biological process (BP), molecular function (MF), and cell composition (CC). We selected the ten most significant enrichment results for analysis in three parts  Figure6(B): Pathways enrichment map of lncRNA-related mRNAs</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DISCUSSION</head><p>SKCM remains one of the deadliest malignancies in the world <ref type="bibr" target="#b30">[29]</ref> . Due to its complex molecular and cellular heterogeneity <ref type="bibr" target="#b31">[30]</ref> , the effectiveness of existing SKCM risk prediction models is not satisfactory <ref type="bibr" target="#b32">[31]</ref> .</p><p>Therefore, it is necessary to construct a new SKCM risk prediction model for clinical use to reduce mortality and improve the prognosis of SKCM. Clinicians should develop personalized treatment plans for SKCM patients, develop strategies for prevention and early detection of SKCM, track high-risk populations more frequently, conduct regular clinical examinations based on model predictions, and make an early diagnosis. In this study, differential expressions of lncRNA and mRNA related to SKCM were obtained by high-throughput RNA sequencing and clinical data from SKCM patients in the TCGA database. Subsequently, we extracted immune-related lncRNA. Finally, univariate and multivariate Cox analyses were performed to establish a risk model for predicting the prognosis of SKCM. Four lncRNA (MIR155HG, AL137003.2, AC011374.2, AC009495.2) were used to construct the prediction model of SKCM prognostic risk. Applying the prediction model to the TCGA SKCM data set, SKCM patients can be divided into a high-risk group and low-risk group. The AUC value of the model is 0.722, indicating that the 4 immune-related lncRNAs model has excellent survival</p><p>prediction performance. Of the four lncRNA, MIR155HG was found to be a marker of early cancer development <ref type="bibr" target="#b33">[32]</ref> . MIR155HG is activated and upregulated by the MYB transcription factor <ref type="bibr" target="#b34">[33]</ref> , leading to the downregulation of many tumor suppressor genes. The expression of lncRNA MIR155 host gene MIR155HG was significantly correlated with the infiltration level of immune cells and immune molecules, especially with the appearance of immune checkpoint molecules such as programmed cell death protein 1 (PD-1), PD-1 ligand 1 (PD-L1), and cytotoxic T lymphocyte-associated antigen 4 (CTLA4) in most cancers <ref type="bibr" target="#b35">[34]</ref> . Detection of clinical CHOL and hepatocellular carcinoma tissues confirmed that MIR155HG expression was positively correlated with CTLA4 and PD-L1 levels <ref type="bibr" target="#b36">[35]</ref> .</p><p>So far, studies on the remaining three lncRNA are not in-depth enough.AC009495 is a highly transcribed HERV gene <ref type="bibr" target="#b37">[36]</ref> . HERV forms an essential part of the human genome, with about 98,000 ERV elements and fragments, accounting for 5-8%. Blast analysis showed that AC011374 was related to CTC-543d15 <ref type="bibr" target="#b38">[37]</ref> , while CTC-543d15 was related to astrocytoma and rectal cancer <ref type="bibr" target="#b39">[38]</ref> .</p><p>The use of the TCGA database provides data for the prediction model of cancer survival.</p><p>Compared with the previously constructed SKCM lncRNA prognosis model <ref type="bibr" target="#b40">[39]</ref> , the TCGA database has a large amount of patient sample data, complete clinical information, and full </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion</head><p>We constructed a 4 immune-related lncRNAs model to predict the prognosis of SKCM patients reliably, and these lncRNAs may play a role in the carcinogenesis of SKCM. Further functional studies are needed to elucidate the molecular mechanisms behind the purpose of these lncRNAs in SKCM.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure1:</head><figDesc>Figure1: The result of univariate Cox regression analysisThen, based on preliminary screening using univariate Cox regression analysis, We obtained four lncRNAs that were used to construct the prediction model using multivariate Cox regression</figDesc><graphic coords="5,90.00,444.64,415.20,231.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure2:</head><figDesc>Figure2: Tree clustering of lncRNA in the risk model Among the four lncRNAs obtained by Cox regression analysis(Figure2), AC009495.2 was positive, indicating that this lncRNA had a higher risk. Meanwhile, the other three MIR155HG、 AL137003.2 and AC011374.2 were negatively correlated.</figDesc><graphic coords="6,90.00,322.20,415.20,123.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure3</head><figDesc>Figure3(A): Kaplan-Meier survival curve analysis of the training data set</figDesc><graphic coords="6,90.00,471.89,415.20,120.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure4Figure4:</head><figDesc>Figure4: ROC curve analysis of clinical characteristics of SKCM patients(A); Clinical correlation analysis of</figDesc><graphic coords="8,90.00,342.30,203.40,145.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure5:</head><figDesc>Figure5: Visualization of high-risk patients versus low-risk patients in lncRNA of risk model(A), immune</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><figDesc>. The enrichment process of BP mainly includes T cell activation, regulation of lymphocyte activation, regulation of T cell activation, and leukocyte cell-cell adhesion, which are strictly related to the growth and reproduction of tumor cells. The enrichment characteristics of MF mainly include cytokine receptor activity, MHC protein binding, and cytokine binding. The 616 mRNAs were primarily enriched in 30 signaling pathways (Figure6(B)), including Cytokine-cytokine receptor interaction, Chemokine signaling pathway, and cell adhesion molecules (CAMs) and Human T-cell leukemia virus one infection. Most of these thirty pathways are related to the immune system of bettas, as is Th1 and Th2 cell differentiation and T cell receptor signaling pathway</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure6(A ) :</head><label>)</label><figDesc>Figure6(A): Enrichment analysis of biological processes, molecular function, and cellular component (P &lt; 0.05)</figDesc><graphic coords="11,95.25,381.12,415.30,286.55" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><figDesc>prognosis and survival data of SKCM patients. The ROC curve can be used to evaluate the specificity and sensitivity of the model (AUC &gt;0.7 means the model has excellent responsiveness). The prognostic model of 4 immune-related lncRNAs established by us has the potential to predict the prognosis of SKCM patients with specificity and sensitivity. Besides, whether univariate cox-regression analysis or multivariate cox-regression analysis, the predictive effect of the 4 immune-related lncRNAs model constructed by us can evaluate the prognosis and further illustrate the evaluation value of the model. Besides, since the lncRNA used in this model have a predictive effect on the prediction of SKCM patients, also experimental studies can be carried out to explore the role of these lncRNAs in the pathogenesis of BRCA, providing new ideas and insights for treatment. However, the present study still has some limitations, and we attempted to verify the predictive performance of the 4 immune-related lncRNAs model in other large SKCM data sets. Unfortunately, due to the restrictions of SKCM clinical mutation information and patient prognosis information, we did not find a data set that met the validation requirements. Therefore, it is necessary to propose effective strategies, such as extending the follow-up time to verify the results and adopting a machine learning method to improve the accuracy of the model.</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability declaration</head><p>This manuscript contains previously unpublished data. The name of the repository and accession number are not available.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Biomolecules. The dark side of sunlight and SKCM</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Taylor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">347</biblScope>
+			<biblScope unit="issue">6224</biblScope>
+			<date type="published" when="2015-02-20">Feb 20, 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Metastatic SKCM treatment: Combining old and new therapies</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Davey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Van Der Westhuizen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Bowden</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Crit Rev Oncol Hematol</title>
+		<imprint>
+			<biblScope unit="volume">98</biblScope>
+			<biblScope unit="page" from="242" to="253" />
+			<date type="published" when="2016-02">Feb, 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Risk of SKCM Recurrence After Diagnosis of a High-Risk Primary Tumor</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Von Schuckmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C B</forename><surname>Hughes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ghiasvand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Malt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Van Der Pols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Beesley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Khosrotehrani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Smithers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Green</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JAMA Dermatol</title>
+		<imprint>
+			<biblScope unit="volume">155</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="688" to="693" />
+			<date type="published" when="2019-06-01">Jun 1, 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Anorectal SKCM: surgical management guidelines according to tumour thickness</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">H</forename><surname>Weyandt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">O</forename><surname>Eggert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Houf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Raulf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">B</forename><surname>Brocker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Becker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Br J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="2019" to="2022" />
+			<date type="published" when="2003-12-01">Dec 1, 2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Management of malignant SKCM</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">H</forename><surname>Mun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arch Plast Surg</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="565" to="574" />
+			<date type="published" when="2012-09">Sep, 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The potential role of sunitinib targeting SKCMs</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Valsecchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sato</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Opin Investig Drugs</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1473" to="1483" />
+			<date type="published" when="2013-11">Nov, 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Eggermont</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Suciu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Testori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Santinami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Kruit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Marsden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Punt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sales</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Dummer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Robert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Schadendorf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Patel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>De Schaetzen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Spatz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Long-term results of the randomized phase III trial EORTC 18991 of adjuvant therapy with pegylated interferon alfa-2b versus observation in resected stage III SKCM</title>
+		<author>
+			<persName><surname>Keilholz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">31</biblScope>
+			<biblScope unit="page" from="3810" to="3818" />
+			<date type="published" when="2012-11-01">Nov 1, 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Tumour-infiltrating lymphocytes in SKCM prognosis and cancer immunotherapy</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Zakka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Mihm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jr</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Schatton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pathology</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="177" to="187" />
+			<date type="published" when="2016-02">Feb, 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Tumour-infiltrating lymphocytes and SKCM tumorigenesis: an insight</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Hussein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Br J Dermatol</title>
+		<imprint>
+			<biblScope unit="volume">153</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="18" to="21" />
+			<date type="published" when="2005-07">Jul, 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Precursor lesions in familial SKCM. A new genetic preneoplastic syndrome</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Reimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Clark</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Greene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Ainsworth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Fraumeni</surname><genName>Jr</genName></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JAMA</title>
+		<imprint>
+			<biblScope unit="volume">239</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="744" to="746" />
+			<date type="published" when="1978-02-20">Feb 20. 1978</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Blue nevus with satellitosis mimicking malignant SKCM</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Del Rio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">A</forename><surname>Vazquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Veiga</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Suarez Penaranda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cutis</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="301" to="302" />
+			<date type="published" when="2000-05">May, 2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">The identification and mapping of SKCM regional nodal metastases: minimally invasive surgery for the diagnosis of nodal metastases</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">V</forename><surname>Godellas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Berman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Lyman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">W</forename><surname>Cruse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rapaport</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Heller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Glass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Fenske</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Messina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Am Surg</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="97" to="101" />
+			<date type="published" when="1995-02">Feb, 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The molecular pathology of SKCM: an integrated taxonomy of melanocytic neoplasia</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Bastian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu Rev Pathol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="239" to="271" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Pan-cancer characterization of immune-related lncRNAs identifies potential oncogenic biomarkers</title>
+		<author>
+			<persName><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1000</biblScope>
+			<date type="published" when="2020-02-21">Feb 21, 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">RNA-Seq: a revolutionary tool for transcriptomics</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gerstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Snyder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Genet</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="57" to="63" />
+			<date type="published" when="2009-01">Jan, 2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Comprehensive Genomic Characterization of Long Noncoding RNAs across Human Cancers</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Shan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E</forename><surname>Kandalaft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Tanyi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">X</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Katsaros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Montone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Coukos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Sood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rebbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">V</forename><surname>Dang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="529" to="540" />
+			<date type="published" when="2015-10-12">Oct 12, 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">The emerging role of lncRNAs in cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Huarte</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Med</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1253" to="1261" />
+			<date type="published" when="2015-11">Nov, 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">7-lncRNA Assessment Model for Monitoring and Prognosis of Breast Cancer Patients: Based on Cox Regression and Co-expression Analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Oncol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">1348</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Identification of an eight-lncRNA prognostic model for breast cancer using WGCNA network analysis and a Coxproportional hazards model based on L1-penalized estimation</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Hua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Mol Med</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1333" to="1343" />
+			<date type="published" when="2019-10">Oct, 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas (TCGA): an immeasurable source of knowledge</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tomczak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Czerwinska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wiznerowicz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Contemp Oncol (Pozn)</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1A</biblScope>
+			<biblScope unit="page" from="68" to="77" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W</forename><surname>Sayers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Beck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Brister</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Bolton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Canese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Comeau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Funk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ketter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kimchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Kitts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kuznetsov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lathrop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mcgarvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Madden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Murphy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>O'leary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Phan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">A</forename><surname>Schneider</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Thibaud-Nissen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Trawick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Pruitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ostell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Database resources of the National Center for Biotechnology Information</title>
+		<imprint>
+			<date type="published" when="2020-01-08">Jan 8, 2020</date>
+			<biblScope unit="volume">48</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Increased expression of the lncRNA PVT1 is associated with poor prognosis in pancreatic cancer patients</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Minerva Med</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="143" to="149" />
+			<date type="published" when="2015-06">Jun, 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">An expression signature model to predict lung adenocarcinomaspecific survival</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">Y</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Mo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Manag Res</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="3717" to="3732" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Understanding survival analysis: Kaplan-Meier estimate</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Goel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Khanna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kishore</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Ayurveda Res</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="274" to="278" />
+			<date type="published" when="2010-10">Oct, 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Receiver Operating Characteristic (ROC) Curve Analysis for Medical Diagnostic Test Evaluation</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hajian-Tilaki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Caspian J Intern Med</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="627" to="635" />
+			<date type="published" when="2013">2013</date>
+			<pubPlace>Spring</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Sparse principal component analysis in cancer research</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">L</forename><surname>Hsu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Transl Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="182" to="190" />
+			<date type="published" when="2014-06">Jun, 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Computational Identification and Analysis of Ubiquinone-Binding Proteins</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cells</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2020-02-24">Feb 24, 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Liberzon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pinchback</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thorvaldsdottir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tamayo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Mesirov</surname></persName>
+		</author>
+		<idno>MSigDB) 3.0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular signatures database</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1739" to="1740" />
+			<date type="published" when="2011-06-15">Jun 15, 2011</date>
+		</imprint>
+	</monogr>
+	<note>Bioinformatics</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">SKCM</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ingraffea</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Facial Plast Surg Clin North Am</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="33" to="42" />
+			<date type="published" when="2013-02">Feb, 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">The molecular and cellular heterogeneity of pancreatic ductal adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Samuel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Hudson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Gastroenterol Hepatol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="77" to="87" />
+			<date type="published" when="2011-12-20">Dec 20, 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Identifying Persons at Highest Risk of SKCM Using Self-Assessed Risk Factors</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">H</forename><surname>Williams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Shors</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">E</forename><surname>Barlow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Solomon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>White</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Exp Dermatol Res</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">TGF-beta1 promotes colorectal cancer immune escape by elevating B7-H3 and B7-H4 via the miR-155/miR-143 axis</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">41</biblScope>
+			<biblScope unit="page" from="67196" to="67211" />
+			<date type="published" when="2016-10-11">Oct 11. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Regulation of the MIR155 host gene in physiological and pathological processes</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">S</forename><surname>Elton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Selemon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Elton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Parinandi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gene</title>
+		<imprint>
+			<biblScope unit="volume">532</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2013-12-10">Dec 10, 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">MIR155HG is a prognostic biomarker and associated with immune infiltration and immune checkpoint molecules expression in multiple cancers</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Med</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="7161" to="7173" />
+			<date type="published" when="2019-12">Dec, 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">SKCM long non-coding RNA signature predicts prognostic survival and directs clinical risk-specific treatments</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Dermatol Sci</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="226" to="234" />
+			<date type="published" when="2017-03">Mar, 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Human endogenous retroviruses with transcriptional potential in the brain</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nakamura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Okazaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sugimoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Oda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Jinno</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Hum Genet</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="575" to="581" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Differentially expressed genes in neurofibromatosis 1associated neurofibromas and malignant peripheral nerve sheath tumors</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Holtkamp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">F</forename><surname>Mautner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Friedrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Harder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hartmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Theallier-Janko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">T</forename><surname>Hoffmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Deimling</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Neuropathol</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="159" to="168" />
+			<date type="published" when="2004-02">Feb, 2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">The Use of Three Long Non-Coding RNAs as Potential Prognostic Indicators of Astrocytoma</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Xue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<date type="published" when="2015">0135242. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Development and External Validation of a SKCM Risk Prediction Model Based on Self-assessed Risk Factors</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Vuong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">K</forename><surname>Armstrong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Weiderpass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">O</forename><surname>Adami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Veierod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Barrett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Bishop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Whiteman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Olsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Hopper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Mann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Cust</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mcgeechan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Australian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Family</forename><surname>Study</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JAMA Dermatol</title>
+		<imprint>
+			<biblScope unit="volume">152</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="889" to="896" />
+			<date type="published" when="2016-08-01">Aug 1, 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

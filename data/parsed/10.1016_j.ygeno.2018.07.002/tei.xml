@@ -1,0 +1,1691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Drug response prediction by ensemble learning and drug-induced gene expression signatures *</title>
+				<funder ref="#_bFv8cMz">
+					<orgName type="full">The Scientific and Technological Research Council of Turkey</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2018-07-16">16 Jul 2018</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Mehmet</forename><surname>Tan</surname></persName>
+							<email>mtan@etu.edu.tr</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Engineering</orgName>
+								<orgName type="institution">TOBB University of Economics and Technology</orgName>
+								<address>
+									<settlement>Ankara</settlement>
+									<country key="TR">Turkey</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ozan</forename><forename type="middle">Fırat</forename><surname>Özgül</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Engineering</orgName>
+								<orgName type="institution">TOBB University of Economics and Technology</orgName>
+								<address>
+									<settlement>Ankara</settlement>
+									<country key="TR">Turkey</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Batuhan</forename><surname>Bardak</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Engineering</orgName>
+								<orgName type="institution">TOBB University of Economics and Technology</orgName>
+								<address>
+									<settlement>Ankara</settlement>
+									<country key="TR">Turkey</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Işıksu</forename><surname>Ekşioglu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Engineering</orgName>
+								<orgName type="institution">TOBB University of Economics and Technology</orgName>
+								<address>
+									<settlement>Ankara</settlement>
+									<country key="TR">Turkey</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Suna</forename><surname>Sabuncuoglu</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Toxicology Department</orgName>
+								<orgName type="department" key="dep2">Faculty of Pharmacy</orgName>
+								<orgName type="institution">Hacettepe University</orgName>
+								<address>
+									<settlement>Ankara</settlement>
+									<country key="TR">Turkey</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Drug response prediction by ensemble learning and drug-induced gene expression signatures *</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2018-07-16">16 Jul 2018</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B7BE1C8BB59EE1A2E0EA8920D4DAEF8F</idno>
+					<idno type="arXiv">arXiv:1802.03800v3[q-bio.GN]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>drug signatures</term>
+					<term>cell line signatures</term>
+					<term>drug response prediction</term>
+					<term>ensemble learning</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Chemotherapeutic response of cancer cells to a given compound is one of the most fundamental information one requires to design anti-cancer drugs. Recently, considerable amount of drug-induced gene expression data has become publicly available, in addition to cytotoxicity databases. These large sets of data provided an opportunity to apply machine learning methods to predict drug activity. However, due to the complexity of cancer drug mechanisms, none of the existing methods is perfect. In this paper, we propose a novel ensemble learning method to predict drug response. In addition, we attempt to use the drug screen data together with two novel signatures produced from the drug-induced gene expression profiles of cancer cell lines. Finally, we evaluate predictions by in vitro experiments in addition to the tests on data sets. The predictions of the methods, the signatures and the software are available from <ref type="url" target="http://mtan.etu.edu.tr/drug-response-prediction/">http://mtan.etu.edu.tr/drug-response-prediction/</ref>.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The highly variable nature of treatment responses among cancer patients necessitates tailor-made therapies. Forecasting the most feasible drug therapy for an individual patient, being the vital part of such personalized therapies, is a gruelling task since it requires the application of several candidate drugs on cancer on an individual basis. Determining chemotherapeutic response of malign cells in silico is an important problem whose solution can greatly contribute to both drug discovery and to such personalized treatment design. Several recently introduced large scale drug screen databases provided a significant opportunity to train machine learning models that predict drug activity <ref type="bibr" target="#b6">(Garnett et al., 2012;</ref><ref type="bibr" target="#b0">Barretina et al., 2012)</ref>. These databases provide data based on a large number of cytotoxicity experiments treating cancer cell lines with chemicals. Accurate machine learning models exploiting these databases have the potential to replace some of the wet-lab experiments performed for these different procedures.</p><p>There are several recent studies on drug sensitivity and anti-cancer drug response prediction. In <ref type="bibr" target="#b18">(Wan and Pal, 2014)</ref>, random forest regression model is used for obtaining a single drug or a group of drugs for a certain cancer. <ref type="bibr" target="#b24">(Zhang et al., 2015)</ref> proposes an approach with cell line similarity network (CSN) and drug similarity network (DSN) data to predict anti-cancer drug responses of a given cell line by using dual-layer integrated cell line-drug network. To predict drug activity, <ref type="bibr" target="#b17">(Turki and Wei, 2017)</ref> proposes a novel approach that uses link prediction algorithms and compare their results with existing drug sensitivity prediction models. Based on their experimental results, link prediction algorithms perform better than the methods used in comparison. Results based on a similar motivation is reported in <ref type="bibr" target="#b13">(Stanfield et al., 2017)</ref> where the authors compute network profiles derived from a heterogeneous drug response network. They, then train a classifier to distinguish sensitive and resistant cell lines. In a recent study <ref type="bibr" target="#b23">(Zhang et al., 2018)</ref>, the authors integrate information from gene expression profiles, drug chemical structures, drug-target data and protein protein interactions to derive a heterogeneous network for predicting cell line-drug associations, where the novel results are validated by the literature evidence. Multi-task learning schemes have come into prominence as a consequence of their capability of exploiting inter-drug relationships during training. While multi-task learning for the drug activity prediction was largely limited to regularized linear models before, recently more sophisticated approaches have emerged. An approach called Kernelized Bayesian Multi-task Learning (KBMTL) <ref type="bibr" target="#b7">(Gonen and Margolin, 2014)</ref> relying on kernel-based dimension reduction and multi-task learning demonstrated notable performance for drug response prediction. The study by Tan <ref type="bibr" target="#b16">(Tan, 2016)</ref> has shown that the trace-norm regularized multi-task learning followed by a kernel transform of the input gene expression data is superior to several other methods proposed for this task. A similar work by Yuan et al <ref type="bibr" target="#b22">(Yuan et al., 2016)</ref>, also demonstrates the improved predictive power of multi-task learning with trace-norm regularization. In another study <ref type="bibr" target="#b19">(Wang et al., 2017)</ref>, the authors premediate that the similar drugs should possess similar responses and define drug-similarity by Pearson correlation of drug responses. This is followed by application of a novel method called similarity-regularized matrix factorization (SRMF) which maps drugs and cell lines to a lower dimensional space and reconstruct the drug response matrix in this latent space. The usage of ensemble methods were also found promising in drug response prediction task, as in many other problems. These low-variance models surpassed all other schemes in a recent DREAM challenge on predicting human responses to toxic compounds <ref type="bibr" target="#b5">(Eduati et al., 2015)</ref>. Winners of both sub-tasks utilized ensemble of random forest models where each forest was devoted to a single cluster of cell lines. In addition to ensemble learning, biologically-plausible preprocessing techniques such as filtrating irrelevant genetic features, clustering cell lines and chemical using external data sets were found to be efficient strategies. None of these methods consider to use both multi-task and single-task methods together in an ensemble model. Also none considered to integrate the LINCS database to the transcriptional profiles for this task.</p><p>Our contributions in this paper can be summarized as follows. First, we propose to use an ensemble model to predict cytotoxicity of anti-cancer drugs by using four different prediction methods. Three of these methods have been recently proposed for this task, and the last one is a multi-task neural network. For each of these, similar cell lines and drugs are grouped and a large number of models are trained on these subsets of data as in the winning strategy for DREAM challenge <ref type="bibr" target="#b5">(Eduati et al., 2015)</ref>. We, then, combine the predictions from these models into a single prediction by stacked generalization. Second, we propose cell line sensitivity and drug activity signatures by integrating multiple databases and study the effect of these to the response prediction performance. Finally, we validate the predictions in vitro by treating one cell line with five selected compounds. The results are promising; both the ensemble model and signatures improve the prediction performance compared to the baseline methods.</p><p>In the following sections, we first describe the data sets that we use. Then, Section 3 discusses the drug activity and cell line sensitivity signatures and Section 4 provides the details on the proposed ensemble method. Finally, we report the experimental results in Section 5 and conclude in Section 6.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Data sets</head><p>The first data set that we use is the Genomics of Drug Sensitivity in Cancer (GDSC) database <ref type="bibr" target="#b9">(Iorio et al., 2016)</ref>. To produce GDSC database, more than a thousand cancer cell lines were screened against a large number of anti-cancer therapeutics. The main aim of the source is to identify biomarkers that lead to drug sensitivity or resistance. The cell lines are characterized in multiple omics features such as the gene expression, copy number variation and coding variants. We utilize the gene expression data as there is a wide consensus that this is the most informative data type for drug response prediction <ref type="bibr" target="#b3">(Costello et al., 2014)</ref>. Gene expression data is produced by Affymetrix Human Genome U219 Array and normalized by robust multiarray averaging (RMA). The second data set that we utilize is the Cancer Cell Line Encyclopedia (CCLE) <ref type="bibr" target="#b0">(Barretina et al., 2012)</ref>. This is a similar screen to GDSC where the mRNA expression data is produced by using AffyMetrix U133+2 arrays. Provided data is the perturbational profile of 504 cancer cell lines treated with 24 anti-cancer drugs. Gene expression profiles provided by GDSC and CCLE is high-dimensional; the number of genes is around 17000. To reduce dimension, we applied the gene selection procedure we previously proposed in <ref type="bibr" target="#b16">(Tan, 2016)</ref>, where the number of genes selected is 1274 and 1239 for CCLE and GDSC respectively. The last database we use, Library of Integrated Network-based Cellular Signatures (LINCS), is composed of drug-induced gene expression profiles of the cancer cell lines <ref type="bibr" target="#b14">(Subramanian et al., 2017)</ref>. The database has recently been enlarged and moved to a new home called the CMAP L1000 database<ref type="foot" target="#foot_0">foot_0</ref> . The database currently holds perturbational profiles of tens of cell lines treated with tens of thousands of perturbagens most of which are small molecules. The profiles are given in terms of 978 landmark genes that can explain most of the variance in the gene expression profile of a cell line. In this paper we used the LINCS Phase II version by using the provided API.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Signatures</head><p>This section describes the proposed signatures to represent the activity and sensitivity of the drugs and cell lines, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Drug activity signatures</head><p>Lincscloud API provides access to the experimental results in Library of Integrated Networkbased Cellular Signatures (LINCS)<ref type="foot" target="#foot_1">foot_1</ref> Program database. This database exhibits the effect of a drug on numerous cell lines by means of up or down regulations of landmark genes chosen by the database curators. We use these experimental results with the aim of generating drug activity signatures which represents each drug by its induced gene expression changes.</p><p>The first step of drug activity signature generation is the formation of experimental signatures, ExpSig(dr, CL), that represents the gene-specific changes on a cell line CL upon application of drug dr in vector form:</p><formula xml:id="formula_0">ExpSig(dr, CL) = gene 1 ↑, gene 2 ↓, gene 3 ↓, ..., gene K ↑ (1)</formula><p>where the arrows represent the up and down regulations for the genes.</p><p>For a given drug dr and cell line CL, ExpSig(dr, CL) can be constructed by a single LINCS access, where the database API provides the most regulated 50 among the 978 landmark genes.</p><p>Experimental signatures are generated for all cell line-drug pairs in our data set. In the LINCS database, multiple experiments can exist for a given cell line-drug pair with different experimental parameters such as dose and duration. For instance, there are 188 different experiments for cell line MCF7 treated with Vorinostat, where we considered these as distinct experiments.</p><p>Based on the experiment signatures (ExpSig), drug activity signature (ActSig) that represents the cumulative gene expression changes induced by a drug dr is defined as follows:</p><formula xml:id="formula_1">ActSig(dr) = CL ExpSig(dr, CL)<label>(2)</label></formula><p>where, CL represents the combination of the experiment signatures for dr over all experiments involving dr in LINCS. Here, combination can be performed in several different ways. We define combination as the number of experiments for which the genes are up and down regulated. Therefore,</p><formula xml:id="formula_2">ActSig(dr) = g 1 (↑ n u 1 , ↓ n d 1 ), ..., g K (↑ n u K , ↓ n d K )<label>(3)</label></formula><p>The notation g 1 (↑ n u 1 , ↓ n d 1 ), states that dr is observed to up-regulate gene g 1 in n u 1 experiments and it down-regulates g 1 in n d 1 experiments. ActSig defined here, therefore, represents how a drug effects the cell lines, where this can be considered as an expression of mode of action (MOA) for a drug, in terms of gene regulations. ActSig also has the property of decreasing the effect of experimental errors by averaging over several experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Cell line sensitivity signatures</head><p>While GDSC and CCLE databases include the cytotoxicity measurements of compounds on particular cell lines, LINCS database exhibits differential gene expression profiles of cell lines upon treatment with a large number of compounds. By a cell line sensitivity signature (CLSS) we aim to gather the gene expression changes in a cell line CL, induced by different compounds. However, we restrict these compounds to be the ones that are found to be active against CL, where the activity information is extracted from other pharmacological screening studies such as GDSC. By this restriction, our purpose is to build a signature that describes drug-induced differential gene expression in the cell lines which are sensitive to those drugs (hence the name 'sensitivity signature').</p><p>Building the CLSS for a cell line is initiated by selecting an activity threshold, T , for the considered activity measure (IC 50 in our case). Then, for all the (dr,CL) pairs with IC 50 below T , we query the LINCS database to retrieve the up or down regulated landmark genes. Querying LINCS for (dr, CL) pair leads to three different possible scenarios: (i) LINCS might include (dr,CL) experiment and experimental results can be directly used, (ii) (dr,CL) experiment might not have been performed in LINCS, despite the existence of dr and/or CL. In this case, the experimental results of dr applied on cell lines similar to CL can be used, (iii) dr may not be available in LINCS. In this last case, if the (known) target proteins of dr have been used in gene knock-out experiments in LINCS, their results on cell lines similar to CL can be used to approximate the drug effect. Formally, the result of this procedure that we call the sensitivity signature (SensSig) can be defined as follows.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SensSig(dr, CL)</head><formula xml:id="formula_3">=            ExpSig(dr, CL) (dr, CL) ∈ LINCS ActSig(dr)</formula><p>dr ∈ LINCS and (dr, CL) / ∈ LINCS (on similar cell lines to CL) T argetSig(T argets dr ) dr / ∈ LINCS (on similar cell lines to CL)</p><p>(4)</p><p>where we used ∈ to denote inclusion in database for ease of notation and T argetSig(T argets dr ) corresponds to case (iii) above, differential gene expression profile for the gene knock-out experiments for the targets of dr, T argets dr .</p><p>As mentioned above, CLSS aims to cover the differential gene expression profile leading to cell death in tumor cells. SensSig(dr, CL) describes the profile in response to dr only. As there can be a large number of experiments on CL in LINCS, combination of SensSig(dr, CL) over all drugs applied on CL can describe the cumulative gene expression changes that are critical for CL. Based on this, we define CLSS as follows,</p><formula xml:id="formula_4">CLSS(CL) = dr SensSig(dr, CL)<label>(5)</label></formula><p>The combination dr in the above equation can be defined in a number of different ways. This can simply be a set union. However, the one which we think can better represent the cumulative sensitivity, is to construct CLSS as a set of vectors, where each vector corresponds to the union of signatures over drugs targeting the same pathway. The target pathway information for each compound is obtained from GDSC. This way we will have a number of signatures for each cell line corresponding to the target pathways of the drugs in Equation <ref type="formula" target="#formula_4">5</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Signature similarities</head><p>As mentioned, the two signatures defined above characterize the cell lines and drugs in terms of sensitivity and activity respectively. The sensitivity signature is a representation of the gene expression changes that lead to cell death in a certain cell line. Similarly, drug activity signature is a representation of the "mode of action" for a drug, summarizing the cumulative differential gene expression upon treatment on cell lines. Therefore, a natural next step is to compare these signatures to predict whether a given drug is active on a given cell line.</p><p>This approach is similar to the connectivity score of the Connectivity Map (CMAP) <ref type="bibr" target="#b10">(Lamb et al., 2006)</ref> (the previous version of LINCS) for drug repositioning. The connectivity score defined in CMAP also compares two differential gene expression signatures to find a drug that has the effect of reverting the expression profile back to normal. CMAP finds and outputs the drugs whose effect is the opposite of a given differential gene expression profile for a certain condition (a disease for example). Our ultimate goal here, on the other hand, is to directly predict the drug activity. To this aim, we propose to use the similarity between the proposed drug and cell line signatures to be able to "help" some other methods to better predict drug response. In other words, we are looking for the drugs that will kill most of the malignant cells in a certain tumor.</p><p>To sum up, we hypothesize that the matching between CLSS(CL) and ActSig(dr) should give us a clue on the activity of the drug dr on the cell line CL. For this, we used cosine similarity between the signatures, where, among other choices, we observed that it performed better. As each CLSS is a list of vectors (corresponding to different pathways), we computed the similarity of each vector in CLSS(CL) with ActSig(dr) and used the maximum of these as the similarity between the sensitivity of CL and the activity of dr. So from here on, we will refer this maximum value as "signature similarity".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Ensemble model for drug activity prediction</head><p>There can be multiple motivations to build ensembles as listed in <ref type="bibr" target="#b4">(Dietterich, 2000)</ref>; statistical, representational and computational. All these different aspects more or less contribute to the motivation of the work in this paper. Despite recent improvements in availability of drug response data, amount of data can still cause multiple different hypotheses to perform reasonably well, and combining them can improve the performance. Also, we do not yet know the best representation for drug response models which can differ for each individual drug, therefore an ensemble with different representation assumptions, again, might help. Computational aspect seems to contribute less than the formers to the motivation, however as the available data increase, we think it can become equally important as well.</p><p>Cancer types may substantially differ in aspects such as development, behavior and response to treatment. To consider this in the method, we also exploit some form of subsampling by clustering the cell line samples. Our basic motivation here is to model the more closely related cancer types together, which can make the predictive models more stable and focused to certain types of cancer. Also, this operation can reduce the variance error of the final model. To produce this final model by integrating the outputs of multiple learners, stacking technique with different meta-learners is used. Following subsections detail the proposed ensemble method. The whole method that we call Ensemble Learning for Drug Activity Prediction (ELDAP) is summarized in Figure <ref type="figure" target="#fig_0">1</ref>. We will refer the ELDAP method that does not exploit the signatures in stacking as ELDAP\S. It has two different data sources for modeling cells. The training data (shown as D in Figure <ref type="figure" target="#fig_0">1</ref>) is the non-interventional gene expression profiles of cancer cell lines. On the other hand, interventional (drug-induced) gene expression data are exploited to compute the signature similarities.</p><formula xml:id="formula_5">Training data . . . subsampling BM (Base model) D D 1 D 2 D K-1 D K M 1 M 2 M K-1 M K BM ∈ {KBMTL,</formula><p>PSVR, Elastic-net, NN} . . . BM model M i trained on D i , i ∈ {1,2,...,K} Test sample x (Gene expression profile of a cell line) Mean of predictions of each M i BM E prediction of x Stacking module Signature similarities ELDAP prediction All base model predictions </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Base regressors</head><p>This section defines the base models that we use as the learning methods in ensemble learning. These four are selected based on their previous use or their potential to be successful for this problem.</p><p>Elastic Net: Elastic Net Regression which combines ridge and Lasso regression is a popular sparse regularized learning method. In genomics data sets,where number of features are typically larger than the number of samples, sparsity is a desired property. Elastic Net outputs a matrix W that minimizes the following error function:</p><formula xml:id="formula_6">1 2n ||Y -XW || 2 2 + α(ρ||W || 1 + (1 -ρ)||W || 2 2 ) (6)</formula><p>The α parameter sets the weight for the regularization. ρ balances the lasso and ridge penalty and n is the number of samples. These parameters were chosen as the ones minimizing the cross-validation error on a separate grid search. We used Elastic-net as a single task method where it is the model that was previously applied on GDSC for biomarker detection successfully <ref type="bibr" target="#b6">(Garnett et al., 2012)</ref>.</p><p>Kernelized Bayesian Multitask Learning: Kernelized Bayesian Multitask Learning (KBMTL) <ref type="bibr" target="#b7">(Gonen and Margolin, 2014)</ref> aims at solving related tasks jointly through a multitask regression scheme followed by a kernelized non-linear dimensionality reduction stage. The multitask algorithm reveals the shared information between distinct tasks in the kernel space and generates joint models. Such a procedure is capable of eliminating drug-specific noise as well as off-target effects. Moreover, joint modeling enables to utilize missing data since the regression is performed over a large set of data rather than individual data points. This property makes KBMTL a useful tool for genomics data where scarcity is a serious issue. KBMTL optimization procedure includes determining the hidden representations of data points in the kernel subspace and projection matrices.</p><p>Pairwise support vector regression: We call a support vector machine (SVM) a pairwise support vector regressor (PSVR) when the input data are composed of objects including two (possibly different) elements and the target is continuous. Depending on the task, a sample, therefore, usually represents an interaction or relationship between the elements. In our case, each sample is a drug-cell line pair and the target is the IC 50 value. This has been applied to a similar classification task before <ref type="bibr" target="#b15">(Tan, 2014)</ref>. We follow here a similar procedure with the difference that our task here is a regression task. A similar approach was carried out also in protein-ligand interaction prediction (Jacob and Vert, 2008) and in compound toxicity prediction <ref type="bibr" target="#b1">(Bernard et al., 2017)</ref>.</p><p>We define a pairwise kernel K p as the product of the drug kernel K d and the cell line kernel K c .</p><formula xml:id="formula_7">K p ((dr j , CL i ), (dr l , CL k )) = K d (dr j , dr l ) * K c (CL i , CL k ) (7)</formula><p>where both K d and K c are defined as the radial basis function (RBF) kernel between the drug and cell line descriptors, respectively. The descriptors that we use for drugs are the PaDEL descriptors (Yap, 2011), and the gene expression profile of the selected subset of genes for the cell lines.</p><p>Neural networks: Artificial Neural Networks are one of the most widely used models in machine learning. With recent advancements in graphics processing units and training methods remarkable achievements have been witnessed in speech recognition, image understanding and machine translation. For an introduction and recent developments, see <ref type="bibr" target="#b8">(Goodfellow et al., 2016)</ref>. In this paper, we used a multi-layer feed forward neural network with a multi-task output layer. The architectural details for the network that we use is given in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Learning Strategy for base models</head><p>We have followed a novel learning strategy with the intent of exploiting sample similarities.</p><p>Instead of training a model or an ensemble of models trained on the whole training set, we generated several smaller training subsets corresponding to the neighborhood of a certain training sample.</p><p>This training process can be summarized as follows: A single training sample is chosen and together with its 300 closest neighbors in the training set, we form a subset. 300 is chosen as the best performing value out of a set of neighborhood values. The distance metric defining the neighborhood of a sample is the Pearson correlation of the gene expression data. Due to the relatively small number of samples, with the target values this constitutes a highly under-determined system. To resolve this problem, we computed the Radial Basis Function (RBF) kernel gram matrix for all the methods except the PSVR. In this way, submatrix becomes a symmetrical square matrix where each index reflects the RBF similarity between two samples. This not only performs a non-linear transformation, but also reduces the dimension. The models are trained on this newly formed gram matrix. We construct submatrices this way from the training set which, after training, results in a model corresponding to each sample. The testing of new samples is straightforward. When a test sample, which is a gene expression profile characterizing a cell line, arrives, the most similar 300 training cell lines and associated models are identified. The mean value of the predictions of this collection of models is returned as the overall predicted IC 50 value.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Stacked generalization</head><p>Stacked generalization (or stacking) method where individual predictions of a collection of models are introduced as inputs to a second-level learning algorithm is an extensively used technique for boosting prediction accuracy <ref type="bibr" target="#b20">(Wolpert, 1992)</ref>. In our work, we blended Elastic Net, KBMTL, Neural Networks and PSVR through a stacking module. Although, stacking only aims at blending previously made predictions, addition of newer features to the process is also possible. As previously stated, we hypothesize that employing cell-line/drug signatures at the second level can augment the accuracy. For this purpose, we generated a new feature called signature similarity which is defined by the cosine similarity between drug and cell-line signatures. This feature is computed for all cell-line and drug pairs for which the signatures could be computed.</p><p>The main challenge of designing a second-level learner for blending was the missing values. Due to the amount of intersection between databases, we could acquire signature similarity metrics only for 133 drugs and 45 cell lines which approximately corresponds to 2.5 % of the original data set. Therefore, we attempted to implement stacking schemes where signature similarity values contribute to the results only when they are available. This was a challenging task where the proposed models were supposed to be robust to changing input characteristics, e.g. missing/present signature similarity values. We propose three strategies, each satisfying these conditions. These can be splitted into three categories:</p><p>(i) Simple model averaging: Here, the predictions of the individual models were averaged with and without weighting. When used, the weights were chosen as being inversely proportional to individual models' MSEs on the data. In other words, a model making better predictions alone had more contribution in the average, as well. It is noteworthy that the signature similarities could not be directly included in the averaging since they did not represent IC 50 values but similarities. Therefore, prior to averaging, we utilized a pre-learner responsible for mapping signature similarities to IC 50 values. This pre-learner was chosen among a set of models including linear regression, support vector regression and regression tree. The choice and the tuning of this model were based on cross-validation.</p><p>(ii) Conventional machine learning models: Though variable input characteristics hampered the usage of classical machine learning models in a straight-forward way, it was still possible to train a different model for each input setting. For instance, one could train a regression tree model for observations with all possible features such as individual predictions and signature similarities, while turning to a new regression tree model for the samples lacking any of these features. For this class, we included models such as support vector machines, regression trees and shallow neural networks.</p><p>(iii) Modified distance-based models: The last category of methods were the adaptive models which could dynamically adapt themselves to the changing input environments. In this class, we only included distance-based models since average inter-sample distances could be computed even in the absence of specific features. For this purpose, we designed a modified KNN regressor measuring the distances only based on the available features.</p><p>For both data sets, we aimed to obtain the lowest MSE by varying these stacking strategies. It should be noted that, this process was fully automated, a meta-learner or combination of multiple meta-learners minimizing the cross-validation error was chosen from the bag of candidate models. Same models were tested with and without signature similarity values so as to confirm the effect of similarities during prediction. For GDSC data set, the lowest MSE values were achieved as the average of two stacking modules; a modified KNN (iii) and model averaging (i). It should be noted that the signature similarities were transformed into IC 50 values by a linear model. In CCLE data set, an averaging module with a regression tree pre-learner was the most successful. No further averaging was found to be efficient. The effect of signature similarities was evaluated by comparing the MSE of indices, e.g. cell line-drug pairs, with available signature similarity values. We iterated the prediction process with and without signature similarities on these indices and observed the improvement when similarities were utilized.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Experimental Results</head><p>In this section we report the experimental results corresponding to two different evaluations. In the first part, we report the results of the cross validation (CV) experiments that we name as in silico experiments. The second part gives the results of in vitro experiments of the selected cell line and drugs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">In silico evaluation</head><p>For the in silico evaluation, all the reported results are the average mean squared errors of a 3fold CV. The experiments were performed on a computer with 3.2GHz CPU and 16GB of RAM running Linux. Here, for each compound, there is a vector of cytotoxicity values corresponding to the target vector of a learning problem. We refer to the drug activity prediction problem composed of a set of samples and one of these target vectors, as a task here. The performance of a task is measured in terms of the task specific mean squared error (TMSE);</p><formula xml:id="formula_8">T M SE(t) = 1 n n i=1 (ŷ t i -y t i ) 2 (8)</formula><p>for a given task t, where n is the number of samples and ŷt i and y t i are the predicted and correct cytotoxicity values for task t and sample i, respectively. The overall performance is reported as the mean TMSE (MSE):</p><formula xml:id="formula_9">M SE = 1 T T t=1 T M SE(t) (9)</formula><p>where T is the number of tasks. In addition to MSE, we report the Spearman correlation of the predictions with the ground truth values. This is also computed similar to MSE, where the squared difference in Equation 8 is replaced by the Spearman correlation between ŷt i and y t i , ρ(ŷ t i , y t i ). Then, the overall correlation, ρ, is computed as the mean correlation of all tasks as in Equation <ref type="formula">9</ref>.</p><p>For each of the methods, we optimized the method parameters with a separate grid search. As a result of that, the parameters that we use are as follows. For Elastic-net, we used α = 0.01 and ρ = 1 (which means that the method actually performs a Lasso regression). We used the scikit-learn <ref type="bibr" target="#b12">(Pedregosa et al., 2012)</ref> library for the implementation of Elastic-net. For KBMTL, we set {α λ , β λ , α , β , R, σ h , σ w } = {1, 1, 1, 1, 20, 0.1, 1}. We executed KBMTL for 200 iterations. The author provided implementation was used for KBMTL. For neural network, we used two hidden layers with Rectified Linear Unit activations. For each hidden layer we used a dropout rate of 0.5. The size of the two hidden layers are 270 and 200 respectively. We used the stochastic gradient descent optimizer with a learning rate of 0.01 and applied a batch size of 100. We used Keras library <ref type="bibr" target="#b2">(Chollet, 2015)</ref> for the implementation.</p><p>We report the results in five steps. In the first part, the performances of the single methods are given in Table <ref type="table" target="#tab_1">1a</ref>. These results are reported as the baseline results for comparison. Due to the scalability issues of SVMs, the results for PSVR could not be reported for GDSC, as the run lasted for more than two weeks. For CCLE, as the data set is smaller, the performance of PSVR is also reported and it seems to be the best among others. However, one also should note that PSVR uses the extra information of compound structures. Also, as mentioned before, the number of compounds with available structure data is 21 and 224 for CCLE and GDSC, respectively. One should take this into account for performance comparison. Among single methods, KBMTL significantly outperforms other methods for GDSC.</p><p>In the second step of the results we report in Table <ref type="table" target="#tab_1">1b</ref>, the performances of the single method ensembles (see Section 4.2) are given. We mark these methods with a subscript E for readability as in Figure <ref type="figure" target="#fig_0">1</ref>. Except PSVR, for each method, we observe a performance improvement compared to Table <ref type="table" target="#tab_1">1a</ref>. Also note that, the improvement for Elastic-net is the largest. The performance difference is significant for Elastic-net and NN for GDSC. However it is not possible to confirm statistically that the improvements are significant for CCLE.</p><p>The third part of the results report the overall performance of ELDAP and ELDAP\S in Table <ref type="table">2a</ref>. We can not see a performance improvement here, as the ratio of cell lines and drugs that have the signatures available is low. To demonstrate the effect of signatures, therefore, we report the results for the ones with signatures only. In this case, a small improvement can be observed (see Table <ref type="table">2b</ref>). We also provide some literature based evidence for some pairs with highly similar signatures in last part of this section. The fourth part of the results correspond to the drug specific errors. For each drug, we show the errors in Figure <ref type="figure" target="#fig_1">2</ref> and 3 for GDSC and CCLE respectively. As it is seen in figures, the performance of ELDAP is superior in almost all drugs, especially for GDSC. Note that Figures 2 and 3 compare the single method performances (Table <ref type="table" target="#tab_1">1a</ref>) with ELDAP (Table <ref type="table" target="#tab_1">1b</ref>).</p><p>Finally, Tables <ref type="table" target="#tab_4">3</ref> and <ref type="table">4</ref> report the results in terms of ρ. In terms of ρ, for GDSC, ELDAP overperforms the single methods (Table <ref type="table">4a</ref>). For CCLE, the results are competitive with the baselines.</p><p>So far, we presented the efficiency and reliability of generated signature similarity metrics by only inferring the augmented prediction accuracy when they are included in the stacking stage. Table 2: Performance of ELDAP in terms of MSE</p><p>However, pharmalogical inferences are also possible. In this section, we attempt to relate our results with the literature on specific drug activities. For this purpose, we randomly select few cell line-drug pairs among the ones with very high/low signature similarity scores, e.g. the best and the worst 5% both for up and down regulations. Among this short list, the most enhanced pattern is domination of few specific drugs on several cell lines. In order words, the independent from the cell lines they are applied to, some drugs achieved the highest signature similarity scores. Majority of these succesful drugs were observed to target major pathways enhancing cancer cell proliferation such as ERK/MAPK signaling and PI3K/MTOR signaling. Apart from these, drugs regulating cell cycles and apoptosis through cycline depending kinases (CDK2, CDK7, CDK9) and caspase activators (Procaspase-3, Procaspase-7), respectively, were also present among the most successful drugs. The last set of drugs found among the top-tier drugs were growth factor receptor inhibitors obstructing IGFR signaling (IGF1R, IR) and thus cancer cell proliferation.</p><p>Obtaining high signature similarity results on these targeted drugs acting on the most important pathways linked to cancer cell survival is biologically sensible and an indicator of reasonability of our signature-based approach.</p><p>As a final evaluation, we report the performances of two "external" methods. These methods are SRMF and Random Forests (RF). We call them external to emphasize that they are not included in the ensemble for ELDAP. The results are given in Table <ref type="table">5</ref>. We evaluated these methods in the same setting that we used for the other methods. Before evaluating, we performed parameter optimization for both methods based on a separate validation set. Based on these results, we observed that RF overperforms other methods for both data sets. It is in our future plans to extend ELDAP with new methods and RF seems to be a good candidate to be included in the ensemble for ELDAP. For SRMF, we see that it is competitive for GDSC, but for CCLE we obtained poor results. However one should note that SRMF was designed originally to predict the activities for cells and drugs that were already available in the training set. Therefore SRMF is not suitable to predict drug activities for new cell lines which is the way we evaluate the methods in this paper.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">In vitro evaluation</head><p>In addition to the in silico evaluation, we performed in vitro evaluation on a cancer cell line. We selected A549, human epithelial lung carcinoma cell line, as our in vitro test bed. Other than the</p><p>GDSC CCLE KBMTL 0.159 0.244 PSVR -0.212 Elastic-net 0.159 0.231 NN 0.170 0.235 (a) Single methods GDSC CCLE KBMTL E 0.159 0.234 PSVR E 0.155 0.191 Elastic-net E 0.159 0.205 NN E 0.170 0.224 (b) Single method ensembles Table 4: Performance of ELDAP in terms of ρ  GDSC CCLE SRMF 2.359± 0.182 (0.160) 9.318±2.173 (0.167) RF 1.709±0.137 (0.194) 3.947±0.637 (0.225)</p><p>Table 5: Performance of SRMF and RF in terms of MSE (ρ)</p><p>availability of the cell line, this choice is arbitrary. Five different compounds were selected that were not applied on A549 in the GDSC data set. The selection was done by checking the error rates in the in silico evaluation of the compounds and cytotoxicity variance of the drugs. The compounds are the ones that have the smallest error rates and largest variances (as variance can be considered an indicator of selectivity) among the commercially available chemicals. A549 was treated with these five different compounds and the resulting cytotoxicity values were compared to the predictions by the proposed method. Following subsections give the results and further details of these wet-lab experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1">Chemicals</head><p>The chemicals and reagents used in the experiments were purchased from the following suppliers: Fetal calf serum (FCS), trypsin-EDTA, Dulbecco's modified Eagle's medium (DMEM), penicillin-streptomycin, L-glutamine from Biological Industries (Kibbutz Beit-Haemek, Israel); 3-(4,5-dimethylthiazol-2-yl)-2,5-diphenyltetrazolium bromide (MTT) dye, methylene blue dye, methanol (MEOH), from Merck Chemicals (Darmstadt, Germany); dimethyl sulfoxide (DMSO), ethanol, from ICN Biomedicals Inc. (Aurora, Ohio, USA).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2">Cell culture</head><p>A549 cells, human epithelial lung carcinoma cell line, were purchased from American Type Culture Collection (Manassas, VA, USA). The cells were maintained in DMEM containing 10% fetal calf serum and 0,5% penicillin-streptomycin. The cells were kept in a incubator (Thermo Scientific Heraeus, Germany) at 37 ± 1 • C with a humidified atmosphere of 95% air and 5% CO 2 . The culture medium was changed two times in one week. A549 cells used in all experiments were between the 2nd and 3rd culture passage after thawing.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.3">Determination of cytotoxicity by MTT assay</head><p>The effects of the compounds, TAK-715, GSK2126458, Ispinesib mesylate, KIN001-102 and OSI-930 on cell viability were determined by MTT assay with slight changes described by <ref type="bibr" target="#b11">(Ohguro et al., 1999)</ref>. A549 cell line is highly sensitive and has good characteristics in colony formation. Therefore these adherent cells are very convenient for MTT assay. Before starting experiments, the cells have been grown for 2 weeks. Afterwards A549 cells were seeded at density of 5000 and 10000 cells/well in 96-well plates and allowed to grow for 24 h before treatment. The cells were treated with each compounds at different concentrations (0.0064, 0.032, 0.16, 0.8, 4, 20, 100, 500 µM for TAK-715, KIN001-102, OSI-930 and 0.00128, 0.0064, 0.032, 0.16, 0.8, 4, 20, 100 µM for GSK2126458, Ispinesib mesylate) in the culture medium for 48 h and 72 h. The compounds were dissolved in DMSO and added to the medium to yield a final DMSO concentration of 1% (v/v). Control group cells were treated with the culture medium containing 1% of DMSO without compounds. Following the incubation period, the medium was removed and 1 mg/mL MTT solution in 100 µL of the culture medium was added to each well and further incubated at 37 • C for 3 h. After the MTT application, the medium was discarded, and 100 µL of PBS was added to wash the cells. 100 µL of DMSO was added onto the cells in order to dissolve the formazan crystals. Absorbance of each sample was measured at 570 nm using the microplate reader (SpectraMax M2, Molecular Devices Limited, Berkshire, UK). Cytotoxic potantial of the compounds were determined by calculating the percentage of cell viability ratio between treated and untreated (control) cells (% cell viability) IC50 values of the drugs was calculated by using the dose-response curves. Each experiment was performed in triplicate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.4">Evaluation of cytotoxic effects of the compounds on A549 cell line</head><p>The cytotoxic effects of the compounds at different concentrations on A549 cell line are shown in Figure <ref type="figure" target="#fig_3">4</ref> and 5. According to the results, the compounds showed significant cytotoxicity on A549 cell line. The concentration-dependent cytotoxicity was observed for A549 cells after both 48 h and 72 h exposure to the compounds.</p><p>The IC 50 values of cytotoxic drugs were calculated as explained in Section 5.2.3 and shown in Table <ref type="table" target="#tab_7">6</ref> and <ref type="table" target="#tab_8">7</ref>. The in vitro results were compared to the predictions of ELDAP for all compounds. The predictions of ELDAP for these drugs are shown in Table <ref type="table">8</ref>. As it is shown in Table <ref type="table" target="#tab_7">6</ref> and <ref type="table" target="#tab_8">7</ref> the IC 50 values of the compounds are inline with IC 50 predictions in Table <ref type="table">8</ref>. Note that one should not expect an exact match with the predictions here as there are significant differences in experimental conditions though we did our best to build a similar wet-lab environment that the GDSC data set is produced. Table 8: Predicted cytotoxicity values by ELDAP  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Drug</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Conclusion</head><p>Prediction of chemotherapeutic response of malign cells is an essential part of designing personalized drugs. Recent efforts of producing large scale data sets provides the opportunity to apply machine learning models to this problem.</p><p>In this paper we proposed an ensemble learning method which combines both multitask and single task learners through a stacking module. We demonstrated the usage of novel signatures that represent the activity and sensitivity of drugs and cell lines, respectively. These signatures are defined in a way that the similarity between them can be used as an indicator of drug activity for the corresponding cell line. In addition to the computer based evaluation, in vitro experiments performed on cell line A549 for 5 drugs depicted that the method can produce reliable predictions. The small number of drugs in the intersection of LINCS and the other databases, GDSC and CCLE, limited the efficacy of the signature similarities. In case of the data availability, the significance of the effect can be more clearly demonstrated. Several directions can be followed to extend this work. One is to incorporate new data types that can effect the results, such as the pathway data sets. The pathway information can help in selecting the genes in the same pathway for modeling. Another usage can be to exploit the pathway cancer relationship in the sense that only related genes can be used in the sub-models. This can be further extended in case the cell lines are grouped by their tissue or cancer type. Another possible extension is to apply active learning techniques to this problem, where the next wet-lab experiment to perform can be selected in such a way that the new cytotoxicity value is maximally effective on improving the prediction performance. We believe that this kind of a cycle can greatly decrease the error rates.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Block diagram for the ELDAP method. The prediction of ELDAP is the output of a stacking module, where the input to the stacking module is the output of base model ensembles. Some details are omitted in this figure, further details are given in the text.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Drug specific MSE for the GDSC data set.</figDesc><graphic coords="12,75.31,325.10,464.80,108.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Drug specific MSE for the CCLE data set.</figDesc><graphic coords="12,182.24,486.95,244.00,108.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Effects of the compounds on cell viability of A549 cells with 5000 cell/well (A, C, E, G, I) or 10000 cell/well (B, D, F, H, J) for 48 h exposure.</figDesc><graphic coords="15,75.31,41.75,460.80,667.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Effects of the compounds on cell viability of A549 cells with 5000 cell/well (A, C, E, G, I) or 10000 cell/well (B, D, F, H, J) for 72 h exposure. 16</figDesc><graphic coords="16,75.31,41.75,464.64,675.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1 :</head><label>1</label><figDesc>Performance of the single methods and single method ensembles in terms of MSE</figDesc><table><row><cell></cell><cell>GDSC</cell><cell>CCLE</cell><cell></cell><cell>GDSC</cell><cell>CCLE</cell></row><row><cell>KBMTL</cell><cell cols="2">2.030±0.150 4.496±1.125</cell><cell>KBMTL E</cell><cell cols="2">2.064±0.150 4.073±0.522</cell></row><row><cell>PSVR</cell><cell>-</cell><cell>3.768±0.587</cell><cell>PSVR E</cell><cell cols="2">2.518±0.205 4.806±1.040</cell></row><row><cell>Elastic-net</cell><cell cols="2">2.571±0.150 5.694±0.924</cell><cell cols="3">Elastic-net E 2.015±0.171 4.233±0.736</cell></row><row><cell>NN</cell><cell cols="2">2.464±0.271 4.408±0.726</cell><cell>NN E</cell><cell cols="2">2.040±0.156 4.087±0.695</cell></row><row><cell></cell><cell cols="2">(a) Single methods</cell><cell cols="3">(b) Single method ensembles</cell></row><row><cell></cell><cell>GDSC</cell><cell>CCLE</cell><cell></cell><cell>GDSC(Sig)</cell><cell>CCLE(Sig)</cell></row><row><cell>ELDAP\S</cell><cell cols="2">1.808±0.142 3.928±0.606</cell><cell>ELDAP\S</cell><cell cols="2">1.880±0.553 1.840±0.544</cell></row><row><cell>ELDAP</cell><cell cols="2">1.808±0.142 3.928±0.606</cell><cell>ELDAP</cell><cell cols="2">1.971±0.773 1.816±0.687</cell></row><row><cell></cell><cell cols="2">(a) Overall performance</cell><cell cols="3">(b) Performance on signature sub-matrix</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 3 :</head><label>3</label><figDesc>Performance of the single methods and single method ensembles in terms of ρ</figDesc><table><row><cell></cell><cell>GDSC</cell><cell>CCLE</cell><cell></cell><cell>GDSC(Sig)</cell><cell>CCLE(Sig)</cell></row><row><cell>ELDAP\S</cell><cell>0.171</cell><cell>0.229</cell><cell>ELDAP\S</cell><cell>0.311</cell><cell>0.354</cell></row><row><cell>ELDAP</cell><cell>0.171</cell><cell>0.228</cell><cell>ELDAP</cell><cell>0.315</cell><cell>0.291</cell></row><row><cell></cell><cell cols="2">(a) Overall performance</cell><cell cols="3">(b) Performance on signature sub-matrix</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 6 :</head><label>6</label><figDesc>The IC 50 (µM) values of the compounds for A549 cells with 5000 cell/well at 48h and 72 h</figDesc><table><row><cell></cell><cell>IC 50 (48 h)</cell><cell>IC 50 (72 h)</cell></row><row><cell>TAK 715</cell><cell>40.53</cell><cell>3.32</cell></row><row><cell>GSK 2126458</cell><cell>17.74</cell><cell>0.10</cell></row><row><cell>Ispinesib Meylate</cell><cell>3.63</cell><cell>1.63</cell></row><row><cell>KIN001-102</cell><cell>13.26</cell><cell>5.01</cell></row><row><cell>OSI-930</cell><cell>370.31</cell><cell>65.34</cell></row><row><cell>Drug</cell><cell>IC 50 (48 h)</cell><cell>IC 50 (72 h)</cell></row><row><cell>TAK 715</cell><cell>32.39</cell><cell>18.40</cell></row><row><cell>GSK 2126458</cell><cell>3.22</cell><cell>0.03</cell></row><row><cell>Ispinesib Meylate</cell><cell>3.63</cell><cell>3.77</cell></row><row><cell>KIN001-102</cell><cell>19.02</cell><cell>17.05</cell></row><row><cell>OSI-930</cell><cell>368.56</cell><cell>403.67</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 7 :</head><label>7</label><figDesc>The IC 50 (µM) values of the compounds for A549 cells with 10000 cell/well at 48h and 72 h</figDesc><table><row><cell>Drug</cell><cell>Predicted cytotoxicity</cell></row><row><cell>TAK 715</cell><cell>106.738</cell></row><row><cell>GSK 2126458</cell><cell>0.071</cell></row><row><cell>Ispinesib Meylate</cell><cell>0.285</cell></row><row><cell>KIN001-102</cell><cell>21.716</cell></row><row><cell>OSI-930</cell><cell>69.036</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>http://clue.io</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1"><p>http://www.lincsproject.org/</p></note>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><p>* This research was supported by <rs type="funder">The Scientific and Technological Research Council of Turkey</rs> (Grant no:<rs type="grantNumber">115E274</rs>)</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_bFv8cMz">
+					<idno type="grant-number">115E274</idno>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Jordi</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giordano</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kavitha</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungjoon</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><forename type="middle">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Lehár</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dmitriy</forename><surname>Sonkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anupama</forename><surname>Reddy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manway</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lauren</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">E</forename><surname>Monahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paula</forename><surname>Morais</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jodi</forename><surname>Meltzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Korejwa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Judit</forename><surname>Jané-Valbuena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Felipa</forename><forename type="middle">A</forename><surname>Mapa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Thibault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eva</forename><surname>Bric-Furlong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pichai</forename><surname>Raman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Shipway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ingo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jill</forename><surname>Engels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guoying</forename><forename type="middle">K</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianjun</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melanie</forename><forename type="middle">De</forename><surname>Aspesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kalpana</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">D</forename><surname>Jagtap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuele</forename><surname>Hatton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Supriya</forename><surname>Palescandolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Scott</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carrie</forename><surname>Mahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">C</forename><surname>Sougnez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ted</forename><surname>Onofrio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Liefeld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wendy</forename><surname>Macconaill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Winckler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanxin</forename><surname>Reich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jill</forename><forename type="middle">P</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stacey</forename><forename type="middle">B</forename><surname>Mesirov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gad</forename><surname>Gabriel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristin</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivien</forename><surname>Ardlie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vic</forename><forename type="middle">E</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barbara</forename><forename type="middle">L</forename><surname>Myer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Weber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Porter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Warmuth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jennifer</forename><forename type="middle">L</forename><surname>Finan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Todd</forename><forename type="middle">R</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">William</forename><forename type="middle">R</forename><surname>Morrissey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Sellers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Levi</forename><forename type="middle">A</forename><surname>Schlegel</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Garraway</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nature11003</idno>
+		<ptr target="http://dx.doi.org/10.1038/nature11003" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<idno type="ISSN">00280836</idno>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Kernel Multitask Regression for Toxicogenetics</title>
+		<author>
+			<persName><forename type="first">Elsa</forename><surname>Bernard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yunlong</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Erwan</forename><surname>Scornet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Veronique</forename><surname>Stoven</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Walter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jean</forename><forename type="middle">Philippe</forename><surname>Vert</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/minf.201700053</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular Informatics</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">François</forename><surname>Chollet</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Keras</surname></persName>
+		</author>
+		<ptr target="https://github.com/fchollet/keras" />
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A community effort to assess and improve drug sensitivity prediction algorithms</title>
+		<author>
+			<persName><forename type="first">Laura</forename><forename type="middle">M</forename><surname>James C Costello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elisabeth</forename><surname>Heiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Georgii</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Gönen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">J</forename><surname>Michael P Menden</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nbt.2877</idno>
+		<ptr target="http://www.ncbi.nlm.nih.gov/pubmed/24880487" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1" to="103" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Ensemble methods in machine learning</title>
+		<author>
+			<persName><forename type="first">T G</forename><surname>Dietterich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Multiple Classifier Systems. First International Workshop</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+			<biblScope unit="volume">1857</biblScope>
+		</imprint>
+	</monogr>
+	<note>MCS 2000. Proceedings</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Federica</forename><surname>Eduati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lara</forename><forename type="middle">M</forename><surname>Mangravite</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tao</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hao</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Christopher Bare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruili</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thea</forename><surname>Norman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mike</forename><surname>Kellen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jichen</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaowei</forename><surname>Zhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rui</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guanghua</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Menghang</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nour</forename><surname>Abdo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oksana</forename><surname>Kosyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Friend</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allen</forename><surname>Dearry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anton</forename><surname>Simeonov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raymond</forename><forename type="middle">R</forename><surname>Tice</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivan</forename><surname>Rusyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fred</forename><forename type="middle">A</forename><surname>Wright</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gustavo</forename><surname>Stolovitzky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tero</forename><surname>Aittokallio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Salvatore</forename><surname>Alaimo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alicia</forename><surname>Amadoz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Muhammad</forename><surname>Ammad-Ud Din</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Agathe</forename><surname>Chloé</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaume</forename><surname>Azencott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pelham</forename><surname>Bacardit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elsa</forename><surname>Barron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Bernard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shao</forename><surname>Beyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alena</forename><surname>Bin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Karsten</forename><surname>Van Bömmel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">April</forename><forename type="middle">M</forename><surname>Borgwardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Brian</forename><surname>Brys</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Caffrey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jungsoo</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Himanshu</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eleni</forename><forename type="middle">G</forename><surname>Chheda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathieu</forename><surname>Christodoulou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Trevor</forename><surname>Clément-Ziza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marianne</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sofie</forename><surname>Cowherd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joaquin</forename><surname>Demeyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joel</forename><forename type="middle">D</forename><surname>Dopazo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andre</forename><forename type="middle">O</forename><surname>Elhard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alfredo</forename><surname>Falcao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">A</forename><surname>Ferro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rosalba</forename><surname>Friedenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yunguo</forename><surname>Giugno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jenni</forename><forename type="middle">W</forename><surname>Gong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Courtney</forename><forename type="middle">A</forename><surname>Gorospe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dominik</forename><surname>Granville</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthias</forename><surname>Grimm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rosa</forename><forename type="middle">D</forename><surname>Heinig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petteri</forename><surname>Hernansaiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sepp</forename><surname>Hintsanen</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hochreiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chin</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alok</forename><surname>Huska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yunlong</forename><surname>Jaiswal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samuel</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ismeet</forename><surname>Kaski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Suleiman</forename><surname>Kaur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Günter</forename><surname>Ali Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Natalio</forename><surname>Klambauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Krasnogor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Miron</forename><surname>Kuhn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rintu</forename><surname>Bartosz Kursa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Kutum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Inhan</forename><surname>Lazzarini</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Michael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weng Khong</forename><surname>Leung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charlie</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Felipe</forename><forename type="middle">Llinares</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alessandro</forename><surname>López</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Mammana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tom</forename><surname>Mayr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Misael</forename><surname>Michoel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonathan</forename><forename type="middle">D</forename><surname>Mongiovì</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Moore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ravi</forename><surname>Patrick Mpindi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">O</forename><surname>Narasimhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gaurav</forename><surname>Opiyo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrea</forename><forename type="middle">L</forename><surname>Pandey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Juliane</forename><surname>Peabody</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antti</forename><surname>Perner</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Poso</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nbt.3299</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Biotechnology</title>
+		<editor>
+			<persName><forename type="first">Alfredo</forename><surname>Pulvirenti</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Konrad</forename><surname>Rawlik</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Susanne</forename><surname>Reinhardt</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Carol</forename><forename type="middle">G</forename><surname>Riffle</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Douglas</forename><surname>Ruderfer</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Aaron</forename><forename type="middle">J</forename><surname>Sander</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Richard</forename><forename type="middle">S</forename><surname>Savage</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Erwan</forename><surname>Scornet</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Patricia</forename><surname>Sebastian-Leon</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Roded</forename><surname>Sharan</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Carl</forename></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Johann</forename><surname>Simon-Gabriel</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Veronique</forename><surname>Stoven</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Jingchun</forename><surname>Sun</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Jing</forename><surname>Tang</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Ana</forename><forename type="middle">L</forename><surname>Teixeira</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Albert</forename><surname>Tenesa</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Jean</forename></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Philippe</forename><surname>Vert</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Martin</forename><surname>Vingron</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Thomas</forename><surname>Walter</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Krister</forename><surname>Wennerberg</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Sean</forename><surname>Whalen</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zofia</forename><surname>Wisniewska</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yonghui</forename><surname>Wu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Hua</forename><surname>Xu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Shihua</forename><surname>Zhang</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Junfei</forename><surname>Zhao</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">W</forename><forename type="middle">Jim</forename><surname>Zheng</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Dai</forename><surname>Ziwei</surname></persName>
+		</editor>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="933" to="940" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>Prediction of human population responses to toxic compounds by a collaborative competition</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mathew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sonja</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><forename type="middle">D</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anahita</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">King</forename><forename type="middle">Wai</forename><surname>Dastur</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lau</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Drug susceptibility prediction against a panel of drugs using kernelized Bayesian multitask learning</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gonen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/bioinformatics/btu464</idno>
+		<ptr target="http://bioinformatics.oxfordjournals.org/content/30/17/i556.short" />
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<idno type="ISSN">1367- 4803</idno>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="556" to="563" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Deep Learning-book</title>
+		<author>
+			<persName><forename type="first">Ian</forename><surname>Goodfellow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Courville</surname></persName>
+		</author>
+		<idno type="DOI">http://goodfeli.github.io/dlbook/%0A10.1038/nature14539</idno>
+		<ptr target="http://goodfeli.github.io/dlbook/%0Ahttp://dx.doi.org/10.1038/nature14539" />
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<publisher>MIT Press</publisher>
+			<biblScope unit="volume">521</biblScope>
+			<biblScope unit="page">800</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Laurent Jacob and Jean-philippe Vert. Protein -ligand interaction prediction : an improved chemogenomics approach</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theo</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">J</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Graham</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Schubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanne</forename><surname>Aben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuel</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Syd</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Cokelaer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ewald</forename><surname>Van Dyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Holger</forename><surname>Heshani De Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xianming</forename><surname>Heyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Regina</forename><forename type="middle">K</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingsong</forename><surname>Egan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tatiana</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xeni</forename><surname>Mironenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Mitropoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinhua</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tinghu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergi</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maryam</forename><surname>Sayols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Soleimani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nuria</forename><surname>Tamborero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petra</forename><surname>Lopez-Bigas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manel</forename><surname>Ross-Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathanael</forename><forename type="middle">S</forename><surname>Esteller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">A</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Haber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>Lodewyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Wessels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Saez-Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><forename type="middle">J</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Garnett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cell.2016.06.017</idno>
+		<idno>doi: 10.1093/ bioinformatics/btn409</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="2149" to="2156" />
+			<date type="published" when="2008">2016. 2008</date>
+		</imprint>
+	</monogr>
+	<note>A Landscape of Pharmacogenomic Interactions in Cancer Cell</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Justin</forename><surname>Lamb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emily</forename><forename type="middle">D</forename><surname>Crawford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><forename type="middle">W</forename><surname>Modell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Irene</forename><forename type="middle">C</forename><surname>Blat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">J</forename><surname>Wrobel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jim</forename><surname>Lerner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jean-Philippe</forename><surname>Brunet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aravind</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenneth</forename><forename type="middle">N</forename><surname>Ross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Reich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haley</forename><surname>Hieronymus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guo</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">J</forename><surname>Scott A Armstrong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">A</forename><surname>Haggarty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ru</forename><surname>Clemons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steven</forename><forename type="middle">A</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Carr</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.1132939</idno>
+	</analytic>
+	<monogr>
+		<title level="j">The Connectivity Map : Using. Science</title>
+		<idno type="ISSN">1095-9203</idno>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Concentration dependent effects of hydrogen peroxide on lens epithelial cells</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ohguro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fukuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sasabe</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Ophthalmology</title>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Scikit-learn: Machine Learning in Python</title>
+		<author>
+			<persName><forename type="first">Fabian</forename><surname>Pedregosa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gaël</forename><surname>Varoquaux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandre</forename><surname>Gramfort</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vincent</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bertrand</forename><surname>Thirion</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olivier</forename><surname>Grisel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathieu</forename><surname>Blondel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Prettenhofer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ron</forename><surname>Weiss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vincent</forename><surname>Dubourg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jake</forename><surname>Vanderplas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandre</forename><surname>Passos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Cournapeau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthieu</forename><surname>Brucher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthieu</forename><surname>Perrot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Édouard</forename><surname>Duchesnay</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s13398-014-0173-7.2</idno>
+		<ptr target="http://dl.acm.org/citation.cfm?id=2078195%5Cnhttp://arxiv.org/abs/1201.0490" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="2825" to="2830" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Drug Response Prediction as a Link Prediction Problem</title>
+		<author>
+			<persName><forename type="first">Zachary</forename><surname>Stanfield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mustafa</forename><surname>Coskun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Koyuturk</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/srep40321</idno>
+		<ptr target="http://www.nature.com/articles/srep40321" />
+	</analytic>
+	<monogr>
+		<title level="j">Scientific Reports</title>
+		<idno type="ISSN">2045-2322</idno>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">40321</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Aravind</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rajiv</forename><surname>Narayan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steven</forename><forename type="middle">M</forename><surname>Corsello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">D</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ted</forename><forename type="middle">E</forename><surname>Natoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaodong</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><surname>Gould</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">F</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">A</forename><surname>Tubelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacob</forename><forename type="middle">K</forename><surname>Asiedu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">L</forename><surname>Lahr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jodi</forename><forename type="middle">E</forename><surname>Hirschman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zihan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melanie</forename><surname>Donahue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bina</forename><surname>Julian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mariya</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Wadden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ian</forename><forename type="middle">C</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arthur</forename><surname>Liberzon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Courtney</forename><surname>Toder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mukta</forename><surname>Bagul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marek</forename><surname>Orzechowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Oana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Federica</forename><surname>Enache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sarah</forename><forename type="middle">A</forename><surname>Piccioni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">J</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alice</forename><forename type="middle">H</forename><surname>Lyons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alykhan</forename><forename type="middle">F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Angela</forename><forename type="middle">N</forename><surname>Shamji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anita</forename><surname>Brooks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Corey</forename><surname>Vrcic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacqueline</forename><surname>Flynn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">Y</forename><surname>Rosains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roger</forename><surname>Takeda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Desiree</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Justin</forename><surname>Davison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristin</forename><surname>Lamb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Larson</forename><surname>Ardlie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peyton</forename><surname>Hogstrom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathanael</forename><forename type="middle">S</forename><surname>Greenside</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">A</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Serena</forename><surname>Clemons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaoyun</forename><surname>Silver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wen</forename><forename type="middle">Ning</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Willis</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaohua</forename><surname>Read-Button</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">J</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lucienne</forename><forename type="middle">V</forename><surname>Haggarty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jesse</forename><forename type="middle">S</forename><surname>Ronco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stuart</forename><forename type="middle">L</forename><surname>Boehm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">G</forename><surname>Schreiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><forename type="middle">A</forename><surname>Doench</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">E</forename><surname>Bittker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bang</forename><surname>Root</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Todd</forename><forename type="middle">R</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Golub</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cell.2017.10.049</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note>A Next Generation Connectivity Map: L1000 Platform and the First 1,000,000 Profiles. Cell</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Drug sensitivity prediction for cancer cell lines based on pairwise kernels and miRNA profiles</title>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Tan</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/BIBM.2014.6999145</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -2014 IEEE International Conference on Bioinformatics and Biomedicine</title>
+		<meeting>-2014 IEEE International Conference on Bioinformatics and Biomedicine</meeting>
+		<imprint>
+			<publisher>IEEE BIBM</publisher>
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Prediction of anti-cancer drug response by kernelized multi-task learning</title>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Tan</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.artmed.2016.09.004</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence in Medicine</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="page" from="70" to="77" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A link prediction approach to cancer drug sensitivity prediction</title>
+		<author>
+			<persName><forename type="first">Turki</forename><surname>Turki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhi</forename><surname>Wei</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s12918-017-0463-8</idno>
+		<ptr target="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5629619/" />
+	</analytic>
+	<monogr>
+		<title level="j">BMC Systems Biology</title>
+		<idno type="ISSN">1752-0509</idno>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">Suppl 5</biblScope>
+			<biblScope unit="page">94</biblScope>
+			<date type="published" when="2017">10 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">An Ensemble Based Top Performing Approach for NCI-DREAM Drug Sensitivity Prediction Challenge</title>
+		<author>
+			<persName><forename type="first">Qian</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ranadip</forename><surname>Pal</surname></persName>
+		</author>
+		<idno type="DOI">10.1371/journal.pone.0101183</idno>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Improved anticancer drug response prediction in cell lines using matrix factorization with similarity regularization</title>
+		<author>
+			<persName><forename type="first">Lin</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaozhong</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Louxin</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qiang</forename><surname>Gao</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s12885-017-3500-5</idno>
+		<ptr target="http://bmccancer.biomedcentral.com/articles/10.1186/s12885-017-3500-5" />
+	</analytic>
+	<monogr>
+		<title level="j">BMC Cancer</title>
+		<idno type="ISSN">1471-2407</idno>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">513</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Stacked generalization</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>David</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wolpert</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0893-6080(05</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Networks</title>
+		<imprint>
+			<biblScope unit="page" from="80023" to="80024" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">PaDEL-descriptor: An open source software to calculate molecular descriptors and fingerprints</title>
+		<author>
+			<persName><forename type="first">Chun</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yap</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1466" to="1474" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Multitask learning improves prediction of cancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivan</forename><surname>Paskov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hristo</forename><surname>Paskov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alvaro</forename><forename type="middle">J</forename><surname>González</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christina</forename><forename type="middle">S</forename><surname>Leslie</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/srep31619</idno>
+		<ptr target="http://www.nature.com/articles/srep31619" />
+	</analytic>
+	<monogr>
+		<title level="j">Scientific Reports</title>
+		<idno type="ISSN">2045-2322</idno>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">31619</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A novel heterogeneous network-based method for drug response prediction in cancer cell lines</title>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Minghui</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianing</forename><surname>Xi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianghong</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ao</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41598-018-21622-4</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific Reports</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Predicting Anticancer Drug Responses Using a Dual-Layer Integrated Cell Line-Drug Network Model</title>
+		<author>
+			<persName><forename type="first">Naiqian</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haiyun</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jun</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaoqi</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">Shirley</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1371/journal.pcbi.1004498</idno>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

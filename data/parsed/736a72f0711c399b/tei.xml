@@ -1,0 +1,1531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Predicting drug response of tumors from integrated genomic profiles by deep neural networks</title>
+				<funder ref="#_jEPjxXv">
+					<orgName type="full">San Antonio Life Science Institute (SALSI Innovation Challenge</orgName>
+				</funder>
+				<funder ref="#_xdpmcgt">
+					<orgName type="full">NCI Cancer Center Shared Resources (NIH-NCI</orgName>
+				</funder>
+				<funder ref="#_Pqk45Gj">
+					<orgName type="full">National Institutes of Health</orgName>
+					<orgName type="abbreviated">NIH</orgName>
+				</funder>
+				<funder ref="#_CM2NCkf">
+					<orgName type="full">CPRIT</orgName>
+				</funder>
+				<funder ref="#_zneB2dZ">
+					<orgName type="full">unknown</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Yu-Chiao</forename><surname>Chiu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Greehey Children&apos;s Cancer Research Institute</orgName>
+								<orgName type="institution" key="instit2">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hung-I</forename><forename type="middle">Harry</forename><surname>Chen</surname></persName>
+							<email>cheny8@uthscsa.edu</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Greehey Children&apos;s Cancer Research Institute</orgName>
+								<orgName type="institution" key="instit2">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Computer Engineering</orgName>
+								<orgName type="institution">University of Texas at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78249</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Tinghe</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Computer Engineering</orgName>
+								<orgName type="institution">University of Texas at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78249</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Songyao</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Computer Engineering</orgName>
+								<orgName type="institution">University of Texas at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78249</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">School of Automation</orgName>
+								<orgName type="laboratory">Laboratory of Information Fusion Technology of Ministry of Education</orgName>
+								<orgName type="institution">Northwestern Polytechnical University</orgName>
+								<address>
+									<postCode>710072</postCode>
+									<settlement>Xi&apos;an</settlement>
+									<region>Shaanxi</region>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Aparna</forename><surname>Gorthi</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Greehey Children&apos;s Cancer Research Institute</orgName>
+								<orgName type="institution" key="instit2">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Li-Ju</forename><surname>Wang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Greehey Children&apos;s Cancer Research Institute</orgName>
+								<orgName type="institution" key="instit2">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yufei</forename><surname>Huang</surname></persName>
+							<email>yufei.huang@utsa.edu</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Computer Engineering</orgName>
+								<orgName type="institution">University of Texas at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78249</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Epidemiology and Biostatistics</orgName>
+								<orgName type="institution">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yidong</forename><surname>Chen</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Greehey Children&apos;s Cancer Research Institute</orgName>
+								<orgName type="institution" key="instit2">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Epidemiology and Biostatistics</orgName>
+								<orgName type="institution">University of Texas Health Science Center at San Antonio</orgName>
+								<address>
+									<addrLine>San Antonio</addrLine>
+									<postCode>78229</postCode>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Predicting drug response of tumors from integrated genomic profiles by deep neural networks</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">5D63937185565531194F26B1D519F6BF</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>deep neural networks</term>
+					<term>pharmacogenomics</term>
+					<term>drug response prediction</term>
+					<term>Cancer Cell Line Encyclopedia</term>
+					<term>Genomics of Drug Sensitivity in Cancer</term>
+					<term>The Cancer Genome</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>training, partly replaced by principal components, and built on individual types of input data. We then applied the model to predict drug response of 9,059 tumors of 33 cancer types. Using per-cancer and pan-cancer settings, the model predicted both known, including EGFR inhibitors in non-small cell lung cancer and tamoxifen in ER+ breast cancer, and novel drug targets, such as vinorelbine for TTN-mutated tumors. The comprehensive analysis further revealed the molecular mechanisms underlying the resistance to a chemotherapeutic drug docetaxel in a pan-cancer setting and the anti-cancer potential of a novel agent, CX-5461, in treating gliomas and hematopoietic malignancies.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusions</head><p>Here we present, as far as we know, the first DNN model to translate pharmacogenomics features identified from in vitro drug screening to predict the response of tumors. The results covered both well-studied and novel mechanisms of drug resistance and drug targets.</p><p>Our model and findings improve the prediction of drug response and the identification of novel therapeutic options.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Abstract</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Background</head><p>The study of high-throughput genomic profiles from a pharmacogenomics viewpoint has provided unprecedented insights into the oncogenic features modulating drug response. A recent study screened for the response of a thousand human cancer cell lines to a wide collection of anti-cancer drugs and illuminated the link between cellular genotypes and vulnerability. However, due to essential differences between cell lines and tumors, to date the translation into predicting drug response in tumors remains challenging. Recently, advances in deep neural networks (DNNs) have revolutionized bioinformatics and introduced new techniques to the integration of genomic data. Its application on pharmacogenomics may fill the gap between genomics and drug response and improve the prediction of drug response in tumors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results</head><p>We proposed a DNN model to predict drug response based on mutation and expression profiles of a cancer cell or a tumor. The model contains three subnetworks, i) a mutation encoder pre-trained using a large pan-cancer dataset to abstract core representations of high-dimension mutation data, ii) a pre-trained expression encoder, and iii) a drug response predictor network integrating the first two subnetworks. Given a pair of mutation and expression profiles, the model predicts IC 50 values of 265 drugs. We trained and tested the model on a dataset of 622 cancer cell lines and achieved an overall prediction performance of mean squared error at 1.96 (log-scale IC 50 values). The performance was superior in prediction error or stability than two classical methods (linear regression and support vector</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Background</head><p>Due to tumor heterogeneity and intra-tumor sub-clones, an accurate prediction of drug response and an identification of novel anti-cancer drugs remain challenging tasks <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>.</p><p>Pharmacogenomics, an emerging field studying how genomic alterations and transcriptomic programming determine drug response, represents a potential solution <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b3">4]</ref>. For instance, recent reports identified mutation profiles associated with drug response both in tumor type-specific and pan-cancer manners <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b5">6]</ref>. As drug response data of large patient cohorts are scarcely available, large-scale cell line-based screening can greatly facilitate the study of pharmacogenomics in cancer. Recently, the Genomics of Drug Sensitivity in Cancer (GDSC) Project proposed a comprehensively landscape of drug response of ~1,000 human cancer cell lines to 265 anti-cancer drugs and unveiled crucial oncogenic aberrations related to drug sensitivity <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b7">8]</ref>. Because of the fundamental differences between in vitro and in vivo biological systems, a translation of pharmacogenomics features derived from cells to the prediction of drug response of tumors is to our knowledge not yet realized.</p><p>Deep learning (DL) is the state-of-the-art machine learning technology for learning knowledge from complex data and making accurate predictions. It features the ability to learn the representation of data without the need for prior knowledge and an assumption on data distributions. The DL technology has been successfully applied to bioinformatics studies of regulatory genomics, such as predicting binding motifs <ref type="bibr" target="#b8">[9]</ref>, investigating DNA variants <ref type="bibr" target="#b9">[10]</ref>, deciphering single-cell omics <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b11">12]</ref>, and extraction of genomics features for survival prediction <ref type="bibr" target="#b12">[13]</ref>. In pharmaceutical and pharmacogenomics research, reports have shown its ability to predict drug-target interactions <ref type="bibr" target="#b13">[14]</ref>, screen for novel anti-cancer drugs <ref type="bibr" target="#b14">[15]</ref>, and predict drug synergy <ref type="bibr" target="#b15">[16]</ref>. Nevertheless, data complexity and the requirement of large training datasets have limited its application to integrate genomics data and comprehensively predict drug response, hindering the translation to precision oncology.</p><p>Addressing the unmet demands, the present study is aimed to predict the response of tumors to anti-cancer drugs based on genomic profiles. We designed a deep neural network </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Datasets</head><p>We downloaded gene-level expression data of 935 cell lines of the Cancer Cell Line Encyclopedia (CCLE) and 11,078 TCGA pan-cancer tumors from the CTD 2 Data Portal <ref type="bibr" target="#b16">[17]</ref> and UCSC TumorMap <ref type="bibr" target="#b17">[18]</ref>, respectively. Given the total numbers of cell lines, tumors, and genes as C, T, G, respectively, we metricized the expression data by ! ""#! = %&amp;' ( )*+ ,,.</p><p>//01 + 1 , where )*+ ,,. //01 is the number of transcripts per million of gene g ( ' ∈ 1, 5 ) in cell line c ( 6 ∈ 1, 7 ), and ! 8"9: = %&amp;' ( )*+ ,,; &lt;/=&gt; + 1 , where</p><p>)*+ ,,; &lt;/=&gt; denotes the number of transcripts per million of the same gene in tumor t () ∈ 1, ? ). Genes with low information burden (mean &lt; 1 or st. dev. &lt; 0.5) among TCGA samples were removed. Mutation Annotation Format (MAF) files of mutation data were downloaded directly from CCLE (1,463 cells) <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b19">20]</ref> and TCGA databases (10,166 tumors). Here we only considered four types of nonsynonymous mutations, including missense and nonsense mutations, frameshift insertions and deletions. Thus, we had binary matrices of @ ""#! = + ,,. //01 and @ 8"9: = + ,,; &lt;/=&gt; , where + ,,. //01 and + ,,; &lt;/=&gt; are the mutation states (1 for mutation and 0 for wildtype) of gene g in c and t, respectively. Genes with no mutations in CCLE and TCGA samples were eliminated.</p><p>We also downloaded drug response data of 990 CCLE cell lines to 265 anti-cancer drugs measured by the half maximal inhibitory concentration (IC 50 ) from the GDSC Project <ref type="bibr" target="#b6">[7]</ref>. IC 50 were measured in µM and represented in log scale (i.e., A" ""#! = %&amp;' BC D6 E,. //01 , with d denoting the d-th drug and F ∈ 1, G ) and missing data were imputed by a weighted mean of IC 50 of 5 nearest drugs using R packages VIM and laeken <ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b21">22]</ref>. In this study, we analyzed 622 cell lines with available expression, mutation, and IC 50 data and 9,059 tumors with expression and mutation profiles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>General settings of DNNs and computation environment</head><p>DNN training in this study were performed using the python library Keras 1.2.2 with TensorFlow backend. We used fully (or densely) connected layers for all networks. At a neuron j, its output H I is calculated by</p><formula xml:id="formula_0">H I = J K LI M L L + N I<label>(1)</label></formula><p>, where M L is the output of neuron i at the previous layer of j, K LI and N I denote the synaptic weight and bias, respectively, and J represents an activation function. The notation of all neurons at a layer can thus be written as</p><formula xml:id="formula_1">O = J PQ + R .<label>(2)</label></formula><p>During training, synaptic weights and biases are adjusted to minimize a loss function. We hereafter refer to the two parameters as synaptic parameters because they represent the model and can be used to transfer a learned model to another. In this study, models were optimized using the Adam optimizer with a loss function of mean squared error (MSE).</p><p>We used the He's uniform distribution <ref type="bibr" target="#b22">[23]</ref> to initialize autoencoders and the Prediction (P) network, while the mutation encoder (M enc ) and expression encoder (E enc ) in the complete model were initialized by the synaptic parameters learned from the pre-training on TCGA data. Neuron activation function was set as rectified linear unit (ReLU) except for the output layer of P as linear in order to better fit the distribution of log-scale IC 50 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Overview of the proposed DNN model</head><p>The proposed DNN model was developed to predict IC 50 values based on genomic profiles of a cell or a tumor. Given the pair of mutation and expression vectors of sample c, @ ""#! : , 6 , ! ""#! : , 6 , the model predicts a D-length vector of IC 50 , A" ""#! 6 , as an output. As shown in Figure <ref type="figure" target="#fig_3">1</ref>, the model is composed of three networks: i) a mutation encoder (M enc ), ii) an expression encoder (E enc ), and iii) a prediction feedforward network (P). The first and second components are the encoding parts of two autoencoders pretrained using TCGA data to learn the high-order features of mutation and expression data into a lower dimensional representation. The encoded representation of mutation and expression profiles were linked into P and the entire model was trained on CCLE data to make prediction of IC 50 values. Details of our model are described below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Pre-training of mutation and expression encoders</head><p>Autoencoder is an unsupervised DL architecture that includes an asymmetric pair of encoder and decoder. By minimizing the loss between input and reconstructed (i.e., decoded) data, it reduces the dimension of complex data and captures crucial features at the bottleneck layer (the layer between encoder and decoder) (Figure <ref type="figure" target="#fig_3">1B</ref>, top and bottom panels). We pre-trained an autoencoder on each of the TCGA mutation and expression datasets to optimize the capability to capture high-order features. To determine the optimized architecture, we adopted a hyper-parameter optimization method, namely hyperas <ref type="bibr" target="#b23">[24]</ref>, to select i) number of neurons at the 1 st layer (4096, 2048, or 1024), ii) number of neurons at the 2 nd layer (512, 256, or 128), iii) number of neurons at the 3 rd layer (the bottleneck layer; 64, 32, or 16), and iv) batch size (128 or 64). Each combination was trained for 20 epochs; the best-performing model was re-run for 100 epochs and the synaptic parameters were saved.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Complete prediction network</head><p>In our complete model, encoders of the two optimized autoencoders, i.e., M enc and E enc , were linked to P to make predictions of IC 50 (Figure <ref type="figure" target="#fig_3">1</ref>). P is a 5-layer feedforward neural network, including the first layer merging output neurons of the two encoders, three fully connected layers, and the last layer of d neurons generating IC 50 values of d drugs (Figure <ref type="figure" target="#fig_3">1B</ref>, orange box). In the complete model, architecture (number of layers and neurons at each layer) of M enc and E enc were fixed; their synaptic parameters were initialized using the parameters obtained from pre-training in TCGA and updated during the training process.</p><p>P was randomly initialized. We trained the entire model using CCLE data, with 80%, 10%, and 10% of samples as training, validation, and testing sets, respectively. We note the validation dataset was used to update model parameters but to stop the training process when the loss in validation set had stopped decreasing for 3 consecutive epochs to avoid model overfitting. Performance of the model was evaluated using the testing samples, i.e., UVW A" ""#! : , " XYZX , A" ""#! : , " XYZX , where " XYZX denotes the test set of cell lines.</p><p>We applied the final model to predict drug response of TCGA tumors. For a tumor t, @ 8"9: : , ) , ! 8"9: : , ) was fed into the model and A" 8"9: : , ) was calculated. A high predicted IC 50 indicates an adverse response of a patient to the corresponding drug.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Comparison to other model designs</head><p>Performance of the complete neural network model was compared to four different DNN designs. First, to assess the effect of TCGA pre-training on M enc and E enc , we randomly initialized both encoders using the He's uniform distribution and calculated MSE of the entire model. Second, dimension reduction of the M enc and E enc networks was replaced by principal component analysis (PCA). Last two models were built without M enc or E enc to study whether they jointly improved the performance. In each iteration, CCLE samples were randomly assigned to training (80%), validation (10%), and testing (10%) and each model was trained and tested. Performance in terms of the number of consumed epochs and MSE in IC 50 were summarized and compared across the 100 iterations. We also analyzed two classical prediction methods, multivariate linear regression and regularized support vector machine (SVM). For each method, top 64 principle components of mutations and gene expression were merged to predict IC 50 values of all (using linear regression) or individual drugs (SVM).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results and Discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model construction and evaluation in CCLE</head><p>The study is aimed to predict drug response (measured as log-scale IC 50 values) using genome-wide mutation and expression profiles. We included mutation and expression profiles of 622 CCLE cell lines of 25 tissue types and 9,059 TCGA tumors of 33 cancer types. After data preprocessing, 18,281 and 15,363 genes with mutation and expression data, respectively, available in both CCLE and TCGA samples were analyzed. Log-scale IC 50 values of all cell lines in response to 265 anti-cancer drugs were collected from the GDSC Project <ref type="bibr" target="#b6">[7]</ref>. After imputation of missing values, the range of log IC 50 was from -9.8 to 12.8 with a standard deviation of 2.6 (Figure <ref type="figure" target="#fig_4">2A</ref>). We designed a DNN model with three building blocks: 4-layer M enc and 4-layer E enc for capturing high-order features and reducing dimensions of mutation and expression data, and a 5-layer prediction network P integrating the mutational and transcriptomic features to predict IC 50 of multiple drugs (Figure <ref type="figure" target="#fig_3">1</ref>). To make the best use of the large collection of TCGA pan-cancer data, we pretrained an autoencoder for each data type and extracted the encoders, M enc (number of neurons at each layer,</p><p>18,281, 1,024, 256, and 64) and E enc (15,363, 1,024, 256, and 64), to construct our final model (detailed in Methods). Output neurons of the two encoders were linked to P (number of neurons at each layer, 64+64, 128, 128, 128, and 265), of which the last layer outputs predicted IC 50 . Architecture of the complete neural networks is shown in Figure 1B. After pre-training M enc and E enc components, we trained the entire model using 80% of CCLE samples together with a validation set of 10% of samples to avoid overfitting. The remaining samples (64 cells; 16,960 cell-drug combinations) were used for testing. The model achieved an overall MSE in IC 50 of 1.53, corresponding to 1.48 and 1.98 in training/validation and testing data, respectively. Generally, the distribution of predicted IC 50 was similar to original data (Figure 2A-B), while the two modes of original data seemed to be enhanced (highlighted in Figure 2A). In both training/validation and testing data, the prediction was highly consistent to the true data in terms of IC 50 values (Pearson correlation; [ \ ) and rank of drugs (Spearman correlation; [ ] ) of a sample ( [ \ ∈ 0.70,0.96 , [ ] ∈ 0.62,0.95 , and all P-values &lt; 1.0×10 -29 ; Figure 2C-D). Of note, correlations achieved in training/validation and testing samples were highly comparable (Figure 2C-D), confirming the performance of our model. Performance comparisons to other designs To test the stability of our model, we ran 100 training processes each of which training, validation, and testing cells were reselected. Overall, the model converged in 14.0 epochs (st. dev., 3.5; Table 1) and achieved an MSE of 1.96 in testing samples (st. dev., 0.13; Figure 2E and Table 1). We compared the performance to linear regression, SVM, and four analog DNNs of our model, including random initialization (identical architecture, but without TCGA pre-training of M enc and E enc ), PCA (M enc and E enc each replaced by top 64 principal components of mutation and expression data), M enc only (E enc removed from the model), and E enc only (M enc removed from the model). The two classical methods seemed to suffer from high MSE in testing samples (10.24 and 8.92 for linear regression and SVM, respectively; Table 1). Our model also outperformed DNNs with random initialization and PCA in MSE (difference in medians, 0.34 and 0.48; Figure 2E and Table 1) and stability (st. dev. of MSE in testing samples = 0.13, 1.21, and 0.17 for our model, random initialization, and PCA, respectively; Figure <ref type="figure" target="#fig_4">2E</ref>). While the E enc -only model achieved similar performance to our model (difference in medians = 0.0042; Figure <ref type="figure" target="#fig_4">2E</ref> and Table <ref type="table">1</ref>), the addition of M enc seemed to bring faster convergence (difference in medians = 3;</p><p>Table <ref type="table">1</ref>). Our data echoed the biological premise that gene expressions are more directly linked to biological functions and thus richer in information burden than mutations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Associations of gene mutations to predicted drug response in TCGA -per-cancer study</head><p>In search of effective anti-cancer drugs in tumors, we applied the constructed model directly to predict the response of 9,059 TCGA samples to the 265 anti-cancer drugs. The predicted IC 50 values followed a similar distribution to CCLE cells (Figure <ref type="figure" target="#fig_4">2A</ref>, blue line).</p><p>Realizing the different nature of cell lines and tumors, we started by examining several drugs with well-known target genes. As shown in Figure <ref type="figure" target="#fig_5">3A</ref>, breast invasive carcinoma (BRCA) with positive estrogen receptor (ER; assessed by immunohistochemistry by TCGA) responded to a selective estrogen receptor modulator, tamoxifen, significantly better than ER-negative patients (t-test P = 2.3×10 -4 ). Also, two EGFR inhibitors, afatinib and gefitinib, achieved better performance in non-small cell lung cancers (NSCLC) with mutated EGFR (P = 2.0×10 -7 and 6.6×10 -3 ). While the promising results on these wellcharacterized drugs showed the applicability of our model to tumors, we noted that the magnitude of differences in predicted IC 50 levels was modest, underlining the fundamental differences between cell lines and tumors. In order to prioritize mutations underlying drug response, we systematically analyzed all cancer-mutation-drug combinations and tested the significance of differences in IC 50 between samples with and without a mutation for each cancer. Here only genes with a mutation rate higher than 10% and harbored by at least 10 patients in a cancer were analyzed. With a stringent criterion of Bonferroni-adjusted t-test P &lt; 1.0×10 -5 , we identified a total of 4,453 significant cancer-mutation-drug combinations involving 256 drugs and 169 cancer-mutation combinations (Figure <ref type="figure" target="#fig_5">3B</ref>).</p><p>The top three combinations were TP53 mutations in lung adenocarcinoma (LUAD; modulating response to 235 drugs), lung squamous cell carcinoma (LUSC; 228 drugs), and stomach adenocarcinoma (STAD; 224 drugs) (Table <ref type="table">2</ref>). TP53 was one of the most frequently mutated and well-studied genes in many cancers. The mutation has been shown to be associated with cancer stem cells and resistance functions and thus regulates drug resistance <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b25">26]</ref>. For instance, our data indicated its associations with resistance of a PI3Kβ inhibitor, TGX221, in 9 cancers including low-grade glioma (LGG; mean difference in IC 50 (ΔIC 50 ) = 0.95; P = 2.2×10 -109 ; Figure <ref type="figure" target="#fig_5">3C</ref>) and resistance of vinorelbine in BRCA (ΔIC 50 = 0.68; P = 7.4×10 -71 ; Figure <ref type="figure" target="#fig_5">3C</ref>) and 6 other cancers. We also identified gene mutations that sensitized tumors to a large number of drugs, such as IDH1 (138 drugs;</p><p>Table <ref type="table">2</ref>). IDH1 was the most frequently mutated gene in LGG (77.3% in our data; Table <ref type="table">2</ref>) and known to regulate cell cycle of glioma cells and enhance the response to chemotherapy <ref type="bibr" target="#b26">[27]</ref>. Our finding agreed with the report and showed that IDH1 mutation dramatically reduced IC 50 of chemotherapeutic agents, e.g., doxorubicin in LGG (ΔIC 50 = -0.85; P = 3.6×10 -71 ; Figure <ref type="figure" target="#fig_5">3C</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Associations of gene mutations to predicted drug response in TCGA -pan-cancer study</head><p>We also carried out a study to explore how gene mutations affect drug response in a pancancer setting. The analysis was focused on 11 genes with mutation rates higher than 10% across all TCGA samples (Table <ref type="table">3</ref>). Using an identical criterion, we identified 2,119 significant mutation-drug pairs composed of 256 drugs, among which 1,882 (88.8%) and 237 (11.2%) were more resistant and sensitive in mutated samples, respectively (Figure <ref type="figure" target="#fig_6">4A</ref> and Table <ref type="table">3</ref>). TP53 (251 drugs), CSMD3 (223), and SYNE1 (218), TTN (206), and RYR2</p><p>(199) were the top drug response-modulating genes (Table <ref type="table">3</ref>). Among them, TP53 (9 sensitive and 242 resistant drugs) and TTN mutations (44 and 162) were associated with the most numbers of resistant and sensitive drugs, respectively (Table <ref type="table">3</ref>). Thus, we further investigated the drug response and their association with status of the 2 genes. Many of the drugs with large TP53 mutations-modulated changes in ΔIC 50 (|ΔIC 50 | ≥ 0.7; Figure <ref type="figure" target="#fig_6">4A-B</ref>)</p><p>were previously studied in different cancer types by in vitro models. For instance, wildtype TP53 is required in the anti-cancer actions of CX-5461 <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref> and sorafenib <ref type="bibr" target="#b29">[30]</ref> (both P of ΔIC 50 ~0 in our data; Figure <ref type="figure" target="#fig_6">4B</ref>), sensitizes various cancer cells to bortezomib <ref type="bibr" target="#b30">[31]</ref> (P = 4.4×10 -308 ; Figure <ref type="figure" target="#fig_6">4B</ref>), and enhances phenformin-induced growth inhibition and apoptosis <ref type="bibr" target="#b31">[32]</ref> (P =2.0×10 -241 ; Figure <ref type="figure" target="#fig_6">4B</ref>). As for previously less explored TTN mutations, the longest gene in human genome known to carry large variations, our data indicated that perhaps TNN acts as a marker gene of tumors sensitized to chemotherapeutic agents such as vinorelbine (P ~0; Figure <ref type="figure" target="#fig_6">4C</ref>) and a potential anti-cancer drug epothilone B (P =2.5×10 - 253 ; Figure <ref type="figure" target="#fig_6">4C</ref>). Taken together findings from our per-and pan-cancer studies, we have demonstrated the applicability of our model to predict drug response of tumors and ability to unveil novel and well-studied genes modulating drug response in cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Pharmacogenomics analysis of docetaxel and CX-5461 in TCGA</head><p>To unveil the pharmacogenomics landscape of drugs, a comprehensive study of mutation and expression profiles associated with resistance of a drug in a pan-cancer setting was carried out.</p><p>Here we took two drugs as demonstrating examples, a widely used chemotherapeutic agent docetaxel and a novel anti-cancer drug CX-5461 currently under investigation in several cancers. For each drug, pan-cancer patients predicted to be very sensitive and resistant (with IC 50 in bottom and top 1%, n = 91 in each group; Figure 5A, left panel) were compared for cancer type composition, mutation rates, and differential gene expression. Top cancer types of docetaxel-sensitive patients were among esophageal carcinoma (ESCA; 25.3%), cervical and endocervical cancer (CESC; 13.2%), and head and neck squamous cell carcinoma (HNSC; 9.9%) (Figure 5B, left panel), while top resistant patients were mainly liver hepatocellular carcinoma (LIHC; 42.9%), LGG (26.4%), and glioblastoma multiforme (GBM; 12.1%) (Figure 5B, left panel). Top 10 gene</p><p>with most changed mutation rates between the two groups of patients are listed in Figure <ref type="figure" target="#fig_7">5C</ref>. On average, each sensitive tumor harbored 2.7 mutations among these genes, much higher than 0.51 observed in the resistant group (Figure <ref type="figure" target="#fig_7">5C</ref>, left panel), implying tumors with higher mutation burdens in crucial genes may be more vulnerable to the treatment. Of note, a great majority of the most significantly differentially expressed genes were upregulated in sensitive patients (Figure <ref type="figure" target="#fig_7">5C</ref>, left panel). We performed functional annotation analysis of the top 300 genes in Gene Ontology terms of biological processes and molecular functions using the Database for Annotation, Visualization and Integrated Discovery (DAVID) v6.7 <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b33">34]</ref>. While we did not observe any cluster of functions related to microtubule, through which docetaxel physically binds to the cell and regulate the cell cycle <ref type="bibr" target="#b34">[35]</ref>, these drug sensitivity-related genes were indeed predominantly enriched in functions governing the mitotic cell cycle (Table <ref type="table">4</ref>). The observation largely reflected the nature of the chemotherapeutic agent to target highly proliferative cells and the dependence of drug response on the ability to pass cell-cycle checkpoints. In addition to docetaxel, we analyzed a novel anti-cancer agent, CX-5461. This inhibitor of ribosomal RNA synthesis has been shown with anti-cancer properties in cancer cells <ref type="bibr" target="#b35">[36,</ref><ref type="bibr" target="#b36">37]</ref> and is now under phase I/II clinical trial in solid tumors (NCT number, NCT02719977). In hematopoietic malignancies, it was recently shown to outperform standard chemotherapy regimen in treating aggressive acute myeloid leukemia (LAML) <ref type="bibr" target="#b28">[29]</ref>, and its anti-cancer effects were dependent on wild-type TP53 <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref>. Concordantly, in our data, LAML and lymphoid neoplasm diffuse large B-cell lymphoma (DLBC) jointly accounted for 45.1%  <ref type="table">5</ref>). Altogether, the pharmacogenomics analyses revealed well-known resistance mechanisms of docetaxel and shed light on the potential of CX-5461 on hematopoietic malignancies and LGG.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Limitations and future work</head><p>DNN is unquestionably one of the hottest computational breakthroughs in the era of big data. Although promising results of our and other studies have demonstrated its ability of solving challenging bioinformatic tasks, the method has several fundamental limitations. As the availability of more large-scale drug screening data, we expect the proposed model to make even more accurate predictions and unveil subtle pharmacogenomics features. Furthermore, our model may incorporate additional genomic mutation information, such as copy number alterations, into data matrices @ 8"9: and @ ""#! , to enrich the complexity of tumor mutation for model training and further reduce the training MSE. Because of the nature of DNNs as black boxes, the interpretability of results is typically limited. In this study, by integrating genomics profiles to the predictions, we systematically investigated how single gene mutations, as well as the interplay between cancer type, mutations, and biological functions, were associated with the predicted drug response. With the advances in DNN, several novel methods were recently proposed to extract features learned by neural networks, such as network-centric approach <ref type="bibr" target="#b38">[39]</ref> and decomposition of predicted outputs by backpropagation onto specific input features <ref type="bibr" target="#b39">[40]</ref> (reviewed in <ref type="bibr" target="#b40">[41]</ref>). Future works may incorporate these methods to provide a landscape of pharmacogenomics and further reveal novel oncogenic genomics profiles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusions</head><p>This study addresses the need for a translation of pharmacogenomics features identified from pre-clinical cell line models to predict drug response of tumors. We developed a DNN model capable of extracting representative features of mutations and gene expression, and bridging knowledge learned from cancer cell lines and transferring to tumors. We showed the reliability of the model and its superior performance than four different methods.</p><p>Applying our model to the TCGA collection of tumors, we identified both well-studied and novel resistance mechanisms and drug targets. Overall, the proposed model is widely applicable to incorporate other omics data and to study a wider range of drugs, paving the way to the realization of precision oncology.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Tables</head><p>Table 1 -Performance of our DNNs and other models Measurement Model Linear regression SVM Random initialization PCA E enc only M enc only Median MSE in testing samples a 1.96 10.24 b 8.92 c 2.30 2.44 1.96 3.09 Median number of training epochs a 14 ----9 17 9.5 a Median of 100 shuffles of training, validation, and testing samples b Result of one multivariate regression model c Results of 265 SVM models, each predicting IC 50 for a drug</p><p>Table 3 -Top gene mutations modulating pan-cancer drug response Gene Mutation rate Num. modulated drugs Num. sensitive drugs Num. resistant drugs TP53 34.3% 251 9 242 CSMD3 12.6% 223 12 211 SYNE1 11.5% 218 10 208 TTN 30.2% 206 44 162 RYR2 11.9% 199 14 185 USH2A 10.7% 191 12 179 LRP1B 12.1% 188 19 169 FLG 11.0% 183 9 174 MUC16 19.5% 161 51 110 PCLO 10.5% 155 12 143 PIK3CA 11.7% 144 45 99</p><p>Table 4 -Top GO clusters enriched in top 300 differentially expressed genes associated with predicted response to docetaxel GO ID GO term Num. genes P-value Cluster 1 (enrichment score: 10.89) GO:0007049 cell cycle 40 1.13×10 -10 GO:0022402 cell cycle process 33 3.51×10 -10 GO:0000279 M phase 32 1.01×10 -15 Cluster 2 (enrichment score: 3.96) GO:0000166 nucleotide binding 56 1.95×10 -4 GO:0032553 ribonucleotide binding 54 2.74×10 -6 GO:0032555 purine ribonucleotide binding 54 2.74×10 -6 Cluster 3 (enrichment score: 3.45) GO:0000278 mitotic cell cycle 26 1.01×10 -9 GO:0051726 regulation of cell cycle 15 8.48×10 -4 GO:0007346 regulation of mitotic cell cycle 12 3.09×10 -5 Cluster 4 (enrichment score: 2.47) GO:0051327 M phase of meiotic cell cycle 8 9.46×10 -4 GO:0007126 meiosis 8 9.46×10 -4 GO:0051321 meiotic cell cycle 8 1.07×10 -3 Cluster 5 (enrichment score: 2.07) GO:0051276 chromosome organization 13 8.64×10 -2 GO:0007059 chromosome segregation 6 9.34×10 -3 GO:0000070 mitotic sister chromatid segregation 5 2.45×10 -3</p><p>Each cluster is represented by the largest three GO terms.</p><p>Table 5 -Top GO clusters enriched in top 300 differentially expressed genes associated with predicted response to CX-5461 GO ID GO term Num. genes P-value Cluster 1 (enrichment score: 8.65) GO:0043062 extracellular structure organization 17 2.93×10 -9 GO:0030198 extracellular matrix organization 15 4.55×10 -10 GO:0005201 extracellular matrix structural constituent 13 2.64×10 -9 Cluster 2 (enrichment score: 6.13) GO:0008544 epidermis development 18 2.35×10 -9 GO:0007398 ectoderm development 18 7.71×10 -9 GO:0030855 epithelial cell differentiation 8 4.60×10 -3 Cluster 3 (enrichment score: 4.23) GO:0030199 collagen fibril organization 9 7.34×10 -9 GO:0032963 collagen metabolic process 6 5.37×10 -5 GO:0044259 multicellular organismal macromolecule metabolic process 6 8.96×10 -5 Cluster 4 (enrichment score: 2.84) GO:0006928 cell motion 18 8.22×10 -4 GO:0016477 cell migration 13 9.51×10 -4 GO:0048870 cell motility 13 2.33×10 -3 Cluster 5 (enrichment score: 2.60) GO:0060429 epithelium development 12 6.39×10 -4 GO:0030855 epithelial cell differentiation 8 4.60×10 -3 GO:0009913 epidermal cell differentiation 6 4.49×10 -3</p><p>Each cluster is represented by the largest three GO terms. (A) Model overview. Mutation and expression data of TCGA (n = 9,059) were used to pretrain two autoencoders (highlighted in blue and green) to extract data representations. Encoders of the autoencoders, namely mutation encoder M enc and expression encoder E enc , were linked to a prediction network (P; denoted in orange) and the entire model (i.e., M enc , E enc , and P) was trained using CCLE data (n = 622, of which 80%, 10%, and 10% used as training, validation, and testing, respectively) to predict the response to 265 drugs. (B) Architecture of the neural networks. Numbers denote the number of neurons at each layer. (A) Density plots of true (with missing values), imputed, and predicted IC 50 data of CCLE and predicted data of TCGA. (B) Heatmaps of imputed and predicted IC 50 data of CCLE. (C, D) Sample-wise Pearson and Spearman correlation between imputed and predicted IC 50 data of CCLE samples. (E) Mean square errors of our and 4 other DNN-based designs. The proposed model was compared to a model with no TCGA pre-training (with encoders randomly initialized; abbreviated as Rand Init), with encoders substituted by PCAs, with E enc only (no M enc ), and with M enc only (no E enc ). Each model was trained for 100 times, each of which CCLE samples were randomly assigned into training, validation, and testing sets. (A) Predicted IC 50 of TCGA tumors with known drug targets in a cancer type. Significance of ΔIC 50 between tumors with and without a gene mutation was assessed by the two-tailed t-test. (B) Gene mutations significantly associated with predicted drug response in a cancer type. Middle panel, significant mutation-drug pairs in each cancer (with Bonferroni adjusted t-test P &lt; 1.0×10 -5 ). Nodes labeled with names are those with extreme significance (adjust P &lt; 1.0×10 -60 ) and magnitude of ΔIC 50 (|ΔIC 50 | ≥ 0.5). Top 10 cancer types with the largest sample sizes are denoted by node color and shape. (C) Box plots of three mutationdrug examples in BRCA and LGG. pan-cancer study (A) Gene mutations significantly associated with predicted drug response across all TCGA samples. Here only the 11 genes with mutation rates larger than 10% were analyzed. Nodes labeled with names are those with extreme significance (adjust P &lt; 1.0×10 -200 ) and magnitude of ΔIC 50 (ΔIC 50 ≥ 0.7 or ΔIC 50 &lt; 0). (B, C) Examples of drugs modulated by TP53 and TTN mutations, respectively. (A) Waterfall plot of predicted IC 50 for the two drugs across all TCGA samples. Tumors with extreme IC 50 values (top and bottom 1%) were denoted as the resistant and sensitive groups. (B) Cancer type composition of resistant and sensitive samples. Cancer types accounted for at least 10% in any group are highlighted in bold and shown in (C). (C)  A B B Prediction network (P) CCLE TCGA CCLE TCGA Drug response Mutation encoder (M enc )</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Figures</head><p>Mutation decoder TCGA pretraining CCLE training/testing Expression encoder (E enc ) Expression decoder Mutation autoencoder Expression autoencoder Prediction network (P) ... ... ... . . . Output layer ... Merge layer ... Mutation encoder (M enc ) ... ... Input layer Hidden layers Gene mutation status Expression encoder (E enc ) ... ... ... Input layer Hidden layers Hidden layers Predicted IC 50 values Gene expression levels ... ... Mutation autoencoder ... ... Input layer Encoder layers Decoder layers Output layer TCGA pretraining Bottleneck layer ... ... ... ... ... Expression autoencoder ... ... Input layer Encoder layers Decoder layers Output layer TCGA pretraining Bottleneck layer ... ... ... ... ... 1024 256 64 18281 1024 256 64 15363 128 128 128 128 A B EGFR-mut (n=56) EGFR-wt (n=937) GEFITINIB in NSCLC P=6.59x10 -3 0 1 2 Predicted log IC 50 (µM) EGFR-mut (n=56) EGFR-wt (n=937) AFATINIB in NSCLC P=1.97x10 -7 0 1 2 Predicted log IC 50 (µM) TP53-mut (m=227) TP53-wt (n=274) 3 4 5 6 TGX221 in LGG P=2.22x10 -109 Predicted log IC 50 (µM) TP53-mut (n=316) TP53-wt (n=664) -4 -3 -2 -1 VINORELBINE in BRCA P=7.37x10 -71 Predicted log IC 50 (µM) IDH1-mut (n=387) IDH1-wt (n=114) -3 -2 -1 DOXORUBICIN in LGG P=3.55x10 -71 Predicted log IC 50 (µM) ER+ (n=719) ER-(n=214) 2 3 4 5 6 Predicted log IC 50 (µM) TAMOXIFEN in BRCA P=2.26x10 -4 -1.5 -1.0 -0.5 0 0.5 1.0 1.5 Intra-cancer difference in predicted log IC 50 between mut and wt (µM) 0 20 40 60 80 100 120 -log(P adj ) Resistant in mut Sensitive in mut PHA-793887/TP53 XMD13-2/TP53 OSI-027/TP53 AR-42/TP53 VINORELBINE/ TP53 THAPSIGARGIN/ TP53 GENENTECH-CPD-10/ IDH1 NSC-207895/IDH1 DOXORUBICIN/IDH1 CEP-701/IDH1 BRYOSTATIN-1/TP53 RDEA119-(RESCREEN)/ TP53 BEXAROTENE/TP53 BOSUTINIB/TP53 TGX221/TP53 MLN4924/TP53 -2.0 2.0 TCGA-BLCA TCGA-BRCA TCGA-HNSC TCGA-LGG TCGA-LUAD TCGA-LUSC TCGA-PRAD TCGA-SKCM TCGA-STAD TCGA-THCA Other C Figure 4 A B TTN-mut (n=2733) TTN-wt (n=6326) EPOTHILONE-B Predicted log IC 50 (µM) -6 -5 -4 -3 -2 -1 0 P=2.54x10 -253 TTN-mut (n=2733) TTN-wt (n=6326) VINORELBINE Predicted log IC 50 (µM) 0 -6 -5 -4 -3 -2 P~0 1 -1 TP53-mut (n=3109) TP53-wt (n=5950) 1 2 3 4 5 6 7 8 CX-5461 P~0 Predicted log IC 50 (µM) TP53-mut (n=3109) TP53-wt (n=5950) 1 2 3 4 5 6 7 SORAFENIB P~0 Predicted log IC 50 (µM) TP53-mut (n=3109) TP53-wt (n=5950) -6 -4 -2 0 2 4 6 8 BORTEZOMIB P=4.37x10 -308 Predicted log IC 50 (µM) TP53-mut (n=3109) TP53-wt (n=5950) 3 4 5 7 9 11 13 PHENFORMIN P=2.00x10 -241 Predicted log IC 50 (µM) 6 8 10 12 -1.0 -0.5 0 0.5 1.0 0 50 100 150 200 250 300 350 -log(P adj ) CSMD3 FLG LRP1B MUC16 PCLO PIK3CA RYR2 SYNE1 TP53 TTN USH2A Pan-cancer difference in predicted log IC 50 between mut and wt (µM) Resistant in mut Sensitive in mut GENENTECH-CPD-10/TP53 TL-1-85/TP53 Y-39983/TP53 OSI-027/TP53 PHENFORMIN/TP53 GSK1070916/TP53 PHA-665752/TP53 NVP-TAE684/TP53 CRIZOTINIB/TP53 AZ628/TP53 BORTEZOMIB/ TP53 A-770041/TP53 MS-275/TP53 CGP-60474/TP53 CGP-082996/TP53 VX-680/TP53 JW-7-52-1/TP53 ABT-869/TTN VINORELBINE/TTN EPOTHILONE-B/TTN BRYOSTATIN-1/TTN 1.5 -1.5 TP53: 5-FLUOROURACIL, BMS-509744, BMS-536924, BX-912, CX-5461, DABRAFENIB, GSK690693, GW843682X, IMATINIB, JW-7-24-1, KIN001-236, KIN001-270, LENALIDOMIDE, MG-132, NPK76-II-72-1, NVP-BHG712, OSI-930, PHA-793887, PYRIMETHAMINE, RAPAMYCIN, S-TRITYL-L-CYSTEINE, SORAFENIB, WZ-1-84, XMD13-2 C Figure 5 A B C Cancer type breakdown Cancer type breakdown Cancer type breakdown Cancer type breakdown 1 2 3 4 5 6 7 CX-5461 1000 2000 3000 4000 5000 6000 7000 8000 9000 Patient Predicted log IC 50 (µM) Top 1% resistant patients Top 1% sensitive patients ESCA HNSC LAML LGG LUSC ADCY1 APC CSMD3 CUBN FLG IDH1 NRXN1 PCLO SYNE1 TP53 Resistant patients Sensitive patients Top 10 differentially mutated genes Top 300 differentially expressed genes CESC ESCA GBM LGG LIHC CSMD3 MUC16 MUC4 NEB PIK3CA RYR2 SYNE1 TP53 TTN ZFHX4 Resistant patients Sensitive patients Top 10 differentially mutated genes Top 300 differentially expressed genes 1000 2000 3000 4000 5000 6000 7000 8000 9000 Patient -7 -6 -5 -4 -3 -1 Predicted log IC 50 (µM) DOCETAXEL Top 1% resistant patients Top 1% sensitive patients -2 0 5 10 15 20 25 30 35 40 45 Percentage in top patients Resistant Sensitive A C C B L C A B R C A C E S C C O A D D L B C E S C A G B M H N S C K I R C K I R P L G G L I H C L U A D L U S C O V P C P G P R A D R E A D S K C M S T A D U C E C Percentage in top patients B L C A B R C A C E S C C O A D D L B C E S C A H N S C L A M L L G G L I H C L U A D L U S C O V R E A D S K C M S T A D U C E C U C S 0 5 10 15 20 25 30 35 40 45 50 Resistant Sensitive -2.0 +2.0</p><note type="other">Figure 2</note></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>(</head><figDesc>DNN) model to learn the genetic background from high-dimensional mutation and expression profiles using the huge collection of tumors of The Cancer Genome Atlas (TCGA). The model was further trained by the pharmacogenomics data developed in human cancer cell lines by the GDSC Project and their corresponding genomic and transcriptomic alteration, and finally applied to TCGA data again to predict drug response of tumors. Collectively, this study demonstrated a novel DL model that bridges cell linebased pharmacogenomics knowledge via tumor genomic and transcriptomic abstraction to predict tumors' response to compound treatment.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>( 41 .</head><label>41</label><figDesc>8% and 3.3%) of patients predicted be respond extremely well to CX-5461 (Figure5A-B, right panels). Of note, LGG comprised another 48.4% of the sensitive tumors (Figure5B, right panel). Nine of the top 10 differentially mutated genes were enriched in the resistant group and leaded by TP53 mutations (mutation rate, 95.6% in resistant vs. 13.2% in sensitive patients; Figure5C, right panel), echoing data from our pan-cancer analysis (Figure4A-B) and previous in vitro and in vivo investigations<ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref>. IDH1 was the only gene preferentially mutated in sensitive tumors and largely marked LGG (mutated in 42 of 44 sensitive LGG; Figure5C, right panel). DAVID analysis of the top 300 differentially expressed genes highlighted differential mechanisms between solid and non-solid tumors, such as extracellular matrix and cell motion (Table</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><figDesc>For instance, due to high representational power and model complexity, the method suffers from overfitting and the requirement of large training data. Addressing this, the present study adopts a training-validation partition of training data to allow early stopping to the training process<ref type="bibr" target="#b37">[38]</ref>. Future work may further incorporate dropout and regularization to DNNs. Also, by taking advantage of the transferability of neural networks, we used the huge volume of TGCA data to equip our model the ability of capturing representations of mutation and expression data. Transferring the learned parameters to initialize our model virtually increased the sample size of our training data. Our data from 100 iterations of model training suggest the stability of performance and insensitivity to the selection of training samples.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 1 -</head><label>1</label><figDesc>Figure 1 -Illustration of the proposed neural network model</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 2 -</head><label>2</label><figDesc>Figure 2 -Model construction and evaluation using CCLE datasets</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 3 -</head><label>3</label><figDesc>Figure 3 -Associations of gene mutations to predicted drug response in TCGAper-cancer study</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 4 -</head><label>4</label><figDesc>Figure 4 -Associations of gene mutations to predicted drug response in TCGA -</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 5 -</head><label>5</label><figDesc>Figure 5 -Pharmacogenomics analysis of docetaxel and CX-5461 in TCGA</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><figDesc>Figure 1</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>5 TP53: 5 - 2 C</head><label>552</label><figDesc>Figure3</figDesc></figure>
+		</body>
+		<back>
+
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgements</head><p>None.</p></div>
+			</div>
+
+
+			<div type="funding">
+<div><head>Funding</head><p>This research and this article's publication costs were supported partially by the <rs type="funder">NCI Cancer Center Shared Resources (NIH-NCI</rs> <rs type="grantNumber">P30CA54174</rs> to YC), <rs type="funder">NIH</rs> (<rs type="grantNumber">CTSA 1UL1RR025767-01</rs> to YC, and <rs type="grantNumber">R01GM113245</rs> to YH), <rs type="funder">CPRIT</rs> (<rs type="grantNumber">RP160732</rs> to YC), and <rs type="funder">San Antonio Life Science Institute (SALSI Innovation Challenge</rs> Award <rs type="grantNumber">2016</rs> to YH and YC). The funding sources had no role in the design of the study and collection, analysis, and interpretation of data and in writing the manuscript.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_xdpmcgt">
+					<idno type="grant-number">P30CA54174</idno>
+				</org>
+				<org type="funding" xml:id="_Pqk45Gj">
+					<idno type="grant-number">CTSA 1UL1RR025767-01</idno>
+				</org>
+				<org type="funding" xml:id="_CM2NCkf">
+					<idno type="grant-number">R01GM113245</idno>
+				</org>
+				<org type="funding" xml:id="_jEPjxXv">
+					<idno type="grant-number">RP160732</idno>
+				</org>
+				<org type="funding" xml:id="_zneB2dZ">
+					<idno type="grant-number">2016</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Availability of data and material</head><p>The dataset supporting the conclusions of this article is included within the article.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>List of Abbreviations</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Consent for publication</head><p>Not applicable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Competing interests</head><p>The authors declare that they have no competing interests.  </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The influence of subclonal resistance mutations on targeted cancer therapy</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Schmitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Loeb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Salk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="335" to="347" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Potential role of pharmacogenomics in reducing adverse drug reactions: a systematic review</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Phillips</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Veenstra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><forename type="middle">E</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Sadee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JAMA : the journal of the American Medical Association</title>
+		<imprint>
+			<biblScope unit="volume">286</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="2270" to="2279" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Pharmacogenetics of cancer drugs</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Hertz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rae</forename><forename type="middle">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu Rev Med</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="page" from="65" to="81" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Conditional Selection of Genomic Alterations Dictates Cancer Evolution and Oncogenic Dependencies</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Raynaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Tavernari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Battistello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sungalee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Saghafinia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Laessle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sanchez-Vega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Schultz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Oricchio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer cell</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="155" to="168" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Cancer type-dependent genetic interactions between cancer driver alterations indicate plasticity of epistasis across cell types</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Lehner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular systems biology</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">824</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A Landscape of Pharmacogenomic Interactions in Cancer</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Aben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Goncalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightfoot</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="740" to="754" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bindal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">R</forename><surname>Thompson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="page" from="955" to="961" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Predicting the sequence specificities of DNA-and RNA-binding proteins by deep learning</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Alipanahi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Delong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Weirauch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Frey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="831" to="838" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Predicting effects of noncoding variants with deep learning-based sequence model</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">G</forename><surname>Troyanskaya</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature methods</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="931" to="934" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Using neural networks for reducing the dimensions of single-cell RNA-Seq data</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bar-</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page">156</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">DeepCpG: accurate prediction of single-cell DNA methylation states using deep learning</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Angermueller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Reik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Stegle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome biology</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">67</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Deep Learning-Based Multi-Omics Integration Robustly Predicts Survival in Liver Cancer. Clinical cancer research : an official journal of the</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chaudhary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">B</forename><surname>Poirion</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">X</forename><surname>Garmire</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<publisher>American Association for Cancer Research</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Deep-Learning-Based Drug-Target Interaction Prediction</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Sha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of proteome research</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1401" to="1409" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">The cornucopia of meaningful leads: Applying deep adversarial autoencoders for new molecule development in oncology</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kadurin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Aliper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kazennov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mamoshina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Vanhaelen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Khrabrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zhavoronkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">2017</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="10883" to="10890" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">DeepSynergy: Predicting anti-cancer drug synergy with Deep Learning</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Preuer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rpi</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hochreiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Bulusu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Klambauer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Salmon provides fast and bias-aware quantification of transcript expression</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Patro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Duggal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Love</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Irizarry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kingsford</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature methods</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="417" to="419" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">TumorMap: Exploring the Molecular Similarities of Cancer Samples in an Interactive Portal</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Newton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Novak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Swatloski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Mccoll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chopra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Graim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Weinstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Baertsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Salama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ellrott</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">77</biblScope>
+			<biblScope unit="issue">21</biblScope>
+			<biblScope unit="page" from="111" to="e114" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lehar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sonkin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Genomics of Drug Sensitivity in Cancer C: Pharmacogenomic agreement between two cancer cell line data sets</title>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell Line Encyclopedia C</title>
+		<imprint>
+			<biblScope unit="volume">528</biblScope>
+			<biblScope unit="issue">7580</biblScope>
+			<biblScope unit="page" from="84" to="87" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>Nature</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kowarik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Templ</surname></persName>
+		</author>
+		<title level="m">Imputation with the R Package VIM</title>
+		<imprint>
+			<date type="published" when="2016">2016 2016</date>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page">16</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<title level="m" type="main">Estimation of Social Exclusion Indicators from Complex Surveys: The R Package laeken</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Alfons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Templ</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013 2013</date>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page">25</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Delving deep into rectifiers: Surpassing humanlevel performance on imagenet classification</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sun</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015. 2015</date>
+			<biblScope unit="page" from="1026" to="1034" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<title level="m" type="main">A very simple wrapper for convenient hyperparameter optimization</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pumperla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">+</forename><surname>Keras</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hyperopt</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">The paradigm of mutant p53-expressing cancer stem cells and drug resistance</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shetzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Solomon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Koifman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Molchadsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Horesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Rotter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Carcinogenesis</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1196" to="1208" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">The role of p53 in cancer drug resistance and targeted chemotherapy</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hientz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mohr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bhakta-Guha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Efferth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="8921" to="8946" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">IDH1 overexpression induced chemotherapy resistance and IDH1 mutation enhanced chemotherapy sensitivity in Glioma cells in vitro and in vivo</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Asian Pac J Cancer Prev</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="427" to="432" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Inhibition of RNA polymerase I as a therapeutic strategy to promote cancer-specific activation of p53</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Bywater</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Poortinga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Sanij</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cullinane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cluse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Drygin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Anderes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="51" to="65" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Inhibition of Pol I transcription treats murine and human AML by targeting the leukemia-initiating cell population</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Cameron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Hannan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">N</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Fong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sornkom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pavy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cullinane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Diesch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Blood</title>
+		<imprint>
+			<biblScope unit="volume">2017</biblScope>
+			<biblScope unit="issue">21</biblScope>
+			<biblScope unit="page" from="2882" to="2895" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Sorafenib inhibits proliferation and invasion of human hepatocellular carcinoma cells via up-regulation of p53 and suppressing FoxM1</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">D</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">F</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Q</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Pharmacol Sin</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="241" to="251" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Cancer cell sensitivity to bortezomib is associated with survivin expression and p53 status but not cancer cell types</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Calinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Chanan-Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Exp Clin Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page">8</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">53 is required for metformininduced growth inhibition, senescence and apoptosis in breast cancer cells</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Parris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochem Biophys Res Commun</title>
+		<imprint>
+			<biblScope unit="volume">464</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1267" to="1274" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Systematic and integrative analysis of large gene lists using DAVID bioinformatics resources</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Huang Da</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Sherman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Lempicki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature protocols</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="44" to="57" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Bioinformatics enrichment tools: paths toward the comprehensive functional analysis of large gene lists</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Huang Da</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Sherman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Lempicki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="13" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Docetaxel. A review of its pharmacodynamic and pharmacokinetic properties and therapeutic efficacy in the management of metastatic breast cancer</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Fulton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Spencer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drugs</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1075" to="1092" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Targeting RNA polymerase I with an oral small molecule CX-5461 inhibits ribosomal RNA synthesis and solid tumor growth</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Drygin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bliesath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Proffitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Omori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Haddach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schwaebe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Siddiqui-Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer research</title>
+		<imprint>
+			<biblScope unit="volume">71</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1418" to="1430" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">CX-5461 is a DNA G-quadruplex stabilizer with selective lethality in BRCA1/2 deficient tumours</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Di</forename><surname>Antonio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mckinney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mathew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Neil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">D</forename><surname>Silvester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Garcia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature communications</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">14432</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Deep learning for computational biology</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Angermueller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Parnamaa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Parts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Stegle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular systems biology</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">878</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yosinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Clune</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fuchs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lipson</surname></persName>
+		</author>
+		<idno>arXiv:150606579</idno>
+		<title level="m">Understanding neural networks through deep visualization</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Learning important features through propagating activation differences</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shrikumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Greenside</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kundaje</surname></persName>
+		</author>
+		<idno>arXiv:170402685 2017</idno>
+		<imprint/>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Kalinin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Higgins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Reamaroon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Soroushmehr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allyn</forename><forename type="middle">-</forename><surname>Feuer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dinov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Najarian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Athey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">D</forename></persName>
+		</author>
+		<idno>arXiv:180108570 2018</idno>
+		<title level="m">Deep Learning in Pharmacogenomics: From Gene Regulation to Patient Stratification</title>
+		<imprint/>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

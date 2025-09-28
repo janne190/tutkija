@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Distribution-free and model-free multivariate feature screening via multivariate rank distance correlation</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2023-05-05">5 May 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Shaofei</forename><surname>Zhao</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Mathematical Sciences</orgName>
+								<orgName type="institution">Binghamton University</orgName>
+								<address>
+									<postCode>13850</postCode>
+									<settlement>Vestal</settlement>
+									<region>NY</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Guifang</forename><surname>Fu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Mathematical Sciences</orgName>
+								<orgName type="institution">Binghamton University</orgName>
+								<address>
+									<postCode>13850</postCode>
+									<settlement>Vestal</settlement>
+									<region>NY</region>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Distribution-free and model-free multivariate feature screening via multivariate rank distance correlation</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-05-05">5 May 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">4A83B3E8C223DC4285CB15B8F074AFB3</idno>
+					<idno type="arXiv">arXiv:2110.03145v2[stat.ME]</idno>
+					<note type="submission">Preprint submitted to Journal of Multivariate Analysis</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Distance correlation</term>
+					<term>Feature screening</term>
+					<term>Multivariate rank</term>
+					<term>Sure screening property</term>
+					<term>Ultrahigh dimensional data analysis. 2020 MSC: Primary 62H20</term>
+					<term>Secondary 60E10</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Feature screening approaches are effective in selecting active features from data with ultrahigh dimensionality and increasing complexity; however, many existing feature screening approaches are either restricted to a univariate response or rely on some distribution or model assumptions. In this article, we propose a sure independence screening approach based on the multivariate rank distance correlation (MrDc-SIS). The MrDc-SIS achieves multiple desirable properties such as being distribution-free, completely nonparametric, scale-free and robust for outliers or heavy tails. Moreover, the MrDc-SIS can be used to screen either univariate or multivariate responses and either one dimensional or multi-dimensional predictors. We establish the theoretical sure screening and rank consistency properties of the MrDc-SIS approach under a mild condition by lifting previous assumptions about the finite moments. Simulation studies demonstrate that MrDc-SIS outperforms eight other closely relevant approaches under some settings. We also apply the MrDc-SIS approach to a multi-omics ovarian carcinoma data downloaded from The Cancer Genome Atlas (TCGA).</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The explosion of big data brings unprecedented dimension and complexity challenges in a wide variety of fields. As a result, the well-established variable selection approaches, such as the LASSO <ref type="bibr" target="#b31">[32]</ref>, smoothly clipped absolute deviation (SCAD, <ref type="bibr" target="#b6">[7]</ref>), Elastic net <ref type="bibr" target="#b42">[43]</ref> and Dantzig selector <ref type="bibr" target="#b0">[1]</ref>, may have their effectiveness and accuracy reduced for ultrahigh dimensional data analyses <ref type="bibr" target="#b8">[9]</ref>.</p><p>The concept of "ultrahigh dimension" was first introduced in Fan and Lv <ref type="bibr" target="#b7">[8]</ref>, defined as log(p) = O(n ξ ) for some ξ &gt; 0, here p stands for the number of predictor variables, and n is the sample size. It is also called non-polynomial dimensionality or NP-dimensionality. The feature screening approaches are effective in selecting active predictors from ultrahigh dimensional data with theoretical guarantees <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b7">8,</ref><ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b21">22,</ref><ref type="bibr" target="#b22">23,</ref><ref type="bibr" target="#b35">[36]</ref><ref type="bibr" target="#b36">[37]</ref><ref type="bibr" target="#b37">[38]</ref><ref type="bibr" target="#b38">[39]</ref><ref type="bibr" target="#b39">[40]</ref>. However, the majority of existing feature screening approaches either explicitly or implicitly required some distribution or model assumptions. Fan and Lv <ref type="bibr" target="#b7">[8]</ref> pioneered the first sure independence screening (SIS) approach and selected predictors based on the Pearson correlation coefficient between each predictor and a univariate response, but the SIS approach required the normality and linear regression model assumptions. Zhu et al. <ref type="bibr" target="#b40">[41]</ref> proposed the sure independent ranking and screening (SIRS) approach by utilizing an indicator function to discretize the original response and then calculating the association between the indicator function and each of the predictors. The SIRS improved the SIS approach by lifting the normality and linear model assumptions. However, SIRS still required finite moment assumptions on predictors to obtain the sure screening property. Li et al. <ref type="bibr" target="#b16">[17]</ref> proposed the distance correlation based sure independence screening (DC-SIS) approach. The DC-SIS also lifted the normality and model assumptions. However, it still required that both response and predictor variables meet the sub-exponential tail bound, which may not always be satisfied if the data has heavy tails or complex structures.</p><p>Recently, several robust feature selection approaches have been studied. For example, Zhong et al. <ref type="bibr" target="#b38">[39]</ref> proposed a robust feature screening method for a univariate response (DC-RoSIS) by applying the DC-SIS to original predictors and the rank statistic of response. As a result, DC-RoSIS is robust in terms of response but may not be robust for predictors. In addition, DC-RoSIS focused on a univariate response. Pan et al. <ref type="bibr" target="#b24">[25]</ref> proposed a BCor-SIS approach based on Ball correlation, which is robust with mild assumptions and can be applied to both multivariate and univariate responses. Liu et al. <ref type="bibr" target="#b19">[20]</ref> proposed another robust model-free and data-adaptive feature selection method named PC-Screen, where they utilized projection correlation to measure the dependence and knockoff features to determine the threshold. The PC-Screen is also robust and can be applied to both multivariate and univariate responses, but its computation cost is relatively higher than other approaches. Li et al. <ref type="bibr" target="#b14">[15]</ref> proposed a robust rank correlation screening (RRCS) based on Kendall's τ. As commented by Guo et al. <ref type="bibr" target="#b9">[10]</ref>, Kendall's τ excels in detecting monotone relationship but may not be effective in detecting other relationships between two variables. Moreover, the RRCS can not be directly applied to multivariate data. Guo et al. <ref type="bibr" target="#b9">[10]</ref> invented a stable correlation (SC) as a new dependence score based on a new weight function of distance correlation and further extended it to a feature screening field (SC-SIS). Although the SC-SIS is robust and can be applied to multivariate predictors and responses, it requires to tune an extra parameter a in the calculation of SC.</p><p>In this article, we propose a sure independence screening approach based on the multivariate rank distance correlation ( <ref type="bibr" target="#b3">[4]</ref>), and refer it as MrDc-SIS. Székely et al. <ref type="bibr" target="#b30">[31]</ref> systematically studied the theoretical property of distance correlation. Li et al. <ref type="bibr" target="#b16">[17]</ref> introduced the distance correlation into the feature screening field and proposed the DC-SIS. Deb and Sen <ref type="bibr" target="#b3">[4]</ref> studied the theoretical property of multivariate rank distance correlation (MrDc) and in this article we further extend it into the feature screening field and propose the MrDc-SIS approach. The MrDc-SIS achieves multiple agreeable properties and significantly expands the capability of well-established extant screening approaches to better overcome the challenges associated with messy data.</p><p>Specifically, the proposed MrDc-SIS have the following good properties: 1) It achieves completely model-free and nonparametric properties, and is flexible for both linear and nonlinear relationships. Since the underlying true model is actually unknown in practice, it avoids inaccuracies caused by model misspecification. 2) It is robust, scaleinvariant and distribution-free without requiring a normality assumption, which greatly expands its wide application scope in heavy-tailed data. Here the distribution-free means no matter what the original distribution of the data may be, it will always be transformed to a unit hypercube, thus the original distribution will not affect the performance of MrDc, see Deb and Sen [4, Proposition 2.2] for more details. 3) The sure screening consistency property can be proven with the minimal condition compared with other existing feature screening methods. The sure screening consistency asymptotically guarantees that all true predictors are selected with probability approaching 1 as the sample size increases to ∞. The only condition it has on the variable is absolute continuity without restrictions on the moments of the underlying distributions. This relaxation of MrDc-SIS improves the selection success rate for heavy-tailed data such as t and Pareto distributed data. 4) Unlike many feature screening approaches, MrDc-SIS is feasible for either a univariate or multivariate response, and either one dimensional or multi-dimensional predictors. Moreover, in the calculation of the MrDc between predictors and responses, no tuning parameter involved.</p><p>We perform three simulation studies with various difficulty levels. In simulation 1, we design a univariate response and compare MrDc-SIS with eight other relevant approaches, including SIS (Fan and Lv <ref type="bibr" target="#b7">[8]</ref>), SIRS (Zhu et al. <ref type="bibr" target="#b40">[41]</ref>), RRCS (Li et al. <ref type="bibr" target="#b14">[15]</ref>), SC-SIS (Guo et al. <ref type="bibr" target="#b9">[10]</ref>), PC-Screen (Liu et al. <ref type="bibr" target="#b19">[20]</ref>), BCor-SIS (Pan et al. <ref type="bibr" target="#b24">[25]</ref>), DC-SIS (Li et al. <ref type="bibr" target="#b16">[17]</ref>) and DC-RoSIS (Zhong et al. <ref type="bibr" target="#b38">[39]</ref>). In simulations 2-3, we focus on multivariate responses and compare MrDc-SIS with only four approaches that are feasible for multivariate responses, which are SC-SIS, PC-Screen, Bcor-SIS, and DC-SIS. Simulation studies demonstrate the robustness and outperformance of the MrDc-SIS under some settings, especially in one-tailed and fat-tailed data, like Pareto distributions. We also apply the MrDc-SIS approach to ovarian carcinoma (OV) downloaded from The Cancer Genome Atlas (TCGA). The data was collected from multiple platforms, such as genome and epigenome, for the same patient (it is called "multi-omics" data). The modeling aim is to detect active genes associated with OV and in the long run provide theoretical guidance for the diagnosis and prognosis of the disease. The exploratory data analysis shows that this multi-omics data has extremely long tails and large ranges of scales (a range from 0 to 50,000 as an example); nonlinear associations, and complex structures.</p><p>The remainder sections are organized as follows: In Section 2, we elaborate on the details and theoretical properties of MrDc-SIS. This is followed by an assessment of the finite sample performance of MrDc-SIS via simulation studies in Section 3. In section 4 we implement the MrDc-SIS to multiple platforms of the TCGA data. In Section 5, we discuss the method and give our conclusion. Finally, the proof of the main theorem is given in the appendix.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Multivariate rank</head><p>Deb and Sen <ref type="bibr" target="#b3">[4]</ref> initiated a distribution-free and model-free dependence measure by integrating multivariate rank with distance correlation and they used low-discrepancy sequences to map the original data to a unit hypercube. Let R d denote the original d-dimensional space and [0, 1] d denote the d-dimensional unit hypercube that the original data is mapped into by the multivariate rank process. Let P(R d ) denote the families of all probability distributions on R d , and P ac (R d ) denote the families of Lebesgue absolutely continuous probability measures on R d . Let U d denote the uniform distribution on [0, 1] d and C n stands for the set of all permutations of {1, . . . , n}. The multivariate rank is implemented through a measure transportation, or optimal transportation. It is a problem of finding a "nice" function</p><formula xml:id="formula_0">G : R d → R d such that G maps a given measure µ ∈ P(R d ) to ν ∈ P(R d ), written as G#µ = ν. It means that G(X) ∼ ν where X ∼ µ [4, 28].</formula><p>Proposition 1 (McCann's Theorem <ref type="bibr" target="#b20">[21]</ref>). Suppose µ, ν ∈ P ac (R d ), then there exists a function R(•), which is the gradient of an (extended) real-valued d-variate convex function, such that R#µ = ν. R is unique µ a.e.. Moreover, if µ and ν have finite second moments, R(•) is also the solution to the Monge's problem:</p><formula xml:id="formula_1">inf F X -G(X) 2 dµ(X) subject to G#µ = ν.</formula><p>Based on the Proposition 1, if we let ν = U d and give a measure µ ∈ P ac (R d ), then there exists a rank function, R(•), such that R#µ = ν, and this is unique up to measure zero sets with respect to µ. However, in practice we don't really know the distribution µ, instead our only knowledge about µ is obtained from data observations, X 1 , . . . ,</p><formula xml:id="formula_2">X n i.i.d ∼ µ ∈ P ac (R d ). If {X 1 , . . . .X n }</formula><p>are samples of a univariate random variable X (i.e., d = 1), it is easy to get a good discrete approximation of U 1 by simply sorting {X i } n i=1 and assigning {i/n} n i=1 to the sorted points. However, if {X i } n i=1 are samples of a multivariate vector with higher dimensions (d &gt; 1), we utilize the low-discrepancy sequences to approximate U d . Low-discrepancy sequence, also known as the quasi monte-carlo (QMC) sequence, is to construct a fixed-points set with low "discrepancy" <ref type="bibr" target="#b4">[5]</ref>. The property of "low-discrepancy" means that the proportion of points in the sequence falling into an arbitrary set B is close to the proportional of the measure of B. In other words, even if we have the same number of points in both sequences, the low-discrepancy sequences may be more equally distributed on [0, 1] d than random sequences. Among these low-discrepancy sequences, Halton sequence <ref type="bibr" target="#b10">[11]</ref>, Sobol' sequence <ref type="bibr" target="#b28">[29]</ref>, Niederreiter sequence (also known as (t,m,s)-nets; <ref type="bibr" target="#b23">[24]</ref>), and their extensions (scrambled, truncated, etc) have been thoroughly studied. Sobol' et al. <ref type="bibr" target="#b29">[30]</ref> explored the Sobol' sequence up to 16,384 dimensions; and Joe and Kuo <ref type="bibr" target="#b13">[14]</ref> successfully constructed Sobol' sequence for 21,201-dimensional data, which was an extremely large experiment. Theoretically speaking, it is feasible to extend low-discrepancy sequences to dimensions that are even higher than those explored in the extant literature, but it may be difficult to check the low-discrepancy properties and to avoid collinearity. Fig. <ref type="figure">1</ref> illustrates a comparison of Sobol' sequence and a random sequence, from which we can see that the Sobol' sequence distributes more evenly and more uniformly than the random sequence.</p><p>Let</p><formula xml:id="formula_3">D X n = {X d 1 , . . . ,</formula><p>X d n } be the observed data, where each data point has d-dimensions. Let H d n := {h d 1 , . . . , h d n } denote a sample of d-variate vector after multivariate rank map (we use Sobol' sequences for d 2; and use {i/n} n i=1 for d = 1). Let µ X n := n i=1 δ X d i /n and ν n := n i=1 δ h d i /n be the empirical distributions on D X n and H d n respectively</p><p>, where δ represents the Dirac measure. Then the empirical rank is defined as the optimal transport map which transports µ</p><formula xml:id="formula_4">X n to ν n , that is, Rn = argmin G X -G(X) 2 dµ X n (X) subject to G#µ X n = ν n .</formula><p>It is equivalent to</p><formula xml:id="formula_5">σn := argmin σ∈C n n i=1 X d i -h d σ(i) 2 = argmax σ∈C n n i=1 X d i , h d σ(i) .</formula><p>0.0 0.2 0.4 0.6 0.8 1.0 1st Dimension 0.0 0.2 0.4 0.6 0.8 1.0 2nd Dimension 0.0 0.2 0.4 0.6 0.8 1.0 1st Dimension 0.0 0.2 0.4 0.6 0.8 1.0 2nd Dimension Fig. 1: Plots of the 1st and 2nd dimension for the Sobol' sequence (left panel) and random sequence (right panel) for a sample with 200 observations. The Sobol' sequence looks more uniform or less "discrepancy" compared with the random generator.</p><p>Finally, the empirical rank map is obtained as</p><formula xml:id="formula_6">Rn (X d i ) = h d σn (i) , i ∈ {1, . . . , n}.<label>(1)</label></formula><p>Equation ( <ref type="formula" target="#formula_6">1</ref>), i.e., finding the argmin, is an assignment problem. We utilized the modified Hungarian algorithm <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b32">33]</ref> that are implemented as standard solvers in most platforms (e.g., scipy.optimize.linear sum assignment in Python).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Multivariate rank distance correlation</head><p>Let X and Y be two multivariate vectors with dimensions s 1 and s 2 , respectively. The optimal rank map R X (X) transforms X into H s 1 , and the optimal rank map R Y (Y) transforms Y into H s 2 . Let φ R X (t), φ R Y (s) denote the individual characteristic functions, and φ R X ,R Y (t, s) denotes the joint characteristic function of R X (X) and R Y (Y). Then the multivariate rank distance covariance (MrDcov) between X and Y is defined as</p><formula xml:id="formula_7">MrDcov 2 (X, Y) = R s 1 +s 2 φ R X ,R Y (t, s) -φ R X (t)φ R Y (s) 2 w(t, s)d tds, where w(t, s) = (c s 1 c s 2 t 1+s 1 s 1 s 1+s 2 s 2 ) -1 , with c d = π (1+d)/2 /Γ((1 + d)/</formula><p>2) as a weight function. Throughout this paper, a d represents the Euclidean norm of a ∈ R d , and φ 2 = φ φ for complex-valued function φ with φ being its conjugate.</p><p>Accordingly, the multivariate rank distance correlation is defined as</p><formula xml:id="formula_8">MrDc(X, Y) = MrDcov(X, Y) √ MrDcov(X, X)MrDcov(Y, Y) .</formula><p>Compared to the original distance correlation, multivariate rank distance correlation has several remarkable advantages, which make it agreeable to construct a sure screening procedure based on MrDc:</p><p>• It does not require the original data, X and Y, to have finite first moments, because R X (X) and R Y (Y) already lie in the unit hypercube.</p><p>• It does not require any distribution assumptions for X and Y, and the exponential tail bound condition that was required in Li et al. <ref type="bibr" target="#b16">[17]</ref> is automatically satisfied.</p><p>• Under a special case when (X, Y) follows a bivariate Gaussian distribution with mean vector 0, variances 1 and correlation ρ, MrDc(X, Y) and the original distance correlation both increases when |ρ| increases <ref type="bibr">[4, C.3]</ref>.</p><p>According to Székely et al. <ref type="bibr" target="#b30">[31]</ref>, the multivariate rank distance covariance can be computed as,</p><formula xml:id="formula_9">MrDcov 2 (X, Y) = MrS 1 + MrS 2 -2MrS 3 ,</formula><p>where</p><formula xml:id="formula_10">MrS 1 = E[ R X (X) -R X ( X) s 1 R Y (Y) -R Y ( Ỹ) s 2 ], MrS 2 = E[ R X (X) -R X ( X) s 1 )E( R Y (Y) -R Y ( Ỹ) s 2 ], MrS 3 = E[E[ R X (X) -R X ( X) s 1 |R X (X)]]E[E[ R Y (Y) -R Y ( Ỹ) s 2 |R Y (Y)]].</formula><p>Here</p><formula xml:id="formula_11">(R X ( X), R Y ( Ỹ)) is an independent copy of (R X (X), R Y (Y)).</formula><p>Specifically, the estimation process is as follows: Given the dataset</p><formula xml:id="formula_12">{X i , Y i } n i=1 (X i is s 1 dimension and Y i is s 2 dimension), we obtain { RX n (X i ), RY n (Y i )} n i=1</formula><p>from the multivariate rank in (1) using Sobol's sequence. Then we estimate the MrS 1 , MrS 2 and MrS 3 as</p><formula xml:id="formula_13">MrS 1 = 1 n 2 n i=1 n j=1 RX n (X i ) -RX n (X j ) s 1 RY n (Y i ) -RY n (Y j ) s 2 , MrS 2 = 1 n 2 n i=1 n j=1 RX n (X i ) -RX n (X j ) s 1 1 n 2 n i=1 n j=1 RY n (Y i ) -RY n (Y j ) s 2 , MrS 3 = 1 n 3 n i=1 n j=1 n l=1 RX n (X i ) -RX n (X l ) s 1 RY n (Y j ) -RY n (Y ℓ ) s 2 .</formula><p>Finally, the multivariate rank distance covariance and correlation can be estimated as</p><formula xml:id="formula_14">MrDcov 2 (X, Y) = MrS 1 + MrS 2 -2 MrS 3 , MrDc(X, Y) = MrDcov(X, Y) MrDcov(X, X) MrDcov(Y, Y)</formula><p>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Independence screening procedure based on multivariate rank distance correlation</head><p>We propose a sure independence screening procedure based on the MrDc in this section. Let Y = (Y 1 , . . . , Y q ) (q is the dimension of response and is fixed) be the response vector with support Ψ Y , X = (X 1 , . . . , X p ) be the predictor vector and each predictor is d-dimensional. Let F(Y|X) be the conditional distribution function of Y given X. In ultrahigh dimensional settings the number of predictors (p) may exceed the number of observations (n) exponentially, and only a small portion of predictors are truly relevant to the response (i.e., sparse structure). The predictors can accordingly be divided into two parts: active predictors which are truly related with the response and inactive predictors which are not related with the response. Define</p><formula xml:id="formula_15">D = { j : F(Y|X) functionally depends on X j for some Y ∈ Ψ Y }, I = { j : F(Y|X) does not functionally depend on X j for any Y ∈ Ψ Y }.</formula><p>as the index sets of active and inactive predictors. Accordingly, x D = {X j : j ∈ D} and x I = {X j : j ∈ I} as active and inactive predictors sets. The aim of the MrDc-SIS approach is to identify the index set D from all indices of the entire candidate pool. From the definition above, we can see Y ⊥ ⊥ x I |x D , where ⊥ ⊥ denotes statistical independence, so x I are redundant when x D are known.</p><p>Given the dataset, {X i , Y i } n i=1 , define</p><formula xml:id="formula_16">ω j = MrDc 2 (X j , Y), and ω j = MrDc 2 (X j , Y), j ∈ {1, . . . , p}.</formula><p>Here ω j is a dependence score that measures the association strength between each predictor X j and a multivariate response vector Y, and ω j is the sample estimate of ω j , which can be used to rank the predictors from the most important to the least important. The finally selected subset of active predictors is defined as</p><formula xml:id="formula_17">D = { j : ω j cn -κ , 1 j p},</formula><p>where c and κ are pre-specified threshold values which will be defined in next subsection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Theoretical properties</head><p>We impose the following minimum signal strength conditions.</p><p>Condition 1. (Minimum signal strength) (a) For some c &gt; 0 and 0 κ &lt; 1/2, min j∈D ω j 2cn -κ . (b) For some c 2 &gt; 0 and 0 κ 2 &lt; 1/2, min j∈D ω jmax j∈I ω j 2c 2 n -κ 2 .</p><p>Remark 1. Condition 1(a) assumes that the minimum dependence score in the active set should be greater than a positive value. This assumption is very common in the feature screening literature, for example Li et al. <ref type="bibr" target="#b16">[17]</ref> condition (C2), Fan and Lv [8] condition 3, Hao and Zhang <ref type="bibr" target="#b11">[12]</ref> condition (C3), Huang et al. <ref type="bibr" target="#b12">[13]</ref> condition (C2), and Pan et al.</p><p>[25] condition (C1), among many others. This condition also makes more sense in practice because a so-called active predictor should at least have nonzero effects. Condition 1(b) is stronger than Condition 1(a), and it assumes that there is a gap of signal strength between active features and inactive features. This is the same as condition 1(b) in <ref type="bibr" target="#b19">[20]</ref> and condition (C2) in <ref type="bibr" target="#b9">[10]</ref>, and it is a mild condition as we allow the gap to tend to 0 as n → ∞.</p><p>Theorem 1. (Sure screening) For any 0 &lt; γ &lt; 1/2 -κ, there exists a positive constant c 1 such that Pr( max</p><formula xml:id="formula_18">1 j p | ω j -ω j | cn -κ ) O(p exp(-c 1 n 1-2(κ+γ) )).<label>(2)</label></formula><p>Under Condition 1(a), we have</p><formula xml:id="formula_19">Pr(D ⊆ D) 1 -O(s n exp(-c 1 n 1-2(κ+γ) )),<label>(3)</label></formula><p>where s n stands for the cardinality of D.</p><p>Per the statements of this theorem, we conclude that MrDc-SIS is capable to handle the NP-dimensionality of order, log(p) = o(n 1-2κ ), with the minimal assumptions compared to many other sure independence screening methods. For example, Li et al. <ref type="bibr" target="#b16">[17]</ref> required that each X and Y satisfies the sub-exponential tail bound. We don't need to have this assumption because R X (X) and R Y (Y) automatically fall in [0, 1] d , which is a bounded set. The bounded random variables automatically satisfy the sub-Gaussian tail bound and hence it is already stronger than the sub-exponential tail bound.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Theorem 2. (Rank consistency) Under Condition 1(b), we have</head><formula xml:id="formula_20">Pr(min j∈D ω j -max j∈I ω j &gt; 0) &gt; 1 -O(p exp(-c 1 n 1-2(κ 2 +γ) )),<label>(4)</label></formula><p>where</p><formula xml:id="formula_21">0 &lt; γ &lt; 1/2 -κ.</formula><p>The rank consistency is a stronger result than the sure screening property. It shows that when the signal strength gap between active features and inactive features satisfies Condition 1(b), the active features will always rank higher than the inactive features, which ensures us to find a threshold and separate the active and inactive sets with high probability.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5.">The choice of a threshold</head><p>After ranking the predictors from the most important to the least important utilizing ω j , a threshold is needed so that the active set can be separated from the inactive set, and in turn the set D can be selected. Several studies have been made to suggest a threshold, and they fall into two categories.</p><p>The first category is a hard threshold <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b17">18]</ref>. This method suggests to select d variables with the largest dependence score ω, where d is often a multiplier of [n/ log(n)] or [n 4/5 / log(n 4/5 )], in which [a] stands for the integer part of a.</p><p>The other category is a soft threshold <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b24">25]</ref>. We can generate some auxiliary variables that are completely independent from the response, and calculate the dependence score between the response and these auxiliary variables, then we set the threshold to be the largest dependence score among these "fake" dependence scores. Recently, Liu et al. <ref type="bibr" target="#b19">[20]</ref> suggested to use knockoff features, and further select the threshold that can control the false discovery rate (FDR) to a given level.</p><p>We adopt another soft threshold, the max-ratio criterion that was proposed by Huang et al. <ref type="bibr" target="#b12">[13]</ref> in the MrDc-SIS approach. If sorting the scores ω j 's in descending order, denote as ω( <ref type="formula" target="#formula_6">1</ref>)</p><formula xml:id="formula_22">ω(2) • • • ω(p)</formula><p>, the importance of predictors can be ranked. Huang et al. <ref type="bibr" target="#b12">[13]</ref> assumed that ω( j) &gt; 0 for j s 0 and ω( j) → 0 in probability for j &gt; s 0 , here the true selection size is |D| = s 0 . It implies that the ratio ω(s 0 ) / ω(s 0 +1) → ∞ in probability. Therefore, s 0 can be estimated by ŝ0 = argmax</p><formula xml:id="formula_23">1 j p-1 ω( j) / ω( j+1) .</formula><p>To save the computational cost, we utilize different multipliers of [n/ log(n)] criterion for all simulation studies and the max-ratio rule for the real data analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Simulation studies</head><p>In this section, we evaluate the finite sample performance of MrDc-SIS through three simulation examples, and compare it with eight most relevant feature screening methods. All the approaches are implemented using Python 3, and we set the hyperparameter a = 0.5 for SC-SIS. Similar to Li et al. <ref type="bibr" target="#b16">[17]</ref> and Zhong and Zhu <ref type="bibr" target="#b37">[38]</ref>, we adopt the following three "efficiency" criteria to assess the performance of each feature screening method:</p><p>1. S: the minimum selection size to include all true predictors. We draw boxplots of S across 200 replicates, and also report the mean and standard deviation of S. The closer of S to the true model size, the robuster the procedure is. 2. P s : the success rate that each true predictor is selected under three given thresholds across 200 replicates.</p><p>Following Fan and Lv <ref type="bibr" target="#b7">[8]</ref> and Li et al. <ref type="bibr" target="#b16">[17]</ref>, the thresholds are set as</p><formula xml:id="formula_24">d 1 = [n/ log(n)], d 2 = 2 × d 1 and d 3 = 3 × d 1 .</formula><p>3. P a : the simultaneous success rate that all true predictors are selected under three given thresholds across 200 replicates. A higher P s (or P a ) value indicates that the procedure has a higher chance to include each true individual predictor (or all true predictors) within a given threshold.</p><p>Before conducting simulations, we first assess the computational costs of these nine approaches. We utilize the Hungarian algorithm to solve the map transportation problem, which has the same computational cost, O(n 3 ), as the PC-Screen does, only under its worse cases. On the contrary, SC-SIS and DC-SIS have computational costs of O(n 2 ). We run the "timeit" function in a laptop (Intel Core i7-4720HQ, 16GB RAM, Windows 10) to compare the actual computational times of each of these nine approaches using 200 observations and 100 iterations for one predictor as an example. In univariate scenarios, both X and Y are 200 × 1, and in multivariate scenarios, both X and Y are 200 × 3.  <ref type="table" target="#tab_2">1</ref>, we observe that SIS, RRCS and DC-SIS are extremely fast for the univariate case, which require less than 1 ms to calculate a score; BCor-SIS, SC-SIS, SIRS, DC-RoSIS are a little bit slower, requires less than 10 ms to get a score; MrDc-SIS needs 17 ms, and PC-Screen spends 555 ms. In the multivariate case, DC-SIS is the fastest with its speed less than 2 ms; SC-SIS, MrDc-SIS and BCor-SIS are similar; but PC-Screen spends 1370 ms to conduct one score, which is much slower than other four methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Univariate case</head><formula xml:id="formula_25">Example 1. Consider the model Y = β 1 X 1 + β 2 X 6 + β 3 X 2 12 + β 4 X 22 +</formula><p>, and we set the sample size n = 200 and the number of predictors p = 5000. We generate {X i } p i=1 from a multivariate t distribution with degree of freedom 1 (t 1 ), mean 0, and covariance matrix Σ p×p = (σ i j ), where σ i j = 0.5 |i-j| . We generate β j ∼ Uniform(2, 5) for j = 1, 2, 3, 4. We vary two cases for the error term . Case (1): ∼ N(0, 1) and case (2): ∼ t 1 to explore normal errors and heavy tail errors.   SIS SIRS RRCS SC-PC-BCor-DC-DC-MrDc-SIS Screen SIS SIS RoSIS SIS S.mean 3494.35 2661.64 61.31 1004.48 56.81 643.93 2856.78 766.64 62.31 S.std 1221.44 1662.03 165.64 1108.24 181.27 988.96 1469.41 1118.37 201.52 Tables 2, 3 and Fig. <ref type="figure" target="#fig_0">2</ref> demonstrate the results of all the nine approaches in Example 1 where the error term ∼ N(0, 1). It can be observed from Fig. <ref type="figure" target="#fig_0">2</ref> that RRCS, PC-Screen and MrDc-SIS outperform the other screening approaches, and the minimum selection size for these three methods to select all true predictors is around 60. Given the fact that the total number of predictors is 5000, average S's bigger than 2500 for SIS, SIRS and DC-SIS imply that they can not distinguish the truth from the noise; SC-SIS, BCor-SIS and DC-RoSIS are all robust screening methods, and they perform better than SIS, SIRS and DC-SIS, however, their average S's are still ten times higher than MrDc-SIS; We can also observe from Table <ref type="table" target="#tab_4">3</ref> that the simultaneous success rates P a 's of SIS, SIRS, and DC-SIS are just a little above zero even for a threshold of d 3 , the P a 's of SC-SIS, Bcor-SIS, and DC-RoSIS are less than 0.45 for a threshold d 3 , while RRCS, PC-Screen, and MrDc-SIS achieve success rates of more than 0.89 under the same threshold. The results in case <ref type="bibr" target="#b0">(1)</ref> indicate that the MrDc-SIS is as robust as RRCS and PC-Screen do, and outperforms the other six feature screening methods when error has the normal distribution. Tables 4, 5 and Fig. <ref type="figure" target="#fig_1">3</ref> demonstrate the results of all the nine approaches in Example 1 where the error term ∼ t 1 . This time not only the predictors are messier than the normal case, but also the error terms have heavier tails than the normal distribution. As a result, all methods perform worse than in case (1). Among these nine approaches, PC-Screen performs the best; MrDc-SIS is the second with an average S of 538; SC-SIS and Bcor-SIS are in the next tier, with average S's being around 1200; RRCS and DC-RoSIS have average S's around 2400; and SIS, SIRS and DC-SIS are in the last tier with average S's around 3700. We can also observe from Table <ref type="table" target="#tab_6">5</ref> that the simultaneous success rates, P a 's, of SIS, SIRS, and DC-SIS are 0 even in threshold d 3 , and the P s 's of any individual true predictor are small; DC-RoSIS performs better than DC-SIS in individual P s 's, but its simultaneous P a is only 0.02 at the threshold d 3 ; RRCS has good performance on individuals like X 1 , X 6 and X 22 , however, it can not handle the square term X 2  12 since it may not be monotone, and its simultaneous rate P a is only 0.025 at the threshold d 3 ; SC-SIS and BCor-SIS work better as they can successfully select X 12 , and their simultaneous P a 's increase to 0.1; PC-Screen and MrDc-SIS select each true predictor with a high probability, and the P a 's of these two methods increase to 0.5. The results in case <ref type="bibr" target="#b1">(2)</ref> indicate that the MrDc-SIS is as robust as PC-Screen and outperforms the other seven feature screening methods when both the predictors and the error term have heavy tails like t 1 distribution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Multivariate case</head><p>In this section we evaluate the performance of MrDc-SIS on multivariate scenarios, especially when both responses and predictors are multivariate. Among the nine screening methods, only SC-SIS, PC-Screen, BCor-SIS, DC-SIS and MrDc-SIS can handle multivariate data, therefore, we compare only these five feature screening methods in the following two examples.</p><p>Example 2. (Multivariate t scenario) We set sample size n = 200, predictor size p = 10, 000, and response size q = 10. We generate U = [U 1 , . . . , U p ] from multivariate t 2 distribution with covariance Σ p×p = (σ i j ), where σ i j = 0.8 |i-j| , V = [V 1 , . . . , V p ] from multivariate t 1 distribution with same covariance Σ p×p , and W = [W 1 , . . . , W p ] from multivariate t 3 distribution with same covariance Σ p×p . Then we integrate them as our predictors X = [X 1 , . . . , X p ] where X j = [U j , V j , W j ] for j ∈ {1, . . . , p}. Here, X is a 3 × 200 × 10, 000 array (tensor), and each X j is a multivariate vector with dimension 200 × 3. This design mimic the real data settings where U, V, W are data collected from different platforms (omes). In addition, it demonstrates the performance of MrDc-SIS when screening multivariate predictors. In the following, we connect the first 4 response components to be truly associated with some active predictors (different predictor connect different platforms to increase difficulty level). We set the remaining 6 response components as noises.</p><p>• For k ∈ {1, . . . , 4}, 1. Randomly sample id 1 , id 2 , id 3 , id 4 with replacement from {1, 2, 3}. • For k ∈ {5, . . . , 10}, Y k ∼ t 1 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Y k</head><formula xml:id="formula_26">[i] = β 1 X[id 1 , i, 2] + β 2 X[id 2 , i, 4] + β 3 X[id 3 , i, 101] + β 4 X[id 4 , i, 102] 2 + [i], ∀i = 1,</formula><p>Fig. <ref type="figure">4</ref>: Boxplots of S in multivariate t scenario. PC-Screen, BCor-SIS and MrDc-SIS perform well under this setting, while SC-SIS and DC-SIS find it hard to distinguish the signals from the noise.  Tables 6, 7 and Fig. <ref type="figure">4</ref> demonstrate the results of all the five approaches in Example 2. We observe that PC-Screen performs the best with an average S of 146; BCor-SIS and MrDc-SIS are close with average S's less than 300 (the total number of predictors is 10,000); DC-SIS has an average S be around 3000; SC-SIS has a S of 6000. From Table <ref type="table" target="#tab_8">7</ref> we can see the PC-Screen has a simultaneous success rate P a of 0.9 when using threshold d 3 ; BCor-SIS and MrDc-SIS have P a 's being around 0.8 with the same threshold; and SC-SIS and DC-SIS have P a 's only a little above 0 with the same threshold. The results in Example 2 indicate that the MrDc-SIS performs slightly worse than PC-Screen and BCor-SIS, but it is still robust to select true predictors under multivariate t scenario.</p><p>Example 3. (Multivariate Pareto scenarios) In this example, we investigate the performance of MrDc-SIS for not only heavier tails but also right skewness. In addition, we mixed both continuous and discrete data types in both the predictor and response components, which mimic the real multi-omics data better and also greatly expand the application scope of the proposed approach. We set predictor size p = 5000 and keep n = 200 as well as q = 10. For a Pareto distribution Pareto(a, m), the probability density is</p><formula xml:id="formula_27">f (x) = am a x a+1</formula><p>where a is the shape and m the scale. Case (1) (continuous responses).</p><p>1. Generate U = [U 1 , . . . , U p ] from multivariate Pareto distribution with shape a = 10, scale m = 15, and covariance matrix Σ p×p = (σ i j ), where</p><formula xml:id="formula_28">σ i j = 0.8 |i-j| . 2. Generate V = [V 1 , . . . , V p ] from binomial distribution Bin(4, 0.3). 3. Generate W = [W 1 , . . . , W p ]</formula><p>from multivariate Pareto distribution with shape a = 12, scale m = 30, and covariance matrix Σ p×p = (σ i j ), where σ i j = 0.8 |i-j| . 4. X = [X 1 , . . . , X p ] where X j = [U j , V j , W j ] for j ∈ {1, . . . , p}. Here, X is a 3 × 200 × 10000 array (tensor). 5. Connect the first four response components with active predictors as follows Case (2) (mixed categorical and continuous responses). We follow exactly the same procedure as in case (1) in generating X and Y. But we discretize the second component of Y as Y 2 [i] = 0 if its value is below 25% quantile; Y 2 [i] = 1 if its value is between 25% and 50% quantile; Y 2 [i] = 2 if its value is between 50% and 75% quantile; and Y 2 [i] = 3 if its value is above 75% quantile.    Tables 8, 9 and Fig. <ref type="figure" target="#fig_5">5</ref> demonstrate the results of all the five approaches in case (1) of Example 3. We can see that MrDc-SIS performs better than all the other four approaches under this messy setting with heavy tail and right skewness, being achieved an average S of 400. The average S of PC-Screen is 2400, and S's of DC-SIS, BCor-SIS and SC-SIS are even higher. The boxplots of S's in Fig. <ref type="figure" target="#fig_5">5</ref> demonstrates that the other four feature screening methods may not distinguish the truth from the noise, while MrDc-SIS is still robust to effectively select the true predictors. From table <ref type="table" target="#tab_10">9</ref> we can see that MrDc-SIS has a simultaneous rate of 0.63 under threshold d 3 , while the rates of the other four methods are below 0.1 under the same thresholds. Tables 10, 11 and Fig. <ref type="figure" target="#fig_6">6</ref> demonstrate the results of all the five approaches for case (2) of Example 3. We can see that MrDc-SIS can still outperform the other four screening methods with an average S of 600 when both predictors and responses mixed with discrete and continuous components, while the other four approaches are trapped and need average S's more than 2000 to select true predictors. From Table <ref type="table" target="#tab_12">11</ref> we can see that MrDc-SIS has a simultaneous success rate P a 0.6 under threshold d 3 , while the rates of other four methods are still below 0.1 under the same threshold.</p><formula xml:id="formula_29">• For k ∈ {1, . . . , 4}, (a) Randomly sample id 1 , id 2 , id 3 , id 4 with replacement from {1, 2, 3}. (b) Y k [i] = β 1 X[id 1 , i, 2] + β 2 X[id 2 , i, 3] + β 3 X[id 3 , i, 101] + β 4 X[id 4 , i, 102] 2 + [i], i ∈ {1, . . . , n},</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Real data analysis</head><p>In this section we study cancer genome TCGA-OV data. The data is downloaded by TCGA-Assembler 2 with R <ref type="bibr" target="#b34">[35,</ref><ref type="bibr" target="#b41">42]</ref>. Altogether, we analyze data collected from three platforms: DNA copy number variation (CNV), DNA methylation (ME), and gene expression (GE) for each of the 296 patients. The modeling aim is to detect important associations between copy number variation, methylation, and gene expression, and hence detect active genes influencing the OV disease.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Data preprocessing</head><p>Before the analysis, we preprocess the data as follows:</p><p>• ME. We download the methylation 27k data. After removing missing values, the DNA methylation data is arranged in a 296 × 14, 280 matrix.</p><p>• CNV. We download the nocnv.hg19 data, which eliminates some germline CNV. After removing missing values, the CNV data is arranged in a 296 × 13, 956 matrix.</p><p>• Integrated predictor array. We integrate CNV and ME in one unit. After matching the common genes of these two platforms, it results in a 296 × 13, 491 × 2 array, where the sample size is 296, the number of predictors is 13,491, and each predictor is a 2-dimensional vector (CNV for the 1st dimension and ME for the 2nd dimension).</p><p>• GE. The expression values of five genes, BRCA1, BRCA2, TP53, BCL2L1, KRAS, are the response and arranged in a 296 × 5 matrix. We found these five genes from an overview link <ref type="url" target="http://www.cancerindex.org/geneweb/X1003.htm">http://www.cancerindex.org/  geneweb/X1003.htm</ref>. This overview summarizes and ranks genes based on the number of findings that they were reported by thousands of publications with the relevant research and, it highlights the importance of these five genes in influencing ovarian cancer.</p><p>The explorative visualizations reveal some of the messy aspects of the dataset. For example, on the left panel of Fig. <ref type="figure" target="#fig_7">7</ref>, we can see an extremely long tail and large range (from 0 to 50000) for the expression values of gene KRAS; on the right panel, heavy right skewness and a likely violation of the normality distribution assumption are demonstrated for the expression values of gene BRCA2. The simulation studies already illustrated how challenging these issues are for existing feature screening approaches, which confirms the motivation of proposing the MrDc-SIS approach. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Feature screening for integrated CNV and Methylation</head><p>It has multiple advantages to treat the CNV and ME as a 2-dimensional unit rather than model each of them individually and separately: the predictor size will always be p no matter how many different platforms we have, and it will be effortless to add new data; the correlation of multiple platforms of the same gene can be incorporated. As a multivariate feature screening approach, we want to evaluate the association strength between the 5-dimensional response vector and each of the 2-dimensional predictor vectors. The MrDc scores of the 13,491 genes are demonstrated in Fig. <ref type="figure" target="#fig_8">8</ref>. We can see that eight genes stand out and their MrDc scores are far beyond those of the remaining genes. We apply the max-ratio rule on these 13,491 scores and it chooses only the top eight genes as the important subset. They are BCAT1, BHLHE41, COX4I2, ITPR2, KRAS, LMNTD1, LRMP and RASSF8. Some of these findings quantitatively confirm other reports of the literature. For example, KRAS and BRCA1 were identified to be associated with significant increased risk of developing ovarian cancer <ref type="bibr" target="#b25">[26]</ref>. The COX4I2 was identified as a molecular marker of the abnormal energy metabolism of cancer tissues by Li and Zhan <ref type="bibr" target="#b15">[16]</ref>. The LRMP was identified to be amplified and over-expressed in ovarian cancer cell <ref type="bibr" target="#b33">[34]</ref>.</p><p>We also visually explore the 3D scatter plots of these important findings and notice some complex relationships. For example, a nonlinear trend between the CNV of BCAT1 with expression of gene KRAS (left panel of Fig. <ref type="figure" target="#fig_9">9</ref>); a L-shaped trend between the Methylation of KRAS and expression of gene BRCA1 (middle panel of Fig. <ref type="figure" target="#fig_9">9</ref>); and a megaphone-shaped trend between the Methylation of LRMP and expression of gene BCL2L1 (right panel of Fig. <ref type="figure" target="#fig_9">9</ref>). Fig. <ref type="figure" target="#fig_9">9</ref> not only illustrates that the proposed MrDc-SIS approach effectively captures complex relationships that are usually need to be solved by data transformation when using traditional approaches, but also demonstrates that multiple genes act together to influence the ovarian cancer cells. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Discussion</head><p>In this paper, we propose a sure independence screening procedure via multivariate rank distance correlation. The main contribution of MrDc-SIS to the feature screening literature is that it provides an alternative robust feature screening approach that can be applied to multivariate predictors and multivariate responses. Without tail bound (subexponential or sub-Gaussian) restrictions for both the predictor and response, we prove the theoretical sure screening and rank consistency properties when the number of predictors diverges at an exponential rate of the sample size, which requires a minimal condition. Extensive simulation studies with various difficulty levels demonstrate that the proposed MrDc-SIS is robust and can capture both linear and nonlinear dependence structures and also mixed continuous and discrete data types.</p><p>In addition to the "low-discrepancy" property, the low-discrepancy sequences that we utilized have more advantages. For example, if one extra observation is added, generating low-discrepancy sequences simply requires to add one more point without the need of recalculating the entire sequence, which greatly reduces the computational cost. Furthermore, low-discrepancy sequences are fixed sequences and it leads to a reliable and reproducible consequence.</p><p>We apply the MrDc-SIS approach to the multi-omics TCGA-OV dataset to detect important associations between gene expression, DNA methylation, and CNV. Eight genes, BCAT1, BHLHE41, COX4I2, ITPR2, KRAS, LMNTD1, LRMP and RASSF8, are detected to be important in associating with the ovarian cancer. Some of these results quantitatively confirm the findings of the literature that have also reported KRAS, BRCA1 COX4I2, LRMP for OV disease using dramatically different methods and/or datasets <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b33">34]</ref>.</p><p>The existing feature screening approaches count on a threshold to determine the selection size without computing a p-value. In this article, we utilize max-ratio criterion to determine the threshold for the selection size. Actually, the low discrepancy sequence is a fixed value sequence, one can easily get all the possible permutations of the sequence before even having the dataset. It makes the derivations of the distributions and p-value quick and easy without the need of permuting each dataset at a large number of times, which greatly reduces the computational cost if the number of predictors is large. Determining a p-value is important to access the significance of each predictor in biomedical applications. In the future work, we will explore p-values of the predictors under various dimensions of the dataset, which will greatly expand the application scope of the MrDc-SIS approach.</p><p>Using the similar arguments as before, we can get</p><formula xml:id="formula_30">lim sup n→∞ Ŝ * j1 lim sup n→∞ ( 1 n(n -1) k l R X (X jk ) -R X (X jℓ ) d R Y (Y k ) -R Y (Y ℓ ) q ) a.s..<label>(10)</label></formula><p>Define</p><formula xml:id="formula_31">S * * j1 = 1 n(n -1) k l R X (X jk ) -R X (X jℓ ) d R Y (Y k ) -R Y (Y ℓ ) q . (<label>11</label></formula><formula xml:id="formula_32">)</formula><p>By the Cauchy-Schwartz inequality,</p><formula xml:id="formula_33">S j1 = E[ R X (X 1 j ) -R X (X 2 j ) d R Y (Y 1 ) -R Y (Y 2 ) q ] {E( R X (X 1 j ) -R X (X 2 j 2 d )E( R Y (Y 1 ) -R Y (Y 2 ) 2 q )} 1/2 {4E( R X (X j ) 2 d )4E( R Y (Y) 2 q )} 1/2 &lt; ∞.<label>(12)</label></formula><p>We know R X (X j So to establish the uniform consistency of Ŝ j1 , it suffices to show the uniform consistency of S * * j1 , Notice {R X (X jk ), R Y (Y k )} 1 k n are i.i.d. random vectors, so the right hand side of 11 is a standard U-statistic. Let</p><formula xml:id="formula_34">h 1 (R X (X jk ), R Y (Y k ); R X (X jℓ ), R Y (Y ℓ )) = R X (X jk ) -R X (X jℓ ) d R Y (Y k ) -R Y (Y ℓ</formula><p>) q be the kernel of U-statistic S * * j1 , then</p><formula xml:id="formula_35">h 1 = R X (X jk ) -R X (X jℓ ) d R Y (Y k ) -R Y (Y ℓ ) q ( R X (X jk ) d + R X (X jℓ ) d )( R Y (Y k ) q + R Y (Y ℓ ) q ) 4 ndq . = M.</formula><p>By the Markov inequality, for any t &gt; 0 we have Pr(S * * j1 -S j1 )</p><p>E[exp(tS * * j1 )] exp(t + tS j1 )</p><p>.</p><p>By Serfling (1980, section 5.1.6) <ref type="bibr" target="#b26">[27]</ref>, any U-statistic can be represented as an average of averages of i.i.d. random variables. So S * * j1 = 1 n! n! Ω(X j1 , Y 1 ; . . . , X jn , Y n ), where n! denotes the summation over all permutations of {1, . . . , n}, and Ω is an average of m = [n/2] i.i.d. random variables, Ω = 1 m r h (r)  1 . Since the exponential function is convex, by Jensen's inequality.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>E[exp(tS</head><p>* * j1 )] = E[exp{t 1 n! n! Ω(X j1 , Y 1 ; . . . , X jn , Y n )}] 1 n! n! E[exp{tΩ(X j1 , Y 1 ; . . . , X jn , Y n )}] = E m {exp( 1 m th (r) 1 )}. (13) Apply Lemma 1, we have Pr(S * * j1 -S j1 ) E m {exp( 1 m t[h (r) 1 -S j1 ])} exp(t ) exp{-t + M 2 t 2 /(8m)}. (14) If we choose t = 4 m M 2 , and by symmetry of U-statistic, we have Pr(|S * * j1 -S j1 | ) 2 exp(-2 2 m/M 2 ).</p><p>If we choose M = cn γ for 0 &lt; γ &lt; 1 2 -κ, when n is sufficiently large, we can further get Pr(| Ŝ j1 -S j1 | 3 ) 2 exp(-c 2 n 1-2γ ). ( <ref type="formula">16</ref>)</p><p>Next we come to Ŝ j2 . = Ŝ j2,1 × Ŝ j2,2 where Ŝ j2,1 = 1</p><formula xml:id="formula_37">n 2 k l RX n (X jk ) -RX n (X jℓ ) d , Ŝ j2,2 = 1 n 2 k l</formula><p>RY n (Y k ) -RY n (Y ℓ ) q . Correspondingly, we write S j2 = S j2,1 × S j2,2 , where S j2,1 = E[ R X (X 1 j ) -R X (X 2 j ) d ] and S j2,2 = E[ R Y (Y 1 ) -R Y (Y 2 ) q ]. Following the same arguments for proving <ref type="bibr" target="#b15">(16)</ref> we can show Pr(| Ŝ j2,1 -S j2,1 | 3 ) 2 exp(-c 2 n 1-2γ ) <ref type="bibr" target="#b16">(17)</ref> and Pr(| Ŝ j2,2 -S j2,2 | 3 ) 2 exp(-c 2 n 1-2γ ).</p><p>Like previously, S j2,1 and S j2,2 are uniformly bounded, so max</p><p>1 j p {S j2,1 , S j2,2 } C (19) for some constant C. We have the following Pr(|( Ŝ j2,1 -S j2,1 )S j2,2 | ) Pr(| Ŝ j2,1 -S j2,1 | C ) 2 exp( -c 2 n 1-2γ 9C 2 ), Pr(|( Ŝ j2,2 -S j2,2 )S j2,1 | ) Pr(| Ŝ j2,2 -S j2,2 | C ) 2 exp( -c 2 n 1-2γ 9C 2 ), and Pr(|( Ŝ j2,1 -S j2,1 )( Ŝ j2,2 -S j2,2 (</p><formula xml:id="formula_39">)<label>20</label></formula><p>The last inequality holds when is sufficiently small and C is sufficiently large. For Ŝ j3 , we use the third order U-statistic and follow similar arguments can get Here m = [n/3] since it is a third order U-statistic. And</p><formula xml:id="formula_40">Ŝ * j3 =<label>6</label></formula><formula xml:id="formula_41">h 3 (X 1 , Y 1 ; X 2 , Y 2 ; X 3 , Y 3 ) = X 1 -X 2 d Y 1 -Y 3 q + X 1 - X 2 d Y 2 -Y 3 q + X 1 -X 3 d Y 1 -Y 2 q + X 1 -X 3 d Y 2 -Y 3 q + X 2 -X 3 d Y 1 -Y 2 q + X 2 -X 3 d Y 1 -Y 3 q</formula><p>is the kernel of U-statistic. By definition of Ŝ j3 we know</p><formula xml:id="formula_42">Ŝ j3 = (n -1)(n -2) n 2 ( Ŝ * j3 + 1 n -2 Ŝ * j1 ).</formula><p>Again S j3 is finite, take n large enough such that 3n-2 n 2 S j3 and n-1 </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 2 :</head><label>2</label><figDesc>Fig. 2: Boxplots of S in case (1) where ∼ N(0, 1). RRCS, PC-Screen and MrDc-SIS outperform the other methods as the true signals are ranked top among all predictors, while for other methods, like SIS, true signals are ranked around 4000.</figDesc><graphic coords="8,64.51,422.06,223.78,112.01" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 3 :</head><label>3</label><figDesc>Fig.3: Boxplots of S in case (2) where ∼ t 1 . As the noise has heavier tails, all methods get worse than in case (1). However, PC-Screen and MrDc-SIS are still better than other methods, and RRCS performs much worse than before.</figDesc><graphic coords="8,320.44,422.06,223.78,112.01" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Table 2 :</head><label>2</label><figDesc>The minimum selection size S of each screening method for case (1) of Example 1. Among 5000 predictors, RRCS, PC-Screen and MrDc-SIS can rank all true signals to top 60, while SC-SIS, BCor-SIS and DC-RoSIS will rank all true signals to top 1000, and others will rank true signals to 3000, indistinguishable from the noise.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><figDesc>2, . . . , n, where β 1,2,3,4 ∼ Uniform(1, 2) and ∼ t 1 .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>where β 1 , 2 , 3 , 4 ∼</head><label>1234</label><figDesc>Uniform(1, 2) and ∼ Pareto<ref type="bibr" target="#b9">(10,</ref><ref type="bibr" target="#b14">15)</ref>.• For k ∈ {5, . . . , 10}, Y k ∼ Pareto<ref type="bibr" target="#b9">(10,</ref><ref type="bibr" target="#b14">15)</ref>.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 5 :</head><label>5</label><figDesc>Fig. 5: Boxplots of S in case (1) of Example 3. MrDc-SIS performs the best among all five methods, it can rank all true signals in top 400, while other four methods rank all true signals to 4000, implies they have difficulty in distinguishing the signals from the noise.</figDesc><graphic coords="12,64.51,470.59,223.78,112.01" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 6 :</head><label>6</label><figDesc>Fig. 6: Boxplots of S in case (2) of Example 3. MrDc-SIS still performs the best, it can rank all true signals in top 600, while other four methods again rank all true signals to 4000, implies they have difficulty in distinguishing the signals from the noise.</figDesc><graphic coords="12,320.44,470.59,223.78,112.01" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 7 :</head><label>7</label><figDesc>Fig. 7: The histogram of gene expression data for gene KRAS (left panel) and gene BRCA2 (right panel), as examples.</figDesc><graphic coords="14,64.51,497.93,223.81,167.85" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 8 :</head><label>8</label><figDesc>Fig.8: The multivariate rank distance correlation scores between the 5-dimensional response vector and each of the 13,491 2-dimensional predictors.</figDesc><graphic coords="15,64.51,146.89,466.26,233.37" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 9 :</head><label>9</label><figDesc>Fig. 9: Visualization of some complex relationships. Left: GE of KRAS versus the CNV and ME of BCAT1; Middle: GE of BRCA1 versus the CNV and ME of KRAS; and Right: GE of BCL2L1 versus the CNV and ME of LRMP.</figDesc><graphic coords="15,84.09,587.53,139.87,139.87" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>3 }</head><label>3</label><figDesc>) and R Y (Y) are uniformly bounded. For any given &gt; 0, take n large enough such that S j1 /n &lt; and|S * * j1 -Ŝ * j1 | &lt; , then Pr{| Ŝ j1 -S j1 | 3 } = Pr{| Ŝ * Pr{| Ŝ * j1 -S j1 | n -1 n 3 -S j1 n } Pr{| Ŝ * j1 -S j1 | 2 } Pr{|S * * j1 -S j1 | }.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><figDesc>)| ) Pr(|( Ŝ j2,1 -S j2,1 )| √ ) + Pr(|( Ŝ j2,2 -S j2,2inequality, we havePr(| Ŝ j2 -S j2 | 3 ) = Pr(| Ŝ j2,1 Ŝ j2,2 -S j2,1 S j2,2 | 3 ) Pr(|( Ŝ j2,1 -S j2,1 )S j2,2 | ) + Pr(|( Ŝ j2,2 -S j2,2 )S j2,1 | ) + Pr(|( Ŝ j2,1 -S j2,1 )( Ŝ j2,2 -S j2,2</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><figDesc>n(n -1)(n -2) k&lt;l&lt;m h 3 ( RX n (X jk ), RY n (Y k ); RX n (X jℓ ), RY n (Y ℓ ); RX n (X jm ), RY n (Y m )), S * * j3 = 6 n(n -1)(n -2) k&lt;l&lt;m h 3 (R X (X jk ), R Y (Y k ); R X (X jℓ ), R Y (Y ℓ ); R X (X jm ), R Y (Y m )), Pr(|S * * j3 -S j3 | ) 2 exp(-2 2 m /M 2 ) = 2 exp(-2c2 n 1-2γ /3).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><figDesc>j3 -S j3 | 6 ) = Pr(| (n -1)(n -2) n 2 ( Ŝ * j3 -S j3 ) -3n -2 n 2 S j3 + n -1 n 2 ( Ŝ * j1 -S j1 ) + n -1 n 2 S j1 | 6 ) Pr(| Ŝ * j3 -S j3 | 2 ) + Pr(| Ŝ * j1 -S j1 | 2 ) Pr(|S * * j3 -S j3 | ) + Pr(|S * * j1 -S j1 | )4 exp(-2 2 n 1-2γ /3).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 1 :</head><label>1</label><figDesc>Computational time cost to calculate one dependence score for each of the nine feature screening approaches. SIS, SIRS, RRCS and DC-RoSIS are not applicable for multivariate scenarios.</figDesc><table><row><cell></cell><cell></cell><cell>SIS</cell><cell cols="2">SIRS RRCS</cell><cell>DC-SIS</cell><cell>DC-RoSIS</cell><cell>BCor-SIS</cell><cell>PC-Screen</cell><cell>SC-SIS</cell><cell>MrDc-SIS</cell></row><row><cell>Univariate</cell><cell cols="3">Mean (ms) 0.161 5.74</cell><cell cols="2">0.501 0.908</cell><cell>8.97</cell><cell>3.65</cell><cell>555</cell><cell>5.57</cell><cell>17</cell></row><row><cell>(n = 200)</cell><cell>Std (ms)</cell><cell cols="6">0.006 0.165 0.003 0.003 0.039 0.015</cell><cell>0.86</cell><cell cols="2">0.010 0.051</cell></row><row><cell cols="3">Multivariate Mean (ms) N.A.</cell><cell>N.A.</cell><cell>N.A.</cell><cell>1.36</cell><cell>N.A.</cell><cell>65.5</cell><cell>1,370</cell><cell>14.3</cell><cell>22.1</cell></row><row><cell>(n = 200)</cell><cell>Std (ms)</cell><cell>N.A.</cell><cell>N.A.</cell><cell>N.A.</cell><cell>0.005</cell><cell>N.A.</cell><cell>0.321</cell><cell>4.27</cell><cell cols="2">0.017 0.234</cell></row><row><cell>From Table</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 3 :</head><label>3</label><figDesc>P s and P a under different thresholds for case (1) of Example 1, d 1 = [n/ log(n)] = 37, d 2 = 2d 1 , and d 3 = 3d 1 . If we choose top d 3 predictors, RRCS, PC-Screen and MrDc-SIS can select all true signals 90% of the time, BCor-SIS and DC-RoSIS can select all true signals 45% of the time, while approaches that are not robust, like SIS and SIRS, only 6% of the time they can select all true signals.</figDesc><table><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SIS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>SIRS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>RRCS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.125</cell><cell>0.16</cell><cell>0.1</cell><cell>0.11</cell><cell>0</cell><cell>0.335</cell><cell>0.325</cell><cell>0.32</cell><cell>0.275</cell><cell>0.025</cell><cell>0.955</cell><cell>0.96</cell><cell>0.93</cell><cell>0.92</cell><cell>0.775</cell></row><row><cell>d 2</cell><cell>0.15</cell><cell>0.195</cell><cell>0.125</cell><cell>0.155</cell><cell>0</cell><cell>0.415</cell><cell>0.395</cell><cell>0.415</cell><cell>0.365</cell><cell>0.045</cell><cell>0.97</cell><cell>0.975</cell><cell>0.96</cell><cell>0.95</cell><cell>0.86</cell></row><row><cell>d 3</cell><cell>0.17</cell><cell>0.235</cell><cell>0.165</cell><cell>0.155</cell><cell>0</cell><cell>0.445</cell><cell>0.435</cell><cell>0.45</cell><cell>0.39</cell><cell>0.06</cell><cell>0.98</cell><cell>0.975</cell><cell>0.97</cell><cell>0.975</cell><cell>0.9</cell></row><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">PC-Screen</cell><cell></cell><cell></cell><cell></cell><cell cols="2">BCor-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.65</cell><cell>0.645</cell><cell>0.605</cell><cell>0.56</cell><cell>0.08</cell><cell>0.965</cell><cell>0.96</cell><cell>0.955</cell><cell>0.91</cell><cell>0.8</cell><cell>0.77</cell><cell>0.76</cell><cell>0.79</cell><cell>0.735</cell><cell>0.27</cell></row><row><cell>d 2</cell><cell>0.7</cell><cell>0.69</cell><cell>0.655</cell><cell>0.615</cell><cell>0.125</cell><cell>0.965</cell><cell>0.97</cell><cell>0.955</cell><cell>0.955</cell><cell>0.85</cell><cell>0.82</cell><cell>0.8</cell><cell>0.81</cell><cell>0.785</cell><cell>0.365</cell></row><row><cell>d 3</cell><cell>0.745</cell><cell>0.71</cell><cell>0.7</cell><cell>0.66</cell><cell>0.175</cell><cell>0.975</cell><cell>0.98</cell><cell>0.975</cell><cell>0.965</cell><cell>0.895</cell><cell>0.86</cell><cell>0.855</cell><cell>0.825</cell><cell>0.805</cell><cell>0.455</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">DC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">DC-RoSIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">MrDc-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.21</cell><cell>0.235</cell><cell>0.195</cell><cell>0.18</cell><cell>0.01</cell><cell>0.735</cell><cell>0.715</cell><cell>0.705</cell><cell>0.65</cell><cell>0.32</cell><cell>0.965</cell><cell>0.96</cell><cell>0.935</cell><cell>0.905</cell><cell>0.775</cell></row><row><cell>d 2</cell><cell>0.265</cell><cell>0.28</cell><cell>0.255</cell><cell>0.22</cell><cell>0.01</cell><cell>0.77</cell><cell>0.76</cell><cell>0.755</cell><cell>0.72</cell><cell>0.4</cell><cell>0.97</cell><cell>0.965</cell><cell>0.955</cell><cell>0.95</cell><cell>0.845</cell></row><row><cell>d 3</cell><cell>0.305</cell><cell>0.33</cell><cell>0.28</cell><cell>0.25</cell><cell>0.015</cell><cell>0.795</cell><cell>0.81</cell><cell>0.775</cell><cell>0.74</cell><cell>0.44</cell><cell>0.975</cell><cell>0.975</cell><cell>0.97</cell><cell>0.97</cell><cell>0.89</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 4 :</head><label>4</label><figDesc>The minimum selection size S of each screening method for case (2) of Example 1. All methods perform worse than in case (1), but PC-Screen and MrDc-SIS still outperform the others, which can rank all true signals at around 500.</figDesc><table><row><cell></cell><cell>SIS</cell><cell>SIRS</cell><cell>RRCS</cell><cell>SC-SIS</cell><cell>PC-Screen</cell><cell>BCor-SIS</cell><cell>DC-SIS</cell><cell>DC-RoSIS</cell><cell>MrDc-SIS</cell></row><row><cell cols="10">S.mean 3807.90 3793.81 2378.06 1297.39 421.63 1187.96 3720.05 2441.23 538.07</cell></row><row><cell>S.std</cell><cell>863.91</cell><cell cols="8">895.86 1522.62 1239.26 776.74 1227.52 945.82 1338.28 872.06</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 5 :</head><label>5</label><figDesc>P s and P a under different thresholds for case (2) of Example 1, d 1 = [n/ log(n)] = 37, d 2 = 2d 1 , and d 3 = 3d 1 . If we choose top d 3 predictors, PC-Screen and MrDc-SIS can select all true signals in 50% of the time, SC-SIS and BCor-SIS can select all true signals in 10% of the time, and others can only successfully select all true signals in less than 2% of the time.</figDesc><table><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SIS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>SIRS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>RRCS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0</cell><cell>0.005</cell><cell>0.095</cell><cell>0.005</cell><cell>0</cell><cell>0.05</cell><cell>0.035</cell><cell>0.015</cell><cell>0.035</cell><cell>0</cell><cell>0.65</cell><cell>0.645</cell><cell>0.01</cell><cell>0.73</cell><cell>0.005</cell></row><row><cell>d 2</cell><cell>0.005</cell><cell>0.015</cell><cell>0.13</cell><cell>0.02</cell><cell>0</cell><cell>0.06</cell><cell>0.05</cell><cell>0.03</cell><cell>0.045</cell><cell>0</cell><cell>0.73</cell><cell>0.74</cell><cell>0.03</cell><cell>0.765</cell><cell>0.02</cell></row><row><cell>d 3</cell><cell>0.005</cell><cell>0.015</cell><cell>0.175</cell><cell>0.03</cell><cell>0</cell><cell>0.06</cell><cell>0.085</cell><cell>0.045</cell><cell>0.065</cell><cell>0</cell><cell>0.76</cell><cell>0.77</cell><cell>0.04</cell><cell>0.79</cell><cell>0.025</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">SC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">PC-Screen</cell><cell></cell><cell></cell><cell></cell><cell cols="2">BCor-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.48</cell><cell>0.4</cell><cell>0.835</cell><cell>0.455</cell><cell>0.03</cell><cell>0.755</cell><cell>0.745</cell><cell>0.97</cell><cell>0.8</cell><cell>0.365</cell><cell>0.535</cell><cell>0.495</cell><cell>1</cell><cell>0.52</cell><cell>0.065</cell></row><row><cell>d 2</cell><cell>0.57</cell><cell>0.5</cell><cell>0.91</cell><cell>0.53</cell><cell>0.08</cell><cell>0.795</cell><cell>0.82</cell><cell>0.985</cell><cell>0.825</cell><cell>0.475</cell><cell>0.58</cell><cell>0.545</cell><cell>1</cell><cell>0.59</cell><cell>0.125</cell></row><row><cell>d 3</cell><cell>0.61</cell><cell>0.56</cell><cell>0.925</cell><cell>0.545</cell><cell>0.1</cell><cell>0.815</cell><cell>0.87</cell><cell>0.995</cell><cell>0.86</cell><cell>0.565</cell><cell>0.625</cell><cell>0.6</cell><cell>1</cell><cell>0.635</cell><cell>0.175</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">DC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">DC-RoSIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">MrDc-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell><cell>X 1</cell><cell>X 6</cell><cell>X 12</cell><cell>X 22</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.005</cell><cell>0</cell><cell>0.17</cell><cell>0.01</cell><cell>0</cell><cell>0.205</cell><cell>0.175</cell><cell>0.585</cell><cell>0.2</cell><cell>0.005</cell><cell>0.7</cell><cell>0.665</cell><cell>0.93</cell><cell>0.73</cell><cell>0.22</cell></row><row><cell>d 2</cell><cell>0.005</cell><cell>0.02</cell><cell>0.24</cell><cell>0.015</cell><cell>0</cell><cell>0.265</cell><cell>0.215</cell><cell>0.635</cell><cell>0.225</cell><cell>0.01</cell><cell>0.76</cell><cell>0.745</cell><cell>0.98</cell><cell>0.8</cell><cell>0.385</cell></row><row><cell>d 3</cell><cell>0.025</cell><cell>0.03</cell><cell>0.28</cell><cell>0.02</cell><cell>0</cell><cell>0.31</cell><cell>0.24</cell><cell>0.66</cell><cell>0.255</cell><cell>0.02</cell><cell>0.78</cell><cell>0.8</cell><cell>0.985</cell><cell>0.825</cell><cell>0.47</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 6 :</head><label>6</label><figDesc>The</figDesc><table><row><cell cols="2">S.mean 6603.45</cell><cell>146.07</cell><cell>226.23</cell><cell>2978.20</cell><cell>276.98</cell></row><row><cell>S.std</cell><cell>2241.11</cell><cell>766.61</cell><cell>755.20</cell><cell>2616.41</cell><cell>860.28</cell></row></table><note><p>minimum selection size S of each screening method for Example 2. PC-Screen, BCor-SIS and MrDc-SIS can rank all true signals at top 200, while DC-SIS ranks all true signals at top 3000, and SC-SIS ranks all true signals at top 6000. SC-SIS PC-Screen Bcor-SIS DC-SIS MrDc-SIS</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 7 :</head><label>7</label><figDesc>P s and P</figDesc><table><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">PC-Screen</cell><cell></cell><cell></cell><cell></cell><cell cols="2">BCor-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 2</cell><cell>X 4</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 4</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 4</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.01</cell><cell>0.02</cell><cell>0.02</cell><cell>0.04</cell><cell>0</cell><cell>0.945</cell><cell>0.935</cell><cell>0.955</cell><cell>0.96</cell><cell>0.87</cell><cell>0.89</cell><cell>0.835</cell><cell>0.955</cell><cell>0.96</cell><cell>0.775</cell></row><row><cell>d 2</cell><cell>0.01</cell><cell>0.02</cell><cell>0.04</cell><cell>0.055</cell><cell>0</cell><cell>0.965</cell><cell>0.955</cell><cell>0.97</cell><cell>0.96</cell><cell>0.895</cell><cell>0.925</cell><cell>0.865</cell><cell>0.96</cell><cell>0.965</cell><cell>0.815</cell></row><row><cell>d 3</cell><cell>0.01</cell><cell>0.03</cell><cell>0.045</cell><cell>0.065</cell><cell>0</cell><cell>0.98</cell><cell>0.955</cell><cell>0.97</cell><cell>0.97</cell><cell>0.915</cell><cell>0.935</cell><cell>0.905</cell><cell>0.965</cell><cell>0.965</cell><cell>0.85</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">DC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">MrDc-SIS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>X 2</cell><cell>X 4</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 4</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 1</cell><cell>0.12</cell><cell>0.125</cell><cell>0.75</cell><cell>0.805</cell><cell>0.03</cell><cell>0.98</cell><cell>0.98</cell><cell>0.82</cell><cell>0.75</cell><cell>0.68</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 2</cell><cell>0.165</cell><cell>0.135</cell><cell>0.845</cell><cell>0.855</cell><cell>0.055</cell><cell>0.98</cell><cell>0.985</cell><cell>0.85</cell><cell>0.82</cell><cell>0.75</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 3</cell><cell>0.19</cell><cell>0.165</cell><cell>0.88</cell><cell>0.865</cell><cell>0.06</cell><cell>0.985</cell><cell>0.985</cell><cell>0.88</cell><cell>0.84</cell><cell>0.79</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table><note><p>a under different thresholds for Example 2, d 1 = [n/ log(n)] = 37, d 2 = 2d 1 , and d 3 = 3d 1 . If we choose top d 3 predictors, PC-Screen can select all true signals in 92% of the time, BCor-SIS and MrDc-SIS can select all true signals in 80% of the time, while SC-SIS and DC-SIS have a much lower success rate.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head>Table 8 :</head><label>8</label><figDesc>The minimum selection size S of each screening method for case (1) of Example 3. MrDc-SIS ranks true signals in top 400, better than other four approaches.</figDesc><table><row><cell></cell><cell cols="4">SC-SIS PC-Screen Bcor-SIS DC-SIS MrDc-SIS</cell></row><row><cell cols="2">S.mean 3776.08</cell><cell>2441.05</cell><cell>3164.50 2852.32</cell><cell>401.94</cell></row><row><cell>S.std</cell><cell>1010.82</cell><cell>1462.06</cell><cell>1399.92 1404.24</cell><cell>792.86</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10"><head>Table 9 :</head><label>9</label><figDesc>P s and P a under different thresholds for case (1) of Example 3, d 1 = [n/ log(n)] = 37, d 2 = 2d 1 , and d 3 = 3d 1 . If we choose top d 3 predictors, MrDc-SIS can select all true signals in 63% of the time, while other four approaches can only select all true signals in less than 3% of the time.</figDesc><table><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">PC-Screen</cell><cell></cell><cell></cell><cell></cell><cell cols="2">BCor-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.02</cell><cell>0.03</cell><cell>0.02</cell><cell>0.025</cell><cell>0.01</cell><cell>0.02</cell><cell>0.015</cell><cell>1</cell><cell>1</cell><cell>0.015</cell><cell>0.015</cell><cell>0.015</cell><cell>0.995</cell><cell>1</cell><cell>0.01</cell></row><row><cell>d 2</cell><cell>0.025</cell><cell>0.04</cell><cell>0.025</cell><cell>0.035</cell><cell>0.01</cell><cell>0.025</cell><cell>0.02</cell><cell>1</cell><cell>1</cell><cell>0.015</cell><cell>0.025</cell><cell>0.02</cell><cell>0.995</cell><cell>1</cell><cell>0.01</cell></row><row><cell>d 3</cell><cell>0.045</cell><cell>0.06</cell><cell>0.03</cell><cell>0.04</cell><cell>0.01</cell><cell>0.04</cell><cell>0.035</cell><cell>1</cell><cell>1</cell><cell>0.025</cell><cell>0.03</cell><cell>0.035</cell><cell>0.995</cell><cell>1</cell><cell>0.015</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">DC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">MrDc-SIS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 1</cell><cell>0.015</cell><cell>0.015</cell><cell>0.995</cell><cell>1</cell><cell>0.01</cell><cell>0.605</cell><cell>0.64</cell><cell>1</cell><cell>1</cell><cell>0.56</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 2</cell><cell>0.02</cell><cell>0.02</cell><cell>1</cell><cell>1</cell><cell>0.015</cell><cell>0.66</cell><cell>0.69</cell><cell>1</cell><cell>1</cell><cell>0.605</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 3</cell><cell>0.02</cell><cell>0.025</cell><cell>1</cell><cell>1</cell><cell>0.015</cell><cell>0.69</cell><cell>0.735</cell><cell>1</cell><cell>1</cell><cell>0.63</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11"><head>Table 10 :</head><label>10</label><figDesc>The minimum selection size S of each screening method for case (2) of Example 3 where we have mixed categorical and continuous responses. MrDc-SIS still works better than other approaches, it ranks all true signals to top 600, while others rank the true signals to 3000.</figDesc><table><row><cell></cell><cell cols="4">SC-SIS PC-Screen Bcor-SIS DC-SIS MrDc-SIS</cell></row><row><cell cols="2">S.mean 3671.39</cell><cell>2316.39</cell><cell>3017.87 2796.06</cell><cell>631.01</cell></row><row><cell>S.std</cell><cell>1074.09</cell><cell>1447.70</cell><cell>1444.25 1424.84</cell><cell>1194.76</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12"><head>Table 11 :</head><label>11</label><figDesc>P s and P a under different thresholds for case (2) of Example 3, d 1 = [n/ log(n)] = 37, d 2 = 2d 1 , and d 3 = 3d 1 . If we choose top d 3 predictors, MrDc-SIS can select all true signals in 60% of the time, while other four approaches can only select all true signals in less than 8% of the time.</figDesc><table><row><cell>Model Size</cell><cell></cell><cell></cell><cell>SC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">PC-Screen</cell><cell></cell><cell></cell><cell></cell><cell cols="2">BCor-SIS</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell></row><row><cell></cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell></row><row><cell>d 1</cell><cell>0.035</cell><cell>0.04</cell><cell>0.025</cell><cell>0.05</cell><cell>0.01</cell><cell>0.04</cell><cell>0.045</cell><cell>0.995</cell><cell>1</cell><cell>0.03</cell><cell>0.035</cell><cell>0.035</cell><cell>0.99</cell><cell>1</cell><cell>0.025</cell></row><row><cell>d 2</cell><cell>0.045</cell><cell>0.05</cell><cell>0.03</cell><cell>0.09</cell><cell>0.01</cell><cell>0.08</cell><cell>0.065</cell><cell>1</cell><cell>1</cell><cell>0.055</cell><cell>0.04</cell><cell>0.035</cell><cell>0.99</cell><cell>1</cell><cell>0.025</cell></row><row><cell>d 3</cell><cell>0.065</cell><cell>0.07</cell><cell>0.035</cell><cell>0.11</cell><cell>0.01</cell><cell>0.095</cell><cell>0.09</cell><cell>1</cell><cell>1</cell><cell>0.08</cell><cell>0.045</cell><cell>0.04</cell><cell>0.99</cell><cell>1</cell><cell>0.025</cell></row><row><cell>Model Size</cell><cell></cell><cell cols="2">DC-SIS</cell><cell></cell><cell></cell><cell></cell><cell cols="2">MRDC-SIS</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell>P s</cell><cell></cell><cell></cell><cell>P a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell>X 2</cell><cell>X 3</cell><cell>X 101</cell><cell>X 102</cell><cell>All</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 1</cell><cell>0.035</cell><cell>0.035</cell><cell>0.995</cell><cell>1</cell><cell>0.03</cell><cell>0.61</cell><cell>0.585</cell><cell>1</cell><cell>1</cell><cell>0.54</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 2</cell><cell>0.045</cell><cell>0.04</cell><cell>0.995</cell><cell>1</cell><cell>0.035</cell><cell>0.67</cell><cell>0.665</cell><cell>1</cell><cell>1</cell><cell>0.605</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>d 3</cell><cell>0.045</cell><cell>0.04</cell><cell>0.995</cell><cell>1</cell><cell>0.035</cell><cell>0.68</cell><cell>0.675</cell><cell>1</cell><cell>1</cell><cell>0.605</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+		</body>
+		<back>
+
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgments</head><p>We thank the Editor, Associate Editor and three anonymous referees for their valuable time and constructive comments.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Lemma 2. (Serfling [27, Theorem A, pp. 201]), Let h(X 1 , . . . , X m ) be a kernel of the U-statistic U n , and θ = E{h(X 1 , . . . , X m )}. If a h(X 1 . . . , X m ) b, then for any t &gt; 0 and n m,</p><p>where [n/m] denotes the integer part of n/m. Because of the symmetry of U-statistic, we have</p><p>Proof of (2) in the Theorem 1: We want to show the uniform consistency of the denominator and the numerator of ω j , since the denominator and numerator have similar form, we only deal with the numerator. Define</p><p>where d, q stand for the dimension of X j and Y, most of the time d = 1, but sometimes when the data are from different sources or in multiomics data, we may have d &gt; 1. Moreover,</p><p>where (X 1 j , Y 1 ), (X 2 j , Y 2 ), (X 3 j , Y 3 ) are independent observations having the same distribution as (X j , Y). Firstly we focus on Ŝ jℓ , define</p><p>By the triangle inequality, for any k, ℓ ∈ {1, 2, . . . , n}:</p><p>So we have</p><p>By Theorem 2.1 in Deb and Sen <ref type="bibr" target="#b3">[4]</ref>, the last two terms equal to 0 a.s.. Therefore</p><p>Repeat the same argument on Y's instead of X j 's, we can get</p><p>Another application of the triangle inequality also yields the following:</p><p>Combining these 3 inequalities, we have</p><p>for some positive constant c 1 . This is the convergence rate of the numerator of ω j . Since the denominator has the same form of numerator, let = cn -κ and 0 &lt; κ + γ &lt; 1 2 , we have Pr( max</p><p>Proof of (3) in the Theorem 1: If D D, then there must exist some j ∈ D such that ω j &lt; cn -κ , since ω j 2cn -κ for all j ∈ D, we know there exist some j ∈ D such that | ω j -</p><p>where s n is the cardinality of D. This completes the proof. O(p exp(c 1 n 1-2(κ 2 +γ) )).</p><p>This completes the proof.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The Dantzig selector: Statistical estimation when p is much larger than n</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Candes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="2313" to="2351" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Feature screening for time-varying coefficient models with ultrahigh dimensional longitudinal data</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Reimherr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">596</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening for ultrahigh dimensional discriminant analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="page" from="630" to="641" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Multivariate rank-based distribution-free nonparametric testing using measure transportation</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Deb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Sen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="45" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">High-dimensional integration: the quasi-Monte Carlo way</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Dick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">Y</forename><surname>Kuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Sloan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Numerica</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="133" to="288" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Theoretical improvements in algorithmic efficiency for network flow problems</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Edmonds</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Karp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="248" to="264" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Variable selection via nonconcave penalized likelihood and its oracle properties</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="page" from="1348" to="1360" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Sure independence screening for ultrahigh dimensional feature space</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page" from="849" to="911" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Ultrahigh dimensional feature selection: beyond the linear model</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Samworth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="2013" to="2038" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Stable correlation and robust feature screening</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science China Mathematics</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="page" from="153" to="168" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Algorithm 247: Radical-inverse quasi-random point sequence</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Halton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="701" to="702" />
+			<date type="published" when="1964">1964</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Interaction screening for ultrahigh-dimensional data</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="1285" to="1301" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Feature screening for ultrahigh dimensional categorical data with applications</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business &amp; Economic Statistics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="237" to="244" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Constructing Sobol sequences with better two-dimensional projections</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Joe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">Y</forename><surname>Kuo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">SIAM Journal on Scientific Computing</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="2635" to="2654" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Robust rank correlation based screening</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="1846" to="1877" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Signaling pathway network alterations in human ovarian cancers identified with quantitative mitochondrial proteomics</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">EPMA Journal</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="153" to="172" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Feature screening via distance correlation learning</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="1129" to="1139" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Feature selection for varying coefficient models with ultrahigh-dimensional covariates</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="266" to="274" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A selective overview of feature screening for ultrahigh-dimensional data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science China Mathematics</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="page" from="1" to="22" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening and FDR control with Knockoff features</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="16" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Existence and uniqueness of monotone measure-preserving maps</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Mccann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Duke Mathematical Journal</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="309" to="324" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Covariate information number for feature screening in ultrahigh-dimensional supervised problems</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Nandy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Chiaromonte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="14" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Entropy-based model-free feature screening for ultrahigh-dimensional multiclass classification</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Fang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Nonparametric Statistics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="515" to="530" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Low-discrepancy and low-dispersion sequences</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Niederreiter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Number Theory</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="51" to="70" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">A generic sure independence screening procedure</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A KRAS-variant in ovarian cancer acts as a genetic marker of cancer risk</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ratner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boeke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Barnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nallur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Pelletier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Blitzblau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tassi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Paranjape</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page" from="6509" to="6515" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<author>
+			<persName><forename type="first">R</forename><surname>Serfling</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Approximation Theorems of Mathematical Statistics</title>
+		<title level="s">Wiley Series in Probability and Statistics -Applied Probability and Statistics Section Series</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>John Wiley &amp; Sons Inc</publisher>
+			<date type="published" when="1980">1980</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Distribution-free consistent independence tests via center-outward ranks and signs</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Drton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Han</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="16" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">On the distribution of points in a cube and the approximate evaluation of integrals</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>Sobol</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Zhurnal Vychislitel&apos;noi Matematiki i Matematicheskoi Fiziki</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="784" to="802" />
+			<date type="published" when="1967">1967</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Construction and comparison of high-dimensional Sobol&apos;generators, Wilmott Magazine</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>Sobol</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">'</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Asotsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kreinin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kucherenko</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011">2011. 2011</date>
+			<biblScope unit="page" from="64" to="79" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Measuring and testing dependence by correlation of distances</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Székely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Rizzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">K</forename><surname>Bakirov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="2769" to="2794" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Regression shrinkage and selection via the lasso</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="page" from="267" to="288" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">On some techniques useful for solution of transportation network problems</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tomizawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Networks</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="173" to="194" />
+			<date type="published" when="1971">1971</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Identification of DNA copy number changes in microdissected serous ovarian cancer tissue using a cDNA microarray platform</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Tsuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Birrer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">M</forename><surname>Ito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ohashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">H</forename><surname>Rao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Berkowitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Genetics and Cytogenetics</title>
+		<imprint>
+			<biblScope unit="volume">155</biblScope>
+			<biblScope unit="page" from="97" to="107" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">TCGA-assembler 2: software pipeline for retrieval and processing of TCGA/CPTAC data</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ji</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="1615" to="1617" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Network-based feature screening with applications to genome data</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Feng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="1250" to="1270" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Forward additive regression for ultrahigh-dimensional nonparametric additive models</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Duan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="175" to="192" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">An iterative approach to distance correlation-based sure independence screening</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Computation and Simulation</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="page" from="2331" to="2345" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Regularized quantile regression and robust feature screening for single index models</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cui</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica Sinica</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page">69</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening for ultrahigh dimensional censored regression</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics and Computing</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="947" to="961" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Model-free feature screening for ultrahigh-dimensional data</title>
+		<author>
+			<persName><forename type="first">L.-P</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L.-X</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="page" from="1464" to="1475" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">TCGA-assembler: open-source software for retrieving and processing TCGA data</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ji</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Methods</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="599" to="600" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

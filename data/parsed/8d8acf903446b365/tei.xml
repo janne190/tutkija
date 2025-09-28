@@ -1,0 +1,1584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Dose-response modeling in high-throughput cancer drug screenings: An end-to-end approach</title>
+				<funder ref="#_WpP7aWF #_X9jNS5b #_gxmrvd4">
+					<orgName type="full">National Institutes of Health</orgName>
+					<orgName type="abbreviated">NIH</orgName>
+				</funder>
+				<funder ref="#_XpQRrga">
+					<orgName type="full">Simons Foundation</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Data Science Institute of Columbia University</orgName>
+				</funder>
+				<funder ref="#_Ms3ZkD9 #_rP3EQWv">
+					<orgName type="full">ONR</orgName>
+				</funder>
+				<funder ref="#_aT9qchA #_wDfDQWy">
+					<orgName type="full">National Science Foundation</orgName>
+					<orgName type="abbreviated">NSF</orgName>
+				</funder>
+				<funder ref="#_SST5SpV">
+					<orgName type="full">DARPA</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2020-05-22">22 May 2020</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Wesley</forename><surname>Tansey</surname></persName>
+							<email>wesley.tansey@columbia.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Data Science Institute</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Systems Biology</orgName>
+								<orgName type="institution">Columbia University Medical Center</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kathy</forename><surname>Li</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Applied Mathematics and Applied Physics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Haoran</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Applied Mathematics and Applied Physics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Scott</forename><forename type="middle">W</forename><surname>Linderman</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Data Science Institute</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Statistics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Raul</forename><surname>Rabadan</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Systems Biology</orgName>
+								<orgName type="institution">Columbia University Medical Center</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><forename type="middle">M</forename><surname>Blei</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Data Science Institute</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Statistics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff4">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Chris</forename><forename type="middle">H</forename><surname>Wiggins</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Data Science Institute</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Applied Mathematics and Applied Physics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Dose-response modeling in high-throughput cancer drug screenings: An end-to-end approach</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2020-05-22">22 May 2020</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9255FB623C3479F8D935A0E514344032</idno>
+					<idno type="arXiv">arXiv:1812.05691v2[stat.AP]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Personalized cancer treatments based on the molecular profile of a patient's tumor are an emerging and exciting class of treatments in oncology. As genomic tumor profiling is becoming more common, targeted treatments to specific molecular alterations are gaining traction. To discover new potential therapeutics that may apply to broad classes of tumors matching some molecular pattern, experimentalists and pharmacologists rely on high-throughput, in vitro screens of many compounds against many different cell lines. We propose a hierarchical Bayesian model of how cancer cell lines respond to drugs in these experiments and develop a method for fitting the model to real-world high-throughput screening data. Through a case study, the model is shown to capture nontrivial associations between molecular features and drug response, such as requiring both wild type TP53 and overexpression of MDM2 to be sensitive to Nutlin-3(a). In quantitative benchmarks, the model outperforms a standard approach in biology, with ≈ 20% lower predictive error on held out data. When combined with a conditional randomization testing procedure, the model discovers biomarkers of therapeutic response that recapitulate known biology and suggest new avenues for investigation. All code for the paper is publicly available at <ref type="url" target="https://github.com/tansey/deep-dose-response">https://github.com/tansey/deep-dose-response</ref>.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">High-throughput cancer drug screening</head><p>Genomic sequencing and high-throughput drug screening is becoming cheaper, enabling widespread adoption in both research institutions and hospitals <ref type="bibr" target="#b19">(Muir et al., 2016)</ref>. Many of these institutions have built datasets that enable scientists to explore potential connections between the molecular profile of a cell (i.e. its DNA and other related biological information) and its phenotypic response to treatment with a certain drug. Specifically in cancer therapeutics, large public datasets have become available with thousands of experiments testing different drugs on different types of cancer cell lines (e.g. <ref type="bibr" target="#b36">Yang et al., 2012;</ref><ref type="bibr" target="#b1">Barretina et al., 2012;</ref><ref type="bibr" target="#b10">Iorio et al., 2016;</ref><ref type="bibr" target="#b9">Haverty et al., 2016)</ref>.</p><p>One goal in analyzing these datasets is to build a predictive model of drug response. The model takes in a set of molecular features of a cell line and predicts the expected outcome of using a candidate drug to treat it. The more accurate the predictor, the more it can be trusted to faithfully simulate wet lab results. If a good predictor can be constructed, it can accelerate the discovery of targeted therapies by refining experimentalists' hypotheses much faster than can be done in the lab. Thus, good predictors have high value to biologists.</p><p>We build a generative model of drug response in high-throughput cancer drug screens. The model captures uncertainty inherent in cell line experiments, including measurement error, natural variation in cell growth, and drug response heterogeneity. We take an approximate Bayesian approach to estimating the model parameters and also propose a method for detecting contaminated data. We use the model in a case study analyzing a dataset <ref type="bibr" target="#b10">(Iorio et al., 2016)</ref> containing hundreds of thousands of experiments. In our study, the model outperforms a state-of-the-art approach for estimating dose-response curves <ref type="bibr">(Vis et al., 2016)</ref>. Model predictions also recapitulate known biology involving nonlinear interactions between molecular features and drugs. Approximate dose-response posteriors, in combination with conditional randomization tests <ref type="bibr" target="#b2">(Candes et al., 2018)</ref>, reveal both known and potentially novel biomarkers of drug response.</p><p>The experimental design used in our case study is similar to many pharmacogenomic profiling experiments. Consequently, we expect the proposed model and insights from our case study to be applicable to other high-throughput cancer drug screening studies. Some studies <ref type="bibr" target="#b8">(Haibe-Kains et al., 2013;</ref><ref type="bibr" target="#b27">Safikhani et al., 2016)</ref> have shown results may not transfer between different high-throughput studies, implying the actual model predictions we infer may not perform well on other datasets. Nevertheless, the modeling strategy and techniques we propose for dealing with data-specific challenges in the GDSC can help guide and inform modeling of similar datasets. In the conclusions of the paper, we summarize these insights for practitioners analyzing other datasets, designing new experiments in the lab, or guiding data-gathering policy at hospitals.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">Experimental setup and details</head><p>Our data come from the Genomics of Drug Sensitivity in Cancer (GDSC) <ref type="bibr" target="#b36">(Yang et al., 2012;</ref><ref type="bibr" target="#b7">Garnett et al., 2012;</ref><ref type="bibr" target="#b10">Iorio et al., 2016)</ref>, a high-throughput screening (HTS) study on therapeutic response in cancer cell lines. The GDSC data comprise the results of testing 1072 cancer cell lines nearly-combinatorially against 265 cancer therapeutic drugs, in vitro. The experiments were conducted across two separate testing sites: the Wellcome Trust Sanger Institute ("Site 1") and Massachusetts General Hospital ("Site 2"). Experiments were carried out over the course of multiple years and used one of two assay types, depending on the cell type: suspended ("Assay S") or adherent ("Assay A"). For a given site and assay type, each experiment was carried out using a series of HTS microwell plates; the layout for each plate is shown in Fig. <ref type="figure" target="#fig_2">3</ref> in the supplement.</p><p>A given plate contains hundreds of microwells, where each well is designated as either a negative control, positive control, or treatment. Negative control wells are left unpopulated and untreated, so as to calibrate the base level of machine output if all cells were to die. All other wells are populated with a constant volume of cells; due to natural variation in cell volume, exactly how many cells occupy any given well is unknown. Positive control wells are left untreated so as to measure the base response for drugs that have no effect.<ref type="foot" target="#foot_0">foot_0</ref> Finally, a series of drugs are applied to the remaining wells, with each well receiving a different concentration. A single plate is used to test only one specific cell line; all wells in a plate are filled with the specific assay fluid appropriate for the target cell line. Drug concentration ranges were derived based on previous experiments and were delivered at either 5 or 9 dose levels, depending on the testing site. Both testing sites start at the same maximum dose level, which is diluted at a 4-fold rate for the 5 dose schedule and at a 2-fold rate for the 9 dose schedule, resulting in the same final minimum dose. Since the sites use the same minimum and maximum dose, this dilution procedure yields missing data for odd-numbered dose levels in the dataset. Once treated, cells are left to either grow or die for 72 hours.</p><p>Cell population size is approximated by a fluorescence assay. A fluorescent compound is added to the wells that is capable of penetrating cells and binding to a protein kept at relatively-constant levels in all living cells. When a cell dies, its structure breaks down and the target protein denatures, leaving no binding agent and resulting in no fluorescence. Robotically-controlled cameras photograph each well and the total luminescence of the image (i.e. pixel intensity count) is used as a relative measure of cell population size.</p><p>Luminescence of positive and negative control wells is used to calibrate luminescence of treatment wells. Positive control wells provide an estimate for how much light a well with all living cells will emit, while negative control wells provide an estimate for how much light a well with no living cells will emit. We refer to this negative control measure as the baseline fluorescence bias, since it represents the fluorescence of an empty well. This baseline measure is also subject to machine or technical error from the specific equipment being used. Positive controls are subject to natural biological variation from the particular cell line being used. Population luminescence after treatment (relative to the positive and negative controls) is the quantity of interest for each treatment microwell. That is, we seek to estimate the survival rate of the population after treatment: populations close to the negative control luminescence will have mostly died; populations close to the positive control luminescence will have mostly survived; in-between levels indicate some partial survival.</p><p>We aim to build a model that treats the molecular covariates as features that potentially convey predictive information about sensitivity and resistance to different therapies. For 963 of the cell lines, we have molecular information about gene mutations, copy number variations (CNVs), and gene expression. We preprocessed the mutations and CNVs to filter down to genes that are recurrently observed as altered in large-scale observational cancer studies. This preprocessing is necessary, as adjacent CNVs are highly correlated and many nucleotide mutations occur in genes that are known to have no impact on functionality. Biological knowledge from pre-existing databases is leveraged here to filter genes down to a more informative set (see Supplementary material for details). After preprocessing, we are left with 5822 binary gene mutations and 234 copy number counts; we keep all 17271 gene expression covariates. For a handful of cell lines (109), no molecular information is available; we treat these as missing data. Almost all drugs have been screened against all cell lines, yielding a dataset of 225385 (cell line, drug) experiments. We treat all missing experiments and all missing molecular features as missing at random.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3">Related work</head><p>Several methods for dose-response modeling have been proposed in the recent literature. <ref type="bibr" target="#b16">Low-Kam et al. (2015)</ref> proposed a Bayesian regression tree model for estimating toxicity at different levels of certain nanoparticles. Wheeler (2019) modeled dose-response with molecular descriptors via additive Bayesian splines. Both of these methods, while capable of working from raw data, do not scale to the massive size of our data, where we have tens of thousands of features.</p><p>Several machine learning approaches to dose-response prediction in cancer experiments have also been proposed (e.g. <ref type="bibr" target="#b18">Menden et al., 2013;</ref><ref type="bibr" target="#b0">Ammad-ud din et al., 2016;</ref><ref type="bibr" target="#b24">Rampasek et al., 2017)</ref>. These models seek to predict a single summary statistic (usually the area under the curve or the IC50) of a parametric model fit to the more complicated raw data. Predicting this summary statistic treats the preprocessed model as a ground truth label, making it difficult to know whether improved predictive performance is because the model has learned something about the actual response of the cancer cells, or simply has "fit the fit" by better matching the predictive model to the parametric model. Here we seek to work end-to-end, predicting directly from the raw data. This prevents us from fairly comparing against most past machine learning approaches that require a clearly-defined covariate and scalar response setup. The upside is that modeling the entire experiment enables us to account for measurement error, an important source of noise in scientific data <ref type="bibr" target="#b15">(Loken and Gelman, 2017)</ref> that has historically been overlooked in cancer screens. Substantial measurement error (Section 2.3) and outcome uncertainty (Section 2.4) are present in our dataset; Section 3 shows the benefits of the end-to-end approach, as well as a comparison to the state-of-the-art approach in computational biology <ref type="bibr">(Vis et al., 2016)</ref>.</p><p>2 Bayesian dose-response model</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Generative model</head><p>Consider N cell lines and M drugs. Each cell line i = 1, . . . , N is tested against each drug j = 1, . . . , M , at dose levels t = 1, . . . , D. The study consists of plates ℓ = 1, . . . , L; we denote by ℓ(i, j) the plate on which a specific (i, j) pair was tested. The result of a plate experiment is fluorescence count data (r ℓ , q ℓ , Y ℓ ) where r ℓ = (r ℓ1 , . . . , r ℓR ) are the R negative control measurements used to estimate the baseline fluorescence bias, q ℓ = (q ℓ1 , . . . , q ℓQ ) are the Q positive control measurements used to estimate the fluorescence of a population of cells when no effective treatment has been applied, and Y ℓ are the treatment well measurements for each of the drugs on plate ℓ. Since each (i, j) pair is tested only on a single plate, we index treatments by their cell line, drug, and dose levels, respectively; thus, Y ∈ R N ×M ×D is a 3-tensor and y ijt represents the result of treating cell line i with drug j at dose level t. Each cell line i has an associated vector of mutation, copy number variation, and expression covariates X i .</p><p>We propose a generative model of dose-response,</p><formula xml:id="formula_0">r ℓk ∼ Poisson(c ℓ ) q ℓk ∼ Poisson(λ ℓ + c ℓ ) y ijt ∼ Poisson(τ ijt λ ℓ(i,j) + c ℓ(i,j) ) λ ℓ ∼ Gamma(a ℓ , b ℓ ) τ ijt = 1 1 + exp(-β ijt ) β ij ∼ MVN + (µ ij , Σ j ) µ ij = f (X i , j; θ)<label>(1)</label></formula><p>The plate-specific negative and positive control fluorescent counts, r ℓk and q ℓk , are modeled as random variables for which we receive R and Q i.i.d. observations, respectively. The positive control fluorescence distribution is a function of the baseline fluorescence from the machine (c ℓ ) and the growth rate (λ ℓ ) of the cell line on plate ℓ. The outcome of experiment y ijt is a sample from the positive control distribution, but with a treatment effect τ ijt that reduces the growth rate of the cells.</p><p>The treatment effect τ ijt has the direct interpretation as drug j killing (1 -τ ijt ) × 100% of cell line i on average when applied at dose level t. The vector of responses τ ij is the dose-response curve -that is, it represents the percentage of cells that survive at different dose levels; this is the primary quantity of interest in every experiment. Discovering effective drugs corresponds to finding curves that show sensitivity in some subset of cell lines, indicating the therapy is likely targeting some molecular property of the cells.</p><p>The dose-response curve is modeled through a latent constrained multivariate normal (MVN). The logistic transform from the MVN variable β ijt to the effect τ ijt constrains effects to be in the [0, 1] interval, corresponding to expected cell survival percentage. The MVN is constrained to the monotone-increasing half-space, encoding that the drug effect can only become stronger as the dose increases. The mean response is a monotone function f of the molecular features for the target cell line and the ID of the drug to be applied.</p><p>The model for τ encodes several scientific assumptions. We assume no drug has a positive effect on any cell -that is, no drug actually encourages growth. There are two biological motivations for this assumption. First, cancer cells are generally defined by uncontrolled proliferation. Cultivating non-cancerous cells in vitro is extremely difficult as most cells induce apoptosis (cell suicide) outside of their host environment. There is little room left biologically for a drug to encourage the cancer cell lines to grow even more. Second, the drugs chosen for the GDSC experiment have all been selected for their ability to stress and kill cells. A large portion of the drugs are established cancer therapeutics that are designed to kill cells by targeting pathways recurrently found altered in certain cancers. In addition to assuming all drugs do not encourage growth, we also assume that toxicity only increases with drug concentration. This assumption is again based on the notion of cancer drugs being highly toxic. We check these assumptions empirically in the Supplementary material.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Overview of approximate inference approach</head><p>In practice, simultaneous estimation of all parameters in (1) is computationally infeasible. Furthermore, we discovered contamination in the GDSC data that must be handled carefully (see the Supplementary material for details). Instead, the prior parameter estimates (â ℓ , bℓ , ĉℓ , μij , θ, Σ j ) are obtained through a stepwise procedure. At a high level, there are four main steps:</p><p>1. Baseline fluorescence bias rate ĉℓ is estimated from negative controls. These controls contain systematic biases due to technical error; we detail a denoising approach for negative controls in Section 2.3.</p><p>2. Positive control priors âℓ and bℓ are estimated by maximum likelihood for each plate in Section 2.4.</p><p>3. The black box predictive model f is chosen to be a neural network; parameters θ are estimated in Section 2.5 by maximizing the marginal log likelihood of the data with fixed control priors and an identity covariance matrix.</p><p>4. Drug-specific dose-response correlation structure Σ j is estimated in Section 2.6 through cross-validation and maximum likelihood with fixed prior means μ.</p><p>The final model enables approximate Bayesian posterior inference on τ ij , the dose-response curve. The remainder of this section details the four estimation steps in our estimation procedure.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Batch effects</head><p>An assumption in high-throughput cancer drug analyses is that each individual well is independent of the other wells on the same plate, and each plate is independent of subsequent plates. There is growing concern about both assumptions among biologists. Recent studies suggest there is substantial spatial bias in microwell assays <ref type="bibr" target="#b12">(Lachmann et al., 2016;</ref><ref type="bibr" target="#b17">Mazoure et al., 2017)</ref>, inducing dependence among individual wells on the same plate. We generally label this "cross-contamination" since microwell results are spilling over into neighboring wells. This cross-contamination leads us to throw out several negative control wells in each plate; see the Supplementary for details on removing cross-contaminated wells. After decontamination, some plates are left with as few as 5 negative control wells.</p><p>0 200 400 600 800 1000 1200 Experiment day 20000 40000 60000 80000 100000 Negative control Observed medians Density estimate (a) Negative control uncertainty 200000 300000 400000 500000 600000 Measurement value 0 1 2 3 4 5 6 7 8 Count Fit Observations (b) Positive control uncertainty</p><p>Figure <ref type="figure">1</ref>: Left panel: Time-evolving estimate of the negative control density for an example testing site and assay type. The x-axis is the date a plate was screened, relative to the start of the study; y-axis is the median control well measurements after removing contaminated wells. The trend filtering density regression fit is in orange (line: mean, bands: 90% regions). Right panel: Maximum likelihood estimate of an example positive control density, after fitting the negative control MAP estimate.</p><p>The second assumption is that each plate of observations is independent, regardless of when or where it was tested; as we show, this assumption is also violated for the GDSC data. Fig. <ref type="figure">1</ref> (left) shows one of the four (site, assay) stratifications, with negative control medians for each plate in gray.<ref type="foot" target="#foot_1">foot_1</ref> The x-axis in each subplot is the date ID of the plate (the date when the plate was screened); all dates are relative to the first day of the study. There is clear visual evidence of temporal dependence, with trends followed by sharp discontinuities.</p><p>This temporal dependency is well-established in the HTS literature <ref type="bibr" target="#b11">(Johnson et al., 2007;</ref><ref type="bibr" target="#b13">Leek et al., 2010</ref>) and falls broadly under the term "batch effects." These are technical artifacts that cause otherwise-independent experiments to yield dependent results. Myriad causes can introduce temporal batch effects: using the same test site, the same equipment, preparation by the same technician, or even conducting the experiment at the same ambient temperature. Generally batch effects are seen as a nuisance that reduces the signal in experimental data and must be removed as a preprocessing step, if possible.</p><p>We instead use the temporal batch effects to our advantage when estimating the negative controls. We leverage the inter-well dependence through an approximate Bayes procedure that shrinks the differences between median estimates of negative control wells for plates screened on similar days. We use the relevant portion of the generative model for a single negative control well,</p><formula xml:id="formula_1">r ℓk ∼ Poisson(c ℓ ) c ℓ ∼ Gamma(v d(ℓ) , w d(ℓ) ) ,<label>(2)</label></formula><p>where d(ℓ) denotes the specific day d that plate ℓ was screened. We use the median observation c ℓ as a noisy approximation to the true rate. We then fit a time-evolving density to model the prior distribution of the medians on each day,</p><formula xml:id="formula_2">minimize v,w∈R + - d ℓ∈{ℓ : d=d(ℓ)} log(Gamma( c ℓ ; v d , w d )) + ρ 1 ∆ (1) v w 1 + ρ 2 ∆ (0) v w 2 1 ,<label>(3)</label></formula><p>where ∆ (k) is the k th -order trend filtering matrix (Tibshirani, 2014) using the falling factorial basis <ref type="bibr" target="#b34">(Wang et al., 2014)</ref> to handle the irregular grid of days. The solution to (3) finds densities that are piecewise-linear in their mean and piecewise constant in their variance.</p><p>The regularization parameters ρ 1 and ρ 2 are chosen via 5-fold cross-validation and the model is fit with stochastic gradient descent. Since the counts are large, we use a normal approximation to the gamma, parameterized in natural parameter space for computational convenience; shape and rate parameters are reconstructed from the mean and variance of the normal. Since (3) is non-convex, we only find a local optimum, but empirically we observe good fits across a wide array of simulated data. The orange line and bands in the left panel of Fig. <ref type="figure">1</ref> show the results for one stratification, where the outliers have been shrunk substantially.</p><p>Given the learned prior (v d , ŵd ) from (3), we calculate the maximum a posteriori (MAP) estimate for the negative control mean,</p><formula xml:id="formula_3">ĉℓ = vd(ℓ) + k r ℓk ŵd(ℓ) + k 1 . (<label>4</label></formula><formula xml:id="formula_4">)</formula><p>While there is technical variation in the bias rate, it is relatively small after corrections and thus as a practical matter we simply use the MAP estimate for the Poisson rate of the negative controls. Using the MAP estimate with a fixed ĉℓ simplifies downstream inference by removing the need to numerically integrate out the negative control.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Natural variation in cell line growth</head><p>Even under ideal conditions without any batch effects or spatial plate bias, cell population growth and response exhibits a large degree of natural variation. For instance, Fig. <ref type="figure">1</ref> (right) shows the distribution of the positive control wells for one example plate. The variance in this cell line is so large that a decrease in fluorescence of even 50% compared to the mean would not be highly unlikely. Furthermore, population growth variance varies substantially between cell lines, testing sites, and assay types.</p><p>Since we have a reasonably large number of positive control wells on each plate, we estimate the population directly, maximize a,b∈R + q Poisson(q; λ + ĉℓ )Gamma(λ; a, b)dλ .</p><p>(5)</p><p>The integral in (5) can be resolved analytically to be an incomplete gamma; however, we found a finite grid approximation to be more numerically stable. The maximum likelihood problem is also nonconvex, so we again rely on a local optima approximation found via a sequential least squares solver. We found the fits in simulation to be close to the ground truth when using the same number of control replicates as in the GDSC data. The orange line in the right panel of Fig. <ref type="figure">1</ref> shows the resulting fit from optimizing (5) on the example plate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">Fitting the black box response prior</head><p>We use a deep neural network for f , parameterized by weights θ. The molecular feature X i is passed through a 1000 × 200 × 200 × (265 × 9) feed forward network. The 9 outputs φ ij for each of the 265 drugs are then constrained to be monotone,</p><formula xml:id="formula_5">µ ijt = φ ij9 + 9&gt;k≥t log(1 + exp(φ ijk )) ,<label>(6)</label></formula><p>where the right-hand side of ( <ref type="formula" target="#formula_5">6</ref>) is the cumulative sum of the softplus operator applied to the raw outputs from dose t upward, allowing the maximum dose level to set the offset. We fix Σ j to the identity matrix; we found the results did not improve by using off-diagonal terms.</p><p>We optimize θ by maximizing the log-likelihood of the data,</p><formula xml:id="formula_6">L(θ) = N i=1 M j=1 log p y ij | f (x ij ; θ), Σ, â, b, ĉ = N i=1 M j=1 log t p y ijt | β ijt , â, b, ĉ p(β ij | f (x ij , θ), Σ) dβ ij ,<label>(7)</label></formula><p>where</p><formula xml:id="formula_7">p y ijt | β ijt , â, b, ĉ = Po(y ijt | σ(β ijt )λ ijt + ĉ) Ga(λ ijt | â, b) dλ ijt .</formula><p>We approximate the inner integral in ( <ref type="formula" target="#formula_6">7</ref>) with a numeric grid over the values of λ ijt .</p><p>We split the data into 10 cross-validation (CV) folds. For each fold, we use 90% of the in-sample data as training and 10% as validation for early-stopping. We optimize (7) using RMSprop <ref type="bibr" target="#b30">(Tieleman and Hinton, 2012)</ref> for 30 epochs with 10 × 265 samples per mini-batch. We check empirical risk on the validation set after every epoch and keep the best model over the entire run. The final model predictions on the out-sample (test) fold are then used for evaluation of the prior in Section 3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6">Estimating dose-response covariance and posterior dose-response curves</head><p>After fitting θ, we reuse the validation set to estimate the covariance matrix for each drug. Fixing the predicted means for each test set, we estimate the drug dose-response covariance as the maximum likelihood estimator,</p><formula xml:id="formula_8">τ ij = max 0, min 1, (y ij -ĉℓ(i,j) ) âℓ(i,j) × bℓ(i,j) βij = log τ ij 1 -τ ij Σ j = ( β•j -μ•j ) ( β•j -μ•j ) ,<label>(8)</label></formula><p>where τ is the empirical estimate of cell survival (i.e. without prior information from the features or any constraint on the curve shape).</p><p>The prior estimates are then fixed and the posterior distribution of τ , the latent dose-response rate for each experiment, is estimated via Markov chain Monte Carlo (MCMC). We evaluated two MCMC methods: 1) a fully-conjugate Gibbs sampler implemented via Polya-Gamma augmentation <ref type="bibr" target="#b23">(Polson et al., 2013)</ref> where the sampled posterior MVN logits are projected to be monotone using the pool adjacent violators algorithm as in <ref type="bibr" target="#b14">(Lin and Dunson, 2014)</ref>, and 2) rejection sampling with an elliptical slice sampling <ref type="bibr" target="#b20">(Murray et al., 2010)</ref> proposal. We found the Gibbs sampler to have high sample complexity due to the need to sample both λ ijt and τ ijt , where the value of one tightly constrains the distribution over the other. The elliptical slice sampler, by contrast, approximated the posterior better with fewer samples and only required a single MCMC chain. We ran the elliptical slice sampler for 2000 iterations with the first 500 iterations discarded as burn-in samples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Model comparison and evaluation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Baseline approach</head><p>We compare the proposed Bayesian approach to the existing dose-response curve fitting pipeline <ref type="bibr">(Vis et al., 2016)</ref> used for the GDSC dataset. The pipeline is similar to those used in other high-throughput cancer drug screening analyses (e.g., <ref type="bibr" target="#b1">Barretina et al., 2012)</ref>. Unlike in the Bayesian approach, the baseline method does not account for measurement error, model natural variation, or quantify its uncertainty.</p><p>First, negative and positive controls are averaged to obtain rℓ and qℓ . These are point estimates of baseline fluorescence when all cells die or survive, respectively, on plate ℓ. The control point estimates are then used to calculate the expected percentage of cells that survived each treatment experiment,</p><formula xml:id="formula_9">τijt = max 0, min 1, qℓ(i,j) -y ijt qℓ(i,j) -rℓ(i,j) . (<label>9</label></formula><formula xml:id="formula_10">)</formula><p>The τ estimates are then treated as observations of the percentage of cells surviving. A logistic curve is fit for every (i, j) pair using a multilevel mixed effects model,</p><formula xml:id="formula_11">τijt = 1 1 + e - t-ζ 1 +ξ 1i +ξ 1ij ζ 2 +ξ 2i [ξ 1i , ξ 2i ] ∼ N (0, Ψ) ξ 1ij ∼ N (0, ν 2 ) ,<label>(10)</label></formula><p>where ξ 1i and ξ 2i enable the model to share statistical strength between drugs tested on the same cell line; the model is fit by maximum likelihood estimation. Curves are summarized by integrating out the dose parameter t to obtain a summary statistic, such as the estimated concentration required to kill 50% of cells (IC50). Log-IC50 values are used as targets for predictive modeling of molecular features. For each drug, an elastic net <ref type="bibr" target="#b38">(Zou and Hastie, 2005)</ref> model is fit with hyperparameters chosen through cross-validation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Performance comparison</head><p>We compare the Bayesian model in Eq. (1) to the above baseline approach. To compare the two methods, we consider the task of imputing a missing dose given observations of the other dose levels in the experiment. This checks the ability of the model to capture the shape of the dose-response curve. For each (cell line, drug) experiment, we hold out one dose level at random and treat it as missing data that must be imputed. Error is measured in terms of variance-adjusted raw count values on the held out data,</p><formula xml:id="formula_12">err ijt = y ijt -ŷijt stdev(q ℓ(i,j) ) 2 , (<label>11</label></formula><formula xml:id="formula_13">)</formula><p>where ŷijt is the model prediction and stdev(q ℓ(i,j) ) is the standard deviation of the raw positive controls.</p><p>For the baseline, raw predictions are backed out from ( <ref type="formula" target="#formula_9">9</ref>) and (10),</p><formula xml:id="formula_14">ŷ(baseline) ijt = τ (baseline) ijt (q ℓ(i,j) -rℓ(i,j) ) + rℓ(i,j) . (<label>12</label></formula><formula xml:id="formula_15">)</formula><p>For the Bayesian model, we use a MAP estimate of the raw count,</p><formula xml:id="formula_16">ŷ(Bayes) ijt = τ (Bayes) ijt × âℓ(i,j) × bℓ(i,j) + ĉℓ(i,j) ,<label>(13)</label></formula><p>where τ (Bayes) ijt is the posterior mean estimate of τ ijt in (1). We also consider a hybrid version of the baseline that uses only the control correction technique. For this method, we replace the control means with the approximate Bayes estimates,</p><formula xml:id="formula_17">ŷ(hybrid) ijt = τ (baseline) ijt × âℓ(i,j) × bℓ(i,j) + ĉℓ(i,j) .<label>(14)</label></formula><p>In the hybrid model, the controls are used somewhat differently in two ways. First, the raw controls are used by the baseline method to estimate τ (baseline) then the corrected controls are used to estimate ŷ(hybrid) .</p><p>(  <ref type="formula">2016</ref>). The baseline is slightly improved by using corrected controls (Hybrid), but overall is not flexible enough to fully model the observed dose-response curves; the Bayesian model outperforms both pipelined approaches.</p><p>Table <ref type="table" target="#tab_0">1</ref> presents the results for this benchmark. Using the corrected controls in the hybrid model improves the predictions of the baseline model slightly, suggesting the correction procedures from Sections 2.3 and 2.4 are useful independent of the Bayesian model. However, the Bayesian model outperforms the predictions from the corrected baseline model by ≈ 20%. We also investigated a featureless version of the Bayesian model and found similar improvements over the baseline, suggesting the improvements are due to the flexibility of the constrained multivariate normal prior. The log-linear constraint of the baseline model imposes a strong assumption that the true dose response curve has a sigmoidal shape. By contrast, the Bayesian model only assumes monotonicity and learns the shape priors from the data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Assessing feature importance</head><p>A current debate in precision oncology is whether all molecular feature types contain predictive power. Gene panels used in hospitals, such as MSK-IMPACT <ref type="bibr" target="#b3">(Cheng et al., 2015)</ref>, only consider mutations and copy number, while others argue that gene expression is sufficient to predict response <ref type="bibr" target="#b22">(Piovan et al., 2013;</ref><ref type="bibr" target="#b26">Rodriguez-Barrueco et al., 2015)</ref>. We investigate this here by fitting separate models for every possible subset of features (mutations, copy number variations, and expression). If a feature set does not contain worthwhile information, it will effectively introduce noise into the model and either not improve performance or lower it (e.g. due to finite samples and a nonconvex optimization procedure).</p><p>To measure predictive power of a model, we consider the task of predicting entire out-of-sample experiments at all dose levels. We again measure error on variance-adjusted raw count predictions. However, the curve prediction task is a prior predictive check of the model, rather than a posterior one. This is a more challenging task, as the model does not see any outcomes from the specific experiment when making predictions. We use the logistic-transformed mean as the predicted drug effect, ŷ(prior) ijt = âℓ(i,j) × bℓ(i,j)</p><p>1 + e -f + t (Xi,j; θ)</p><p>+ ĉℓ(i,j) .</p><p>The approach of Vis et al. ( <ref type="formula">2016</ref>) does not provide a way to make raw predictions from feature subsets; we therefore only consider the Bayesian model for this task.</p><p>(min) Dose level (max) Model 0 1 2 3 4 5 6 7 8 All Mutations 1.06 1.08 1.07 1.06 1.04 1.03 1.02 1.02 1.00 1.03 CNV 1.04 1.06 1.07 1.08 1.09 1.11 1.11 1.13 1.12 1.10 Expression 1.01 1.03 1.02 1.03 1.02 1.03 1.01 1.00 1.02 1.02 Mut+CNV 1.05 1.04 1.06 1.05 1.04 1.03 1.01 1.02 1.00 1.03 Mut+Exp 1.00 1.01 1.01 1.01 1.01 1.00 1.00 0.99 0.99 1.00 CNV+Exp 0.99 1.00 1.00 1.01 1.01 1.01 1.01 1.00 1.00 1.01 All</p><p>1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00</p><p>Table <ref type="table">2</ref>: Mean error results on the curve prediction benchmark relative to using all molecular features. Overall performance generally increases as more features are added, suggesting each subset conveys valuable predictive information not captured by the other two.</p><p>We evaluate the predicted priors from the held out cross-validation folds, across all folds. We measure mean error by first taking the average error on the entire curve, then averaging across all curves. Table <ref type="table">2</ref> shows the curve prediction results. The model generally has lower error as more feature subsets are included, suggesting that all three feature subsets add predictive value.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Qualitative evaluation</head><p>In addition to the quantitative results above, we also evaluate whether the model recapitulates known biology in its learned prior. This qualitative check provides reassurance that the patterns discovered by the model are reliable and not likely just functions of undetected experimental artifacts. We generated marginal prior predictive curves with different subsets of drugs and cell lines. The subsets of cells are chosen based on features that are known to be targeted by certain drugs. Drugs that target one subset should produce more sensitive marginal predicted response curves. BRAF inhibitors: 6 of the drugs in the dataset are labeled as BRAF inhibitors. These drugs all target a well-studied, commonly-mutated oncogene called BRAF. Mutations in this gene, particularly mutations in the codon 600 (V600E), lead to activation of the MAPK (MEK/ERK) signaling pathway in tumor cells.</p><p>As shown in the top left panel of Fig. <ref type="figure" target="#fig_1">2</ref>, the model successfully captures the differential efficacy of BRAF inhibitors between cell lines possessing mutant and wild type variants.</p><p>MAPK signaling: 18 of the drugs in the dataset target signaling in the MAPK pathway. The MAPK signaling pathway is involved in cell growth and proliferation and one of the most commonly activated pathway across tumors. KRAS and NRAS are members of the RAS gene family, which constitute central nodes in the MAPK pathway. RAS proteins activate other proteins that in turn drive cell growth. Mutations in KRAS and NRAS can lead them to be permanently activated, causing continual growth signaling downstream in the MAPK pathway. The drugs we consider here target the MAPK pathway in various ways to downregulate its activity; specifically, the drugs included here target BRAF, RSK2, ERK1/2/5, and MEK1/2/5. The top right panel of Fig. <ref type="figure" target="#fig_1">2</ref> shows that the model successfully predicts more sensitivity to these drugs when a cell line has a mutation in one of these two RAS genes.</p><p>Nutlin-3(a): The drug Nutlin-3(a) binds to and suppresses MDM2. MDM2 is a negative regulator of P53. TP53, the gene that codes for the P53 protein, is the most commonly mutated gene in cancer and is known as the "guardian of the genome" for the multiple roles that plays regulating the damage to DNA. When DNA damage is found, TP53 will initiate a transcriptional program to attempt to repair the damage or, if the damage is too severe, will initiate apoptosis and force the cell to die. When TP53 is mutated or suppressed, these safety mechanisms are disabled and they allow downstream damage to occur unchecked, leading to oncogenic growth. MDM2 targets TP53 for proteosomal degradation and when elevated can suppress TP53 entirely. Thus, in order for Nutlin-3(a) to be effective, we need two conditions to be true: 1) MDM2 needs to be elevated above normal levels such that it functionally inactivates TP53, and 2) TP53 must not be mutated, such that if MDM2 is suppressed then TP53 will be functional and capable of initiating apoptosis.</p><p>In this case, we consider a cell line to have an elevated level of MDM2 if it is expressed at least one standard deviation above the mean expression level in the dataset. The bottom left panel of Fig. <ref type="figure" target="#fig_1">2</ref> confirms that the model predicts this nonlinear efficacy pattern.</p><p>PI3K inhibitors: There are 24 drugs in the dataset that are PI3K inhibitors. These drugs broadly target the PI3K-AKT-mTOR pathway, which plays a prominent role in cell growth and division. Cells that exhibit oncogenic malfunctions in this pathway are characterized by two common hallmarks: 1) a loss or mutation of the tumor suppressor gene PTEN, and 2) elevated levels of the oncogene PIK3CA. As in the Nutlin-3(a) scenario, these two show a nonlinear interaction that is replicated by the learned prior, as seen in the bottom right panel of Fig. <ref type="figure" target="#fig_1">2</ref>.</p><p>The qualitative checks above provide a useful reassurance, but they are not foolproof. Namely, these are checks about marginal feature importance. Most features are highly correlated with each other. This correlation may lead a marginal test to indicate the model is capturing biological knowledge about an important feature when it is really learning information about other features that are correlated with the chosen examples. As a final validation of our approach, we use the posterior dose-response curves to test for conditional feature importance.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Biomarker discovery</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Formulating biomarker detection as a multiple testing problem</head><p>In addition to predictive modeling, a second goal in cancer drug screening is to detect biological markers, e.g., genomic or transcriptomic variations in a sample, that allow us to predict that a sample will be sensitive or resistant to therapy. These biomarkers represent potential causal links that, if validated in wet lab experiments and clinical trials, can be used to craft personalize treatments for patients. Statistically, we formulate biomarker identification as a multiple hypothesis testing problem over a set of binary features. The null hypothesis is that a feature X g is conditionally independent of response to drug Y j , given all other features,</p><formula xml:id="formula_19">H 0 : X g ⊥ ⊥ Y j | X -g . (16)</formula><p>We argue that testing for conditional independence is more appropriate for biomarker discovery than the current approaches often employed in biology. Existing approaches in the literature either test for marginal dependence <ref type="bibr" target="#b36">(Yang et al., 2012)</ref> or use heuristic feature selection techniques like lasso regression <ref type="bibr">(Barretina et al., 2012, c.f.,)</ref>. The marginal dependence case leads to many spurious false positives due to the high degree of dependence between features. Heuristic methods, on the other hand, do not offer quantification of uncertainty nor provide a way to control false positives. By contrast, conditional independence testing corrects for feature dependence and casting the problem as hypothesis testing enables us to apply existing techniques for multiple hypothesis correction to achieve finite-sample control over the target error rate (e.g. Type I error or false discovery rate).</p><p>Biomarkers are binary features. A sample is either positive or negative for a biomarker. Therefore, we convert all molecular features to binary biomarkers and test each for conditional independence. Specifically, we consider the following candidate features as potential biomarkers:</p><p>• Mutations. These features are already binary in nature.</p><p>• Copy number gain and loss. We define copy number gain (loss) binary features as a copy number greater (less) than the median copy number for the cell line. For normal diploid human cells this is 2, however cell lines exhibit high degrees of anuploidy; the median copy number of cell lines in the GDSC is 3.</p><p>• Over and under expression. We define a gene to be over (under) expressed if it has expression of greater (less) than 1 standard deviation above (below) the mean.</p><p>We discard any feature with less than 5 positive and negative samples to lower the likelihood of spurious results. The final dataset has 37176 binary features which we test across all 265 drugs for a total of 9.8M hypotheses.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Amortized conditional randomization testing</head><p>To test for conditional independence, we develop a new type of conditional randomization test (CRT) <ref type="bibr" target="#b2">(Candes et al., 2018)</ref>. As with any randomization test, the CRT repeatedly samples from the null distribution to build up an empirical distribution of an arbitrary test statistic. The observed data can then be compared against the null samples to calculate a p-value for each null hypothesis.</p><p>In the conditional independence case, the null distribution is P (X g | X -g ). In practice, the null distribution must be estimated from the data. With thousands of features, fitting this many models can be computationally prohibitive. Rather than fitting conditional distributions for each feature, we posit a factor model of the dataset,</p><formula xml:id="formula_20">P (X) = P (Z) P (X g | Z) .<label>(17)</label></formula><p>Given the factor model assumption, we test the surrogate null hypothesis that conditions only on the latent factor,</p><formula xml:id="formula_21">H 0 : X g ⊥ ⊥ Y j | X -g H 0 : X g ⊥ ⊥ Y j | Z .<label>(18)</label></formula><p>If the factor model assumption holds, then the right hand side null hypothesis is a superset of the conditional independence null hypothesis. This is because Z contains at least all of the information of X -g in Eq. ( <ref type="formula" target="#formula_20">17</ref>).</p><p>The factor model assumption enables estimation of the conditional model to be amortized: rather than fit individual conditional models, we can fit a single factor model to the dataset and sample from P (X g | Ẑ), where Ẑ is the estimated latent factors. Concretely, we fit a logistic factor model to the binary dataset. We include tissue type as 55 binary columns to ensure tissue type does not act as a latent confounder. We use k = 50 latent factors and optimize the model until convergence to a local optimum.</p><p>We calculate p-values by sampling up to 10 6 null samples, calculating their test statistics, and comparing with the true test statistic. We target a 10% false discovery rate using BH correction for multiple tests. To speed up computation, we early-stop p-values if they are larger than 10 -h for h = 1, . . . , 5; these larger p-values will not pass a BH correction step for a 10% FDR, making this a conservative step.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Safety, toxicity, and targeted efficacy</head><p>Conditional randomization testing requires the specification of a test statistic. We propose a new dose-response summary statistic: targeted efficacy. Drugs with a high targeted efficacy score for a given biomarker have a strong differential response probability when segregating the samples based on the biomarker. The statistic reports the degree to which a drug targets a subpopulation of samples with or without the biomarker, and remains innocuous for the other subpopulation.</p><p>We first define what it means for a drug to be safe or toxic. These are subjective decisions that can be informed by biological knowledge in collaboration with experts in a specific therapy or cancer. After conversations with pathologists at Columbia University Medical Center, we chose to define a drug as safe if at least 80% of cells were expected to survive treatment; toxicity was chosen to be a survival rate of at most 50%. To calculate the safety statistic for drug j at dose level t, we aggregate over all samples for which the target biomarker is negative,</p><formula xml:id="formula_22">Safety(x g , j, t) = 1 |{i : x ig = 0}| {i : xig=0} P (τ ijt ≥ 0.8 | y ij , μij , Σ j , â, b, ĉ) . (<label>19</label></formula><formula xml:id="formula_23">)</formula><p>Similarly, we define toxicity as having a survival rate of at most 50%, Toxicity(x g , j, t) = 1 |{i :</p><formula xml:id="formula_24">x ig = 1}| {i : xig=1} P (τ ijt ≤ 0.5 | y ij , μij , Σ j , â, b, ĉ) . (<label>20</label></formula><formula xml:id="formula_25">)</formula><p>Safety and toxicity probabilities are then combined to assess overall efficacy of the drug. We calculate efficacy by taking the minimum of the safety and toxicity probabilities at each dose, then reporting the score at the best observed dose, Efficacy(x g , j) = max t min (safety(x g , j, t), toxicity(x g , j, t)) .</p><p>Finally, a biomarker may be an indicator of sensitivity or resistance. The targeted efficacy score takes the most effective of the two possibilities by looking at efficacy in the biomarker positive and negative groups, TargetedEfficacy(x g , j) = max (Efficacy(x g , j), Efficacy(1 -x g , j)) .</p><p>(</p><formula xml:id="formula_27">)<label>22</label></formula><p>Targeted efficacy is distinguished from common measures of drug efficacy, like IC50 and area under the dose-response curve (AUC), in that it is tied directly to the biomarker of interest. Further, rather than summarize entire curves or projecting to the 50% survival point, targeted efficacy aims to capture whether a specific, viable dose is effective for samples with such a biomarker. It also requires a probabilistic modeling approach that can quantify response uncertainty, making it incompatible with traditional point-estimation approaches to dose-response modeling.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Discoveries</head><p>The full list of p-values for all p &lt; 10 -5 biomarkers on all drugs is available in the supplemental material. Table <ref type="table">3</ref> highlights three subsets of these biomarkers. For each biomarker, we list the following information:</p><p>• Drug: The drug being tested.</p><p>• Gene: The gene where the molecular feature is located.</p><p>• Marker: The molecular feature type representing the biomarker (e.g. mutated or overexpressed).</p><p>• Indicates: Whether a positive value for this biomarker indicates sensitivity or resistance to treatment with the drug.</p><p>• Score: The targeted efficacy score.</p><p>• Pos &amp; Neg: The number of positive and negative samples in the GDSC dataset.</p><p>• p-value: The associated p-value for the biomarker conditional independence test.</p><p>Any biomarker where the targeted efficacy score was higher than all 10 6 null samples is reported as being less than 10 -6 ; additional randomizations could be run to derive a more precise value. The first two results, BRAF mutations and Nutlin-3(a), support the qualitative findings by reporting well-known biomarkers with a strong biological basis. Specifically, the drugs identified as having BRAF mutation as a biomarker for sensitivity are all either BRAF or MEK inhibitors. As noted in Section 3.4, these inhibitors target signaling in the MAPK pathway and BRAF mutations (particularly V600E mutations) are expected to indicate sensitivity to treatment by all the drugs discovered. Similarly, Nutlin-3(a) is found to have TP53 mutations as an indicator of resistance and MDM2 overexpression as an indicator of sensitivity, again matching the expected biological response described in Section 3.4. Along with these two biomarkers, several other well-known biomarkers of Nutlin-3(a) sensitivity are found, such as overexpression of the apoptosis activator gene BAX <ref type="bibr" target="#b32">(Toshiyuki and Reed, 1995)</ref> and the DNA damage-binding gene DDB2 <ref type="bibr" target="#b28">(Shangary and Wang, 2008)</ref>.</p><p>The third set of results focuses on fusions of the genes BCR and ABL, which are coded as mutations in our feature set. The detected set of drugs for this biomarker include several drugs (e.g., Nilotinib and Bosutinib) that are well-known to target BCR-ABL fusions <ref type="bibr" target="#b25">(Rix et al., 2007)</ref>. The list also recapitulates the potent inhibition of Axitinib in BCR-ABL cell lines <ref type="bibr" target="#b21">(Pemovska et al., 2015)</ref>. Interestingly, cell lines with BCR-ABL fusions appear to be sensitive to other kinase inhibitors (e.g. NG-25 and NVP-BHG712) whose function on BCR-ABL has not been previously described. This suggests a broader activity of some of these drugs that have to be validated experimentally.</p><p>The discoveries made suggest many potential causal drivers of sensitivity and resistance. However, the Bayesian model does not replace the need for validation experiments. Instead, it enables biologists to guide their experimental planning by suggesting potential drivers of sensitivity and resistance. It is possible that latent confounders, such as DNA methylation, are correlated with the features that we explored. These latent confounders represent a backdoor path <ref type="bibr">(Pearl, 2009)</ref> through which a non-causal feature may appear to represent a causal link. Making strong causal inference statements about drug sensitivity would require follow-up wet lab experiments that directly intervene on the candidate biomarker.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">The benefits of modeling uncertainty</head><p>Predictive models for cancer cell line drug response enable science to move at a faster pace. If a predictor can faithfully replicate the outcome of a wet lab experiment, scientists can screen drugs quickly in simulation to find potential therapies worth investigating. The usefulness of good predictors has led biologists to organize predictive modeling competitions to crowdsource better predictors <ref type="bibr" target="#b4">(Costello et al., 2014)</ref> and to build bespoke machine learning models to predict drug response <ref type="bibr" target="#b18">(Menden et al., 2013;</ref><ref type="bibr" target="#b0">Ammad-ud din et al., 2016;</ref><ref type="bibr" target="#b24">Rampasek et al., 2017)</ref>. While these efforts have led to models with improved predictive performance, the target of prediction is a summary statistic derived from preprocessing pipelines such as the approach in Section 3.1.</p><p>Compressing each experiment down to a single point estimate of a summary statistic is problematic. At each step in the pipeline, simplifying assumptions remove structure from the model and obfuscate the inherent uncertainty in the measurements, effects, and outcomes. Specifically, (i) averaging the negative controls ignores measurement noise and technical error; (ii) averaging positive controls fails to capture natural variability in cell growth; (iii) a log-linear dose model makes strong assumptions about the effect of different drug concentrations; (iv) the summary statistic reported contains no information about the uncertainty in effect size of a given drug at any specific dose; and (v) biomarker discovery does not account for uncertainty in the summary statistics.</p><p>With these considerations in mind, we proposed a Bayesian approach to modeling dose-response in high-throughput cancer cell line experiments. The Bayesian model addresses the issues with the typical pipeline approach by directly modeling uncertainty at every step: (i-ii) both positive and negative controls are treated as random quantities, with plate-level uncertainty quantification of machine bias and cell growth; (iii) the dose effect is constrained to be monotonic, but is otherwise fully flexible and not limited to the log-linear regime; (iv) the model enables approximate Bayesian posterior inference over the entire dose-response curve for every experiment; and (v) the posterior distributions are used to detect biomarkers through a new probabilistic test statistic.</p><p>The Bayesian model outperforms the pipelined approach in benchmarks on the GDSC dataset. However, there is still ample room for improvement. The neural network architecture and training method we used was not explored extensively. Other models or architectures such as those from the existing literature in computational biology (e.g. <ref type="bibr" target="#b24">Rampasek et al., 2017)</ref> may yield better performance if combined with a Bayesian model of high-throughput screening experiments. The model could also be improved to better match the data. For instance, some drugs induce total cell death at high doses, and some have no effect at all below a certain concentration. The logistic-MVN model may be a poor fit in these cases since they push the logits to extreme values and consequently dominate the likelihood. We followed a typical processing pipeline to determine mutations, CNVs, and expression levels. These feature pipelines remove uncertainty in the sequencing process that, if modeled directly, may also lead to a better predictive model. We plan to investigate these extensions in future work. Further, since the initial draft of this paper was released, a new version of the GDSC dataset (GDSC2) has been made available. However, the format of the controls and features available has changed in the new dataset; we plan to adapt our GDSC model to GDSC2 in future work.</p><p>Finally, cell lines are only simplified, imperfect models of real patient tumors. To be useful in the clinic, a predictive model will need to incorporate real patient data, such as clinical trial and observational patient health records. As a guide for follow-up experiments, cell lines are a useful tool and predictive modeling of cell line drug response can help to better guide the scientist. As more patient data become available, combining our predictive model for cell lines with patient and other (e.g. mice and organoids) data may lead to a better predictor of actual patient drug response.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Conclusions</head><p>Beyond the specific model and metrics, our experience led to several observations about measurement and modeling in high-throughput cancer drug screening. We conclude by highlighting six key takeaways:</p><p>1. Spatial and temporal batch effects can substantially skew results in high-throughput doseresponse experiments. We showed evidence that experimental controls are systematically contaminated, creating dependency between observations. We detailed a correction approach for legacy data that first detects and discards contaminated observations, then leverages temporal dependencies to compensate for the loss of data.</p><p>2. The one-trial-per-dose paradigm is problematic. Natural variation among cell lines was observed to be substantial in Section 2.4, with swings as high as +/ -50% of the median control response being common in many experiments. This complicates inference by creating high degrees of uncertainty about any individual experiment.</p><p>3. A deep Bayesian dose-response model outperforms the state of the art. The Bayesian model was shown in Section 3.2 to outperform a state-of-the-art technique for dose-response modeling developed for the GDSC data. The posterior mean has ≈ 20% lower mean squared error when predicting a held out dose level.</p><p>4. All molecular feature types contain relevant information. Through an exhaustive feature subset study in Section 3.3, we showed that the model predictions are improved by each of the three subsets of features (mutations, copy number, and expression).</p><p>5. Hierarchical probabilistic models can generate biologically-meaningful, nonlinear predictions. A series of examples in Section 3.4 showed that the model recapitulates known biology. In some cases, this involved nonlinear combinations of features such as needing a high level of expression in one gene and a corresponding wild type of another gene for a specific drug to be effective. This suggests the approach has the potential to be used in exploratory drug discovery experiments where candidate drugs are often tried without a known mechanism of action.</p><p>6. Amortized conditional randomization testing provides a scalable, powerful way to detect novel biomarkers. By imposing a factor model structure on binarized features, we were able to conduct 9.8M hypothesis tests. The method uncovered both well-studied biomarkers and many new avenues for future research. Appendix B Feature preprocessing</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B.1 Mutations</head><p>We consider a gene mutated based on the following SNP-level filter:</p><p>• Silent mutations are ignored.</p><p>• Insertion, deletion, nonsense, and nonstop mutations are automatically considered mutated.</p><p>• Missense SNPs are considered mutated if they are present in at least 3 TCGA <ref type="bibr" target="#b31">(Tomczak et al., 2015)</ref> samples.</p><p>• Splice site mutations are considered mutated if they have an "IMPACT" score of high.</p><p>We also include the two gene fusions that were detected in the GDSC data, EWSR1-X and BCR-ABL. This generates a total of 5822 mutation features.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B.2 Copy Number Variations</head><p>Copy number alterations occur when a swath of the genome is lost or amplified. In most cases, this occurs across multiple gene coding regions at once. The result is a highly correlated set of features. We filter this list down to known and potential drivers as follows:</p><p>• We keep the list of 193 known driver genes identified in the original GDSC analysis.</p><p>• We add an additional list of 87 potential driver genes identified in a follow up study <ref type="bibr" target="#b37">(Zack et al., 2013)</ref>.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Prior predictive checks recapitulating known biology. Top left: cell lines with and without a mutated BRAF gene, when treated with any of the six drugs designed to target such cells. Top right: Drugs targeting MAPK signaling that shut down the aberrant signaling caused by mutations in RAS-type genes. Bottom left: Nutlin-3(a) (an MDM2 inhibitor) is effective only when both MDM2 levels are high and TP53 is not mutated. Bottom right: PI3K inhibitors target cells exhibiting PTEN loss and PIK3CA elevation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure3: Layout of the high-throughput screening plates used in the GDSC experiment for a 9-level dosage schedule. Negative controls (blue) are unpopulated and untreated; positive controls (green) are populated but untreated; treatment wells (orange) are treated with one drug per row, with each well in a row treated at a different concentration.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 :</head><label>1</label><figDesc>Mean squared error results on the single-dose imputation benchmark relative to the basline model from Vis et al. (</figDesc><table><row><cell></cell><cell>min)</cell><cell></cell><cell></cell><cell></cell><cell>Dose level</cell><cell></cell><cell></cell><cell></cell><cell>(max)</cell><cell></cell></row><row><cell>Model</cell><cell>0</cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>6</cell><cell>7</cell><cell>8</cell><cell>All</cell></row><row><cell>Baseline</cell><cell>1.00</cell><cell cols="7">1.00 1.00 1.00 1.00 1.00 1.00 1.00</cell><cell>1.00</cell><cell>1.0</cell></row><row><cell>Hybrid</cell><cell>1.04</cell><cell cols="7">1.00 1.04 0.97 0.95 0.91 0.90 0.93</cell><cell>1.03</cell><cell>0.98</cell></row><row><cell>Bayesian</cell><cell>0.92</cell><cell cols="7">0.86 0.71 0.69 0.67 0.79 0.77 0.96</cell><cell>0.86</cell><cell>0.82</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>The terms "negative" and "positive" control here are used differently from their common usage in biology. However, this is the terminology used by<ref type="bibr" target="#b7">Garnett et al. (2012)</ref>; we follow their usage.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1"><p>We use medians rather than means to avoid spurious contamination not removed in the decontamination step.</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>The authors thank <rs type="person">Victor Veitch</rs>, <rs type="person">Mykola Bordyuh</rs>, <rs type="person">Antonio Iavarone</rs> and <rs type="person">Anna Lasorella</rs> for many helpful conversations. They also thank <rs type="person">Jackson Loper</rs> for providing the binary matrix factorization code used in the biomarker testing. WT is supported by the a seed grant from the <rs type="funder">Data Science Institute of Columbia University</rs> and the <rs type="funder">NIH</rs> (<rs type="grantNumber">U54-CA193313</rs>). SWL is supported by the <rs type="funder">Simons Foundation</rs> (<rs type="grantNumber">SCGB-418011</rs>). CHW is supported by the <rs type="funder">NSF</rs> (<rs type="grantNumber">1305023</rs>, <rs type="grantNumber">1344668</rs>) and <rs type="funder">NIH</rs> (<rs type="grantNumber">U54-CA193313</rs>). DMB is supported by <rs type="funder">ONR</rs> (<rs type="grantNumber">N00014-17-1-2131</rs>, <rs type="grantNumber">N00014-15-1-2209</rs>), <rs type="funder">NIH</rs> (<rs type="grantNumber">1U01MH115727-01</rs>), and <rs type="funder">DARPA</rs> (<rs type="grantNumber">SD2 FA8750-18-C-0130</rs>).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_WpP7aWF">
+					<idno type="grant-number">U54-CA193313</idno>
+				</org>
+				<org type="funding" xml:id="_XpQRrga">
+					<idno type="grant-number">SCGB-418011</idno>
+				</org>
+				<org type="funding" xml:id="_aT9qchA">
+					<idno type="grant-number">1305023</idno>
+				</org>
+				<org type="funding" xml:id="_wDfDQWy">
+					<idno type="grant-number">1344668</idno>
+				</org>
+				<org type="funding" xml:id="_X9jNS5b">
+					<idno type="grant-number">U54-CA193313</idno>
+				</org>
+				<org type="funding" xml:id="_Ms3ZkD9">
+					<idno type="grant-number">N00014-17-1-2131</idno>
+				</org>
+				<org type="funding" xml:id="_rP3EQWv">
+					<idno type="grant-number">N00014-15-1-2209</idno>
+				</org>
+				<org type="funding" xml:id="_gxmrvd4">
+					<idno type="grant-number">1U01MH115727-01</idno>
+				</org>
+				<org type="funding" xml:id="_SST5SpV">
+					<idno type="grant-number">SD2 FA8750-18-C-0130</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Material</head><p>The Supplementary material includes the details of our dataset, our preprocessing strategy for molecular features, and the code for all methods described in the paper.</p><p>Conflict of Interest: None declared.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix A Microwell plate layout</head><p>The layout of each microwell plate is shown in Fig. <ref type="figure">3</ref>. A single drug is test per orange row in Fig. <ref type="figure">3</ref>, with each well in the row receiving a different dose. The dose schedule follows a 2x dilution schedule. Crosscontamination was observed between the negative and positive controls. Substantial intra-plate variability is also seen among positive controls.</p><p>• We remove genes from the second list if their copy number is constant across all samples or has correlation coefficient ≥ 0.95 with any gene from the first list.</p><p>For all cell lines, we consider their median copy number to be the baseline level. Despite the GDSC data coming from human tumor cultured cell lines, the median copy number is actually 3. Since copy number mostly impacts differential protein expression, relative abundance in a cell is the most important feature here and we thus consider a cell's median copy number to be its baseline, even though in a normal human tissue a copy number of 3 would be a gain.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B.3 Expression</head><p>We retain all 17271 protein-coding genes sequenced in the GDSC dataset. We use the same preprocessed dataset as in the original GDSC analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix C Checking drug effect assumptions</head><p>As a pragmatic check on our assumption that drugs can only hinder growth, we use the estimated control parameters from Section 2 to calculate approximate z-scores for the drug effects,</p><p>Figure <ref type="figure">4a</ref> shows the marginal distribution of z across all experiments and all dosage levels in the dataset, omitting z-scores less than -10. The z-scores are likely slightly biased due to experimental, technical, and preprocessing error, making the theoretical N (0, 1) null distribution poorly specified; this is a common phenomenon in HTS experiments <ref type="bibr" target="#b6">(Efron, 2008)</ref>. We calculate an empirical null using a polynomial approximation to Efron's method <ref type="bibr" target="#b5">(Efron, 2004)</ref>. The empirical null density suggests that the alternative (i.e. non-null treatment effect) distribution has effectively no mass in the positive (i.e. growth-encouraging) region of z-scores, supporting our death-only assumption on drug effects. Figure <ref type="figure">4b</ref> presents the same marginal z-score check from (23), broken down by individual drugs as a function of dosage level. Every drug appears to have a clear monotone marginal distribution, supporting our montonicity assumption on drug dosage.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix D Cross-contamination</head><p>While bias concerns have been well-investigated in other HTS assays, such concerns are not yet widespread in the cancer research community. Consequently, our high-throughput cancer screening data contains no spatial information about the microwell layout, making it difficult to leverage existing methods of removing spatial bias <ref type="bibr">(Mazoure et al., 2017, e.g.)</ref>. Instead, the information available is a unique ID for each positive and negative control well (across plates in the same testing site and assay type); no location information about the treatment wells is available outside the generic plate design. Nonetheless, uncovering systematic spatial bias is still crucial in the GDSC data, as the negative and positive control wells are positioned adjacent one another. Therefore, any bleeding over of the positive signal could drastically alter the estimate of the baseline fluorescence.</p><p>Fig. <ref type="figure">5</ref> shows an example of such positive-to-negative control well contamination. In this example, the positive controls are all roughly around 900K, as indicated by the dashed red mean line at the top. The negative control wells mostly hover around 30K but some wells have obviously been contaminated by positive control wells and are wildly different. Estimating the negative control rate as the mean of the wells (dashed gray line) would put the estimate of the bias at approximately 14.5% of the positive control mean. The approximate Bayes procedure we describe below estimates the bias with the contamination effects removed at approximately 3.5%. Any treatments estimated from the mean method would therefore bias the drug effects upward, estimating treatment efficacy to be stronger than was likely true.</p><p>Without exact layout knowledge, removing the spatial effects is challenging. Fortunately, we have a large number of both negative (≈ 30) and positive (≈ 40) controls, along with well-specific IDs; these IDs  In (a), we overlay an empirical estimate of the null distribution; most drugs contain no effect and there appears to be no evidence that any drugs have a positive effect on growth. Similarly, in (b) we observe that all drugs seem to have stronger marginal effects as the dosage level increases, suggesting that the monotone toxicity assumption is also reasonable.</p><p>consistently map to the same microwell location across all plates for the same assay type and at the same testing site. This enables us to determine which negative control wells in each site and assay stratification are being systematically contaminated. Fig. <ref type="figure">6</ref> shows the cross-correlation between all of the control wells in each of the four stratifications; different stratifications have different numbers of control wells. In each subplot, the upper left block represents the correlation structure of the negative controls, the lower right represents the positive controls, and the off-diagonal blocks represent the correlation between negative and positive wells.</p><p>Every site shows evidence of at least some contamination, with non-zero entries for many of the off-diagonal blocks. In particular Site 1, Assay S (1S) shows evidence of a large degree of contamination, with the majority of the negative wells being correlated with the positive wells. As a conservative measure, we remove from the dataset any negative wells whose maximum positive well correlation is greater than 0.15 in magnitude. For three of the four testing sites, less than 10 of the negative wells are dropped; for 1S, only 7 negative controls remain.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix E Comparison of model performance with and without cancer type</head><p>We investigated whether using cancer type as an additional feature (i.e. in addition to mutation, CNV, and expression) added predictive power. Table <ref type="table">4</ref> shows the results comparing the two feature sets. Overall, there seems to be no substantial benefit (or cost) to including cancer type as a feature. One possible reason for this is that gene expression and mutation contain enough information to effectively identify the cancer type, leaving it with no conditional mutual information with the drug response.  1.00 1.00 1.00 1.00 1.00 1.00 1.01 1.01 1.01 Without Cancer Type 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00</p><p>Table <ref type="table">4</ref>: Mean error results when including the cancer type as a feature, in addition to all molecular features, relative to using only the molecular features. Using the cancer type seems to add little-to-no new predictive power to the model. </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Drug response prediction by inferring pathway-response associations with kernelized Bayesian matrix factorization</title>
+		<author>
+			<persName><forename type="first">Muhammad</forename><surname>Ammad-Ud Din</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Suleiman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Disha</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Astrid</forename><surname>Malani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olli</forename><surname>Murumägi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tero</forename><surname>Kallioniemi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samuel</forename><surname>Aittokallio</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kaski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="455" to="463" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The cancer cell line encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">Jordi</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giordano</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kavitha</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungjoon</forename><surname>Adam A Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><forename type="middle">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">V</forename><surname>Lehár</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dmitriy</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sonkin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page">603</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Panning for gold: &apos;model-X&apos; knockoffs for high dimensional controlled variable selection</title>
+		<author>
+			<persName><forename type="first">Emmanuel</forename><surname>Candes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingying</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lucas</forename><surname>Janson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinchi</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Memorial Sloan Ketteringintegrated mutation profiling of actionable cancer targets (MSK-IMPACT): A hybridization capture-based next-generation sequencing clinical assay for solid tumor molecular oncology</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Donavan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Talia</forename><forename type="middle">N</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ahmet</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Zehir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ronak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryma</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aijazuddin</forename><surname>Benayed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raghu</forename><surname>Syed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhen</forename><surname>Chandramohan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yu</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Helen</forename><forename type="middle">H</forename><surname>Won</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sasinya</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Scott</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of molecular diagnostics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="251" to="264" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A community effort to assess and improve drug sensitivity prediction algorithms</title>
+		<author>
+			<persName><forename type="first">Laura</forename><forename type="middle">M</forename><surname>James C Costello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elisabeth</forename><surname>Heiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Georgii</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Gönen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">J</forename><surname>Michael P Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mukesh</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petteri</forename><surname>Bansal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Suleiman</forename><forename type="middle">A</forename><surname>Hintsanen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John-Patrick</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Mpindi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature biotechnology</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">1202</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Large-scale simultaneous hypothesis testing: the choice of a null hypothesis</title>
+		<author>
+			<persName><forename type="first">Bradley</forename><surname>Efron</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="page" from="96" to="104" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Microarrays, empirical Bayes and the two-groups model (with discussion)</title>
+		<author>
+			<persName><forename type="first">Bradley</forename><surname>Efron</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistical Science</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">23</biblScope>
+			<biblScope unit="page" from="1" to="22" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mathew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sonja</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><forename type="middle">D</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anahita</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">King</forename><forename type="middle">Wai</forename><surname>Dastur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xi</forename><surname>Richard Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Soares</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page">570</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Inconsistency in large pharmacogenomic studies</title>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nehme</forename><surname>El-Hachem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Juul</forename><surname>Nicolai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">C</forename><surname>Birkbak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">H</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hugo</forename><surname>Beck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Jwl Aerts</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Quackenbush</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">504</biblScope>
+			<biblScope unit="issue">7480</biblScope>
+			<biblScope unit="page" from="389" to="393" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Reproducible pharmacogenomic profiling of cancer cell line panels</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Peter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eva</forename><surname>Haverty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jenille</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yihong</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Billy</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lianoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Scott</forename><surname>Richard M Neve</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">L</forename><surname>Settleman</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yauch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">533</biblScope>
+			<biblScope unit="issue">7603</biblScope>
+			<biblScope unit="page" from="333" to="337" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A landscape of pharmacogenomic interactions in cancer</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theo</forename><forename type="middle">A</forename><surname>Knijnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">J</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Graham R Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Michael P Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nanne</forename><surname>Schubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emanuel</forename><surname>Aben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Syd</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Barthorpe</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lightfoot</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="740" to="754" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Adjusting batch effects in microarray expression data using empirical Bayes methods</title>
+		<author>
+			<persName><forename type="first">Evan</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ariel</forename><surname>Rabinovic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biostatistics</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="118" to="127" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Detection and removal of spatial bias in multiwell assays</title>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Lachmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Federico</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mariano</forename><forename type="middle">J</forename><surname>Giorgi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrea</forename><surname>Alvarez</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Califano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page" from="1959" to="1965" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Tackling the widespread and critical impact of batch effects in high-throughput data</title>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">B</forename><surname>Jeffrey T Leek</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Scharpf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Corrada</forename><surname>Héctor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Bravo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Simcha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evan</forename><surname>Langmead</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donald</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Keith</forename><surname>Geman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rafael</forename><forename type="middle">A</forename><surname>Baggerly</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Irizarry</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Genetics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="733" to="739" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Bayesian monotone regression using Gaussian process projection</title>
+		<author>
+			<persName><forename type="first">Lizhen</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">B</forename><surname>Dunson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="303" to="317" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Measurement error and the replication crisis</title>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Loken</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Gelman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">355</biblScope>
+			<biblScope unit="issue">6325</biblScope>
+			<biblScope unit="page" from="584" to="585" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A Bayesian regression tree approach to identify the effect of nanoparticles&apos; properties on toxicity profiles</title>
+		<author>
+			<persName><forename type="first">Cecile</forename><surname>Low-Kam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donatello</forename><surname>Telesca</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhaoxia</forename><surname>Ji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haiyuan</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tian</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><forename type="middle">I</forename><surname>Zink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andre</forename><forename type="middle">E</forename><surname>Nel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="383" to="401" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Identification and correction of spatial bias are essential for obtaining quality data in high-throughput screening technologies</title>
+		<author>
+			<persName><forename type="first">Bogdan</forename><surname>Mazoure</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Nadon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vladimir</forename><surname>Makarenkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific reports</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">11921</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Machine learning prediction of cancer cell sensitivity to drugs based on genomic and chemical properties</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Michael P Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pedro</forename><forename type="middle">J</forename><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Ballester</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS one</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">61318</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">The real cost of sequencing: Scaling computation to keep pace with data generation</title>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Muir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shantao</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shaoke</forename><surname>Lou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daifeng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">J</forename><surname>Spakowicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leonidas</forename><surname>Salichos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><forename type="middle">M</forename><surname>Weinstock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Farren</forename><surname>Isaacs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joel</forename><surname>Rozowsky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome biology</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">53</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Elliptical slice sampling</title>
+		<author>
+			<persName><forename type="first">Iain</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Mackay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics</title>
+		<meeting>the Thirteenth International Conference on Artificial Intelligence and Statistics</meeting>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="541" to="548" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Axitinib effectively inhibits bcr-abl1 (t315i) with a distinct binding conformation</title>
+		<author>
+			<persName><forename type="first">Tea</forename><surname>Pemovska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mika</forename><surname>Kontro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gretchen</forename><forename type="middle">A</forename><surname>Repasky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Wells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Ciarán N Cronin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olli</forename><surname>Mctigue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kimmo</forename><surname>Kallioniemi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Porkka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">519</biblScope>
+			<biblScope unit="issue">7541</biblScope>
+			<biblScope unit="page" from="102" to="105" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Direct reversal of glucocorticoid resistance by AKT inhibition in acute lymphoblastic leukemia</title>
+		<author>
+			<persName><forename type="first">Erich</forename><surname>Piovan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiyang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Valeria</forename><surname>Tosello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Herranz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alberto</forename><surname>Ambesi-Impiombato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ana</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carolina</forename><forename type="middle">Da</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marta</forename><surname>Sanchez-Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arianne</forename><surname>Perez-Garcia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Isaura</forename><surname>Rigo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mireia</forename><surname>Castillo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer cell</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="766" to="776" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Bayesian inference for logistic models using Pólya-Gamma latent variables</title>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">G</forename><surname>Nicholas G Polson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jesse</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Windle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="issue">504</biblScope>
+			<biblScope unit="page" from="1339" to="1349" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<author>
+			<persName><forename type="first">Ladislav</forename><surname>Rampasek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Hidru</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petr</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Haibe-Kains</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Goldenberg</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Dr</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1706.08203</idno>
+		<title level="m">VAE: Drug response variational autoencoder</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Chemical proteomic profiles of the bcr-abl inhibitors imatinib, nilotinib, and dasatinib reveal novel kinase and nonkinase targets. Blood</title>
+		<author>
+			<persName><forename type="first">Uwe</forename><surname>Rix</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oliver</forename><surname>Hantschel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gerhard</forename><surname>Dürnberger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lily L Remsing</forename><surname>Rix</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melanie</forename><surname>Planyavsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nora</forename><forename type="middle">V</forename><surname>Fernbach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ines</forename><surname>Kaupe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Keiryn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Bennett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacques</forename><surname>Valent</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Colinge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of the American Society of Hematology</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="4055" to="4063" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Inhibition of the autocrine IL-6-JAK2-STAT3-calprotectin axis as targeted therapy for HR-/HER2+ breast cancers</title>
+		<author>
+			<persName><forename type="first">Ruth</forename><surname>Rodriguez-Barrueco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiyang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><forename type="middle">P</forename><surname>Saucedo-Cuevas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mireia</forename><surname>Olivan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Llobet-Navas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Preeti</forename><surname>Putcha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Veronica</forename><surname>Castro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eva</forename><forename type="middle">M</forename><surname>Murga-Penas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ana</forename><surname>Collazo-Lorduy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mireia</forename><surname>Castillo-Martin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes &amp;</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Assessment of pharmacogenomic agreement</title>
+		<author>
+			<persName><forename type="first">Zhaleh</forename><surname>Safikhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nehme</forename><surname>El-Hachem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rene</forename><surname>Quevedo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Petr</forename><surname>Smirnov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Goldenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolai</forename><forename type="middle">Juul</forename><surname>Birkbak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Mason</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christos</forename><surname>Hatzis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leming</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jwl</forename><surname>Hugo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Aerts</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">F1000Research</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Targeting the mdm2-p53 interaction for cancer therapy</title>
+		<author>
+			<persName><forename type="first">Sanjeev</forename><surname>Shangary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shaomeng</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clinical Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="5318" to="5324" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Adaptive piecewise polynomial estimation via trend filtering</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="285" to="323" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude</title>
+		<author>
+			<persName><forename type="first">Tijmen</forename><surname>Tieleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><surname>Hinton</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="26" to="31" />
+		</imprint>
+	</monogr>
+	<note>COURSERA: Neural networks for machine learning</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">The cancer genome atlas (TCGA): an immeasurable source of knowledge</title>
+		<author>
+			<persName><forename type="first">Katarzyna</forename><surname>Tomczak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patrycja</forename><surname>Czerwińska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maciej</forename><surname>Wiznerowicz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Contemporary oncology</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1A</biblScope>
+			<biblScope unit="page">68</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Tumor suppressor p53 is a direct transcriptional activator of the human bax gene</title>
+		<author>
+			<persName><forename type="first">Miyashita</forename><surname>Toshiyuki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">C</forename><surname>Reed</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="293" to="299" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Multilevel models improve precision and speed of IC50 estimates</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Daniel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lorenzo</forename><surname>Vis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Bombardelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><forename type="middle">J</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lodewyk Fa</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wessels</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pharmacogenomics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="691" to="700" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">The falling factorial basis and its statistical applications</title>
+		<author>
+			<persName><forename type="first">Yu-Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Smola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Machine Learning</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="730" to="738" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Bayesian additive adaptive basis tensor product models for modeling high dimensional surfaces: an application to high-throughput toxicity testing</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Matthew</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wheeler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="193" to="201" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Genomics of drug sensitivity in cancer (GDSC): A resource for therapeutic biomarker discovery in cancer cells</title>
+		<author>
+			<persName><forename type="first">Wanjuan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Lightfoot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nidhi</forename><surname>Bindal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dave</forename><surname>Beare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Richard Thompson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="955" to="D961" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Pan-cancer patterns of somatic copy number alteration</title>
+		<author>
+			<persName><forename type="first">Steven</forename><forename type="middle">E</forename><surname>Travis I Zack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Scott</forename><forename type="middle">L</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">D</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gordon</forename><surname>Cherniack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barbara</forename><surname>Saksena</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tabak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng-Zhong</forename><surname>Michael S Lawrence</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeremiah</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><forename type="middle">H</forename><surname>Wala</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Mermel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">1134</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Trevor</forename><surname>Hastie</surname></persName>
+		</author>
+		<idno>10.0 -7.5 -5.0 -2.5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

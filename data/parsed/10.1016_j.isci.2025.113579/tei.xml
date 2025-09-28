@@ -1,0 +1,2775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Multilevel classification framework for breast cancer cell selection and its integration with advanced disease models</title>
+				<funder ref="#_PvdRJ5C">
+					<orgName type="full">Associate Laboratory i4HB</orgName>
+				</funder>
+				<funder ref="#_vp3FfF9">
+					<orgName type="full">la Caixa&quot; Foundation</orgName>
+				</funder>
+				<funder ref="#_yjYxrPG #_kjX6YMw #_Ge3TmZA">
+					<orgName type="full">National</orgName>
+				</funder>
+				<funder ref="#_jqUDAEn #_aQxaM6r">
+					<orgName type="full">unknown</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Catarina</forename><surname>Franco Jones</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Electronics and Computer Science</orgName>
+								<orgName type="institution">University of Southampton</orgName>
+								<address>
+									<postCode>SO171BJ</postCode>
+									<settlement>Southampton</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute for Life Sciences</orgName>
+								<orgName type="institution">University of Southampton</orgName>
+								<address>
+									<postCode>SO17 1BJ</postCode>
+									<settlement>Southampton</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Diogo</forename><surname>Dias</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Bioengineering</orgName>
+								<orgName type="institution" key="instit1">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit2">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">Institute for Health and Bioeconomy</orgName>
+								<orgName type="institution" key="instit2">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit3">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ana</forename><forename type="middle">C</forename><surname>Moreira</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="laboratory">Centre for Mechanical Technology and Automation (TEMA)</orgName>
+								<orgName type="institution">University of Aveiro</orgName>
+								<address>
+									<postCode>3810-193</postCode>
+									<settlement>Aveiro</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff5">
+								<orgName type="laboratory">Intelligent Systems Associate Laboratory (LASI)</orgName>
+								<address>
+									<postCode>4800-058</postCode>
+									<settlement>Guimarães</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Gil</forename><surname>Gonçalves</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="laboratory">Centre for Mechanical Technology and Automation (TEMA)</orgName>
+								<orgName type="institution">University of Aveiro</orgName>
+								<address>
+									<postCode>3810-193</postCode>
+									<settlement>Aveiro</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff5">
+								<orgName type="laboratory">Intelligent Systems Associate Laboratory (LASI)</orgName>
+								<address>
+									<postCode>4800-058</postCode>
+									<settlement>Guimarães</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Stefano</forename><surname>Cinti</surname></persName>
+							<affiliation key="aff6">
+								<orgName type="department">Department of Pharmacy</orgName>
+								<orgName type="institution">University of Naples &quot;Federico II&quot;</orgName>
+								<address>
+									<settlement>Naples</settlement>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mustafa</forename><forename type="middle">B A</forename><surname>Djamgoz</surname></persName>
+							<affiliation key="aff7">
+								<orgName type="department">Department of Life Sciences</orgName>
+								<orgName type="institution">Imperial College London</orgName>
+								<address>
+									<postCode>SW7 2BX</postCode>
+									<settlement>London</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Frederico</forename><forename type="middle">Castelo</forename><surname>Ferreira</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Bioengineering</orgName>
+								<orgName type="institution" key="instit1">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit2">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">Institute for Health and Bioeconomy</orgName>
+								<orgName type="institution" key="instit2">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit3">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Paola</forename><surname>Sanjuán-Alberte</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Bioengineering</orgName>
+								<orgName type="institution" key="instit1">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit2">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">Institute for Health and Bioeconomy</orgName>
+								<orgName type="institution" key="instit2">Instituto Superior Técnico</orgName>
+								<orgName type="institution" key="instit3">Universidade de Lisboa</orgName>
+								<address>
+									<postCode>1049-001</postCode>
+									<settlement>Lisbon</settlement>
+									<country key="PT">Portugal</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Rosalia</forename><surname>Moreddu</surname></persName>
+							<email>r.moreddu@soton.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Electronics and Computer Science</orgName>
+								<orgName type="institution">University of Southampton</orgName>
+								<address>
+									<postCode>SO171BJ</postCode>
+									<settlement>Southampton</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Institute for Life Sciences</orgName>
+								<orgName type="institution">University of Southampton</orgName>
+								<address>
+									<postCode>SO17 1BJ</postCode>
+									<settlement>Southampton</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Multilevel classification framework for breast cancer cell selection and its integration with advanced disease models</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">1FB99E2B012988C19D9F7AD48A16BC56</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:54+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Breast cancer</term>
+					<term>cell lines</term>
+					<term>classification</term>
+					<term>precision oncology</term>
+					<term>disease models</term>
+					<term>bioinformatics</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Breast cancer cell lines are indispensable tools for unraveling disease mechanisms, enabling drug discovery, and developing personalized treatments, yet their heterogeneity and inconsistent classification pose significant challenges in model selection and data reproducibility. This review aims at providing a comprehensive and user-friendly framework for broadly mapping the features of breast cancer types and commercially available human breast cancer cell lines, defining absolute criteria, i.e. objective features such as origin (e.g., MDA-MB, MCF), histological subtype (ductal, lobular), hormone receptor status (ER/PR/HER2), and genetic mutations (BRCA1, TP53), and relative criteria, which contextualize functional behaviors like metastatic potential, drug sensitivity, and genomic instability. It then examines how the proposed framework could be applied to cell line screening in advanced and emerging disease models. By supporting better informed choices, this work aims to improve experimental design and strengthen the connection between in vitro breast cancer studies and their clinical translation.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Breast cancer cell lines are in vitro disease models widely used in biomedical research to gain insights into the pathophysiology of the disease, and to develop novel diagnostic and therapeutic strategies. <ref type="bibr" target="#b0">1</ref> Derived from human tumors, they provide a renewable resource for investigating the cellular and molecular mechanisms underlying disease progression, enabling the search for new therapeutic agents and diagnostic markers, by recapitulating local conditions and allowing controlled perturbations in vitro. <ref type="bibr" target="#b1">2,</ref><ref type="bibr" target="#b2">3</ref> In drug discovery and development, cell models are utilized to screen potential anti-cancer drugs for their efficacy and possible toxicity <ref type="bibr" target="#b3">4</ref> . In personalized medicine, patient-derived cells allow to evaluate individual responses to specific treatments, aiming to improve therapeutic outcomes. <ref type="bibr" target="#b4">5</ref> However, cell lines do not fully represent the heterogeneity of patient tumors, especially when employed in isolation, risking to oversimplify the biological environments characteristic of complex living systems. <ref type="bibr" target="#b5">6</ref> Moreover, they may acquire genetic changes during long-term culture, leading to substantial alterations in both morphology and functionality. <ref type="bibr" target="#b5">6</ref> In this scenario, selecting the optimal cancer cell line based on its properties and experimental objectives becomes critical toward obtaining reproducible and translatable results. This review presents a classification framework that distinguishes commercially available human breast cancer cell lines based on absolute criteria, such as origin and hormone receptor status, and relative criteria, such as metastatic potential and drug response. It illustrates how diverse cellular features can be systematically organized to optimize cell lines use in translational research, alongside their integration with advanced disease models, from organoids to co-culture systems and patient-derived xenografts.</p><p>Absolute criteria form the foundational layer of cell lines classification, capturing static or semi-static features that define the cell line identity and heritage. The origin of the cell line, representing whether it is derived from a primary tumor or metastatic lesion, is a clear example of absolute criteria, and influences differentiation state and drug responsiveness. Histological subtype, including ductal, lobular, or metaplastic, offers another level of biological context that can dictate architectural and invasive properties. <ref type="bibr" target="#b6">7</ref> Hormone receptor status (ER, PR, HER2), one of the most clinically relevant stratifications in breast oncology <ref type="bibr" target="#b7">8</ref> , drives therapeutic decisions and aligns with subtypes such as triple-negative or HER2-positive disease. Moreover, molecular subtypes as luminal A/B or basal-like capture transcriptomic signatures that reflect biological states <ref type="bibr" target="#b8">9</ref> , while common genetic mutations (e.g., BRCA1/2, TP53, PTEN) frame the cell within defined oncogenic trajectories. <ref type="bibr" target="#b9">10</ref> Absolute parameters ensure that the use of a cell line is grounded in clinically and genetically meaningful choices; yet, relying solely on absolute descriptors neglects the functional plasticity of breast cancer cells. The relative criteria component addresses this limitation by encompassing dynamic phenotypes and regulatory states that vary across contexts and influence experimental outputs. These include functional attributes such as metastatic ability, proliferation rate and apoptotic resistance, which directly affect how a cell line behaves under experimental perturbation. For example, the propensity to metastasize to bone or brain, which is central to studying organotropism, is interlinked with signaling adaptations and cellular machinery, such as invadopodia formation and EMT programs. <ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b11">12</ref> Similarly, apoptotic resistance, shaped by alterations in caspase expression or FLIP activity, dictates the cell line survival under cytotoxic challenge and is therefore crucial for modeling drug resistance. <ref type="bibr" target="#b12">13</ref> The relative aspects also incorporate advanced molecular and regulatory dimensions such as gene expression signatures (e.g., PAM50, MammaPrint), radiation response profiles, and drug sensitivity patterns that mirror therapeutic resistance observed in clinical settings. This stratification aligns with the contemporary view that cancer is a highly adaptive and evolving system. <ref type="bibr" target="#b13">14</ref> Additionally, layers such as epigenomic modifications, stem cell properties, and inflammatory status bridge the molecular and microenvironmental axes of tumor biology. For instance, ALDH1 or CD44+/CD24-status has been linked to tumor-initiating potential and chemoresistance <ref type="bibr" target="#b14">15</ref> , and immune signatures (e.g., PD-L1 or cytokine expression) can dictate immunotherapeutic outcomes. <ref type="bibr" target="#b15">16</ref> Genomic instability adds another dimension, often indicating susceptibility to specific DNA-damaging agents or synthetic lethality strategies. <ref type="bibr" target="#b16">17</ref> This schematization emphasizes how integrating these criteria could drive the choice and development of more predictive and clinically relevant models. Multi-omics could then allow simultaneous profiling of genomics, transcriptomics, and proteomics to refine cell line characterization, enabling matching to patientderived data. AI and data fusion techniques could forecast drug responses or disease trajectories based on integrative datasets. Finally, informed baseline choices could guide the design of in vitro models. 3D tissue constructs and co-culture systems better recapitulate in vivo architectures and cell-cell interactions, serving as an essential bridge toward preclinical and patient-derived xenograft (PDX) models, ensuring that selected cell lines can perform in biologically complex environments or be employed for their development.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>ABSOLUTE CLASSIFICATION CRITERIA</head><p>We define as absolute criteria those features that can be classified statically and objectively. As opposed to relative criteria (e.g., metastatic potential graded as low or high), absolute criteria are intrinsic attributes such as cellular origin (e.g., "MCF" origin, Michigan Cancer Foundation), histological subtype, hormone receptor status, genetic alterations, and molecular subtype. The following subsections address these characteristics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Cell line origin</head><p>The origin of a cell line denotes its derivation from specific breast tumor tissues. This classification is rooted in the cell line provenance and drives its research application. For brevity, the origins of breast cancer cell line families, along with their associated experimental uses, are summarized in Table <ref type="table">1</ref>. In addition to tumor-derived breast cancer cell lines, engineered breast epithelial models have been developed to study specific processes like transformation, epithelial-to-mesenchymal transition (EMT), and cancer stem cell behavior in a more controlled context. A widely used model is MCF10A, a non-tumorigenic human mammary epithelial cell line often used as the healthy reference in breast cancer studies. <ref type="bibr" target="#b17">18</ref> More advanced systems include HMLE and HMLER cells. HMLE cells are obtained by introducing genes that prevent cellular aging (hTERT) and inhibit tumor suppressor activity (SV40 large T antigen), allowing long-term growth in culture. <ref type="bibr" target="#b18">19</ref> When the HMLE model is further modified with an oncogene (H-RAS), it becomes tumorigenic (known as HMLER). <ref type="bibr" target="#b18">19</ref> A variant called HMLER-shEcad, where the gene for E-cadherin is silenced, is commonly used to model EMT and the acquisition of cancer stem cell-like traits. <ref type="bibr" target="#b18">19</ref> Despite lacking the genetic complexity of actual tumors, these models are valuable tools to dissect the functional impact of specific molecular changes and complement the use of patient-derived breast cancer cell lines in experimental research.</p><p>Table 1. Cell line family, acronym origin, representative cell lines, and clinically relevant research applications of cell line families. Cell line family Acronym origin Representative cell lines Key research applications of the cell line family Ref. Name Source MDA-MB M.D. Anderson Cancer Center -Mammary/Breast MDA-MB-231 Metastatic sites, pleural effusions Metastasis; chemoresistance; tumor-microenvironment interactions 20 MDA-MB-468 Brain metastasis MCF Michigan Cancer Foundation MCF-7 Pleural effusions HR+ Breast cancer progression; weakly metastatic control 21 MCF-10A Fibrocystic breast tissue HCC Human Cancer Culture HCC1937 Primary breast tumor carrying BRCA-1 mutation DNA repair defects; targeted therapy resistance 22 HCC1954 HER2-positive metastatic site BT Breast Tumor BT-474 solid invasive ductal carcinoma, HER2 amplification HER2-targeted therapies (drug testing, e.g., lapatinib) 23 BT-20 Primary TNBC, lacks functional TP53 CAMA Caucasian Malignant Adenocarcinoma CAMA-1 Liver metastasis Endocrine resistance mechanisms 24 SK-BR Sloan Kettering Institute -Breast SK-BR-3 Pleural effusion, TP53 mutation HER2-targeted therapies 25 ZR Zurich/Michigan cancer foundation ZR-75-1 Ascitic effusion, metastatic ductal carcinoma Hormone receptor plasticity; metastatic adaptation 26 ZR-75-30 Subline of the above, with reduced hormone dependence SUM Dr. Stephen Ethier, University of Michigan SUM-149PT Primary inflammatory TNBC, BRCA-1 mutation IBC-specific pathways SUM-159PT Metastatic site of inflammatory TNBC Hs Human Somatic Hs578T Breast carcinosarcoma Sarcomatoid differentiation; tumorstroma crosstalk DU Duke University DU4475 Rare metastatic TNBC model niche-specific metastasis mechanisms CAL Cancer Associated Line CAL-51 Ductal carcinoma, TP53-mutated tumor heterogeneity CAL-120 Metastatic site, basal-like MFM Max Faber Memorial laboratory MFM-223 Pleural effusion with metaplastic TNBC tumor-stroma interactions; drug sensitivity in metaplastic carcinomas PMC Primary Malignant Culture PMC-42 Invasive ductal carcinoma, forms organoids in vitro Morphogenesis; polarization; extracellular matrix role in tumor progression UACC University of Arizona Cancer Center UACC-812 metastatic site (likely lymph node) Drug resistance; gene signatures and drug response UACC-893 HER2-positive ductal carcinoma EMG Epidermal Malignant Growth EM-G3 scirrhous carcinoma, desmoplastic subtype Desmoplasia; tumor microenvironment crosstalk HDQ Unknown HDQ-P1 Primary ductal carcinoma with BRCA-2 mutations Synthetic lethality strategies; resistance mechanisms EFM European Foundation for Medicine EFM-19 Malignant pleural effusion epigenomic modifications; alternative survival pathways IBEP Instituto de Biomedicina, Estudio de Proliferación IBEP-1 Invasive ductal carcinoma, luminal-like intratumoral heterogeneity; clonal evolution IBEP-2 Invasive ductal carcinoma, basallike KPL Kurebayashi Pleural Line KPL-1 malignant ascites of a HER2positive patient antibody-drug conjugate mechanisms LY Dr. Anne Lykkesfeldt LY-2 tamoxifenresistant subline of MCF-7 HR and growth factor pathways; role of autophagy in acquired resistance T Tissue culture T-47D Pleural effusion progesterone receptor (PR) signaling; CDK4/6 inhibitor responses BSMZ Bützow, Sager, Müller, Zurich BSMZ Mucinous carcinoma glycoprotein-mediated immune evasion and matrix adhesion 18,41 AU Auburn University AU565 Metastatic site antibody-drug conjugates 21 Age of patient (21 years old) 21-MT-1 Metastatic breast tumor PARP inhibitor responses; metastasisinitiating cells 21-PT Primary breast tumor HMT Hanyang Medical Team HMT-3902S1 Primary breast tumor TGF-β-driven EMT and metastasis in xenograft models</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Histological subtype</head><p>Tumor morphology, its growth pattern, degree of differentiation, and resemblance to normal terminal ductlobular units (TDLUs), determine if a lesion is in situ or invasive, with invasive tumors carrying a higher risk of metastasis. <ref type="bibr" target="#b45">46</ref> Histological classifications also guide molecular profiling and subsequent targeted therapy selection. This section details the histological diversity of breast cancer and emphasizes clinic-pathological characteristics and correlations. Adenocarcinomas, comprising over 95% of breast cancer, arise from the glandular epithelium of ducts or lobules (Figure <ref type="figure" target="#fig_0">1</ref>). They are characterized by glandular differentiation and mucin production, the latter being intracellular, as in signet-ring cells, or extracellular, as seen in mucinous carcinomas. <ref type="bibr" target="#b46">47</ref> Such tumors are subclassified by their site of origin and invasiveness. Ductal carcinoma is the most prevalent breast cancer type, originating in the mammary milk ducts. <ref type="bibr" target="#b47">48</ref> Ductal and lobular carcinoma in situ represent the two main forms of pre-invasive breast adenocarcinomas. Ductal carcinoma in situ (DCIS) originates in the mammary ducts and remains confined to the ductal system, exhibiting a range of architectural patterns such as solid, cribriform, papillary, and micropapillary. <ref type="bibr" target="#b6">7</ref> Lobular carcinoma in situ (LCIS), by contrast, arises in the terminal ductal lobular units and is characterized by the proliferation of neoplastic cells that distend and fill the acini. LCIS is considered a non-obligate precursor of invasive lobular carcinoma and is classified into three main histological subtypes: classic, pleomorphic, and florid. These variants differ in cytologic features, architectural patterns, and potential biological behavior.</p><p>Invasive lobular carcinomas (ILCs) account for 10-15% of breast cancer cases, arise from the terminal ductlobular units, and are marked by the loss of E-cadherin, typically due to CDH1 mutations. <ref type="bibr" target="#b48">49</ref> They are commonly harder to diagnose from mammograms due to not forming calcifications. ILC is usually ERpositive and HER2-negative, with distinct genomic alterations. <ref type="bibr" target="#b49">50</ref> The majority of ILCs consist of low-nucleargrade malignant cells 50 (i.e., classic ILCs). In a minority of ILCs, the tumor consists of high-nuclear-grade malignant cells (i.e., pleomorphic ILC). ILC can exhibit a range of histological growth patterns, including solid, alveolar, trabecular, and tubulolobular variants. <ref type="bibr" target="#b48">49</ref> These patterns reflect the morphological diversity of ILC and occasionally pose diagnostic challenges. Regardless of pattern, these tumors typically retain the hallmark feature of E-cadherin loss, confirming their lobular origin. <ref type="bibr" target="#b28">29,</ref><ref type="bibr" target="#b49">50</ref> Invasive Ductal Carcinoma (IDC), which constitutes 70-80% of invasive breast cancer cases, invades the stroma and causes desmoplastic reactions. <ref type="bibr" target="#b47">48</ref> IDC is molecularly heterogeneous, with luminal subtypes expressing hormone receptors, HER2-enriched tumors exhibiting ERBB2 amplification, and basal-like tumors being triple-negative. <ref type="bibr" target="#b6">7,</ref><ref type="bibr" target="#b36">37</ref> The majority IDCs are classified as no special type (IDC-NST), yet several distinct histological and clinical variants exist. <ref type="bibr" target="#b47">48</ref> Metaplastic carcinoma (MpC) is an aggressive form of invasive breast cancer, often classified as triplenegative. <ref type="bibr" target="#b6">7</ref> It is highly heterogeneous, typified by epithelial-to-mesenchymal transition, which produces variable differentiation including squamous, spindle, or chondroid elements. <ref type="bibr" target="#b50">51</ref> This subtype of breast cancer is noted for its resistance to chemotherapy. <ref type="bibr" target="#b51">52</ref> Tubular carcinoma (TC) is a rare form of breast cancer defined by the proliferation of angulated, oval or elongated tubules reminiscent of normal breast ducts. Its invasive nature, coupled with the absence of myoepithelial cells, distinguishes it from benign lesions. <ref type="bibr" target="#b52">53</ref> Micropapillary carcinoma (MiC) is another aggressive subtype seen in 1-2% of breast cancer cases, characterized by clusters of tumor cells arranged in an inside-out pattern without fibrovascular cores. <ref type="bibr" target="#b53">54</ref> Despite often being ER-positive, this cancer type display high rates of lymph node involvement and commonly exhibits HER2 amplification or PIK3CA mutations. <ref type="bibr" target="#b53">54</ref> Adenoid cystic carcinoma (ACC) is an extremely rare subtype (&lt;0.1% incidence), featuring biphasic cell populations, luminal and basaloid, that form tubular, cribriform, or solid patterns surrounded by mucinous material. <ref type="bibr" target="#b6">7,</ref><ref type="bibr" target="#b54">55</ref> As opposed to its salivary gland counterpart, breast ACC rarely metastasizes, with surgical excision often proving curative. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Hormone-receptor status</head><p>Receptors are proteins typically found in the cell membrane that can be bound by matching extracellular molecules to elicit intracellular signaling or to enable inter-cellular communication. <ref type="bibr" target="#b56">57,</ref><ref type="bibr" target="#b57">58</ref> Some breast cancer cells possess certain receptors to hormones (HRs) that contribute to cellular behaviors including growth, proliferation, and motility. <ref type="bibr" target="#b58">59,</ref><ref type="bibr" target="#b59">60</ref> HR status has been widely used to classify breast cancer cell lines (Figure <ref type="figure" target="#fig_1">2</ref>). HRs include the estrogen receptor (ER) and the progesterone receptor (PR). Another important receptor is the human epidermal growth factor receptor 2 (HER2). HR/HER2 expression, among other variables, is one of the most important factors in estimating the prognosis and therapeutic responses of breast cancer. <ref type="bibr" target="#b60">61</ref> Estrogen receptor-positive (ER+) breast cancer is the most frequently diagnosed subtype. However, only about 30% of the commercially available breast cancer cell lines are ER+, and these models frequently derive from advanced disease states. <ref type="bibr" target="#b61">62</ref> From those, very few can be grown in mice, such as MCF7 and T47D and ZR-75-1, requiring high levels of exogenous estrogen (E2). <ref type="bibr" target="#b7">8</ref> This does not reflect the low levels of estrogen found in postmenopausal women, where most cases of ER+ breast cancer develop, making these models limited in scope. The majority of ER+ breast cancer is also PR-positive (PR+). <ref type="bibr" target="#b56">57</ref> Elevated PR levels are predominantly observed in luminal A tumors, which yield better outcomes compared to luminal B tumors where PR expression is lower. <ref type="bibr" target="#b62">63</ref> Approximately 15% of breast cancers are human epidermal growth factor receptor 2 positive (HER2+), a subtype that typically affects younger patients and is diagnosed at advanced stages. 64 HER2 overexpression, an independent predictor of poor survival, often occurs irrespective of ER and PR expression. <ref type="bibr" target="#b15">16</ref> Triple-positive breast cancer (TPBC) is a luminal B subtype coexpressing ER, PR, and HER2, accounting for roughly 10-15% of cases. <ref type="bibr" target="#b64">65</ref> It often demonstrates suboptimal responses to standard chemotherapy and hormone therapy due to intricate crosstalk between the ER and HER2 pathways. <ref type="bibr" target="#b65">66</ref> Triple-Negative Breast Cancer (TNBC) lacks expression of ER, PR, and HER2, and accounts for approximately 15% of cases. <ref type="bibr" target="#b66">67</ref> TNBC is predominantly basal-like, is more common in younger women, and exhibits an increased risk of early recurrence and distant metastasis. It is strongly associated with BRCA1 mutations. <ref type="bibr" target="#b67">68</ref> The ER+/HER2-subtype represents the most common breast cancer phenotype (approximately 75% of cases) and is typically classified as luminal A-like, <ref type="bibr" target="#b68">69</ref> while ER+/PR+/HER2+ pattern is classified as luminal B-like. <ref type="bibr" target="#b13">14</ref> Luminal B cancers with an ER+/PR-/HER2+ profile generally portend a worse prognosis than their ER+/PR+ counterparts, while HER2-positive cancers that are ER-/PR-are managed predominantly with HER2-targeted. 70 </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Genetic mutations</head><p>Breast cancer is primarily driven by genetic factors, with age and family history being the most significant risk factors. Approximately 5-10% of breast cancer cases are associated with inherited gene mutations. <ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b70">71</ref> Germline alterations in BRCA1 and BRCA2, among the most widely known mutations, compromise DNA repair and confer a markedly increased lifetime risk, predisposing tumors to either triple-negative or predominantly ER-positive phenotypes, respectively. <ref type="bibr" target="#b71">72</ref> Mutations in TP53, present in nearly 30% of cases, disrupt critical cell cycle checkpoints and promote aggressive tumor behavior with poorer outcomes. <ref type="bibr" target="#b8">9</ref> PTEN mutations are strongly correlated with HER2+ breast cancers, <ref type="bibr" target="#b72">73</ref> and inversely associated with luminal type breast cancers <ref type="bibr" target="#b73">74</ref> affecting cell growth, and proliferation, and inhibiting cancer stem cell activity. <ref type="bibr" target="#b74">75</ref> Other important mutations include defects in CHEK2 and ATM weakening cell cycle control and apoptotic responses. <ref type="bibr" target="#b75">76</ref> Alterations in PALB2, CDH1, STK11, and NF1 contribute to genomic instability, drive invasive characteristics, and influence therapeutic resistance <ref type="bibr" target="#b76">77</ref> . Genetic aberrations define distinct molecular subtypes in breast cancer and are essential for guiding targeted treatments in precision oncology. Genetic drift represents a different problem, further addressed in this review.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Molecular subtype</head><p>Gene expression profiling and hierarchical clustering have delineated five principal molecular subtypes, each with distinct biological behavior, risk factors, and therapeutic responsiveness, namely luminal A, luminal B, HER2-enriched, basal-like, and claudin-low. <ref type="bibr" target="#b77">78</ref> Luminal A is the most common subtype of breast cancer, accounting for around 40% of all breast cancer cases. <ref type="bibr" target="#b77">78</ref> It is characterized by an expression of luminal (low molecular weight) cytokeratins, ER, and PR, with a HER2 negative profile accounting for the low expression of cell proliferation marker Ki-67 (less than 20%). <ref type="bibr" target="#b78">79</ref> Luminal B subtype represents 20-30% of cases, expressing ER (with often reduced PR) and displaying high proliferation indices (Ki67 above 20%). <ref type="bibr" target="#b78">79</ref> These are generally of higher histologic grade, more aggressive, and have a higher recurrence rate compared to Luminal A subtypes, necessitating combined endocrine and chemotherapeutic approaches. <ref type="bibr" target="#b83">84</ref> HER2-enriched comprise approximately 15% of breast cancer cases. <ref type="bibr" target="#b79">80</ref> These are HER2-positive tumors while often exhibiting low or absent ER and PR levels. <ref type="bibr" target="#b80">81</ref> This category is subdivided into luminal HER2 (E+, PR+, HER2+ with intermediate Ki67, 15-30%) and HER2-enriched (E-, PR-, HER2+ with high Ki67, &gt;30%), both marked by high-grade invasive ductal carcinomas with nodal positivity and aggressive clinical behavior. <ref type="bibr" target="#b77">78</ref> Basal-like is often used as a synonymous of triple-negative breast cancer (TNBC), lacking ER, PR, and HER2 expression, while expressing basal cytokeratins. <ref type="bibr" target="#b81">82</ref> Basal-like breast cancers are typically high grade, occurring in patients with BRCA1 mutations, and have limited treatment options outside chemotherapy. Claudin-low tumors are characterized by low expression of cell adhesion molecules and a stem cell-like phenotype. This rare and aggressive subtype is often considered a subclass of basal-like but has gained interest as an in vitro model to reproduce highly aggressive cancers. 52</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Patient age, gender, and ethnicity</head><p>Additional absolute criteria include patient age, gender, and ethnicity. Age critically influences breast cancer risk, tumor morphology, and treatment response. <ref type="bibr" target="#b77">78</ref> Tumors in patients under 40 typically exhibit reduced levels of estrogen receptor, progesterone receptor, and luminal cytokeratin, alongside elevated Ki67, HER2, and p53 expression, indicative of aggressive behavior. <ref type="bibr" target="#b82">83</ref> In contrast, tumors in individuals over 70 generally display indolent features. Yet, most commercially available cell lines were derived from older patients, potentially limiting experimental relevance. <ref type="bibr" target="#b82">83</ref> Ethnicity further modulates breast cancer biology, as disparities in healthcare result in later diagnoses in Hispanic and Asian populations, while non-Hispanic black patients exhibit a tumor microenvironment enriched with pro-tumorigenic immune cells, enhanced microvasculature, and elevated mitotic kinases and transcription factors that promote aneuploidy. <ref type="bibr" target="#b85">86</ref> More in general, marketed cell lines are predominantly caucasian. <ref type="bibr" target="#b83">84</ref> With regards to gender, although breast cancer is most commonly viewed as a female disease, it can also occur in men, where it accounts for less than 1% of all cancers in men and breast cancer cases overall. <ref type="bibr" target="#b84">85</ref> However, male breast cancer incidence has rose over the past 30 years, with inherited pathogenic variants being the most significant risk factors. <ref type="bibr" target="#b85">86</ref> Transgender individuals may also face breast cancer risks, particularly if receiving hormone treatment.</p><p>Studies have shown an increased risk of breast cancer in transexual women compared with cisgender men, and a lower risk in trans men compared with cisgender women. 87</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>RELATIVE CLASSIFICATION CRITERIA</head><p>This section details key classification parameters specific to breast cancer to emphasize their mechanistic underpinnings and clinical utility. Such features are defined as relative due to providing a qualitative measure of cancer cell behavior. Important relative criteria include metastatic ability, proliferation rate, often measured by Ki-67 expression or mitotic indices, <ref type="bibr" target="#b87">88</ref> response to radiation reflecting the tumor sensitivity to DNA damage-induced cell death, <ref type="bibr" target="#b88">89</ref> and drug resistance encompassing mechanisms by which tumors evade therapeutic agents (such as ESR1 mutations in hormone-resistant HR+ disease). <ref type="bibr" target="#b89">90</ref> Inflammatory status reflects, among all, immune microenvironment composition and stem cell-like properties. <ref type="bibr" target="#b90">91</ref> A summary of key relative criteria, their working mechanisms and implications are summarized in Table <ref type="table">2</ref>, alongside absolute criteria to provide a complete overview.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Metastatic ability</head><p>Metastatic ability refers to the capacity of tumor cells to colonize distant organs such as bone, brain, and liver, and it is driven by EMT. <ref type="bibr" target="#b10">11</ref> In metastatic behavior, transcription factors downregulate E-cadherin, enhancing motility and favoring migration to colonize new sites. Bone metastasis, one of the hardest to treat, involves osteolytic factors that activate osteoclasts via RANKL signaling. <ref type="bibr" target="#b10">11</ref> Circulating tumor cells expressing HER2 or EpCAM have been associated with increased metastatic risk. <ref type="bibr" target="#b91">92</ref> Metastatic behavior also differs based on subtype-specific organotropism: luminal tumors often metastasize to bone, HER2+ to liver and lungs, and basal-like tumors to brain and lung <ref type="bibr" target="#b11">12</ref> . These preferences reflect intrinsic properties of the tumor cells, including receptor expression, secreted factors, and ability to modify the pre-metastatic niche. Some cell lines, like MDA-MB-231, consistently metastasize to lung and bone in murine models, while others such as MCF-7 require estrogen supplementation and genetic manipulation to become metastatic. <ref type="bibr" target="#b92">93</ref> Additional drivers include specific signaling cascades, for example CXCR4-CXCL12 involved in bone homing, and MMPs, which degrade extracellular matrix to facilitate invasion. <ref type="bibr" target="#b10">11</ref> Exosomes from metastatic cells can precondition distant niches to favor colonization. <ref type="bibr" target="#b11">12</ref> Moreover, stem-like subpopulations with CD44 high /CD24 low profiles exhibit heightened metastatic ability and are linked to relapse. <ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b51">52</ref> Migration and invasiveness Migration and invasiveness describe the ability of cancer cells to detach from the primary tumor site, degrade the extracellular matrix, and infiltrate surrounding tissues. <ref type="bibr" target="#b11">12</ref> Invasive breast cancer, particularly TNBC and HER2-positive subtypes, exhibit heightened migration via RhoA/ROCK-mediated cytoskeletal reorganization and MMP-9/MMP-14-dependent extracellular matrix degradation. <ref type="bibr" target="#b93">94</ref> In vitro models, for instance MDA-MB-231 cell invasion assays, reveal that TGF-β signaling enhances motility by upregulating integrin αvβ6. <ref type="bibr" target="#b81">82</ref> These behaviors are often initiated during partial EMT which increases cellular plasticity while maintaining some epithelial traits, allowing dynamic adaptation to microenvironmental cues. Migratory activity can be random or directional (chemotaxis), with directional migration often guided by gradients of stromal-derived factors. <ref type="bibr" target="#b94">95</ref> Tumor-associated fibroblasts and macrophages also promote invasion by remodeling the ECM and secreting pro-migratory cytokines <ref type="bibr" target="#b95">96</ref> . Additionally, invadopodia (actin-rich protrusions) formation facilitates local matrix degradation and is prominent in highly invasive cell lines. 69</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Apoptotic resistance</head><p>Apoptotic resistance denotes the tumor evasion of programmed cell death, enabling survival despite genomic damage or therapy. <ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b89">90,</ref><ref type="bibr" target="#b96">97</ref> Apoptotic evasion in breast cancer is linked to Bcl-2 overexpression in luminal subtypes and TP53 mutations in basal-like tumors. <ref type="bibr" target="#b34">35,</ref><ref type="bibr" target="#b81">82</ref> TNBCs frequently exhibit FLIP upregulation, which inhibits caspase-8 activation. <ref type="bibr" target="#b94">95</ref> PARP inhibitors (e.g., olaparib) exploit synthetic lethality in BRCA1/2mutated tumors by impairing DNA repair and forcing apoptosis. <ref type="bibr" target="#b97">98</ref> Some breast cancer cells bypass apoptosis entirely by entering a senescent-like state or activating autophagy as an adaptive survival strategy under therapeutic stress <ref type="bibr" target="#b14">15</ref> . Apoptotic resistance is commonly assessed in vitro using Annexin V/PI staining, TUNEL assays, and caspase-3/7 activity measurements. <ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b12">13</ref> Cell lines like MDA-MB-231 and BT-549 are often used to model high apoptotic resistance, particularly in response to chemotherapy or radiation <ref type="bibr" target="#b14">15</ref> .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Gene expression profile</head><p>Gene expression profiles represent the transcriptomic signatures that classify breast cancer into intrinsic subtypes. Intrinsic subtypes luminal A, luminal B, HER2-enriched, and basal-like, originated from breast cancer transcriptomics. <ref type="bibr" target="#b98">99</ref> The PAM50 assay further refines classification, identifying a claudin-low subgroup with stem-like features. <ref type="bibr" target="#b81">82</ref> Oncotype DX and MammaPrint quantify recurrence risk using proliferation (e.g., Ki-67) and invasion-related genes (e.g., MMP11). <ref type="bibr" target="#b99">100</ref> As a relative criterion, gene expression profiling enables comparison of cell lines beyond subtype labels, revealing functional differences in pathway activity, hormone signaling, immune evasion, or stemness. For instance, two basal-like cell lines may diverge significantly in EMT gene signatures or interferon response genes, making one of them more suitable for metastasis or immunotherapy studies. Expression levels of DNA repair genes (e.g., BRCA1, RAD51), growth factors (e.g., TGFB1), or apoptotic regulators (e.g., BCL2, CASP9) offer insights into therapeutic vulnerabilities <ref type="bibr" target="#b100">101</ref> . Additionally, cell lines cultured in 2D versus 3D conditions can exhibit shifts in gene expression <ref type="bibr" target="#b101">102</ref> , highlighting the need to interpret transcriptomic data in context and developing in vivo-like models to improve accuracy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Epigenomic modifications</head><p>Epigenomic modifications, for example DNA hypermethylation of BRCA1 occurring in a significant fraction of sporadic tumors, are reversible with HDAC inhibitors that restore ERα expression, while EZH2 overexpression in TNBC correlates with stemness and metastasis. <ref type="bibr" target="#b102">103</ref> In a model selection context, epigenomic features help distinguish cell lines by their regulatory landscape rather than transcriptional output alone. DNA methylation at tumor suppressor loci or enhancer regions can create long-term silencing that persists across treatments, as well as histone modifications that can influence chromatin accessibility and lineage identity. <ref type="bibr" target="#b96">97</ref> Functional assays using 3D organoids and patient-derived xenografts provide dynamic insights into treatment response and resistance. <ref type="bibr" target="#b96">97</ref> Cell lines differ in the stability of these states, some retaining locked epigenomes, while others are more prone to reprogramming, particularly in 3D culture or co-culture with stromal cells. 102</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Tumor-immune interactions</head><p>Tumor-immune interactions are one of the most important features of cancer cells when fighting against therapies and initiating invasion. Cancer cells can evade immune cells and recruit them as tumorassociated macrophages, regulatory T cells or myeloid-derived suppressor cells, further exacerbating the malignancy of the tumor <ref type="bibr" target="#b95">96</ref> . Even typically anti-tumor cells (e.g., T cells or NK cells) can become exhausted or suppressed in the TME due to interaction with specific factors, hypoxia, or the absence of stimulatory signals. <ref type="bibr" target="#b95">96</ref> Some breast cancer cell lines, for example MDA-MB-231, HCC38, HCC70 and BT-549, can recapitulate this interaction, namely, cells with high immunogenicity. <ref type="bibr" target="#b103">104</ref> These are often highly modulated when co-cultured with macrophages or T cells and express high levels of cytokines, chemokines, and high PD-L1 under IFN-γ stimulation. <ref type="bibr" target="#b95">96</ref> Low immunogenic cell lines, such as MCF-7, T47D and ZR-75-1, lack expression of PD-L1 and have a low response to IFN-γ or immune co-cultures, making them less suitable for immune checkpoint or immunotherapies studies. <ref type="bibr" target="#b15">16</ref> However, even high-interaction lines are still imperfect models, as standard cell lines lack the full complexity observed in immune microenvironments in vivo. 105</p><p>Table 2. Absolute and relative classification criteria, key features, and clinical relevance. Breast cancer subcategory Key features &amp; molecular details Clinical relevance Ref. Absolute criteria Histological subtype Adenocarcinoma &gt;95% of cases; arises from glandular epithelium; glandular differentiation and mucin production Subtyped as ductal vs. lobular; informs targeted therapy 24,47 Ductal carcinoma Divided into DCIS and IDC; IDC is molecularly heterogeneous (luminal, HER2, basal-like) Provides prognostic stratification based on grade and subtype 7,48 Lobular carcinoma Arises from TDLUs; loss of E-cadherin (CDH1 mutations); usually ER+ and HER2-; associated with FOXA1, TBX3 mutations Complicates detection; influences therapeutic strategies 49,50 Inflammatory breast cancer Rare (1-5%); typically, triple-negative or HER2+; overexpresses EGFR, ANXA1, and COX-2; activation of WNT/β-catenin and NF-κB pathways Highly aggressive with rapid progression 106 Medullary carcinoma Syncytial growth (&gt;75%), absence of glandular/tubular structures; frequent mitoses Rare IDC variant with distinct histological features 7 Mucinous carcinoma Extracellular mucin; clusters; typically, ER+, HER2-; low TP53 mutation; AKT1 E17K mutations Generally lower grade and favorable prognosis 107 Papillary carcinoma Papillary with fibrovascular cores; subtypes include intraductal, encapsulated, solid, and invasive forms Crucial to differentiate benign from malignant lesions Metaplastic carcinoma Aggressive TNBC subtype; heterogeneous with evidence of EMT transition; chemoresistant High resistance profiles; therapeutic challenges 51,52 Tubular carcinoma Well-differentiated; small cell tubules arranged radially; invasive Rare, low-grade, and excellent prognosis Micropapillary carcinoma Often ER+ with high lymph node metastasis; MUC1 overexpression; may have HER2 amplification or PIK3CA mutations Poorer prognosis necessitating adjuvant chemotherapy 109 Adenoid cystic carcinoma Rare (&lt;0.1%); TN yet indolent; MYB-NFIB fusions triggering NOTCH pathway activation Surgical excision is often curative 56 Hormone Receptor Status ER+ Most prevalent; includes MCF7, T47D, ZR-75-1; require high exogenous estrogen; responsive to endocrine therapy Cell lines may not mimic low estrogen conditions of postmenopausal patients PR+ Expressed in response to ER activation; higher levels common in luminal A; prognostic marker PR positivity generally correlates with better outcomes HER2+ 15% of cases; overexpression of HER2; adverse prognostic indicator independent of ER/PR Managed with HER2-targeted agents (e.g., trastuzumab) Triple positive (TPBC) Co-expression of ER, PR, and HER2; luminal B subtype (~10-15%); pathway crosstalk Requires combinatorial therapeutic approaches Triple negative (TNBC) Lacks ER, PR, and HER2; predominantly basal-like; distant metastasis; linked with BRCA1 mutations Limited targeted therapies ER+/HER2-Most common phenotype (~75% of cases); classified as luminal A Endocrine treatments ER+/PR-/HER2+ Luminal B variant with altered receptor signaling; poorer prognosis compared to ER+/PR+HER2+ Potential endocrine therapy resistance ER-/PR-/HER2+ HER2-overexpressing cancers lacking hormone receptors Treated with HER2targeted drugs 80 Genetic Mutations BRCA1 Germline mutations (16% of hereditary BC); crucial for DNA repair and cell cycle regulation; TNBC Key target for PARP inhibitor strategies BRCA2 Functions in DNA repair and genomic stability; 70-80% of BRCA2-mutated cancers are ER+ Influences endocrine therapy in mutation carriers TP53 Mutated in ~30% of BC; mediates cell cycle arrest, apoptosis, or senescence upon DNA damage Determines tumor aggressiveness PTEN Regulates the PI3K/Akt pathway; linked with HER2+ cancers, inversely with luminal types Its loss may direct targeted treatment strategies PALB2 Works in tandem with BRCA1/2 in DNA repair; often associated with aggressive TNBC phenotypes Emerging target in personalized therapeutic approaches CHEK2 Checkpoint kinase mutation; majority are luminal A with some lobular features Reflects cell cycle checkpoint dysfunction ATM Involved in cell cycle regulation and apoptosis; loss-of-heterozygosity in ~40% of sporadic BC; mainly in luminal B/HER2-May influence chemotherapeutic decisions. CDH1 Encodes E-cadherin; loss leads to cell dissociation; mutations predispose to invasive lobular carcinoma Essential for hereditary lobular BC surveillance STK11 Associated with Peutz-Jeghers syndrome; predisposes to other tumor types (ovarian, lung, GI) Important for multitumor screening NF1 Mutations in NF1 occur in ~27% of BC; endocrine resistance and metastasis, especially in ER+ cases May predict targeted endocrine resistance management 81 Molecular Subtype Luminal A ~40% of cases; ER/PR positive; low Ki67 (&lt;20%); typically, IDC; high endocrine therapy response Represents the best prognostic subgroup 79 Luminal B 20-30% of cases; ER positive (with lower PR expression); high Ki67 (&gt;20%); variable HER2 More aggressive; requires combined therapy approaches 107 HER2-enriched ~15% of cases; overexpresses HER2; subdivided into luminal HER2 and HER2enriched Aggressive; outcomes improve with HER2-targeted therapies 78 Basal-like (TNBC) 15-20% of cases; lacks ER, PR, and HER2; expresses basal cytokeratins; linked with BRCA1 Limited treatment options 78 Mesenchymal (claudin-low) Rare; low expression of cell adhesion molecules and stem-cell-like phenotype High tumor plasticity and potential resistance 81 Relative Criteria Metastatic ability EMT transition; downregulation of adhesion molecules; organ tropism. SNAIL, TWIST, ZEB1; downregulation of E-cadherin; PTHrP, IL-11; RANKL; HER2, EpCAM; overexpression of COX2, HB-EGF, ST6GALNAC5 in brain-tropic cancers Enhanced motility; colonizes distant sites 11,92 Tumor, migration and invasiveness Cell detachment; ECM degradation; cytoskeletal reorganization; invadopodia formation; integrin-mediated motility. MMP-9, MMP-14; RhoA/ROCK; TGF-βdriven integrin αvβ6; proliferation markers like Ki-67; Cyclin D1-CDK4/6 complexes; MYC amplification; PI3K/AKT hyperactivity Invasive capacity; differential proliferation in luminal A vs. B subtypes; targeted therapeutic strategies 88,94 Apoptotic resistance Upregulation of anti-apoptotic proteins; Overexpression of Bcl-2 (luminal tumors), TP53 mutations (basal-like), FLIP upregulation in TNBC; BRCA1/2; HIF-1α and carbonic anhydrase IX in hypoxic conditions Chemo/radio resistance; combined treatments such as PARP inhibition with radiotherapy Gene expression and drug resistance Resistance through specific mutations. PAM50, Oncotype DX, MammaPrint; ESR1 mutations (Y537S, D538G); PTEN loss; PIK3CA mutations; βIII-tubulin overexpression; sensitivity to HER2targeted agents, platinum salts, and AR inhibitors Recurrence risk assessment; endocrine and targeted therapy resistance 116 Epigenomic modifications BRCA1 hypermethylation reversible by HDAC inhibitors; EZH2 Influences chemoresistance, recurrence, and therapeutic response 30 Tumour immune system interactions Tumour-infiltrating lymphocytes; IL-6/STAT3-mediated PD-L1 upregulation; ALDH1, CD44/CD24; Notch, Hedgehog, WNT/β-catenin; HR deficiency scores; APOBEC3B Immunotherapeutic resistance and increased invasive capacity 16,105</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TOWARD INFORMED CELL MODEL SELECTION</head><p>To consolidate the criteria discussed throughout this review and translate them into actionable steps, this section proposes a structured workflow for breast cancer cell line selection (Figure <ref type="figure" target="#fig_2">3</ref>). Starting from a defined research question and primary goal, whether mechanistic exploration, drug development, biomarker discovery, or modeling tumor-microenvironment interactions, the approach can guide users through a series of filters based on absolute and relative criteria. The layers include fundamental features followed by dynamic functional attributes relevant to experimental aims. Across levels, the candidate pool progressively narrows down to lines that are, however possible, biologically appropriate, experimentally feasible in the given context, and clinically relevant to their conceived application. The workflow further integrates downstream considerations, for example validation needs (e.g., passage number, genetic drift), with suggestions for additional experimental steps before proceeding, as well as representation gaps (e.g., age range of applicability). Crucially, it also introduces the concept of scaling potential, i.e. the likelihood that a given cell line will perform well in advanced disease models such as organoids, co-culture systems, organ-on-chip platforms or patient-derived xenografts. Pre-selecting based on functional and phenotypic compatibility to more advanced platforms can reduce resource misuse and improve translational fidelity, possibly aiding toward avoiding the use of unscalable in vitro models in studies originally conceived for in vivo applications. This structure might lay the foundation for building adaptive and AI-supported tools that link cell line metadata with model performance to optimize preclinical design. The practical value of this approach is presented in two research scenarios requiring thoughtful cell line selection (Figure <ref type="figure">4</ref>). In the first case, investigating bone-specific metastasis mechanisms in ER+ breast cancer through a standard literature search or AI chat assistant might yield conflicting results, with studies using MCF-7 cells despite their limited metastatic capacity or MDA-MB-231 cells despite being ERnegative. <ref type="bibr" target="#b116">117</ref> By applying the presented model, one would first filter by absolute criteria (ER+ status) and then by relative criteria (bone-metastatic potential), leading to the selection of MCF-7-derived bone-seeking variants or ZR-75-1 cells, which express PTHrP and other bone-metastasis mediators while maintaining ER positivity. The second sample use case presented here involves a novel CDK4/6 inhibitor being tested against therapy-resistant disease. Instead of arbitrarily selecting a panel of luminal cell lines, the framework guides the combination of absolute criteria (luminal B classification, high Cyclin D1 expression) with relative criteria (acquired endocrine resistance). This would lead to selection of long-term estrogen-deprived (LTED) MCF-7 derivatives, LY-2 cells with acquired tamoxifen resistance, or T47D cells with ESR1 mutations, providing a physiologically relevant resistance context. <ref type="bibr" target="#b89">90</ref> The consideration of genetic drift would alert potential inconsistencies between different laboratory strains and encourage authentication and early-passage usage. In both cases, this approach might deliver contextually relevant models that mirror specific disease states over generic categorizations, to enable translational outcomes compared with a simple database consultation or literature search.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTEGRATION WITH ADVANCED AND EMERGING DISEASE MODELS</head><p>The development and deployment of disease models aiming to recapitulate breast cancer complexity benefit from the integration of the defined criteria into the set of advanced and emerging technologies, for example multi-omics profiling to enhance model fidelity, machine learning to forecast treatment outcomes, and microsystems mimicking tissue microenvironments (Figure <ref type="figure" target="#fig_4">5</ref>). <ref type="bibr" target="#b32">33,</ref><ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b104">105,</ref><ref type="bibr" target="#b117">118</ref> Integrated analyses show that many breast cancer cell lines cluster into familiar intrinsic subtypes (e.g. luminal vs. basal) based on gene expression, mirroring patient tumor classes, and multi-omics approaches have even revised prior cell line classifications. <ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b46">47</ref> The combination of genomics (mutations, copy-number variation), transcriptomics (mRNA, miRNA), epigenomics, and proteomics allows us to obtain a holistic molecular portrait that improves subtype matching. This approach also enables to spot discrepancies, as breast cell lines often carry more numerous mutations than tumors, and several key metastatic drivers (e.g. ESR1 mutations) found in patient tumors are absent in commonly used lines. <ref type="bibr" target="#b89">90,</ref><ref type="bibr" target="#b116">117</ref> Bringing together multi-omics data from patients (e.g. The Cancer Genome Atlas) with cell line and organoid data helps identify which models best recapitulate the molecular wiring of a given subtype, potentially enabling the discovery of hybrid molecular subgroups and biomarkers that are overlooked in single-omics analysis. <ref type="bibr" target="#b66">67</ref> Multi-omics integration enables us to match absolute features (e.g., BRCA1 mutation, ER status, luminal B signature) with its functional behaviors (e.g., apoptotic resistance, metastatic tropism), as captured by the relative criteria, simulating clinically relevant contexts in vitro. For example, a drug targeting CDK4/6 should not solely be tested in a luminal-type cell line, but also in one with high Cyclin D1 expression and low apoptotic priming, integrating a profile that combines static and dynamic features. On top of this, machine learning is increasingly able to predict drug responses and classify breast cancer subtypes with accuracy through algorithms trained to recognize complex patterns that correlate with clinically relevant features. The NCI-DREAM Challenge assembled genomic, transcriptomic, proteomic, DNA methylation, and mutation data for 53 breast cancer cell lines to predict relative sensitivity to various drugs. <ref type="bibr" target="#b118">119</ref> A recent study built a deep neural network that integrates gene expression, DNA copy number, mutations, and phospho-proteomic (RPPA) data, including a graph-embedded layer of protein-protein interactions. <ref type="bibr" target="#b8">9</ref> Other groups have developed multi-omics machine learning frameworks to classify breast tumors into subtypes and predict patient therapy outcomes. <ref type="bibr" target="#b119">120</ref> As a real-world example, ensemble models trained on cell line screens have been applied to patient tumor data to distinguish responder vs. non-responder profiles. <ref type="bibr" target="#b118">119</ref> Traditional 2D monolayer cultures often fail to recapitulate the complex architecture and microenvironment of breast tumors, potentially distorting cellular behavior with cells spreading unnaturally, losing their apicobasal polarity, lacking contact with a native ECM, and altering gene expression and drug responses <ref type="bibr" target="#b101">102,</ref><ref type="bibr" target="#b104">105</ref> . For example, 2D-cultured cells have continuous access to oxygen and nutrients, as opposed to cells in a tumor mass, potentially making them more sensitive to drugs than real tumors. Advanced culture systems like 3D spheroids, patient-derived organoids, co-culture models and 3D bioprinting are now improving the physiological relevance of preclinical studies. 3D cultures allow cells to aggregate or grow in a matrix, restoring more in vivo-like morphology and cell-cell interactions. A core benefit of 3D tumor spheroids is the emergence of oxygen, nutrients, and drug gradients across the spheroid, leading to heterogeneous zones of proliferating vs. quiescent cells, mirroring solid tumors. <ref type="bibr" target="#b120">121</ref> Studies comparing in vitro models have shown that breast cancer cells in 3D can become significantly more drug-resistant than in 2D monolayers. <ref type="bibr" target="#b104">105,</ref><ref type="bibr" target="#b117">118,</ref><ref type="bibr" target="#b120">121</ref> For instance, when MCF-7 spheroids were treated with common chemotherapeutics (doxorubicin, paclitaxel, tamoxifen), the 3D cultures were markedly less responsive than 2D cultures <ref type="bibr" target="#b120">121</ref> . This in vitro drug resistance in 3D is attributed to the restoration of tumor-like cell-cell/ECM interactions and diffusion barriers that limit drug penetration. Organoids are often derived from patient tumor samples or stem cells, that self-organize into mini-structures ideally containing multiple cell types, maintain the DNA copy number aberrations and sequence mutations of the parental tumor, as well as estrogen receptor (ER), HER2, and other subtype-defining features. Organoid biobanks and consortia (e.g., the HUB/Hubrecht Institute and Human Cancer Models Initiative) are now cataloguing large collections of breast cancer organoids for research. 122 Cell line metadata and experimental data are compiled into a structured database, from which data is fed as inputs into a machine learning architecture that integrates absolute and relative criteria to generate predictive recommendations tailored to research goals. Suggested cell lines could be deployed in increasingly complex in vitro platforms to enhance biological fidelity and clinical relevance. The resulting experimental outputs, once validated, could feed back into the system, allowing continuous model refinement and improved prediction accuracy over time.</p><p>Another approach to breast cancer modelling revolves around the development of co-culture systems, recalling that tumors are ecosystems of cancer cells interacting with stromal cells, immune cells, neurons, and extracellular matrix. Breast cancer spheroids have been co-cultured with cancer-associated fibroblasts or immune cells to reconstitute aspects of the tumor microenvironment. <ref type="bibr" target="#b104">105</ref> These methods can reveal emergent behaviors, such as how fibroblasts induce drug resistance or how immune cells infiltrate tumor spheroids. A parallel method around the development of advanced systems is organ-on-chip technology, which uses microfabrication techniques to recreate environments that allow blood flow or gradients of nutrients across a biological sample. A study reports the use of a 3D bioprinted breast tumor model in a microfluidic chip, arranging breast cancer cells (MCF7, MDA-MB-231) and healthy mammary cells (MCF10A) within a hydrogel scaffold. <ref type="bibr" target="#b101">102</ref> This method demonstrated realistic cell migration and invasion patterns in response to gradients. 3D bioprinting, in turn, represents a popular frontier for building custom tumor models that include patient-derived cancer cells, supporting fibroblasts, endothelial cells to mimic blood vessels, and immune components all in one 3D construct. In this context, bringing together cell lines that collectively recapitulate a desired environment becomes more complex to do by hand, as well as crucial for ensuring the validity of experimental outcomes. Then, in vivo validation remains a crucial step. A gold standard approach is the use of patient-derived xenografts (PDX), where fragments of a breast tumor are implanted into immunocompromised mice <ref type="bibr" target="#b122">123</ref> . Studies have shown that if a drug causes regression in a cohort of breast cancer PDX models, there is a good chance it will show efficacy in patients with similar tumor profiles. <ref type="bibr" target="#b117">118</ref> PDXs are also instrumental in co-clinical trials, i.e. parallel studies where patients receive therapy while their tumor xenografts in mice are treated similarly, acting as a great standard to comprehensively evaluate the given technology. All the approaches introduced in this section present intrinsic limitations that are out of scope for this review and are extensively addressed elsewhere.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CORE CHALLENGES</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Genetic drift</head><p>Genetic drift is one of the most influencing factors affecting the repeatability of in vitro experiments.</p><p>Instability is associated to clonal dynamics and appearance of new genetic variants. A sample study shows that in 106 cell lines compared across two labs, up to 90% of non-silent mutations were discordant between datasets <ref type="bibr" target="#b123">124</ref> . MCF-7, specifically, had 27 strains with high genomic diversity, including differential mutations, copy number alterations, and gene expression. <ref type="bibr" target="#b123">124</ref> These variations are triggered by variations in growth medium inducing clonal shifts, and even single-cell-derived clones are genomically unstable after long-term culture. This has tremendous consequences for drug discovery research. Out of 321 anti-cancer drugs tested across the 27 MCF-7 strains, almost 75% of effective compounds in some strains were completely inactive in others. <ref type="bibr" target="#b123">124</ref> In a different study, while researching LUCA-15 function in breast cancer, conflicting reports were found regarding its presence in MCF-7 cells, prompting them to characterize their available sublines. It was reported that the chromosomal region where LUCA-15 maps is unstable in MCF-7 cells, and one subline entirely lacked the LUCA-15 gene 13 . This loss correlated with reduced sensitivity to TNFα-induced apoptosis, which is predominant in MCF-7, since this cell line does not have caspase activity, while overexpression of LUCA-15 restored apoptotic responsiveness. These findings suggest LUCA-15 is highly susceptible to genetic drift, leading to different apoptotic behavior in the same cell line. Although most of the studies refer to MCF-7 as the most unstable breast cancer cell line, it has been demonstrated that HCC1143, HCC38, HCC1937, T47D, BT-549 and MDA-MB-361 are also highly unstable <ref type="bibr" target="#b16">17</ref> . MDA-MB-231 and HCC1806 are also moderately unstable, while control cell lines such as MCF710A are usually stable. Approaches to minimize these drawbacks include utilizing cell lines at low passages and standardizing culture conditions for all experimental settings. Genetic drift poses challenges in unifying genomic databases and topic-trained AI assistants, while at the same time making their potential impact even more consistent.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicting characterizations</head><p>Key information such as age, grade, tumor size, ER/HER2 status, and race is also missing or inconsistently reported across many studies, limiting the utility of the data for epidemiological or prognostic modeling. A good example of these challenges in harmonizing data from different breast cancer datasets is observed in Table <ref type="table">3</ref>, which compares three of the most commonly used breast cancer databases. <ref type="bibr" target="#b119">120</ref> The first issue revolves around data collection: CCLE and TCGA-BRCA contain RNA-Seq data, METABRIC contains microarray data. RNA-Seq is much more sensitive than microarrays, leading to technical bias when bringing data together. <ref type="bibr" target="#b124">125</ref> Furthermore, as discussed earlier, the drug response and characteristics of cell lines are often non-comparable with those of primary tumors due to genetic drift and the absence of a relevant microenvironment. Because of this, it is challenging to associate cell-line data from CCLE to equivalent tumors from TCGA-BRCA or METABRIC and vice versa. While each database provides valuable insights, we cannot directly link cancer cell line features to population-based outcomes without accounting for the underlying biases that affect their representativeness. A multi-omic comparison of 57 breast cancer cell lines to 1019 metastatic breast cancer patient samples from METABRIC and TCGA revealed a mismatch between commonly used cell lines and the genomic landscape of metastatic tumors. <ref type="bibr" target="#b125">126</ref> One of the most critical findings was that many of the breast cancer cell lines used to model metastatic disease, such as MDA-MB-231, showed poor genomic similarity to actual metastatic breast cancer tumors, particularly within the basal-like subtype. Through a large-scale integrative analysis comparing 57 cell lines with over 1000 metastatic tumor samples, the authors demonstrate that historical model selection often lacks molecular justification. In contrast, less frequently used lines like HCC38, HCC1395, and BT-549 were found to more closely resemble the genomic and transcriptomic profiles of metastatic tumors.</p><p>126 Table 3. The three biggest and most widely used breast cancer databases in research. Cancer Cell Line Encyclopedia (CCLE), Cancer Genome Atlas Breast Invasive Carcinoma (TCGA-BRCA) and METABRIC -EGA European Genome-Phenome Archive. Feature CCLE TCGA-BRCA METABRIC Sample type Breast cancer cell lines Primary tumor Primary tumor Sample size 76 1098 1992 Expression platform RNA-seq RNA-seq Microarray Subtype distribution Skewed toward TNBC, HER2+ Balanced; ER+ enriched ER+ enriched Drug response Yes No No Passage information Limited NA NA Tissue source In vitro cultured cells (varied origins) Fresh frozen tissue Fresh frozen tissue Ancestry diversity Limited/ not annotated Mostly European ancestry UK/Canadian, white Population metadata Limited Rich Moderate</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Underrepresentation</head><p>The underrepresentation of cell lines from younger patients and non-Caucasian ethnicities is another limitation of most breast cancer models, affecting the translational relevance particularly for studies aimed at investigating racial disparities in TNBC outcomes. <ref type="bibr" target="#b117">118</ref> Healthcare access barriers lead to late-stage diagnoses in Hispanic and Asian women, contributing to fewer available data and lower reported incidence.</p><p>In developed countries, earlier detection is supported by better screening access, while socioeconomic disparities, poor cancer literacy, unhealthy diets, and obesity contribute to higher breast cancer mortality in certain ethnic groups. This disparity continues to bias clinical trials and treatments toward Caucasian patients, further exacerbating healthcare inequalities and limiting the effectiveness of treatments for other ethnic groups. Moreover, most available breast cancer cell lines are derived from older patients, with relatively few from those under 40. Breast cancer from a 23-year-old can be substantially different from the same type of cancer in a 73-year-old. These differences impact how cancer cells behave and respond to treatment, making age another crucial factor to consider. This is becoming increasingly critical because many studies highlight the rising incidence of breast cancer in younger individuals, yet very few of them employ cell lines derived from younger patients (e.g., MCF-7 is from a 69-year-old woman). Integrating all features of every commercial cell line in a common interactive platform would help identifying gaps, misclassifications, and inform a more reliable and relevant experimental design.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONCLUSION</head><p>This work highlights the need for an integrated multifactorial comparison for the vast and heterogeneous dataset of commercially available cell lines, their derived advanced and emerging models, and their effective clinical relevance, with the aim of improving translational chances of in vitro cancer research. It focuses on breast cancer but could be translated to any other cancers, as well as to a set of other diseases commonly studied in bioengineering through the described approaches. It proposes a starting framework to conceive and integrate cutting-edge models that could benefit from contamination straight from the experimental design stage. The ability to align laboratory research with the clinical, molecular, and functional complexity of tumors observed in patients is of crucial importance. The proposed framework suggests initiating with cell lines, the simplest available model, in the context of breast cancer, a well-studied disease, by structuring cell line selection around their absolute (e.g., origin, receptor status, mutations) and relative (e.g., metastatic potential, drug resistance, immune interaction) characteristics to enable a more rational and grounded use of existing resources. The approach, despite statically presented, carries an intrinsically dynamic nature given by the possibility of integrating the proposed blocks into AI-assisted bioinformatic resources. Interfacing the latter with emerging disease models such as 3D organoids and coculture systems would enable a bidirectional information flow between offices, laboratories, and clinics. In parallel, new ideas worth exploring in the biotechnology front for further integration include cancer virtual modeling using digital avatars trained on multi-omics and functional assay data, automated scoring systems for culture scalability and model fitness, and real-time feedback platforms that dynamically adjust cell line recommendations based on evolving biological parameters. These paradigms point to a future where cell model selection turns into a strategic and adaptive process.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Histological subtypes of breast cancer. Breast cancer cell lines are grouped by the histological subtype of the deriving tumors and their sub-classifications, alongside examples of widely used cell linesfor each cancer type. For example, SUM149PT and SUM190PT were established from inflammatory breast cancer, while MDA-MB-134-VI and SUM44PE originated from classic ILC. However, not all subtypes are well-represented by directly derived models. In such cases, some widely employed cell lines (e.g., MCF-7 and MDA-MB-231), though not derived from rare subtypes like papillary or metaplastic carcinoma, may still serve as functional models due to their phenotypic behavior.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Classification of selected commercially available human breast cancer cell lines. The schematic organizes cell lines into five intrinsic subtypes (Luminal A, Luminal B, HER2-enriched, Basallike, and Mesenchymal) displayed in columns. Color-coded symbols represent key attributes used in absolute and relative classifications previously discussed hereby to map their molecular and functional characteristics.</figDesc><graphic coords="8,72.00,130.00,468.00,297.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Decision-making workflow for breast cancer cell line selection. The diagram outlines the proposed stepwise filtering process, beginning with the research objective. It then guides selection through sequential filtering criteria: absolute filters (e.g., receptor status, molecular subtype), and relative filters (e.g., metastatic tropism, resistance traits). Additional layers incorporate experimental feasibility, validation requirements (e.g., passage history, genetic drift), and representation gaps. The final step considers the scalability of selected lines toward advanced disease models such as organoids, co-cultures, and xenografts.</figDesc><graphic coords="16,72.00,61.79,467.95,566.24" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>90 Figure 4 .</head><label>904</label><figDesc>Figure 4. Use cases of the proposed workflow. The first use case (left panel) addresses bone metastasis in ER+ disease, identifying optimal cell models by filtering for both receptor status and metastatic competence. The second (right panel) illustrates drug testing for therapy resistance, combining genomic features with acquired phenotypes to select resistant luminal B models. In both cases, this approach could outperform standard selection methods by working with contextual fidelity. It also integrates considerations of genetic drift and validation needs across strains to potentially add experimental validation steps or pivot.</figDesc><graphic coords="17,72.00,175.99,468.00,465.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Sample workflow in AI-assisted optimization of cell line selection for 2D culture and advanced disease models.Cell line metadata and experimental data are compiled into a structured database, from which data is fed as inputs into a machine learning architecture that integrates absolute and relative criteria to generate predictive recommendations tailored to research goals. Suggested cell lines could be deployed in increasingly complex in vitro platforms to enhance biological fidelity and clinical relevance. The resulting experimental outputs, once validated, could feed back into the system, allowing continuous model refinement and improved prediction accuracy over time.</figDesc><graphic coords="19,79.52,138.75,467.85,327.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="7,68.25,61.50,467.91,271.40" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>This work was supported by <rs type="funder">National</rs> funds from <rs type="institution">FCT -Fundação para a Ciência e a Tecnologia, I.P.</rs>, with dedicated funds from the project eOnco (<rs type="grantNumber">2022.07252.PTDC</rs>) and institutional funds from iBB (<rs type="grantNumber">UIDB/04565/2020</rs> and <rs type="grantNumber">UIDP/04565/2020</rs>), and the <rs type="funder">Associate Laboratory i4HB</rs> (<rs type="grantNumber">LA/P/0140/2020</rs>). The authors also received financial support from "<rs type="funder">la Caixa" Foundation</rs> (<rs type="grantNumber">ID 100010434) LCF/BQ/PI22/11910025</rs>. This work is funded by national funds through FCT, I.P., under <rs type="grantNumber">UID/00481 -TEMA</rs> and the project <rs type="projectName">CarboNCT</rs> (<rs type="grantNumber">2022.03596.PTDC</rs>)</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_yjYxrPG">
+					<idno type="grant-number">2022.07252.PTDC</idno>
+				</org>
+				<org type="funding" xml:id="_kjX6YMw">
+					<idno type="grant-number">UIDB/04565/2020</idno>
+				</org>
+				<org type="funding" xml:id="_Ge3TmZA">
+					<idno type="grant-number">UIDP/04565/2020</idno>
+				</org>
+				<org type="funding" xml:id="_PvdRJ5C">
+					<idno type="grant-number">LA/P/0140/2020</idno>
+				</org>
+				<org type="funding" xml:id="_vp3FfF9">
+					<idno type="grant-number">ID 100010434) LCF/BQ/PI22/11910025</idno>
+				</org>
+				<org type="funded-project" xml:id="_jqUDAEn">
+					<idno type="grant-number">UID/00481 -TEMA</idno>
+					<orgName type="project" subtype="full">CarboNCT</orgName>
+				</org>
+				<org type="funding" xml:id="_aQxaM6r">
+					<idno type="grant-number">2022.03596.PTDC</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DECLARATION OF INTERESTS</head><p>The authors declare no competing interests.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A Biobank of Breast Cancer Explants with Preserved Intra-tumor Heterogeneity to Screen Anticancer Compounds</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bruna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">167</biblScope>
+			<biblScope unit="page" from="260" to="274" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">High-frequency extracellular spiking in electrically-active cancer cells</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Melikov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>De Angelis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Moreddu</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2024.03.16.585162</idno>
+	</analytic>
+	<monogr>
+		<title level="j">biorXiv</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Conductive Core-Shell Nanoparticles: Synthesis and Applications</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Resina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Ferreira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sanjuan-Alberte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Esteves</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Physical Chemistry C</title>
+		<imprint>
+			<biblScope unit="volume">128</biblScope>
+			<biblScope unit="page" from="11083" to="11100" />
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Bridging the Gap Between Biology and Translational Medicine</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Moreddu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cancer</forename><surname>Nanotechnology</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Bioelectricity</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Sci (Weinh)</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">2304110</biblScope>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Wireless Stimulation of Barium Titanate@PEDOT Nanoparticles Toward Bioelectrical Modulation in Cancer</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Jones</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACS Appl Mater Interfaces</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="8836" to="8848" />
+			<date type="published" when="2025">2025</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Human cancer cell lines: fact and fantasy</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Masters</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Mol Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="233" to="236" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Diversity of Breast Carcinoma: Histological Subtypes and Clinical Relevance</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Makki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Med Insights Pathol</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="23" to="31" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Estrogen receptor positive breast cancers have patient specific hormone sensitivities and rely on progesterone receptor</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Scabia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">3127</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Comprehensive molecular portraits of human breast tumours</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cancer Genome Atlas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">490</biblScope>
+			<biblScope unit="page" from="61" to="70" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The spectrum of genetic mutations in breast cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sheikh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Asian Pac J Cancer Prev</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="2177" to="2185" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Metastasis: from dissemination to organ-specific colonization</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">X</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">D</forename><surname>Bos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Massague</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="274" to="284" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Breast Cancer Subtypes Predispose the Site of Distant Metastases</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Soni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Am J Clin Pathol</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="page" from="471" to="478" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Genetic instability of RBM5/LUCA-15/H37 in MCF-7 breast carcinoma sublines may affect susceptibility to apoptosis</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">D</forename><surname>Rintala-Maki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Abrasonis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Burd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Sutherland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Biochem Funct</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="307" to="313" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Molecular and cellular heterogeneity in breast cancer: challenges for personalized medicine</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Rivenbark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>O'connor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">B</forename><surname>Coleman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Am J Pathol</title>
+		<imprint>
+			<biblScope unit="volume">183</biblScope>
+			<biblScope unit="page" from="1113" to="1124" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A three-marker signature identifies senescence in human breast cancer exposed to neoadjuvant chemotherapy</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>El-Sadoni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Chemother Pharmacol</title>
+		<imprint>
+			<biblScope unit="volume">91</biblScope>
+			<biblScope unit="page" from="345" to="360" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Immunohistochemical markers as predictive tools for breast cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Walker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Pathol</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="689" to="696" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Variable Levels of Chromosomal Instability and Mitotic Spindle Checkpoint Defects in Breast Cancer</title>
+		<author>
+			<persName><forename type="first">D.-S</forename><surname>Yoon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Am J Pathol</title>
+		<imprint>
+			<biblScope unit="volume">161</biblScope>
+			<biblScope unit="page" from="391" to="397" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Choosing the right cell line for breast cancer research</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Holliday</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Speirs</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">215</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">The Epithelial-Mesenchymal Transition Generates Cells with Properties of Stem Cells</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Mani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">133</biblScope>
+			<biblScope unit="page" from="704" to="715" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Breast tumor cell lines from pleural effusions</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Cailleau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Young</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Olive</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Reeves</surname><genName>Jr</genName></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="page" from="661" to="674" />
+			<date type="published" when="1974">1974</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">A human cell line from a pleural effusion derived from a breast carcinoma</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">D</forename><surname>Soule</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vazguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Long</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Albert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brennan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="1409" to="1416" />
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Characterization of a breast cancer cell line derived from a germ-line BRCA1 mutation carrier</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Tomlinson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="page" from="3237" to="3242" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Isolation of two human tumor epithelial cell lines from solid breast carcinomas</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">Y</forename><surname>Lasfargues</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename><surname>Coutinho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Redfield</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="967" to="978" />
+			<date type="published" when="1978">1978</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">One hundred and twenty-seven cultured human tumor cell lines producing tumors in nude mice</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fogh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Fogh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Orfeo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="page" from="221" to="226" />
+			<date type="published" when="1977">1977</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Human breast cancer in culture</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Trempe</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-642-81043-5_5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Recent Results Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">41</biblScope>
+			<date type="published" when="1976">1976</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Establishment and characterization of three new continuous cell lines derived from human breast carcinomas</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">W</forename><surname>Engel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="3352" to="3364" />
+			<date type="published" when="1978">1978</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Molecular cytogenetic analysis of 11 new breast cancer cell lines</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Forozan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Br J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="1328" to="1334" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Two syngeneic cell lines from human breast tissue: the aneuploid mammary epithelial (Hs578T) and the diploid myoepithelial (Hs578Bst) cell lines</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Hackett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="page" from="1795" to="1806" />
+			<date type="published" when="1977">1977</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Mutant E-cadherin breast cancer cells do not display constitutive Wnt signaling</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Van De Wetering</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="278" to="284" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A collection of breast cancer cell lines for the study of functionally distinct cancer subtypes</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Neve</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="515" to="527" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Characterization of paired tumor and non-tumor cell lines established from patients with breast cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Gazdar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="766" to="774" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A new human breast carcinoma cell line (PMC42) with stem cell characteristics. III. Hormone receptor status and responsiveness</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Whitehead</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="page" from="643" to="648" />
+			<date type="published" when="1984">1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Phenotyping breast cancer cell lines EM-G3, HCC1937, MCF7 and MDA-MB-231 using 2-D electrophoresis and affinity chromatography for glutathione-binding proteins</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mladkova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sanda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Matouskova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Selicharova</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Cancer</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">449</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">High incidence of protein-truncating TP53 mutations in BRCA1-related breast cancer</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Holstege</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="page" from="3625" to="3633" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">BioModels: expanding horizons to include more modelling approaches and formats</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Glont</surname></persName>
+		</author>
+		<idno>1248-D1253</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">X</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Cell Line Classification and Its Relevance with Breast Tumor Subtyping. J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="3131" to="3141" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Expression of vascular endothelial growth factor (VEGF) family members in breast cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kurebayashi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Jpn J Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">90</biblScope>
+			<biblScope unit="page" from="977" to="981" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">MCF7/LCC2: a 4-hydroxytamoxifen resistant human breast cancer variant that retains sensitivity to the steroidal antiestrogen ICI 182</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Brunner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">780</biblScope>
+			<biblScope unit="page" from="3229" to="3232" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Establishment and characterization of a cell line of human breast carcinoma origin</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Keydar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Eur J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="659" to="670" />
+			<date type="published" when="1965">1965. 1979</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Establishment of the human BSMZ breast cancer cell line, which overexpresses the erbB-2 and c-myc genes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Watanabe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="5178" to="5182" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Differentiation of cultured human breast cancer cells (AU-565 and MCF-7) associated with loss of cell surface HER-2/neu antigen</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Bacus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kiguchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>King</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Huberman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Carcinog</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="350" to="362" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Transformation of different human breast epithelial cell types leads to distinct tumor phenotypes</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Ince</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="160" to="170" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Differential tumorigenicity of two autologous human breast carcinoma cell lines, HMT-3909S1 and HMT-3909S8, established in serum-free medium</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">W</forename><surname>Petersen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="page" from="1257" to="1270" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Complete cytogenetic characterization of the human breast cancer cell line MA11 combining G-banding, comparative genomic hybridization, multicolor fluorescence in situ hybridization, RxFISH, and chromosome-specific painting</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Micci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Teixeira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Heim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Genet Cytogenet</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page" from="25" to="30" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Specific cell differentiation in breast cancer: a basis for histological classification</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Rakha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Toss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Quinn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Pathol</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="76" to="84" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Modern classification of breast cancer: should we stick with morphology or convert to molecular profile characteristics</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Rakha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">O</forename><surname>Ellis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Anat Pathol</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="255" to="267" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Ductal carcinoma in situ: terminology, classification, and natural history</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Allred</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst Monogr</title>
+		<imprint>
+			<biblScope unit="page" from="134" to="138" />
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Lobular Breast Cancer: Histomorphology and Different Concepts of a Special Spectrum of Tumors</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Christgen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancers (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Invasive lobular carcinoma classic type: response to primary chemotherapy and survival outcomes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cristofanilli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="41" to="48" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">A comprehensive overview of metaplastic breast cancer: Features and treatments</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Sci</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="2506" to="2514" />
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Characterization of a naturally occurring breast cancer subset enriched in epithelial-to-mesenchymal transition and stem cell characteristics</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Hennessy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="page" from="4116" to="4124" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Tubular carcinoma of the breast. Clinical pathologic correlations based on 100 cases</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">N</forename><surname>Peters</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wolff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Haagensen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann Surg</title>
+		<imprint>
+			<biblScope unit="volume">193</biblScope>
+			<biblScope unit="page" from="138" to="149" />
+			<date type="published" when="1981">1981</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Molecular and immunohistochemical profiling of invasive micropapillary carcinoma of the breast</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Askeland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Guseva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sompallae</surname></persName>
+		</author>
+		<idno type="DOI">10.2147/PLMI.S67836</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Pathol Lab Med Int</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Adenoid cystic carcinoma of the breast</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">N</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Asarian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Xiao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Surg Case Rep</title>
+		<imprint>
+			<biblScope unit="page">355</biblScope>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Recurrent fusion of MYB and NFIB transcription factor genes in carcinomas of the breast and head and neck</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Persson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci U S A</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="page" from="18740" to="18744" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Estrogen receptor-negative breast carcinomas: a review of morphology and immunophenotypical analysis</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Putti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mod Pathol</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="26" to="35" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Correlations between estrogen receptor, progesterone receptor, and patient characteristics in human breast cancer</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">K</forename><surname>Osborne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Mcguire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1102" to="1109" />
+			<date type="published" when="1984">1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Integrative investigation on breast cancer in ER, PR and HER2-defined subgroups using mRNA and miRNA expression profiling</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Bai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">6566</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">A novel immune subtype classification of ER-positive, PR-negative and HER2-negative breast cancer based on the genomic and transcriptomic landscape</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>An</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Transl Med</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">398</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Recent perspectives of breast cancer prognosis and predictive factors</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncol Lett</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="3674" to="3678" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Development of novel agents for the treatment of early estrogen receptor positive breast cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Elliott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Cescon</surname></persName>
+		</author>
+		<idno>34-S42</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Breast</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="issue">Suppl 1</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">The Role of Progesterone Receptors in Breast Cancer</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Mao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drug Des Devel Ther</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="305" to="314" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">HER2+ breast cancer treatment and cardiotoxicity: monitoring and management</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Jerusalem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Lancellotti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res Treat</title>
+		<imprint>
+			<biblScope unit="volume">177</biblScope>
+			<biblScope unit="page" from="237" to="250" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Immunohistochemical signaling pathways of triple negative and triple positive breast cancers: What is new?</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Elsers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Masoud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kamel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Ahmed</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann Diagn Pathol</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="page">151831</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Triple positive breast cancer: a distinct subtype?</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Vici</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Treat Rev</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="69" to="76" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Repeated observation of breast tumor subtypes in independent gene expression data sets</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sorlie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci U S A</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="8418" to="8423" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">The pathology of familial breast cancer: predictive value of immunohistochemical markers estrogen receptor, progesterone receptor, HER-2, and p53 in patients with mutations in BRCA1 and BRCA2</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lakhani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="2310" to="2318" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">The Future of ER+/HER2-Metastatic Breast Cancer Therapy: Beyond PI3K Inhibitors</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stravodimou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A</forename><surname>Voutsadakis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Anticancer Res</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="4829" to="4841" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Clinicopathological differences and survival benefit in ER+/PR+/HER2+ vs ER+/PR-/HER2+ breast cancer subtypes</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="295" to="304" />
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Familial Breast Cancer: Disease Related Gene Mutations and Screening Strategies for Chinese Population</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Oncol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">740227</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Understanding BRCA2 Function as a Tumor Suppressor Based on Domain-Specific Activities in DNA Damage Responses</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Andreassen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Seo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wiek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hanenberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">PTEN mutations prevalence in HER2-positive breast cancer patients</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Elwy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shehab El Din</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Assem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">H A</forename><surname>Hassan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Helwa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Revista de Senología y Patología Mamaria</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">Partial PTEN deletion is linked to poor prognosis in breast cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Lebok</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Cancer</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">963</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">PTEN suppresses epithelial-mesenchymal transition and cancer stem cell activity by downregulating Abi1</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Qi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">12685</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">ATM signalling and cancer</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Cremona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Behrens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncogene</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="3351" to="3360" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<analytic>
+		<title level="a" type="main">Recommendations for Preventive Care for Women with Rare Genetic Cause of Breast and Ovarian Cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Foretová</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Klinicka Onkologie</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">Molecular Subtypes and Local-Regional Control of Breast Cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Fragomeni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sciallis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Jeruss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Surg Oncol Clin N Am</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="95" to="120" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">Molecular Classification of Breast Carcinoma: From Traditional, Old-Fashioned Way to A New Age, and A New Way</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Eliyatkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Yalcin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zengel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Aktas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Vardar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Breast Health</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="59" to="66" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">Treatment strategy for HER2-positive breast cancer</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Mukai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="335" to="340" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">NF1 deficiency correlates with estrogen receptor signaling and diminished survival in breast cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Dischinger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">NPJ Breast Cancer</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">29</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Molecular characterization of basal-like and non-basal-like triple-negative breast cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Prat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncologist</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="123" to="133" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<analytic>
+		<title level="a" type="main">Establishment and characterization of two primary breast cancer cell lines from young Indian breast cancer patients: mutation analysis</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Pandrangi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell Int</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<analytic>
+		<title level="a" type="main">Ethnic and racial-specific differences in levels of centrosome-associated mitotic kinases, proliferative and epithelial-to-mesenchymal markers in breast cancers</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Rivera-Rivera</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Div</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Epidemiology of male breast cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Konduri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Singh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bobustuc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rovin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kassam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="8" to="14" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<analytic>
+		<title level="a" type="main">Gender-Specific Genetic Predisposition to Breast Cancer: BRCA Genes and Beyond</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Valentini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancers (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<analytic>
+		<title level="a" type="main">Breast cancer risk in transgender people receiving hormone treatment: nationwide cohort study in the Netherlands</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J M</forename><surname>De Blok</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">365</biblScope>
+			<biblScope unit="page">1652</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">2 years versus 1 year of adjuvant trastuzumab for HER2-positive breast cancer (HERA): an open-label, randomised controlled trial</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Goldhirsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lancet</title>
+		<imprint>
+			<biblScope unit="volume">382</biblScope>
+			<biblScope unit="page" from="1021" to="1028" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<analytic>
+		<title level="a" type="main">DNA repair pathways as targets for cancer therapy</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Helleday</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Petermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lundin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hodgson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Sharma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Cancer</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="193" to="204" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<analytic>
+		<title level="a" type="main">ESR1 mutations-a mechanism for acquired endocrine resistance in breast cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Jeselsohn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Buchwalter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>De Angelis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Schiff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Rev Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="573" to="583" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<analytic>
+		<title level="a" type="main">Novel cell culture technique for primary ductal carcinoma in situ: role of Notch and epidermal growth factor receptor signaling pathways</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Farnie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Natl Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="page" from="616" to="627" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<analytic>
+		<title level="a" type="main">Genes that mediate breast cancer metastasis to the brain</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">D</forename><surname>Bos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">459</biblScope>
+			<biblScope unit="page" from="1005" to="1009" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<analytic>
+		<title level="a" type="main">Estrogen Receptor Signaling in Breast Cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Miziak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancers (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">4689</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<analytic>
+		<title level="a" type="main">Kindlin-3 enhances breast cancer progression and metastasis by activating Twist-mediated angiogenesis</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sossey-Alaoui</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">FASEB J</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="2260" to="2271" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<analytic>
+		<title level="a" type="main">The Role of the Tumor Microenvironment in Triple-Positive Breast Cancer Progression and Therapeutic Resistance</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Pu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancers (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">5493</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<analytic>
+		<title level="a" type="main">Cancer-Associated Fibroblasts and Tumor-Associated Macrophages in Cancer and Cancer Immunotherapy</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Raskov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Orhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gaggar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Gögenur</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Oncol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<analytic>
+		<title level="a" type="main">Epigenetic Heritability of Cell Plasticity Drives Cancer Drug Resistance through a One-to-Many Genotype-to-Phenotype Paradigm</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Oliveira</surname></persName>
+		</author>
+		<idno type="DOI">10.1158/0008-5472.CAN-25-0999</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<date type="published" when="2025">2025</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<analytic>
+		<title level="a" type="main">Oral poly(ADP-ribose) polymerase inhibitor olaparib in patients with BRCA1 or BRCA2 mutations and advanced breast cancer: a proof-of-concept trial</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tutt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lancet</title>
+		<imprint>
+			<biblScope unit="volume">376</biblScope>
+			<biblScope unit="page" from="235" to="244" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<analytic>
+		<title level="a" type="main">Molecular portraits of human breast tumours</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Perou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">406</biblScope>
+			<biblScope unit="page" from="747" to="752" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<analytic>
+		<title level="a" type="main">Long-Term Follow-Up of the E1199 Phase III Trial Evaluating the Role of Taxane and Schedule in Operable Breast Cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Sparano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Clin Oncol</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="2353" to="2360" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b100">
+	<analytic>
+		<title level="a" type="main">Genome and Transcriptome Sequencing in Prospective Metastatic Triple-Negative Breast Cancer Uncovers Therapeutic Vulnerabilities</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Craig</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol Cancer Ther</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="104" to="116" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b101">
+	<analytic>
+		<title level="a" type="main">Controlled tumor heterogeneity in a co-culture system by 3D bio-printed tumoron-chip model</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Moghimi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">13648</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b102">
+	<analytic>
+		<title level="a" type="main">Inhibition of EZH2 Catalytic Activity Selectively Targets a Metastatic Subpopulation in Triple-Negative Breast Cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yomtoubian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="755" to="770" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b103">
+	<analytic>
+		<title level="a" type="main">Estrogen receptor-negative breast carcinomas: a review of morphology and immunophenotypical analysis</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Putti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Modern Pathology</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="26" to="35" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b104">
+	<analytic>
+		<title level="a" type="main">Modelling the tumor immune microenvironment for precision immunotherapy</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Mackenzie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Transl Immunology</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b105">
+	<analytic>
+		<title level="a" type="main">Inflammatory breast cancer: the disease, the biology, the treatment</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>Robertson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">CA Cancer J Clin</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="page" from="351" to="375" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b106">
+	<analytic>
+		<title level="a" type="main">Mucinous breast cancer: A narrative review of the literature and a retrospective tertiary single-centre analysis</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Marrazzo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="87" to="92" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b107">
+	<analytic>
+		<title level="a" type="main">Papillary carcinoma of the breast: an overview</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Pal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res Treat</title>
+		<imprint>
+			<biblScope unit="volume">122</biblScope>
+			<biblScope unit="page" from="637" to="645" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b108">
+	<analytic>
+		<title level="a" type="main">Advances in invasive micropapillary carcinoma of the breast research: A review</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">H</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Medicine (Baltimore)</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="page">36631</biblScope>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b109">
+	<analytic>
+		<title level="a" type="main">Pathology of hereditary breast cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Van Der Groep</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Van Der Wall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Van Diest</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Oncol (Dordr)</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="71" to="88" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b110">
+	<analytic>
+		<title level="a" type="main">Management of PALB2-associated breast cancer: A literature review and case report</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Toss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin Case Rep</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">7747</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b111">
+	<analytic>
+		<title level="a" type="main">Clinicopathologic Profile of Breast Cancer in Germline ATM and CHEK2 Mutation Carriers</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Toss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b112">
+	<analytic>
+		<title level="a" type="main">The ATM Gene in Breast Cancer: Its Relevance in Clinical Practice</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">S</forename><surname>Stucci</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b113">
+	<analytic>
+		<title level="a" type="main">Hereditary Gastric and Breast Cancer Syndromes Related to CDH1 Germline Mutation: A Multidisciplinary Clinical Review</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Corso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancers (Basel)</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b114">
+	<analytic>
+		<title level="a" type="main">High cancer risk and increased mortality in patients with Peutz-Jeghers syndrome</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Van Lier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gut</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="page" from="141" to="147" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b115">
+	<analytic>
+		<title level="a" type="main">Carcinoma of the breast with medullary-like features: diagnostic challenges and relationship with BRCA1 and EZH2 functions</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Kleer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arch Pathol Lab Med</title>
+		<imprint>
+			<biblScope unit="volume">133</biblScope>
+			<biblScope unit="page" from="1822" to="1825" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b116">
+	<analytic>
+		<title level="a" type="main">Choosing the right cell line for breast cancer research</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Holliday</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Speirs</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">215</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b117">
+	<analytic>
+		<title level="a" type="main">Patient-derived models of human breast cancer: protocols for in vitro and in vivo applications in tumor biology and translational medicine</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Derose</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Curr Protoc Pharmacol Chapter</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">23</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note>Unit</note>
+</biblStruct>
+
+<biblStruct xml:id="b118">
+	<analytic>
+		<title level="a" type="main">An Ensemble Based Top Performing Approach for NCI-DREAM Drug Sensitivity Prediction Challenge</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">101183</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b119">
+	<analytic>
+		<title level="a" type="main">Multiomics analysis reveals CT83 is the most specific gene for triple negative breast cancer and its hypomethylation is oncogenic in breast cancer</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">12172</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b120">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Reynolds</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Spheroids Reveal a Differential Cancer Stem Cell Response to Chemotherapeutic Treatment. Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">10382</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b121">
+	<analytic>
+		<title level="a" type="main">A Living Biobank of Breast Cancer Organoids Captures Disease Heterogeneity</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Sachs</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">172</biblScope>
+			<biblScope unit="page" from="373" to="386" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b122">
+	<analytic>
+		<title level="a" type="main">Tumor grafts derived from women with breast cancer authentically reflect tumor pathology, growth, metastasis and disease outcomes</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Derose</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Med</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="1514" to="1520" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b123">
+	<analytic>
+		<title level="a" type="main">Genetic and transcriptional evolution alters cancer cell line drug response</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Ben-David</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">560</biblScope>
+			<biblScope unit="page" from="325" to="330" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b124">
+	<analytic>
+		<title level="a" type="main">RNA-Seq vs Dual-and Single-Channel Microarray Data: Sensitivity Analysis for Differential Expression and Clustering</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sîrbu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kerr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Crane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Ruskin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">50986</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b125">
+	<analytic>
+		<title level="a" type="main">Evaluating cell lines as models for metastatic breast cancer through integrative analysis of genomic data</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat Commun</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">2138</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

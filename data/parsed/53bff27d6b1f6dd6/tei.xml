@@ -1,0 +1,1456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Improving Prediction of Phenotypic Drug Response on Cancer Cell Lines Using Deep Convolutional Network</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2019-01-01">January 1, 2019</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Pengfei</forename><surname>Liu</surname></persName>
+							<email>pfliu@cse.cuhk.edu.hk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science and Engineering</orgName>
+								<orgName type="institution">The Chinese University of Hong Kong</orgName>
+								<address>
+									<settlement>Sha Tin</settlement>
+									<region>N.T</region>
+									<country key="HK">Hong Kong</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hongjian</forename><surname>Li</surname></persName>
+							<email>jackyleehongjian@gmail.com</email>
+							<affiliation key="aff1">
+								<orgName type="department">SDIVF R&amp;D Centre</orgName>
+								<address>
+									<addrLine>Hong Kong Science Park Sha Tin</addrLine>
+									<region>N.T</region>
+									<country key="HK">Hong Kong</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">School of Biomedical Sciences</orgName>
+								<orgName type="institution">The Chinese University of Hong Kong</orgName>
+								<address>
+									<settlement>Sha Tin</settlement>
+									<region>N.T</region>
+									<country key="HK">Hong Kong</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Shuai</forename><surname>Li</surname></persName>
+							<email>shuaili@cse.cuhk.edu.hk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science and Engineering</orgName>
+								<orgName type="institution">The Chinese University of Hong Kong</orgName>
+								<address>
+									<settlement>Sha Tin</settlement>
+									<region>N.T</region>
+									<country key="HK">Hong Kong</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kwong-Sak</forename><surname>Leung</surname></persName>
+							<email>ksleung@cse.cuhk.edu.hk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science and Engineering</orgName>
+								<orgName type="institution">The Chinese University of Hong Kong</orgName>
+								<address>
+									<settlement>Sha Tin</settlement>
+									<region>N.T</region>
+									<country key="HK">Hong Kong</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Improving Prediction of Phenotypic Drug Response on Cancer Cell Lines Using Deep Convolutional Network</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2019-01-01">January 1, 2019</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">16CFBA93F08497FE9EBB70389D5DF2B2</idno>
+					<idno type="arXiv">arXiv:1812.11178v1[q-bio.QM]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Understanding the phenotypic drug response on cancer cell lines plays a vital rule in anti-cancer drug discovery and re-purposing. The Genomics of Drug Sensitivity in Cancer (GDSC) database provides open data for researchers in phenotypic screening to test their models and methods. Previously, most research in these areas starts from the fingerprints or features of drugs, instead of their structures. In this paper, we introduce a model for phenotypic screening, which is called twin Convolutional Neural Network for drugs in SMILES format (tCNNS). tCNNS is comprised of CNN input channels for drugs in SMILES format and cancer cell lines respectively. Our model achieves 0.84 for the coefficient of determinant(R 2 ) and 0.92 for Pearson correlation(Rp), which are significantly better than previous works <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b15">16,</ref><ref type="bibr" target="#b29">30]</ref>. Besides these statistical metrics, tCNNS also provides some insights into phenotypic screening.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Historically, drug discovery was phenotypic by nature. Small organic molecules exhibiting observable phenotypic activity (e.g. whole-cell activity) were detected, with a famous example being penicillin, which was serendipitously found. Phenotypic screening, an original drug screening paradigm, is now gaining new attention given the fact that in recent years the number of approved drugs discovered through phenotypic screens has exceeded those discovered through molecular target-based approaches. The latter, despite being the main drug discovery paradigm in the past 25 years, can potentially suffer from the failure in identifying and validating the therapeutic targets. In reality, most FDA approvals of first-in-class drugs actually originated from phenotypic screening before their precise mechanisms of actions or molecular targets ware elaborated. A popular example of this is aspirin (acetylsalicylic acid), for which it took nearly a century to elucidate the mechanism of its actions and molecular targets.</p><p>There are some public phenotypic screening datasets online to support the study the pharmacologic functions of drugs. Cancer Cell Line Encyclopedia (CCLE) and Genomics of Drug Sensitivity in Cancer (GDSC) are the most popular datasets in the field <ref type="bibr" target="#b3">[4]</ref>.</p><p>A pioneer work using machine-learning approaches to predict drug response on cancer cell lines was by Menden et al. <ref type="bibr" target="#b29">[30]</ref>. The authors used a neural network to analyze the response of drugs to cancer cell lines on the GDSC dataset. Their main result was the achievement of 0.72 for the coefficient of determination and 0.85 for Pearson correlation. <ref type="bibr" target="#b2">[3]</ref> and <ref type="bibr" target="#b15">[16]</ref> are other two works on GDSC dataset. The first used kernelized Bayesian matrix factorization to conduct QSAR analysis on cancer cell lines and anti-cancer drugs, and the second used multivariate random forests. Both of their results are not as good as those in <ref type="bibr" target="#b29">[30]</ref>, which is chosen to be the benchmark for our work.</p><p>The first wave of applications of deep learning in pharmaceutical research has emerged in recent years. Its utility has gone beyond bioactivity predictions and has shown promise in addressing diverse problems in drug discovery. Examples cover bioactivity prediction <ref type="bibr" target="#b30">[31]</ref>, de novo molecular design <ref type="bibr" target="#b10">[11]</ref>, synthesis prediction <ref type="bibr" target="#b28">[29]</ref> and biological image analysis <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b25">26]</ref>. A typical example of applying deep learning in protein-ligand interaction is the investigation done by Ragoza et al <ref type="bibr" target="#b34">[35]</ref>.</p><p>Convolutional neural network (CNN) is a model in machine learning which can detect the patterns in data and support classification and regression <ref type="bibr" target="#b43">[44]</ref>. CNN has achieved breaking-through results in many areas including pharmaceutical research <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b31">32]</ref> and has won the championship in ImageNet-2012 <ref type="bibr" target="#b23">[24]</ref>.</p><p>Inspired by the achievements of CNN in these areas, we are interested to see if CNN, compared to conventional machine-learning techniques <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b15">16]</ref>, could significantly improve the prediction accuracy of phenotypic drug response on cancer cell lines. CNN has not been applied to this problem. This is the first study in exploiting deep convolutional neural networks in predicting phenotypic anti-cancer drug response.</p><p>In this paper, we introduce a twin CNN networks model applied to drugs in SMILES format as input, and we call this model tCNNS. tCNNS comprises a CNN network for drugs and another CNN network for cancer cell lines, which will be explained in detail later. Comparing to previous work, we use the latest version of the GDSC dataset, which is bigger and more complete, and our model is more advanced. Most importantly, we achieve much better results than previous works. We share our model online, hoping to make a contribution to other researchers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Relate Work</head><p>Recently, in drug discovery, researchers start to use the molecular structure of drugs directly as features <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b1">2]</ref> instead of using extracted features from open source softwares <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b37">38]</ref>. Due to their good ability to process high-dimensional structure on data, deep learning has been largely adopted in this area <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b36">37,</ref><ref type="bibr" target="#b8">9]</ref>.</p><p>In <ref type="bibr" target="#b8">[9]</ref>, the author stated that both the qualitative classifiers and the quantitative structure-activity relationship (QSAR) models in this area depend on the molecular descriptor, which is the decisive step in the model development process. In the recent two years, there are several different deep neural network models that are trained directly from drugs structure and avoiding the decisive step. Those deep neural network models include unsupervised auto-encoder (AE), and supervised convolution neural network(CNN), recurrent neural network (RNN).</p><p>[14] and <ref type="bibr" target="#b19">[20]</ref> converted simplified molecular input line entry specification (SMILES) of drug into vectors using unsupervised auto-encoder. Those vectors can be used as features or fingerprint of drugs. <ref type="bibr" target="#b1">[2]</ref> and <ref type="bibr" target="#b40">[41]</ref> further extended this method for drug discovery. They predicted the use of drugs by comparing the similarity between those vectors of drugs.</p><p>One of the direct ways to apply CNN on drug structures is to apply CNN on the image of drugs <ref type="bibr" target="#b11">[12]</ref>, instead of the formulas of drugs. In <ref type="bibr" target="#b11">[12]</ref>, the author adopts a computer vision method to screen the image of drugs. The advantage of starting from the image of drugs instead of the formulas of drugs is that it can avoid the massive work of handling the diversity of drugs. However, the disadvantages are that the accuracy is compromised because the information will be distorted when mapping drugs structures to images and the performance of this method relies on the quality of image processing.</p><p>Beside applying CNN on drug images, it is also possible to apply CNN on molecular 3D structures directly <ref type="bibr" target="#b38">[39]</ref>. In this paper, the author predicted the binding energy of the small area around an atom, instead of the entire structure of drugs. We think that it will be interesting to compare the different representations of drugs, such as the 3D structured, the feature vectors learned from SMILES and the features extracted from other software like PaDEL <ref type="bibr" target="#b42">[43]</ref>. They may have different influences on different problems. However, we did not find any kind of such comparisons.</p><p>Even though RNN is usually used to handle time sequence data <ref type="bibr" target="#b41">[42]</ref> instead of spatial data, it is very impressive that <ref type="bibr" target="#b26">[27]</ref> applied RNN on molecule SMILES to predict its solubility. They first converted the SMILES into indirect graphs, and then fed it into an RNN. In this work, they only considered the property of drugs alone, without considering the interactions among drugs and other biological factors, such as cell lines or proteins.</p><p>The benchmark work we used to compare with our model is <ref type="bibr" target="#b29">[30]</ref>, where the author used a neural network to analyze the IC 50 of drugs to cancer cells on the same dataset as ours. We think their network structure is not advanced enough, and the features they used are not informative enough. We design our tCNNS, a convolution neural network (CNN) based model, to predict the interaction between drugs and cell lines, and it performs better in the experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Methods</head><p>In this section, we will introduce the chosen database GDSC with preprocessing steps and the adopted neural network structure in details to make our experiments easier to replicate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Data Acquisition and Preprocessing</head><p>Genomics of Drugs Sensitivity in Cancer (GDSC) <ref type="bibr" target="#b7">[8]</ref> is a public online database about the relationship among many types of cancer and various anti-cancer drugs. Cancer cell lines in GDSC are described by their genetic features, such as mutations state and copy number variances. For the drugs, GDSC provides their names and the compound id (CID). In chemistry, CID is a unique number assigned to each molecular and can be used as the reference number to extract more information about the drugs such as their molecular structures from other databases. GDSC uses IC 50 as the metric of drugs' effect on cancers, which means how much of the drugs is needed to inhibit cancer by half. The less the value, the more effective the drug is. GDSC is an ongoing project and is being updated regularly. In this paper, we use version 6.0 of GDSC, and the benchmark of our paper <ref type="bibr" target="#b29">[30]</ref> used version 2.0 of the GDSC.</p><p>We downloaded three files from GDSC:</p><p>(a) Drug list.csv, which is a list of 265 drugs. Each drug can be referred by its CID or name.</p><p>(b) PANCANCER Genetic feature.csv, which is a list of 990 cancer cell lines from 23 different types of cancers. Each cell line is described by at most 735 features.</p><p>Any feature belongs to one of the two categories: mutation state or copy number alteration.</p><p>(c) PANCANCER IC.csv, which contains the IC 50 information between 250 drugs and 1074 cell lines.</p><p>Note that the numbers of drugs in the file (a) and the file (c) are inconsistent, and the numbers of cell lines in the file (b) and the file (c) are also inconsistent. Some cell lines have less than 735 features. Besides, GDSC does not provide the features for drugs, which have to be downloaded from other datasets. All of these indicate that a preprocessing is needed to clean the data.</p><p>The first step is to purify the drug list. There are 15 repeating items in the file (a) which are removed. Some CIDs in the file (a) are inconsistent with the CIDs that in PubChem <ref type="bibr" target="#b22">[23]</ref>, which is a popular public chemical compounds database. To keep the consistency, we use the CIDs from PubChem. Some drugs cannot be found in PubChem by referring their names in the file (a) and they are removed. In the end, 223 drugs with both names and CIDs are left.</p><p>The second step is to purify the cell lines list. For the 990 cell lines in the file (b), 42 of them has less than 735 features. We remove these cell lines and there are 948 cell lines left.</p><p>In the third step, we only keep the IC 50 values between the remaining drugs after the first step and the remaining cell lines after the second steps. All the other IC 50 values in the file (c) are removed. In summary, there are 223 drugs and 948 cell lines after the preprocessing. Amon the g 223 × 948 = 211, 404 interacting pairs, 81.4% (172, 114) of the IC 50 values are provided in file (c), and 18.6% (39, 290) of the IC 50 are missing.</p><p>The IC 50 data in file (c) are the logarithm of their real value. To make it easy for training and comparison, we follow the method in <ref type="bibr" target="#b29">[30]</ref> to normalize the logarithmic IC 50 values into the (0, 1) interval. Given a logarithmic IC 50 value x, we first take exponential of it to get the real value y = e x and then use the following function to normalize y:</p><formula xml:id="formula_0">y → 1 1 + y -0.1 .</formula><p>Usually y is very small (&lt; 10 -3 ), and the parameter -0.1 is chosen to distribute the result more uniformly on the interval (0, 1) <ref type="bibr" target="#b29">[30]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Numerical Descriptor Extraction</head><p>Recently, there are some pioneering works that apply deep neural network (DNN) directly on the simplified molecular-input line-entry system (SMILES) of drugs. SMILES is a linear notation form to represent the structure of molecules, in which letters, digits and special characters are used to represent the chemical elements in a molecule. For example, "C" is for carbon atom, "=" is for covalent bond between two atoms, Carbon dioxide can be represent as O=C=O, and aspirin can be represented as O=C(C)OC1CCCCC1C(=O)O.</p><p>There are some challenges to apply convolution neural network (CNN) on drugs in SMILES format: first, SMILES can be constructed in various ways and there can be many possible SMILESs for each drug; second, the size of the samples for a CNN should be consistent, but the lengths the SMILES format of drugs are different from each other; third, and more importantly, the SMILES format is composed of different letters representing different chemical elements, such as atoms and bonds, and it does not make sense to apply convolution operation among different chemical elements. To solve these problems, preprocessing is needed to convert the SMILES into a uniform format, and restrict convolutional operation among the same chemical elements.</p><p>To keep unique SMILES format for the drugs, we use the canonical SMILES <ref type="bibr" target="#b33">[34]</ref> for the drugs. Among 223 drugs, the canonical SMILES of 184 of them can be found from PubChemPy by the drugs names, which is a python interface for PubChem. The canonical SMILES of the remaining 39 drugs are downloaded from the Library of the Integrated Network-based Cellular Signatures (LINCS) <ref type="bibr" target="#b20">[21]</ref> instead.</p><p>The longest SMILES for the drugs contains 188 symbols, and most SMILES lengths are between 20 and 90. To keep the size consistent and retain the complete information, all the SMILESs are left aligned with space padding in the right if they are shorter than 188.</p><p>The neural network cannot directly take the drugs in SMILES format as input, and we need to convert the SMILES format (they are uniform length now after handling the second challenge) into a format that can be used in the neural network. There are 72 different symbols in the SMILES format for the total 223 drugs. The distribution of these symbols is quite imbalanced. For example, carbon atom [C] appears in all the 223 drugs, but both the gold atom [Au] and chlorine atom [Cl] appear only once. Suppose we use rows to represent different symbols, and use columns to represent positions in the SMILES format, then each drug in SMILES format can be converted into a 72 * 188 one-hot matrix which only contains 0 and 1. The row number 72 represents 72 possible symbols, and column number 188 represents the longest length of SMILES. In the one-hot matrix for a drug, a value 1 at row i and column j means that the ith symbol appears at jth position in the SMILES format for the drug. In our model, the column of the one-hot matrix is treated as different channels in CNN, and the 1D convolutional operation will be applied along each row of the one-hot matrix, which restricts convolutional operation within the same chemical element.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Deep Neural Network</head><p>Figure <ref type="figure">1</ref>: The upper part is the branch for drugs, and the lower part is the branch for cell lines. Both of them are connected to a fully connected network in the right. The general work-flow of our model is from left to right. The left is the input data of one-hot representations for drugs and the feature vectors for cell lines. The black square stands for 1 and empty square stands for 0. In the middle is the two convolution neural networks for drugs and cell lines. They take the one-hot representations and feature vectors as input data respectively, and their outputs can be interpreted as the abstract features for drugs and cell lines. The structures of the two convolution neural networks are similar. The right is a fully connected network that does regression analysis from the IC50 to the abstract features from the two CNNs in the middle part.</p><p>The structure of our model is shown in Figure <ref type="figure">1</ref>. The input data for our model is the one-hot representation of drugs (phenanthroline is used as an example for the drugs) and the feature vectors of the cell lines. The work-flow can be divided into two stages as follows.</p><p>During the first stage, we build a model with two convolutional neural networks (CNN) branches to distill features for drugs and cell lines separately. We use 1D CNN for the cell-line branch since the input data is 1D feature vectors for cell lines. We also use 1D CNN for the drug branch and treat different symbols as different channels in CNN. The convolution is applied along the length of the SMILES format. The structures for the two branches are the same. For each branch, we use three similar layers: each layer with convolution width 7, convolution stride 1, max pooling width 3, and pooling stride 3. The only difference among the layers is that their number of channels is 40, 80 and 60, respectively. The choices of those parameters for the CNN are inspired by the model in <ref type="bibr" target="#b21">[22]</ref>, in which the author chose a three-layers network model and used a prime number as the filter width. We find that either reducing the pooling size or adding the channel number has the potential to enhance our model but with the cost of losing stability. Losing stability means that the experiments results sometimes become un-repeatable and it will be explained in detail in Section 4.</p><p>In the second stage, after the two branches of CNN, there is a fully connected network (FCN), which aims to do the regression analysis between the output of the two branches and the IC 50 values. There are three hidden layers in the FCN, each with 1024 neurons. We set the dropout probability to be 0.5 for the FCN during the training phase <ref type="bibr" target="#b21">[22]</ref>.</p><p>We implemented our model on TensorFlow v1.4.0 <ref type="bibr" target="#b0">[1]</ref>, which is a popular DNN library with many successful applications <ref type="bibr" target="#b35">[36,</ref><ref type="bibr" target="#b0">1]</ref>. The data and code of this paper can be downloaded from <ref type="url" target="https://github.com/Lowpassfilter/tCNNS-Project">https://github.com/Lowpassfilter/tCNNS-Project</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Performance Measures</head><p>We adopt the metrics of the coefficient of determination (R 2 ), Pearson correlation coefficient (R p ), and root mean square error (RMSE) to measure the performance of our model, as in the benchmark paper <ref type="bibr" target="#b29">[30]</ref>.</p><p>R 2 measures variance proportion of the dependent variables that is predictable from the independent variables. Let y i be the label of a sample x i , and our label prediction on x i is f i . The error of our prediction, or residual, is defined as e i = y i -f i . Let the mean of y i be ȳ = 1 n i y i , We have total sum of squares:</p><formula xml:id="formula_1">SS tot = i (y i -ȳ) 2</formula><p>regression sum of squares:</p><formula xml:id="formula_2">SS reg = i (f i -ȳ) 2</formula><p>residual sum of squares:</p><formula xml:id="formula_3">SS res = i (y i -f i ) 2 = i e 2 i R 2 is defined as: R 2 = 1 - SS res SS tot .</formula><p>R p measures the linear correlation between two variables. We use Y as the true label and F as the corresponding prediction for any sample. Let the mean and standard deviation of Y be Ȳ and σ Y respectively, and those for the prediction F be F and σ F respectively. R p is defined as:</p><formula xml:id="formula_4">R p = E[(Y -Ȳ )(F -F )] σ Y σ F .</formula><p>RMSE measures the difference between two variables Y and F , and RMSE is defined as:</p><formula xml:id="formula_5">RMSE = E[(Y -F ) 2 ] .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Results and Discussion</head><p>In this section, we demonstrate the performance of our algorithm tCNNS with various data input settings, and it achieves high scores in the circumstances we set in the experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Rediscovering Known Drug-Cell Line Responses</head><p>In the 223 × 948 drug-cell line interaction pairs, GDSC provides the IC 50 for 172, 114 of them. In this part, we split those known pairs into 80% as the training set, 10% as the validation set, and 10% as the testing set. In each epoch, parameters in tCNNS are updated using gradient descent on the training set. The validation set is used to check the performance of the tCNNS. If the RMSE on the validation set does not decrease in 10 recent epochs, the training process stops and the predictions of our model on the testing set are compared with the given IC 50 values in GDSC.</p><p>The experiments are set in this way to stimulate the real situations in which we want to train a model on data with labels and apply the model on data without labels. The validation set is separated from the training set so that we can choose a suitable time to stop training independent and avoid the problem of over-fitting.</p><p>We check the regression accuracy of our model by comparing our predictions against the IC 50 provided in GDSC, and the results are displayed in Figure <ref type="figure" target="#fig_0">2</ref>. In the experiments, our model tCNNS outperforms previous work <ref type="bibr" target="#b29">[30]</ref> in many ways: The efficiency of determination (R 2 ) is increased from 0.72 to 0.84, the Pearson correlation(R p ) is increased from 0.85 to 0.92, and the root mean squared error (RMSE) is reduced from 0.83 to 0.027.</p><p>Many hyper-parameters affect the performance of our model tCNNS, such as the number of layers and filter size. After examining, we find that smaller pooling size and more numbers of channels can enhance the performance furthermore but decrease the stability. Take the pooling size for example. When the it is reduced from 3 to 2, R 2 is further increased from 0.84 to 0.92 and R p is further increased from 0.93 to 0.96. The cost of this enhancement is that the network becomes unstable and diverge <ref type="bibr" target="#b18">[19]</ref> during the training. To keep the experiments results repeatable, we report the results with parameters that ensure our experiments stable</p><p>In Figure <ref type="figure" target="#fig_0">2</ref>, we notice that tCNNS is most accurate in the middle part, but less accurate in the two ends in the figure. Its outputs are not small enough when the experimental IC 50 values are very small and are not big enough when the data are huge. This means that tCNNS can be further optimized if we can enhance its performance in the two ends.</p><p>In the experiment, we do not recover the performance reported in <ref type="bibr" target="#b29">[30]</ref> using the network structure in it. After replacing its network with tCNNS, We find that tCNNS do not converge using the features extracted from PaDEL. Finally, we replace the network in <ref type="bibr" target="#b29">[30]</ref> with a deeper one, a network with three hidden layers and 1024 neurons in each hidden layer. This modified benchmark gets the R 2 around 0.65 and R p around 0.81, which is shown on supplementary Figure <ref type="figure">1</ref>. From this figure, we can see that the result is clearly horizontally stratified, which means that the neural network lacks representation power using PaDEL features.</p><p>Based on these results, we conclude that the connections among the IC 50 values and the SMILES format of drugs are stronger than that among the IC 50 values and features extracted using PaDEL.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Predicting Unknown Drug-Cell Line Responses</head><p>Previously, we split the known drug-cell line interaction pairs into training, validation, and testing set to check the accuracy of tCNNS. In this part, we predict the values for those missing pairs by training tCNNS on the known items. The known pairs are split into 90% as the training set, and 10% as the validation set. Again, if the RMSE on the validation set does not decrease in 10 recent epochs, the training process stops and the trained network will be used to predict the values for the missing items. The results are shown in Figure <ref type="figure">3</ref>.</p><p>Figure <ref type="figure">3</ref>: The predicted missing IC50 values. We range the drugs according to the median of their predicted IC50 values with cells. The horizontal axis is the drug names, and the vertical axis is their negative log10(IC50) values with cells. The left part is the top 20 drugs with lowest IC50 median, which means that they are probably the most effective drugs, and the right part is the last 20 drugs with the highest IC50 median, which means that they are the most ineffective drugs. The numbers in each column are the number of missing IC50 values for each drug in the dataset, which can indicate the confidence level of the distribution.</p><p>Figure <ref type="figure">3</ref> is the box plot of the predicted IC 50 values for missing items grouped by drugs. For each drug, the box represents the distribution of the values with its related cell lines. The drugs are sorted by the median of the distribution: the 20 drugs with highest median and 20 drugs with the lowest median value are plotted. Since we do not know the real value for these missing pairs, the accuracy of our prediction is stated by survey and analysis as follows.</p><p>Bortezomib is the best drug in our prediction. In fact, the top 40 pairs with the lowest IC 50 value are all from Bortezomib with some other cell lines. The outstanding performance of Bortesomib in missing pairs is consistent with that in the existing pairs. There is some supporting information in <ref type="bibr" target="#b6">[7]</ref> that the author found that Bortezomib can sensitize cell lines to many other anti-cancer drugs.</p><p>Aica ribonucleotide and Phenformin have the poorest performance in our prediction. Based on our survey, the former one is initially invented to prevent blood flow, and the later one is initially used as an anti-diabetic drug. These two drugs have the potential to cure cancer because they can inhibit the growth of cell (Aica ribonucleotide) or inhibit the growth of Complex I (Phenformin), but their effects are limited since anti-cancer is only the side effect of these them, not their main function.</p><p>Based on our predictions, the IC 50 of drug Bortezomib with cell line NCI-H2342 is 1.19 * 10 -4 µg. This is the third smallest in our predictions and it indicates a good therapeutic effect. This prediction is supported by the findings in <ref type="bibr" target="#b9">[10]</ref> <ref type="bibr" target="#b16">[17]</ref> that Bortezomib is able to control Phosphorylation that causes lung cancer and NCI-H2342 is a lung cell line. Similar evidence to supporting this prediction can also be found in Cell Signaling Technology's 2011 published curation set. <ref type="foot" target="#foot_0">1</ref></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Retraining Without Extrapolated Activity Data</head><p>For each drug in GDSC, there are two important thresholds called minimum screening concentration (min conc), which is the minimum IC 50 value verified by biological experiments, and maximum screening concentration (max conc), which is the maximum IC 50 value verified by biological experiments. Any IC 50 beyond these two thresholds is extrapolated, and not verified by experiments. In general, IC 50 value within min conc and max conc is more accurate than those outside of the thresholds.</p><p>In the GDSC data that we use, only max conc is provided, and there are 64, 440 IC 50 values below max conc, which is about 37% in the whole existing 172, 114 IC 50 values.</p><p>In this part, tCNNS is trained on the IC 50 values below the max conc threshold. We keep 10% data for validating and 10% data for testing and reduce the percentage of data used for training from 80% to 1%. The regression result is shown in supplementary Figure <ref type="figure" target="#fig_0">2</ref> and the comparison against the tCNNS which trained on whole existing data is showed in Figure <ref type="figure">4</ref>. From supplementary Figure <ref type="figure" target="#fig_0">2</ref>, we see that tCNNS can achieve Figure <ref type="figure">4</ref>: The performance with different percentages of data used. The x-axis is the percentage of data we use as training data from the total existing IC50 values (172114) in the database. Since we will use 10% for validating and 10% for testing, the max x is 80%. The y-axis is the performance of our model. The solid lines represent the result on total existing data, and the dash lines represent the results where we just use the IC50 values below the max screening concentration threshold(max conc), below which the data is more accurate. Since there are only 64, 440 values below max conc, so the dash lines end at around 64,440  172,114 * 80% = 30%</p><p>almost the same good result on max conc data only, which is faster because less data is needed. There are some other properties of tCNNS that we can conclude from Figure <ref type="figure">4</ref>. Firstly, it performs very well even with very limited training data. For example, even trained on 1% of the existing IC 50 values, R 2 can be almost 0.5 and R p be around 0.7.</p><p>Secondly, and more importantly, tCNNS performed better with less and more accurate data. We see that the dash lines (results on data below max conc) are always above the solid lines (result on all data), and the final performance on max conc data is almost as good as that on the total data, although the amount of data for the former is only 37% of the later. To further compare the best performance on all data and max conc data only, we repeated the experiments for 20 times to see the distribution of the results, and show it in supplementary Figure <ref type="figure">3</ref>. There are three experimental results shown in Supplementary Figure ??, which are the experiment on all data, on the data below max conc and on a random subset of all data with the same size as those below max conc. Comparing the result on data below max conc with the result on the random data with the same size, we see that the performance of tCNNS is significantly better on data below max conc than on random data with the same size, and this proved that tCNNS is able to utilize the accurate data.</p><p>Comparing the result on data below max conc with that on all data, we see that the means of the tow R 2 are almost the same, and the R p on all data is only a little bit better than that on the data below mac conc. Meanwhile, the variations of R 2 and R p on data below max conc is a little bigger than those on all data. To conclude, the contribution from low quality extrapolated data is limited, and they can only reduce variation and improve R p a little bit.</p><p>Although the extrapolated data cannot enhance the accuracy of the model, they can help to improve the scalability. The tCNNS model trained on all data performs well when tested on data below max conc, which is natural because the later is a subset of the former. However, the model trained on data below max conc performs poorly when tested on all data. R 2 drops to 0.33 and R p drops to 0.6. Our explanation is that when tCNNS is trained on all data, it learns some general pattern among all data. On the contrary, when tCNNS is trained on data below max conc, it only learns the specific patterns for this subset. So although the performance of tCNNS on all data and data below max conc is similar, the paths they achieve the performance are different.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Blind Test For Drugs And Cell lines</head><p>In previous experiments, interaction pairs among drugs and cell lines are randomly selected to be in training set, validation set, or testing set, which means that a specific drug or a specific cell line can exist in training and testing at the same time, which is a problem of drugs re-positioning. In the real world, drugs discovery is a more challenging task in which we may not be able to train tCNNS on a specific drug or cell line before testing on them. Instead, we may need to predict the performance of the specific drug (or cell line) using tCNNS trained on other drugs(or other cell lines.) To stimulate this condition, we design the blind test for drugs and cell lines respectively.</p><p>In the blind test for drugs, drugs are constrained from existing in training and testing at the same time. We randomly select 10% (23/223) drugs and keep their related textIC 50 values for testing. For the remaining 90% drugs, we divide 90% of their related IC 50 values for training and 10% for validating.</p><p>In the blind test for cell lines, cell lines are prevented from existing in training set and testing set at the same time. Similar to the case of drugs, we randomly select 10% (94/948) cell lines and keep their related textIC 50 values for testing. For the remaining 90% (904/948) cells, we used 90% of the related IC 50 for training and 10% for testing.</p><p>We repeat the blind test for drugs on all data and on the data below max conc for 150 times respectively to see the distribution of the results. The same number of experiments for the cell lines are also conducted. The results on all data are shown in Figure <ref type="figure" target="#fig_1">5</ref>. The results on data below max conc data are showed on supplementary Figure <ref type="figure">4</ref> respectively.</p><p>From Figure <ref type="figure" target="#fig_1">5</ref> and supplementary Figure <ref type="figure">4</ref> we see that the performance of tCNNS is comparably robust with the blind test for cell lines, but sensitive with the blind test for drugs. Without the knowledge of drugs in training, the performance drops significantly. Comparing the results in Figure <ref type="figure" target="#fig_1">5</ref> and supplementary Figure <ref type="figure">4</ref>, we see that the extrapolated data makes no contribution in this setting.</p><p>To conclude, it is very important to have the specific drug or cell line in the training stage before we predict their performance. Experiments results support that even with only one or two related IC 50 value, the performance will be significantly improved. For example, NCI-H378 is a special cell line for lung cancer in GDSC that there are only two IC 50 values records for it. For other cell lines, all of them have at least 20 IC 50 values. tCNNS can still make accurate predictions one of the IC 50 values for textitNCI-H378 if the other value is used during the training. Based our the results, the best drug for NCI-H378 are Bortezomib, which has been explained previously <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b16">17]</ref>.</p><p>Meanwhile, tcNNS predicts another potential drug Docetaxel for them. The predicted IC 50 value between Docetaxel and NCI-H378 is 0.03µg (third smallest for NCI-H378), and the predicted IC 50 between Docetaxel and NCI-H250 is 0.04µg (forth smallest for NCI-H250). It is reported in <ref type="bibr" target="#b32">[33]</ref> that APR-246 is a potential useful drug on lung cancer because of its synergy with T P 53 mutations in lung cells, and there is a "additive effects" between APR-246 and Docetaxel.</p><p>Comparing the results of the blind test for drugs and blind test for cell lines, we guess the reason why the blind test for cell lines is slightly better is that there is more common information shared among different cell lines and less among drugs. For example, cell lines share similar genetic information, but drugs can be very diversified. To reduce the information sharing among cells lines, we designed another experiment in which cell lines from the same tissue cannot exist in training and testing at the same time. The result is shown in Table <ref type="table" target="#tab_0">1</ref>.</p><p>In GDSC, the 948 cell lines belong to 13 tissue types and 49 sub-tissue types. We choose to use the 13 tissue types instead of 49 sub-tissue types because it can increase the distances and reduce the similarities among different tissues. Each time one tissue type is selected as testing data. For the rest tissues, we mix them together and use 90% for training and 10% data for validation. From Table <ref type="table" target="#tab_0">1</ref>, we can see that the performance decrease differently for different tissues. For example, blood has the lowest R 2 and R p in all tissues, which indicates that blood is the most different tissue from other tissues. From Table <ref type="table" target="#tab_0">1</ref>, we can also see that the result for validation is much better than testing, which not only because we use validating as the stop criterion for our model, but also because it shares more information with other tissues in the training stage.</p><p>The above results in the blind test give us some hint that with limited budgets, we should carefully arrange the in vivo experiment to cover a wider range of drugs and cells from different tissues to get better in silicon predicting power.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Cell Lines Features Impacts</head><p>In GDSC, the 735 features for cell lines after preprocessing belongs to 310 gene mutation states, and 425 copy number variations. Since different laboratories may use different methods to extract the features for cell lines, in reality, it is not easy to have the complete 735 features for all cells. More possibly, researchers may have smaller and different features group for cell lines. It will be attractive if our tCNNS can have good performance with fewer features for cell lines. In this part, we test tCNNS performance with a different number of features for cell lines. All the results in this part are shown in Figure <ref type="figure" target="#fig_2">6</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6">Biological Meaning v.s Statistical Meaning</head><p>tCNNS takes the one-hot representation of the SMILES format as the features for drugs. Initially, in the one-hot representation of the SMILES format, each row represents a symbol, and each column represents a position in the SMILES format, which is left aligned. For human researchers, the SMILES format is a well-defined concept with biological meaning. However, we think tCNNS may lack the ability to comprehend the biological meaning of the SMILES format and it instead relies on the statistical pattern inside the data. To verify this hypothesis, we modify the one-hot representation of the SMILES format in three ways. Firstly, we randomly shuffle the order of the symbols, which equals shuffling the rows in the one-hot representation. Secondly, we cut the SMILES format into two pieces and switch their positions, which equals shifting the columns in the one-hot representation. Thirdly, we shuffle the positions in the SMILES format, which equals shuffling the columns in the one-hot representation. In the last two ways of the modification, the biological meaning of SMILES is corrupted. We repeat the experiments in the three settings for 10 times respectively and compare the results to the result using the SMILES format without any modification as the benchmark. The comparison is shown in supplementary Figure <ref type="figure" target="#fig_1">5</ref>.</p><p>Since the computation of different channels (the rows in the one-hot representation of SMILES format) are independent of each other in the convolution neural network, we think the result should keep the same in the first modification with the benchmark. In the second modification, shifting the SMILES will only change the three column in the one-hot representation: the two ends columns and the column where we start the shifting. Meanwhile, other columns keep the same. Thus, we also think that the result in the second modification should keep the same with the benchmark. The experimental results do support our predictions in the first two modifications. What surprised us is that the performance also keeps similar in the third modification. We used to think that shuffling the positions in the SMILES format will deteriorate the result because it corrupted the structure of the SMILES format. This stability means that tCNNS actually does not capture the biological meaning of the SMILES format for drugs, and it relies on the statistical patterns inside the SMILES format, cell line features, and the IC 50 values.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.7">Eliminating Outlier</head><p>In the last column in supplementary Figure <ref type="figure" target="#fig_1">5</ref>, we compared the results of tCNNS with the results of benchmark <ref type="bibr" target="#b29">[30]</ref>. As GDSC has changed in recent years, we can not use the same data as <ref type="bibr" target="#b29">[30]</ref>. In the experiment, we follow the method introduced in <ref type="bibr" target="#b29">[30]</ref> and apply it to current data. We use PaDEL(version 2.1.1) to extract 778 features for each drug. For cell lines, we use the same 735 features, instead of the 157 features in the old version of GDSC used in <ref type="bibr" target="#b29">[30]</ref>. To compare the features extracted using PaDEL and features extracted from the SMILES format using CNN, we visualize the distribution of the drugs in different feature spaces to check the difference. When drawing the distribution of drugs using CNN, we use the output of the last layer of CNN tranche for drugs. The reason is that in deep neural network, the fully connected layer is responsible for regression analysis, and CNN is for extracting the high-level features from the drugs features. The input data for the fully connected network is the output of CNN tranche. So drawing the distribution of drugs using the output of the last layer in CNN is more reasonable.</p><p>We also compared the distribution of cell lines in features space of GDSC, and in the output space of the last layer in CNN respectively. The visualization tool we used is t-SNE <ref type="bibr" target="#b27">[28]</ref>, which is widely used to visualize high dimensional data in deep learning.</p><p>The visualization results are shown in Figure <ref type="figure" target="#fig_3">7</ref>. We can see that CNN can distribute the drugs and cell lines more uniformly than features using PaDEL and features of GDSC. For drugs, we see that there are seven outliers in the PaDEL features space. These seven outliers are the only seven drugs that are composed of multiple parts. We show the structure of those drugs in supplementary Figure <ref type="figure" target="#fig_2">6</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusion</head><p>In this paper, we came up with a model tCNNS for phenotypic screening between cancer cell lines and anti-cancer drugs. tCNN is tested on a new version of GDSC with more data compared to previous works. It achieved a much better coefficient of determinant and Pearson correlation than previous works and made predictions for missing values in GDSC with trustful evidence. tCNNS can also converge with a very small set of training data and fewer features for cancer cell lines, which is economically efficient. tCNNS took SMILES as the input data for drugs, and this eliminated the outlier problem in previous works in which drugs fingerprint are used as the features. tCNNS performs better in drugs repurposing than drug discovery, this may be a future research topic. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Regression results on testing set compared to the ground truth IC50 values. The x axis is the experimental IC50 in natural logarithmic scale, and the y axis is the predicted IC50 in natural logarithmic scale. Different colors demonstrate how many testing samples fall in each small square of 0.1 × 0.1, or the hot map of the distribution, where dark purple indicates more samples (around 30 samples per small square 0.1 × 0.1) and light blue indicates fewer samples (less than 5 samples per small square 0.1 × 0.1)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 5 :</head><label>5</label><figDesc>Figure5: Drug and cell blind test result on total data. Yellow color boxes represent the result of cells blind, and blue color boxes for drugs blind. From up to down is the result for R 2 , Rp and RMSR respectively. The red star is the result without controlling data distribution.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 6 :</head><label>6</label><figDesc>Figure 6: Sensitivity to the number of features. The x-axis is the number of mutation states used for cells in the experiments, and the y-axis is the performance we achieved.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 7 :</head><label>7</label><figDesc>Figure 7: Visualization of drugs and cells in the high-dim space. a) Drugs in PaDEL space(778 dims), b) Drugs in CNN space(420 dims), c) cells in mutation space(735 dims), d) cells in CNN space(1680 dims)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 :</head><label>1</label><figDesc>Tissue-Specific Test. The first column is the 13 tissue names and we range them in alphabetical order. The second column is the ground true IC50 values for each tissue. The last two columns are the R 2 and Rp our model achieved by training using all the other tissue data. The number in the bracket is the result for the validation set.</figDesc><table><row><cell>Tissue name</cell><cell>Data Amount</cell><cell>R 2</cell><cell>R p</cell><cell>RMSR</cell></row><row><cell cols="2">aero digestive 13806</cell><cell>0.703</cell><cell>0.843</cell><cell>0.0375</cell></row><row><cell>tract</cell><cell></cell><cell cols="3">(0.826) (0.916) (0.0280)</cell></row><row><cell>blood</cell><cell>31119</cell><cell>0.500</cell><cell>0.724</cell><cell>0.0449</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.833) (0.917) (0.0276)</cell></row><row><cell>bone</cell><cell>6826</cell><cell>0.659</cell><cell>0.813</cell><cell>0.0405</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.825) (0.915) (0.0283)</cell></row><row><cell>breast</cell><cell>9277</cell><cell>0.657</cell><cell>0.811</cell><cell>0.0383</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.829) (0.919) (0.0281)</cell></row><row><cell>digestive</cell><cell>17200</cell><cell>0.667</cell><cell>0.817</cell><cell>0.0384</cell></row><row><cell>system</cell><cell></cell><cell cols="3">(0.830) (0.918) (0.0282)</cell></row><row><cell>kidney</cell><cell>5199</cell><cell>0.669</cell><cell>0.819</cell><cell>0.0386</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.822) (0.914) (0.0286)</cell></row><row><cell>lung</cell><cell>34086</cell><cell>0.614</cell><cell>0.784</cell><cell>0.0371</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.827) (0.919) (0.0285)</cell></row><row><cell>nervous</cell><cell>15763</cell><cell>0.702</cell><cell>0.839</cell><cell>0.0364</cell></row><row><cell>system</cell><cell></cell><cell cols="3">(0.830) (0.918) (0.0280)</cell></row><row><cell>pancreas</cell><cell>5358</cell><cell>0.703</cell><cell>0.840</cell><cell>0.0370</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.820) (0.913) (0.0287)</cell></row><row><cell>skin</cell><cell>10488</cell><cell>0.676</cell><cell>0.824</cell><cell>0.0394</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.827) (0.917) (0.0281)</cell></row><row><cell>soft tissue</cell><cell>3165</cell><cell>0.712</cell><cell>0.853</cell><cell>0.0384</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.821) (0.914) (0.0284)</cell></row><row><cell>thyroid</cell><cell>2715</cell><cell>0.672</cell><cell>0.822</cell><cell>0.0410</cell></row><row><cell></cell><cell></cell><cell cols="3">(0.833) (0.918) (0.0277)</cell></row><row><cell>urogenital</cell><cell>17112</cell><cell>0.715</cell><cell>0.849</cell><cell>0.0363</cell></row><row><cell>system</cell><cell></cell><cell cols="3">(0.825) (0.914) (0.0282)</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>https://www.phosphosite.org/siteAction.action?id=3131</p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Competing interests</head><p>The authors declares that they have no competing interests.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">Declaration</head><p>The authors declares that they have provided the code and data public accessible.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Tensorflow: a system for large-scale machine learning</title>
+		<author>
+			<persName><forename type="first">Martín</forename><surname>Abadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Barham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianmin</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhifeng</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andy</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Dean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthieu</forename><surname>Devin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sanjay</forename><surname>Ghemawat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><surname>Irving</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Isard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">OSDI</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="265" to="283" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Low data drug discovery with one-shot learning</title>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Altae-Tran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bharath</forename><surname>Ramsundar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aneesh</forename><forename type="middle">S</forename><surname>Pappu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vijay</forename><surname>Pande</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACS central science</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="283" to="293" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Integrative and personalized qsar analysis in cancer by kernelized bayesian matrix factorization</title>
+		<author>
+			<persName><forename type="first">Muhammad</forename><surname>Ammad-Ud-Din</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elisabeth</forename><surname>Georgii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mehmet</forename><surname>Gonen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tuomo</forename><surname>Laitinen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olli</forename><surname>Kallioniemi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Krister</forename><surname>Wennerberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antti</forename><surname>Poso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samuel</forename><surname>Kaski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of chemical information and modeling</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="2347" to="2359" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Genomics of Drug Sensitivity in Cancer Consortium, et al. Pharmacogenomic agreement between two cancer cell line data sets</title>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Cell Line Encyclopedia Consortium</title>
+		<imprint>
+			<biblScope unit="volume">528</biblScope>
+			<biblScope unit="issue">7580</biblScope>
+			<biblScope unit="page">84</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>Nature</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A deep learning architecture for image representation, visual interpretability and automated basal-cell carcinoma cancer detection</title>
+		<author>
+			<persName><forename type="first">Angel</forename><surname>Alfonso Cruz-Roa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edison</forename><forename type="middle">Arevalo</forename><surname>Ovalle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anant</forename><surname>Madabhushi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fabio</forename><surname>Augusto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">González</forename><surname>Osorio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Medical Image Computing and Computer-Assisted Intervention</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="403" to="410" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Weighted tanimoto extreme learning machine with case study in drug discovery</title>
+		<author>
+			<persName><forename type="first">Marian</forename><surname>Wojciech</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Czarnecki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Computational Intelligence Magazine</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="19" to="29" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Landscape of targeted anti-cancer drug synergies in melanoma identifies a novel braf-vegfr/pdgfr combination treatment</title>
+		<author>
+			<persName><forename type="first">Arnaud</forename><surname>Adam A Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iulian</forename><surname>Amzallag</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Subash</forename><surname>Pruteanu-Malinici</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zachary</forename><forename type="middle">A</forename><surname>Baniya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adriano</forename><surname>Cooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leeza</forename><surname>Piris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivien</forename><surname>Hargreaves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dennie</forename><forename type="middle">T</forename><surname>Igras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donald</forename><forename type="middle">P</forename><surname>Frederick</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lawrence</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PloS one</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">140310</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mathew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sonja</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><forename type="middle">D</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anahita</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">King</forename><forename type="middle">Wai</forename><surname>Dastur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xi</forename><surname>Richard Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Soares</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Deep learning in drug discovery</title>
+		<author>
+			<persName><forename type="first">Erik</forename><surname>Gawehn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jan</forename><forename type="middle">A</forename><surname>Hiss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gisbert</forename><surname>Schneider</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular informatics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="3" to="14" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Quantitative phosphoproteomics of proteasome inhibition in multiple myeloma cells</title>
+		<author>
+			<persName><forename type="first">Feng</forename><surname>Ge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chuan-Le</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li-Jun</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sheng-Ce</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sheng</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xin-Feng</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li-Ping</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chun-Hua</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hai-Tao</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qing-Yu</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">13095</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Deep learning for computational chemistry</title>
+		<author>
+			<persName><forename type="first">Nathan</forename><forename type="middle">O</forename><surname>Garrett B Goh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abhinav</forename><surname>Hodas</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vishnu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of computational chemistry</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">16</biblScope>
+			<biblScope unit="page" from="1291" to="1307" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">How much chemistry does a deep neural network need to know to make accurate predictions</title>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Garrett B Goh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abhinav</forename><surname>Siegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathan</forename><forename type="middle">O</forename><surname>Vishnu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathan</forename><surname>Hodas</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Baker</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1710.02238</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Atomic convolutional networks for predicting protein-ligand binding affinity</title>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Gomes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bharath</forename><surname>Ramsundar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evan</forename><forename type="middle">N</forename><surname>Feinberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vijay</forename><forename type="middle">S</forename><surname>Pande</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1703.10603</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Automatic chemical design using a data-driven continuous representation of molecules</title>
+		<author>
+			<persName><forename type="first">Rafael</forename><surname>Gómez-Bombarelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Duvenaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">José</forename><surname>Miguel Hernández-Lobato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Aguilera-Iparraguirre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Timothy</forename><forename type="middle">D</forename><surname>Hirzel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><forename type="middle">P</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alán</forename><surname>Aspuru-Guzik</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1610.02415</idno>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Automatic chemical design using a data-driven continuous representation of molecules</title>
+		<author>
+			<persName><forename type="first">Rafael</forename><surname>Gómez-Bombarelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jennifer</forename><forename type="middle">N</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Duvenaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">José</forename><surname>Miguel Hernández-Lobato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamín</forename><surname>Sánchez-Lengeling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dennis</forename><surname>Sheberla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jorge</forename><surname>Aguilera-Iparraguirre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Timothy</forename><forename type="middle">D</forename><surname>Hirzel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><forename type="middle">P</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alán</forename><surname>Aspuru-Guzik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACS central science</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="268" to="276" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Souparno Ghosh, and Ranadip Pal. A copula based approach for design of multivariate random forests for drug sensitivity prediction</title>
+		<author>
+			<persName><forename type="first">Saad</forename><surname>Haider</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raziur</forename><surname>Rahman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PloS one</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">144490</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Phosphositeplus, 2014: mutations, ptms and recalibrations</title>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Peter V Hornbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Beth</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jon</forename><forename type="middle">M</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vaughan</forename><surname>Kornhauser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elzbieta</forename><surname>Latham</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Skrzypek</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+	<note>D1):D512-D520</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">A convolutional neural network for modelling sentences</title>
+		<author>
+			<persName><forename type="first">Nal</forename><surname>Kalchbrenner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><surname>Grefenstette</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phil</forename><surname>Blunsom</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1404.2188</idno>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Deep learning without poor local minima</title>
+		<author>
+			<persName><forename type="first">Kenji</forename><surname>Kawaguchi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="586" to="594" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Molecular graph convolutions: moving beyond fingerprints</title>
+		<author>
+			<persName><forename type="first">Steven</forename><surname>Kearnes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kevin</forename><surname>Mccloskey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marc</forename><surname>Berndl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vijay</forename><surname>Pande</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patrick</forename><surname>Riley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of computeraided molecular design</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="595" to="608" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">The library of integrated network-based cellular signatures nih program: system-level cataloging of human cells response to perturbations</title>
+		<author>
+			<persName><forename type="first">Alexandra B</forename><surname>Keenan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sherry</forename><forename type="middle">L</forename><surname>Jenkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kathleen</forename><forename type="middle">M</forename><surname>Jagodnik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Koplev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Denis</forename><surname>Torre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zichen</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Moshe</forename><forename type="middle">C</forename><surname>Anders B Dohlman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Silverstein</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lachmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell systems</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Basset: learning the regulatory code of the accessible genome with deep convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">Jasper</forename><surname>David R Kelley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">L</forename><surname>Snoek</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Rinn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome research</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="990" to="999" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Pubchem substance and compound databases</title>
+		<author>
+			<persName><forename type="first">Sunghwan</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">A</forename><surname>Thiessen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evan</forename><forename type="middle">E</forename><surname>Bolton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gang</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Asta</forename><surname>Gindulyte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lianyi</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jane</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Siqian</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><forename type="middle">A</forename><surname>Shoemaker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1202" to="D1213" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Imagenet classification with deep convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Krizhevsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><forename type="middle">E</forename><surname>Hinton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in neural information processing systems</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="1097" to="1105" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Machine-learning approaches in drug discovery: methods and applications</title>
+		<author>
+			<persName><forename type="first">Antonio</forename><surname>Lavecchia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drug discovery today</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="318" to="331" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A survey on deep learning in medical image analysis</title>
+		<author>
+			<persName><forename type="first">Geert</forename><surname>Litjens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thijs</forename><surname>Kooi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ehteshami</forename><surname>Babak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arnaud</forename><surname>Bejnordi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adiyoso</forename><surname>Arindra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Setio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohsen</forename><surname>Ciompi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ghafoorian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Awm</forename><surname>Jeroen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bram</forename><surname>Van Der Laak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Clara</forename><forename type="middle">I</forename><surname>Van Ginneken</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sánchez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Medical image analysis</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="60" to="88" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Deep architectures and deep learning in chemoinformatics: the prediction of aqueous solubility for druglike molecules</title>
+		<author>
+			<persName><forename type="first">Alessandro</forename><surname>Lusci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gianluca</forename><surname>Pollastri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pierre</forename><surname>Baldi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of chemical information and modeling</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1563" to="1575" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Visualizing data using t-sne</title>
+		<author>
+			<persName><forename type="first">Laurens</forename><surname>Van Der Maaten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><surname>Hinton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="2579" to="2605" />
+			<date type="published" when="2008-11">Nov. 2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Applications of deep learning in biomedicine</title>
+		<author>
+			<persName><forename type="first">Polina</forename><surname>Mamoshina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Armando</forename><surname>Vieira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evgeny</forename><surname>Putin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Zhavoronkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular pharmaceutics</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1445" to="1454" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Machine learning prediction of cancer cell sensitivity to drugs based on genomic and chemical properties</title>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Michael P Menden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathew</forename><surname>Iorio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ultan</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cyril</forename><forename type="middle">H</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pedro</forename><forename type="middle">J</forename><surname>Benes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julio</forename><surname>Ballester</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Saez-Rodriguez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS one</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">61318</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Machine learning methods in chemoinformatics</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">O</forename><surname>John</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Mitchell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Wiley Interdisciplinary Reviews: Computational Molecular Science</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="468" to="481" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Predicting cancer outcomes from histology and genomics using convolutional networks</title>
+		<author>
+			<persName><forename type="first">Pooya</forename><surname>Mobadersany</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Safoora</forename><surname>Yousefi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohamed</forename><surname>Amgad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jill</forename><forename type="middle">S</forename><surname>David A Gutman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">José E Velázquez</forename><surname>Barnholtz-Sloan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><forename type="middle">J</forename><surname>Vega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lee Ad</forename><surname>Brat</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Cooper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="page">201717139</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Apr-246 overcomes resistance to cisplatin and doxorubicin in ovarian cancer cells</title>
+		<author>
+			<persName><surname>Mohell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Å</forename><surname>Alfredsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fransson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Uustalu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joachim</forename><surname>Byström</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anders</forename><surname>Gullbo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hallberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Vjn Bykov</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Björklund</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell death &amp; disease</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">1794</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Towards a universal smiles representation-a standard method to generate canonical smiles based on the inchi</title>
+		<author>
+			<persName><forename type="first">M O'</forename><surname>Noel</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Boyle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of cheminformatics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">22</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Protein-ligand scoring with convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Ragoza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><surname>Hochuli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elisa</forename><surname>Idrobo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jocelyn</forename><surname>Sunseri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Koes</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of chemical information and modeling</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="942" to="957" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Brain cancer detection from mri: A machine learning approach (tensorflow)</title>
+		<author>
+			<persName><forename type="first">Aaswad</forename><surname>Sawant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mayur</forename><surname>Bhandari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ravikumar</forename><surname>Yadav</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rohan</forename><surname>Yele</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mrs</forename><surname>Sneha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bendale</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BRAIN</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">04</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Computational methods in drug discovery</title>
+		<author>
+			<persName><forename type="first">Gregory</forename><surname>Sliwoski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sandeepkumar</forename><surname>Kothiwale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jens</forename><surname>Meiler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><forename type="middle">W</forename><surname>Lowe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pharmacological reviews</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="334" to="395" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Rob Leurs, Iwan JP de Esch, and Chris de Graaf. Molecular interaction fingerprint approaches for gpcr drug discovery</title>
+		<author>
+			<persName><forename type="first">Márton</forename><surname>Vass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Albert</forename><forename type="middle">J</forename><surname>Kooistra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tina</forename><surname>Ritschel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current opinion in pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="59" to="68" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<title level="m" type="main">Atomnet: a deep convolutional neural network for bioactivity prediction in structure-based drug discovery</title>
+		<author>
+			<persName><forename type="first">Izhar</forename><surname>Wallach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Dzamba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abraham</forename><surname>Heifets</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1510.02855</idno>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Protein secondary structure prediction using deep convolutional neural fields</title>
+		<author>
+			<persName><forename type="first">Sheng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianzhu</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinbo</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scientific reports</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">18962</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Seq2seq fingerprint: An unsupervised deep molecular embedding for drug discovery</title>
+		<author>
+			<persName><forename type="first">Zheng</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sheng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Feiyun</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Junzhou</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 8th ACM International Conference on Bioinformatics, Computational Biology, and Health Informatics</title>
+		<meeting>the 8th ACM International Conference on Bioinformatics, Computational Biology, and Health Informatics</meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="285" to="294" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Describing videos by exploiting temporal structure</title>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Atousa</forename><surname>Torabi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyunghyun</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Ballas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Pal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hugo</forename><surname>Larochelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Courville</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the IEEE international conference on computer vision</title>
+		<meeting>the IEEE international conference on computer vision</meeting>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="4507" to="4515" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Padel-descriptor: An open source software to calculate molecular descriptors and fingerprints</title>
+		<author>
+			<persName><forename type="first">Chun</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yap</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of computational chemistry</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1466" to="1474" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">How transferable are features in deep neural networks?</title>
+		<author>
+			<persName><forename type="first">Jason</forename><surname>Yosinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Clune</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hod</forename><surname>Lipson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in neural information processing systems</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="3320" to="3328" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

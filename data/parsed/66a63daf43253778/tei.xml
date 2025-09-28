@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Precision Therapeutic Biomarker Identification with Application to the Cancer Genome Project</title>
+				<funder ref="#_qHdEvus">
+					<orgName type="full">Sylvester Comprehensive Cancer Center at the University of Miami</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2017-02-08">8 Feb 2017</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Hongmei</forename><surname>Liu</surname></persName>
+							<email>h.liu7@med.miami.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biostatistics</orgName>
+								<orgName type="institution">University of Miami</orgName>
+								<address>
+									<postCode>33136</postCode>
+									<settlement>Miami</settlement>
+									<region>FL</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">J</forename><forename type="middle">Sunil</forename><surname>Rao</surname></persName>
+							<email>jrao@biostat.med.miami.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biostatistics</orgName>
+								<orgName type="institution">University of Miami</orgName>
+								<address>
+									<postCode>33136</postCode>
+									<settlement>Miami</settlement>
+									<region>FL</region>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Precision Therapeutic Biomarker Identification with Application to the Cancer Genome Project</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2017-02-08">8 Feb 2017</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">1EE8C8CA3CB809DA5D89BF8426150C1A</idno>
+					<idno type="arXiv">arXiv:1702.02264v1[stat.AP]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Cancer biomarkers</term>
+					<term>EM algorithm</term>
+					<term>finite mixture of multivariate regression model</term>
+					<term>LASSO</term>
+					<term>overlapping clustering</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Cancer cell lines have frequently been used to link drug sensitivity and resistance with genomic profiles. To capture genomic complexity in cancer, the Cancer Genome Project (CGP) <ref type="bibr" target="#b14">(Garnett et al., 2012)</ref> screened 639 human tumor cell lines with 130 drugs ranging from known chemotherapeutic agents to experimental compounds. Questions of interest include: i) can cancer-specific therapeutic biomarkers be detected, ii) can drug resistance patterns be identified along with predictive strategies to circumvent resistance using alternate drugs, iii) can biomarkers of drug synergies be predicted ? To tackle these questions, following statistical challenges still exist: i)biomarkers cluster among the cell lines; ii) clusters can overlap (e.g. a cell line may belong to multiple clusters); iii) drugs should be modeled jointly. We introduce a multivariate regression model with a latent overlapping cluster indicator variable to address above issues. A generalized finite mixture of multivariate regression (FMMR) model in connection with the new model and a new EM algorithm for fitting are proposed. Re-analysis of the dataset sheds new light on the therapeutic inter-relationships between cancers as well existing and novel drug behaviors for the treatment and management of cancer.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction 1.Data Description</head><p>The use of drugs to selectively target specific genetic alterations in defined patient subpopulations has seen significant successes. One example can be found in the treatment of chronic myeloid leukaemia (CML) where the first consistent chromosomal abnormality associated with a human cancer was identified back in the 1960s. Fast forward to the 1980s where the consequence of this abnormality was discovered to be the production of an abnormal gene called BCR-ABL. Intense drug discovery programs were initiated to shut down the activity of <ref type="bibr">BCR-ABL, and in 1992, imatinib (Gleevec)</ref> was developed. In 1998, the drug was tested in CML patients who had exhausted standard treatment options and whose life expectancy was limited, with remarkable results in their blood counts returning to normal. In 2001, the FDA approved imatinib. Today, a once commonly fatal cancer now has a five-year survival rate of 95% <ref type="bibr" target="#b10">(Druker et al., 2006)</ref>.</p><p>Achievements like this largely inspire today's high throughput screening studies of linking cancer drugs (known or in development) to specific genomic changes which could be used as therapeutic biomarkers. The hope is that such analyses will shed light on biological mechanisms underlying drug sensitivity, tumor resistance and potential drug combination synergies.</p><p>Cancer cell lines have frequently been used as a convenient way of conducting such studies. For a systematic search of therapeutic biomarkers to a variety of cancer drugs, the Cancer Genome Project (CGP) <ref type="bibr" target="#b14">(Garnett et al., 2012)</ref> screened 639 human tumor cell lines, which represent much of the tissue-type and genetic diversity of human cancers, with 130 drugs. These drugs, including approved drugs, drugs in development as well as experimental tool compounds, cover a wide range of targets and processes involved in cancer biology. A range of 275-507 cell lines were screened for each drug. The effect of a 72h drug treatment on cell viability was examined to derive such measures of drug sensitivity as the half-maximal inhibitory concentration (IC 50 ). The cell lines underwent sequencing of 64 known cancer genes, genome-wide analysis of copy number gains and losses, and expression profiling of 14,500 genes.</p><p>Given the degree of complexity of this dataset, the multivariate analysis of variance (MANOVA) and the Elastic-Net regression applied in <ref type="bibr" target="#b14">Garnett et al. (2012)</ref> are insufficient for precise knowledge discovery. First, the marginal drug-feature associations discovered in MANOVA rarely reflect true relationships, as it is more likely that sensitivity of cancer cells to drugs depends on a multiplicity of genomic and epigenomic features with potential interactions. Second, the Elastic-Net regression fails to concern following issues: 1) since the 639 cell lines come from a variety of cancer tissue types, there is likely additional heterogeneity manifested as subpopulations with overlaps in data; 2) note that the 130 drugs (response variables) are hardly independent, one can improve the prediction accuracy by modeling with multiple drugs <ref type="bibr" target="#b5">(Breiman and Friedman, 1997)</ref>.</p><p>Moreover, there are some direct questions of interest from a subject matter perspective that we want to address. These include, i) can cancer-specific therapeutic biomarkers be detected, ii) can drug resistance patterns be identified along with predictive strategies to circumvent resistance using alternate drugs, iii) can biomarkers of combination therapies be identified to help predict synergies in drug activities ? To tackle these questions and previously discussed statistical challenges, we propose a multivariate regression model with a latent overlapping cluster indicator variable. Fitting procedures inducing concurrent variable selection are introduced.</p><p>The rest of the paper is organized as follows. In Section 1.2, we give a selective overview of existing clustering and overlapping clustering methods for general (without response variables) and regression data. In Section 2, a new statistical model is introduced, a generalized FMMR model in connection with the new model and a new EM algorithm for fitting are provided. We also establish a type of consistency optimality for estimation of the generalized FMMR model and perform some small simulation studies to empirically demonstrate this. In Section 3, we put forward another fitting solution to the new model for comparison with the generalized FMMR model. Section 4 contains a comprehensive re-analyses of the CGP data using the proposed method. Discussion is included in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">Relevant Statistical Literature Review</head><p>Clustering is a well established technique to group data elements based on a measure of similarity. Traditional clustering techniques generate partitions so that each data point belongs to one and only one cluster. It has long been recognized that such ideal partition seldom exists in real data <ref type="bibr" target="#b26">(Needham, 1965)</ref>. It is more likely that clusters overlap in some parts. To handle the overlapping issue, <ref type="bibr" target="#b23">Lazzeroni and Owen (2002)</ref> put forward the wellknown plaid model for two-sided overlapping clustering for gene expression data, see also <ref type="bibr" target="#b35">Turner et al. (2005)</ref> for improved plaid model and <ref type="bibr" target="#b37">Zhang (2010)</ref> for Bayesian plaid model formulation. Its numerical solution, however, produces unsatisfactory cluster retrievals (see Section 3). Other overlapping clustering methods include the "naive" finite mixture (FM) model with a hard threshold on posterior membership probabilities, the probabilistic model <ref type="bibr" target="#b4">(Banerjee et al., 2005)</ref> and the multiplicative mixture model based approach <ref type="bibr" target="#b13">(Fu and Banerjee, 2008)</ref>.</p><p>More often interest centers on investigating the relationship between response variables Y ∈ R q and covariates X ∈ R p by fitting a regression model rather than to explore the X or Y on its own. In regression analyses with q = 1, finite mixture of regression (FMR) models are commonly used to capture unobserved cross-sectional heterogeneity in the data <ref type="bibr" target="#b17">(Jedidi et al., 1996)</ref>. The FMR model postulates that a sample of observations come from a finite mixture of latent partitioning sub-populations with each sub-population represented by a regression model. It was first introduced to statistical literatures by <ref type="bibr" target="#b28">Quandt (1972)</ref>. <ref type="bibr">De-Sarbo and Cron (1988)</ref> proposed an EM algorithm <ref type="bibr" target="#b8">(Dempster et al., 1977)</ref> based maximum likelihood estimation for the FMR model. <ref type="bibr" target="#b21">Khalili and Chen (2012)</ref> put forward a penalized likelihood approach for variable selection in FMR models. As a natural generalization to multivariate responses case, <ref type="bibr" target="#b19">Jones and McLachlan (1992)</ref> introduced the FMMR model. <ref type="bibr" target="#b15">Grun and Leisch (2008)</ref> proposed a R package flexmix for fitting FMMR models, however it assumes that the response variables are independent.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">The Proposed Method</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Statistical modeling</head><p>For a sample (of cell lines) of n observations, denote y i = (y i1 , . . . , y iq ) T ∈ R q a vector of responses (IC 50 values), x i = (x i1 , . . . , x ipn ) T ∈ R pn a vector of predictors (genomic markers) and ε i = (ε i1 , . . . , ε iq ) T a vector of random errors for the ith observation. Assume ε i iid ∼ N q (0, Σ) for i = 1, . . . , n. The following proposed model allows overlapping clustering for multivariate regression data,</p><formula xml:id="formula_0">y i = K k=1 B T k x i P ik + ε i , i = 1, . . . , n,<label>(1)</label></formula><p>where K is the total number of clusters, B k is an unknown p n × q coefficient matrix for the kth cluster, and P ik ∈ {0, 1} is 1 if observation i belongs to the kth cluster, otherwise 0. In traditional clustering problem, it assumes that each observation belongs to exactly one cluster, namely K k=1 P ik = 1 for all i. Therefore we allow K k=1 P ik ≥ 1 so that each observation can belong to multiple clusters.</p><p>We provide some interpretation for the clusters in model (1). A cluster k contains a subset of observations for whom P ik = 1. We postulate that not all genomic features are relevant in describing the cluster k, thus assume a sparse coefficient matrix B k . Since the sparse patterns can vary with k, each cluster is represented by a unique set of biomarkers. For observations belong to multiple clusters, their response variables are explained by multiple sets of biomarkers, indicative of involving in several biological processes simultaneously.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">The FMMR model</head><p>When K k=1 P ik = 1, model (1) can be characterized by a hierarchical structure which ends up with an FMMR model. Consider a latent cluster membership random variable z i for observation i from (1). Given K k=1 P ik = 1, the range of z i equals to {1, . . . , K}. Assume that P (z i = k) = π k for each k, then K k=1 π k = 1 and π k ≥ 0. Response y i from model ( <ref type="formula" target="#formula_0">1</ref>) satisfies</p><formula xml:id="formula_1">(y i | z i = k, x i , B k , Σ) ∼ N q (B T k x i , Σ).<label>(2)</label></formula><p>Denote Θ = (B 1 , . . . , B K , Σ, π) with π = (π 1 , . . . , π K-1 ) T . We can derive the joint density of y i and z i as</p><formula xml:id="formula_2">f (y i , z i | x i , Θ) = K k=1 {π k f (y i | z i = k, x i , B k , Σ)} I(z i =k) .</formula><p>(3)</p><formula xml:id="formula_3">Summarizing (3) over z i = 1, . . . , K yields the FMMR model f (y i | x i , Θ) = K k=1 π k f (y i | z i = k, x i , B k , Σ).<label>(4)</label></formula><p>When using the EM algorithm to estimate model ( <ref type="formula" target="#formula_3">4</ref>), (x i , y i ) is regarded as incomplete data for missing z i , so one works on the complete joint density in (3). For a sample of n observations from (1), the complete log-likelihood function of Θ becomes</p><formula xml:id="formula_4">l n (Θ) = n i=1 K k=1 z ik log π k + n i=1 K k=1 z ik log f (y i | z i = k, x i , B k , Σ),<label>(5)</label></formula><p>where z ik = I(z i = k). Since we do not expect all genomic markers to be informative, variable selection, to obtain a parsimonious model is necessary. <ref type="bibr" target="#b21">Khalili and Chen (2012)</ref> and <ref type="bibr" target="#b22">Khalili and Lin (2013)</ref> (for diverging model size) introduced a penalized likelihood approach for variable selection in FMR models, which was shown consistent in variable selection and highly efficient in computation. We define a penalized complete log-likelihood function as</p><formula xml:id="formula_5">ln (Θ) = l n (Θ) -ρ n (Θ),<label>(6)</label></formula><p>where</p><formula xml:id="formula_6">ρ n (Θ) = K k=1 π k ρ nk (B k ).</formula><p>The following two penalty functions are currently used to meet different demands in variable selection:</p><p>1) the L 1 -penalty in LASSO <ref type="bibr" target="#b33">(Tibshirani, 1996)</ref> for simultaneous estimation and variable selection 2) a linear combination of the L 1 -and L 2 -penalty in Elastic-Net <ref type="bibr" target="#b38">(Zou and Hastie, 2005)</ref> for simultaneous estimation and selection of grouped features</p><formula xml:id="formula_7">ρ nk (B k ) = λ k B k 1</formula><formula xml:id="formula_8">ρ nk (B k ) = λ k1 B k 1 + λ k2 B k 2 2 ,</formula><p>where • 1 and • 2 are respectively the L 1 -and L 2 -norms and the tuning parameters λ k , λ k1 , λ k2 ≥ 0. The L 1 -penalty is singular at the origin, thus can shrink some coefficients to exact 0 for sufficiently large λ k or λ k1 <ref type="bibr" target="#b11">(Fan and Li, 2001)</ref>.</p><p>Their revised EM algorithm can easily be generalized to maximize ln (Θ) in ( <ref type="formula" target="#formula_5">6</ref>), hence we bypass here. In next section, generalized FMMR model and EM algorithm are devised to fit overlapping multivariate regression data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">The Generalized FMMR Model</head><p>Finite mixture models (including FMR and FMMR) can only fit partitions, as can be seen from Section 2.2. To enable overlapping clustering, one often uses a "naive" approach by applying a hard threshold α to finite mixture models. This approach assigns a sample to cluster k if its posterior probability of belonging to cluster k is larger than a pre-specified α, hence enabling a sample to belong to multiple clusters. As pointed out by <ref type="bibr" target="#b4">Banerjee et al. (2005)</ref>, this method is problematic because it is not a natural generative model for overlapping clustering, since one underlying assumption of the finite mixture model is that each observation comes from one and only one mixture component. In this section however, we introduce a generalized FMMR model to retrieve overlapping clusters when K k=1 P ik ≥ 1. This generalized model retains its ability in fitting partitions. Suppose we have K objective clusters indexed by 1 to K. These objective clusters refer to clusters defined in (1) and can overlap with each other, resulting in 2 K -1 types of overlapping patterns. Let K equal to 3 for an example, overall overlapping patterns are then composed of S = {1, 2, 3, 12, 13, 23, 123}. Figure <ref type="figure" target="#fig_0">1</ref> shows the particular part each overlapping pattern in S represents. By definition, overlapping patterns in S are mutually exclusive. And each observation i from (1) belongs to one and only one overlapping pattern.</p><p>In the next, we define 2 K -1 hypothetical clusters. Each hypothetical cluster (simply called "cluster" since after) represents an overlapping pattern defined in advance and is indexed by an element in T , T = ∪ K s=1 {(l 1 . . . l s ) : {l 1 , . . . , l s } ⊆ {1, . . . , K}} .</p><p>Cluster (l 1 . . . l s ) implies its members belonging to objective clusters l 1 , . . . , l s . We now introduce a latent cluster membership random variable z i for observation i from model ( <ref type="formula" target="#formula_0">1</ref>) and characterize the model via a hierarchical structure. Given K k=1 P ik ≥ 1, the range of z i becomes T . Further define</p><formula xml:id="formula_9">P (z i = (l 1 . . . l s )) = π (l 1 ...ls) .<label>(7)</label></formula><p>Then vector π = (π (l 1 ...ls)∈T ) T has</p><formula xml:id="formula_10">(l 1 ...ls)∈T π (l 1 ...ls) = 1, π (l 1 ...ls) ≥ 0.</formula><p>Response y i from (1) satisfies</p><formula xml:id="formula_11">(y i | z i = (l 1 . . . l s ), x i , {B l k } s k=1 , Σ) ∼ N q s k=1 B T l k x i , Σ .<label>(8)</label></formula><p>Let Θ = (B 1 , . . . , B K , Σ, π). By ( <ref type="formula" target="#formula_9">7</ref>) and ( <ref type="formula" target="#formula_11">8</ref>), the joint density of y i and z i equals</p><formula xml:id="formula_12">f (y i , z i | x i , Θ) = (9) (l 1 ...ls)∈T π (l 1 ...ls) f (y i | z i , x i , {B l k } s k=1 , Σ) I(z i =(l 1 ...ls)) .</formula><p>Summarizing (9) over z i leads to the generalized FMMR model</p><formula xml:id="formula_13">f (y i | x i , Θ) = (l 1 ...ls)∈T π (l 1 ...ls) f (y i | z i , x i , {B l k } s k=1 , Σ) .<label>(10)</label></formula><p>Note that if π (l 1 ...ls) = 0 for s &gt; 1, (10) reduces to the traditional FMMR model in (4).</p><p>Then the (conditional) log-likelihood function of Θ for a sample of n observations from (1) is</p><formula xml:id="formula_14">l 0 n (Θ) = n i=1 log   (l 1 ...ls)∈T π (l 1 ...ls) f (y i | z i , x i , {B l k } s k=1 , Σ)   .</formula><p>Maximizing above ordinary likelihood function yields non-zero estimates for all regression coefficients. To induce variable selection and remove noise predictors from the regression model, we propose a penalized log-likelihood function</p><formula xml:id="formula_15">l0 n (Θ) = l 0 n (Θ) - K k=1 (l 1 ...ls): k∈{l 1 ,...,ls} π (l 1 ...ls) ρ nk (B k ),<label>(11)</label></formula><p>where ρ nk (B k ) is the LASSO or Elastic-Net penalty function in Section 2.2. Notation (l 1 ...ls): k∈{l 1 ,...,ls} indicates that it summarizes over (l 1 . . . l s ) ∈ T for which k ∈ {l 1 , . . . , l s }.</p><p>The penalty imposed on B k is proportional to (l 1 ...ls): k∈{l 1 ,...,ls} π (l 1 ...ls) , which by definition is proportional to the number of observations involved in the kth objective cluster. This is a strategy, similar to <ref type="bibr" target="#b21">Khalili and Chen (2012)</ref>, of relating the penalty to sample sizes for enhanced power of the method.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Numerical Solution to the Generalized FMMR Model</head><p>We use the renowned EM algorithm for optimization of the generalized FMMR model. The complete log-likelihood function of Θ is</p><formula xml:id="formula_16">l n (Θ) = n i=1 (l 1 ...ls)∈T z i,(l 1 ...ls) log π (l 1 ...ls) + n i=1 (l 1 ...ls)∈T z i,(l 1 ...ls) log f (y i | z i , x i , {B l k } s k=1 , Σ) ,</formula><p>where z i,(l 1 ...ls) = I(z i = (l 1 . . . l s )). The penalized complete log-likelihood function for concurrent variable selection is then</p><formula xml:id="formula_17">ln (Θ) = l n (Θ) - K k=1 (l 1 ...ls): k∈{l 1 ,...,ls} π (l 1 ...ls) ρ nk (B k ). (<label>12</label></formula><formula xml:id="formula_18">)</formula><p>Due to the overlap setting, each B k involves in multiple clusters. Therefore coefficient matrix B k for k = 1, . . . , K can not be optimized independently like in usual EM algorithm. Instead we sequentially update B k given the rest are known. Specifically take ρ nk (B k ) as a LASSO penalty function for an example, our revised EM algorithm iteratively maximizes ln (Θ) in two steps: E-step: Given Θ m , estimate z m i,(l 1 ...ls) with its posterior probability by applying the Bayes' rule to ( <ref type="formula">9</ref>) and ( <ref type="formula" target="#formula_13">10</ref>),</p><formula xml:id="formula_19">P (z m i,(l 1 ...ls) = 1 | y i , x i , Θ m ) = π m (l 1 ...ls) f (y i | z i , x i , {B l k } s k=1 , Σ m ) (l 1 ...l s )∈T π m (l 1 ...l s ) f y i | z i , x i , {B l k } s k=1 , Σ m . M-step: Given Z m = (z m i,(l 1 ...ls)</formula><p>), update the mixing proportions π m+1 by</p><formula xml:id="formula_20">π m+1 (l 1 ...ls) = 1 n n i=1 z m i,(l 1 ...ls) , (l 1 . . . l s ) ∈ T.</formula><p>Note that this is obtained by maximizing the leading term of ( <ref type="formula" target="#formula_17">12</ref>) with respect to π. This simplified updating scheme however works well in simulation studies.</p><p>Given Z m , π m+1 and Σ m , sequentially update</p><formula xml:id="formula_21">B m+1 k | {B m s } s=K s=1,s =k by B m+1 k = arg max B k n i=1 (l 1 ...ls): k∈{l 1 ,...,ls} z m i,(l 1 ...ls) log f y i | z i , x i , {B m l j } s j=1,l j =k , Σ m - (l 1 ...ls): k∈{l 1 ,...,ls} π m+1 (l 1 ...ls) λ k B k 1 .<label>(13)</label></formula><p>By ( <ref type="formula" target="#formula_11">8</ref>),</p><formula xml:id="formula_22">B m+1 k = arg min B k (l 1 ...ls): k∈{l 1 ,...,ls} tr (Y * -XB k ) T z m (l 1 ...ls) (Y * -XB k )(Σ m ) -1 +2 (l 1 ...ls): k∈{l 1 ,...,ls} π m+1 (l 1 ...ls) λ k B k 1 ,<label>(14)</label></formula><p>where</p><formula xml:id="formula_23">y * i = y i - l∈{l 1 ,...,ls}\k (B m l ) T x i , Y * = (y * 1 , . . . , y * q ),</formula><p>z m (l 1 ...ls) = diag z m 1,(l 1 ...ls) , . . . , z m n,(l 1 ...ls) .</p><p>Above ( <ref type="formula" target="#formula_22">14</ref>) is a multivariate regression problem with a LASSO penalty for estimation, which can be solved by the MRCE algorithm <ref type="bibr" target="#b29">(Rothman et al., 2010)</ref>. If we ignore the covariance structure of Σ m merely in ( <ref type="formula" target="#formula_22">14</ref>), estimation of B m+1 k reduces to q independent LASSO regression problems. In this case, more complex penalty functions such as the Elastic-Net and fused LASSO penalties can easily be applied. Therefore we also have investigated the performance of this simplified strategy in simulation studies. It works surprisingly comparable to original method utilizing the MRCE algorithm for estimation of</p><formula xml:id="formula_24">B m+1 k . Given Z m and {B m+1 k } K k=1 , update Σ m+1 by Σ m+1 = arg max Σ n i=1 (l 1 ...ls)∈T z m i,(l 1 ...ls) log f y i | z i , x i , {B m+1 l k } s k=1 , Σ = arg min Σ n i=1 (l 1 ...ls)∈T -z m i,(l 1 ...ls) log |Σ -1 | + (l 1 ...ls)∈T tr (Y -X s k=1 B m+1 l k ) T z m (l 1 ...ls) (Y -X s k=1 B m+1 l k )Σ -1 . (<label>15</label></formula><formula xml:id="formula_25">)</formula><p>By taking the derivative of ( <ref type="formula" target="#formula_24">15</ref>) according to Σ -1 , we get</p><formula xml:id="formula_26">Σ m+1 = (l 1 ...ls)∈T (Y -X s k=1 B m+1 l k ) T z m (l 1 ...ls) (Y -X s k=1 B m+1 l k ) (l 1 ...ls)∈T n i=1 z m i,(l 1 ...ls)</formula><p>, where (l 1 ...ls)∈T n i=1 z m i,(l 1 ...ls) = n. Although we can also penalize the inverse covariance matrix Σ -1 of (15) like in <ref type="bibr" target="#b29">Rothman et al. (2010)</ref>, simulations (not presented in the paper) show that penalizing Σ -1 results in a lower degree of clustering accuracy than not penalizing Σ -1 . This may be because by penalizing Σ -1 one introduces bias into its estimation, a biased estimate of Σ -1 in return deteriorates the estimate of z i,(l 1 ...ls) in E-step. Thus we choose to not penalize Σ -1 .</p><p>Commencing with an initial value Θ 0 , the algorithm iterates between E-and M-steps until the relative change in log-likelihood,</p><formula xml:id="formula_27">| l m+1 n ( Θ) -l m n ( Θ) /l m n ( Θ)|</formula><p>, is smaller than some threshold value, taken as 10 -5 in simulation studies and 10 -3 in real data analysis. Additionally, a cluster, whose mixing proportion is smaller than some threshold value taken as 0.01 in the paper, will be removed during iterations to avoid over estimations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">Selection of Tuning Parameters and the K</head><p>In preceding penalized likelihood approach, one needs to choose the values of componentwise tuning parameters λ k for k = 1, . . . , K, which controls the complexity of an estimated model. The data-driven method cross-validation (CV) <ref type="bibr" target="#b32">(Stone, 1977)</ref> is frequently adopted in literatures. Here we use a component-wise 10-fold CV method for tuning parameters selection in ( <ref type="formula" target="#formula_22">14</ref>).</p><p>Moreover, selection of the number of components K is essential in finite mixture models (including FMR and FMMR). In applications, the choice can be based on prior knowledge of data analysts. With respect to formatted methodologies, information criteria (IC) remains by far the most popular strategy for selection of K. See <ref type="bibr" target="#b7">Claeskens et al. (2008)</ref> for general treatments on this topic. Here we choose the K minimizing below IC n ,</p><formula xml:id="formula_28">IC n (K) = -2l n (Θ) + N K a n .<label>(16)</label></formula><p>Above N k is the effective number of parameters in the model,</p><formula xml:id="formula_29">N K = |{B k , k = 1, . . . , K}| + |π| -1 + |Σ|,</formula><p>where |A| calculates the number of nonzero elements in A. In ( <ref type="formula" target="#formula_28">16</ref>), a n is a positive sequence depending on n. The well known AIC <ref type="bibr" target="#b0">(Akaike, 1974)</ref> and BIC <ref type="bibr" target="#b30">(Schwarz et al., 1978)</ref> correspond to a n = 2 and a n = log(n) respectively. It was shown in <ref type="bibr" target="#b20">Keribin (2000)</ref> that under general regularity conditions, BIC can identify the true order of a finite mixture model asymptotically. Feasibility of his results to FMR or FMMR models is unknown yet. We examined the performance of BIC for selection of K in a generalized FMMR model via simulation studies. It obtained a high degree of accuracy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6">The Asymptotic Properties and Simulation Studies</head><p>Khalili and Lin (2013) showed that their approach by maximizing a penalized log-likelihood function for estimation of the FMR model is consistent in both estimation and variable selection under certain regularity conditions. Denote f (w; Θ) the joint density function of data w = (x, y) with Θ ∈ Ω. The conditional density function of y given x follows an FMR model in <ref type="bibr" target="#b22">Khalili and Lin (2013)</ref> and a generalized FMMR model in (10) in our paper. As defined in ( <ref type="formula" target="#formula_15">11</ref>), the penalized log-likelihhood function is a summation of the log(f (w i ; Θ))'s minus a penalty function. Because the regularity conditions for asymptotic establishments in <ref type="bibr" target="#b22">Khalili and Lin (2013)</ref> are made on f (w; Θ) and the penalty function directly, their theoretical achievements can be extended to our problem. Denote B j k the jth column of B k for j = 1, . . . , q. Let B j k = (B j k1 , B j k2 ) to divide the coefficient vector into non-zero and zero subsets. Denote Θ 0 the true value of Θ, Θ 0 = (Θ 0 1 , Θ 0 2 ) is the corresponding decomposition such that Θ 0 2 contains all zero coefficients, and Θn = ( Θn1 , Θn2 ) is its estimate. Since the dimension of Θn1 increases with n, we investigate the asymptotic distribution of its finite linear transformation, D n Θn1 , where D n is an l×d n1 constant matrix with a finite l and d n1 is the dimension of Θ 0 1 . Moreover D n D T n → D and D is a positive definite and symmetric matrix. We assume that K is independent of the sample size n and known beforehand. Its selection is discussed in Section 2.5.</p><p>Lemma 1. Suppose the penalty function ρ nk (B k ) satisfies conditions P 0 -P 2 and the joint density function f (w; Θ) satisfies conditions R 1 -R 5 in <ref type="bibr" target="#b22">Khalili and Lin (2013)</ref>.</p><p>1. If p 4 n n → 0, then there exists a local maximizer Θn for the penalized log-likelihood ln (Θ) with</p><formula xml:id="formula_30">Θn -Θ 0 = O p p n n (1 + q 2n ) ,</formula><p>where</p><formula xml:id="formula_31">q 2n = max kij |ρ nk (b 0 kij )| √ n : b 0 kij = 0 , b 0 kij is an entry of B 0 k .</formula><p>2. If ρ nk (B k ) also satisfies condition P 3 in Khalili and Lin (2013) and p 5 n n → 0, for any n/p n -consistent maximum likelihood estimate Θn , as n → ∞ it has: i. Variable selection consistency:</p><formula xml:id="formula_32">P ( Bj k2 = 0) → 1, k = 1, .</formula><p>. . , K and j = 1, . . . , q.</p><p>ii. Asymptotic normality:</p><formula xml:id="formula_33">√ nD n I -1/2 1 (Θ 0 1 ) I 1 (Θ 0 1 ) - ρ n (Θ 0 1 ) n ( Θn1 -Θ 0 1 ) + ρ n (Θ 0 1 ) n → d N (0, D), (<label>17</label></formula><formula xml:id="formula_34">)</formula><p>where I 1 (Θ 0 1 ) is the Fisher information matrix under the true subset model.</p><p>Proof. Write Θ = (θ 1 , θ 2 , . . . , θ tn ) T , where t n is the total number of parameters in the model. Then Lemma 1 is a direct extension from <ref type="bibr" target="#b22">Khalili and Lin (2013)</ref>.</p><p>By Lemma 1, Θn under the LASSO or Elastic Net penalty has a convergence rate p n /n via appropriate choice of the tuning parameters. However consistent estimation does not necessarily guarantee consistent variable selection. By the Lemma, the LASSO or Elastic Net penalty does not lead to consistent variable selection, because on one hand λ k must be large enough to achieve sparsity, on the other hand the bias term q 2n is proportional to the λ k / √ n. This problem can be solved by using adaptive LASSO or adaptive Elastic Net penalty instead, which leads to concurrent estimation and variable selection consistency.</p><p>We conducted a sequence of small simulation studies to numerically demonstrate optimality properties of the new method. They are presented in Web Appendix A.</p><p>3 Generalization of the Plaid Model <ref type="bibr" target="#b23">Lazzeroni and Owen (2002)</ref> proposed the plaid model to decompose a gene expression data as the sum of overlapping layers (clusters). Each layer contains a subset of genes and samples, while each gene and sample can participate in multiple layers. Denote x ij a gene expression data entry and K is the total number of layers. The plaid model is</p><formula xml:id="formula_35">x ij = ω 0 + K k=1 (ω k + α ik + β jk )P ik Q jk ,</formula><p>where ω 0 , ω k , α ik , β jk ∈ R, P ik is 1 if gene i is in the kth gene-bolck and otherwise 0, Q jk is 1 if sample j is in the kth sample-block and otherwise 0. An iterative algorithm was put forward to consecutively search for the layers.</p><p>In fact, model ( <ref type="formula" target="#formula_0">1</ref>) is a generalized plaid model by introducing covariates into the model so that it can cluster overlapping multivariate regression data. Therefore, estimation procedures of the plaid model can also be used to estimate (1). In parallel to the plaid model, the parameters are estimated by minimizing the Q,</p><formula xml:id="formula_36">Q = 1 2 n i=1 y i - K k=1 x T i B k P ik 2 2 + K k=1 ρ nk (B k ),</formula><p>where ρ nk (B k ) is the penalty function defined in Section 2.2. Detailed procedures for optimizing Q are shown in Algorithm 1 in Web Appendix B, which is a generalization of the improved iterative algorithm by <ref type="bibr" target="#b35">Turner et al. (2005)</ref> to multivariate regression. At each time, the algorithm searches for a layer that explains as much of the rest data as possible; once a layer has been found, it is subtracted from the data and remains unchanged; the algorithm stops when no further layers can be found. However this algorithm introduces bias to parameter estimations due to its discrete updating scheme, where previous recruited layers can not be refined as new layers are recruited into the model. To address this issue, we further revised Algorithm 1 to enable joint optimization of all layers. Detailed procedures are presented in Algorithm 2 in Web Appendix B.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Therapeutic Biomarker Identification for the CGP Data</head><p>We now turn our attention back to analyses of the CGP high throughput drug sensitivity dataset for cancer described in Section 1.1. An updated version of this data (<ref type="url" target="http://www.cancerrxgene.org/downloads/">http://www.cancerrxgene.org/downloads/</ref>) contains 707 human tumor cell lines as samples, 140 drugs as response variables, and 13831 genomic features as covariates (including the tissue type, rearrangements, mutation status of 71 cancer genes, continuous copy number data of 426 genes causally implicated in cancer, as well as genome-wide transcriptional profiles). The response variables, made up with IC 50 values from pairwise drug-cell-line screening, have some missing values. Therefore the data was first filtered by removing cell lines for which less than 50% of the drugs were tested, resulting in 591 cell lines remaining. In the remaining data, about 37.4% of the cell lines are with missing values. These missing values were then imputed via the a random forest imputation algorithm <ref type="bibr" target="#b16">(Ishwaran et al., 2008)</ref>.</p><p>Direct Q1: Can cancer-specific therapeutic biomarkers be detected?</p><p>We applied our new method to identify patterns of cancer-specific therapeutic biomarkers. Note that by "cancer-specific" we do not assume separate patterns for each cancer type but rather clusters that may be driven by one or a small number of cancer types. Throughout the analysis, we fixed K to a value of 3, although as previously shown, a BIC model selection approach could also be used. However, fixing the value of K does not limit the interesting findings that we can still find and saves on computational time.</p><p>Due to the scale and complexity of the data, the analysis was conducted in three steps. Although simulation studies show that modeling with multiple response variables yields much higher clustering accuracy than modeling with a single response variable, it is unreasonable to simply fit all 140 drugs (responses) in one generalized FMMR model. Because by doing so, one assumes that the cell line assignments to clusters are the same for all 140 drugs, which can hardly be true. Thus in our analysis, we first divided the 140 drugs into several groups and then fitted each drug group with a generalized FMMR model, in which to capture active grouped genomic features, the Elastic-Net penalty along with a simplified updating scheme of B k discussed in Section 2.4 was used.</p><p>In the first step, each drug c was fitted by a generalized FMMR model, from which we got drug-specific cell line assignments, Ẑc , and cluster-wise coefficient estimates, Bc k for k = 1, . . . , 3. In the second step, we used the affinity-propagation clustering (APC) algorithm <ref type="bibr" target="#b12">(Frey and Dueck, 2007)</ref> to group the 140 drugs based on results from step 1. The grouping was conducted in a two-level nested manner. In the first level, the APC algorithm was applied to all 140 drugs. The pair-wise similarity matrix required by the algorithm as input data was calculated from the Euclidean distance between Ẑa and Ẑb where a and b refer to two unique drugs. In the second level, the APC algorithm was re-applied to each first-level drug group. Coefficient estimates Bc k for k = 1, . . . , 3 were used to calculate the pair-wise similarities. Consequently, drugs having similar cell line assignments and cluster-wise coefficient estimates were grouped together. Resulting drug groups are shown in Web Figure <ref type="figure">6</ref>, where the coloring and thickness of connecting lines indicate degree of closeness. In the third step, each second-level drug group C from step 2 was fitted by a generalized FMMR model, from which we got drug-group-specific cell line assignments, ẐC , and cluster-wise coefficient estimates BC k for k = 1, . . . , 3. As an illustration, cell line members and coefficient estimates of clusters 1 and 12 for each second-level drug group are shown in Web Figures <ref type="figure">7</ref><ref type="figure">8</ref>. Cell line members of a cluster are depicted via frequencies of the cancer types cell lines belong to. The frequencies are represented by the size of colored bubbles in top panel of the figures. Estimates of other clusters are not presented in the paper due to limited space. It's very clear that clusters being driven by different cancer types have very different therapeutic genomic profiles and yet no clusters are homogeneous in a particular cancer type. This speaks to the great heterogeneity seen in cancer overall where in fact, cancer is not thought of as a single disease but rather many diseases characterized by different underlying biological changes.</p><p>Direct Q2: Can drug resistance patterns be identified along with predictive xlim Cancer types q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q aero_digestive_tract blood bone</p><p>breast digestive_system kidney lung nervous_system pancreas skin soft_tissue thyroid urogenital_system Drugs Genes MS-HL MUT AKT2 MUT ALK MUT APC MUT BRAF MUT BRCA1 MUT BRCA2 MUT CCND1 MUT CCND2 MUT CCND3 MUT CDH1 MUT CDK4 MUT CDK6 MUT CDKN2A MUT CDKN2C MUT CDKN2a(p14) MUT CTNNB1 MUT CYLD MUT EGFR MUT EP300 MUT ERBB2 MUT EZH2 MUT FAM123B MUT FBXW7 MUT FGFR2 MUT FGFR3 MUT FLCN MUT FLT3 MUT GNAS MUT HRAS MUT IDH1 MUT JAK2 MUT KDM5C MUT KDM6A MUT KDR MUT KIT MUT KRAS MUT MAP2K4 MUT MDM2 MUT MET MUT MLH1 MUT MLLT3 MUT MSH2 MUT MSH6 MUT MYC MUT MYCL1 MUT MYCN MUT NF1 MUT NF2 MUT NOTCH1 MUT NRAS MUT PDGFRA MUT PIK3CA MUT PIK3R1 MUT PTEN MUT RB1 MUT RUNX1 MUT SETD2 MUT SMAD4 MUT SMARCA4 MUT SMARCB1 MUT SMO MUT SOCS1 MUT STK11 MUT TET2 MUT TP53 MUT TSC1 MUT VHL MUT BCR_ABL MUT EWS_FLI1 MUT MLL_AFF1 MUT S.Trityl.L.cysteine Z.LLNle.CHO MS.275 JNK.9L Sunitinib AZD.0530 Bicalutamide OSU.03012 PAC.1 IPA.3 Tipifarnib ABT.263 PLX4720 EHT.1864 Dasatinib JW.7.52.1 Midostaurin Shikonin Sorafenib NVP.TAE684 Etoposide Embelin ZM.447439 CGP.082996 Cisplatin Bosutinib X681640 WH.4.023 Gemcitabine AZ628 PF.02341066 KIN001.135 TGX221 Salubrinal Lapatinib QS11 OSI.906 Bexarotene AS601245 Gefitinib NU.7441 PD.0332991 AZD6482.1 Doxorubicin Thapsigargin AUY922 LAQ824 Temsirolimus AZD8055 AICAR MG.132 Bryostatin.1 Imatinib Bortezomib Epothilone.B AKT.inhibitor.VIII GSK.1904529A Axitinib WZ.1.84 Parthenolide GSK269962A NSC.87877 DMOG AZD.2281 ABT.888 GW.441756 SB.216763 VX.702 AMG.706 JNK.Inhibitor.VIII PD.173074 AG.014699 CMK XMD8.85 PF.562271 FTI.277 BX.795 JNJ.26854165 GW843682X Bleomycin X17.AAG Rapamycin A.443654 BMS.754807 CEP.701 CCT018159 Cyclopamine GNF.2 LFM.A13 Lenalidomide GDC.0449 Nilotinib Paclitaxel BI.2536 Camptothecin Vinblastine Elesclomol NVP.BEZ235 VX.680 A.770041 BMS.536924 BMS.509744 FH535 GSK.650394 BAY.61.3606 Methotrexate ATRA BIBW2992 BIRB.0796 MK.2206 SB590885 CCT007093 Erlotinib PHA.665752 CHIR.99021 AZD6482 SL.0101.1 Nutlin.3a BMS.708163 Pyrimethamine Roscovitine AP.24534 Pazopanib KU.55933 RO.3306 AZD6244 PF.4708671 Obatoclax.Mesylate Cytarabine RDEA119 GDC0941 Vinorelbine Docetaxel CGP.60474 Mitomycin.C Vorinostat CI.1040 AZD7762 PD.0325901 TW.37 -1e+01 -3e-01 -1e-01 -3e-02 -1e-08 1e-08 1e-02 1e-01 2e+00 strategies to circumvent resistance using alternative drugs?</p><p>We discussed in the Introduction to the paper the success story of Gleevec which was used for the treatment of CML based on the known specificity of targeting the BCR-ABL gene. It is now becoming more and more common in the treatment of cancer to first sequence known cancer genes in tumor genomes and then design therapies accordingly <ref type="bibr" target="#b3">(Bailey et al., 2014)</ref>. It is also true that tumors can develop resistance to first line therapies by accumulating mutations which confer resistance. We now show how our methodology can be used to identify predictive strategies for circumventing drug resistance based on mutation data.</p><p>Figures 2-3 are similar to Web Figures <ref type="figure">7</ref><ref type="figure">8</ref>, except that they only show a subset of BC 1 and BC 12 with regard to the mutations of 71 cancer genes, where BC 12 = BC 1 + BC 2 are coefficient estimates of cluster 12 for drug group C. Bottom panel of figure 2-3 are in fact regression based drug-genetic association map with red indicating drug-sensitivity biomarkers and blue indicating drug-resistance biomarkers, conditioning on a cluster of cell lines (upper panel) identified by the generalized FMMR model. We propose that above estimation results can be used for drug repurposing <ref type="bibr" target="#b24">(Martins et al., 2015)</ref> for resistant tumors. Take soft tissue cancers as an example of this drug repurposing. We extracted those clusters which contain a high percentage of soft tissue cancers (large purple bubbles), along with the subset cluster-wise coefficient estimates. The extracted information is presented in Web Figure <ref type="figure" target="#fig_8">5</ref>. Its upper panel shows the IC 50 values of soft tissue cell lines in extracted clus-xlim Cancer types q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q aero_digestive_tract blood bone</p><p>breast digestive_system kidney lung nervous_system pancreas skin soft_tissue thyroid urogenital_system Drugs Genes MS-HL MUT AKT2 MUT ALK MUT APC MUT BRAF MUT BRCA1 MUT BRCA2 MUT CCND1 MUT CCND2 MUT CCND3 MUT CDH1 MUT CDK4 MUT CDK6 MUT CDKN2A MUT CDKN2C MUT CDKN2a(p14) MUT CTNNB1 MUT CYLD MUT EGFR MUT EP300 MUT ERBB2 MUT EZH2 MUT FAM123B MUT FBXW7 MUT FGFR2 MUT FGFR3 MUT FLCN MUT FLT3 MUT GNAS MUT HRAS MUT IDH1 MUT JAK2 MUT KDM5C MUT KDM6A MUT KDR MUT KIT MUT KRAS MUT MAP2K4 MUT MDM2 MUT MET MUT MLH1 MUT MLLT3 MUT MSH2 MUT MSH6 MUT MYC MUT MYCL1 MUT MYCN MUT NF1 MUT NF2 MUT NOTCH1 MUT NRAS MUT PDGFRA MUT PIK3CA MUT PIK3R1 MUT PTEN MUT RB1 MUT RUNX1 MUT SETD2 MUT SMAD4 MUT SMARCA4 MUT SMARCB1 MUT SMO MUT SOCS1 MUT STK11 MUT TET2 MUT TP53 MUT TSC1 MUT VHL MUT BCR_ABL MUT EWS_FLI1 MUT MLL_AFF1 MUT S.Trityl.L.cysteine Z.LLNle.CHO MS.275 JNK.9L Sunitinib AZD.0530 Bicalutamide OSU.03012 PAC.1 IPA.3 Tipifarnib ABT.263 PLX4720 EHT.1864 Dasatinib JW.7.52.1 Midostaurin Shikonin Sorafenib NVP.TAE684 Etoposide Embelin ZM.447439 CGP.082996 Cisplatin Bosutinib X681640 WH.4.023 Gemcitabine AZ628 PF.02341066 KIN001.135 TGX221 Salubrinal Lapatinib QS11 OSI.906 Bexarotene AS601245 Gefitinib NU.7441 PD.0332991 AZD6482.1 Doxorubicin Thapsigargin AUY922 LAQ824 Temsirolimus AZD8055 AICAR MG.132 Bryostatin.1 Imatinib Bortezomib Epothilone.B AKT.inhibitor.VIII GSK.1904529A Axitinib WZ.1.84 Parthenolide GSK269962A NSC.87877 DMOG AZD.2281 ABT.888 GW.441756 SB.216763 VX.702 AMG.706 JNK.Inhibitor.VIII PD.173074 AG.014699 CMK XMD8.85 PF.562271 FTI.277 BX.795 JNJ.26854165 GW843682X Bleomycin X17.AAG Rapamycin A.443654 BMS.754807 CEP.701 CCT018159 Cyclopamine GNF.2 LFM.A13 Lenalidomide GDC.0449 Nilotinib Paclitaxel BI.2536 Camptothecin Vinblastine Elesclomol NVP.BEZ235 VX.680 A.770041 BMS.536924 BMS.509744 FH535 GSK.650394 BAY.61.3606 Methotrexate ATRA BIBW2992 BIRB.0796 MK.2206 SB590885 CCT007093 Erlotinib PHA.665752 CHIR.99021 AZD6482 SL.0101.1 Nutlin.3a BMS.708163 Pyrimethamine Roscovitine AP.24534 Pazopanib KU.55933 RO.3306 AZD6244 PF.4708671 Obatoclax.Mesylate Cytarabine RDEA119 GDC0941 Vinorelbine Docetaxel CGP.60474 Mitomycin.C Vorinostat CI.1040 AZD7762 PD.0325901 TW.37 -1e+01 -4e-01 -8e-02 -2e-02 -1e-08 1e-08 1e-01 5e-01 2e+00 ters. The drugs in Web Figure <ref type="figure" target="#fig_8">5</ref> were further filtered by only keeping those that have low IC 50 values without resistance biomarkers and that have high IC 50 values with resistance biomarkers, leading to Figure <ref type="figure" target="#fig_6">4</ref>. In this figure, we conclude that the former set of drugs can be used as alternatives for the later set of drugs which progress resistance to soft tissue cancers. As a positive control of this strategy, drug Gemcitabine was found to be effective in soft tissue cancers resistant to standard chemotherapy (doxyrubicin) in <ref type="bibr" target="#b25">Merimsky et al. (2000)</ref>.</p><p>Direct Q3: Can drug synergies be predicted?</p><p>Our desire to allow overlapping cell line clusters becomes apparent in answering this question. Overlapping clusters can be used to guide drug combinations and identify potential drug synergies. From ẐC , we can get the cluster-wise IC 50 values for each drug. Web Figure <ref type="figure">9</ref> are boxplots of the cluster-wise IC 50 values for 15 out of 140 drugs. Due to limited space, the rest are not shown. We then identify the drugs for which the magnitudes of IC 50 s of overlapping cluster, say 12, are between those of clusters 1 and 2. For instance, drugs MS.275 and GW843682X show such interesting pattern. We focus on the cluster with highest IC 50 s on average, say cluster 2, and use the coefficient estimates of overlapping cluster to guide the search of another drug to decrease the IC 50 s of cluster 2 towards overlapping cluster. Take GW843682X for an example, cluster 2 has the highest IC 50 s among clusters 1, 2, and 12. We predicted the IC 50 s in cluster 2 using Bgw843682x q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q Drugs Genes</p><p>MS-HL MUT AKT2 MUT ALK MUT APC MUT BRAF MUT BRCA1 MUT BRCA2 MUT CCND1 MUT CCND2 MUT CCND3 MUT CDH1 MUT CDK4 MUT CDK6 MUT CDKN2A MUT CDKN2C MUT CDKN2a(p14) MUT CTNNB1 MUT CYLD MUT EGFR MUT EP300 MUT ERBB2 MUT EZH2 MUT FAM123B MUT FBXW7 MUT FGFR2 MUT FGFR3 MUT FLCN MUT FLT3 MUT GNAS MUT HRAS MUT IDH1 MUT JAK2 MUT KDM5C MUT KDM6A MUT KDR MUT KIT MUT KRAS MUT MAP2K4 MUT MDM2 MUT MET MUT MLH1 MUT MLLT3 MUT MSH2 MUT MSH6 MUT MYC MUT MYCL1 MUT MYCN MUT NF1 MUT NF2 MUT NOTCH1 MUT NRAS MUT PDGFRA MUT PIK3CA MUT PIK3R1 MUT PTEN MUT RB1 MUT RUNX1 MUT SETD2 MUT SMAD4 MUT SMARCA4 MUT SMARCB1 MUT SMO MUT SOCS1 MUT STK11 MUT TET2 MUT TP53 MUT TSC1 MUT VHL MUT BCR_ABL MUT EWS_FLI1 MUT MLL_AFF1 MUT Vinorelbine(1) Docetaxel(1) Gemcitabine(3) JW.7.52.1(5) BMS.708163(2) Nutlin.3a(2) AZD6482(2) ZM.447439(1) PAC.1(1) OSU.03012(1) -3e+00 -4e-02 -1e-08 8e-02 2e+00 q q -4 -2 0 2 4 6 MS.275 IC50 Tr Prc1 Prc2 Prc4 -6 -4 -2 0 2 4 GW843682X IC50 Tr Prc1 Prc2 Prc4 q -4 -2 0 2 4 GW843682X IC50 Tr Prc2 Prc3 Prc6 q 2 4 6 8 10 MS.275+Bicalutamide IC50 Tr Prc1h Prc2 Prc4h q q q q q q -10 -5 0 5 GW843682X+Epothilone.B IC50 Tr Prc1h Prc2 Prc4h q q q q -6 -4 -2 0 2 4 GW843682X+NVP.BEZ235 IC50 Tr Prc2h Prc3 Prc6h we want to see if coefficients Bgw843682x 1 or Bgw843682x 12 applied to cell lines in cluster 2 can generate low IC 50 s similar to those in clusters 1 or 12. Since Bgw843682x 1 corresponds to the coefficient estimates of the target drug GW843682X, we need to find another drug producing similar coefficient estimates to Bgw843682x 1 , this leads to Bepothilone.b 3 . The predicted IC 50 s of cluster 2 using Bepothilone.b 3 , Bgw843682x 2 and Bepothilone.b 3 + Bgw843682x 2 are presented in bottom panel (middle) of Figure 5. It shows that the combination of GW843682X and Epothilone.B produces much lower IC 50 s for cluster 2 than GW843682X alone. Similar studies were conducted for MS.275 with respect to its clusters 1, 2, 12 and GW843682X with respect to its clusters 2, 3, 23. Results are shown in left and right columns of Figure 5 respectively. The combination of GW843682X and NVP.BEZ235 decreases the IC 50 s dramatically, while the combination of MS.275 and Bicalutamide does not show such effect. As a positive control, Wildey et al. ( <ref type="formula">2014</ref>) pointed out that a group of drugs (including GW843682X and Epothilone B) may provide a practical starting point to investigate combinatorial drug therapies for synergistic effect in small-cell lung cancer (SCLC). Among the group of drugs, they found synergism between GW843682X and CGP60474 via a preliminary study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Discussion</head><p>In this paper, we proposed a new model for identifying therapeutic biomarkers for cancer which can answer specific questions regarding sensitivity, resistance and synergy. We used a penalized likelihood approach for the FMMR model which enforced sparsity in the genomic features. To enable overlapping clustering, the FMMR model was then generalized and a new EM algorithm derived for estimation of model parameters. While the noteworthy plaid model can also be generalized for overlapping clustering multivariate regression data, the generalized FMMR model markedly outperforms this method. Some improvements can be made for future developments on this work. First, other useful penalty functions for multivariate regression estimations can be adopted, such as the M AP (MAster Predictor) penalty in <ref type="bibr" target="#b27">Peng et al. (2010)</ref>, the L 2 SV S method by <ref type="bibr" target="#b31">Similä and Tikka (2007)</ref> and the L ∞ SV S method by <ref type="bibr" target="#b34">Turlach et al. (2005)</ref>. Second, the multivariate normal distribution assumption on Y i can be extended to other more flexible parametric families of multivariate distributions, such as the skew-normal distribution <ref type="bibr" target="#b1">(Azzalini, 2005)</ref> and the multivariate skew-t distribution <ref type="bibr" target="#b6">(Chen et al., 2014)</ref>, for frequent presence of skewness and kurtosis in real data.</p><p>As described in the CGP data analyses, we had about 37% of the final analyses observations that had missing data and which we dealt with by using random forest imputation. It would be of interest to explore the impact of this step more thoroughly. An alternative would be to generalize to this problem, the recently developed E-MS algorithm <ref type="bibr" target="#b18">Jiang et al. (2015)</ref> for model selection with incomplete data.</p><p>Web-based Supplementary Materials for "Precision Therapeutic Biomarker Identification with Application to the Cancer Genome Project"</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A Simulation Studies</head><p>A.1 Design of the Simulations Two scenarios were designed to investigate the non-overlapping clustering and overlapping clustering of the new method respectively. In each scenario, data were generated from model (2.1) with K = 3, p n = 15, q = 3 and n = 150, 450. Predictors x i , i = 1, . . . , n, were drawn independently from N pn (0, Σ 1 ) with Σ 1 (i, j) = 0.5 |i-j| . Random errors ε i , i = 1, . . . , n, were drawn independently from N q (0, Σ 2 ) with Σ 2 (i, j) = 0.75 |i-j| . The sparse coefficient matrices B k , k = 1, 2, 3, were generated as</p><formula xml:id="formula_37">B k = W ⊗ S ⊗ T,<label>(18)</label></formula><p>where ⊗ indicates the element-wise product. Each entry of W was drawn independently from N (0, 1), each entry of S was drawn independently from the Bernoulli distribution B(1, p 1 ), and each row of T (either all 1 or all 0) was determined by an independent draw from B(1, p 2 ). As a result, we expect p 1 p 2 p n relevant predictors for each response variable, and (1 -p 2 )p n predictors are expected to be irrelevant to all q response variables. We let p 1 = 0.5 and p 2 = 0.9. Each simulation was repeated for 50 times. A new sequence of B k , k = 1, 2, 3 and a new set of data (X, Y) were generated for each repetition. We assumed that K is known, so that performance evaluation of the new method is not interfered by selection of K. Its selection is separately examined in Section A.4. Scenario 1: The 3 clusters are non-overlapping, each cluster contains n/3 observations. Scenario 2: 70% of the observations involve in single cluster, 22% of the observations involve in two clusters and 8% of the observations involve in three clusters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 Quality Measures of Cluster Recovery</head><p>Quality measures in Baeza-Yates et al. <ref type="bibr">(1999)</ref> have been used to evaluate the clustering performance of the proposed method. Denote N S the number of elements in S. Below quality measures were proposed to compare a retrieved cluster Â with a target cluster A,</p><formula xml:id="formula_38">"specificity" = N A∩ Â N A , "sensitivity" = N A∩ Â N Â , "F 1 measure" = 2N A∩ Â N A + N Â .</formula><p>The F 1 measure, taken as the harmonic mean of specificity and sensitivity, gives an overall measure of the clustering. Moreover, we employed the one-to-one correspondence match approach <ref type="bibr" target="#b35">(Turner et al., 2005)</ref> to evaluate a sequence of retrieved clusters. It includes about three steps. First make the number of retrieved clusters to be the same as the number of target clusters by adding null clusters to retrieved clusters or dropping addition poorly retrieved clusters. Retrieved clusters are then matched to target clusters in pair. Finally, calculate the mean quality measures for the sequence of paired clusters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.3 Results of the Simulations</head><p>A sequence of methods were implemented for comprehensive comparison with our new method, including the generalized plaid model (plaid) and its revised counterparts (aplaid); the R package flexmix (EM) where response variables are treated as independent and overlap issues are not considered; the generalized FMMR model with response variables treated as independent (gEMseplasso0); the generalized FMMR model with separate LASSO estimation of B k (gEMseplasso); and finally the original generalized FMMR model with MRCE estimation of B k (gEMmrce).</p><p>Their performances were evaluated via the three quality measures introduced in Section A.2 and the sum of squared errors (SSE) of coefficients estimates. Results are summarized in Web Figure <ref type="figure">6</ref>-7. In scenario 1 when there is no overlap, EM and gEMseplasso0 do equally well showing that the generalized FMMR model retains the ability to recover non-overlapping clusters. By taking into account of the covariance structure among response variables, gEMseplasso and gEMmrce outperform EM and gEMseplasso0, but there is little difference between gEMseplasso and gEMmrce. In scenario 2 when there are 30% overlaps, specificity of EM drops down dramatically, resulting in a poor F 1 measure. The gEMseplasso0 does much better than EM by estimating the overlaps, while it is defeated by gEMseplasso and gEMmrce. In this scenario, gEMmrce outperforms gEMseplasso when n = 150. However, they converge very fast with n, both achieving a median 95% clustering accuracy when n = 450. The plaid and aplaid have a poor performance in all scenarios.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.4 Additional Simulations</head><p>We conducted another simulation for scenario 2 to evaluate the accuracy of BIC in selection of K. In the simulation, K is unknown in candidate procedures EM and gEMseplasso, and is chosen by minimizing the BIC. Results are summarized in Web Figure <ref type="figure">8</ref> and Web Table <ref type="table">1</ref>. Given 30% overlaps in simulated data, BIC has a poor performance in identifying the true K with the EM procedure. Whereas by fitting the overlapping clusters with gEMseplasso, BIC obtains a much higher accuracy in selection of K (see Web Table <ref type="table">1</ref>). Moreover, although K is misspecified for 12% of the times when n = 450, gEMseplasso still has achieved a median 93% clustering accuracy (see Web Figure <ref type="figure">8</ref>).</p><p>An additional simulation was conducted for scenario 2 to investigate the advantage of modeling with multivariate response variables in the new method. We compared the performance of modeling with all 3 response variables versus modeling with each of the 3 response variables in the generalized FMMR model. Results are summarized in Web Figure <ref type="figure">9</ref>. Using multivariate response variables leads to a much higher clustering accuracy.</p><p>Algorithm 1 Plaid For k = 1 : K do At this point, we have already found k -1 layers and are searching for the kth layer. Calculate the residuals from previous k -1 layers by</p><formula xml:id="formula_39">z i = y i - k-1 l=1</formula><p>x T i B l P il , i = 1, . . . , n.</p><p>Initialize P 0 k . For s = 1 : S do Given P s-1 k , compute , back fit the layers R times. We set R = 2. End for 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Specificity 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q q q q q q q q plaid aplaid EM gEMseplasso0 gEMseplasso gEMmrce 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Sensitivity 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods F1 measure 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q q q q 0 20 40 60 80 100</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head><p>Coefficient Error 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q Web Figure <ref type="figure">6</ref>: Simulation results of scenario 1. The two box plots under each method correspond to n = 150, 450 respectively.</p><p>0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Specificity 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q q q q q q q q plaid aplaid EM gEMseplasso0 gEMseplasso gEMmrce 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Sensitivity 1 2 3 4 5 6 q q q q q q q q q q q q 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods F1 measure 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q 0 20 40 60 80 100</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head><p>Coefficient Error 1 2 3 4 5 6 q q q q q q q q q q q q q q q q q q q q q q q q q q Web Figure <ref type="figure">7</ref>: Simulation results of scenario 2.</p><p>1 2 3 4 5 Methods K by BIC 1 2</p><p>q q q q q q q q q q q q q q q q q q q q q q q q q q q q q EM gEMseplasso 0.</p><p>3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Specificity 1 2 q q q q 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Sensitivity 1 2 q q 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods F1 measure 1 2 q 0 20 40 60 80 100 Methods Coefficient Error 1 2 q q q q q Web Figure 8: Simulation results of BIC in selection of K. 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Specificity 1 2 3 4 q q q Y Y[, 1] Y[, 2] Y[, 3]</p><p>0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods Sensitivity 1 2 3 4 q q q q q q q q 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Methods F1 measure 1 2 3 4 q q q q q q 0 20 40 60 80 100</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head><p>Coefficient Error 1 2 3 4 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q Web Figure <ref type="figure">9</ref>: Simulation results of using multivariate responses versus univariate responses.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Overall overlapping patterns given K = 3.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Subset estimation results of cluster 1 by fitting the data of each second-level drug group in a generalized FMMR model. Bottom panel shows a subset of the coefficient estimates corresponding to the mutations of 71 cancer genes, and upper panel shows cell line compositions of cluster 1 by cancer types.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Subset estimation results of cluster 12 by fitting the data of each second-level drug group in a generalized FMMR model.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><figDesc>results are shown in top panel (middle) of Figure5. By doing so,</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: The extracted IC 50 values of soft tissue cancers (upper panel) and a subset of the coefficient estimates corresponding to the mutations of 71 cancer genes (bottom panel) after filtering those drugs not showing the desired pattern.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 5 :,</head><label>5</label><figDesc>Figure 5: Prediction of drug effects and drug combination effects. In each plot, "Tr" represents the observed IC 50 values; the rest three boxplots are predicted IC 50 values using selected coefficient matrices.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>λ</head><figDesc>jk b jk 1 , where B k = (b 1k , . . . , b qk ).-min{0.5, S 2(S-T ) }, otherwise, where T was taken as 0.2S for i = 1, . . . , n.</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p><rs type="person">Hongmei Liu</rs> was supported by a <rs type="grantName">doctoral fellowship</rs> from the <rs type="funder">Sylvester Comprehensive Cancer Center at the University of Miami</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_qHdEvus">
+					<orgName type="grant-name">doctoral fellowship</orgName>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Materials</head><p>Web Appendices, Tables , and <ref type="table">Figures referenced in Sections 2.6</ref>, <ref type="table">3</ref> and <ref type="table">4</ref> are available with this paper at the Biometrics website on Wiley Online Library.</p><p>Algorithm 2 All-plaid Initialize B 0 1 , . . . , B 0 K and P 0 1 , . . . , P 0 K . For s = 1 : S do For k = 1 : K do Given (B s 1 , . . . , B s k-1 , B s-1 k+1 , . . . , B k-1 K ) and (P s 1 , . . . , P s k-1 , P s-1 k , . . . , P s-1 K ), compute</p><p>x T i B s-1 l P s-1 il , i = 1, . . . , n,</p><p>where B k = (b 1k , . . . , b qk ). Given B s k , compute</p><p>where T was taken as 0.2S and τ ∈ (0, 1) for i = 1, . . . , n.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>End for End for</head><p>Web q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q Drugs Genes Web Figure <ref type="figure">11</ref>: Groups of drugs generated from the APC algorithm. Each node implies a type of drug with the drug name on it. Drugs connected with the same color of strokes belong to a first-level drug group, and drugs connected within a closure belong to a secondlevel drug group.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Liu and Rao</head><p>xlim Cancer types q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q aero_digestive_tract blood bone  Web Figure <ref type="figure">12</ref>: Estimation results of cluster 1 by fitting the data of each second-level drug group in a generalized FMMR model. Bottom panel plots the coefficient estimates, and upper panel describes the cell line compositions of cluster 1 by cancer types.</p><p>xlim Cancer types q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q aero_digestive_tract blood bone  Web Figure <ref type="figure">13</ref>: Estimation results of cluster 12 by fitting the data of each second-level drug group in a generalized FMMR model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Liu and Rao</head><p>q q q q q q q q q q 1 2 3 0 2 4 FTI.277 IC50 q q q q q q q q q q 1 2 3</p><p>-2 2 6 BX.795 IC50 q q q q q q q q q q q q q q q q q q q q q 1 2 3 0 4 JNJ.26854165 IC50 q q q q q q q q q q 1 2 3 4 6 -4 0 4 GW843682X IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 4 6</p><p>-10 0 10 Bleomycin IC50 q q q 1 2 3 4 6 -8 -2 4 X17.AAG IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 4 5 -10 0 Rapamycin IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 4 5 -4 0 4 A.443654 IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 4 5 -6 0 4</p><p>BMS.754807 IC50 q q q q q q q q q q q q q q q q q q q q 1 2 3 4 5 -4 0 4 CEP.701 IC50 q q 1 2 3 4 5 1 3 5 7 CCT018159 IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 2 4 6 8 Cyclopamine IC50 q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 -2 2 6 GNF.2 IC50 q q q q q q q q q q q q q q q q q 1 2 3 4 8 14 LFM.A13 IC50 q q q q q q q q q q q q q q q q q q q q q q q q q 1 2 3 1 3 5 7 Lenalidomide IC50</p><p>Web Figure <ref type="figure">14</ref>: Cluster-wise IC 50 values of each drug.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A new look at the statistical model identification</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Akaike</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE transactions on automatic control</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="716" to="723" />
+			<date type="published" when="1974">1974</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The skew-normal distribution and related multivariate families</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Azzalini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scandinavian Journal of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="159" to="188" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Modern information retrieval</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Baeza-Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ribeiro-Neto</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="volume">463</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Implementation of biomarker-driven cancer therapy: existing tools and remaining gaps</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Holla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Brusco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mendelsohn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Routbort</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Mills</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Discovery medicine</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">92</biblScope>
+			<biblScope unit="page">101</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Model-based overlapping clustering</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Banerjee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Krumpelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Basu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Mooney</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the eleventh ACM SIGKDD international conference on Knowledge discovery in data mining</title>
+		<meeting>the eleventh ACM SIGKDD international conference on Knowledge discovery in data mining</meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page" from="532" to="537" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Predicting multivariate responses in multiple linear regression</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Breiman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Friedman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="3" to="54" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Regularized multivariate regression models with skew-t error distributions</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pourahmadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Maadooliat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Planning and Inference</title>
+		<imprint>
+			<biblScope unit="volume">149</biblScope>
+			<biblScope unit="page" from="125" to="139" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Model selection and model averaging</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Claeskens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Hjort</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="volume">330</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Maximum likelihood from incomplete data via the em algorithm</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Dempster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Laird</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Rubin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the royal statistical society. Series B (methodological)</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="38" />
+			<date type="published" when="1977">1977</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">A maximum likelihood methodology for clusterwise linear regression</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Desarbo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Cron</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of classification</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="249" to="282" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Five-year follow-up of patients receiving imatinib for chronic myeloid leukemia</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Druker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Guilhot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Gathmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kantarjian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Gattermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Deininger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">T</forename><surname>Silver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Goldman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Stone</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<publisher>New England Journal of Medicine</publisher>
+			<biblScope unit="volume">355</biblScope>
+			<biblScope unit="page" from="2408" to="2417" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Variable selection via nonconcave penalized likelihood and its oracle properties</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">456</biblScope>
+			<biblScope unit="page" from="1348" to="1360" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Clustering by passing messages between data points</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Frey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dueck</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">science</title>
+		<imprint>
+			<biblScope unit="volume">315</biblScope>
+			<biblScope unit="issue">5814</biblScope>
+			<biblScope unit="page" from="972" to="976" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Multiplicative mixture models for overlapping clustering</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Banerjee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Eighth IEEE International Conference on Data Mining</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2008">2008. 2008</date>
+			<biblScope unit="page" from="791" to="796" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Systematic identification of genomic markers of drug sensitivity in cancer cells</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Garnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Heidorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dastur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Greninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">R</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Soares</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="issue">7391</biblScope>
+			<biblScope unit="page" from="570" to="575" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Flexmix version 2: finite mixtures with concomitant variables and varying and constant parameters</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Grun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Leisch</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Random survival forests. The annals of applied statistics</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ishwaran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">B</forename><surname>Kogalur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">H</forename><surname>Blackstone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Lauer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="841" to="860" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">On estimating finite mixtures of multivariate regression and simultaneous equation models</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jedidi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ramaswamy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Desarbo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wedel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Structural Equation Modeling: A Multidisciplinary Journal</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="266" to="289" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">The e-ms algorithm: model selection with incomplete data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Rao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">511</biblScope>
+			<biblScope unit="page" from="1136" to="1147" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Fitting finite mixture models in a regression context</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mclachlan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Australian Journal of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="233" to="240" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Consistent estimation of the order of mixture models</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Keribin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sankhyā: The Indian Journal of Statistics, Series A</title>
+		<imprint>
+			<biblScope unit="page" from="49" to="66" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Variable selection in finite mixture of regression models</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Khalili</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the american Statistical association</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Regularization in finite mixture of regression models with diverging number of parameters</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Khalili</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="436" to="446" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Plaid models for gene expression data</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lazzeroni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Owen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistica sinica</title>
+		<imprint>
+			<biblScope unit="page" from="61" to="86" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Linking tumor mutations to drug responses via a quantitative chemical-genetic interaction map</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Martins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Corella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Horiuchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rakshandehroo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Gordan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Levin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jascur</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer discovery</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="154" to="167" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Gemcitabine in soft tissue or bone sarcoma resistant to standard chemotherapy: a phase ii study</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Merimsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Meller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Flusser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kollender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Issakov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weil-Ben-Arush</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Fenig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Neuman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sapir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ariad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer chemotherapy and pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="177" to="181" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">Computer methods for classification and grouping. The Use of Computers in Anthropology</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Needham</surname></persName>
+		</author>
+		<editor>I. Hymes</editor>
+		<imprint>
+			<date type="published" when="1965">1965</date>
+			<biblScope unit="page" from="345" to="356" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Regularized multivariate regression for identifying master predictors with application to integrative genomics study of breast cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bergamaschi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D.-Y</forename><surname>Noh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Pollack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The annals of applied statistics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">53</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A new approach to estimating switching regressions</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Quandt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American statistical association</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">338</biblScope>
+			<biblScope unit="page" from="306" to="310" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Sparse multivariate regression with covariance estimation</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Rothman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Levina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational and Graphical Statistics</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="947" to="962" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Estimating the dimension of a model</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Schwarz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The annals of statistics</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="461" to="464" />
+			<date type="published" when="1978">1978</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Input selection and shrinkage in multiresponse linear regression</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Similä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tikka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computational Statistics &amp; Data Analysis</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="406" to="422" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">An asymptotic equivalence of choice of model by cross-validation and akaike&apos;s criterion</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Stone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society. Series B (Methodological)</title>
+		<imprint>
+			<biblScope unit="page" from="44" to="47" />
+			<date type="published" when="1977">1977</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Regression shrinkage and selection via the lasso</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society. Series B (Methodological)</title>
+		<imprint>
+			<biblScope unit="page" from="267" to="288" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">Simultaneous variable selection</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Turlach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">N</forename><surname>Venables</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Wright</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="349" to="363" />
+		</imprint>
+	</monogr>
+	<note type="report_type">Technometrics</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Improved biclustering of microarray data demonstrated through systematic performance tests</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Turner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Krzanowski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computational statistics &amp; data analysis</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="235" to="254" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Pharmacogenomic approach to identify drug sensitivity in small-cell lung cancer</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wildey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Lent</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Stetson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Barnholtz-Sloan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dowlati</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PloS one</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">106784</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">A bayesian model for biclustering with applications</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series C (Applied Statistics)</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="635" to="656" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

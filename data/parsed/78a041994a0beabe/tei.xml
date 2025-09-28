@@ -1,0 +1,1651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Synergistic Drug Combination Prediction by Integrating Multi-omics Data in Deep Learning Models</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Tianyu</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute for Informatics (I2)</orgName>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution">Dalian University of Technology</orgName>
+								<address>
+									<settlement>Dalian</settlement>
+									<region>China</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Liwei</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="institution">Dalian University of Technology</orgName>
+								<address>
+									<settlement>Dalian</settlement>
+									<region>China</region>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Philip</forename><forename type="middle">R O</forename><surname>Payne</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute for Informatics (I2)</orgName>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Medicine</orgName>
+								<orgName type="institution" key="instit1">Washington University School of Medicine</orgName>
+								<orgName type="institution" key="instit2">Washington University in St. Louis</orgName>
+								<address>
+									<settlement>St. Louis</settlement>
+									<region>Missouri</region>
+									<country>United States;</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Fuhai</forename><surname>Li</surname></persName>
+							<email>fuhai.li@wustl.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute for Informatics (I2)</orgName>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Pediatrics</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Synergistic Drug Combination Prediction by Integrating Multi-omics Data in Deep Learning Models</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9F568CCB0E424320166A4A4ABCE7F1A6</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Drug resistance is still a major challenge in cancer therapy. Drug combination is expected to overcome drug resistance. However, the number of possible drug combinations is enormous, and thus it is infeasible to experimentally screen all effective drug combinations considering the limited resources. Therefore, computational models to predict and prioritize effective drug combinations is important for combinatory therapy discovery in cancer. In this study, we proposed a novel deep learning model, AuDNNsynergy, to prediction drug combinations by integrating multi-omics data and chemical structure data. In specific, three autoencoders were trained using the gene expression, copy number and genetic mutation data of all tumor samples from The Cancer Genome Atlas. Then the physicochemical properties of drugs combined with the output of the three autoencoders, characterizing the individual cancer cell-lines, were used as the input of a deep neural network that predicts the synergy value of given pair-wise drug combinations against the specific cancer cell-lines. The comparison results showed the proposed AuDNNsynergy model outperforms four state-of-art approaches, namely DeepSynergy, Gradient Boosting Machines, Random Forests, and Elastic Nets. Moreover, we conducted the interpretation analysis of the deep learning model to investigate potential vital genetic predictors and the underlying mechanism of synergistic drug combinations on specific cancer cell-lines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.Introduction</head><p>Combinatory therapies are being adopted in treating complicated diseases, e.g., cancer [1] and AIDS <ref type="bibr" target="#b1">[2]</ref>, which are more effective with reduced toxicity, and can overcome intrinsic or acquired resistance to individual drugs <ref type="bibr" target="#b2">[3]</ref>. Generally, there are three types of pair-wise drug combination interactions: additive interaction (the effect (e.g., tumor cell growth inhibition) of a drug</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>combination is equal to the sum of effects of individual drugs taken separately), synergistic interaction (the effect of a drug combination at specific doses is greater than the sum of effects of individual drugs) and antagonistic interaction (the effect of a drug combination is less than the sum of effects of individual drugs). A few synergistic drug combinations have been discovered, for example, targeted therapy and immune treatment <ref type="bibr" target="#b3">[4]</ref>, targeted therapy and targeted therapy <ref type="bibr" target="#b4">[5]</ref>, targeted therapy and chemotherapy combinations <ref type="bibr" target="#b5">[6]</ref>. Also mechanisms of synergy of drug combinations are diverse and distinct, for example, two drugs can achieve synergy by targeting different oncogenic pathways or mutations simultaneously <ref type="bibr" target="#b6">[7]</ref>, <ref type="bibr" target="#b7">[8]</ref>.</p><p>It is a challenging task to experimentally screen drug combinations considering the enormous number of possible combinations and heterogeneous mechanisms of synergy.</p><p>Therefore, computational models to predict effective drug combinations for specific cancer subtypes or individual patients is important and urgently needed. To facilitate the development of computational models of drug combinations, more and more datasets of drug combinations have been being generated. For example, 178 drug combinations were collected from FDA orange book by Zhao et al. <ref type="bibr" target="#b8">[9]</ref>, and 239 drug combinations were derived from literature curated by Huang et al. <ref type="bibr" target="#b9">[10]</ref>. The DCDB database <ref type="bibr" target="#b10">[11]</ref> has 1363 drug combinations, and the ASDCD database <ref type="bibr" target="#b11">[12]</ref> has 210 drug combinations. Moreover, experimental screening of combinations of 39 drugs against 38 cell lines were reported in <ref type="bibr" target="#b12">[13]</ref>; and screening results of combinations of 104 drugs against 59 cell lines were reported in <ref type="bibr" target="#b13">[14]</ref>.</p><p>In spite of the existing approaches, drug combination prediction is still an open problem.</p><p>For example, Li et al. <ref type="bibr" target="#b14">[15]</ref> developed a network propagation method to predict drug synergy based on the gene-gene interaction network. Janizek et al. <ref type="bibr" target="#b15">[16]</ref> used XGBoost method combing with a tool named TreeSHAP to predict and make prediction results explainable. A system biology method was designed by Feala et al. <ref type="bibr" target="#b16">[17]</ref>; Nelander et al. <ref type="bibr" target="#b17">[18]</ref> built a nonlinear multiple-input, multiple-output network model. Chen et al. <ref type="bibr" target="#b18">[19]</ref> predicting potential combinations based on semisupervised learning. Also some computational models <ref type="bibr" target="#b19">[20]</ref>, <ref type="bibr" target="#b20">[21]</ref>, <ref type="bibr" target="#b21">[22]</ref> have been proposed integrating the genomics profiles of tumor and reverse gene signatures of drugs derived from connective map database <ref type="bibr" target="#b22">[23]</ref>, <ref type="bibr" target="#b23">[24]</ref>. Deep learning models have been developed to solve medical problems and outperformed the traditional machine learning methods. For example, Preuer et al. <ref type="bibr" target="#b24">[25]</ref> proposed a deep neural network (DNN) model named DeepSynergy with an improvement of 7.2% over Gradient Boosting Machines for synergy task. Chiu, Y. C et al. <ref type="bibr" target="#b25">[26]</ref> created a model using DNN to predict single drug response of tumors. Gao et al. <ref type="bibr" target="#b26">[27]</ref> predicted drug target using a recurrent neural network and convolution neural network. However, the large number of features used in deep learning models might cause overfitting problem. Also, most models were trained using the genomics data of a small number of cancer cell-lines, and it is hard to generalize the model to new cancer cell lines or patients. Moreover, most deep learning models were not explained, and it is hard to understand the potential mechanism of synergy of drug combinations.</p><p>To improve the prediction accuracy and explain the deep learning models (black box), in this study, we proposed a novel model, AuDNNsynergy (Deep Neural Network Synergy model with Autoencoders), for synergistic drug combination prediction. The comparison results indicated that the AuDNNsynergy model outperformed four state-of-art approaches in ten model measurements. In this model, multi-omics datasets, i.e., gene expression, mutation, copy number variation, and physicochemical properties of drugs were integrated to achieve better prediction accuracy. Moreover, to make the model has prediction ability for unseen cell lines and tumors, we trained autoencoders with all tumor samples form The Cancer Genome Atlas (TCGA) (pancancer dataset). Also, we used a particular cross-validation technique to select the best hyperparameters for the deep learning model. Finally, we conducted the interpretation analysis of the deep learning model to discover potential driver genetic features and uncover underlying mechanisms of synergistic drug combinations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Materials</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Data</head><p>Drug combination screening dataset. The high-throughput drug combination screening dataset was downloaded from <ref type="bibr" target="#b12">[13]</ref>. In specific, 583 pairwise drug combinations of 38 individual drugs were screened against 39 human cancer cell lines. The 39 cell lines include seven types of cancers, i.e., lung, breast, skin, large intestine, pleura, prostate, and ovary. Tumor cell viability after 48 hours of drug treatments (4 doses for each drug) were measured to estimate the synergy of drug combinations. In total, there are 23062 data points.</p><p>Omics data of cancer cell lines and TCGA samples. RNA-seq data of the 1156 cancer cell lines and 10,535 tumor samples from The Cancer Genome Atlas (TCGA) were downloaded from Cancer Cell Line Encyclopedia (CCLE) and UCSC Xena Server <ref type="bibr" target="#b27">[28]</ref> (URL: <ref type="url" target="https://xenabrowser.net/datapages/?dataset">https://xenabrowser.net/datapages/?dataset</ref>). The somatic mutation data of the screened cell lines and 9104 TCGA tumor samples were downloaded from Catalogue of Somatic Mutations in Cancer (COSMIC) <ref type="bibr" target="#b28">[29]</ref> and UCSC Xena respectively. The copy number of 10,845 TCGA pancancer tumors and the 39 cancer cell lines can be accessed from UCSC Xena and CCLE respectively. Some cancer cell lines data cannot be found in CCLE, and COSMIC. We used the genomics data of EFM-129A and COLO320 for the EFM-129B and COLO320DM cell lines respectively. In brief, the EFM-129B established from the same person of EFM-129A after 14 days. The COLO320DM is children of COLO320.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Physicochemical features of drugs.</head><p>To characterize the chemical structures of individual drugs, we used the counts of extended connectivity fingerprints with a radius of 6 (ECP_6) <ref type="bibr" target="#b29">[30]</ref>, predefined physicochemical properties and presence or absence of toxicophores substructures, which were obtained by using jCompoundMapper <ref type="bibr" target="#b30">[31]</ref> and Chemopy <ref type="bibr" target="#b31">[32]</ref> respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Data pre-processing</head><p>The gene expression data was normalized as log 2 (𝑡𝑝𝑚 + 0.001), where 𝑡𝑝𝑚 denotes the number of transcripts per million. The mutation data (only non-silent mutations were used) was formalized as a binary variable: 1 (with mutation) and 0 (no mutation). Copy number variation (CNV) were estimated using GISTIC2 method <ref type="bibr" target="#b32">[33]</ref>. For synergy score of drug combinations, the Loewe Additivity model was used <ref type="bibr" target="#b33">[34]</ref>. All features were filtered by removing elements with zero variance and then normalized to has zero-mean and unit variance. We denote 𝐸 𝑇 , 𝐸 𝐶 , 𝑀 𝑇 , 𝑀 𝐶 , 𝐶 𝑇 as processed data, where 𝐸, 𝑀, and 𝐶 represent gene expression, mutation, copy number and drug, and the T and C indicate tumor and cell lines. For example, 𝐸 𝑇 presenting TCGA expression data after pre-processing. After preprocessing, each cell line contains 50196, 17643 and 20318 features of expression, mutation, and copy number, and each drug represented using the 2431 physicochemical features, denoted by D. In total, each drug combination against a given cancer cell line has 93019 features.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Model</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Architecture of AuDNNsynergy</head><p>The AuDNNsynergy model consists of two major components: three autoencoders and a deep neural network, as shown in </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Settings of autoencoders.</head><p>The three autoencoders are the expression autoencoder (𝐸𝑛 𝑒𝑥 ), mutation autoencoder (𝐸𝑛 𝑚𝑢 ) and copy number autoencoder (𝐸𝑛 𝑐𝑜 ), which were trained using TCGA multi-omics data to transfer the knowledge embedded in the large-scale genomics data of TCGA samples. The cell lines' gene expression, copy number and mutation data are then encoded using the trained three autoencoders, and the outputs are used as the input of the prediction network. In specific, we applied six densely connected layers neural network structure for each autoencoder. Moreover, to choose the optimal autoencoder structures and parameters, the number of neurons and batch size were set as hyperparameters, which result in 20 alternatives of autoencoders. The shape of layers is conic and symmetry with five hidden layers have the number of neurons selected from [8192, 4096, 2048, 1024, 512], and the batch size selected from <ref type="bibr">[512,</ref><ref type="bibr">256]</ref>. The linear activations were used in the output layer and bottleneck layer, and the rectified linear activations were used for other layers. The minimum square error (MSE) was used as the cost function minimized by Adam optimizer with default learning rate. The He's uniform distribution was used for initialization, and a moving average over five epochs on a validation set early-stopping was used for training iterations.</p><p>Settings of the deep neural network. The shape of layers is conic. The number of layers, the number of neurons and learning rate were set as hyperparameters. The number of layers was selected from <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3]</ref>, the number of neurons was selected from [8192, 4096, 2048, 1024, 512]; and the number of learning rate was selected from [10 -1 , 10 -3 , 10 -5 ]. The linear activations were used in the output layer, and rectified linear activations were used in the hidden layers. The batch size of 64, a dropout rate of 0.2 and 0.5 for the input and hidden layers, and stochastic gradient descent optimizer with momentum 0.5 to minimizes MSE cost function were used. The He's uniform distribution was used for initialization, and a moving average over 15 epochs on a validation set early-stopping was used for training iterations. Mathematically, the output 𝒂 𝑖 of layer 𝑖 is calculated by 𝒂 𝑖 = 𝑨 𝑖 (𝑾 𝑖 𝒂 𝑖-1 + 𝒃 𝑖 ), where 𝒂 𝑖 denotes the production of layer i (𝒂 0 is the input), 𝑨 𝑖 , 𝑾 𝑖 and 𝒃 𝑖 are the activation function, weight matrix and bias vector of layer 𝑖 respectively. The weights and biases are learned by backpropagation to minimizes the MSE cost function.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Cross-validation and model interpretation analysis</head><p>For autoencoders' training, each omics data was randomly split into training (90%) and testing (10%) data, and this training was repeated 5 times. For the prediction network, we used five-fold cross-validation experiments to estimate the performance of AuDNNsynergy. To make the model robust each drug-drug combination only appeared in one of these five folds. We used one fold of training dataset as validation dataset to tune the model. To interpret the deep learning model, the 'Innvestigate' package <ref type="bibr" target="#b34">[35]</ref> was used to analyze networks' predictions to investigate importance of features. The method of pixel-wise explanations by layer-wise relevance propagation (LRP) <ref type="bibr" target="#b35">[36]</ref> was adopted. In specific, we used Innvestigate first to get the important drug and encoded genomic features contributing to the synergy score; and then we used LPR again to the interesting genomic features for the selected encoded nodes of encoders outputs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Computation environment of AuDNNsynergy</head><p>We deployed the model on Google Cloud Platform with system Ubuntu 16.04, four vcpu, 32G memory, and NVIDIA Tesla V100 GPU. The AuDNNsynergy was run under CUDA 9.0, cuDNN 9.0 using Keras 2.1 with GPU supporting Tensorflow 1.4 backend.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Model comparison</head><p>We compared AuDNNsynergy with four state-of-arts machine learning models, including DeepSynergy <ref type="bibr" target="#b24">[25]</ref>, Gradient Boosting Machines <ref type="bibr" target="#b36">[37]</ref>, Random Forests <ref type="bibr" target="#b37">[38]</ref>, and Elastic Nets <ref type="bibr" target="#b38">[39]</ref>.</p><p>We evaluated these model, except DeepSynergy, on the 8846 features dataset <ref type="bibr" target="#b24">[25]</ref> and on the 93019 features dataset constructed in this study. The DeepSynergy model was only evaluated on the 8846 features dataset. The reason is that the memory of NVIDIA Tesla V100 GPU is not enough to train it using the 93019 features dataset, which is a limitation of DeepSynergy. To evaluate the DeepSynergy model (a three-layer deep neural network), top 3 hyperparameter settings of performance were used. For the gradient boosting ensembles model, the number of trees and number of features in each split were set as hyperparameters. Random decision forests are also an ensemble machine learning method operated by constructing a multitude of decision trees. Different numbers of trees and numbers of features in each split were evaluated. The Elastic Net is a regularized regression method with a linear combination of lasso and ridge as a penalty of sparse constraint. We performed it with different 𝛼 values and 𝐿 1 ratio that controls the relative weights of 𝐿 1 and 𝐿 2 . The hyperparameter settings of these four methods can be found in Table <ref type="table">1</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Synergistic drug combination prediction</head><p>The 𝐸𝑛 𝑒𝑥 autoencoder with 8192, 2048 and 512 neurons in three layers respectively, and batch size 256; The 𝐸𝑛 𝑒𝑥 autoencoder with 8192, 2048 and 1024 neurons in three layers respectively and batch size 256, and the 𝐸𝑛 𝑒𝑥 autoencoder has 8192, 2048 and 1024 neurons in three layers and batch size 256, have the best performance. The two-layers deep neuron network with 8192 and 2048 neurons respectively and 10 -5 learning rate has the best performance. The performance of the models was measured using the rank correlation and MSE measurements between the experimental synergy scores and the predicted synergy scores. The rank correlation coefficient measures the rank correlation for sometimes predicting priorities of drug pairs is more important than accurately predicting the sensitivity to all potential drugs, and MSE is commonly used to assess the quality of an estimator. The prediction results, in terms of rank correlation and MSE, of the proposed AuDNNsynergy model are shown in Figures <ref type="figure" target="#fig_2">2</ref>, <ref type="figure" target="#fig_3">3</ref>, 4 and 5. As can be seen, the prediction accuracy varies significantly among cell lines and drugs, which might be caused by the distinct mechanisms of different drug-drug pair synergistic/antagonistic effects on specific cell lines. For individual cell lines, the rank correlation coefficients vary from 0.56 to 0.81.</p><p>Only three cell lines exhibit a correlation below 0.6, and &gt;55% of the cell lines can be predicted with a correlation &gt;0.7. The MSE varies in the range of 61 to 526. Similarly, only three cell lines have MSEs &gt;400; and 50% of the cell lines have MSE &lt; 0.7. For individual drugs, the rank correlation coefficients fall in the range of 0.55 to 0.86. Only two drugs have rank correlation coefficients below 0.6; and ~67% of the drugs have rank correlation coefficients higher than 0.7.</p><p>The MSEs for drugs vary from 64 to 846. Three drugs have MSEs larger than 400; and ~ 67% of the drugs have MSEs lower than 200. Specifically, the Sunitinib and Doxorubicin are relatively easy to predict, with rank correlation values above 0.7 and MSE below 100. Moreover, we ranked observed synergy scores and compared with the drug pairs with the highest predicted scores. For over 93% test cell lines, the most synergistic drug pair predicted by AuDNNsynergy falls in the top 5 synergistic drug combinations based on the experimental data. For over 74% cell lines, the model correctly predicted the most synergy pairs. We summarized this result using the pie chart, as shown in Figure <ref type="figure" target="#fig_6">6</ref>.</p><p>We also investigated the poor predictions, which is defined as the difference between prediction synergy value and experimental value is over 100. There are 51 samples (2‰ of all data points) in total, and 10 of them are from the LNCAP (prostate adenocarcinoma) cell line; 9 of them are from the NCIH2122 (lung cancer) cell line; and 12 of them are from the NCIH23 cell line. For drugs, the combinations of MK-4827, GELDANAMYCIN and MK-8776, BEZ-235 appear most frequently with six times in the poor predictions. In summary, most of the predictions are good, as shown in the scattering plot in Figure <ref type="figure" target="#fig_7">7</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Model comparison</head><p>The detailed model comparison results are listed in Table <ref type="table" target="#tab_1">2</ref> and Table <ref type="table">3</ref>, using the measurements of rank correlation, MSE, confidence interval, root mean square error (RMSE) and Pearson correlation. The models were evaluated on the 93019 features dataset, and the 8846 features dataset (*marked). As can be seen, the proposed AuDNNsynergy model outperforms other four models, especially in terms of the rank correlation (0.73) and MSE (241.12). Moreover, it can be seen that other models could not improve their performance even using more features. Also, it is hard to apply the DeepSynergy directly on the 93019 features dataset because there will be more than six hundred million parameters to be optimized. Therefore, it cannot be run on the google cloud platform. Table <ref type="table">3</ref> shows the area under the receiver operator characteristics curve (ROC AUC), area under the precision-recall curve (PR AUC), accuracy (ACC), precision (PREC) and Cohen's Kappa of the five models. The proposed AuDNNsynergy model has the best performance in terms of ROC AUC, PR AUC, ACC, PREC and Kappa compared with other models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Interpretation analysis</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Important omic features for the overall prediction</head><p>Using the interpretation analysis, the number of most important features that can negatively regulate, positively regulate and impact the model are listed in Table <ref type="table">4</ref>, Table <ref type="table" target="#tab_4">5</ref>, and Table <ref type="table">6</ref>, respectively. As can be seen, over 50% of most important features are the chemical structures. It is interestingly that the number of important omics features almost will not change with more feature selected. To identify the important genes, we employ the interpretation analysis twice.</p><p>First, we used the interpretation analysis to get the encoded omics features in the top 100 important features; and repeat five times to select the common features. Then we conduct the interpretation analysis again on the autoencoders to identify the related genes. In summary, the gene expression of 2 genes, mutation of 25 genes, and copy number of 14 genes were selected, which are listed in Table <ref type="table">7</ref>. Through the literature review, we found that many of these genes have been reported related to drug resistance or sensitivity, e.g., STAT3, miR-222, XIAP, FGF16, PBRM1, and SPP1. For example, the feedback activation of STAT3 is a common cause of resistance to many targeted cancer therapies and chemotherapies <ref type="bibr" target="#b39">[40]</ref>. The miR-222 confers Adriamycin and Docetaxel resistance in MCF-7 cells <ref type="bibr" target="#b40">[41]</ref>. The FGF16 gene regulates aggressiveness of HepG2 and PLC/PRF/5 cells <ref type="bibr" target="#b41">[42]</ref>. The mutation of PBRM1, a subunit of the SWI/SNF complex, attenuated the effect of Gefitinib in part by sustaining AKT pathway function during EGFR inhibition <ref type="bibr" target="#b42">[43]</ref>. The SPP1 gene plays an important role in drug sensitivity of malignant pleural mesothelioma <ref type="bibr" target="#b43">[44]</ref>, Oral Squamous Cell Carcinoma <ref type="bibr" target="#b44">[45]</ref>, and pancreatic cancer <ref type="bibr" target="#b45">[46]</ref>. SPP1 is also pivotal in tumor cell proliferation, angiogenesis and metastasis in ovarian <ref type="bibr" target="#b46">[47]</ref>, brain <ref type="bibr" target="#b47">[48]</ref>, lung <ref type="bibr" target="#b48">[49]</ref>, kidney <ref type="bibr" target="#b49">[50]</ref>, liver <ref type="bibr" target="#b50">[51]</ref>, bladder <ref type="bibr" target="#b51">[52]</ref>, breast <ref type="bibr" target="#b52">[53]</ref>, esophageal <ref type="bibr" target="#b53">[54]</ref>, gastric <ref type="bibr" target="#b54">[55]</ref>, colon <ref type="bibr" target="#b55">[56]</ref> and prostate cancers <ref type="bibr" target="#b56">[57]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Mechanism of synergy for specific drug combinations against given cell lines</head><p>We also explored underlying mechanisms of synergy of some drug combinations. For example, Dasatinib and Carboplatin have synergy effect on ovarian cell line A2780 <ref type="bibr" target="#b57">[58]</ref>. Dasatinib targets the SRC while carboplatin targets the DNA. We found the most important gene is the copy number of PTPRK, which dephosphorylates SRC <ref type="bibr" target="#b58">[59]</ref>; Drug combination Sorafenib and Erlotinib are reported to treat non-small cell lung cancer (NSCLC) <ref type="bibr" target="#b59">[60]</ref>. Erlotinib and Sorafenib are the inhibitors of epidermal growth factor receptor (EGFR) and vascular endothelial growth factor (VEGF) receptor respectively. The two of the most important omics predictors of this response are gene PAIP2 and gene miR-507. PAIP2 has a positive effect on the response while miR-507 has an adverse effect. Suppressing miR-507 promotes VEGF-C production <ref type="bibr" target="#b60">[61]</ref>, and PAIP2 is a strong regulator of VEGF <ref type="bibr" target="#b61">[62]</ref>. However, the PAIP2, miR-507, and PTPRK gene are not in the most critical predictors for all drug combination predictions. The results indicate that the interpretation analysis could be useful for uncovering novel mechanism of synergy for specific drug combination against given cancer cell-lines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Synergistic drug combination prediction for TCGA samples</head><p>We also applied the AuDNNsynergy to predict synergy score of the 853 drug combinations on TCGA samples. Although the omics profiles of cell lines and tumors might be different, some prediction results are still meaningful. For example, drug combination Dasatinib/Erlotinib has a high synergy score (rank 7/583) for the NSCLC bears EGFR mutation. Dasatinib is an inhibitor of SRC while Erlotinib is EGFR inhibitor and this pair has been reported are synergy, safe and feasible in NSCLC with activating EGFR mutations <ref type="bibr" target="#b62">[63]</ref>. Also, the Dasatinib with another EGFR inhibitor, Laptinib, have a high synergy score (rank 5/583) for NSCLC with EGFR mutation. The other example is the ABT-888/BEZ-235, MK-4827/BEZ-235, and MK4827/MK8669 combinations, which are top ranked in our prediction (top 4%-7%). ABT-888 and MK-4827 target on PARP while BEZ-235 and MK-8669 target on MTOR on breast cancer samples. The literature review <ref type="bibr" target="#b63">[64]</ref> showed that the treatment of a BRCA2 mutated luminal breast cancer PDX by Everolimus and Olaparib combination resulted in tumor regression. Interestingly, Olaparib is a PARP inhibitor while Everolimus is a mTOR inhibitor, and their combination could lead to unrepaired DNA damage and tumor regression in vivo, through a cross-talk between DNA repair and mTOR pathways. These promising examples show that the proposed model can be used to predict drug combinations for new tumor samples not in the 39 cell lines in the screening data. One of the reasons is that the proposed AuDNNsynergy model is trained using the TCGA samples, and it can transfer and maintain the knowledge of different tumor samples to achieve robust predictions for new tumor samples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Discussion</head><p>In this study, we have presented a deep learning model, AuDNNsynergy, which outperforms existing models of drug combination prediction. In the model, we integrated multi-type of genomics data, e.g., gene expression, copy number and mutation using three autoencoders; and applied the transfer learning to train the autoencoders using TCGA data. The results indicated that the transfer learning of TCGA data can improve the prediction accuracy. Also, we conducted the interpretation analysis, and identified a set of interesting omics features for drug combination prediction, and uncovered potential mechanisms of synergy of specific drug combination against given cancer cell lines.</p><p>In the future work, we aim to improve the performance of AuDNNsynergy as follows. 1) A larger drug combination screening dataset will be used to evaluate the AuDNNsynergy model.</p><p>There are a few drug combination datasets reported. However, the measurements of drug combination synergy are heterogeneous. We will merge these screening datasets using a standard measurement of combinations effectiveness to evaluate the AuDNNsynergy model. 2) More types of genomics data, e.g., methylation, PARADIGM pathway activity, protein expression, and drug structure graph can be added to improve the prediction model.</p><p>Table 1. Hyperparameter settings of 4 method. Table 3. ROC AUC, PR AUC, ACC, PREC and Kappa for 5 methods. Table 4. The number of 4 types features of most positive effect for synergy scores.        </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Overview of the AuDNNsynergy architecture.</figDesc><graphic coords="14,72.00,72.00,467.35,422.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. MSE of predicted synergy scores per cell line.</figDesc><graphic coords="15,72.00,72.00,467.70,350.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Rank correlation coefficients between observed and predicted synergy scores per cell line.</figDesc><graphic coords="16,72.00,72.00,467.70,350.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. MSE of predicted synergy scores per drug.</figDesc><graphic coords="17,72.00,72.00,467.70,350.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Rank correlation coefficients between observed and predicted synergy scores per drug.</figDesc><graphic coords="18,72.00,72.00,467.70,350.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. Ranking correlation between prediction and experimental validations.</figDesc><graphic coords="19,72.00,72.00,467.80,350.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. The overall distribution of predicted and the experimental validated synergy scores.</figDesc><graphic coords="20,72.00,72.00,467.80,350.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 .</head><label>2</label><figDesc>Rank Correlation, MSE, Confidence Interval, RMSE and Pearson correlation for 5 methods on the 93019 features dataset, and the 8846 features dataset (*marked).</figDesc><table><row><cell>Method</cell><cell cols="2">Hyperparameter</cell><cell></cell><cell></cell></row><row><cell>Deep Synergy</cell><cell cols="5">𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 ℎ𝑖𝑑𝑑𝑒𝑛 𝑙𝑎𝑦𝑒𝑟𝑠 𝑛𝑒𝑢𝑟𝑜𝑛𝑠 ∈ {[8192,4096], [8192,8192], [8192,2048]}</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="3">𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑒𝑠𝑡𝑖𝑚𝑎𝑡𝑜𝑟𝑠 ∈ [128,256,512,1024]</cell></row><row><cell>Gradient Boosting Machines</cell><cell></cell><cell cols="4">𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠 𝑐𝑜𝑛𝑠𝑖𝑑𝑒𝑟𝑒𝑑 ∈ [𝑙𝑜𝑔 2 (# 𝑜𝑓 𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠), 𝑠𝑞𝑢𝑎𝑟𝑒(# 𝑜𝑓 𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠)]</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="3">𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑒𝑠𝑡𝑖𝑚𝑎𝑡𝑜𝑟𝑠 ∈ [128,256,512,1024]</cell></row><row><cell>Random Forests</cell><cell></cell><cell cols="4">𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠 𝑐𝑜𝑛𝑠𝑖𝑑𝑒𝑟𝑒𝑑 ∈ [𝑙𝑜𝑔 2 (# 𝑜𝑓 𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠), 𝑠𝑞𝑢𝑎𝑟𝑒(# 𝑜𝑓 𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠)]</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="2">𝛼 ∈ [0.1, 1,10,100]</cell></row><row><cell>Elastic Nets</cell><cell></cell><cell></cell><cell cols="2">𝐿 1 𝑟𝑎𝑡𝑖𝑜 ∈ [0.25,0.5,0.75]</cell></row><row><cell>Method</cell><cell></cell><cell>Rank Correlation</cell><cell>MSE</cell><cell>RMSE</cell><cell>Pearson correlation</cell></row><row><cell>AuDNNsynergy</cell><cell></cell><cell>0.730.02</cell><cell>241.1243.52</cell><cell>15.461.44</cell><cell>0.740.03</cell></row><row><cell>Deep Synergy*</cell><cell></cell><cell>0.660.02</cell><cell>255.4949.54</cell><cell>15.911.56</cell><cell>0.730.04</cell></row><row><cell cols="2">Gradient Boosting Machines</cell><cell>0.640.02</cell><cell>310.7350.40</cell><cell>17.571.42</cell><cell>0.640.02</cell></row><row><cell cols="3">Gradient Boosting Machines* 0.640.01</cell><cell>308.0649.34</cell><cell>17.501.39</cell><cell>0.640.02</cell></row><row><cell>Random Forests</cell><cell></cell><cell>0.640.02</cell><cell>326.3153.54</cell><cell>18.001.45</cell><cell>0.630.02</cell></row><row><cell>Random Forests*</cell><cell></cell><cell>0.630.02</cell><cell>330.1851.45</cell><cell>18.121.37</cell><cell>0.610.03</cell></row><row><cell>Elastic Nets</cell><cell></cell><cell>0.490.02</cell><cell>422.7254.35</cell><cell>20.521.30</cell><cell>0.440.02</cell></row><row><cell>Elastic Nets*</cell><cell></cell><cell>0.490.02</cell><cell>424.3854.39</cell><cell>20.561.30</cell><cell>0.440.02</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 5 .</head><label>5</label><figDesc>The number of 4 types features of most negative effect for synergy scores.</figDesc><table><row><cell cols="2">Performance Metric ROC AUC PR AUC</cell><cell>ACC</cell><cell>PREC</cell><cell>Kappa</cell></row><row><cell>AuDNNsynergy</cell><cell cols="4">0.910.02 0.630.06 0.930.01 0.720.06 0.510.04</cell></row><row><cell>Gradient Boosting Machines</cell><cell cols="4">0.870.02 0.540.04 0.930.01 0.720.03 0.390.05</cell></row><row><cell>Random Forests</cell><cell cols="4">0.860.03 0.510.04 0.920.02 0.570.04 0.210.04</cell></row><row><cell>Elastic Nets</cell><cell cols="4">0.770.04 0.330.09 0.920.01 0.230.29 0.150.09</cell></row><row><cell>Deep Synergy*</cell><cell cols="4">0.900.03 0.590.06 0.920.03 0.560.11 0.510.04</cell></row><row><cell>Features</cell><cell>100</cell><cell>500</cell><cell></cell><cell>1000</cell><cell>2000</cell></row><row><cell>Expression</cell><cell>0.20.4</cell><cell>0.20.4</cell><cell></cell><cell>0.20.4</cell><cell>0.20.4</cell></row><row><cell>Mutation</cell><cell>9.40.5</cell><cell>9.60.8</cell><cell></cell><cell>9.81.2</cell><cell>10.60.8</cell></row><row><cell>Copy Number</cell><cell>11.22.0</cell><cell>12.22.3</cell><cell></cell><cell>12.42.2</cell><cell>12.62.1</cell></row><row><cell>Drug</cell><cell>79.21.6</cell><cell>478.01.8</cell><cell></cell><cell>977.61.3</cell><cell>1976.61.2</cell></row><row><cell>Features</cell><cell>100</cell><cell>500</cell><cell></cell><cell>1000</cell><cell>2000</cell></row><row><cell>Expression</cell><cell>1.80.4</cell><cell>1.80.4</cell><cell></cell><cell>1.80.4</cell><cell>4.65.2</cell></row><row><cell>Mutation</cell><cell>11.80.4</cell><cell>12.20.7</cell><cell></cell><cell>12.20.7</cell><cell>36.248.4</cell></row><row><cell>Copy Number</cell><cell>13.21.7</cell><cell>13.41.9</cell><cell></cell><cell>13.62.2</cell><cell>143.897.0</cell></row><row><cell>Drug</cell><cell>73.21.2</cell><cell>472.61.5</cell><cell></cell><cell>972.41.6</cell><cell>1820.875.1</cell></row></table></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" />			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Opportunities and Challenges in the Development of Experimental Drug Combinations for Cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Humphrey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JNCI J. Natl. Cancer Inst</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="issue">16</biblScope>
+			<biblScope unit="page" from="1222" to="1226" />
+			<date type="published" when="2011-08">Aug. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Potential mechanism for sustained antiretroviral efficacy of AZT-3TC combination therapy</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Larder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Kemp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Harrigan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">269</biblScope>
+			<biblScope unit="issue">5224</biblScope>
+			<biblScope unit="page" from="696" to="699" />
+			<date type="published" when="1995-08">Aug. 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Theoretical Basis, Experimental Design, and Computerized Simulation of Synergism and Antagonism in Drug Combination Studies</title>
+		<author>
+			<persName><forename type="first">T.-C</forename><surname>Chou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pharmacol. Rev</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="621" to="681" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Targeted therapies combined with immune checkpoint therapy</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Prieto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Reuben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">A</forename><surname>Cooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Wargo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer J. (United States)</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="138" to="146" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Combination targeted therapy with sorafenib and bevacizumab results in enhanced toxicity and antitumor activity</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">S</forename><surname>Azad</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Clin. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">22</biblScope>
+			<biblScope unit="page" from="3709" to="3714" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Combining Targeted Therapies and Drugs with Multiple Targets in the Treatment of NSCLC</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Maione</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncologist</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="274" to="284" />
+			<date type="published" when="2006-03">Mar. 2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Core signaling pathways in ovarian cancer stem cell revealed by integrative analysis of multi-marker genomics data</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">196351</biblScope>
+			<date type="published" when="2018-05">May 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">KRAS mutation is an important predictor of resistance to therapy with epidermal growth factor receptor tyrosine kinase inhibitors in non-small cell lung cancer</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Massarelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="2890" to="2896" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Prediction of drug combinations by integrating molecular and pharmacological data</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">M</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Iskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zeller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kuhn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Van Noort</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bork</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput. Biol</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">e1002323</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Systematic prediction of drug combinations based on clinical side-effects</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">A</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sanseau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">7160</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A major update of the drug combination database</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Gai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<idno>DCDB 2.0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Database</title>
+		<imprint>
+			<biblScope unit="volume">2014</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">ASDCD: Antifungal Synergistic Drug Combination Database</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">An Unbiased Oncology Compound Screen to Identify Novel Combination Strategies</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>O'neil</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Cancer Ther</title>
+		<imprint>
+			<biblScope unit="page">843</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The National Cancer Institute ALMANAC: A comprehensive screening resource for the detection of anticancer drug pairs with enhanced therapeutic activity</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Holbeck</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="page">489</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Network propagation predicts drug synergy in cancers</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Quang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Guan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="5446" to="5457" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Explainable machine learning prediction of synergistic drug combinations for precision cancer medicine</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Janizek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Celik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S.-I</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">bioRxiv</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Systems approaches and algorithms for discovery of combinatorial therapies</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Feala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cortes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Duxbury</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Piermarocchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Mcculloch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Paternostro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Wiley Interdiscip. Rev. Syst. Biol. Med</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="181" to="193" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Models from experiments: Combinatorial drug perturbations of cancer cells</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nelander</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">216</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">NLLSS: Predicting Synergistic Drug Combinations Based on Semi-supervised Learning</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput. Biol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">e1004975</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">DrugComboRanker: Drug combination discovery based on target network analysis</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="228" to="236" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Diffusion mapping of drug targets on disease signaling network elements reveals drug combination strategies</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Regan-Fendt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">E</forename><surname>Carson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R O</forename><surname>Payne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Pacific Symposium on Biocomputing</title>
+		<imprint>
+			<date type="published" when="2018">2018. 2018</date>
+			<biblScope unit="page">212669</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Integrative network and transcriptomics-based approach predicts genotype-specific drug combinations for melanoma</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">E</forename><surname>Regan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R O</forename><surname>Payne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AMIA Joint Summits on Translational Science proceedings</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="247" to="256" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">The connectivity map: Using gene-expression signatures to connect small molecules, genes, and disease</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lamb</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">313</biblScope>
+			<biblScope unit="issue">5795</biblScope>
+			<biblScope unit="page" from="1929" to="1935" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A Next Generation Connectivity Map: L1000 Platform and the First 1,000,000 Profiles</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subramanian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">171</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1437" to="1452" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">DeepSynergy: Predicting anti-cancer drug synergy with Deep Learning</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Preuer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">P I</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hochreiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Bulusu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Klambauer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1538" to="1546" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">Predicting drug response of tumors from integrated genomic profiles by deep neural networks</title>
+		<author>
+			<persName><forename type="first">Y.-C</forename><surname>Chiu</surname></persName>
+		</author>
+		<idno>ArXiv. 20</idno>
+		<imprint>
+			<date type="published" when="2018-05">May-2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Interpretable Drug Target Prediction Using Deep Neural Representation</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">Y</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fokoue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Iyengar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IJCAI</title>
+		<imprint>
+			<biblScope unit="page" from="3371" to="3377" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">The UCSC Xena Platform for cancer genomics data visualization and interpretation</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Mary Goldman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Brian</forename><surname>Craft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Angela</forename><forename type="middle">N</forename><surname>Brooks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jingchun</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">biorxiv</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">COSMIC: Somatic cancer genetics at high-resolution</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Forbes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">D1</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Extended-connectivity fingerprints</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rogers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hahn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Inf. Model</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="742" to="754" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">JCompoundMapper: An open source Java library and command-line tool for chemical fingerprints</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hinselmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Rosenbaum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Fechner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Cheminform</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">3</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">ChemoPy: Freely available python package for computational biology and chemoinformatics</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">S</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">N</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Z</forename><surname>Liang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1092" to="1094" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">GISTIC2.0 facilitates sensitive and confident localization of the targets of focal somatic copy-number alteration in human cancers</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Mermel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">R41</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">SynergyFinder: a web application for analyzing drug combination dose-response matrix data</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ianevski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aittokallio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">15</biblScope>
+			<biblScope unit="page" from="2413" to="2415" />
+			<date type="published" when="2017-08">Aug. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">P.-J</forename><forename type="middle">K</forename><surname>Maximilian Alber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Lapuschkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philipp</forename><surname>Seegerer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Miriam</forename><surname>Hägele</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kristof</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Grégoire</forename><surname>Schütt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wojciech</forename><surname>Montavon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Klaus-Robert</forename><surname>Samek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sven</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Dähne</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note>iNNvestigate neural networks!,&quot; ArXiv</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">On pixelwise explanations for non-linear classifier decisions by layer-wise relevance propagation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Binder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Montavon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Klauschen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Samek</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>p. e0130140</note>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Stochastic gradient boosting</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Friedman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Stat. Data Anal</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="367" to="378" />
+			<date type="published" when="2002-08">Aug. 2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Random decision forests</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">K</forename><surname>Ho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 3rd International Conference on Document Analysis and Recognition</title>
+		<meeting>the 3rd International Conference on Document Analysis and Recognition</meeting>
+		<imprint>
+			<date type="published" when="1995">1995</date>
+			<biblScope unit="page" from="278" to="282" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Regularization and variable selection via the elastic net</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. R. Stat. Soc. Ser. B Stat. Methodol</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="301" to="320" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Feedback Activation of STAT3 as a Cancer Drug-Resistance Mechanism</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Liang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Trends Pharmacol. Sci</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="47" to="61" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">MiR-222 and miR-29a contribute to the drug-resistance of breast cancer cells</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gene</title>
+		<imprint>
+			<biblScope unit="volume">531</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="8" to="14" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">MiR-520f promotes cell aggressiveness by regulating fibroblast growth factor 16 in hepatocellular carcinoma</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Feng</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wen</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guo</forename><surname>Zha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Qing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hong</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Deng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">65</biblScope>
+			<biblScope unit="page">109546</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">A genetic interaction analysis identifies cancer drivers that modify EGFR dependency</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Davoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Leng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes Dev</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Significance of osteopontin in the sensitivity of malignant pleural mesothelioma to pemetrexed</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Takeuchi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1886" to="1894" />
+			<date type="published" when="2014-06">Jun. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Osteopontin Involves Cisplatin Resistance and Poor Prognosis in Oral Squamous Cell Carcinoma</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Luo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed Res. Int</title>
+		<imprint>
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Blockade of autophagy reduces pancreatic cancer stem cell activity and potentiates the tumoricidal effect of gemcitabine</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Tung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Chiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Shan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Cancer</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">179</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">SPP1 promotes ovarian cancer progression via integrin β1/FAK/AKT signaling pathway</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xiong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Onco. Targets. Ther</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">1333</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Osteopontin is up-regulated and associated with neutrophil and macrophage infiltration in glioblastoma</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Atai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Immunology</title>
+		<imprint>
+			<biblScope unit="volume">132</biblScope>
+			<biblScope unit="page" from="39" to="48" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Clinical and prognostic significance of OPN and VEGF expression in patients with non-small-cell lung cancer</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qunying</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lijing</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guosheng</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiwei</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tonghuan</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Juan</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bo</forename><surname>Gu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Epidemiol</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="539" to="544" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">A systematic review of predictive and prognostic biomarkers for VEGF-targeted therapy in renal cell carcinoma</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Funakoshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Hsieh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Treat. Rev</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="533" to="547" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Overexpression of osteopontin in hepatocellular carcinoma</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gotoh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sakamoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kanetaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chuuma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hirohashi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pathol. Int</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="19" to="24" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Correlation of Osteopontin Protein Expression and Pathological Stage across a Wide Variety of Tumor Histologies</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Coppola</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="184" to="190" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Adherence to osteopontin via alphavbeta3 suppresses phorbol ester-mediated apoptosis in MCF-7 breast cancer cells that overexpress protein kinase C-alpha</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Noti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1237" to="1280" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">An inducible short-hairpin RNA vector against osteopontin reduces metastatic potential of human esophageal squamous cell carcinoma in vitro and in vivo</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ito</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1308" to="1316" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Ablation of osteopontin suppresses N-methyl-Nnitrosourea and Helicobacter pylori-induced gastric cancer development in mice</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Carcinogenesis</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1550" to="1560" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Osteopontin knockdown suppresses the growth and angiogenesis of colon cancer cells</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">World J. Gastroenterol</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">30</biblScope>
+			<biblScope unit="page">10440</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Increased expression of osteopontin contributes to the progression of prostate cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Khodavirdi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="883" to="886" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Dasatinib (BMS-35482) has synergistic activity with paclitaxel and carboplatin in ovarian cancer cells</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Teoh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gynecol. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="187" to="192" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Transforming growth factor {beta} (TGF-{beta})-Smad target gene protein tyrosine phosphatase receptor type kappa is required for TGF-{beta} function</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Shin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L</forename><surname>Arteaga</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Cell. Biol</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="4703" to="4715" />
+			<date type="published" when="2005-06">Jun. 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">A Multicenter Phase II Study of Erlotinib and Sorafenib in Chemotherapy-Naive Patients with Advanced Non-Small Cell Lung Cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S W</forename><surname>Lind</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="3078" to="3087" />
+			<date type="published" when="2010-06">Jun. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">CCL5 promotes VEGF-C production and induces lymphangiogenesis by suppressing miR-507 in human chondrosarcoma cells</title>
+		<author>
+			<persName><forename type="first">L.-H</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page" from="36896" to="36908" />
+			<date type="published" when="2016-06">Jun. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Poly(A)-binding protein-interacting protein 2, a strong regulator of vascular endothelial growth factor mRNA</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Onesto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Berra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Grépin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pagès</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Biol. Chem</title>
+		<imprint>
+			<biblScope unit="volume">279</biblScope>
+			<biblScope unit="issue">33</biblScope>
+			<biblScope unit="page" from="34217" to="34226" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">A Phase I/II Study Combining Erlotinib and Dasatinib for Non-Small Cell Lung Cancer</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Gold</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncologist</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="1040" to="1041" />
+			<date type="published" when="2014-10">Oct. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Inhibition of mTOR downregulates expression of DNA repair proteins and is highly efficient against BRCA2-mutated breast cancer in combination to PARP inhibition</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">El</forename><surname>Botty</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">51</biblScope>
+			<biblScope unit="page" from="29587" to="29600" />
+			<date type="published" when="2018-07">Jul. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

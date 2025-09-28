@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Using the &quot;Hidden&quot; Genome to Improve Classification of Cancer Types</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2020-07-11">11 Jul 2020</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Saptarshi</forename><surname>Chakraborty</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Epidemiology &amp; Biostatistics</orgName>
+								<address>
+									<addrLine>Memorial Sloan-Kettering Cancer Center New York</addrLine>
+									<postCode>10017</postCode>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Colin</forename><forename type="middle">B</forename><surname>Begg</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Epidemiology &amp; Biostatistics</orgName>
+								<address>
+									<addrLine>Memorial Sloan-Kettering Cancer Center New York</addrLine>
+									<postCode>10017</postCode>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Ronglai</forename><surname>Shen</surname></persName>
+							<email>shenr@mskcc.org</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Epidemiology &amp; Biostatistics</orgName>
+								<address>
+									<addrLine>Memorial Sloan-Kettering Cancer Center New York</addrLine>
+									<postCode>10017</postCode>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Using the &quot;Hidden&quot; Genome to Improve Classification of Cancer Types</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2020-07-11">11 Jul 2020</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">3B622CB3E88933F90CC4536551C95C3B</idno>
+					<idno type="arXiv">arXiv:2005.10779v2[stat.ME]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Cancer classification</term>
+					<term>Group-lasso penalty</term>
+					<term>Multi-level models</term>
+					<term>Multinomial logistic regression</term>
+					<term>Whole-exome mutations</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>It is increasingly common clinically for cancer specimens to be examined using techniques that identify somatic mutations. In principle these mutational profiles can be used to diagnose the tissue of origin, a critical task for the 3-5% of tumors that have an unknown primary site. Diagnosis of primary site is also critical for screening tests that employ circulating DNA. However, most mutations observed in any new tumor are very rarely occurring mutations, and indeed the preponderance of these may never have been observed in any previous recorded tumor.</p><p>To create a viable diagnostic tool we need to harness the information content in this hidden genome of variants for which no direct information is available. To accomplish this we propose a multi-level meta-feature regression to extract the critical information from rare variants in the training data in a way that permits us to also extract diagnostic information from any previously unobserved variants in the new tumor sample. A scalable implementation of the model is obtained by combining a high-dimensional feature screening approach with a group-lasso penalized maximum likelihood approach based on an equivalent mixed-effect representation of the multilevel model. We apply the method to the Cancer Genome Atlas whole-exome sequencing data set including 3702 tumor samples across 7 common cancer sites. Results show that our multi-level approach can harness substantial diagnostic information from the hidden genome.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Identifying the anatomic site of origin of malignancy is a crucial problem in cancer diagnosis, including cancers of unknown primary which make up 3-5% of total cancer diagnoses worldwide and are associated with poor prognosis <ref type="bibr" target="#b31">(Varadhachary and Raber, 2014;</ref><ref type="bibr" target="#b8">Conway et al., 2018)</ref>, as well as in the more recent context of "liquid biopsies" whereby circulating tumor DNA <ref type="bibr">(ctDNA)</ref> is identified in the blood and can in principle be used for early detection of cancer <ref type="bibr" target="#b11">(Diaz Jr and Bardelli, 2014;</ref><ref type="bibr" target="#b32">Wan et al., 2017)</ref>. In recent years, large-scale sequencing studies have begun to reveal the somatic mutational landscape in cancer. Evidence emerging from these studies suggests that common somatic mutations can be highly organ site specific <ref type="bibr" target="#b20">(Haigis et al., 2019)</ref>. This serves as a basis for identifying site of origin using the mutational profile identified from the tumor sample or from ctDNA sequencing.</p><p>Predicting cancer types based on mutations, however, comes with its own sets of challenges.</p><p>Advances in modern genome sequencing technologies and their application to large cancer patient cohorts have resulted in the discovery of millions of unique somatic mutations (variants) in the tumor genome. It is well known that a relatively small number of variants appear in tumors frequently, but the vast majority of variants occur extremely infrequently. Data from large-scale sequencing studies such as the Cancer Genome Atlas (TCGA, <ref type="bibr" target="#b1">Bailey et al., 2018)</ref> revealed that over 90% of the somatic variants in the study were singletons, i.e. observed only once in the &gt;10,000 sequenced tumor samples. The vast trove of these extremely rare variants, routinely ignored or under-utilized, may in fact harbor important signals that can be harnessed for clinically relevant problems. A statistical and computational solution to extract relevant information from these rare variants is needed.</p><p>Furthermore, there are many more variants yet to be discovered, and virtually every gene sequencing experiment identifies a multitude of previously unseen mutations. This makes variantbased prediction of cancer types extremely difficult: in sequencing of a new tumor, for many (if not all) mutations in the tumor there will be little or no direct previous information. One approach is to perform classification only at the gene level <ref type="bibr" target="#b27">(Soh et al., 2017)</ref>. That is, instead of using the individual variants directly, the genes in which the mutations occurred are used as predictors.</p><p>This strategy aggregates all (including rare) variants in a gene and reduces the total dimension of predictors, as the total number of genes is much smaller than the total number of possible variants. Furthermore, all genes are known, and hence the problem of encountering predictors that were not present in the training data does not arise. However, this approach ignores variant-level information that can be critical. For example, common variants in the KRAS gene are known to be highly tissue-specific: the KRAS G12C variant is primarily associated with lung adenocarcinoma, while KRAS G12R occurs more exclusively in pancreatic cancers. Thus, a gene level classification model is likely to produce sub-optimal results as such variant-level discriminant information is lost.</p><p>We note that the problem of tumor classification based on mutation profiles has analogies with content-based text classification problems in natural language processing. The work of <ref type="bibr" target="#b29">Taskar et al. (2003)</ref> is particularly noteworthy in this context. The authors suggest "learning" the role of a previously unseen word (feature) through its context, i.e., neighboring words/features, while classifying a new text document. In the field of machine learning in general the problem of classification/prediction with previously unseen features can be framed as a problem of domain adaptation or transfer learning <ref type="bibr" target="#b24">(Shi and Knoblock, 2017)</ref>, where a model trained on a specific source domain is adapted to a related but different target domain. Existing approaches to domain adaptation problems include tree based ensemble methods <ref type="bibr" target="#b19">(Habrard et al., 2013)</ref>, nearest neighbor regression/classification techniques <ref type="bibr" target="#b24">(Shi and Knoblock, 2017)</ref>, and neural networks <ref type="bibr" target="#b18">(Ganin et al., 2016)</ref>. However, as is often the case in the machine learning literature, many of these approaches are black-boxes, and do not aid interpretable statistical inference on the model parameters (and thus on the predictors).</p><p>The major contribution of this paper lies in the development of a rigorous statistical framework that through the associated DNA sequence context infers the effects of previously unseen variants and subsequently uses these inferred effects in the prediction of cancer sites. More precisely, we build a multi-level classification model with an embedded hierarchical meta-regression step in which the effects of all (including previously unseen) variants are modeled as functions of a number of known meta-features describing the associated mutation contexts. Through the meta-regression, these meta-features can be used to quantify the effects of previously unseen variants in a new tumor, and simultaneously provide a highly informative yet substantially smaller dimensional projection of the ultra high-dimensional (in the order of millions) predictor space. In our example we employ two categorical meta-features, the gene itself and the single base substitution membership of the variant, though the model can easily be extended to include other meta-features.</p><p>Through an equivalent mixed-effect representation of our multi-level model, we demonstrate how these meta-features affect classification. In particular we note how our approach rigorously combines information from the raw variants as well as from the genes in which the variants originate, thus providing a refinement and extension to the existing gene-level approaches <ref type="bibr" target="#b27">(Soh et al., 2017)</ref>.</p><p>Careful assignment of a shrinkage prior as a further hierarchical layer in the mixed effect model aids a group-lasso regularized likelihood of the model parameters of interest, thus enabling straightforward implementation. The parameter estimation is performed following a mutual informationbased feature screening <ref type="bibr">(Cover and Thomas, 2012a)</ref>. This makes our approach highly scalable, allowing incorporation of possibly millions of variants and appropriately chosen meta-features. We apply the method to the publicly available TCGA mutation data set, electing to focus on 7 common cancer types.</p><p>The remainder of the article is organized as follows. In Section 2, we provide a brief description of the TCGA data. In Section 3 we first provide some intuition on our variant and meta-information based approach, then formalize the intuition in terms of a (sparse) multi-level multinomial logistic classification model, and finally describe an implementation strategy for our model that can handle millions of variants as predictors. Section 4 describes the application of our model to the TCGA data set. Finally, in Section 5 we address strengths and limitations of our method, and research directions that will be pursued in future. Additional technical and numerical details are included in the Appendix.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Data source and description</head><p>The somatic variant data are from the Cancer Genome Atlas (TCGA) study derived from wholeexome sequencing of approximately 10,000 tumor samples across multiple cancer types <ref type="bibr" target="#b1">(Bailey et al., 2018)</ref>. We focus our attention on the 7 most prevalent tumor types (as determined by the SEER <ref type="bibr" target="#b13">(Duggan et al., 2016)</ref> program of the National Cancer Institute), namely bladder urothelial carcinoma (BLCA), breast invasive carcinoma (BRCA), colorectal adenocarcinoma (COADREAD), lung adenocarcinoma (LUAD), pancreatic adenocarcinoma (PAAD), prostate adenocarcinoma (PRAD), and skin cutaneous melanoma (SKCM). These have sample sizes (number of tumors) of <ref type="bibr">411, 1025, 559, 568, 176, 495, and 468</ref> respectively. Among these 3702 tumors a total of 811,497 unique somatic variants were identified, the majority of which were rare variants (see Table <ref type="table">2</ref>). Specifically, 95% of all observed variants are singletons (appearing only once in the cohort).</p><p>A key challenge involves making use of new variants emerging in a future tumor sample that have not been observed in the training cohort. In earlier work we showed that 60% of mutations identified in new tumors are expected to be variants not observed in the TCGA cohort (Chakraborty</p><p>r 1 2 3 4 5 6 7 8 9 10 0+ 770057 35027 4541 1077 384 175 77 40 28 19 10+ 11 7 4 2 4 3 5 2 1 2 We have developed a multi-level meta-feature regression framework to properly employ of the information in those new (observed only in the test set) variants while classifying the cancer type of a new tumor. To this end, we first make a key observation: irrespective of whether a variant is "recorded" or "new", we always have some quantifiable information obtained from the associated DNA sequencing contexts, called meta-features in this paper. The key idea then involves inferring the effects of new variants from those of the recorded variants with similar meta-features. In terms of a multinomial logistic model, this amounts to connecting the logistic regression coefficients for variants to these meta-features through an appropriate hierarchical meta-regression step. Using this hierarchical meta-regression, the regression coefficients for the new variants in a tumor outside the training set can then be "predicted", and subsequently used for classification. The following section formalizes this idea via an appropriate multilevel model.</p><formula xml:id="formula_0">20+ 2 1 4 1 0 0 0 0 2 0 30+ 1 2 1 2 1 0 1 0 0 1 40+ 0 0 0 0 0 1 0 1 0 1 50+ 0 0 0 0 0 0 0 0 0 0 60+ 0 1 0 0 0 0 0 0 0 0 .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Model</head><p>Let us denote by u j = (u j,1 , . . . , u j,p ) T the values of p meta-features associated with the variants, j = 1, . . . , d = d 1 +d 2 . Recall that only the first d 1 variants are observed in the training data, i.e., the first m of the n total tumors. In this study we include two categorical meta-features on each variant:</p><p>the nucleotide substitution signature associated with each variant, and gene membership, and we dummy code each category. More precisely, we define p binary meta-features of which the first 96 indicate whether a variant corresponds to one of 96 possible single base substitution signature categories (see Section 4.1 for more details), and the remaining meta-features are indicators of ∼ 600 OncoKB cancer genes <ref type="bibr" target="#b7">(Chakravarty et al., 2017)</ref>. We define the design matrix X ∈ R n×d as X T = (x 1 , . . . , x n ), where x i = (x i1 , . . . , x id ) T , i = 1, . . . , n. (Note that while training we only have access to x i1 , . . . , x id 1 , for i = 1, . . . , m; the regression parameters associated with the new variants d 1 + 1, . . . , d are not identifiable in the training data set, and hence not estimated.) Also, let U ∈ R d×p be the meta-design matrix defined as U T = (u 1 , . . . , u d ). This unified representation with all tumors (training and test combined) and all variants (both recorded and new) simplifies notation and enables development of a multi-level classification model as described in the following.</p><p>The multi-level multinomial logistic regression model is defined as follows:</p><formula xml:id="formula_1">P (c i = k) = exp α k + d j=1 x ij β j,k K k =1 exp α k + d j=1 x ij β j,k</formula><p>, independently for i = 1, . . . , n; k = 1, . . . , K</p><formula xml:id="formula_2">β j,k ∼ N (u T j ω •,k , τ 2 j ), independently for j = 1, . . . , d; k = 1, . . . , K ω l,k ∼ N (0, ξ 2 l ), independently for l = 1, . . . , p; k = 1, . . . , K<label>(1)</label></formula><p>where</p><formula xml:id="formula_3">α = (α 1 , . . . , α K ) T ∈ R K×1 is the vector of intercepts; β = (β j,k ) ∈ R d×K is the matrix of individual variant regression coefficients with k-th column being β •,k = (β 1,k , . . . , β d,k ) T ∈ R d×1 , k = 1, . . . , K and the j-th row being β j,• = (β j,1 , . . . , β j,K ) ∈ R 1×K , j = 1, . . . , d; ω = (ω l,k ) ∈ R p×K</formula><p>is the matrix of meta-regression coefficients, listing the coefficients associated with each meta-feature for various cancer types, with the l-th row of ω being ω l,• , l = 1, . . . , p, and the k-th column being</p><formula xml:id="formula_4">ω •,k , k = 1, . . . , K.</formula><p>The second level in (1) encapsulates the key meta-feature regression step in our multi-level model. This step aids estimation of the meta-feature effects ω •,k through the recorded variants.</p><p>These estimated meta-feature effects ω•,k can subsequently "predict" the regression effects {β Furthermore, this meta-feature regression step also aids a substantial dimension reduction of the predictor space. This becomes clearer in an alternative mixed-effect representation of the model described in the following section. This mixed-effect representation, in addition to aiding dimension reduction, also provides interpretation of the model parameters and aids scalable implementation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Alternative mixed-effect representation</head><p>Instead of estimating the model parameters in (1) directly, we first rewrite the model using a mixed-effects representation of β, and then note how this alternative representation substantially simplifies implementation. Note that the second level in (1) can be expressed as</p><formula xml:id="formula_5">β j,k = β 0 j,k + u T j ω •,k<label>(2)</label></formula><p>where</p><formula xml:id="formula_6">β 0 j,k ∼ N (0, τ 2 j ). Writing d j=1 x ij β 0 j,k = x T i β 0 •,k , where β 0 •,k = (β 0 1,k , . . . , β 0 d,k ) and d j=1 x ij u j = x T</formula><p>i U , we obtain the following alternative representation of (1):</p><formula xml:id="formula_7">P (c i = k) = exp α k + x T i β 0 •,k + x T i U ω •,k K k =1 exp α k + x T i β 0 •,k + x T i U ω •,k , i = 1, . . . , n; k = 1, . . . , K β 0 j,k ∼ N (0, τ 2 j ), j = 1, . . . , d; k = 1, . . . , K ω l,k ∼ N (0, ξ 2 l ), l = 1, . . . , p; k = 1, . . . , K.<label>(3)</label></formula><p>From representation (3), it follows that the penalized likelihood/un-normalized (i.e., without the normalizing constant) posterior density of α, β 0 = (β 0 j,k ) and ω is essentially that of a regularized multinomial logistic regression likelihood with intercept α, predictors (x T i , x T i U ), associated regression coefficients β 0 and ω, and with ridge penalties on β 0 and ω. For a fixed j (l), the assumption of equal variance of β 0 j,k (ω l,k ) for all k aids shrinkage/partial pooling in the estimation of the associated residual-regression (meta-regression) parameters, as is typical in multilevel models.</p><p>The following observations are made as consequences of the reparameterization (3). First, through x T i U , the meta-features are now directly "connected" to the classification (first level of the model). Note that, for a meta-feature l, x T i U •,l quantifies the total mutational information or the total mutation burden in tumor i that is described by that meta-feature, where U •,l denotes the l-th column of the meta-design matrix U . For example, if U •,l corresponds to the dummy variable indicating whether or not the variants are mutations at a specific gene G l , (i.e., u j,l = 1 if the j-th variant is indeed mutation of gene G l , and 0 otherwise) then x T i U •,l counts the total number of mutations at gene G l observed in tumor i. Consequently, the meta-regression parameter ω l,k measures the effect of gene G l in describing the cancer type k of a tumor. Note that this "connection" naturally combines the effects of the individual variants and those of the genes where a mutation occurred, thus providing a refinement of the existing gene-based classification approach.</p><p>Second, owing to the decomposition (2), β 0 j,k can be viewed as the j-th variant specific residual effect that is not explained by the meta-regression. As is the case in any mixed effects model, these variant specific residual effects can only be measured for a variant that is present in the training data set, i.e., for j ≤ d 1 . (Indeed it can only be realistically utilized for the relatively few variants that occur somewhat frequently.) For j &gt; d 1 , the predicted residual effects β 0 j,k are all zero. Third, observe that associated with each tumor i, x T i U essentially combines the presence/absence information of all training set/recorded variants through the meta-features; the condensed information is then used in classification. In other words, the product design-meta-design matrix XU obtained by stacking the rows x T i U , i = 1, . . . , m, aids a natural and potentially highly informative lower dimensional projection of the raw variant design matrix X. Once information from all variants are properly condensed in the product design-meta-design matrix XU , the less informative variants can then be screened out from the design matrix X using an appropriate feature screening technique, such as an information-theory based feature screening method <ref type="bibr" target="#b3">(Brown et al., 2012)</ref> and/or sure independence screening <ref type="bibr">(Fan and</ref><ref type="bibr">Lv, 2008, 2017)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Group Lasso Formulation for Parameter Estimation</head><p>Note that the primary parameters of interest in model (3) (and (1)) are α, β 0 , and ω (and hence β), and the remaining are nuisance hyper-parameters. We propose estimation of the primary parameters through their marginal posterior modes (i.e., marginal a posteriori estimates). To this end, we include one additional hierarchical layer specifying the same gamma prior distributions on {τ 2 j } and {ξ 2 l }, and then marginalize out {τ 2 j } and {ξ 2 l } from the posterior density to obtain a group-lasso <ref type="bibr" target="#b21">(Kyung et al., 2010;</ref><ref type="bibr" target="#b34">Yuan and Lin, 2006)</ref> regularized multinomial logistic likelihood for α, β 0 and ω. In particular, we consider τ 2 j , ξ 2 l ∼ independent Gamma((K + 1)/2, λ 2 /2), j = 1, . . . , d, l = 1, . . . , p</p><p>Then marginalizing out {τ 2 j } and {ξ 2 l } from the joint posterior density yields the following grouplasso regularized multinomial logistic log-likelihood for α, β 0 and ω:</p><formula xml:id="formula_8">log π(α, β 0 , ω | λ, c 1 , . . . , c n , x 1 , . . . , x n ) = n i=1 K k=1 1(c i = k) log   exp α k + x T i β 0 •,k + x T i U ω •,k K k =1 exp α k + x T i β 0 •,k + x T i U ω •,k   -λ d j=1 β 0 j,• 2 -λ p l=1 ω l,• 2 (4)</formula><p>where</p><formula xml:id="formula_9">• 2 denotes the squared norm, defined for v = (v 1 , . . . , v K ) as v 2 = ( K k=1 v 2 k ) 1/2</formula><p>. Maximizing (4) yields the group-lasso maximum marginal a posteriori estimates of α, β 0 and ω (and hence of β). An important consequence of assigning a group lasso penalty is that for any j (or any l), the maximum marginal a posteriori estimates of {β 0 j,1 , . . . , β 0 j,K } (or {ω l,1 , . . . , ω l,K }) are either all exactly zero or all non-zero. In other words, the model aids variable selection at a collective variant and/or meta-feature level, i.e., either all cancer site-specific effects associated with a single variant and/or a single meta-feature are retained in the fitted model, or they are all dropped.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Prediction of Cancer Sites for New Tumors</head><p>Given the estimated residual regression parameters β0 j,• , j = 1, . . . , d 1 , intercepts α, and metaregression parameters ωl,• , l = 1, . . . , p, and the test data meta-design matrix U , the cancer site prediction (classification) of a test set tumor i with variant indicators x i = (x i1 , . . . , x id ) is performed as follows. First we set β0 j,• = 0 for all j = d 1 + 1, . . . , d, and obtain the full residual regression coefficient matrix β0 = (( β0 j,k : j = 1, . . . , d, k = 1, . . . , K)). Then for each k, we compute ηi,k = αk + x T i β0</p><p>•,k + x T i U ω•,k , and subsequently normalize exp(η i,k ) to obtain the predicted probability of the tumor i being of cancer type k:</p><formula xml:id="formula_10">P (c i = k) = exp(η i,k )/ K k =1 exp(η i,k</formula><p>). These probabilities provide a soft classification for tumor i; a hard classification can be obtained by assigning tumor i to class k * = arg max k=1,...,K P (c i = k). It is of note that since the residual effects {β 0 j,k } are all zero for a new variant j ≥ d 1 + 1, the contribution of such a variant in ηi,k comes only through the j-th term of the sum x T i U ω•,k , namely, x ij u T j ω•,k , which is the "predicted" (through the meta-regression) effect of the variant j, multiplied by the binary indicator x ij of that new variant being present in the i-th individual. That is, given a new variant in a new tumor, we first predict the effect of that new variant based on its meta features and then use the predicted effect in classification.</p><p>Remark 3.1 From representation (3) it follows that our model essentially builds a classifier with two sets of predictors: the variant indicators x i and the total mutation burden described by the meta-features x T i U (e.g., total number of mutations at each gene, and the total number of mutations associated with each single nucleotide change) in tumor i.</p><p>Remark 3.2 It is of note that the symmetric representation of the multinomial logistic model provided in the first level of (3) (or (1)) does not identify the intercept and regression parameters by itself. For any values of the parameters {α k , β 0</p><formula xml:id="formula_11">•,k , ω •,k } k=1,...,K , {α k -γ, β 0 •,k -γ, ω •,k -γ} k=1,.</formula><p>..,K provide the same multinomial probabilities for any γ ∈ (-∞, ∞). However, the (prior) distributions specified in the second and third levels of (1) identify these parameters, and hence aid their estimability. See, e.g., <ref type="bibr" target="#b35">Zhu and Hastie (2004)</ref> and <ref type="bibr" target="#b17">Friedman et al. (2010)</ref> for more details.</p><p>Remark 3.3 The symmetric representations of the multinomial logistic regression provided in the first levels of (3) and (1) do not aid direct interpretation in terms of the predictors in the model.</p><p>To achieve a log-odds ratio interpretation of the regression/meta-regression parameters, one first needs to define a reference category (say 1). Then β j,k -β j,1 (or ω j,k -ω j,1 ) measures the resulting change in the log odds of the cancer type being k relative to being type 1, when the j-th variant status is changed from absent to present, while keeping the statuses of all other variants fixed (or the total mutational burden captured through l-th meta-feature is changed by one unit, while keeping mutation burden described by other meta-features fixed). The residual effect parameters {β 0 j,k } in (3) are interpreted as effects of variant j that are not explained by the meta-feature regression.</p><p>Formally, β 0 j,k -β 0 j,1 measures the unexplained/residual change in the log odds of the cancer type being k relative to being type 1 after accounting for the "expected" change as "predicted" through the meta-feature regression (viz., u T j (ω •,k -ω •,1 )), when the j-th variant status is changed from being absent to being present, while keeping the statuses of all other variants fixed.</p><p>Remark 3.4 It is to be noted that that the penalty parameter λ in (4) weights all regression parameters equally. Hence, the predictors x i and x T i U should all be scaled prior to fitting the model <ref type="bibr" target="#b30">(Tibshirani, 1997)</ref>. For a given λ, the penalized likelihood (4) can be efficiently optimized using a cyclical coordinate descent algorithm as described in <ref type="bibr" target="#b16">Friedman et al. (2007)</ref> and <ref type="bibr" target="#b17">Friedman et al. (2010)</ref>. This approach is highly scalable, and can handle thousands of predictors (variants and meta features combined). The penalty parameter λ can be chosen via a model-selection procedure such as cross-validation. The R package glmnet <ref type="bibr" target="#b25">(Simon et al., 2011)</ref> provides an efficient implementation of this optimization approach, along with a cross-validation based selection of the penalty parameter.</p><p>4 Data application: predicting cancer site of origin of TCGA tumors</p><p>We implemented our multi-level classification model using data from TCGA of the 7 highest prevalence tumor types, as determined by the SEER program of the National Cancer Institute <ref type="bibr" target="#b13">(Duggan et al., 2016)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Classification performance under cross-validation</head><p>We conducted five-fold cross-validation to assess the prediction performance of our method. The entire set of 3702 tumors was partitioned into five random folds (maintaining the relative proportions of the seven cancer types as observed in the full data). Four out of the five folds were treated as the training set, and the fifth fold was treated as the test set in which the cancer site labels were masked, and all five combinations of test and training sets were considered for a given partition.</p><p>The predicted class probabilities in the test sets were subsequently compared with the actual labels to evaluate prediction accuracy.</p><p>To fit our model, we first obtained x ij , the presence/absence indicator of variant j in the i-th tumor in the training set, for all whole-exome variants that were observed at least once in the training data. (On a typical training set there were around 620,000 variants appearing at least once on average.) The meta-features involved dummy coded presence/absence indicators of the 584 clinically relevant cancer genes constituting the oncoKB list <ref type="bibr" target="#b7">(Chakravarty et al., 2017)</ref> and the 96 single base nucleotide substitution signatures. The single base nucleotide substitution signature is the type of alteration (e.g., C to T transitions) in the trinucleotide context. For each mutated locus, there are six classes of base substitution (C¿A, C¿G, C¿T, T¿A, T¿C, T¿G), together with the nucleotide base immediately 5' and 3' to each mutated base, yielding a total of 96 possible single base nucleotide substitution signature types. These alterations are the key elements in classical mutation signature analysis <ref type="bibr" target="#b0">(Alexandrov et al., 2013)</ref>, and reveal the mutagenic processes specific to certain cancer types (e.g., the C¿T and C¿G mutations at TpCpN trinucleotides are signature of APOBEC defect which is prevalent in bladder cancer). The design matrix X = ((x ij )) and the product design-meta-design matrix XU were subsequently obtained. As described in Section 3.3, the (i, l)-th element of the product design-meta-design matrix XU is the total burden in the i-th tumor that is associated with the l-th meta feature (a specific gene or corresponding to a specific neucleotide change signature), and thus can be computed without actually constructing the meta-design matrix U and performing the computationally expensive high dimensional matrix multiplication of X and U .</p><p>After obtaining X and XU , we performed a screening of the raw variants to find and retain the most discriminating ones in the sparse multilevel multinomial logistic model. For this, we used a normalized mutual information (NMI) based feature screening <ref type="bibr" target="#b28">(Strehl and Ghosh, 2003;</ref><ref type="bibr">Cover and Thomas, 2012b)</ref> which can be regarded as a generalization of the feature importance based sure independence screening approach described in <ref type="bibr" target="#b14">Fan and Lv (2008)</ref>. See Web Appendix A for the definition and a brief note on normalized mutual information. We estimated the NMI with cancer types separately for all variants in the training data, and filtered out from the design matrix X all variants with NMI ranking ≥ 250.</p><p>Along with our multi-level model with observed variants as predictors, and the associated gene labels and mutation footprints as meta-features, we also considered the following three competing For (c), we first performed a similar feature screening as done in our multilevel model, but kept all variants with NMI ranking &lt; 1000. All group lasso penalty parameters were chosen via separate (independent) 10 fold cross-validations. All computations were done in statistical software R v 3.4.4 (R Core Team, 2018), and the packages tidyverse <ref type="bibr" target="#b33">(Wickham, 2017)</ref>, data.table <ref type="bibr" target="#b12">(Dowle and Srinivasan, 2019)</ref>, Matrix <ref type="bibr" target="#b2">(Bates and Maechler, 2019)</ref>, glmnet <ref type="bibr" target="#b25">(Simon et al., 2011)</ref>, and precrec <ref type="bibr" target="#b23">(Saito and Rehmsmeier, 2017)</ref> were used.</p><p>After fitting the four models on each training data set, the predicted probabilities of being classified into each of the seven cancer types were computed for each tumor in the associated test set for each method. These predicted probabilities were subsequently combined from all five folds.</p><p>We repeated the entire cross-validation experiment (with all four models) on 100 different random partitions (folds) of the tumors, and then collected from each cross-validation the classification probabilities from all four models, and in each of the seven cancer categories.</p><p>To compare predictive performances of the four competing models we considered the resulting one-vs-rest comparison in each cancer category based on the classification probabilities. On each cross-validation, for each method, in each one-vs-rest comparison, we obtained a precision-recall curve by computing the precision (also called positive predictive value) and recall (also sensitivity) associated with varying binary classification thresholds <ref type="bibr" target="#b23">(Saito and Rehmsmeier, 2017)</ref>. It is of note that precision-recall curves are substantially more informative than receiver-operator characteristic (ROC) curves in a classification problem with imbalanced classes, which is the case here due to the small sample size of the PAAD class (176, 4.76% of 3702). The corresponding area under the curve (AUC) was computed as a summary of each one-vs-rest classification performance, and the average AUCs from all seven one-vs-rest classifications were subsequently obtained as univariate measures of overall classification performance for each classifier. The means and the standard deviations of these AUCs (and the overall average AUC) across all cross-validations were computed to quantify the variability of these measures across cross-validations. These values are shown in Table <ref type="table">4</ref>.1.</p><p>(The actual precision-recall curves are shown in Web Figure <ref type="figure">1</ref>).</p><p>For each of the four classifiers, a hard classification rule was obtained by assigning each tumor to the class with highest probability. The precision-recall values for these hard classifiers were computed under cross validations, and results are shown in Web Table <ref type="table" target="#tab_1">1</ref> in Web Appendix C.</p><p>These results show a broadly similar pattern in terms of relative performances of the four methods.</p><p>From the cross validation results displayed in Table <ref type="table">4</ref>.1, and also Web Figure <ref type="figure">1</ref> and Web Table <ref type="table" target="#tab_1">1</ref>, it is clear that the multilevel model consistently, and often substantially, outperforms the other three classifiers in each one-vs-rest comparison as quantified through the AUCs of the precisionrecall curves and the curves themselves, Web Figure <ref type="figure">1</ref>. In terms of the improvement in AUC over its closest competitor, the largest gains are observed in the cancer categories LUAD, BLCA, SKCM and COADREAD; in the remaining three cancer types, PAAD, BRCA and PRAD, there are still noticeable positive gains, although not as dramatic as the former three.</p><p>[None of four Seen+Unseen variants SMML Gene RF Gene SML Recorded variants SML BLCA 0.72 (0.01) 0.64 (0.011) 0.62 (0.012) 0.51 (0.0097) BRCA 0.72 (0.0077) 0.67 (0.0041) 0.72 (0.0057) 0.59 (0.0053) COADREAD 0.81 (0.0078) 0.73 (0.0038) 0.75 (0.0061) 0.70 (0.009) LUAD 0.84 (0.0028) 0.61 (0.0088) 0.63 (0.0088) 0.45 (0.0079) PAAD 0.56 (0.014) 0.54 (0.0073) 0.52 (0.016) 0.44 (0.013) PRAD 0.53 (0.01) 0.45 (0.01) 0.51 (0.0075) 0.26 (0.0071) SKCM 0.94 (0.0039) 0.79 (0.0036) 0.84 (0.006) 0.84 (0.0097) Average 0.74 (0.006) 0.63 (0.003) 0.66 (0.0085) 0.54 (0.0084)</p><p>Table <ref type="table">2</ref>: Area under the precision-recall curve for each one-vs-rest classification (first seven rows) and their average (last row) obtained from the classification probabilities assigned by each classifier.</p><p>The numbers inside a cell (outside the parentheses) represents the cross-validation mean of the area under the curves (AUCs) for the associated one-vs-rest classification (first seven rows, labeled at the left border), or the cross-validation mean of the average AUC (from all one-vs-rest classification, last row) for the corresponding classifier (labeled at the top border), and the numbers inside the parentheses are the corresponding (cross-validation) standard deviations.</p><p>classifiers performs well in the cancer category PRAD, which is not unexpected, as PRAD is not a very mutation driven cancer.] This illustrates the importance of the mutation signatures as metafeatures in our classification model (discussed in more detail in the next section). The gene-level classifiers (random forest and sparse multinomial logistic) have similar performances, while the recorded variant only model clearly has a noticeably inferior classification performance.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Obtaining covariate effects from a full data fit</head><p>The cross-validation experiments illustrate the substantial gain in prediction accuracy achieved by the full multilevel model consisting of the effects of individual variants, in addition to the 584 genes and 96 single base nucleotide substitution meta-features. To gain insights on the effects of these factors we refitted the ("full") model on the whole TCGA data set with all 3702 tumors. As before, we first computed the product design-meta-design matrix XU by counting the total number of variants corresponding to each meta-feature in a tumor. We then obtained the ranks of the NMI values with cancer types for all 811,497 variants observed in the data, and screened out all variants with NMI rank ≥ 250. The group lasso penalty parameter was chosen via a 10-fold cross-validation (using glmnet). The penalized regression parameter estimates quantifying the variant, gene and single base nucleotide substitution signature effects were then obtained from the fitted model. To aid interpretation, we considered PRAD (prostate cancer) as the reference group, as this group has tumors with low mutation burden in general, and computed the log odds ratios of being classified into each of the other six cancer sites (see Remark 3.3). To aid comparison, each log odds ratio estimate was subsequently multiplied by the associated standard deviation of the predictor and then exponentiated, providing odds ratios for one standard deviation changes in the predictors.</p><p>We first considered the "residual" effects β 0 of the raw variants included in the model (retained after normalized mutual information based screening), i.e., the variant specific effects that are not explained by the meta-features. Unsurprisingly, most of the estimated residual effects were zero/small, as a consequence of the group lasso penalty. With PRAD as the reference group, we computed the corresponding ratio of odds of being classified into one of the other six categories.</p><p>In Figure <ref type="figure">2</ref>, 30 variants with the largest estimated odds ratios are displayed. It appears that the largest estimated odds ratio is observed in SKCM for BRAF V600E, a mutation that has been linked to skin cancer in multiple studies <ref type="bibr" target="#b1">(Bailey et al., 2018)</ref>. It is also of note that a handful of KRAS variants, such as G12C, G12D, G12R and G12V, have strong non-zero effects on cancer classification. These findings are in concordance with the existing scientific literature in that we see the G12C variant exhibiting its largest positive effects in lung adenocarcinoma (LUAD), while G12D, G12R and G12V display their largest effects on pancreatic cancer (PAAD). These variant specific effects cannot be captured in a gene-only model that identifies a mutation only through the associated gene.</p><p>Next, to visually assess the relative effects of the genes as meta-features in our cancer classification model, we considered the 30 genes with the largest odds ratios of classifying a tumor into one of the six cancer categories other than PRAD (for one standard deviation changes in the gene levels), and plotted odds ratios in Figure <ref type="figure">3</ref>. The figure shows large values for genes whose mutations are known to be highly tissue specific. For example, mutations at APC have been associated with colorectal cancer (CODEREAD), those at BRAF and NRAS with melanoma skin cancer (SKCM), and those at KRAS with both lung (LUAD) and pancreatic (PAAD) cancers.</p><p>Finally, to visualize the relative effects of the single base nucleotide substitution signatures in predicting cancer types, we obtained odds ratios for dominant mutation signature groups. We considered five dominant signature groups, viz., APOBEC, MMR, POLE, Smoking and UV, each being a weighted average of the 96 raw single base substitution signatures <ref type="bibr" target="#b0">(Alexandrov et al., 2013)</ref>, and computed the corresponding weighted average of the estimated meta-regression coefficients, ωh = v h T ωMS-1:96,• , and the weighted design-meta-design matrix, XU •,M S-1:96 v h , for BLCA BRCA COADREAD LUAD PAAD SKCM 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 EP300 EGFR AKT1 SOX9 CDKN2A GNAQ NFE2L2 MAP3K1 ELF3 XPO1 SMAD4 KEAP1 CDH1 ERBB2 KMT2D GNA11 GNAS PTPRT FBXW7 TCF7L2 RB1 NF1 ARID1A BRAF FGFR3 TP53 NRAS PIK3CA APC KRAS Odds Ratio (for 1 S.D. change in the predictor) Gene Figure 3: Treating prostate cancer (PRAD) as the reference category, the ratio of odds of classifying a tumor into one of the other six cancer categories, for a one standard deviation change in the corresponding level of gene are plotted for 30 genes with largest odds ratios. Each horizontal bar indicates the magnitude of the odds ratios (in a log scale) for each of the 30 genes (row), and in each cancer type (column).</p><p>BLCA BRCA COADREAD LUAD PAAD SKCM 1.0 1.2 1.4 1.6 1.8 1.0 1.2 1.4 1.6 1.8 1.0 1.2 1.4 1.6 1.8 1.0 1.2 1.4 1.6 1.8 1.0 1.2 1.4 1.6 1.8 1.0 1.2 1.4 1.6 1.8 UV Smoking POLE MMR APOBEC Odds Ratio (for 1 S.D. change in the predictor) Dominant Mutation Signature each of these signature groups where v h denotes the weights associated with the h-th dominant signature (h ∈ {APOBEC, MMR, POLE, Smoking, UV}). Here ωMS-1:96,• (XU •,M S-1:96 ) is a sub-matrix of the estimated meta-regression coefficient matrix ω (design-meta-design matrix XU ), with rows (columns) corresponding to the 96 single-base substitution signatures. The weighted effects ωh were then remeasured for one standard deviation changes in these dominant mutation signatures, by multiplying with standard deviations of the columns of XU •,M S-1:96 . Finally, treating PRAD as the baseline category, the odds ratios for classifying a tumor into one of the other six categories were computed for one standard deviation changes in these dominant signature groups, and were plotted in Figure <ref type="figure" target="#fig_3">4</ref>. Large odds ratios are obtained for the UV signature in melanoma skin cancer (SKCM), the smoking signature in lung cancer (LUAD), the MMR signatures in both colorectal cancer (COADREAD), and the APOBEC signatures in bladder cancer (BLCA), breast cancer (BRCA), and lung cancer (LUAD). These findings are in perfect alignment with the existing scientific knowledge <ref type="bibr" target="#b0">(Alexandrov et al., 2013)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Discussion</head><p>We considered a multi-level multinomial logistic regression model for predicting/classifying primary sites of origin of tumors with unknown primary. Our model incorporates information on hitherto unseen mutations through the associated genes and mutation footprints, treated as meta-features in the model, and uses this information in the classification. We observed substantial gains in classification accuracy over approaches that do not take advantage of these meta-features, such as a recorded variant only classifier, and a gene-level classifier. Along with the variants, we investigated the roles of the associated genes and the single base nucleotide substitution mutation footprints as predictors in our model, and gained further insights on the discriminating abilities of these attributes.</p><p>There are a number of future directions in which our current approach and findings could be extended. First, we limited the scope of our analysis by considering seven common cancer categories in the TCGA data for classification, using the whole-exome variants as predictors, and using only gene memberships and single base mutation signatures as meta-features. These were selected for expository purposes, since these tumor types had adequate sample sizes and well known mutational features. In a clinical study, interests may lie in a larger number of cancer types with more clinical relevance, and inclusion of a reference (no cancer) category may be of practical importance, e.g., for a ctDNA study where the patient may not have cancer at all. It may also be of interest to include extra-exome variants, obtained for example from a whole genome sequencing study, as predictors to assess their discriminating/predictive abilities and to see if they improve the performance. Finally, additional meta features for a variant, such as its replication time, exome size, expression levels etc. could potentially help extract further information from the rare and unseen variants, thereby bolstering predictive abilities of the model. Our approach could be easily extended to address these scientific problems. If the total number of cancer categories is sufficiently large, then a sparse group lasso penalty <ref type="bibr" target="#b26">(Simon et al., 2013)</ref>, instead of the group lasso penalty considered in this paper, could lead to a potentially better classification accuracy. Second, instead of the penalized likelihood based optimization approach (maximum a posteriori estimation), a full Bayesian approach could be adopted for estimation of model parameters. Then, instead of predicting the residual effect of a hitherto unseen variant to be exactly equal to zero, one would consider an ensemble of possible values via random generation from the associated posterior, as obtained from the meta-regression, and combine those with posterior samples for residual regression parameters associated with "recorded" variants, and those for the meta-regression parameters. Note that to properly account for the sparsity in the predictor space in a full Bayesian framework one would need to use a sparse Bayesian prior e.g., the spike and slab prior or a global-local shrinkage prior, such as the horseshoe prior <ref type="bibr" target="#b5">(Carvalho et al., 2009)</ref>, instead of the lasso type priors considered in this study. Finally, a nonparametric Bayesian approach to sparse multinomial logistic regression, as considered in <ref type="bibr" target="#b4">Burgette and Reiter (2013)</ref>, might also be profitably combined with the hierarchical structure considered in</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><figDesc>j,k } for a new variant j (j &gt; d 1 ) as βj,k = u T j ω•,k . Note that because we only have access to the first m tumors and the first d 1 variants in the training data, the regression effects {β d 1 +1,k , . . . , β d,k } for new variants are not identifiable and hence cannot be estimated in the training data set (only {β 1,k , . . . , β d 1 ,k } can be estimated from the training data). A prediction of the cancer label c i for a test set individual i (i = m + 1, . . . , n) is made using β j,k 's estimated from the training data for j ≤ d 1 , and the β j,k 's predicted via the meta-feature regression for j &gt; d 1 .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>models to compare their relative classification performances: (a) a group-lasso penalized sparse multinomial logistic classifier with the predictors being indicators of the presence/absence of mutations at each of the 584 oncoKB genes, (b) a random forest gene level classifier with the same predictors as in (a), and (c) a recorded-variant-only sparse multinomial logistic classifier with group lasso penalty. Thus (a) tells us the achievable accuracy, based on a generalized linear model, using only gene-level information; (b) is a non-parametric version of (a) with the generalized linear and parametric assumptions removed (and thus has a potentially better predictive ability than (a)), and (c) tells us the extent of diagnostic accuracy using only recorded variant specific information.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 2 :Figure 3 :</head><label>23</label><figDesc>Figure2: Treating prostate cancer (PRAD) as the reference category, the (residual) ratio of odds of classifying a tumor into one of the other six cancer categories, for a one standard deviation change in the presence/absence of raw variants are plotted for 30 variants with largest (residual) odds ratios. Each horizontal bar indicates the magnitude of the estimated odds ratios (in a log scale) associated with the corresponding variant (row) and in each cancer type (column).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Treating prostate cancer (PRAD) as the reference category, odds ratios of classifying a tumor into one of the other six cancer categories, for a one standard deviation change in the corresponding levels of the 5 dominant mutation signature groups are plotted. Each horizontal bar indicates the magnitude of odds ratio (in a log scale) for each of the 5 dominant mutation signature groups (rows), and in each cancer type (column).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1 :</head><label>1</label><figDesc>Out of the 811,497 unique variants observed in the 3702 TCGA tumors with one of the seven cancer types, the number of variants N r that appear exactly r times (i.e., in r tumors),</figDesc><table><row><cell>. .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell><cell>. . .</cell></row><row><cell>260+</cell><cell>0</cell><cell>0</cell><cell>1</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0</cell></row><row><cell cols="11">r = 1, 2, . . . , 270, are displayed for various r's. The (i, j)-th cell shows the observed value of N r</cell></row><row><cell cols="11">corresponding to r = 10(i -1) (= left row border) +j (= top column border). For example, the</cell></row><row><cell cols="11">(1, 1)-th entry, 770057, is the observed value of N 0+1 = N 1 , the number of singletons. The (4, 3)-th</cell></row><row><cell cols="7">entry, 1, tells us that there was a single variant observed 33 times.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>et al., 2019).</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="8">3 Multi-level model for cancer type prediction</cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="3">3.1 Notation and intuition</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="11">Consider a training data set consisting of mutation profiles of m tumors with known cancer types</cell></row><row><cell cols="11">and a test data set of n -m (n &gt; m) tumors whose cancer types we aim to predict. For the i-th</cell></row><row><cell cols="11">tumor the associated true cancer label is c i ∈ {1, . . . , K}, where K is the number of candidate</cell></row><row><cell cols="11">cancer types. We call variants that have been observed at least once in the training cohort as</cell></row><row><cell cols="11">"recorded" variants, and we have information on the presence/absence of d 1 such recorded variants</cell></row><row><cell cols="11">in the training set. Let x ij denote the binary indicator of the presence/absence of the j-th variant</cell></row><row><cell cols="11">in i-th individual (0 = absence, 1 = presence), j = 1, . . . , d 1 . In the test set, we seek to predict</cell></row><row><cell cols="11">the cancer labels based on information on the presence/absence of d = d 1 + d 2 variants in total,</cell></row><row><cell cols="11">where d 2 denotes the number of variants in the test data that do not occur in the training data. A</cell></row><row><cell cols="7">diagrammatic representation of the problem is provided in Figure 1.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="11">We consider a multinomial logistic ("softmax") regression framework for this classification prob-</cell></row><row><cell cols="11">lem, where for k = 1, . . . , K, the probability P (c i = k) of the i-th tumor having cancer type k is</cell></row></table></figure>
+		</body>
+		<back>
+
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>this paper. This approach may lead to additional insights such as which mutations and/or metafeatures are effectively "similar" in classifying tumors by appropriately clustering the mutations into a number of distinct groups.</p></div>
+			</div>
+
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability Statement</head><p>The TCGA data that support the findings of this study are openly available in the GDC Data Portal of National Cancer Institute at <ref type="url" target="https://portal.gdc.cancer.gov/">https://portal.gdc.cancer.gov/</ref>.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supporting Information</head><p>Web Appendices, Tables, Figures , and <ref type="figure">a</ref> zip file containing the data and the R scripts used for the analyses are available in the Supporting Information section at the end of the article.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Signatures of mutational processes in human cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Alexandrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nik-Zainal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Wedge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Aparicio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Behjati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Biankin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bolli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Borg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A.-L</forename><surname>Børresen-Dale</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">500</biblScope>
+			<biblScope unit="page">415</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Comprehensive Characterization of Cancer Driver Genes and Mutations</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Bailey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Maechler</surname></persName>
+		</author>
+		<title level="m">Matrix: Sparse and Dense Matrix Classes and Methods. R package version</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="2" to="17" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Conditional likelihood maximisation: a unifying framework for information theoretic feature selection</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pocock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-J</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Luján</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of machine learning research</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="27" to="66" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Multiple-shrinkage multinomial probit models with applications to simulating geographies in public use data</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Burgette</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Reiter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian analysis (Online)</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Handling sparsity via the horseshoe</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Carvalho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">G</forename><surname>Polson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Scott</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Artificial Intelligence and Statistics</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="73" to="80" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Using somatic variant richness to mine signals from rare variants in the cancer genome</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Arora</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Begg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Shen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Communications</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">OncoKB: a precision oncology knowledge base</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chakravarty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Phillips</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kundra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Rudolph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Yaeger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Soumerai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Nissan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JCO precision oncology</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="1" to="16" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Molecular characterisation and liquid biomarkers in carcinoma of unknown primary (cup): taking the uout of cup</title>
+		<author>
+			<persName><forename type="first">A.-M</forename><surname>Conway</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kilgour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Brady</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dive</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cook</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British journal of cancer page</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Cover</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Thomas</surname></persName>
+		</author>
+		<title level="m">Elements of information theory</title>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Cover</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Thomas</surname></persName>
+		</author>
+		<title level="m">Elements of information theory</title>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Liquid biopsies: genotyping circulating tumor dna</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Diaz</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bardelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of clinical oncology</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">579</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">data.table: Extension of &apos;data.frame&apos;. R package version 1</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dowle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Srinivasan</surname></persName>
+		</author>
+		<idno>12.2</idno>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The surveillance, epidemiology and end results (seer) program and pathology: towards strengthening the critical relationship</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Duggan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">F</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Altekruse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Penberthy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Sherman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American journal of surgical pathology</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page">94</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Sure independence screening for ultrahigh dimensional feature space</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page" from="849" to="911" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Sure independence screening</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lv</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics Reference Online</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="8" />
+			<date type="published" when="2017">2017</date>
+			<publisher>Wiley StatsRef</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Pathwise coordinate optimization</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Höfling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The annals of applied statistics</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="302" to="332" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Regularization Paths for Generalized Linear Models via Coordinate Descent</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of statistical software</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Domain-adversarial training of neural networks</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ganin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ustinova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ajakan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Germain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Larochelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Laviolette</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marchand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Lempitsky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="2096" to="2030" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Boosting for unsupervised domain adaptation</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Habrard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-P</forename><surname>Peyrache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sebban</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Joint European Conference on Machine Learning and Knowledge Discovery in Databases</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="433" to="448" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Tissue-specificity in cancer: The rule, not the exception</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Haigis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cichowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">363</biblScope>
+			<biblScope unit="page" from="1150" to="1151" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Penalized regression, standard errors, and Bayesian lassos</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kyung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gilly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Casellax</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Analysis</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">R: A Language and Environment for Statistical Computing</title>
+		<author>
+			<orgName type="collaboration">R Core Team</orgName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">R Foundation for Statistical Computing</title>
+		<meeting><address><addrLine>Vienna, Austria</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">precrec: fast and accurate precision-recall and ROC curve calculations in R</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Saito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rehmsmeier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="145" to="147" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Learning with previously unseen features</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Knoblock</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IJCAI</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="2722" to="2729" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Regularization paths for cox&apos;s proportional hazards model via coordinate descent</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Simon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="1" to="13" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">A sparse-group lasso</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Simon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational and Graphical Statistics</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="231" to="245" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Predicting cancer type from tumour dna signatures</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">P</forename><surname>Soh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Szczurek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sakoparnig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Beerenwinkel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome medicine</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Cluster ensembles -A knowledge reuse framework for combining multiple partitions</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Strehl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ghosh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Learning on the test data: Leveraging unseen features</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Taskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Koller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PROC. ICML</title>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">The lasso method for variable selection in the cox model</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics in medicine</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="385" to="395" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Cancer of unknown primary site</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Varadhachary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Raber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New England Journal of Medicine</title>
+		<imprint>
+			<biblScope unit="volume">371</biblScope>
+			<biblScope unit="page" from="757" to="765" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Liquid biopsies come of age: towards implementation of circulating tumour dna</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Massie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Garcia-Corbacho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mouliere</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Brenton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Caldas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pacey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Baird</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Rosenfeld</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Cancer</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page">223</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">tidyverse: Easily Install and Load the &apos;Tidyverse&apos;. R package version 1.2.1</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wickham</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Model selection and estimation in regression with grouped variables</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society: Series B (Statistical Methodology)</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="49" to="67" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Classification of gene microarrays by penalized logistic regression</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biostatistics</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="427" to="443" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -16,6 +16,10 @@ dependencies = [
   "numpy>=1.26",
   "scikit-learn>=1.4",
   "defusedxml>=0.7",
+  "google-generativeai",
+  "chromadb", # or faiss-cpu
+  "rank-bm25", # or fastbm25
+  "tiktoken", # or tokenizers
 ]
 
 [project.scripts]
@@ -31,6 +35,7 @@ testpaths = ["tests"]
 markers = [
   "network: tests that require outbound HTTP access",
   "integration: slower, multi-component smoke tests",
+  "rag: tests for the RAG pipeline",
 ]
 
 [project.optional-dependencies]

@@ -33,9 +33,39 @@ la screen --in data\cache\merged.parquet --out data\cache\screened.parquet --rec
 la pdf discover --in data\cache\merged.parquet --out data\cache\pdf_index.parquet
 la pdf download --in data\cache\pdf_index.parquet --pdf-dir data\pdfs --audit data\logs\pdf_audit.csv --mailto $Env:UNPAYWALL_EMAIL
 docker run -d --name grobid -p 8070:8070 ghcr.io/kermitt2/grobid:latest
-la parse run --pdf-dir data\pdfs --out-dir data\parsed --index-out data\cache\parsed.parquet --grobid-url http://localhost:8070 --err-log data\logs\parse_errors.csv --sample 20
+la parse run --pdf-dir data\pdfs --out-dir data\parsed --index-out data\cache\parsed_index.parquet --grobid-url http://localhost:8070 --err-log data\logs\parse_errors.csv --sample 20
 ```
 > Windows: wrap the topic in quotes so UTF-8 characters survive.
+
+## RAG & QA
+
+The project includes a Retrieval Augmented Generation (RAG) pipeline for answering questions from the parsed TEI documents. The process involves three main steps: chunking the documents, building a vector index, and running the question-answering command.
+
+```powershell
+# 1) Chunk TEI documents into smaller pieces
+la rag chunk --parsed-index data/cache/parsed_index.parquet `
+             --out data/cache/chunks.parquet `
+             --overlap 128 --max-tokens 1024
+
+# 2) Build a vector index (using ChromaDB and Google embeddings by default)
+la rag index --chunks data/cache/chunks.parquet `
+             --index-dir data/index/chroma `
+             --embed-provider google --embed-model text-embedding-004
+
+# 3) Ask a question
+la qa --question "What are the key methods in X?" `
+      --index-dir data/index/chroma --k 6 `
+      --llm-provider google --llm-model gemini-1.5-flash `
+      --out data/output/qa.jsonl
+```
+
+### Provider Configuration
+
+You can switch the embedding and language model providers via the command-line options. For example, to use a different embedding model, you would change the `--embed-provider` and `--embed-model` flags on the `la rag index` command. Similarly, the `--llm-provider` and `--llm-model` flags on the `la qa` command control the language model used for generating answers.
+
+### Interpreting the Output
+
+The `la qa` command produces a `qa.jsonl` file, where each line is a JSON object representing a question-answering result. The structure is defined by the `QAResult` model and includes the original question, the generated answer, a list of claims made in the answer, and the sources used to generate the answer. Each claim is supported by one or more citations, which include a quote from the source text and, where available, page numbers.
 
 ### Installing dependencies behind a proxy or offline
 
@@ -84,7 +114,7 @@ All first-party tests and commands run without reaching the public internet once
 
 `la pdf discover` scans the merged metadata or the optional `tools/seed_urls.csv` list and records which provider (arXiv, PubMed Central or Unpaywall) can serve each paper. `la pdf download` reads that index, writes PDFs under `data/pdfs/`, augments the Parquet file with `pdf_path`, `pdf_license` and `has_fulltext` columns and appends an audit trail to `data/logs/pdf_audit.csv`. Provide your registered Unpaywall email via `.env` (`UNPAYWALL_EMAIL=`) or the `--mailto` flag so the API call is accepted.
 
-`la parse run` expects a running GROBID container. It scans the PDF directory, sends each file to the service, stores the returned TEI XML under `data/parsed/<id>/tei.xml` and writes a lightweight Markdown summary to `text.txt`. Errors are recorded in `data/logs/parse_errors.csv` and the metadata index lands in `data/cache/parsed.parquet`.
+`la parse run` expects a running GROBID container. It scans the PDF directory, sends each file to the service, stores the returned TEI XML under `data/parsed/<id>/tei.xml` and writes a lightweight Markdown summary to `text.txt`. Errors are recorded in `data/logs/parse_errors.csv` and the metadata index lands in `data/cache/parsed_index.parquet`.
 
 ### Phase 4 helper script
 

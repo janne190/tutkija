@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Predictive genomics: A cancer hallmark network framework for predicting tumor clinical phenotypes using genome sequencing data</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Edwin</forename><surname>Wang</surname></persName>
+							<email>edwin.wang@cnrc-nrc.gc.ca</email>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<postCode>H4P 2R2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Center for Bioinformatics</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<postCode>H3G 0B1</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Naif</forename><surname>Zaman</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<postCode>H4P 2R2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Anatomy and Cell Biology</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<postCode>H3A 2B2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Shauna</forename><surname>Mcgee</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<postCode>H4P 2R2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Experimental Medicine</orgName>
+								<orgName type="institution">McGill University</orgName>
+								<address>
+									<postCode>H3A 1A3</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jean-Sébastien</forename><surname>Milanese</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<postCode>H4P 2R2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff4">
+								<orgName type="department">Department of Medicine</orgName>
+								<orgName type="institution">Laval University</orgName>
+								<address>
+									<postCode>G1V 0A6</postCode>
+									<settlement>Quebec</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ali</forename><surname>Masoudi-Nejad</surname></persName>
+							<affiliation key="aff5">
+								<orgName type="department">Institute of Biochemistry and Biophysics</orgName>
+								<orgName type="laboratory">Laboratory of Systems Biology and Bioinformatics (LBB)</orgName>
+								<orgName type="institution">University of Tehran</orgName>
+								<address>
+									<settlement>Tehran</settlement>
+									<country key="IR">Iran</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Maureen</forename><surname>O'connor</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">National Research Council Canada</orgName>
+								<address>
+									<postCode>H4P 2R2</postCode>
+									<settlement>Montreal</settlement>
+									<region>QC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Predictive genomics: A cancer hallmark network framework for predicting tumor clinical phenotypes using genome sequencing data</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">A6F966F00140574E6E32E8BBC32F5CAF</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Tumor genome sequencing leads to documenting thousands of DNA mutations and other genomic alterations. At present, these data cannot be analyzed adequately to aid in the understanding tumorigenesis and its evolution. Moreover, we have little insight into how to use these data to predict clinical phenotypes and tumor progression to better design patient treatment. To meet these challenges, we discuss a cancer hallmark network framework for modeling genome sequencing data to predict cancer clonal evolution and associated clinical phenotypes. The framework includes: (1) cancer hallmarks that can be represented by a few molecular/signaling networks. 'Network operational signatures' which represent gene regulatory logics/strengths enable to quantify state transitions and measures of hallmark traits. Thus, sets of genomic alterations which are associated with network operational signatures could be linked to the state/measure of hallmark traits. The network operational signature transforms genotypic data (i.e., genomic alterations) to regulatory phenotypic profiles (i.e., regulatory logics/strengths), to cellular phenotypic profiles (i.e., hallmark traits) which lead to clinical phenotypic profiles (i.e., a collection of hallmark traits). Furthermore, the framework considers regulatory logics of the hallmark networks under tumor evolutionary dynamics and therefore also includes: (2) a self-promoting positive feedback loop that is dominated by a genomic instability network and a cell survival/proliferation network is the main drivers of tumor clonal evolution. Surrounding tumor stroma and its host immune systems shape the evolutionary paths; (3) cell motility initiating metastasis is a byproduct of the above self-promoting loop activity during tumorigenesis; (4) an emerging hallmark network which triggers genome duplication dominates a feed-forward loop which in turn could act as a rate-limiting step for tumor formation; (5) mutations and other genomic alterations with specific patterns and tissue-specificity, which are driven by aging and other cancer-inducing agents. This framework represents the logics of complex cancer biology as a myriad of phenotypic complexities governed by a limited set of underlying organizing principles. It therefore adds to our understanding of tumor evolution and tumorigenesis, and moreover, potential usefulness of predicting tumors' evolutionary paths and clinical phenotypes. Strategies of using this framework in conjunction with genome sequencing data in an attempt to predict personalized drug targets, drug resistance, and metastasis for a cancer patient, as well as cancer risks for a healthy individual are discussed. Accurate prediction of cancer clonal evolution and clinical phenotypes will have substantial impact on timely diagnosis, personalized management and prevention of cancer.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Tumor genome sequencing has generated information on thousands of mutations and other genomic alterations. To date, more than 10,000 tumor genomes have been sequenced and as sequencing costs drop, many more genomes will be determined in the near future. Recently, Illumina released a high-throughput genetic sequencing machine, the HiSeq X Ten that can sequence a whole human genome for $1,000. New technologies such as Quantum Sequencing platform and Oxford Nanopore systems hold promise for further reducing genome sequencing cost in the future. This trend suggests that genome sequencing could be used as a diagnostic tool in clinical practice.</p><p>Tumor genome sequencing has cataloged many 'driver-mutating genes' and will continue to catalog more. However, the biological complexity of cancer combined with a vast amount of genome sequencing data presents a significant challenge on how to extract useful information and translate them into mechanistic understandings and predictions for cancer phenotypes <ref type="bibr" target="#b0">[1]</ref>, thus enabling management of cancer patient treatment in a more efficient manner. If one looks at a cancer cell genome, it is abundant with gene mutations, deletions and amplifications, chromosome gains and losses. Though seemingly random, there could in fact be patterns for mutations and chromosomal changes and by uncovering these patterns, we could in turn gain more insight into the mechanisms which drive cancer progression. By accessing the complete, precise genomic and clinical information from cancer patients, future advances will depend on exploiting the natural genetic complexity through uncovering key components of the cancer system. The genetic complexity observed can be described in a mathematical manner and models computed as a result. Moreover, the key components of cancer could be experimentally perturbed to test their characteristics. Ultimately, we could predict evolutionary path of the tumor clones and their phenotypes associated with progression, metastases and drug resistance.</p><p>In this review, we discuss a cancer hallmark network framework that can be used to model key components of cancer systems and then link mutant genotypes (i.e., mutations and other genomic alterations) to cellular and clinical genotypes. Using this framework, we illustrate strategies for prediction of cancer drug targets, probability of tumor recurrence, and cancer risks based on individual patient's genome sequencing profile. Predictions derived from cancer hallmark network-based modeling could ultimately be used in diagnosis and optimized patient management and prevention of cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Cancer hallmarks and their networks</head><p>Although the biology of cancer is extremely complex, key traits have been revealed during the past decade. The complexity of cancer can be reduced and represented by a few distinctive and complementary capabilities ('cancer hallmarks') that enable tumor growth and metastasis dissemination. These hallmarks constitute an organizing principle that provides a logical framework for understanding the remarkable diversity of neoplastic diseases. In 2000, Weinberg and Hanahan proposed six cancer hallmarks <ref type="bibr" target="#b1">[2]</ref>:</p><p>(1) cancer cells self-stimulate their own growth; (2) they resist inhibitory signals that might prevent their growth; (3) they resist their own programmed cell death; (4) they stimulate the growth of blood vessels to supply nutrients to tumors; (5) they can multiply forever; and (6) they invade local tissue and spread to distant organs. These are the core common traits that govern the transformation of normal cells to cancer (malignant or tumor) cells. In 2011, Weinberg and Hanahan updated the cancer hallmarks by adding 4 more <ref type="bibr" target="#b2">[3]</ref>: <ref type="bibr" target="#b6">(7)</ref> abnormal metabolic pathways; (8) evading the immune system (escaping from immunosurveillance); (9) chromosome abnormalities and unstable DNA (genome instability); and (10) inflammation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Genome duplication is an emerging cancer hallmark</head><p>Cancer hallmarks are evolving as we understand more about cancer. For example, from genomic point of view, the most striking characteristic of cancer genomes is extensive aneuploidy. Cancer genomes carry extremely high frequency of somatic copy number alterations, most of which are large-scale at chromosomal level. For example, several chromosomal arms can be amplified or deleted. It has been proposed that genome duplication could play a critical role for generating cancer aneuploidies and most likely be a rate-limiting step for tumor development <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. This assumption is based on the observations that genome duplication occurs only one time and routinely at the last round of gene amplification/deletion events during the transformation from normal to cancer cells <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. Aneuploidy is extensive in cancer <ref type="bibr" target="#b5">[6]</ref>. We and others have shown that that a large fraction (~50%) of solid tumors have undergone genome duplication (Milanese et al. unpublished data; <ref type="bibr" target="#b6">[7]</ref>. Therefore, we regard genome duplication as an emerging cancer hallmark trait which not only drives cancer aneuploidies but also a rate-limiting driving force during tumor formation. Genome duplication enables subtle changes in the activity of many different genes simultaneously and could facilitate the activation of several hallmark networks in one shot <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. In particular, the capabilities of interactions/regulations between hallmark networks could easily be acquired through genome duplication. Therefore, activation of genome duplication network could represent a "perfect storm" of extreme changes of genes in the cancer genome so that a cell could acquire a set of cancer hallmark traits at one time and then transform a 'slow-growing' cancer clone into 'fast-growing' one and therefore speed up tumor formation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Mapping of cancer hallmark traits onto cancer hallmark networks</head><p>Over the past few years it has been argued that network or a systems approach should be adopted for modeling of cancer genomic data so as to further understand cancer biology and translate the information into clinical practice <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b7">8,</ref><ref type="bibr" target="#b8">9]</ref>. In the article of 'The Roadmap of Cancer Systems Biology' <ref type="bibr" target="#b9">[10]</ref>, we proposed that a signaling network could be constructed for an individual tumor and modeling efforts could then be made ascribing cancer hallmark networks to that particular tumor. Substantial efforts have been made in this direction recently and have generated interesting results. For example, patientspecific whole signaling pathways have been constructed using a graphical model (PARADIGM) based on genomic alteration data and used for predicting drug targets <ref type="bibr" target="#b10">[11]</ref>. We have developed an algorithm by modeling cancer hallmark gene modules and successfully identified highly robust cancer biomarkers <ref type="bibr" target="#b11">[12]</ref>. Moreover, by the modeling of genomic alterations on the core cancer hallmark network -the cell survival and proliferation network -we are able to effectively predict (with 80% accuracy) breast cancer subtype-specific drug targets <ref type="bibr" target="#b12">[13]</ref>. Theses examples are encouraging for modeling of tumor genomic data and complex cancer systems using a framework that consists of a set of hallmark networks representing underlying principles and mechanisms of tumorigenesis.</p><p>The mechanisms of cancer etiology attributed to signaling pathways of some cancer hallmarks are closely intertwined. Therefore, the hallmarks whose underlying signaling pathways are highly intertwined can be collected into one hallmark network. For example, the signaling processes of Hallmarks 1, 2 and 3 are highly interactive, which one can define as a cancer cell survival and proliferation network (for simplicity, the survival network). This survival network collects the interactions and signaling processes of the above three hallmarks. Using this principle, we mapped cancer hallmark networks onto hallmark traits. Finally, we represent the complexity of cancer using only ten hallmark networks (Box 1).</p><p>A cancer cell needs to acquire functional capabilities that allow it to survive, proliferate, disseminate and colonize (i.e., tumor metastasis) in distant organs. These functions are acquired in different tumor types via activating distinct hallmark networks and at various times during the course of multistep tumorigenesis. Among the networks, three of them are core networks and critical for these multistep processes. The mutation network, which represents Hallmark 9 (i.e., genome instability), not only is the master driver for tumorigenesis but also orchestrate hallmark capabilities. Acquisition of other hallmark traits mainly depends on the activation of the mutation network. The survival network represents the fundamental activities (i.e., survival and proliferation) of a cancer cell, while EMT network representing Hallmark 6 carries out the initial key step of tumor metastases. Details for the hallmark network relationships in a context of tumor evolutionary dynamics have been illustrated in Fig 1a.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Quantifying cancer hallmark traits and networks to link mutant genotype to regulatory, molecular and cellular phenotypes of cancer cells</head><p>Although cancer hallmark concepts have been introduced over 10 years, they are largely described in text. Aside from traits such as cell proliferation and EMT, most of the hallmark traits have no quantification measures proposed. To model cancer hallmark traits and networks, it is necessary to quantify not only hallmark networks but also hallmark traits. We could then link network measures to hallmark trait measures using mathematical language.</p><p>Network measures can be quantified at two levels: operational (i.e., regulatory) and molecular (i.e., functional) levels. The topological structure of a molecular network can be seen as computer hardware, while gene/protein regulations/interactions on the network can be seen as software programs which run on computers. Different cancer cells/clones could run distinct software programs. For example, different cancer cells have different sets of genomic alterations, which could trigger distinct operational (regulatory) programs on the network. In this context, nodes and links in the network could be weighted, and certain scoring functions (representing strengths of gene/protein regulations) could be developed to represent gene regulatory logics/strengths on networks. We define a 'network operational signature' which is represented by a regulatory profile in which a set of genes form a set of regulatory circuits encoding gene regulatory relationships and strengths. Gene expression has been regarded as a molecular phenotype. Similarly, gene/protein regulatory (including signaling, protein modifications, and other regulatory relations such as non-coding RNA regulations) logics/strengths can be seen as a 'regulatory phenotype'. A same set of genomic alterations could have distinct regulatory logics/strengths (i.e., regulatory phenotypes) on distinct molecular networks, and therefore, could lead to distinct cellular phenotypes in different cells. A gene expression signature representing specific molecular phenotypes can be linked to cellular or clinical phenotypes, therefore, we propose that network operational signatures representing specific regulatory phenotypes can be linked to cellular or clinical phenotypes as well. Details of network operational signatures associated with cancer hallmarks are described in Section 3.1. At the molecular level, we define network measures using gene expression or protein phosphorylation signatures, in which both gene expression and phosphorylation are treated as molecular phenotypes of cells. We propose phosphorylation signatures as a measuring feature due to our belief that cell signaling networks are critical for tumorigenesis <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. A molecular signature contains a list of genes and their values of either gene expression or phosphorylation, while a network operational signature contains a set of genes encoding their regulatory relationships and strengths.</p><p>Cancer hallmark traits can be quantified based on the cell biology of the hallmarks. For example, cell survival could be measured by the cell proliferation rate or by the proliferation marker Ki-67; genome instability could be measured by the mutations density or deletion/amplification density per Mb chromosome; cancer dissemination could be measured by the number of cancer cells circuited in blood (volume) and the primary tumor (volume) and so on. With the quantification of the networks and their corresponding hallmark traits, we could model their relationships using computational approaches. Previously, we have modeled cancer hallmarks using gene expression signatures (i.e., functional gene modules of cancer hallmark networks) and these molecular signatures effectively predicted tumor metastasis events <ref type="bibr" target="#b11">(Li 2010)</ref>. Recently, we also developed an algorithm to identify network operational signatures of cancer cell survival networks that link to cancer cell drug targets (Tibichi et al., unpublished data). Using this algorithm, we correctly predicted which genes are essential to cell survival by providing the genomic alterations of an individual cancer cell which in turn serve as drug targets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Principles of the cancer hallmark network framework</head><p>Hallmark networks possess distinctive and complementary capabilities that enable tumor growth and metastasis, which constitute organizing principles that provide a logical framework for understanding the remarkable diversity of the diseases. We hypothesize that a collection these hallmark networks orchestrates and drives tumorigenesis, and thus forms a framework for network-based modeling and predictions of cancer phenotypes and clonal evolutionary paths (e.g., we could predict tumor clonal evolving several-stepsahead). In this framework, higher-order rules between hallmark networks in the context of tumor evolutionary dynamics exist (Fig <ref type="figure" target="#fig_0">1</ref>). These rules help us to prioritize the networks that are more suitable for the modeling of distinct stages of tumorigenesis. By developing this framework, we foresee cancer research as an increasingly logical science, in which a myriad of phenotypic complexities are manifestations of a small set of underlying organizing principles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Transformation of genomic alternations into network regulatory phenotypes which quantify cellular phenotypes such as hallmark traits</head><p>From a systems biology perspective, each hallmark network has a critical transition threshold (i.e., tipping point) at which the system shifts abruptly from one state to another <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. This tipping point can be quantified by a network operational signature and furthermore, it can be reflected in hallmark traits. For example, a critical transition threshold for a survival network is marked by the significantly different states between normal and cancer cells. In this context, a network operational signature could specifically quantify the sharp transition between States 0 and 1 (for example, for the cell survival hallmark, 0 represents the normal cell state while 1 represents the cancer cell state). In Stage 1, some hallmark traits have their own measurements, such as proliferation rate, which is different between cancer cells. A network operational signature can specifically quantify the measures of hallmark traits. In this context, we propose that network operational signatures of a hallmark network could be identified to quantify both a transition between States 0 and 1 and the measure of State 1 of hallmark traits.</p><p>A series of network analyses of cancer genes showed that genes for each hallmark trait are most likely to be enriched in subnetworks or network communities <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref>, suggesting that sets of genes work together to accomplish the task. It has been proposed that there exist recurrent positive feedback network motifs, or functional modules, during the sharp transitions of States 0 and 1 <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. A network operational signature could be enriched with regulatory relations and strengths of the genes within one or few network motifs/network communities. The core hypothesis is that multiple cancer-driving factors, such as genomic alterations, could have thousands of combinations (ways) to trigger a 'state transition' of a hallmark network. However, to trigger a state transition they must go beyond the critical transition threshold which can be quantified by a network operational signature. Similarly, there are many ways (combinations of cancer-driving factors) in a hallmark network could drive different measures of a hallmark trait, but only a limited number of network operational signatures can quantify them. Importantly, by developing appropriate scoring functions, we could transform the combinations of cancer-driving factors (i.e., genomic alterations) into network operational signatures which could directly quantify hallmark traits. This modeling approach quantitatively links genotypes (genomic alterations) to regulatory phenotypes (regulatory logics/strengths), to cellular phenotypes (hallmark traits) and finally to clinical phenotypes (a collection of hallmark traits).</p><p>State transitions in network modeling are often described by activation/inactivation status of 'output nodes/genes' or 'sink' of networks <ref type="bibr" target="#b14">[15]</ref>. However, in many cases, it is unclear which genes are the output nodes for a biological process and furthermore, output nodes of the networks could be different between cancer cells. It is a very challenging task to define the output nodes for the networks of cancer cells. Therefore, network operational signatures provide an effective means which overcomes the problems of defining output nodes of a functional network.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Cancer cell evolution is mainly driven by a self-promoting positive feedback loop of hallmark networks</head><p>The evolutionary process of cancer cells is highly dynamic, however, the outcome of evolution and selection will finally lead to favor hyper-proliferation and fast-growing cancer cells. The biology of a tumor cannot be understood by simply enumerating the cancer hallmark traits or networks, but instead must consider the interactions/regulations of these hallmark networks in terms of evolutionary dynamics. Therefore, we propose that the major evolutionary driving force of a cancer cell comes from a self-promoting positive feedback loop in which mutation network and survival network are dominant components (Fig <ref type="figure" target="#fig_2">1b</ref>). In this loop, mutation network is a master activator/regulator, which is a driving engine for genomic alterations, while survival network is the final regulated target. This survival network, which continually sends positive feedback (i.e., selecting cancer cells with more fitness) to the mutation network, drives the evolutionary path of cancer cells. Mutation network induces high instability of the genome leading to an increase in genomic alteration occurring in the cell. New genomic alterations could be occurred in some components (i.e., genes/proteins) of the mutation network, which in turn could give the network higher efficient, thereby inducing a higher level of genome instability. The mutation network therefore has a self-regulating function.</p><p>Genomic alterations induced by a mutation network could occur in the components of other hallmark networks so that other hallmark traits could be acquired. Cancer cell populations are much like an ecosystem in which fast-growing cancer cells have higher competitive power than slow-growing ones. Fast-growing cancer cells will be selected to become a dominate subpopulation within a tumor and therefore a highly efficient survival network will be selected. We must be made aware that the networks in the self-promoting loop are in the same cell. If a highly efficient survival network is selected, the mutation network and other networks in the loop are also selected. This selection process is equivalent to sending a positive feedback to these networks by the survival network. Combined with the knowledge that the mutation network can be self-regulated, we propose that the loop is a self-promoting positive feedback loop, dominated by the networks of mutation and survival and refer to it as self-promoting loop (Fig <ref type="figure" target="#fig_2">1b</ref>).</p><p>The two main classes of cancer genes are oncogenes and tumor suppressor genes. In general, oncogenes are often mutated or amplified in positive gene circuits, whereas tumor suppressor genes are often mutated, deleted or methylated in negative gene circuits <ref type="bibr" target="#b15">[16]</ref>. Negative-feedback gene circuits that normally operate to dampen various types of signaling ensure homeostatic regulation of the flux of signals coursing through the intracellular circuitry <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b20">21]</ref>. Defects in these circuits are capable of enhancing proliferate signaling <ref type="bibr" target="#b14">[15]</ref>. Based on the model of the self-promoting positive feedback loop of hallmark networks, we expect that the 'destination' of tumor cells is to become hyperproliferative in nature by self-promoting their genomes to have a higher hypermutation rate (i.e, a highly efficient mutation network). Therefore, the outcome of this self-promoting process will lead more tumor suppressor genes becoming mutated/deleted and more oncogenes becoming mutated /amplified. This reasoning is supported by a recent survey that the distribution of oncogenes and tumor suppressor genes is correlated with copy number alterations (i.e., amplifications and deletions) of chromosome arms <ref type="bibr" target="#b5">[6]</ref>.</p><p>It is clear that the self-promoting loop mainly drives cancer cell evolution. However, intercellular systems could shape the path of cancer evolution. Stroma-network (e.g., inflammation and tumor stromal immune systems) could send signals to the networks of the self-promoting loop, and furthermore, tumor host immune system forms selection forces for cancer cells. These hallmark systems also play an important role in shaping cancer evolutionary path to drive tumorigenesis (Fig <ref type="figure" target="#fig_2">1a</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">A genome duplication network activated feedforward loop is a rate-limiting step for tumor formation</head><p>Genome duplication appears to be a rate-limiting step for tumor formation in many epithelial-origin tumor samples <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. A sharp transition between a slow-growing clone to a fast-growing clone could be governed by a genome duplication event yet thus far, it is unclear how genome duplication is triggered. Interactions between the mutation network of a cancer cell and its host systems such as tumor stroma-network may activate genome duplication network thereby trigger a genome duplication event in that cancer cell. This event often drives a large number of amplifications and deletions to occur simultaneously and in turn other hallmark networks, such as survival network, could quickly reach high efficiency. Therefore, the selection process after a genome duplication event is governed by a feedforward loop (Fig <ref type="figure" target="#fig_2">1c</ref>) in which a genome duplication network is the master regulator, the dedifferentiation network, angiogenesis-inducing network and immune-escaping network are the secondary regulators, and survival network as the regulated target. If this feedforward loop is more efficient than the step-wise selfpromoting positive feedback loop, the number of amplified and deleted genes in tumors which experienced genome duplication could be significantly smaller than that of the tumors which had not experienced genome duplication. Indeed, we found that this is true in our analysis of a few hundreds of tumor genomes (Milanese et al. unpublished materials).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Cancer cell motility initiating metastasis is a byproduct of the cancer hallmark self-promoting loop activity</head><p>Tumor recurrence and metastasis are the leading cause of cancer mortality. Therapies for recurrent disease may fail, at least in part, because the genomic alterations driving the growth of recurrences are distinct from those in the initial tumor. Therefore, understanding how metastasis occurs is critical. The first step of metastasis is a cancer cell that acquires motility governed by an epithelial-mesenchymal transition (EMT) network.</p><p>As the activity of mutation network gets higher, more genomic altercations will occur in the genome. If certain genomic altercations hit EMT network components, a transition between States 0 and 1 could be triggered (i.e., 0 represents a cancer cell without motility capability, while 1 represents a cancer cell acquired motility capability). Once a cancer cell acquires the EMT trait, it starts to move out of the tumor, then circulates in the host systems and finally colonizes in distant organs. In this context, cancer cell motility is not a trait which has been selected for, but it is mainly driven by the mutation network and the self-promoting loop. If this is true, we expect that EMT-driven cell motility could be acquired by cancer cells at any time during its evolution, including the slow-growing stage (i.e., before primary tumor formation, or from primary tumors). However, generally if EMT occurs in fast-growing cells, these cells could have higher chance to undergo metastasis. Traditionally it is believed that metastasis occurs late in tumor formation (i.e., dissemination of tumor cells in late stage of tumor progression). However, a number of recent studies indicate that early dissemination of tumor cells occur before tumor formation <ref type="bibr" target="#b2">[3]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Mutations and other genomic alterations have specific patterns and tissuespecificity</head><p>For years it has been known that mutational signatures exist in cancer. For example, both UV light and tobacco-smoking produce very specific signatures in a person's genome. It is assumed that each mutational process leaves a particular pattern of mutations, an imprint or signature, in the genomes of cancers it causes. Using an algorithm previously developed for searching mutational patterns <ref type="bibr" target="#b21">[22]</ref>, investigators analyzed more than 7,000 tumor genomes representing 30 most common cancer types and found sets of mutational signatures in tumors <ref type="bibr" target="#b22">[23]</ref>. They found that each tumor type contains mutational signatures derived from at least 2 different and distinct factors such as aging, smoking, UV and so on. This means that we can now study those patterns that drive cancer and furthermore, it suggests that cancer development, progression and metastases can be predicted.</p><p>If agent-derived mutational signatures are evenly distributed across all tissues, it is difficult to explain why only some agents induce certain types of tumors. With the assumption that a mutational signature could occur in distinct tissues and tumor types, we carefully checked the results obtained from a recent survey of mutational signatures among 30 tumor types <ref type="bibr" target="#b22">[23]</ref> and found our hypothesis to be valid. An agent-derived mutational signature can indeed be tissue-dependent. For example, BRCA1/2-mutationderived mutational signatures dominantly occur in the tumors of breast, ovary and pancreas <ref type="bibr" target="#b22">[23]</ref>. Aging-derived mutational signatures can be both age-and tissue-specificdependent. For example, aging-derived Siganture1A predominantly occurs in AML and other 6 tumor types <ref type="bibr" target="#b22">[23]</ref>. In addition, an agent could induce two or more different mutational signature profiles which could occur in distinct tissues. For example, APOBEC is able to induce at least two different mutational signatures: one occurs in 16 tumor types while the other occurs in 2 other tumor types <ref type="bibr" target="#b22">[23]</ref>. Furthermore, a recent study showed that tissue-specific mtDNA mutation signatures are common, even in normal tissues, and also showed that most of these signatures are aging-driven <ref type="bibr" target="#b23">[24]</ref>. This study underscores that human DNA changes or mutates in patterns rather than randomly.</p><p>These mutational signatures will be extremely useful for modeling genome sequencing data using the hallmark network-based framework. Therefore, it is critical to survey more genomes with different ages and from different tissues, to create a compendium of mutational signatures triggered by the aging process. In addition, a similar effort should be taken in collecting mutational signatures derived from cancer-inducing factors (including chemotherapy drugs and therapy-based radiations) in different tissues and cancer types.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Strategies for constructing predictive models using a hallmark network framework</head><p>Tumor progression can be portrayed as a succession of clonal expansions, each of which is triggered by the interactions of a set of hallmark networks <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>. Starting from a normal cell to a cancer clone, new mutations during clonal expansion will build on the existing mutation profiles of previous clones. Therefore, a hallmark network can be updated and examined to check if the newly added mutations could work together with the 'pre-existing mutations' of the network to trigger a state transition or modulate the measures of a hallmark trait. Mutational patterns can be treated as key factors in the modeling experiments. For example, age-associated mutational patterns are major driving force for tumorigenesis. Different age groups have distinct mutational patterns, but they do not exist across all the tissue types. If we know the mutational patterns driven by aging or other factors, we could simulate the mutations of the proteins (or the regulatory or post-modification elements of the proteins such as transcription factor binding sites and phosphorylation motifs), which contain sequences matching that mutational pattern (Fig <ref type="figure" target="#fig_1">2a</ref>). From there we could predict which proteins on a network could become mutated and whether this mutation works together with the 'pre-existing mutations' of the network to trigger the activation of a hallmark network by comparing with network operational signatures (Fig <ref type="figure" target="#fig_1">2a</ref>). Network operational signatures could be identified from the gene regulatory profiles, which are generated from the network of normal and tumor samples. By doing so, cancer clonal evolution becomes largely predictable. The predictability of tumor clonal evolution means that we could foresee clonal evolutionary paths and then design cancer therapies to effectively conduct individualized cancer treatment.</p><p>More than 10,000 tumor genomes have been sequenced and this effort is still ongoing. It is expected that more tumor genomes and their matched gremlin genomes will be sequenced in the near future. Using these data, we can obtain network operational signatures for quantifying state transitions and measures for hallmark traits. Using these signatures and the hallmark network framework we can construct models that predict how the tumor will evolve and the risk potentials for healthy people who have certain germline mutations which could induce cancers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Predictive models for a cancer patient</head><p>When a patient has a primary tumor only (i.e., metastasis has not been detected yet), it would be interesting to predict: 1) the possibility of tumor recurrence and metastases; 2) which drugs could be applied; and 3) the potential consequences after applying a specific drug. This information could aid in the design of therapies of appropriate first line of treatment and avoiding drug resistance derived from a specific drug treatment.</p><p>There are at least three key steps in the transformation of a normal cell to a metastatic cell (i.e., from a normal to a cancer cell; from a cancer cell to a circulating cell; and then to a metastatic cell which has been colonized in another organ). In this process, survival networks could be undergoing at least three key rounds of rewiring so that the drug targets for these three clinical phenotypes could be different. It would be useful to predict drug targets not only for the primary tumor, but also for the circulating cells so that circulating cancer cells could also get treated. As mentioned above, modeling of survival networks could predict drug targets for individual cancer cells. The survival signaling network can be constructed based on genome-wide RNAi knockdown data. Previously, we constructed breast cancer subtype-specific survival networks which were used for predicting subtype-specific drug targets with 80% accuracy <ref type="bibr">(Zaman 2013)</ref>. Recently, we developed network operational signatures of survival networks that enabled prediction of drug targets specifically for a single cancer cell/clone with 90% accuracy (Tibiche et al., manuscript in preparation). This tool allows predicting drug targets for each clone within a tumor based on their genomic alteration profiles. The genomic alternation profiles of primary tumor clones and the circulating cancer cells can be used for predicting their drug targets.</p><p>Currently, patients are often treated with generic cancer chemotherapeutic drugs which are often toxic and may also induce new mutations to tumor cells. To predict potential drug resistance, we could apply a specific drug to determine the mutational patterns driven by that drug on survival networks. For example, a drug can be applied to different cancer cell lines, followed by genome sequencing to identify mutational patterns derived from that specific drug treatment. If the mutational pattern driven by a specific drug that is to be applied to a patient is known, we could simulate the mutations of the proteins (whose sequences match the mutational pattern, of the current survival networks of the tumor clones) to predict the probability of drug resistance and help in making clinical decisions whether a drug should be applied to that patient. It should be noted that for that same drug, the probability of drug resistance varies between different patients (i.e., their survival networks have distinct pre-existing genomic alteration profiles).</p><p>To predict metastasis of a primary tumor, it is possible to simulate protein mutations of the EMT network based on mutational patterns learned from that tumor combined with aging-associated mutational patterns. The same method could apply to the mutation network and the immune-escaping network for the circulation and colonization processes of a cancer cell. In addition, host immune repertoire deep sequencing data could be integrated to examine the probability of tumor recurrence and metastasis.</p><p>The collection of these predictions could help in understanding of the mechanisms by which invading cells give rise to recurrent tumors and the effect of adjuvant therapeutics have on their evolution which will facilitate the development of new strategies to delay or prevent recurrence and malignant tumor progression.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Predictive models for cancer risk for healthy individuals</head><p>At the moment, cancer predisposition genes in germline cells are the major genetic factors to be used for evaluating cancer risks for a healthy person. To date, ~114 cancer predisposition genes have been identified <ref type="bibr" target="#b24">[25]</ref>. The assumption is that if a cancer is detected early, treatment and survival will be improved. Preventative measures can be taken, such as the surgical removal of the at-risk tissue, however, it is preferable to conduct chemoprevention for persons at-risk. For example, taking an aspirin daily significantly reduced the risk of colorectal cancer for men who have mismatch repair gene mutation in germline cells <ref type="bibr" target="#b25">[26]</ref>. However, it is unwise to use a single cancer predisposition gene to judge all cancer risks and we propose using the cancer hallmark framework (Fig <ref type="figure" target="#fig_1">2b</ref>) could more effectively evaluate cancer risks based on a person's genomic profiles derived from blood cells.</p><p>We will consider the germline and aging mutational profiles, as well as potential environmental factors for inducing cancers in the framework. The self-promoting feedback loop (Fig <ref type="figure" target="#fig_2">1b</ref>) containing both the mutation network and survival network could provide a window of opportunity for mitigating or preventing cancer. As shown in Fig <ref type="figure" target="#fig_1">2b</ref>, hallmark networks will be first mapped using the mutations from the germline genomic profile, followed by other potential mutations based on the mutational patterns derived from aging and other potential cancer inducing agents (e.g., if a person is a heavy smoker, mutational patterns triggered by smoking will be projected). Network operational signatures can be used for predicting if and when the person could develop cancer. In this model, aging is considered as a major driving force for tumorigenesis: for example, nearly half of cancer patients are diagnosed after 65 years of age. Moreover, genomewide age-related DNA methylation changes in blood and other tissues related to histone modification, expression and cancer, revealed the existence of age-specific DNA methylation genes <ref type="bibr" target="#b26">[27]</ref>, which suggests that age-specific mutation patterns exists. Furthermore, age-associated mutational patterns are tissue-specific. Given this strategy, the incidence and timing of malignant tumor progression can potentially be predictable. Because this prediction is based on hallmark networks in which gene regulatory profiles can be generated by mutations, it is possible to predict potential drug targets using the regulatory profiles. Therefore, it is possible to apply drugs for personalized cancer prevention.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Challenges</head><p>Our framework consists of a set of cancer hallmark networks. However, at the moment only a few hallmark networks are relatively rich in information, such as cell survival, mutation (i.e., genome instability) and EMT networks. Comprehensive information for other hallmark networks is still not available: a reasonably complete stroma-network is still not available as the great majority of signaling molecules and pathways remain to be identified. This reality poses challenges in using this framework to explore the interactions between stoma and cancer cells in orchestrating malignant progression.</p><p>Mutational patterns are critical factors in constructing predictive models, however, mutational patterns derived from aging, chemo and popular germline mutations have been not extensively catalogued. It is therefore important to gather a comprehensive compendium of mutational patterns for the understanding of cancer development and aid in constructing predictive models. Finally, it is essential to develop optimized network scoring functions for network modeling and network operational signatures for hallmark networks.  Constructing predictive network models using the cancer hallmark network framework. Based on the relationships and functions of the hallmark networks, distinct networks could be modeled, for example, for predicting drug targets, survival network could be modeled; for predicting cancer risk, mutation network and survival network could be modeled; for predicting cancer recurrence, EMT network and stroma-network could be modeled. For each predictive model, network operational signatures, mutational patterns and so on will be used. New mutations based on mutational patterns of cancerinducing agents could be projected onto the networks. Gene regulatory profiles (i.e., representing regulatory phonotype) could be generated based on the new and pre-existing mutations on the networks. The profiles will be compared with network operational signatures to predict the outcomes of the newly added mutations. Here mutation has a broad definition: it could be any genetic and epigenetic changes. A network operational signature is a specifically regulatory profile in which a set of genes encodes their regulatory logics and strengths. Fig 2a, predictive network models for cancer patients. These models could predict drug targets of tumor clones, prognosis, and drug resistance. The figure shows a case that within a tumor three clones can be identified. Each clone will be modeled independently. The final result of the tumor will be dependent on the outcomes of the three clones. Fig 2b, cancer risk predictive network models for healthy individuals. Exome-sequencing data of germline cells will be incorporated into mutational patterns derived from aging, cancer predisposition genes or other cancerinducing agents. These data will be modeled on hallmark networks to predict whether and when a tumor could occur for a healthy individual. Angiogenesis-inducing network represents underlying molecular mechanisms for angiogenesis which provides tumors for accessing nutrients and oxygen and evacuating metabolic wastes. It represents stimulating the growth of blood vessels to supply nutrients to tumors.</p><p>Immune-escaping network represents a mechanism for escaping immune surveillance from host by cancer cells.</p><p>EMT (epithelial-mesenchymal transition) network represents regulatory machinery that allows cancer cells requiring cell motility ability. Invasion and metastasis has multisteps: cancer cells acquire motility capability, disseminate and circulate in host, and finally colonize in distant organs. EMT network captures the first step of this process. Other steps involved in extensive interactions between cancer cells and tumor microenvironment, which is represented by a stroma-network.</p><p>Genome duplication network represents a molecular mechanism of triggering genome duplication during cancer clonal evolution. This mechanism has been proposed as a ratelimiting driving force during tumor formation.</p><p>Metabolic network represents a molecular mechanism of reprogramming energy metabolism which leads to aerobic glycolysis.</p><p>Stroma-network represents complex interactions between stroma and tumor cells. These interactions could have multiple functions such as tumor-promoting inflammation, immune responses that could eradicate tumors, or other supporting functions for tumor growth.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig 1 .</head><label>1</label><figDesc>Fig 1. Cancer hallmark networks and their relationships in the context of tumor clonal evolutionary dynamics. Fig 1a represents the regulatory relationships of cancer hallmark networks. Fig 1b represents a self-promoting positive feedback loop which is the dominantly driving force for cancer clonal evolution. In this loop, mutation network is a master activator/regulator, which is a driving engine for genomic alterations, while survival network is the final regulated target. This survival network, which continually sends positive feedback to the mutation network, drives the evolutionary path of cancer cells. Fig 1c represents a feedforward loop in which a genome duplication network is the master regulator, the dedifferentiation network, angiogenesis-inducing network and immune-escaping network are the secondary regulators, and survival network as the regulated target. The hallmarks represented by each network have been explained in Box 1. Networks in blue, red and green represent immune-escaping network, angiogenesisinducing network, and dedifferentiation network, respectively. Line with arrows represents an inducing (positive) or interaction relationship, while open circle with double arrows represents self-regulation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig 2 .</head><label>2</label><figDesc>Fig 2.Constructing predictive network models using the cancer hallmark network framework. Based on the relationships and functions of the hallmark networks, distinct networks could be modeled, for example, for predicting drug targets, survival network could be modeled; for predicting cancer risk, mutation network and survival network could be modeled; for predicting cancer recurrence, EMT network and stroma-network could be modeled. For each predictive model, network operational signatures, mutational patterns and so on will be used. New mutations based on mutational patterns of cancerinducing agents could be projected onto the networks. Gene regulatory profiles (i.e., representing regulatory phonotype) could be generated based on the new and pre-existing mutations on the networks. The profiles will be compared with network operational signatures to predict the outcomes of the newly added mutations. Here mutation has a broad definition: it could be any genetic and epigenetic changes. A network operational signature is a specifically regulatory profile in which a set of genes encodes their regulatory logics and strengths. Fig 2a, predictive network models for cancer patients. These models could predict drug targets of tumor clones, prognosis, and drug resistance. The figure shows a case that within a tumor three clones can be identified. Each clone will be modeled independently. The final result of the tumor will be dependent on the outcomes of the three clones. Fig 2b, cancer risk predictive network models for healthy individuals. Exome-sequencing data of germline cells will be incorporated into mutational patterns derived from aging, cancer predisposition genes or other cancerinducing agents. These data will be modeled on hallmark networks to predict whether and when a tumor could occur for a healthy individual.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Box 1 :</head><label>1</label><figDesc>Mapping cancer hallmark networks to hallmark traitsSurvival network represents underlying molecular mechanisms for the most fundamental trait of cancer cells involves their ability to sustain chronic proliferation, resist to cell death, and resist inhibitory signals that might prevent their growth. It represents a collection of three hallmark traits whose underlying biological processes and signaling pathways are highly intertwined and cross-talked.Mutating network represents regulatory mechanisms that trigger high level of genome instability and induce high mutation rate of the genome.Dedifferentiation network represents molecular mechanisms of the capability of unlimited replicative potential of tumors.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="18,90.00,72.00,227.28,350.64" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="19,90.00,72.00,233.52,395.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="21,90.00,85.68,216.96,584.64" type="bitmap" /></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Understanding genomic alterations in cancer genomes using an integrative network approach</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Lett</title>
+		<imprint>
+			<biblScope unit="volume">340</biblScope>
+			<biblScope unit="page" from="261" to="269" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The Hallmarks of Cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="57" to="70" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology in the genome sequencing era: Part 1, dissecting and modeling of tumor clones and their networks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">K</forename><surname>Beitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin. Cancer Biol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="279" to="285" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology in the genome sequencing era: Part 2, evolutionary dynamics of tumor clonal networks and drug resistance</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">K</forename><surname>Beitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Semin. Cancer Biol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="286" to="292" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Cumulative haploinsufficiency and triplosensitivity drive aneuploidy patterns and shape the cancer genome</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Davoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">W</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">E</forename><surname>Mengwasser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Sack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Elledge</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">155</biblScope>
+			<biblScope unit="page" from="948" to="962" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Absolute quantification of somatic DNA alterations in human cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cibulskis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Helman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mckenna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">W</forename><surname>Laird</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Onofrio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Winckler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Weir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pellman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Levine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Biotechnol</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="413" to="421" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Rapid learning for precision oncology</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Shrager</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Tenenbaum</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Clin. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="109" to="118" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The scientific drunk and the lamppost: massive sequencing efforts in cancer discovery and treatment</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Yaffe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Signal</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">13</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Cancer systems biology</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<publisher>CRC Press</publisher>
+			<pubPlace>Boca Raton, FL</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Inference of patient-specific pathway activities from multidimensional cancer genomics data using PARADIGM</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Vaske</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Benz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Z</forename><surname>Sanborn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Earl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Szeto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Haussler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Stuart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="237" to="245" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Identification of high-quality cancer prognostic markers and metastasis network modules</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Lenferink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Collins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun. 1</title>
+		<imprint>
+			<biblScope unit="page">34</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Signaling network assessment of mutations and copy number variations predict breast cancer subtype-specific drug targets</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Jaramillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tibiche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Banville</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Collins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nantel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="216" to="223" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Regulatory network motifs and hotspots of cancer genes in a mammalian cellular signalling network</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Moksong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chowdhury</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IET. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="292" to="297" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Dynamic modeling and analysis of cancer cellular network motifs</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cloutier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Integr. Biol. (Camb. )</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="724" to="732" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">A map of human cancer signaling</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jaramillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">O</forename><surname>Purisima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">152</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Signaling network analysis of ubiquitin-mediated proteins suggests correlations between the 26S proteasome and tumor progression</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Biosyst</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1809" to="1816" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">The human phosphotyrosine signaling network: Evolution and hotspots of hijacking in cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tibiche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kaneko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Schiller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="1222" to="1230" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Dynamic rewiring of the androgen receptor protein interaction network correlates with prostate cancer clinical outcomes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paliouras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lumbroso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kapogeorgakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">K</forename><surname>Beitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Trifiro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Integr. Biol. (Camb. )</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="1020" to="1032" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Cancer systems biology: exploring cancer-associated genes on cellular networks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lenferink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Mol. Life Sci</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="1752" to="1762" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Regulation of death receptor signaling by the ubiquitin system</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">E</forename><surname>Wertz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">M</forename><surname>Dixit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Death. Differ</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="14" to="24" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Deciphering signatures of mutational processes operative in human cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Alexandrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nik-Zainal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Wedge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="246" to="259" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Signatures of mutational processes in human cancer</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Alexandrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nik-Zainal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Wedge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Aparicio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Behjati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Biankin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bolli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Borg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Borresen-Dale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Boyault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Burkhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Caldas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">R</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Desmedt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Eils</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Eyfjord</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Foekens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Greaves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hosoda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hutter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ilicic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Imbeaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Imielinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Jager</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Knappskog</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kool</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lakhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lopez-Otin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">C</forename><surname>Munshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Nakamura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Northcott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pajic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Papaemmanuil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Paradiso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Pearson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Puente</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ramakrishna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Richardson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Richter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rosenstiel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schlesner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">N</forename><surname>Schumacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">N</forename><surname>Span</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Teague</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Totoki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Tutt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Valdes-Mas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Van Buuren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">'</forename><surname>Van</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vincent-Salomon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Waddell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zucman-Rossi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Mcdermott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Lichter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meyerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Grimmond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Siebert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Campo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shibata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Pfister</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">500</biblScope>
+			<biblScope unit="page" from="415" to="421" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Recurrent tissue-specific mtDNA mutations are common in humans</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Samuels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Torstenson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rokas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Thornton-Wells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Moore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Hughes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Hoffman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Haines</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">G</forename><surname>Murdock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Mortlock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Williams</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS. Genet</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">1003929</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Realizing the promise of cancer predisposition genes</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Rahman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">505</biblScope>
+			<biblScope unit="page" from="302" to="308" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Chemoprevention in Lynch syndrome</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Burn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Mathers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Bishop</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fam. Cancer</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="707" to="718" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Genome-wide age-related DNA methylation changes in blood and other tissues relate to histone modification, expression and cancer</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Taylor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Carcinogenesis</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="356" to="364" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Computational genomic algorithms for microRNA-based diagnosis of lung cancer: the potential of machine learning</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">N</forename><surname>Garikipati</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Huron High School</orgName>
+								<address>
+									<settlement>Ann Arbor</settlement>
+									<region>MI</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Computational genomic algorithms for microRNA-based diagnosis of lung cancer: the potential of machine learning</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">FE30144001C2D48A94E732FBAE128A92</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The advent of large scale, high-throughput genomic screening has introduced a wide range of tests for diagnostic purposes. Prominent among them are tests using microRNA (miRNA) expression levels. Genomics and proteomics now provide expression levels of hundreds of miRNAs at a time. However, for actual diagnostic tools to become reality requires the simultaneous development of methods to interpret the large amounts of miRNA expression data that can be generated from a single patient sample. Because these data are in numeric form, quantitative methods must be developed. Statistics such as p-values and log fold change give some insight, but the diagnostic effectiveness of each miRNA test must first be evaluated. Here, the author has developed a traditional, sensitivity-and specificity-based algorithm, as well as a modern machine learning algorithm, and evaluated their diagnostic potential for lung cancer against a publicly available database. The findings suggest that the machine learning algorithm achieves higher accuracy (97% for cancerous and 73% for normal samples), in addition to providing confidence intervals that could provide valuable diagnostic support. The machine learning algorithm also has significant potential for expansion to more complex diagnoses of lung cancer sub-types, to other cancers, as well diseases beyond cancer. Both algorithms are available on the Github repo: <ref type="url" target="https://github.com/neerja-g/machine-learning-miRNA">https://github.com/neerja-g/machine-learning-miRNA</ref> .</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Lung Cancer is the leading cause of death among both male and female cancer patients, accounting for 25% of all cancer deaths <ref type="bibr">[1]</ref>. There are over 430,000 Americans living today who have been diagnosed with lung cancer at some time. While the popular belief is that lung cancer is caused by the inhalation of carcinogens due to smoking, 20-30% of patients diagnosed with lung cancer have never smoked, leading researchers to believe that smoking is not the root cause of lung cancer. Additionally, not much is known about the genetic basis of this disease.</p><p>Although significant advances have been made to treat and detect lung cancer, often, it is not detected until it is in an advanced stage, and is nearly untreatable. microRNAs (miRNAs) are small RNA (Ribose Nucleic Acid) molecules that do not code proteins. Instead, they may "silence" the activity of certain RNAs, and regulate the actions of certain genes. Because of these functions, miRNA biomarkers have recently been used as a means to detect and predict diseases by using expression levels derived from tissue samples such as tumors. However, this method is often invasive, involves long recovery periods and can potentially lead to complications if performed incorrectly. In contrast, biomarkers derived from blood, urine, or saliva can serve the same purpose as other tissue biomarkers, while being significantly less invasive than their tissue. These advantages have made miRNA testing for lung cancer and other diseases more viable as a diagnostic approach. In parallel, there is now a growing number of studies that seek to develop techniques to interpret miRNA readouts.</p><p>Because 100s or even 1000s of miRNAs can be tested for, the pROCessing of these results has fueled an increase in high throughput methods using bioengineering principles, prominent among them being lab-on-chip techniques. They have been complemented by quantitative methods in computational biology that use a range of statistical and mathematical algorithms. An early example was a study by Baldi &amp; Long <ref type="bibr" target="#b0">[2]</ref>, who applied a Bayesian statistical analysis to DNA microarrays, which was found to be more effective than the simple t-test or fold methods. Lu et al. <ref type="bibr" target="#b1">[3]</ref> conducted a study that used a novel, flow cytometric miRNA expression profiling technique to analyze miRNAs from samples, including cancerous ones. The expression levels reflected the development and differentiation of the tumors, and an overall downregulation of miRNAs was observed when compared to healthy tissue samples. Chin et al. <ref type="bibr" target="#b2">[4]</ref> identified a single-nucleotide polymorphism (SNP) in an let-7 miRNA complementary site of the KRAS gene's 3' untranslated region (UTR) that increased risk for a variant called non-small cell lung cancer. Exosomal miRNA biomarkers from both cancer and non-cancer samples have been used as a benchmark to create a screening test that would indicate whether an individual had lung cancer <ref type="bibr" target="#b3">[5]</ref>. MicroRNA expression levels have also been used in conjunction with CT scans as another method to diagnose lung cancer <ref type="bibr" target="#b4">[6]</ref>. The study found that miRNA expression levels from healthy lung tissue showed key associations with clinical presentation, indicating the influence of a conducive microenvironment for developing tumors. Bianchi et al. <ref type="bibr" target="#b5">[7]</ref> developed a diagnostic test derived from the detection of 34 miRNAs in serum that allowed them to identify still-early non-small cell lung carcinomas in asymptomatic patients who were high-risk individuals for lung cancer.</p><p>This study seeks to add to the body of research that develops computational genomic approaches to efficiently screen for lung cancer. It is based on expression levels of miRNAs in a large dataset obtained from the Gene Expression Omnibus (GEO) <ref type="bibr" target="#b6">[8]</ref>. First, the sensitivity and specificity <ref type="bibr" target="#b7">[9,</ref><ref type="bibr" target="#b8">10]</ref> of the miRNAs in the dataset are examined to determine their suitability as diagnostic tests for lung cancer. Subsequently, a machine learning model is developed <ref type="bibr" target="#b9">[11,</ref><ref type="bibr" target="#b10">12]</ref> and trained on this dataset, as an alternate computational diagnostic tool. The two algorithms thus developed can be applied in future to individualized patient samples that have been tested for expression levels of the same array of miRNAs as in the dataset used here, with the goal of predicting the probability that a given patient sample is cancerous. They can also be extended to diagnosis of more complex sub-types of lung cancer, to other cancers and other diseases. The dataset used in this study was obtained from GEO <ref type="bibr" target="#b6">[8]</ref>, which provides RNA expression data for many different diseases. The specific dataset used here is GSE61741, and provided miRNA expression levels for 1049 patients, 73 of whom were known to have lung cancer, and 94 of whom were healthy. One possible role of miRNAs in the cancerous samples could be the downregulation of apoptotic signaling pathways (Figure <ref type="figure" target="#fig_0">1</ref>). The other 882 patients had varying diseases, from glaucoma to sarcoidosis. Statistical analysis was performed on these two sample groups using GEO2R, GEO's integrated statistical analysis tool, and the p-value, adjusted p-value, t-value, B, and log fold change of all 848 miRNA samples were calculated. All algorithms were written and run as scripts in the freely available statistical software package, R.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Data analysis for sensitivity and specificity</head><p>One way to evaluate the usefulness of any test is to calculate its sensitivity and specificity. Sensitivity can be defined as the proportion of true positives in a test, that is, the proportion of tests that actually detected a disease state (test positives) relative to the total number of samples that are confirmed with the disease state (sample positives). Specificity is the proportion of tests that correctly detected a disease-free state (test negatives) relative to the total number of samples that were confirmed to be free of the disease (sample negatives). See Scholkopf et al. <ref type="bibr" target="#b7">[9]</ref> and Gentleman et al. <ref type="bibr" target="#b8">[10]</ref> for more extensive discussions of these statistical measures, and Davuluri et al. <ref type="bibr" target="#b11">[13]</ref> or Mathe et al. <ref type="bibr" target="#b12">[14]</ref> for applications in computational biology.</p><p>In the example of Table <ref type="table">1</ref>, the sensitivity is s n = A/(A+C) , and the specificity is s p = D/(B+D) .</p><p>The higher the sensitivity and specificity, the more accurate the test. A higher sensitivity test is better suited to eliminate negative results. A higher specificity, on the other hand, more accurately identifies positive results. Therefore, a test with both high sensitivity and specificity is ideal. These values were calculated for all 848 miRNA samples, using data from all 167 of the patients.</p><p>The expression levels were read into a matrix G * of dimensions 848x167. The rows thus represented the randomized miRNAs and columns represented patient samples. The first 73 columns corresponded to cancerous samples, and the next 94 to normal samples. However, the samples were randomized within the cancerous and normal sub-groups. The miRNA expression levels varied between 1 and 39185.92. Furthermore, each miRNA had a different maximum expression level. For use in each of the cancer diagnostic algorithms to follow, it proves useful to normalise these data by dividing the expression levels for each miRNA (row) by the maximum expression value of that miRNA. That is, matrix elements G * ij were divided by G m i defined as Consider the i th miRNA. For this miRNA, a threshold value T i needed to be chosen, such that if this miRNA's normalized expression level for the j th sample satisfied G 1 ij &gt; T i it was considered upregulated, and this miRNA test indicated that the j th sample was cancerous (positive). Conversely, if G 1 ij ≤ T i this miRNA test indicated that the j th sample was normal (negative). If the i th miRNA returned p i positive results when applied to the m 1 c cancerous samples in the training set and n i negative results when applied to the m 1 n normal samples in the training set, its sensitivity and specificity were given by s n i = p i /m 1 c and s p i = n i /m 1 n , respectively. This is evident on reviewing the example presented in the context of Table <ref type="table">1</ref>. Note that the sensitivity and specificity satisfy 0 ≤ s n i ≤ 1 and 0 ≤ s p i ≤ 1, for the i th miRNA, i = 1,...,848.</p><formula xml:id="formula_0">G m i = max j [G * ij ] for j = 1,...,167 , to obtain normalized values G ij = G * ij /G m i lying</formula><p>Clearly, the sensitivity and specificity so computed, s n i and s p i , depend on the corresponding thresholds, T i , for i = 1,...,848. To circumvent this subjectivity, each threshold was chosen as that value returning the largest values of s n i + s p i . This ensured that for the i th miRNA a</p><p>T i value returning s n i &gt; 0.5 and s p i &gt; 0.5 would be preferred over a T i value returning s n i = 0 and s p i = 1 or s n i = 1 and s p i = 0, thus favoring simultaneous maximization of s n i and s p i . It is to be noted that choosing a single threshold in the interval, say T satisfying 0 ≤ T ≤ 1, to be used with all 848 miRNAs would fail to capture the characteristics of each miRNA as a distinctive test.</p><p>With the sensitivity and specificity of each miRNA determined by coding this algorithm in R, all 848 miRNAs were applied to the test data in the matrix G 2 to evaluate their effectiveness at identifying cancerous (positive) and normal (negative) samples. See the Results section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">A supervised machine learning binary classification algorithm to identify cancer</head><p>Machine Learning algorithms constitute a class of Artificial Intelligence methods that enable the learning of models and decision making with minimal intervention from the scientist <ref type="bibr" target="#b13">[15]</ref>. They have proved particularly powerful for complex problems in science and engineering, as well as in marketing, image, text and speech recognition <ref type="bibr" target="#b14">[16]</ref>, predictions in sports, business and politics <ref type="bibr" target="#b9">[11,</ref><ref type="bibr" target="#b10">12]</ref> and even autonomous driving <ref type="bibr" target="#b15">[17]</ref>. They are very effective on problems with large datasets, which may otherwise be difficult to gain insight to. Machine learning algorithms include regression fits (developing a mathematical model to fit data) or classification methods (grouping data). Since, in this study, it is of interest to separate samples into cancerous and normal classes, binary classification methods are appropriate. The training dataset, with samples already labelled as cancerous and normal, can be used to "train" the binary classification algorithm, and the approach can be further described as "supervised learning". Trained, supervised machine learning classification algorithms can be applied to test datasets to make predictions. Machine learning algorithms are increasingly being used in computational biology.</p><p>For some examples see Brown et al. <ref type="bibr" target="#b16">[18]</ref> and Ben-Hur et al. <ref type="bibr" target="#b17">[19]</ref>. Here, a supervised machine learning binary classification algorithm is trained and applied to prediction of cancer in the test dataset. It was developed by following the Massively Open Online Course "Machine Learning" offered by Prof. Andrew Ng of Stanford University on the Coursera platform <ref type="bibr" target="#b18">[20]</ref>.</p><p>In machine learning, each sample, whether in the training or test dataset is described by a fixed number of features collected into a feature vector, say X j for each sample j . For the dataset obtained from GEO, the individual miRNA expression levels are the features for each sample.</p><p>Therefore, there were 167 samples in the matrix G , with m 1 c + m 1 n samples in the matrix G 1 , and 167 -m 1 c -m 1 n samples in the matrix G 2 . The feature vector X j of each sample j was an 848 dimensional vector with as many features. It is also common in machine learning algorithms to normalize the feature vectors so that the values X j i of the i th feature lie in the interval [0,1] as j runs through the samples. This was already satisfied, since for instance, with the training set, we have that takes on values between 0 and 1. Here, is a vector of coefficients that weight each feature. Θ</p><formula xml:id="formula_1">X j i = G 1 ij , for i =</formula><p>The idea behind training the machine learning algorithm is to design a method to optimize the values of the components of so that h( X j ) is as close to the actual data for the j th sample. The Θ data for the training set define a function Y( X j ) that takes on the value if the j th sample is 1 cancerous, and if it is normal. The vector is optimized by minimizing a cost function, , 0 Θ (Θ) J which is defined for the training set as  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Results</head><p>The results of training the Threshold Algorithm and the supervised machine learning binary classification algorithm are discussed below, as well as their performance on the test data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Calibration of the Sensitivity/Specificity Algorithm for determining and testing results</head><p>The   The data in Tables <ref type="table" target="#tab_0">2</ref><ref type="table" target="#tab_1">3</ref><ref type="table" target="#tab_2">4</ref><ref type="table" target="#tab_3">5</ref>show that the highest sensitivity miRNAs obtained from each training set have high true positive rates (TPRs) and the corresponding highest specificity miRNAs have high true negative rates (TNRs). However the high sensitivity miRNAs also have high false positive rates (FPRs), while the high specificity miRNAs have high false negative rates (FNRs). Recall that a high sensitivity test is meant to be useful to identify normal (negative) samples (Section 2.1). However, the high FPRs of the high sensitivity miRNAs in Tables <ref type="table" target="#tab_0">2</ref> and <ref type="table" target="#tab_2">4</ref> compromises their effectiveness as diagnostic tests for identifying normal (negative) samples.</p><p>Similarly, a high specificity test is meant to be useful to confirm diseased (positive) samples (Section 2.1). However the high FNRs of the high specificity miRNAs compromises their effectiveness as diagnostic tests for confirming diseased (positive samples). In this context only miRNA hsa-let-7d* in</p><p>Table 3 (Column 1) is a somewhat viable test for confirming disease because it has a high TNR and low FNR. No other miRNA is comparable as a test to confirm disease, and no miRNA meets the bar for ruling out normal (negative) cases.</p><p>Tables 2--5 also show that increasing the training set does not markedly improve the reliability of the miRNAs as diagnostic tests using sensitivity and specificity. The results in Table <ref type="table" target="#tab_3">5</ref> are poorer than in Table <ref type="table" target="#tab_1">3</ref> even though the data in Table <ref type="table" target="#tab_3">5</ref> is seven times as large as in Table <ref type="table" target="#tab_1">3</ref>. This is surprising; a well-designed test should improve in its predictivity with larger training sets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Training the machine learning algorithm and test results</head><p>The supervised binary classification machine learning algorithm was trained with learning rate and regularization parameter . Recall that allows the algorithm .01 α = 0 λ = 0 λ = 0 to fit the training data very closely, and even over fit it. However, the test results were not adversely affected by this choice as shown below. After some numerical experiments, cost function J ≤ 0.05 was selected as a suitable threshold for training the algorithm. If overfitting resulted from the tolerance on the cost function would also need to be higher than the low λ = 0 value of 0.05 used here. A result h( X j ) &gt; 0.5 was taken as a positive result, and h( Z j ) ≤ 0.5 was taken as a negative result on a test sample with feature vector Z j (miRNA expression values).</p><p>Figure <ref type="figure" target="#fig_3">2</ref> shows the variation in the accuracy of the machine learning algorithm, evaluated against the test set, as the training set is expanded to include from 10% to 70% of the samples in steps of 10%. This is the same range used for the study of sensitivity and specificity in Section 3.1. The two curves represent the machine learning algorithm's average accuracy at identifying cancerous/positive (red) and normal/negative (green) samples from the test set. The averages are obtained over 5 training runs of the machine learning algorithm for each training dataset. The error bars show maximum and minimum accuracy attained over the corresponding training set. It is noteworthy that the accuracy at identifying positive samples is well above 0.75 for training sets that consist of 20%, or more, of the samples. The accuracy is 0.97 for training sets containing 60% and 70% of the samples. The accuracy at identifying negative samples is not as high, but again shows an increasing trend with values over 0.5 for 4 of the 7 training sets, and 0.73 for the largest training set. This somewhat lower accuracy than for positive samples may continue to improve with larger training sets. This approach was not pursued, because the statistics from the test sets would become sparse as the total number of samples is fixed at 167 in the GSE61741 data set.</p><p>The red curve in Figure <ref type="figure">5</ref> shows the average probability of a positive, or cancerous outcome for the samples identified as being positive or cancerous versus the training data set size. This probability reaches close to 1 for the larger training sets. The green curve is, conversely, the average probability of a positive, or cancerous outcome for the samples identified as being negative/normal versus the training data set size. This probability reaches a low of 0.03 for the larger training sets. These are important measures of the confidence in the predictions (accuracy) presented in Figure <ref type="figure">4</ref>, and can prove useful in actual clinical diagnoses. A higher probability that a sample identified as being cancerous is indeed cancerous is an important measure to gauge reliability of the test. The same can be said if there is a lower probability that a </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Discussion</head><p>The advent of genomics has brought many advances in medicine and biotechnology. The most exciting of these are in the diagnosis and treatment of diseases. Given the complexities of cancer <ref type="bibr" target="#b20">[22]</ref> it is not surprising that there is considerable interest in applying genomics to its diagnosis and treatment. This study has investigated the role of miRNAs in cancer diagnosis. Large scale miRNA sequencing <ref type="bibr" target="#b21">[23]</ref> has made it possible to use 100s of them as distinct tests for diseased and normal states. However, this also presents a "big data" problem , where the volume of information available can overwhelm the ability to use it in a meaningful manner. This is where computational biology, and specifically, computational genomics, becomes relevant. Statistical, data-driven algorithms can be used to analyze the genomic data and make predictions that mere observation of 100s of miRNA array tests cannot discern. Here, the sensitivity and specificity, which are traditional statistical measures, have been compared against a modern machine learning algorithm for identifying cancerous and normal samples using miRNA expression data.</p><p>The data set in this study included a large number of miRNAs (848), and a moderate number of samples (167), which were separated into training and test sets for the calibration and validation of the algorithms. It is notable (Tables 2--5) that the high sensitivity miRNAs had high false positive rates (FPRs) on the test data, compromising their effectiveness as tests for identifying normal samples (Tables <ref type="table" target="#tab_0">2</ref> and <ref type="table" target="#tab_2">4</ref>). Similarly, the high specificity miRNAs had high false negative rates (FNRs) on the test data, compromising their effectiveness as tests for identifying cancerous samples (Tables <ref type="table" target="#tab_1">3</ref> and <ref type="table" target="#tab_3">5</ref>).</p><p>These results, while seeming to undermine sensitivity and specificity as statistical measures in computational genomics-based diagnostics, should be approached with caution.</p><p>They have been obtained with a single data set, which while not small, may have unknown biases in it. It is therefore necessary to apply the sensitivity/specificity tests to more data sets of greater population diversity before reaching definitive conclusions on their effectiveness.</p><p>The notable features of the supervised binary classification machine learning algorithm in Section 3.2 are its high accuracies at identifying both cancerous (positive) and normal (negative) samples in the test sets (Figure <ref type="figure">4</ref>), and the accompanying probabilities of correctness of these predictions (Figure <ref type="figure">5</ref>). Importantly, this algorithm, trained on the identical datasets as the sensitivity/specificity tests, shows clear improvements in its accuracy at predicting both cancerous and normal samples, and in the probabilities of correctness of these predictions, with increasing training set size. This trend is expected of high performance prediction methods.</p><p>As with the sensitivity and specificity measures, the machine learning algorithm also could be trained and tested against larger and more diverse data sets. Given the encouraging preliminary results, it may be expected that it will similarly perform well.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Placing this work in context</head><p>The present work adds to the growing literature on computational genomics, especially on machine learning approaches for miRNA-based diagnosis of cancer. A small collection of these studies is available in Refs 24-29. The studies in Refs 24, 25, 26 and 29 used a different machine learning algorithm: a support vector machine (SVM). The others were the iterative signature algorithm <ref type="bibr" target="#b25">[27]</ref> and a Naïve Bayesian classifier <ref type="bibr" target="#b26">[28]</ref>. These machine learning algorithms were applied to study breast, urothelial, colorectal and lung cancers. The sample sizes ranged from 36</p><p>to 141 <ref type="bibr" target="#b22">[24,</ref><ref type="bibr" target="#b23">25,</ref><ref type="bibr" target="#b27">29]</ref>, and the numbers of miRNAs from 12 <ref type="bibr" target="#b23">[25,</ref><ref type="bibr" target="#b25">27]</ref> to 866 <ref type="bibr" target="#b27">[29]</ref>.</p><p>Relative to the above works, the present study used a training sample sizes that were comparable: 16 to 117, with corresponding test datasets ranging from 151 down to 50, respectively. The high probabilities of correctness of the results on the test sets have already been discussed. The feature vector size, i.e., the number of miRNAs in the present study compares with the largest in the above studies <ref type="bibr" target="#b27">[29]</ref>, which also was a GSE dataset. It is likely that the high accuracies gained are related to this large feature vector. The binary classification algorithm here maybe considered somewhat more elementary than an SVM, but its simplicity could be an advantage in encouraging its use by others, which is a goal of future work (Section 4.2).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Future work</head><p>To extend this study, both algorithms will be challenged with larger and more diverse data sets from the GEO repository. This study has potential for broad impact in medicine, because both algorithms developed and tested here can be applied to many medical conditions that allow a binary classification into diseased and normal states. They therefore serve as quite general models for computational genomics-based diagnostic tests. The R codes for both algorithms are well-commented, allowing even a beginning user of R to easily modify and apply them to other data sets, or even to studies of different conditions. A more complex condition involving multiple classes would require a different, multi-class classification machine learning algorithm, which is a planned future extension of this work. This could, for instance, be trained against an miRNA array data set with small cell lung cancer, non-small cell lung cancer and lung carcinoid tumor samples and then against sub-types of other cancers and non-cancer diseases.</p><p>Another direction of investigation will extend the machine learning algorithms and codes to select the most effective feature vectors (miRNAs). This could also suggest which miRNAs have similarity of action. All R scripts for both algorithms are available on the GitHub repository <ref type="url" target="https://github.com/neerja-g/machine-learning-miRNA">https://github.com/neerja-g/machine-learning-miRNA</ref> under the LGPL 3.0 license.</p><p>Ultimately, the goal is to bring such computational genomics into the clinical setting, where decisions could be reached with greater confidence, given the very quantitative measures of accuracy and probability that the machine learning algorithms provide. Even further, there exists the possibility of alerting a currently healthy individual to the odds of developing a condition in the future. This of course, would also require longer term studies on the change in performance of the algorithms in terms of outcomes, accuracies, and probabilities over many years as the data from the same set of patients changes with their state of health.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Apoptotic signaling pathways that could be downregulated by miRNAs in lung cancer.</figDesc><graphic coords="4,73.50,273.00,468.00,252.75" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>in the interval [0,1]. The normalised expression values were assembled into a matrix denoted by G , also of dimensions 848x167. Training and testing data sets were extracted from G . The 73 cancerous patient samples were separated into m 1 c training and m 2 c test samples, and the 94 normal patient samples into m 1 n training and m 2 n test samples. The training data were read into a matrix G 1 of dimensions 848x( m 1 c + m 1 n ), whose first m 1 c columns held cancerous samples and next m 1 n columns held normal samples. Similarly, The test data were read into a matrix G 2 of dimensions 848x( m 2 c + m 2 n ), whose first m 2 c columns held cancerous samples and next m 2 n columns held normal samples. The algorithm for computing sensitivity and specificity follows.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>n</head><figDesc>1,...,848 and j = 1,..., m 1 c + m 1 The supervised machine learning binary classification algorithm is based on a decision function (1)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>( 2 )</head><label>2</label><figDesc>Figure 2.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. The supervised, binary classification machine learning algorithm running in R. The training step is shown with decreasing cost function.</figDesc><graphic coords="10,78.00,219.00,468.00,293.25" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><figDesc>Receiver Operating Characteristic curve (ROC) shows the variation in the true positive rate, or TPR (also the sensitivity) versus the false positive rate or FPR (also equal to 1specificity) as the threshold is varied over the range of the values in the test<ref type="bibr" target="#b19">[21]</ref>. The ROC curve for five of the miRNAs: hsa-let-7a--hsa-let-7e are shown in Fig 1. The entire dataset of 167 samples was used for these ROCs. The sensitivity/specificity algorithm computes T i values individually for each of the 848 miRNAs using the training data set. The values of T i for the miRNAs with the 5 highest sensitivities and specificities varied between 0 and 0.99. The results of applying the 5 highest sensitivity and 5 highest specificity miRNAs to the cancerous and normal test samples were collected for m 1 c and m 1 n chosen so that the training set included 10%, 20%,...,70% of the samples in the cancerous and normal data sets. The miRNAs with the five highest sensitivities and specificities were chosen for each training set, and compared against the corresponding test set (the dataset minus training set) to determine the effectiveness of the corresponding miRNAs as tests for detecting cancer, and for ruling it out. Tables 2 and 3 present the results for the case where the training set contained 10% of samples in the data set, and Tables 4 and 5 present results for the case where the training set contained 70% of the samples in the dataset</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><figDesc>sample identified as being normal is actually cancerous. Averages were computed over 5 training runs, each starting from randomized initial values of the machine learning parameters, Error . Θ bars are maximum and minimum values for the corresponding training set. The uniformity of results indicates the robustness of the algorithm, and the tightening error bounds with larger training sets (Figures 4 and 5) are indications of the improvement of predictions with larger training datasets. This improvement in predictive accuracy is expected of a good machine learning algorithm.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="14,77.25,73.50,461.25,177.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="15,73.50,273.00,452.25,170.25" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 2 .</head><label>2</label><figDesc>Five</figDesc><table><row><cell></cell><cell cols="3">highest sensitivity miRNAs with</cell><cell cols="3">m 1 c = 7 and m 1 n = 9 (10% of data set).</cell></row><row><cell>miRNA</cell><cell>hsa-let-7a</cell><cell>hsa-let-7b</cell><cell cols="2">hsa-let-7c</cell><cell>hsa-let-7d</cell><cell>hsa-let-7e</cell></row><row><cell>TPR</cell><cell>1.00</cell><cell>1.00</cell><cell cols="2">0.97</cell><cell>0.98</cell><cell>1.00</cell></row><row><cell>FPR</cell><cell>1.00</cell><cell>0.94</cell><cell cols="2">0.92</cell><cell>0.90</cell><cell>1.00</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 3 .</head><label>3</label><figDesc>Five</figDesc><table><row><cell></cell><cell cols="3">highest specificity miRNAs with</cell><cell cols="2">m 1 c = 7 and m 1 n = 9 (10% of data set).</cell></row><row><cell>miRNA#</cell><cell>hsa-let-7d*</cell><cell cols="4">hsa-let-7f-2* hsa-miR-106a* hsa-miR-10b hsa-miR-10b*</cell></row><row><cell>TNR</cell><cell>0.69</cell><cell>0.39</cell><cell>0.60</cell><cell>0.67</cell><cell>0.92</cell></row><row><cell>FNR</cell><cell>0.12</cell><cell>0.52</cell><cell>0.70</cell><cell>0.56</cell><cell>0.84</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 4 .</head><label>4</label><figDesc>Five highest sensitivity miRNAs with</figDesc><table><row><cell>m 1 c = 51 and m 1 n = 66 (70% of data set).</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 5 .</head><label>5</label><figDesc>Five</figDesc><table><row><cell></cell><cell></cell><cell cols="2">highest specificity miRNAs with</cell><cell cols="3">m 1 c = 51 and m 1 n = 66 (70% of data set).</cell></row><row><cell cols="5">miRNA hsa-miR-1 hsa-miR-1271 hsa-miR-136</cell><cell cols="2">hsa-miR-146b-3p hsa-miR-152</cell></row><row><cell>TNR</cell><cell>0.86</cell><cell>0.96</cell><cell>1.00</cell><cell></cell><cell>0.86</cell><cell>1.00</cell></row><row><cell>FNR</cell><cell>0.91</cell><cell>1.00</cell><cell>1.00</cell><cell></cell><cell>1.00</cell><cell>1.00</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgement</head><p>I thank <rs type="person">Dr. Inhan Lee</rs> of miRcore for introducing me to computational genomics and for her guidance on the initial miRNA expression data analysis from GEO.</p></div>
+			</div>			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A Bayesian framework for the analysis of microarray expression data: regularized t -test and statistical inferences of gene changes</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Baldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Long</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="509" to="519" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">MicroRNA expression profiles classify human cancers</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Miska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Alvarez-Saavedra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lamb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sweet-Cordero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Ebert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Maki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Ferrando</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Downing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jacks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">R</forename><surname>Horvitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Golub</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">435</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="834" to="839" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A SNP in a let-7 microRNA complementary site in the KRAS 3 untranslated region increases non-small cell lung cancer risk</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Chin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ratner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Leng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nallur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Babar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R-U</forename><surname>Muller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Straka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Burki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Crowell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Patel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kulkarni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Homer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zelterman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Kidd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Christiani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Belinsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Slack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Weidhaas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Research</title>
+		<imprint>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="8535" to="8540" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Exosomal microRNA: A diagnostic marker for lung cancer</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Rabinowits</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gerçel-Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Day</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">H</forename><surname>Kloecker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clinical Lung Cancer</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="42" to="46" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">MicroRNA signatures in tissues and plasma predict development and prognosis of computed tomography detected lung cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boeri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Verria</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Contea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Roza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Modenab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Facchinettia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Calabroc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Croced</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Pastorinoc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sozzia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PROCeedings of the US National Academy of Science</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="3713" to="3718" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">A serum circulating miRNA diagnostic test to identify asymptomatic high-risk individuals with early stage lung cancer</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Bianchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Nicassio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Belloni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Dall'olio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bernard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pelosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Maisonneuve6</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Veronesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">P</forename><surname>Di Fiore</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">EMBO Molecular Medicine</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="495" to="503" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<ptr target="http://www.ncbi.nlm.nih.gov/geo/" />
+	</analytic>
+	<monogr>
+		<title level="j">Gene Expression Omnibus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Kernel Methods in Computational Biology</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Scholkopf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tsuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J-P</forename><surname>Vert</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<publisher>MIT Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gentleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">J</forename><surname>Carey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Irizarry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dudoit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics and Computational Biology Solutions using R and Bioconductor</title>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<publisher>Springer Pub</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Barber</surname></persName>
+		</author>
+		<title level="m">Bayesian Reasoning and Machine Learning</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Reinforcement and Systematic Machine Learning for Decision Making</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kulkarni</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>Wiley. IEEE Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Computational identification of promoters and first exons in the human genome</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">V</forename><surname>Davuluri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Grosse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Q</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Genetics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="412" to="417" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Computational approaches for predicting the biological effect of p53 missense mutations: a comparison of three sequence analysis based methods</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Mathe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Olivier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ishioka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hainaut</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">V</forename><surname>Tavtigian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Research</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1317" to="1325" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The Machine Learning Approach</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Baldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Brunak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<publisher>MIT Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Perner</surname></persName>
+		</author>
+		<title level="m">Machine Learning and Data Mining in Pattern Recognition. 6th International Conference MLDM</title>
+		<meeting><address><addrLine>Leipzig, Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2009-07-23">2009. July 23-25, 2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Autonomous Intelligent Vehicles. Theory, Algorithms and Implementation</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cheng</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<publisher>Springer-Verlag</publisher>
+			<pubPlace>London</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Knowledge-based analysis of microarray gene expression data by using support vector machines</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P S</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">N</forename><surname>Grundy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cristianini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">W</forename><surname>Sugnet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">S</forename><surname>Furey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jr</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Haussler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PROCeedings of the US National Academy of Science</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="262" to="267" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Support Vector Machines and Kernels for Computational Biology</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ben-Hur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Ong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sonnenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Schölkopf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Rätsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Computational Biology</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">1000173</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ng</surname></persName>
+		</author>
+		<ptr target="https://www.coursera.org/learn/machine-learning" />
+	</analytic>
+	<monogr>
+		<title level="j">Machine Learning . Coursera</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">ROCR: visualizing classifier performance in R</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Sander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Beerenwinkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lengauer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics Applications Note</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="3940" to="3941" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Biology of Cancer . Garland Science</title>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Ultra-high throughput sequencing-based small RNA discovery and discrete statistical biomarker analysis in a collection of cervical tumours and matched controls</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Witten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>Gu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W-O</forename><surname>Lui</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Biology</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">58</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">MicroRNAs as Biomarkers for Diagnosis, Prognosis and Theranostics in Prostate Cancer</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bertoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cava</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Castiglioni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Molecular Sciences</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page">421</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A urinary microRNA signature can predict the presence of bladder urothelial carcinoma in patients undergoing surveillance</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Sapre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Macintyre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Clarkson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Naeem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cmero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kowalczyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Costello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Corcoran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Hovens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Cancer</title>
+		<imprint>
+			<biblScope unit="volume">114</biblScope>
+			<biblScope unit="page" from="454" to="462" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Identifying microRNAs involved in cancer pathway using support vector machines</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kothandan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Biswas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computational Biology and Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="page" from="31" to="36" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Analysis of miRNA expression profiles in breast cancer using biclustering</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fiannaca</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rosa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">La</forename><surname>Paglia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rizzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Urso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Naïve Bayes classifier predicts functional microRNA target interactions in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Amirkhah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Farazmand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ahmadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Wolkenhauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ulf</forename><surname>Schmitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular BioSystems</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="2126" to="2134" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">HEM for identification of differentially expressed miRNAs using hypercuboid equivalence partition matrix</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Maji</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,2005 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Retrotransposon mobilization in cancer genomes</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2022-04-23">April 23, 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Tracy</forename><surname>Ballinger</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Center for Biomolecular Science and Engineering</orgName>
+								<orgName type="institution">University of California</orgName>
+								<address>
+									<postCode>95064</postCode>
+									<settlement>Santa Cruz</settlement>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Adam</forename><forename type="middle">D</forename><surname>Ewing</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Center for Biomolecular Science and Engineering</orgName>
+								<orgName type="institution">University of California</orgName>
+								<address>
+									<postCode>95064</postCode>
+									<settlement>Santa Cruz</settlement>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><surname>Haussler</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Center for Biomolecular Science and Engineering</orgName>
+								<orgName type="institution">University of California</orgName>
+								<address>
+									<postCode>95064</postCode>
+									<settlement>Santa Cruz</settlement>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="institution" key="instit1">Howard Hughes Medical Institute</orgName>
+								<orgName type="institution" key="instit2">University of California</orgName>
+								<address>
+									<postCode>95064</postCode>
+									<settlement>Santa Cruz</settlement>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Retrotransposon mobilization in cancer genomes</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-04-23">April 23, 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">6EC691CD93F6B2AAE064ACE43709B27A</idno>
+					<idno type="arXiv">arXiv:1501.04268v1[q-bio.GN]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The Cancer Genome Atlas project was initiated by the National Cancer Institute in order to characterize the genomes of hundreds of tumors of various cancer types. While much effort has been put into detecting somatic genomic variation in these data, somatic structural variation induced by the activity of transposable element insertions has not been reported. Transposable elements (TEs) are particularly relevant in cancer in part because of several known cases in which a TE insertion is directly linked to cancer formation and studies linking the epigenetic status of retrotransposons to carcinogenesis and patient outcome. Additionally, evidence for somatic retrotransposition in eukaryotic genomes suggests that some tissues and therefore some cancer types may be disposed to increased retrotransposition. We built upon previous work to develop a highly efficient computational pipeline for the detection of non-reference mobile element insertions from high-throughput paired-end whole genome sequencing data that is capable of detecting breakpoints through a local assembly strategy. Using this, we analyzed 33 whole genome tumor datasets with paired normal samples from TCGA across 3 different cancer types: glioblastoma multiforme (GBM), ovarian serous cystoadenocarcinoma (OV) and colorectal adenocarcinoma (COAD). We detected 72 insertions in colon samples, almost all of them LINE-1 elements, and none in GBM or OV. The amount of somatic retrotransposition varies widely between samples with 61 insertions present in one case. The lack of somatic retrotransposon insertions in GBM and OV samples suggests that TE activity in cancer is restricted to certain cancer types.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Retrotransposons are found in all eukaryotic genomes. They are observed as repetitive DNA elements due to their capacity to insert new copies of themselves into the host DNA through a copy and paste process using an RNA intermediate <ref type="bibr" target="#b4">(Boeke et al., 1985)</ref>. They are categorized as either long terminal repeat (LTR) or non-LTR and further into families based on sequence similarity to other elements and by their mechanism of mobilization. The non-LTR retrotransposons that inhabit mammalian genomes are likely to mobilize through a mechanism known as target-primed reverse transcription <ref type="bibr" target="#b35">(Luan et al., 1993)</ref>. Numerous retrotransposon copies exist in the human genome, comprising at least 45% of its DNA <ref type="bibr" target="#b31">(Lander et al., 2001)</ref> and perhaps over two-thirds when highly sensitive TE detection methods are applied <ref type="bibr" target="#b11">(de Koning et al., 2011)</ref>. The most prolific retroelements in the human genome include LINE-1 and Alu sequences, comprising 17% and 8% of the assembled reference genome, respectively. During primate evolution, the general pattern of retroelement activity has been for one family of LINE element to be active at a time, suggesting either competition for a host factor or adaptation to evade one <ref type="bibr" target="#b28">(Khan et al., 2006)</ref>. LINE-1 elements are autonomous retrotransposons encoding two proteins <ref type="bibr" target="#b43">(Scott et al., 1987)</ref> responsible for both their own mobilization in cis and the mobilization of non-autonomous Alu elements <ref type="bibr" target="#b12">(Dewannieux et al., 2003)</ref>, SVA elements <ref type="bibr" target="#b20">(Hancks et al., 2011)</ref>, and processed pseudogenes <ref type="bibr" target="#b14">(Esnault et al., 2000)</ref> in trans. The activity of the human-specific LINE element, termed L1HS, was first recognized in vivo due to its ability to disrupt exons and cause Mendelian disease <ref type="bibr" target="#b27">(Kazazian et al., 1988)</ref>. Since then, transposable elements have been linked to a variety of diseases, including cancer, through insertional mutagenesis of exons and regulatory regions near genes, disrupting gene function or regulation (see <ref type="bibr">Hancks et al. 2012</ref> for review). For example, in one case, an exonic L1 insertion was found in the APC tumor suppressor gene in colon cancer tissue but not the normal tissue of the same patient <ref type="bibr" target="#b36">(Miki, 1992)</ref>. Intronic retroelement insertions are known to affect splicing by providing 5' or 3' splice sites or disrupting sequence at the branch point <ref type="bibr" target="#b3">(Belancio et al., 2008;</ref><ref type="bibr" target="#b19">Hancks et al., 2009;</ref><ref type="bibr" target="#b47">Taniguchi-Ikeda et al., 2011)</ref>. Recent estimates place the rate of L1 retrotransposition in human genomes at 1 new insertion for every 100 to 150 live births <ref type="bibr" target="#b15">(Ewing and Kazazian, 2010;</ref><ref type="bibr" target="#b24">Huang et al., 2010)</ref>. Since retroelements can clearly have an impact on phenotype and disease, it is important that retrotransposon insertion polymorphisms (RIPs) and mutations be characterized in genomic studies. A plethora of recent studies provide various means to document retrotransposon insertion polymorphisms (RIPs) segregating in human populations <ref type="bibr" target="#b2">(Beck et al., 2010;</ref><ref type="bibr" target="#b15">Ewing and Kazazian, 2010;</ref><ref type="bibr">Hormozdiari et al., 2010a;</ref><ref type="bibr" target="#b24">Huang et al., 2010;</ref><ref type="bibr" target="#b25">Iskow et al., 2010;</ref><ref type="bibr" target="#b52">Witherspoon et al., 2010;</ref><ref type="bibr" target="#b16">Ewing and Kazazian, 2011;</ref><ref type="bibr" target="#b46">Stewart et al., 2011)</ref>, including one report of 9 somatic retrotransposon insertions across 6 lung tumors <ref type="bibr" target="#b25">(Iskow et al., 2010)</ref>.</p><p>Cancer progression depends on the accumulation of somatic mutations, and recent evidence suggests that retrotransposition also occurs in some somatic tissues such as neuronal stem cells <ref type="bibr" target="#b38">(Muotri et al., 2005;</ref><ref type="bibr" target="#b10">Coufal et al., 2009;</ref><ref type="bibr" target="#b1">Baillie et al., 2011)</ref>. The observation of somatic retrotransposition in specific tissue types suggests tissue-specific regulation, either through known regulators such as APOBEC3 proteins <ref type="bibr" target="#b29">(Kinomoto et al., 2007;</ref><ref type="bibr" target="#b37">Muckenfuss et al., 2006;</ref><ref type="bibr" target="#b45">Stenglein and Harris, 2006;</ref><ref type="bibr" target="#b9">Chen et al., 2006)</ref>, germline piRNAs <ref type="bibr" target="#b0">(Aravin et al., 2007)</ref>, and DNA methylation <ref type="bibr" target="#b54">(Yoder et al., 1997;</ref><ref type="bibr" target="#b5">Bourc'his and Bestor, 2004)</ref>, or through novel mechanism(s) not yet ascribed to transposable elements. Other lines of evidence for somatic retrotransposition include the aforementioned disease-causing insertions, observations of varying levels of transgene-bourne somatic retrotransposition in transgenic mice <ref type="bibr" target="#b26">(Kano et al., 2009)</ref>, and somatic R2 insertions in Drosophila simulans <ref type="bibr" target="#b13">(Eickbush and Eickbush, 2011)</ref>. In addition to mutagenizing both somatic and germline genomes through new insertions, transposable elements play an important role in shaping gene regulatory networks by providing binding sites for transcription factors, including those highly important for cancer progression such as TP53 and SOX2 <ref type="bibr" target="#b51">(Wang et al., 2007;</ref><ref type="bibr" target="#b6">Bourque et al., 2008;</ref><ref type="bibr" target="#b30">Kuwabara et al., 2009;</ref><ref type="bibr" target="#b21">Harris et al., 2009)</ref>. Furthermore, genome-wide methylation status is often assessed through analysis of CpG islands located in the 5' UTRs of LINE-1 elements, which are typically heavily methylated <ref type="bibr" target="#b53">(Woodcock et al., 1997)</ref>, contributing to their quiescence in most somatic tissue types. Through this assay, a wide variety of cancers are found to be hypomethylated <ref type="bibr" target="#b40">(Ogino et al., 2011)</ref>, leading us to speculate that retrotransposition rates may be substantially increased in certain cancer types or samples.</p><p>In order to test this hypothesis, we took advantage of whole-genome sequence data available through The Cancer Genome Atlas (TCGA). TCGA is an ongoing multi-institutional effort that will eventually include whole genome sequence data for hundreds of tumors and corresponding normal samples for over 20 different cancer types. Here, we consider transposable element insertions in the genomes of three cancer types: glioblastoma multiforme (GBM) <ref type="bibr">(TCGA Research Network, 2008)</ref>, ovarian serous cystoadenocarcinoma (OV) <ref type="bibr">(TCGA Research Network, 2011)</ref>, and colon/rectal adenocarcinoma (COAD/READ) <ref type="bibr" target="#b39">(Muzny et al., 2012)</ref>, and present evidence for substantially increased retrotransposition in colorectal adenocarcinoma.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Results</head><p>We developed a computational pipeline (discord-retro, <ref type="url" target="http://github.com/adamewing/discord-retro">http://github.com/adamewing/discord-retro</ref>) to detect non-reference retrotransposon insertions from paired end whole genome sequencing data by using mate-pair information from discordantly mapped read pairs (see Methods). We measured the detection characteristics of our application by repeatedly inserting 100 retrotransposons into the euchromatic portion of human chr22 at random positions, generating paired reads, mapping to the GRCh37 reference sequence, and applying our method (see Methods for details). We observe 87.9% sensitivity with perfect specificity when insertions into other insertions of the same class (e.g. LINE into a LINE or Alu into an Alu) are discarded, and 94.5% sensitivity and perfect specificity if these insertions are allowed. Using discord-retro, we analyzed 33 high coverage (&gt;30x) tumor and normal genome pairs produced by TCGA, and identified retrotransposon insertions not found in the human reference genome (NCBI36 or GRCh37). For high coverage data, the tumor and patient-matched normal paired-end sequence data were combined in order to distinguish between a non-reference germline insertion, which would be found in both tissues, from a somatic insertion, which would be found only in the tumor (or normal) DNA. Refinement of junctions using local assembly and analysis of soft-clipped reads allowed breakpoint-resolution on one or both ends of a predicted insertion. In 45% of cases, we identified target site duplications (TSDs), a short duplication of sequence around the insertion site that occur as a byproduct of target primed reverse transcription.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Germline Insertions</head><p>Across the 33 tumor/normal pairs, we identified 7022 non-reference retrotransposon insertions present in both the tumor and corresponding normal genome, of which 3273 overlapped with a previous study <ref type="bibr" target="#b50">(Wang et al., 2006;</ref><ref type="bibr" target="#b2">Beck et al., 2010;</ref><ref type="bibr" target="#b15">Ewing and Kazazian, 2010;</ref><ref type="bibr">Hormozdiari et al., 2010a;</ref><ref type="bibr" target="#b25">Iskow et al., 2010;</ref><ref type="bibr" target="#b52">Witherspoon et al., 2010;</ref><ref type="bibr" target="#b16">Ewing and Kazazian, 2011;</ref><ref type="bibr">Stewart et al., 2011) (Fig S1)</ref>. Of all insertions detected, 727 were LINE insertions, 6101 were Alu insertions and 189 were SVA insertions. Of the 3749 previously uncataloged insertions, 350 were LINE-1 elements, 3220 were Alu elements, and 177 were SVA elements. For every tumor/normal pair we detected an average of 111 LINEs, 823 Alus, and 36 SVAs (Fig. <ref type="figure" target="#fig_0">1</ref>). We detected an average of 8.4 LINE, 79.6 Alu and 1.9 SVA insertions that were present in only one sample. The chromosomal distribution of insertions is illustrated in Figure <ref type="figure" target="#fig_1">2</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Somatic Insertions</head><p>Somatic insertions are those occuring exclusively in either the tumor or normal sample of a patientmatched pair of genomes and also not present in any other sample or catalogue of retrotransposon insertions from a previous study. Furthermore, because we combine discordant read pairs across both the tumor and normal tissue for an individual, we can be sure that if a tumor-specific or normal-specific call is made, not a single read that could indicate the presence of the insertion exists in the other sample. We found 72 tumor-specific LINE-1 insertions from 4 colon cancer tumor/normal pairs and none from any of the 18 GBM and 10 OV tumor/normal pairs (Fig. <ref type="figure" target="#fig_2">3</ref>). Conversely, for the four samples with tumor-specific insertions, we found very few insertions present only in the normal sample (Fig. <ref type="figure" target="#fig_1">S2</ref>). For one sample, TCGA-AA-A00R, there was an abnormally high number of normal-specific predictions which we believe to be an artifact. The distribution of insertion lengths for the tumor-specific LINE-1 insertions differs markedly from insertions found in both the tumor and normal tissues (Fig. <ref type="figure" target="#fig_3">4</ref>). Of 655 LINE-1 insertions present in both tumor and normal genomes, 147 were full length, defined here as 5.8 kb of greater as indicated by the minimum and maximum mapping locations of paired reads within the reference elements, which resembles the distribution expected from the length distribution in the reference genome <ref type="bibr" target="#b18">(Grimaldi et al., 1984;</ref><ref type="bibr" target="#b41">Pavlícek et al., 2002)</ref>. In contrast, only 2 out of 72 tumor-specific LINE-1 insertions were full-length (p &lt; 9.68 × 10 -6 , Fisher's exact test).</p><p>Of the 72 tumor-specific insertions, one occurred in the 3' UTR of PPP1R1C (protein phosphatase 1, regulator subunit 1C), and 22 occurred in introns, including an insertion in NAV3, a gene associated with colon cancer <ref type="bibr" target="#b8">(Carlsson et al., 2012)</ref>. The NAV3 insertion occurs in patient TCGA-AA-3518 115 bp downstream of the third exon in the same orientation as the gene in a region overlapped by DNAse hypersensitivity and H3K27 acetylation signals (Fig. <ref type="figure" target="#fig_2">S3</ref>), indicating possible regulatory elements nearby. An examination of gene expression levels (Agilent 244K Custom Gene Expression G4502A-07-3) between the tumor and normal insertions was carried out using the UCSC Cancer Genome Browser <ref type="bibr" target="#b56">(Zhu et al., 2009)</ref>, which indicated lower expression of NAV3 and other genes containing tumor-specific insertions (notably A2BP1, and CTNNA2 ) in the tumor relative to the patient-matched normal colon tissue (Fig. <ref type="figure">5</ref>). Here we focus further analysis on NAV3, as decreases in its expression are frequent in colorectal adenomas <ref type="bibr" target="#b8">(Carlsson et al., 2012)</ref>. Analysis of Agilent expression data from TCGA-AA-3518 shows the difference in expression between NAV3 in tumor and normal tissues is ranked at the 93rd percentile relative to differences between all other genes in the same tumor/normal pair. To ascertain whether other somatic mutations might be responsible for the observed change in expression, we compared NAV3 and the surrounding region between cancer and normal genomes of TCGA-AA-3518 using the BamBam algorithm (Z. Sanborn, unpublished). We detected evidence for 9 potentially cancer-specific SNPs in the 382 kbp region (Fig. <ref type="figure" target="#fig_3">S4</ref>), but we found no evidence for point mutations or CNVs in exons or in the proximal upstream region likely to have an obvious effect on transcript abundance apart from the L1 insertion.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Similarity to reference elements</head><p>After acquiring a set of insertion predictions for each sample, we sought to determine the closest element in the reference genome in terms of sequence similarity, as this may represent an element similar to the active progenitor element. In general, it is unlikely that the true progenitor can be identified through sequence similarity alone, as the active elements in the human reference genome diverge from one another by less than 1% <ref type="bibr" target="#b7">(Brouha et al., 2003;</ref><ref type="bibr" target="#b44">Seleme et al., 2006;</ref><ref type="bibr" target="#b2">Beck et al., 2010)</ref>. That said, identification of the most similar elements in the human reference genome based on local re-assembly of the elements detected by discord-retro yields an enrichment of full-length, intact, human L1 elements, some of which are known to be active elements (Table <ref type="table">1</ref>). This serves as further evidence to substantiate our claim that our report of 72 tumor-specific L1 insertions in 4 colon cancer cases are novel insertions derived from active L1 elements.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Discussion</head><p>As TCGA and others continue to sequence more cancer and paired normal cases across a wider number of cancer types, we may uncover clear driver mutations caused by transposable elements and other cancer types that exhibit high levels of insertional mutagenesis by transposable elements. It is remarkable that TE activity appears so much higher in colorectal adenocarcinomas than in glioblastoma multiforme or ovarian serous cystoadenocarcinoma, but the specific mechanism behind this tissue specificity has eluded us so far. An intronic insertion in NAV3 seemes to be paired with a marked decrease in gene expression, although it is far from clear if there is a direct relationship between the presence of somatic LINE-1 insertions and the expression decrease in cases like this. Given that a survey of other somatic mutations in and surrounding NAV3 yielded nothing that stood out as a possibly expression-altering mutation, and an insertion in NAV3 occured only 112 bp downstream of an exon in a region with an epigenetic profile indicating regulatory potential, we posit that the LINE-1 insertion may be responsible for the cancer-specific decrease in expression in this instance.</p><p>Our general knowledge of somatic retrotransposition is limited, although new technologies and the decreasing cost of sequencing will likely provide new insights in the near future as sequencing studies begin to focus on multiple tissues from a single donor individual. In most respects, the somatic tumor-specific insertions detected by our method are similar to germline insertions, with the notable exception of their length: 97.2% of tumor-specific insertions are truncated as compared to a 77.6% truncation rate for germline insertions (insertions detected in both normal and cancer samples). The mechanism for L1 truncation is unknown; conjectures include the presence of an endo-or exonuclease that targets the L1 RNA template, or a factor that interferes with reversetranscription. At this stage the etiology of element truncation in colon tumors and how it differs from normal or germline tissue is unknown. It may be illuminating to work out why tumor-specific insertions are more severely truncated than those in the germline as a future study and whether this is a general characterisic of somatic retrotransposition or if there is some connection to tumor biology.</p><p>This is an exciting time for transposable element biology given our improving ability to explore entire genomes. In this case, whole-genome paired-end sequencing has allowed us to detect somatic retrotransposition in cancer genomes, an observation that opens many new questions regarding the role of mobile DNA in carcinogenesis and tumor molecular biology. As sequencing technologies and out ability to detect structural variants improve, so will our ability to characterize new TE insertions and their parent elements, perhaps gaining further insight on what leads to tissue or disease specific TE activation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Methods</head><p>A number of successful computational methods have been devised capable of detecting transposable element insertions from whole-genome sequence data including VariationHunter2 <ref type="bibr">(Hormozdiari et al., 2010b)</ref>, <ref type="bibr">T-lex (Fiston-Lavier et al., 2011)</ref>, RetroSeq (<ref type="url" target="https://github.com/tk2/RetroSeq">https://github.com/tk2/RetroSeq</ref>), HYDRA-SV <ref type="bibr" target="#b42">(Quinlan et al., 2010)</ref>, and Tea <ref type="bibr" target="#b32">(Lee et al., 2012)</ref>. The approach outlined here, implemented as discord-retro, has the advantage of working directly from the ubiquitous .bam sequence alignment format (as does RetroSeq) with minimal need for additional mapping apart from that required to identify insertion breakpoints. Here, we give a high-level overview of our method. Sequence data analyzed in this study was generated on the Illumina platform and aligned to a human reference assembly (NCBI36 or GRCh37) by TCGA Research Network members at TCGA Genome Sequencing Centers.</p><p>Paired-end reads can be classified based on how they map to the reference genome. A read pair is called concordant if both reads map the proper distance apart and in the correct orientation for the insert size and procedure used in the library preparation and sequencing, and discordant if these conditions are not met. For example, ends of a discordant paired read may map to different chromosomes, too far apart, too close together, or in the wrong orientation. A second type of improperly paired reads are ones in which one read maps to the reference, but its pair does not. These reads are referred to as one-end-anchored (OEA). Lastly, reads are called soft-clipped when part of the read aligns to the reference sequence, but either or both ends of the read do not.</p><p>We first selected all discordant reads from both the tumor and normal sequencing data of a patient where one read of the pair maps to a unique portion of the genome, called the "anchored" read, and the other end maps to a repeatmasker annotation elsewhere in the genome. We will refer to these types of read-pairs as one-end-repeat (OER) reads. We filtered elements corresponding to AluS and LTR elements from the results due to an overabundance of calls with no corresponding breakpoint predictions in some samples. Regions where the uniquely mapped ends of the OER reads clustered in two peaks with opposite orientation were considered consistent with an insertion existing between the two clusters of OER reads. We require there to be 8 OER read pairs within a 500bp window, and for there to be at least 2 uniquely mapped or "anchored" reads on either strand. The requirement that both breakpoints (5' and 3' junctions) be covered by paired reads reduces the chance of incorrectly annotating a segmental duplication, translocation, or inversion as a transposable element insertion.</p><p>The selection of clustered discordant OER reads yields a set of 20-50bp windows as predicted transposable element insertion sites. These were annotated as "germline" if there were discordant reads in both the tumor and normal tissue samples, as "somatic/cancer" if there were contributing discordant reads only in the tumor tissue, and as "somatic/normal" if there were contributing discordant reads only in the normal tissue. Insertion loci are cross-referenced against retrotransposon insertion polymorphisms (RIPs) cataloged in previous studies <ref type="bibr" target="#b50">(Wang et al., 2006;</ref><ref type="bibr" target="#b2">Beck et al., 2010;</ref><ref type="bibr" target="#b15">Ewing and Kazazian, 2010;</ref><ref type="bibr">Hormozdiari et al., 2010a;</ref><ref type="bibr" target="#b25">Iskow et al., 2010;</ref><ref type="bibr" target="#b52">Witherspoon et al., 2010;</ref><ref type="bibr" target="#b16">Ewing and Kazazian, 2011;</ref><ref type="bibr" target="#b46">Stewart et al., 2011)</ref> and against each other. As breakpoint resolution varies across studies, insertions within the same 500bp window were considered overlapping. A total of 14 (16%) potentially tumor-specific insertions were eliminated by comparison to known RIPs and RIPs found in this study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Breakpoint refinement using soft-clipped reads</head><p>Soft-clipped reads mapped using bwa <ref type="bibr">(Li and Durbin, 2009</ref>) could be used to pinpoint a breakpoint in the insertion site. For each of the 14 samples aligned with bwa (Table <ref type="table">S1</ref>), soft-clipped reads mapping within 500bp of each of the predicted insertion sites and which had greater than 10 bp clipped from the read were used to find a consensus breakpoint where a majority of soft-clipped read ends occurred at the same nucleotide in the reference genome. When breakpoints for both the 5' and 3' junctions between the element and the reference genome were detected, we identified target site duplications when the breakpoint on the forward strand occured 3-50bp downstream of the breakpoint on the reverse strand.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Breakpoint refinement with local assembly</head><p>We used a local assembly and realignment strategy to determine breakpoints for all samples. All discordant and soft-clipped reads within 500bp of a predicted insertion site were assembled using Velvet <ref type="bibr" target="#b55">(Zerbino and Birney, 2008)</ref> with a k-mer size of 31, the shortPaired option, and insert length of 300. If the reads assembled into 5 contigs or less, these contigs were mapped back to the reference genome using BLAT. A cutoff of 5 contigs was chosen because when more contigs were present, they were generally too short to be more informative than the original reads. After mapping the assembled contigs back to the reference assembly, breakpoints present as the point where a contig no longer matches the reference sequence and begins matching a reference retroelement sequence. Target site duplications could be ascertained in cases where two assembled contigs had overlapping alignments to the predicted insertion site on opposite strands.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Simulation</head><p>To measure the accuracy and sensitivity of our pipeline, we inserted 100 LINE, SINE, and SVA sequences randomly into the euchromatic sequence of chr22 from hg19/GRCh37. The retroelement sequences were randomly truncated on the 5' end up to 75% of the original element length for LINEs and SVAs, and 25% for Alus. Poly(A) tails between 20 and 70bp in length were added to the 3' end, and 12bp of the target insertion site was duplicated on the 5' junction to mimic target site duplications. Paired Illumina reads were simulated via wgsim (<ref type="url" target="https://github.com/lh3/wgsim">https://github.com/lh3/wgsim</ref>) to generate paired 75bp reads at 30x coverage. These reads were mapped back to the reference genome using bwa <ref type="bibr">(Li and Durbin, 2009)</ref> with the following parameters: -q 5 -l 32 -k 2 -t 4 -o 1, alignments were processed with samtools <ref type="bibr">(Li et al., 2009)</ref> and used as input to discord-retro.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Assessing sequence similarity to reference elements</head><p>We performed local sequence assembly as described in section 4.2 to generate contigs corresponding to inserted sequences. BLAT alignments of the contigs were carried out to find the most closely related elements in the reference genome. Repeatmasker-annotated elements were scored by the sum of the products of the percent identity of a BLAT alignment and the length of the alignment for each contig that overlapped the repeat masked element. The element with the highest score was predicted to be the source element for the new insertion, excluding elements within 1000bp of the insertion site. Elements scoring within 20 percent-identity bases of the highest score were considered as potential progenitors as well. In cases where there were several repeat elements tied for the highest score or very close to the highest score, the progenitor is considered ambiguous. We ranked the repeat masked elements by the number of times they were predicted to be a progenitor for an somatic insertion, whether ambiguous or not, and examined the top 10 elements for retrotransposition capability.</p><p>COAD 2689 COAD 3518 COAD 3534 COAD 3593 COAD A00R OV 0723 OV 0725 OV 0751 OV 0890 OV 0980 OV 0982 OV 1103 OV 1319 OV 1371 OV 1411 GBM 0145 GBM 0152 GBM 0155 GBM 0185 GBM 0188 GBM 0208 GBM 0214 GBM 0648 GBM 0786 GBM 0877 GBM 0881 GBM 1063 GBM 1086 GBM 1401 GBM 1438 GBM 1454 GBM 1459 GBM 1460 SVA SINE LINE Nnumber of insertions 0 200 400 600 800 1000 1200 1400 COAD OV GBM 5 Figures  COAD 2689 COAD 3518 COAD 3534 COAD 3593 COAD A00R OV 0723 OV 0725 OV 0751 OV 0890 OV 0980 OV 0982 OV 1103 OV 1319 OV 1371 OV 1411 GBM 0145 GBM 0152 GBM 0155 GBM 0185 GBM 0188 GBM 0208 GBM 0214 GBM 0648 GBM 0786 GBM 0877 GBM 0881 GBM 1063 GBM 1086 GBM 1401 GBM 1438 GBM 1454 GBM 1459 GBM 1460 0 1000 2000 3000 4000 5000 6000 0e+ 00 4e-04 8e-04 Insertion Length Fraction of total insertions germline somatic Germline insertions are found in the normal and the tumor tissue of a patient, found in a previous study, or found in multiple patients, and somatic/cancer insertions are found only in the tumor tissue of a single patient. There is a significant difference between the proportion of L1 germline insertions that are full length (&gt;5.8kbp) and the proportion of somatic/cancer L1 insertions that are full length (p-value=9.68 x 10-6).</p><formula xml:id="formula_0">9 2 0 2 1 2 2 X Y                                                                      Alu SVA LINE-1  Tumor Insertion</formula></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: The number of non-reference germline insertions (found in both normal and tumor samples) per patient analyzed.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Plot depicting distribution of insertion site density for non-reference mobile element insertions (outer rings, colored as indicated) and tumor-specific insertions (inner ring, circles).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: (A) Discordant read "one-end repeat (OER)" mappings for the 4 colorectal adenocarcinoma samples with tumor-specific retrotranposon activity. Links are shown in the color of the chromosome where the insertion occurred. (B) The number of retrotransposon insertions detected only in the tumor tissue for each of 33 patients analyzed.No cancer-specific Alu or SVA insertions were detected, and no insertions were found in ovarian carcinoma (OV) or glioblastoma multiforme (GBM), but between 1 and 61 cancer-specific insertions were found across 4 colorectal adenocarcinoma (COAD) patients tumors.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure4: The lengths of non-reference L1 insertions detected in this study, binned in 200bp intervals. Germline insertions are found in the normal and the tumor tissue of a patient, found in a previous study, or found in multiple patients, and somatic/cancer insertions are found only in the tumor tissue of a single patient. There is a significant difference between the proportion of L1 germline insertions that are full length (&gt;5.8kbp) and the proportion of somatic/cancer L1 insertions that are full length (p-value=9.68 x 10-6).</figDesc></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Figure 5: Expression level of genes in normal tissue (blue) prior to intronic LINE-1 insertion, and after (red). Relative expression values are taken from the UCSC Cancer Genome Browser <ref type="bibr" target="#b56">(Zhu et al. 2009)</ref>, where they were normalized by centering to the mean expression level.  <ref type="table">1</ref>: Contigs of inserted sequence were assembled for some cancer-specific transposable element (TE) insertions and aligned back to the reference genome using BLAT. Repeat masker annotated elements from the reference genome are listed according to the number of times they have the highest sequence similarity to an insertions contigs compared to all other repeat masker annotated elements (Best Related Insertions). The number of times an element has within 20 mismatches of the highest sequence similarity to an insertions contigs (in essence, is the most similar or a close second), is also listed (Related Insertions).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>LINE elements most closely related to inserted sequences</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The Piwi-piRNA pathway provides an adaptive defense in the transposon arms race</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Aravin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Hannon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Brennecke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="issue">5851</biblScope>
+			<biblScope unit="page" from="761" to="764" />
+			<date type="published" when="2007">2007</date>
+			<pubPlace>New York, N.Y.</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Somatic retrotransposition alters the genetic landscape of the human brain</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Baillie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Barnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Upton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Gerhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Richmond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">D</forename><surname>Sapio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Brennan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rizzu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Line-1 retrotransposition activity in human genomes</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Beck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Collier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Macfarlane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Malig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Kidd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Eichler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Badge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Moran</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1159" to="1170" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The impact of multiple splice sites in human L1 elements</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">P</forename><surname>Belancio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Roy-Engel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Deininger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gene</title>
+		<imprint>
+			<biblScope unit="volume">411</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="38" to="45" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Ty elements transpose through an rna intermediate</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Boeke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Garfinkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Styles</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Fink</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="491" to="500" />
+			<date type="published" when="1985">1985</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Meiotic catastrophe and retrotransposon reactivation in male germ cells lacking dnmt3l</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bourc'his</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Bestor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">431</biblScope>
+			<biblScope unit="issue">7004</biblScope>
+			<biblScope unit="page" from="96" to="99" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Evolution of the mammalian transcription factor binding repertoire via transposable elements</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bourque</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">B</forename><surname>Vega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">L</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">G</forename><surname>Srinivasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-L</forename><surname>Chew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ruan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-L</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Ng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1752" to="1762" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Hot L1s account for the bulk of retrotransposition in the human population</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Brouha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schustak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Badge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lutz-Prigge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Farley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences of the United States of America</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="5280" to="5285" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Potential role of a navigator gene NAV3 in colorectal cancer</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Carlsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ranki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sipilä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Karenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">M</forename><surname>Abdel-Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ovaska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Siggberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Aapola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ässämäki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Häyry</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">British journal of cancer</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="517" to="524" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">APOBEC3A is a potent inhibitor of adeno-associated virus and retrotransposons</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Lilley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">N</forename><surname>Narvaiza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Landau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Weitzman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current biology : CB</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="480" to="485" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">L1 retrotransposition in human neural progenitor cells</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">G</forename><surname>Coufal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Garcia-Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Yeo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Lovci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Morell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>O'shea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">H</forename><surname>Gage</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">460</biblScope>
+			<biblScope unit="issue">7259</biblScope>
+			<biblScope unit="page" from="1127" to="1131" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Repetitive elements may comprise over two-thirds of the human genome</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P J</forename><surname>De Koning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Gu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Castoe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Batzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Pollock</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS genetics</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">1002384</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">LINE-mediated retrotransposition of marked Alu sequences</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dewannieux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Esnault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Heidmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="41" to="48" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Retrotransposition of R2 elements in somatic nuclei during the early development of Drosophila</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Eickbush</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Eickbush</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mobile DNA</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">11</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Human LINE retrotransposons generate processed pseudogenes</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Esnault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Maestre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Heidmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature genetics</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="363" to="367" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">High-throughput sequencing reveals extensive variation in human-specific l1 content in individual human genomes</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Ewing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1262" to="1270" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Whole-genome resequencing allows detection of many rare LINE-1 insertion alleles in humans</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Ewing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome research</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="985" to="990" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">T-lex: a program for fast and accurate assessment of transposable element presence using next-generation sequencing data</title>
+		<author>
+			<persName><forename type="first">A.-S</forename><surname>Fiston-Lavier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Carrigan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Petrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>González</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">36</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Defining the beginning and end of KpnI family segments</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Grimaldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Skowronski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Singer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The EMBO journal</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1753" to="1759" />
+			<date type="published" when="1984">1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Exon-trapping mediated by the human retrotransposon SVA</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Hancks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Ewing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tokunaga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome research</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1983" to="1991" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Retrotransposition of marked SVA elements by human L1s in cultured cells</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Hancks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Goodier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">K</forename><surname>Mandal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E</forename><surname>Cheung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Human Molecular Genetics</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="3386" to="3400" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dewan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zupnick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Normart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gabriel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Prives</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Levine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hoh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">53 responsive elements in human retrotransposons</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="3857" to="3865" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Alu repeat discovery and characterization within human genomes</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hormozdiari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Alkan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ventura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Hajirasouliha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Malig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yorukoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bakhshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Sahinalp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="36" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Next-generation variationhunter: combinatorial algorithms for transposon insertion discovery</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hormozdiari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Hajirasouliha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yorukoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Alkan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Eichler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Sahinalp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="350" to="357" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Mobile interspersed repeats are major structural variants in the human genome</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R L</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Schneider</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Niranjan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Robinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Steranka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Valle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">I</forename><surname>Civin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1171" to="1182" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Natural mutagenesis of human genomes by endogenous retrotransposons</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Iskow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Mccabe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Torene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Pittard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Neuwald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">G V</forename><surname>Meir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Vertino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Devine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1253" to="1261" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">L1 retrotransposition occurs mainly in embryogenesis and creates somatic mosaicism</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Godoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Courtney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Vetter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Gerton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Ostertag</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genes &amp; development</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1303" to="1312" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Haemophilia a resulting from de novo insertion of l1 sequences represents a novel mechanism for mutation in man</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Youssoufian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">G</forename><surname>Phillips</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Antonarakis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">332</biblScope>
+			<biblScope unit="issue">6160</biblScope>
+			<biblScope unit="page" from="164" to="166" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Molecular evolution and tempo of amplification of human LINE-1 retrotransposons since the origin of primates</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Smit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Boissinot</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome research</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="78" to="87" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">All APOBEC3 family proteins differentially inhibit LINE-1 retrotransposition</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kinomoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kanno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shimura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ishizaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kojima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kurata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tokunaga</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic acids research</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="2955" to="2964" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Wnt-mediated activation of NeuroD1 and retro-elements during adult neurogenesis</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kuwabara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hsieh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Muotri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yeo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Warashina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Moore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Nakashima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Asashima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">H</forename><surname>Gage</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature neuroscience</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1097" to="1105" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Initial sequencing and analysis of the human genome</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Lander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Linton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Birren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Nusbaum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Zody</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Baldwin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Devon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Dewar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Doyle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Fitzhugh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">409</biblScope>
+			<biblScope unit="issue">6822</biblScope>
+			<biblScope unit="page" from="860" to="921" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Landscape of Somatic Retrotransposition in Human Cancers</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Iskow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Gokcumen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Haseley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Luquette</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Lohr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Wilson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<pubPlace>New York, N.Y.</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Fast and accurate short read alignment with burrows-wheeler transform</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Durbin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page" from="1754" to="1760" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Handsaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wysoker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fennell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ruan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Homer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Marth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Abecasis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Durbin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Sequence Alignment/Map format and SAMtools</title>
+		<meeting><address><addrLine>Oxford, England</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="2078" to="2079" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Reverse transcription of r2bm rna is primed by a nick at the chromosomal target site: a mechanism for non-ltr retrotransposition</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Korman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Jakubczak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Eickbush</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="595" to="605" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Disruption of the apc gene by a retrotransposal insertion of l1 sequence in a colon cancer</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">N A H Y M J U K W K B V Y N Y</forename><surname>Miki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="643" to="645" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">APOBEC3 proteins inhibit human LINE-1 retrotransposition</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Muckenfuss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hamdorf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Held</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Perkovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Löwer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cichutek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Flory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G</forename><surname>Schumann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Münk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of biological chemistry</title>
+		<imprint>
+			<biblScope unit="volume">281</biblScope>
+			<biblScope unit="issue">31</biblScope>
+			<biblScope unit="page" from="22161" to="22172" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Somatic mosaicism in neuronal precursor cells mediated by l1 retrotransposition</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Muotri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">T</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C N</forename><surname>Marchetto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">H</forename><surname>Gage</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">435</biblScope>
+			<biblScope unit="issue">7044</biblScope>
+			<biblScope unit="page" from="903" to="910" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Comprehensive molecular characterization of human colon and rectal cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Muzny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Bainbridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Dinh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Drummond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L</forename><surname>Kovar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Morgan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">F</forename><surname>Newsham</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">487</biblScope>
+			<biblScope unit="issue">7407</biblScope>
+			<biblScope unit="page" from="330" to="337" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Cancer immunology-analysis of host and tumor factors for personalized medicine</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ogino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Galon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Fuchs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dranoff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature reviews. Clinical oncology</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="711" to="719" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Length distribution of long interspersed nucleotide elements (LINEs) and processed pseudogenes of human endogenous retroviruses: implications for retrotransposition and pseudogene detection</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pavlícek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Paces</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zíka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hejnar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Gene</title>
+		<imprint>
+			<biblScope unit="volume">300</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="189" to="194" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Genome-wide mapping and assembly of structural variant breakpoints in the mouse genome</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Quinlan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sokolova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Leibowitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Hurles</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Mell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>Hall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="623" to="635" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Origin of the human l1 elements: proposed progenitor genes deduced from a consensus dna sequence</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Scott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Schmeckpeper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Abdelrazik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Comey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>O'hara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Rossiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Cooley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Heath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Margolet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genomics</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="113" to="125" />
+			<date type="published" when="1987">1987</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">Extensive individual variation in L1 retrotransposition capability contributes to human genetic diversity</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D C</forename><surname>Seleme</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Vetter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Cordaux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bastone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Batzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Kazazian</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="page" from="6611" to="6616" />
+		</imprint>
+		<respStmt>
+			<orgName>Proceedings of the National Academy of Sciences of the United States of America</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">APOBEC3B and APOBEC3F inhibit L1 retrotransposition by a DNA deamination-independent mechanism</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Stenglein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Harris</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of biological chemistry</title>
+		<imprint>
+			<biblScope unit="volume">281</biblScope>
+			<biblScope unit="issue">25</biblScope>
+			<biblScope unit="page" from="16837" to="16841" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stewart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kural</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Strömberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Konkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Stütz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Urban</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Grubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">Y K</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-P</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A comprehensive map of mobile element insertion polymorphisms in humans</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">1002236</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Pathogenic exon-trapping by SVA retrotransposon and rescue in Fukuyama muscular dystrophy</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Taniguchi-Ikeda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kobayashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kanagawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-C</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Oda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kuga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kurahashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">O</forename><surname>Akman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dimauro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">478</biblScope>
+			<biblScope unit="issue">7367</biblScope>
+			<biblScope unit="page" from="127" to="131" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Comprehensive genomic characterization defines human glioblastoma genes and core pathways</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">455</biblScope>
+			<biblScope unit="issue">7216</biblScope>
+			<biblScope unit="page" from="1061" to="1068" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+		<respStmt>
+			<orgName>TCGA Research Network</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Integrated genomic analyses of ovarian carcinoma</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">474</biblScope>
+			<biblScope unit="issue">7353</biblScope>
+			<biblScope unit="page" from="609" to="615" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+		<respStmt>
+			<orgName>TCGA Research Network</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">dbrip: a highly integrated database of retrotransposon insertion polymorphisms in humans</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Grover</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Azrak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Batzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Liang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Hum Mutat</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="323" to="329" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Species-specific endogenous retroviruses shape the transcriptional network of the human tumor suppressor protein p53</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Lowe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">G</forename><surname>Sellers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Salama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Burgess</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Brachmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Haussler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci</title>
+		<imprint>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="issue">47</biblScope>
+			<biblScope unit="page" from="18613" to="18618" />
+			<date type="published" when="2007">2007</date>
+			<pubPlace>USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Mobile element scanning (me-scan) by targeted high-throughput sequencing</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Witherspoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Watkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Batzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Jorde</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genomics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">410</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Asymmetric methylation in the hypermethylated CpG promoter region of the human L1 retrotransposon</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Woodcock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Lawler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Linsenmeyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Doherty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">D</forename><surname>Warren</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of biological chemistry</title>
+		<imprint>
+			<biblScope unit="volume">272</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="7810" to="7816" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Cytosine methylation and the ecology of intragenomic parasites</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Yoder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">P</forename><surname>Walsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Bestor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Trends in genetics : TIG</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="335" to="340" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Velvet: algorithms for de novo short read assembly using de bruijn graphs</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Zerbino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Birney</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="821" to="829" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">The UCSC Cancer Genomics Browser</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Z</forename><surname>Sanborn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Benz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Szeto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hsu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Kuhn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Karolchik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Archie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Lenburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Esserman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature methods</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="239" to="240" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

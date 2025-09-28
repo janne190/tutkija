@@ -1,0 +1,1267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Cell-in-cell structures are involved in the competition between cells in breast cancer</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">S</forename><forename type="middle">Sajedeh</forename><surname>Mousavi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Sara</forename><surname>Razi</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Department of veterinary medicine</orgName>
+								<orgName type="institution">Islamic Azad university</orgName>
+								<address>
+									<addrLine>Garmsar branch</addrLine>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Garmsar-Iran Department of Biology, Science and Research branch</orgName>
+								<orgName type="institution">Islamic Azad University</orgName>
+								<address>
+									<settlement>Tehran</settlement>
+									<country key="IR">Iran</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">Shahid Beheshti University of medical sciences</orgName>
+								<address>
+									<settlement>Tehran</settlement>
+									<country key="IR">Iran</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Cell-in-cell structures are involved in the competition between cells in breast cancer</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">A2C88DA29693594F649E8F593B84E940</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Cell in cell structure</term>
+					<term>Breast cancer</term>
+					<term>CICs</term>
+					<term>Microarray</term>
+					<term>Bioinformatics</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Breast cancer is the most common cancer in women worldwide, and discovering the biomarkers of this disease became so vital nowadays and Cell in Cell structure could be one of them, and it may be used as an available proxy for tumour malignancy. (CICs) are unusual in that keep morphologically healthy cells within another cell. They are found in various human cancers and result from active cell-cell interaction, and it has different kinds. In this study, we analyzed the microarray data from GEO (GSE103865) to genetically evaluate CICs' incidence in samples obtained from breast cancer patients to understand the relationship between the rate of CIC and the prognosis of breast cancer. The preprocessing was performed using R software. The DAVID website was used to analyze gene ontology (GO) and Gene and Genome (KEGG) pathway. The protein-protein interactions (PPIs) of the obtained DEGs were assessed using the STRING website, and hub modules in Cytoscape and cytoHubba were screened. According to the results from analyzing the 20 hub genes, we understood that overexpression of our Top genes is effective in focal adhesion, ECM-receptor interaction, platelet activation and PI3K-Akt signalling pathway, which shows that changes in these pathways could be the reason the overexpression of CICs in breast cancer. These data and research by many others have uncovered various genes involved in CIC formation and have started to give us an idea of why they are formed and how they could contribute to breast cancer.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Breast cancer tissues are highly heterogeneous, which is crucial for clinical diagnosis and treatment. Cannibalism of cells is a rare pathological condition found in a variety of human tumours, including breast cancer <ref type="bibr">(Huang, Chen et al. 2015)</ref>. Cannibalistic cells often form cell in-cell (CIC) structures characterized by one cell enclosing another, impacting patient prognosis <ref type="bibr" target="#b31">(Zhang, Niu et al. 2019)</ref>. CIC structures have been discovered in both human and animal tumours <ref type="bibr" target="#b7">(Ferreira, Soares et al. 2015)</ref>, implying that CIC is a common malignant phenomenon in all animals.</p><p>Cell-in-cell structures (CICs) are unusual in that those who keep morphologically healthy cells within another cell. They are found in various human cancers and result from active cell-cell interaction <ref type="bibr">(Huang, Chen et al. 2015)</ref>. CICs may form homotypically between tumour cells or heterotypically between different types of cells, such as tumour cells and immune cells, due to the complex cellular composition of cancer tissues <ref type="bibr">(Huang, Chen et al. 2015, Fais and</ref><ref type="bibr">Overholtzer 2018)</ref>. CIC formation usually results in the death of internalized cells in a non-autonomous manner, with the outer cells killing the inner cells <ref type="bibr" target="#b18">(Overholtzer, Mailleux et al. 2007</ref>). After apoptosis (type I), necrosis (type II), and autophagy-dependent cell death (type III), CIC-mediated cell death was proposed as the type IV cell death <ref type="bibr" target="#b17">(Martins, Raza et al. 2017)</ref>. CICs seem to have opposing functions (suppressive and proliferative) in human tumours, which are likely influenced by various factors such as CIC type, tumour type, stage, and so on <ref type="bibr">(Huang, Chen et al. 2015, Fais and</ref><ref type="bibr">Overholtzer 2018)</ref>. The development of a specific kind of CIC results from the integration of multiple signals <ref type="bibr">(Ruan, Wang et al. 2018, Mackay and</ref><ref type="bibr" target="#b16">Muller 2019)</ref>, and it may be used as a functional proxy for tumour malignancy <ref type="bibr">(Sharma and</ref><ref type="bibr">Dey 2011, Jose, Mane et al. 2014)</ref>. According to accumulating evidence, CICs were consistently linked to tumour grades <ref type="bibr" target="#b0">(Abodief, Dey et al. 2006</ref><ref type="bibr" target="#b15">, Kim, Choi et al. 2019)</ref>.</p><p>In this study, we analyzed the microarray data from GEO (GSE103865) to genetically evaluate CICs' incidence in samples obtained from breast cancer patients and also by examining the superior upregulated genes and their cell pathways, understanding the relationship between the rate of CIC and the prognosis of breast cancer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Material and methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Dataset</head><p>The microarray dataset used in this essay was generated by Sun Q et al. Based on the GPL570 Affymetrix Human Genome U133 Plus 2.0 Array platform and is available in NCBI's Gene Expression Omnibus (GEO) repository, with accession number GSE103865. Breast tumour tissue samples were collected from patients at the Military 307 Hospital, Beijing, and selected according to low and high CICs formation rate for RNA extraction and hybridization on Affymetrix microarrays. We had attained 7 samples for L-CICs and 7 samples for H-CICs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Preprocessing and Selection of Differentially Expressed Genes (DEGs)</head><p>We performed some Quality Control (QC) checks involving sample-level plots. These checks comprise a Principal Component Analysis (PCA) plot and boxplot. PCA helps us distinguish samples using expression variations and determine whether the L-CICs and H-CICs samples are differentiable after normalization (Figure <ref type="figure">1</ref>). The gene expression ranges had been transformed to a logarithmic base 2 scale. The preprocessing was performed using R (version 4.0.3), and we used different packages such as genefilter (version 1.72.1) for filtering genes from though put experiments, affy (version 1.68.0), Affytools (1.62.0), AffyPLM (1.66.0) for fitting prob-levels models and limma (3.46.0) for evaluating DEGs between L-CICs and H-CICs samples. Also, the hgu133plus2.db annotation package was used to convert probe identifiers into gene symbols. The top 200 genes were selected to be submitted to the STRING database. The cut-off criteria for defining DEGs were adjusted P&lt;0.0001 and |logFC| &lt;=1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>PPI Undirected Unweighted Network Reconstruction of DEGs</head><p>Protein-protein interactions (PPIs) for overlapping DEGs were obtained from the online Search Tool for the Retrieval of Interacting Genes (STRING, <ref type="url" target="http://string-db.org">http://string-db.org</ref>). These interactions were input into Cytoscape software (<ref type="url" target="http://www.cytoscape.org/">http://www.cytoscape.org/</ref>) to create a PPI network of hub genes. This network was analyzed by the Cytoscape MCODE plugin (degree cutoff = 2, max. Depth = 100, k-core = 2, and node score cutoff = 0.2.). We used the plugin cytoHubba to select the top 20 upregulated hub genes from the PPI network.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>(a) (b)</head><p>Figure <ref type="figure">1</ref>: (a): PCA plot which used to distinguish samples using expression variations and determine whether the Low-CICs and High-CICs samples are differentiable after normalization (blue dots: Low CICs, Red dots: High CICs) / (b): Boxplot for checking the normalization of our samples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DEGs gene ontology and KEGG pathway analysis</head><p>To gain further insights into DEGs' biological function, a total of DEGs consisted of 124 DEGs were submitted into DAVID software for GO analysis and KEGG pathway analysis. In biological process (BP) term, the result indicated that the DEGs were mainly enriched in Collagen catabolic process, extracellular matrix organization, extracellular structure organization, and multicellular organism catabolic process. (Figure <ref type="figure">2</ref>  (b) (c) (d)</p><p>(horizontal line:-log(p.value)) : (a)Biological process: Those processes that are vital for an organism to live and that shape its capacities for interacting with its environment. (b)Cellular component: The complex biomolecules and structures of cells and living organisms. (c): Molecular function: the elemental activities of a gene product at the molecular level, such as binding or catalysis. (d)KEGG Pathway: a collection of hand-drawn pathway maps that reflect our understanding of molecular interaction, reaction, and connection networks PPI network and the top 20 hub genes PPI information was acquired from the STRING database. Constructing and visualizing a PPI network of hub genes was conducted by Cytoscape software. Using the MCODE plugin in Cytoscape, we obtained the module with the highest score, which contained 54 nodes and 94 edges (figure <ref type="figure">6</ref>). Then, the plugin cytoHubba was used to select the top 20 hub genes, which are in order of scores: COL1A1, COL1A2, COL3A1, ASPN, COL12A1, COL10A1, COL8A2, COL8A1, COL5A3, ITGA11, IGF1R, PLCB1, ERBB2, SMAD7, ITGB5, SPARC, MFAP5, PLCB4, S100A8, OMD</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Figure (3): Protein-protein interactions based on 200 Top genes</head><p>Table (1): Most related pathways to the 20 hub genes Pathway Percentage FDR Genes Focal adhesion 40 9.39E-07 COL1A1, COL3A1, COL1A2, ITGB5, COL5A3, ERBB2, ITGA11, IGF1R ECM-receptor interaction 30 5.19E-06 COL1A1, COL3A1, COL1A2, ITGB5, COL5A3, ITGA11 Protein digestion and absorption 30 5.19E-06 COL1A1, COL3A1, COL1A2, COL5A3, COL12A1, COL10A1 Amoebiasis 30 9.91E-06 COL1A1, COL3A1, PLCB4, COL1A2, COL5A3, PLCB1 Platelet activation 30 2.19E-05 COL1A1, COL3A1, PLCB4, COL1A2, COL5A3, PLCB1 PI3K-Akt signalling pathway 35 1.25E-04 COL1A1, COL3A1, COL1A2, ITGB5, COL5A3, ITGA11, IGF1R Long-term depression 15 0.046014 PLCB4, PLCB1, IGF1R Pathways in cancer 20 0.238652 PLCB4, ERBB2, PLCB1, IGF1R Calcium signaling pathway 15 0.287069 PLCB4, ERBB2, PLCB1 Proteoglycans in cancer 15 0.298754 ITGB5, ERBB2, IGF1R Rap1 signaling pathway 15 0.298754 PLCB4, PLCB1, IGF1R</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Hub genes analysis</head><p>We used Funrich (version 3. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Discussion</head><p>Breast cancer is the most common cancer in women all over the world. Screening and diagnosing breast cancer at earlier stages are essential to improve patient survival and reduce treatment costs. However, the underlying mechanism regulating breast cancer aggressiveness remains poorly understood, and biomarkers for detecting earlystage breast cancer are still lacking.</p><p>In this study, we analyzed a microarray dataset from GEO, and Then the plugin cytoHubba was used to discover the top 20 hub genes. All these DEGs were classified into 11 protein categories, in which the top is Collagen. The functional enrichment analyses demonstrated that the DEGs were enriched in biological processes such as Collagen catabolic process, extracellular matrix organization, extracellular structure organization, and multicellular organism catabolic process. It has been demonstrated Collagen that has a significant role in the progression of CICs.</p><p>KEGG pathway analysis uncovered that the DEGs were significantly associated with ECM receptor interaction, Protein digestion, absorption, Focal adhesion, Amoebiasis, Protein digestion, absorption, and Amoebiasis and According to the obtained molecular function chart, the DEGs are associated with extracellular matrix structural constituent, collagen binding, platelet-derived growth factor binding, and RAGE receptor binding. 40 % of our hub genes, including COL1A1, COL3A1, COL1A2, ITGB5, COL5A3, ERBB2, ITGA11 and IGF1R, are involved Focal adhesion pathway and 30% of them that include COL1A1, COL3A1, COL1A2, ITGB5, COL5A3, ITGA11 are effective in ECM-receptor interaction pathway. By checking these two pathways on the KEGG website, we understand that they are entirely related.</p><p>The extracellular matrix (ECM) is a complex mixture of structural and functional macromolecules that plays a crucial role in tissue and organ morphogenesis and cell and tissue structure and function maintenance.</p><p>Transmembrane molecules, primarily integrins, and proteoglycans, CD36, and other cell-surface-associated components mediate specific interactions between cells and the ECM. These interactions regulate cellular activities such as adhesion, migration, differentiation, proliferation, and apoptosis directly or indirectly. Integrins also serve as mechanoreceptors, forming a physical connection between the ECM and the cytoskeleton that transmits power. Integrins are glycosylated, heterodimeric transmembrane adhesion receptors with noncovalently bound alpha and beta subunits. ECM-receptor interactions are significant in the processes of tumour shedding, adhesion, degradation, (f)</p><p>movement, and hyperplasia, according to a 2019 study by Yulong Bao. It has been established that ECM plays a role in other cancers. The extracellular matrix (ECM) is upregulated in prostate cancer tissue and plays a role in tumour invasion and metastasis in gastric cancer. In colorectal cancer cells, the ECM can promote epithelial-mesenchymal transition (EMT). The most lethal adult brain tumour is glioblastoma. It has pathological characteristics such as abnormal neovascularization and tumour cell infiltration. In this progression, the interactions between the ECM and the glioblastoma microenvironment are crucial. Tumour cells move through the ECM during metastasis, and the tumour suppressor nischarin can prevent cancer cell migration by interacting with a variety of proteins. According to some research, nischarin can prevent breast cancer cells from migrating and invading by altering the expression patterns of main adhesive proteins. Nischarin expression can reduce cells' ability to bind to the ECM, resulting in a reduction in invadopodium-mediated matrix degradation. Malignant tumours have a biological function called invasive metastasis. The high levels of expression of ECM proteins or genes in breast tumour tissues can lead to new cancer treatment ideas. (Bao, Wang et al.2019)</p><p>Cell-matrix adhesions are essential in various biological processes, including cell motility, proliferation, differentiation, gene regulation, and cell survival. Specialized structures known as focal adhesions form at cellextracellular matrix contact points, A multi-molecular complex of junctional plaque proteins anchors bundles of actin filaments to transmembrane receptors of the integrin family. Some focal adhesion constituents are structural links between membrane receptors and the actin cytoskeleton, whereas others are signalling molecules such as protein kinases and phosphatases, their substrates, and various adapter proteins. Integrin signalling relies on the FAK (Focal Adhesion Kinase) and src proteins' non-receptor tyrosine kinase activities, as well as their adaptor protein functions, to trigger downstream signalling events. These signaling events reorganize the actin cytoskeleton, which is needed for changes in cell structure, motility, and gene expression. Growth factor binding to their respective receptors results in similar morphological changes and gene expression regulation, demonstrating the important crosstalk between adhesion and growth factor signaling. (genome website)</p><p>According to Damiano Cosimo Rigiracciolo's review from 2021, FAK circuitry has been identified as one of the vital transduction pathways leading to breast cancer progression based on the characterization of molecular alterations various forms of breast tumours. As a result, the evidence summarized in this analysis adds to the importance of FAK expression and activity in breast cancer proliferative and metastatic features. FAK is highly expressed in over 40% of breast tumours and is closely linked to resistance to chemotherapy and targeted therapies.</p><p>The importance of FAK in promoting oncogenic pathways and inactivating tumour suppressive signals in mammary tumour progression and metastasis has also been identified. The importance of FAK in the functional interactions between breast cancer cells and the surrounding TME (tumour microenvironment) has recently been identified, leading to the acquisition of a high invasive phenotype. ACCORDING TO THIS DATA, high FAK expression and activity could be a promising biomarker for more detailed therapeutic strategies in breast cancer.</p><p>Furthermore, our findings demonstrate the significance of platelet activation and the PI3K-Akt signalling pathway in breast cancer. Platelets play an essential and beneficial function in primary hemostasis when the vessel wall's integrity is disrupted. Adhesion to adhesive macromolecules, such as Collagen and von Willebrand factor, or soluble platelet agonists, such as ADP, thrombin, and thromboxane A2, initiate platelet adhesion and activation at sites of vascular wall injury. Different agonists stimulate different receptors, resulting in increased intracellular Ca2+ concentrations, which stimulate platelet to shapeshift and granule secretion and eventually induce the "inside-out" signalling mechanism to activate the ligand-binding role of integrin alpha IIb beta 3. Platelet adhesion and aggregation are mediated by alpha IIb beta 3 binding to its ligands, primarily fibrinogen, and "outside-in" signalling is triggered, resulting in platelet spreading, additional granule secretion, stabilization of platelet adhesion and aggregation, and clot retraction. (genome website)</p><p>In a study by Chris E. Holmes, they have started looking into the unusual platelet phenotype caused by breast cancer and its treatment. Cancer cells' interactions with the primary tumour microenvironment are essential determinants of cancer progression to metastasis, and our findings indicate that platelets from cancer patients can influence the tumour microenvironment differently than platelets from healthy controls. Changes in platelet biology often cause differential responses to antiplatelet therapies such as ADP receptor antagonists. A better understanding of breast cancer and breast cancer treatment-related changes in platelet phenotype may significantly impact antiplatelet strategies to slow cancer progression and enable platelet inhibition therapy to be used safely in patients with heart disease and breast cancer. <ref type="bibr" target="#b8">(Holmes, Levis et al. 2016)</ref> Many types of cellular stimuli or toxic insults activate the phosphatidylinositol 3' kinase (PI3K)-Akt signalling pathway, which regulates fundamental cellular functions including transcription, translation, proliferation, development, and survival. Development factors induce class Ia and Ib PI3K isoforms as they bind to their receptor tyrosine kinase (RTK) or G protein-coupled receptors (GPCR). At the cell membrane, PI3K catalyzes the synthesis of phosphatidylinositol-3,4,5-triphosphate (PIP3). PIP3 then acts as a second messenger, assisting in the activation of Akt. By phosphorylating substrates involved in apoptosis, protein synthesis, metabolism, and the cell cycle, Akt can regulate critical cellular processes once activated.</p><p>According to Sherry X. Yang's study, the PI3K/AKT pathway is crucial in breast cancer pathogenesis, which has been discovered after decades of research; however, evidence on its effects on patient outcomes has been mixed. As previously stated, the translation is complicated by a heterogeneous breast cancer population whose tumours may vary in the magnitude of PI3K/AKT signalling dependence or have undergone different treatments and specific and changing treatment modalities that may have altered this pathway function. As a result, the findings for PIK3CA mutations and AKT activation in early-stage breast cancer prognosis were inconsistent. In the ER+ population, these changes were often linked to a positive or negligible outcome, while in the ER_ population, they were linked to a worse outcome. The effects of the PI3K/AKT pathway signalling in ER+ early breast cancer may have been overridden mainly by adjuvant endocrine therapy, which may have overridden the effects of the PI3K/AKT pathway signalling.</p><p>The Cellular component chart based on DAVID software shows that the DEGs are enriched in the intracellular parts. Many signals and intracellular proteins have been linked to developing various forms of CICs, such as Entosis <ref type="bibr" target="#b16">(Mackay and Muller 2019)</ref>. Entosis is initiated by the cell that will eventually be internalized <ref type="bibr" target="#b18">(Overholtzer, Mailleux et al. 2007</ref>). This mechanism is also known as in-cell invasion, and it almost always leads to the death of the internal cell. Under standard tissue culture conditions, susceptible cell lines exhibit a low degree of entosis, but when cells are grown in matrix-detached conditions, higher rates of entosis are observed <ref type="bibr" target="#b12">(Ishikawa, Ushida et al. 2015</ref><ref type="bibr" target="#b7">, Gol, Pena et al. 2018)</ref>. Matrix detachment occurs before mitosis or apoptosis in standard culture conditions <ref type="bibr" target="#b28">(Wang, He et al. 2016</ref><ref type="bibr" target="#b5">, Durgan, Tseng et al. 2017</ref>). The discovery that several tumour cells could reliably engulf normal or non-transformed epithelial cells when admixed led to the hypothesis that entosis could act as a cell competition mechanism. <ref type="bibr" target="#b16">(Mackay and Muller 2019)</ref> CIC's roles in human cancers have been controversial <ref type="bibr">(Huang, Chen et al. 2015)</ref>; while early studies suggested a tumour-suppressing function based on its nature of cell death, later studies found that CIC-mediated engulfment can also promote tumour growth. The principle of cell rivalry recently resolved this disparity (Kroemer and Perfettini 2014, <ref type="bibr" target="#b24">Sun, Luo et al. 2014)</ref>. Heterogeneous tumours are characterized by the presence of numerous clones that compete for limited space and nutrients. CIC death slowed tumour development in the early stages. The winner tumour cell clones with oncogenic mutations were repeatedly internalized and outcompeted by CIC-mediated engulfment. Those that were less malignant, causing tumour growth to slow. According to CIC-induced aneuploidy, the winner cells have more opportunities to develop new mutations and malignant phenotypes, such as metastasis.</p><p>As a result, during the late stages of cancer, the malignant winner clones with oncogenic mutations populate the tumour tissues and undergo distant metastasis <ref type="bibr">(Sun, Huang et</ref>  Cancer cells reshape Collagen in the opposite direction, forming a self-reinforcing cell-collagen loop that promotes cancer progression. <ref type="bibr" target="#b30">(Xu, Xu et al. 2019)</ref> The ECM undergoes structural changes as a result of cancer incidence and progression. Collagen content and distribution are altered in cancer cells to better coordinate biological properties such as gene mutations, transcription factors, signalling pathways, and receptors. Cancer cell behaviour is influenced by the heterogeneity of mutated genes, one of the significant promoters of cancer cell behaviour. Oncogene mutations, classified as tumour suppressor genes or proto-oncogenes, affect the collagen conditions in the tumour matrix. Cancer development is influenced by both cells and molecules in the tumour microenvironment. Collagen's role in cancer is a two-edged sword. Collagen, cancer cells and other matrix molecules, on the one side, form an interlocking loop that reinforces each other. <ref type="bibr" target="#b30">(Xu, Xu et al. 2019)</ref> ASPN is the fourth gene on the list of hub genes. ASPN is a small leucine-rich proteoglycan that belongs to the canonical class I family of extracellular matrix (ECM) proteins with a special Drepeat in its Nterminal region <ref type="bibr" target="#b19">(Sasaki, Takagane et al. 2021</ref>) ASPN is mainly located in the ECM of cartilage that surrounds skeletal tissue <ref type="bibr" target="#b13">(Jiang, Liu et al. 2019)</ref>. ASPN has been studied extensively in osteoarthritis and is tightly regulated in cartilage and has been linked to breast ductal carcinoma local invasion <ref type="bibr" target="#b3">(Castellana, Escuin et al. 2012)</ref>. Furthermore, ASPN is overexpressed in pancreatic ductal adenocarcinoma, indicating that it may be helpful for diagnostic and therapeutic purposes <ref type="bibr" target="#b26">(Turtoi, Musmeci et al. 2011)</ref>. ASPN also affects epidermal growth factor receptor (EGFR) receptor signalling, which helps GC cells expand and migrate <ref type="bibr" target="#b4">(Ding, Zhang et al. 2015)</ref>.</p><p>ITGA11 (Integrin Subunit Alpha 11) and ITGB5 are two integrin subunits on our list (Integrin Subunit Beta 5).</p><p>Understanding new developments in the transcriptome and pathways can lead to the discovery of new cancer biomarkers. Integrin 11 (ITGA11), a member of the integrin family, is involved in various biological processes, including metastasis, embryogenesis, hemostasis, immune response, tissue repair, cancer development, tumour angiogenesis, and therapy resistance <ref type="bibr" target="#b2">(Bos, Van der Groep et al. 2003</ref><ref type="bibr" target="#b29">, Wong, Gilkes et al. 2011)</ref>. Integrin mutations disrupt cancer cell adhesion and extracellular matrix assembly, potentially resulting in tumour metastasis <ref type="bibr">(Schindl, Schoppmann et al. 2002)</ref>. Tyrosine kinase receptors facilitate cancer cell proliferation and differentiation, and integrins interact with them.</p><p>Integrins are heterodimeric cell surface adhesion receptors that are made up of two subunits: and. A combinatorial association of 18 and 8 subunits results in 24 distinct integrin heterodimers (Van der Flier and Sonnenberg 2001). ECM ligands can bind to the subunit and activate intracellular signalling events via the subunit, allowing extracellular and intracellular events to be integrated for cell motility and invasion. Several integrins are expressed at low or undetectable levels in adult epithelia, but they are upregulated in tumours <ref type="bibr">(Ju, Godet et al.)</ref>. Integrin 11 (ITGA11) is expressed in various tissues in the fetus, but it disappears with maturation in adult tissues <ref type="bibr" target="#b11">(Hynes 2002)</ref>. The Site of expression chart shows that these 20 genes are associated with preadipocytes, Dentin, Amniotic fluid, cornea, odontoblast, tooth, cerebrospinal fluid, Dermis, ligament, keratinocytes, and kidney cancer. Also, we understood that these genes are related to breast, prostate, central nervous system, upper aerodigestive tract, Cancer Gene Census gene list, and parathyroid from the COSMIC chart.</p><p>In conclusion, according to the results from analyzing the 20 hub genes, we understood that overexpression of our Top genes is effective in focal adhesion, ECM-receptor interaction, platelet activation and PI3K-Akt signalling pathway, which shows that changes in these pathways could be the reason for the overexpression of CICs in breast cancer. Involvement of our most scored genes in these pathways could indicate their effect on increasing the incidence of CICs and further its impact on tumour cell malignancy in breast cancer. The high expression levels of ECM proteins or genes in breast tumour tissues can lead to new cancer treatment ideas. We believe that these genes and pathways may be possible breast cancer markers, but further research is needed to confirm the mechanisms of tumorigenesis and growth. Also, from the hub genes, there is a strong connection between breast cancer and Collagen. By inducing cancer cell proliferation, migration, and metastasis. In conclusion, the relationship between Collagen and cancer is only partially understood, and further research is required to elucidate detailed collagen biological mechanisms in cancer tissue that can precisely control collagen balance for entire treatment gain. When combined with other treatment options, this new approach can help patients live longer and have a better quality of life.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><figDesc>.a). Regarding the cellular component (CC) term, the DEGs were mainly involved in intracellular activations (Figure 2.b). About molecular function (MF), the DEGs were primarily associated with extracellular matrix structural constituent, collagen binding, plateletderived growth factor binding, and RAGE receptor binding (Figure 2.c). The DEGs were mostly linked to ECMreceptor interaction, Protein digestion and absorption, Focal adhesion, Amoebiasis, Platelet activation, Renin secretion, Arrhythmogenic right ventricular cardiomyopathy (ARVC), PI3K-Akt signaling pathway, Glutamatergic synapse and Long-term depression according to the KEGG pathway research. (Figure 2.d).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure</head><figDesc>Figure (2) The involvement degree of our 200 Top genes in different processes (by DAVID website)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure</head><figDesc>Figure (4): Analyzing 20 hub genes with Funrich software. (a): Biological process (b)Cellular component (c)Molecular function (d)Site of expression (normal tissues, cancer tissues, cell types and cell lines) (e)heat map gene expression (f) COSMIC: The Catalogue Of Somatic Mutations In Cancer, is the world's largest and most comprehensive resource for exploring the impact of somatic mutations in human cancer.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><figDesc>al. 2015) COL1A1 (Collagen Type I Alpha 1 Chain), COL1A2 (Collagen Type I Alpha 2 Chain), COL3A1 (Collagen Type III Alpha 1 Chain), COL12A1 (Collagen Type XII Alpha 1 Chain), COL10A1 (Collagen Type X Alpha 1 Chain), COL8A2 (Collagen Type VIII Alpha 2 Chain), COL8A1 (Collagen Type VIII Alpha 1 Chain) and COL5A3 (Collagen Type V Alpha 3 Chain) were all in our ten hub genes so this shows the relationship between CICs and Collagen. Signal transduction pathways regulate cellular activity. External signals are received by cells via receptors and transmitted via a cascade, converting extracellular signals into intracellular signals and triggering physiological cellular reactions that control biological activities. Collagen, which is part of the ECM, affects cancer cell activity.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="3,72.00,72.00,299.15,410.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="3,72.00,491.40,302.15,210.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="5,72.00,72.00,412.80,196.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="5,72.00,282.10,414.70,192.50" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="5,72.00,488.40,417.60,193.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="6,72.00,260.75,294.10,273.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="8,72.00,117.85,468.00,169.55" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="8,72.00,319.30,457.10,158.20" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="9,72.00,72.00,330.00,285.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="9,72.00,366.10,342.70,325.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="10,74.75,72.00,359.75,220.90" type="bitmap" /></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" />			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Cell cannibalism in ductal carcinoma of breast</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Abodief</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Al-Hattab</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cytopathology: official journal of the British Society for Clinical Cytology</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="304" to="305" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Transcriptome profiling revealed multiple genes and ECM-receptor interaction pathways that may be associated with breast cancer</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Jia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cellular &amp; molecular biology letters</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="20" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Levels of hypoxia-inducible factor-1α independently predict prognosis in patients with lymph node negative breast carcinoma</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Van Der Groep</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Greijer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shvarts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Meijer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">M</forename><surname>Pinedo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Semenza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Van Diest</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Van Der Wall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer: Interdisciplinary International Journal of the American Cancer Society</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1573" to="1581" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">ASPN and GJB2 are implicated in the mechanisms of invasion of ductal breast carcinomas</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Castellana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Escuin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Peiró</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Garcia-Valdecasas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vázquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Pons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pérez-Olabarria</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Barnadas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lerma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Cancer</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">175</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Asporin participates in gastric cancer cell growth and migration by influencing EGF receptor signaling</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncology reports</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1783" to="1790" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Mitosis can drive cell cannibalism through entosis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Durgan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y.-Y</forename><surname>Tseng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Hamann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-C</forename><surname>Domart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Collinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overholtzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Florey</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note>Elife 6: e27134</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Cell-in-cell phenomena in cancer</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Fais</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overholtzer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Reviews Cancer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="758" to="766" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">A polymorphism in the fatty acid desaturase-2 gene is associated with the arachidonic acid metabolism in pigs</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Ferreira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Soares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Carvalho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Borralho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Vicente</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Branco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Correia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Peleteiro ; Gol</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">N</forename><surname>Pena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Rothschild</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Estany</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Diagnostic pathology</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2015">2015. 2018</date>
+		</imprint>
+	</monogr>
+	<note>Four cases of cell cannibalism in highly malignant feline and canine tumors Scientific reports</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Platelet phenotype changes associated with breast cancer and its treatment</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Holmes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Levis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Schneider</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Bambace</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sharma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Lal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Wood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">B</forename><surname>Muss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Platelets</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="703" to="711" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Detecting cell-in-cell structures in human tumor samples by E-cadherin/CD68/CD45 triple staining</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page">20278</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Mammalian Cell Competitions, Cell-in-Cell Phenomena and Their Biomedical Implications</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current molecular medicine</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="852" to="860" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Integrins: bidirectional, allosteric signaling machines</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">O</forename><surname>Hynes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">cell</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="673" to="687" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Loss of anchorage primarily induces non-apoptotic cell death in a human mammary epithelial cell line under atypical focal adhesion kinase signaling</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ishikawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ushida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shibanuma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell death &amp; disease</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1619" to="e1619" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Differentially expressed genes ASPN, COL1A1, FN1, VCAN and MUC5AC are potential prognostic biomarkers for gastric cancer</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Xiao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncology letters</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="3191" to="3202" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Evaluation of cannibalistic cells: a novel entity in prediction of aggressive nature of oral squamous cell carcinoma</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Mane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Datar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Muttagi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hallikerimath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Kale</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Odontologica Scandinavica</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="418" to="423" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Spindle assembly checkpoint MAD2 and CDC20 overexpressions and cell-in-cell formation in gastric cancer and its precursor lesions</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Ju</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Godet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">C</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Byun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jayatilaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Xiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Samanta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-H</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-W</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y.-S</forename><surname>Kim ; Kroemer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-L</forename><surname>Perfettini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Human pathology</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1280" to="1281" />
+			<date type="published" when="2014">2019. 2014</date>
+		</imprint>
+	</monogr>
+	<note>Hypoxia Selectively Enhances Integrin a5b1 Receptor Expression in Breast Cancer to Promote Metastasis Entosis, a key player in cancer cell competition Cell research</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Biological relevance of cell-in-cell in cancers</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Mackay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Muller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochemical Society Transactions</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="725" to="732" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Entosis: The emerging face of non-cell-autonomous type IV programmed death</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Martins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Q</forename><surname>Raza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Voisin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Dakhli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Law</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">De</forename><surname>Jong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Allouch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Thoreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Brenner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Deutsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomedical journal</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="133" to="140" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Expression profiling identified IL-8 as a regulator of homotypic cell-in-cell formation</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overholtzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Mailleux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mouneimne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Normand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Schnitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>King</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Cibas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Brugge ; Ruan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMB reports</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">412</biblScope>
+			<date type="published" when="2007">2007. 2018</date>
+		</imprint>
+	</monogr>
+	<note>A nonapoptotic cell death process, entosis, that occurs by cell-in-cell invasion Cell</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Expression of asporin reprograms cancer cells to acquire resistance to oxidative stress</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sasaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Takagane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Konno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Itoh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kuriyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yanagihara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yashiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yamada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Murakami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tanaka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer science</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">1251</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schindl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">F</forename><surname>Schoppmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Samonigg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hausmaninger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Kwasny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gnant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Jakesz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Overexpression of hypoxia-inducible factor 1α is associated with an unfavorable prognosis in lymph node-positive breast cancer</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kubista</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Birner</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Oberhuber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clinical Cancer Research</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1831" to="1837" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Cell cannibalism and cancer</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Sharma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Diagnostic cytopathology</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="229" to="233" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Cell-in-cell structures are involved in the competition between cells in human tumors</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overholtzer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Molecular &amp; cellular oncology</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">1002707</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Competition between human cells by entosis</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Florey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shirasawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sasazuki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">N</forename><surname>Robinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overholtzer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell research</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1299" to="1310" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Extracellular matrix structure</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Theocharis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Skandalis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gialeli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">K</forename><surname>Karamanos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Advanced drug delivery reviews</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="page" from="4" to="27" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Identification of novel accessible proteins bearing diagnostic and therapeutic potential in human pancreatic ductal adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Turtoi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Musmeci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Dumont</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Somja</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bevilacqua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>De Pauw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Delvenne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Castronovo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of proteome research</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="4302" to="4313" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Function and interactions of integrins</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Van Der Flier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sonnenberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell and tissue research</title>
+		<imprint>
+			<biblScope unit="volume">305</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="285" to="298" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Cell-in-cell death is not restricted by caspase-3 deficiency in MCF-7 cells</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of breast cancer</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">231</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Hypoxia-inducible factor 1 is a master regulator of breast cancer metastatic niche formation</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">-L</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Gilkes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Chaturvedi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">I</forename><surname>Fraley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-M</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U.-S</forename><surname>Khoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">O</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">-L</forename><surname>Ng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the National Academy of Sciences</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="issue">39</biblScope>
+			<biblScope unit="page" from="16369" to="16374" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">The role of collagen in cancer: from bench to bedside</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of translational medicine</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="22" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Subtype-based prognostic analysis of cell-in-cell structures in early breast cancer</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Qin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tai</surname></persName>
+		</author>
+		<ptr target="https://www.genome.jp/" />
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers in oncology</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">895</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

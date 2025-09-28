@@ -1,0 +1,2225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Discovery of cancer common and specific driver gene sets</title>
+				<funder ref="#_mx5B8yZ">
+					<orgName type="full">Key Laboratory of Random Complex Structures and Data Science, CAS</orgName>
+				</funder>
+				<funder ref="#_5aBNXZ8 #_H9gXZzK">
+					<orgName type="full">Chinese Academy of Sciences</orgName>
+					<orgName type="abbreviated">CAS</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Academy of Mathematics and Systems Science, CAS</orgName>
+				</funder>
+				<funder ref="#_jsDaKf8 #_XVQWeuD #_QrQaW2J">
+					<orgName type="full">National Natural Science Foundation of China</orgName>
+				</funder>
+				<funder ref="#_BGSSN7Z">
+					<orgName type="full">CAS, CAS Frontier Science Research Key Project for Top Young Scientist</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2016-12-30">30 Dec 2016</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Junhua</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">• J. Zhang and S. Zhang are with National Center for Mathematics and Interdisciplinary Sciences</orgName>
+								<orgName type="department" key="dep2">Academy of Mathematics and Systems Science</orgName>
+								<orgName type="institution">Chinese Academy of Sciences</orgName>
+								<address>
+									<postCode>100190</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Shihua</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">• J. Zhang and S. Zhang are with National Center for Mathematics and Interdisciplinary Sciences</orgName>
+								<orgName type="department" key="dep2">Academy of Mathematics and Systems Science</orgName>
+								<orgName type="institution">Chinese Academy of Sciences</orgName>
+								<address>
+									<postCode>100190</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Discovery of cancer common and specific driver gene sets</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2016-12-30">30 Dec 2016</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">0A2566943E70BE47452CDE9B10BEA073</idno>
+					<idno type="arXiv">arXiv:1612.09478v1[q-bio.GN]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Bioinformatics</term>
+					<term>cancer genomics</term>
+					<term>pan-cancer study</term>
+					<term>driver pathway</term>
+					<term>mutual exclusivity</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Cancer is known as a disease mainly caused by gene alterations. Discovery of mutated driver pathways or gene sets is becoming an important step to understand molecular mechanisms of carcinogenesis. However, systematically investigating commonalities and specificities of driver gene sets among multiple cancer types is still a great challenge, but this investigation will undoubtedly benefit deciphering cancers and will be helpful for personalized therapy and precision medicine in cancer treatment. In this study, we propose two optimization models to de novo discover common driver gene sets among multiple cancer types (ComMDP) and specific driver gene sets of one certain or multiple cancer types to other cancers (SpeMDP), respectively. We first apply ComMDP and SpeMDP to simulated data to validate their efficiency. Then, we further apply these methods to 12 cancer types from The Cancer Genome Atlas (TCGA) and obtain several biologically meaningful driver pathways. As examples, we construct a common cancer pathway model for BRCA and OV, infer a complex driver pathway model for BRCA carcinogenesis based on common driver gene sets of BRCA with eight cancer types, and investigate specific driver pathways of the liquid cancer lymphoblastic acute myeloid leukemia (LAML) versus other solid cancer types. In these processes more candidate cancer genes are also found.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>metastasis <ref type="bibr" target="#b13">[14]</ref>, <ref type="bibr" target="#b14">[15]</ref>. A main concern is that the human protein interaction network and biological pathways are far from being complete. It is necessary to develop new methods without relying on prior knowledge to discover novel mutated driver gene sets or pathways.</p><p>Previous studies indicate that a driver gene set has two key properties: (1) covering a large number of samples (high coverage); and (2) its mutations tend to exhibit mutual exclusivity (high mutual exclusivity), i.e., a single mutation is usually enough to disturb one pathway <ref type="bibr" target="#b7">[8]</ref>, <ref type="bibr" target="#b15">[16]</ref>, <ref type="bibr" target="#b16">[17]</ref>. For example, the mutation of TP53 and the copy number amplification of MDM2 seldom appear simultaneously in glioblastoma multiforme (GBM) patients (p53 pathway) <ref type="bibr" target="#b0">[1]</ref>. These rules have been frequently used to de novo discover mutated driver gene sets in recent years <ref type="bibr" target="#b17">[18]</ref>, <ref type="bibr" target="#b18">[19]</ref>, <ref type="bibr" target="#b19">[20]</ref>. For example, <ref type="bibr">Vandin et al. developed</ref> Dendrix by designing a weight function to combine the coverage and exclusivity of a gene set, and maximizing it via a Markov chain Monte Carlo (MCMC) approach to extract driver gene sets <ref type="bibr" target="#b17">[18]</ref>. <ref type="bibr">Zhao et al.</ref> further developed a binary linear programming (BLP) model <ref type="bibr" target="#b18">[19]</ref> to get the exact solutions of the maximization problem, and designed a genetic algorithm to optimize variant weight functions and incorporate prior biological knowledge into it in a more flexible manner. However, these studies have all focused on a single pathway without considering the cooperativeness between pathways <ref type="bibr" target="#b17">[18]</ref>, <ref type="bibr" target="#b18">[19]</ref>, <ref type="bibr" target="#b19">[20]</ref>, <ref type="bibr" target="#b20">[21]</ref>.</p><p>In fact, a great deal of evidence has suggested that pathways often function cooperatively in cancer initiation and progression <ref type="bibr" target="#b14">[15]</ref>, <ref type="bibr" target="#b15">[16]</ref>, <ref type="bibr" target="#b21">[22]</ref>, <ref type="bibr" target="#b22">[23]</ref>. Thus, exploring the complex collaboration among different biological pathways and functional modules may shed new lights on the understanding of the cellular mechanisms underlying carcinogenesis. Leiserson et al. <ref type="bibr" target="#b23">[24]</ref> generalized Dendrix (Multi-Dendrix) to simultaneously identify multiple driver gene sets in cancer. More importantly, the collaboration among different pathways means these gene sets are likely simultaneously mutated in a large cohort of patients. To this end, Zhang et al. <ref type="bibr" target="#b24">[25]</ref> developed CoMDP to de novo discover cooccurring mutated driver gene sets in cancer by introducing a novel weight function and a mathematical programming model; Melamed et al. <ref type="bibr" target="#b25">[26]</ref> introduced an information theoretic method GAMToC to identify combinations of genomic alterations in cancer; and Remy et al. <ref type="bibr" target="#b26">[27]</ref> developed a logical model to explain mutually exclusive and co-occurring genetic alterations in bladder carcinogenesis.</p><p>On the other hand, different cancer types may have certain commonalities <ref type="bibr" target="#b27">[28]</ref>. Investigating the similarities and differences among multiple cancer types may enhance the understanding of pathologies underlying cancers and provide new clues to efficient drug design and cancer treatment. The TCGA pan-cancer project surveyed multiplatform aberration data in cancer samples from thousands of cancer patients among 12 cancer types <ref type="bibr" target="#b28">[29]</ref>, which provides huge opportunities to make such investigations <ref type="bibr" target="#b29">[30]</ref>, <ref type="bibr" target="#b30">[31]</ref>. For example, different histological cancers can be classified into the same clusters <ref type="bibr" target="#b29">[30]</ref>, <ref type="bibr" target="#b31">[32]</ref>, <ref type="bibr" target="#b32">[33]</ref>, which means that different cancers may be treated by the same drugs. Recently, Leiserson et al. <ref type="bibr" target="#b33">[34]</ref> proposed a directed heat diffusion model (HotNet2) to identify pathways and protein complexes based on pan-cancer network analysis; Kim et al. <ref type="bibr" target="#b34">[35]</ref> investigated different kinds of mutual exclusivity among multiple cancer types and designed statistical testing methods for driver gene set identification (MEMCover). Although recent pan-cancer studies revealed that some pairs of genes showing mutually exclusivity are common or specific for some cancer types <ref type="bibr" target="#b27">[28]</ref>, <ref type="bibr" target="#b35">[36]</ref>, there is still a lack of systematic investigation of commonalities and specificity in pathway level.</p><p>In this study, we develop two mathematical programming models (ComMDP and SpeMDP) to de novo identify cancer common and specific driver gene sets, respectively. For the former, we detect a set of genes which have significantly high mutual exclusivity and large coverage in two or more cancer types simultaneously. For the latter, we identify a driver gene set specific to one or a group of cancer types (say, S 1 ) versus another group of cancer types (say, S 2 ). In other words, we require the detected genes to have significantly high mutual exclusivity and large coverage in the group S 1 but not in S 2 . We first apply ComMDP and SpeMDP to simulated data to validate their effectiveness. Then, we apply them to the mutation data of 12 cancer types from the pan-cancer project <ref type="bibr" target="#b28">[29]</ref>, <ref type="bibr" target="#b29">[30]</ref> and obtain several biologically meaningful driver gene sets. For example, for breast carcinoma (BRCA) and ovarian carcinoma (OV), we identify their common driver gene sets as well as their individual specific driver gene sets relative to the other. Interestingly, the identified common gene sets are involved with distinct cancer pathways such as apoptosis pathway, ErbB signaling pathway, PI3K-Akt signaling pathway and MAPK signaling pathway, which enable us to construct a common cancer pathway model for BRCA and OV. Further, we construct a hypothetical mutated driver pathway model for BRCA carcinogenesis and progression based on eight common driver gene sets of BRCA with eight cancer types, indicating the complexity of BRCA carcinogenesis. In addition, we investigate specific driver pathways of the liquid cancer lymphoblastic acute myeloid leukemia (LAML) versus other solid cancer types, and identify mutations of FLT3, IDH2, NRAS, IDH1, RUNX1, NPM1, TET2, KIT, amplifications of MLL, IGSF5, and deletions of TP53, GNAQ, which are involved in proliferation, transcriptional deregulation, impaired hematopoietic differentiation, and so on. We expect the proposed methods can discover new commonalities and specificities among cancers and help to understand cancer initialization and progression further.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">MATERIALS AND METHODS</head><p>We first briefly describe the maximum weight submatrix problem, where the coverage and exclusivity of a gene set is combined to form a weight function for discovering driver gene sets in a single mutation data <ref type="bibr" target="#b17">[18]</ref>, <ref type="bibr" target="#b18">[19]</ref>. Then we propose ComMDP and SpeMDP to de novo discover cancer common and specific mutated driver gene sets among multiple cancer types, respectively (Fig. <ref type="figure" target="#fig_0">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">The maximum weight submatrix problem</head><p>Given a binary mutation matrix A with m rows (samples) and n columns (genes), Vandin et al. introduced a weight function W and defined the maximum weight submatrix problem <ref type="bibr" target="#b17">[18]</ref>. Specifically, it is designed to find a submatrix M of size m × k in matrix A by maximizing W :</p><formula xml:id="formula_0">W (M ) = |Γ(M )| -ω(M ) = 2|Γ(M )| - g∈M |Γ(g)|, (1)</formula><p>where Γ(g) = {i : A ig = 1} denotes the set of samples in which the gene g is mutated, Γ(M ) = ∪ g∈M Γ(g) measures the coverage of M , and ω(M ) = g∈M |Γ(g)| -|Γ(M )| measures the coverage overlap of M .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">ComMDP for identifying common mutated driver gene sets among two or multiple cancer types</head><p>Considering R (R ≥ 2) cancer types, for each we have the mutation matrix A r = (a (r) ij ) with m r samples and the same n mutated genes (r = 1, . . . , R). To find a common mutated driver gene set M with large coverage and high exclusivity, we introduce a weight function C m :</p><formula xml:id="formula_1">C m (M ) = R r=1 2|Γ Ar (M )| - g∈M |Γ Ar (g)| .</formula><p>(</p><formula xml:id="formula_2">)<label>2</label></formula><p>We propose the following BLP model to maximize it:</p><formula xml:id="formula_3">max F m (x, u) = R r=1 2 mr i=1 x (r) i - n j=1 u j • mr i=1 a (r) ij<label>(3)</label></formula><formula xml:id="formula_4">s.t.                        x (r) i ≤ n j=1 a (r) ij u j , i = 1, . . . , m r , r = 1, . . . , R, n j=1 u j = K, x<label>(r)</label></formula><p>i , u j ∈ {0, 1}, i = 1, . . . , m r , j = 1, . . . , n, r = 1, . . . , R, (4) where u j indicates whether column j of the mutation matrices falls into submatrx M or not, and all the columns j's with u j = 1 constitute M ; x = {x (1) , . . . , x (R) }, and x (r) i indicates whether the entries of row i are zeros or not in A r (r = 1, . . . , R). Thus, mr i=1 x (r) i represents the coverage of M in A r (i.e., |Γ Ar (M )|); K is the total number of genes within M .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">SpeMDP for identifying a certain or multiple cancer specific driver gene sets</head><p>Suppose we want to find the specific mutated driver gene sets for R cancer types relative to other T ones (R ≥ 1, T ≥ 1). We use A r = (a (r) ij ) (r = 1, . . . , R) and B t = (b (t) kj ) (t = 1, . . . , T ) to denote corresponding mutation matrices, respectively. We introduce the weight function S m :</p><formula xml:id="formula_5">S m (M ) = 1 R R r=1 K|Γ Ar (M )| - g∈M |Γ Ar (g)| - 1 T T t=1 K|Γ Bt (M )| - g∈M |Γ Bt (g)| .<label>(5)</label></formula><p>We maximize S m by the following BLP model:</p><formula xml:id="formula_6">max G m (x, y, u) = 1 R R r=1 K mr i=1 x (r) i - n j=1 u j • mr i=1 a (r) ij - 1 T T t=1 K lt k=1 y (t) k - n j=1 u j • lt k=1 b (t) kj ,<label>(6)</label></formula><formula xml:id="formula_7">s.t.                                      x (r) i ≤ n j=1 a (r) ij u j , i = 1, . . . , m r , r = 1, . . . , R, 1 n n j=1 b (t) kj u j ≤ y (t) k ≤ n j=1 b (t) kj u j , k = 1, . . . , l t , t = 1, . . . , T, n j=1 u j = K, x<label>(r)</label></formula><p>i , y</p><p>k , u j ∈ {0, 1}, i = 1, . . . , m r , j = 1, . . . , n, r = 1, . . . , R, k = 1, . . . , l t , t = 1, . . . , T, (7) where x = {x (1) , . . . , x (R) }, y = {y (1) , . . . , y (T ) }. As stated above, the constraint</p><formula xml:id="formula_9">x (r) i ≤ n j=1 a (r)</formula><p>ij u j in Eq. ( <ref type="formula">7</ref>) ensures that mr i=1 x (r) i is the coverage of M in A r . In Eq. ( <ref type="formula" target="#formula_5">5</ref>) or Eq. ( <ref type="formula" target="#formula_6">6</ref>), because of the subtraction of the weights of B t from that of A r , we use the restrictions</p><formula xml:id="formula_10">1 n n j=1 b (t) kj u j ≤ y (t) k ≤ n j=1 b (t) kj u j to ensure that lt k=1 y (t)</formula><p>k is the coverage of M in B t , and we use the coefficient K to ensure the weights of A r and B t are all non-negative.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Statistical significance</head><p>We perform a permutation test to assess the significance of results. We permutate the mutations independently among samples to preserve the mutation frequency of each gene. Two kinds of significance are calculated: (1) individual one measuring the significance of a gene set in a certain mutation matrix, where the weight W in Eq. ( <ref type="formula">1</ref>) is used as the statistic; (2) overall one measuring the significance of a gene set by viewing all the mutation matrices as a whole, where the weight C m in Eq. ( <ref type="formula" target="#formula_2">2</ref>) and the weight S m in Eq. ( <ref type="formula" target="#formula_5">5</ref>) are used as the statistics for ComMDP and SpeMDP, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">Simulated data</head><p>To assess the performance of the proposed methods on a variety of data, we construct eight datasets, sd1, • • • , sd8, for simulation study. For convenience of description, in the following we use A r or B r to denote the mutation matrices, M (r) i to denote the i-th embedded submatrix (or gene set) in A r or B r for which the proposed methods are used to identify, and p </p><formula xml:id="formula_11">(r) i (1 ≤ r ≤ R, 1 ≤ i ≤ I).</formula><p>The datasets sd1 and sd2 are generated to illustrate the performance of ComMDP for identifying common driver gene sets among multiple cancer types. The difference is that in sd1 for each r the M (r) i have a constant mutation rate (1 ≤ i ≤ I), but in sd2 they have varying ones, to investigate the possible impact of mutation rates in the gene sets on the discovery accuracy. sd1 is constructed as follows. First, we have three empty matrices A r with the same sizes: m (samples) × n (genes) (here m = 500, n = 900). Then, we embed I submatrices M (r) i with a mutation rate p (r) into each matrix A r (r = 1, • • • , 3; i = 1, • • • , I; I = 9; p (1) = 0.80, p (2) = 0.85, p (3) = 0.90), where for each r, M (r) i contains i + 1 genes (i = 1, • • • , I), and for each i, these submatrices M (r) i occupy the same columns in the corresponding A r (r = 1, • • • , 3). For each sample in A r , a gene uniformly chosen from M (r) i is mutated with rate p (r) , and once one gene is mutated, the other genes in M (r) i have a rate p 0 to be mutated (p 0 = 0.04). Finally, the genes not in M (r) i are mutated in at most three samples, which can be viewed as the background mutation rate in the simulated data. The dataset sd2 is constructed in a similar way, the difference is that each gene set has 9 genes (K = 9), and</p><formula xml:id="formula_12">M (r) i has a mutation rate p (r) i = 1 -i * δ(r)(r = 1, • • • , 3; i = 1, • • • , 9), where δ(1) = 0.03, δ(2) = 0.04, δ(3) = 0.05.</formula><p>The simulated datasets sd3-sd7 are generated to demonstrate the performance of SpeMDP for identifying specific driver gene sets of one or several cancer type(s) versus other cancers. In this case, the datasets are constructed to contain two kinds of embedded gene sets. The first kind of gene sets have mutations with (approximately) mutual exclusivity, like those in sd1 (called the first manner of embedding); but for the second ones, we randomly select 60% samples for which two genes are randomly chosen to be mutated with proper mutation rates, ensuring they are not exclusive (called the second manner of embedding). For the details of the construction of sd3-sd7, please refer to the Supplementary Data. We use these five datasets sd3-sd7 to investigate different aspects for SpeMDP applications. Specially, -sd3 for discovering a certain cancer specific driver gene sets -sd4 for investigating in which case SpeMDP can identify specific driver gene sets -sd5 for investigating the impact of diverse mutation rates on the results -sd6 for investigating the method performance in different mutation generation manners -sd7 for discovering multiple cancer specific driver gene sets We construct dataset sd8 to see if the previous individual cancer type approaches can also identify cancer common and specific driver gene sets (e.g., BLP in MDPFinder <ref type="bibr" target="#b18">[19]</ref> or Dendrix <ref type="bibr" target="#b17">[18]</ref>). The construction of sd8 is similar to that of sd1. Seven groups of submatrices M (r) i with 6 genes in each are embedded into A r with m = 500, n = 700, r = 1, • • • , 3. The first group of submatrices are constructed in the first embedding manner (thus corresponding to a common driver gene set); each of the 2nd to the 4th groups contains two with the first embedding manner, one with background mutations (corresponding to neither common nor specific driver gene sets); each of the last three groups contains one with the first embedding manner, two with background mutations (each corresponding to a specific driver gene set).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6">Biological data</head><p>We use mutation data from the pan-cancer project <ref type="bibr" target="#b29">[30]</ref>, <ref type="bibr" target="#b32">[33]</ref> to assess our methods for practical applications. The 12 types of cancer include bladder carcinoma (BLCA), breast carcinoma (BRCA), colon adenocarcinoma (COAD), glioblastoma multiformae (GBM), head and neck squamous carcinoma (HNSC), kidney renal clear-cell carcinoma (KIRC), lymphoblastic acute myeloid leukemia (LAML), lung adenocarcinoma (LUAD), lung squamous carcinoma (LUSC), ovarian carcinoma (OV), rectal adenocarcinoma (READ), and uterine cervical and endometrial carcinoma (UCEC). Here colon adenocarcinoma and rectal adenocarcinoma are combined into one type denoted as COADREAD.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Simulation study</head><p>We first apply ComMDP to the simulated datasets sd1, sd2 and apply SpeMDP to sd3 -sd7 to assess their performance. We run each method ten times for each dataset. We further apply them to sd8 and compare them with driver gene set discovery approaches for individual cancer types (BLP <ref type="bibr" target="#b18">[19]</ref> is used here).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.1">Common driver gene set discovery.</head><p>For sd1 ComMDP can identify the embedded gene sets for all the ten runs when the number of genes K ≤ 8 (Fig. <ref type="figure" target="#fig_2">2a</ref>). When K = 9, it can detect the embedded gene set for five runs, and it has a wrong one for each of other five runs. When K = 10, each detection of eight runs contains nine correct genes plus a wrong one, and each of other two runs has two wrong ones. We also investigate the possible impact of varying mutation rates in the gene sets on the discovery accuracy. For the embedded nine gene sets of K = 9 with diverse mutation rates in sd2, each of ten runs can identify at least eight correct genes in each gene set (Fig. <ref type="figure" target="#fig_2">2b</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.2">Specific driver gene set discovery.</head><p>First, we consider the situation of one cancer specific driver gene sets. In sd3, SpeMDP can correctly detect the embedded gene sets for K =2 to 10 (Fig. <ref type="figure" target="#fig_2">2c</ref>). The results on sd4 demonstrate that when the gene set is exclusive in kind 1 (kind 2) set but not in kind 2 (kind 1) set, or one is exclusive and the other takes background mutations, SpeMDP can successfully identify it (Fig. <ref type="figure" target="#fig_2">2d</ref>). In the first case, the gene set is approximately exclusive in both kinds 1 and 2 sets which corresponds to a common driver pathway, so SpeMDP cannot find it. In sd5, the mutation rates in kind 1 and kind 2 sets simultaneously get smaller and smaller, so the mutation coverage will get small (so does the weight W ) in kind 1 set along with i gets large (1 ≤ i ≤ I, I = 9), and more exclusive mutation in kind 2 dataset will become possible. Therefore, the performance to detect the embedded gene set will decrease when i gets large (Fig. <ref type="figure" target="#fig_2">2e</ref>). We further validate this on sd6. The mutation rate of sd6 in kind 2 dataset gets larger and that in kind 1 set gets smaller along with i becomes large (1 ≤ i ≤ I, I = 9). In this case, we successfully identify all the embedded gene sets except the one corresponding to i = 2 (Fig. <ref type="figure" target="#fig_2">2f</ref>). Lastly, the result on sd7 indicates that SpeMDP is also effective to identify specific gene sets for multiple cancer types (Fig. <ref type="figure" target="#fig_2">2g</ref>), where the dataset is simulated in a similar way to that of sd6. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.3">Individual driver gene set discovery approaches cannot detect common and specific driver gene sets well.</head><p>For sd8, we first use the BLP model in MDPFinder <ref type="bibr" target="#b18">[19]</ref> to identify individual driver gene sets in each A r which contains seven embedded submatrices, and we get the ones marked by ellipses in Fig. <ref type="figure" target="#fig_3">3</ref>. Then we apply ComMDP and SpeMDP to identify the common and specific driver gene sets among all the A r s, and we obtain those marked by the rectangle and dotted rectangles, respectively. Note that the detected individual and common driver gene sets do not have any overlap. Moreover, the detected individual driver pathways in the second and third sets (A 2 and A 3 ) are not specific (Fig. <ref type="figure" target="#fig_3">3</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Applications to biological data</head><p>We investigate common driver gene sets among all the pair mutation data of the 11 cancer types with K = 2 to 10. We summarize all the significant driver gene sets with both individual and overall significance less than 0.05 (Suppl. Table <ref type="table">S1</ref>). The mutation rates of TP53 in LUSC and OV are very high (164/182 and 405/445, respectively). We distinguish this situations with or without TP53 when relating to these two cancer types.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Common mutated driver gene sets among two or multiple cancer types</head><p>Previous studies indicate that BRCA and OV have similar phenotypes to some extent. Interestingly, we indeed obtain significant common driver gene sets between them by ComMDP for K = 7 to 10 (Table <ref type="table">1</ref>), and reveal 10 genes TP53, PIK3CA, MAP3K1, MAP2K4, PIK3R1, LPA, KRAS, ERBB2, FGFR2, TNXB in total. These genes are enriched in several signaling pathways relating to apoptosis, ErbB signaling pathway, PI3K-Akt signaling pathway, MAPK signaling pathway, etc. Based on known KEGG pathway knowledge (Fig. <ref type="figure" target="#fig_4">4A</ref>), we propose a common mutated pathway model for cancer initiation and progression in both BRCA and OV (Fig. <ref type="figure" target="#fig_4">4B</ref>). We show the heat map of the alterations of the gene set for K = 10 (Suppl. Figure <ref type="figure" target="#fig_0">S1</ref>) and see that TP53 has a very high mutation rate in OV (as stated TABLE 1 Significant common driver gene sets between BRCA and OV identified by BLP K Common pathways p1 p2 p 7 TP53, PIK3CA, MAP3K1, MAP2K4, PIK3R1, LPA, KRAS 0 0.003 0 8 TP53, PIK3CA, MAP3K1, MAP2K4, PIK3R1, LPA, KRAS, ERBB2 0 0.004 0 9 TP53, PIK3CA, MAP3K1, MAP2K4, PIK3R1, LPA, KRAS, ERBB2, FGFR2 0 0 0 10 TP53, PIK3CA, MAP3K1, MAP2K4, PIK3R1, LPA, KRAS, ERBB2, FGFR2, TNXB 0 0 0 p1 and p2 denote the p-values of the common gene sets in BRCA and OV, respectively. p represents the overall significance.</p><p>above). The mutation rates of other nine genes are very low. It implies that TP53 mutation plays a dominant role in this pathway in OV, indicating that the common driver pathway exploration helps to identify driver ones with low mutation frequency (Fig. <ref type="figure" target="#fig_4">4</ref>).</p><p>We also employ BLP <ref type="bibr" target="#b18">[19]</ref> to identify individual driver gene sets in BRCA and OV (Table <ref type="table" target="#tab_0">2</ref>), respectively. For each K in Table <ref type="table" target="#tab_0">2</ref>, there is only one common gene TP53 between the identified gene sets for these two cancers. For other genes in the common gene sets in Table <ref type="table">1</ref>, PIK3CA, MAP3K1, MAP2K4 and PIK3R1 only appear in the gene sets of BRCA, and KRAS, FGFR2 and LPA appear only in those of OV (Table <ref type="table" target="#tab_0">2</ref>). Thus, only a local path of the common mutated pathways (Fig. <ref type="figure" target="#fig_4">4B</ref>) can be found by BLP for each of these two cancers (Fig. <ref type="figure" target="#fig_4">4C</ref>).</p><p>ComMDP has distinct advantages over both the genecentric frequency-based approaches and the individual driver gene set based approaches. First, in the identified common gene sets (Table <ref type="table">1</ref>), some genes have very low mutation frequency. For example, TNXB, LPA and FGFR2 all have less than five mutations in 466 BRCA samples and 445 OV samples, respectively. With such low frequency, these genes cannot be discovered by the gene-centric frequencybased approaches. But all the three genes have important biological functions (Fig. <ref type="figure" target="#fig_4">4B</ref>) and are closely related to the carcinogenesis of BRCA and OV <ref type="bibr" target="#b36">[37]</ref>, <ref type="bibr" target="#b37">[38]</ref>, <ref type="bibr" target="#b38">[39]</ref>, <ref type="bibr" target="#b39">[40]</ref>. For instance, Hu et al. validated TNXB as a promising biomarker for early metastasis of breast cancer <ref type="bibr" target="#b36">[37]</ref>; Kim et al. demonstrated TNXB might be helpful to predict the prognosis of patients with stage III serous ovarian cancer through differential expression analysis <ref type="bibr" target="#b37">[38]</ref>; LPA and its receptors play an important role in mediating malignant behaviors in various cancers and recent studies <ref type="bibr" target="#b38">[39]</ref>, <ref type="bibr" target="#b40">[41]</ref> suggested they could be potential diagnostic biomarkers for BRCA and OV, respectively; FGFR2 were suggested as candidate targets for therapeutics in clinical trial for BRCA and OV <ref type="bibr" target="#b39">[40]</ref>, <ref type="bibr" target="#b41">[42]</ref>. Second, some of the ten important common genes (Table <ref type="table">1</ref>) cannot be identified by the driver gene set identification approaches for individual cancer type (Table <ref type="table" target="#tab_0">2</ref>). Especially, TNXB and ERBB2 are not identified for any cancer by BLP. Actually, ERBB2 is a well-known cancer gene, and it plays a crucial role for certain subtypes of BRCA and OV patients <ref type="bibr" target="#b42">[43]</ref>, <ref type="bibr" target="#b43">[44]</ref>. Third, it is important to note that the individual cancer type approach can only discover a small part of the common gene set for each cancer type (Fig. <ref type="figure" target="#fig_4">4</ref>), whereas ComMDP can integrate information from different cancers and imply a more biologically reasonable common driver pathway.</p><p>Importantly, identifying all the significant common driver gene sets of BRCA with certain cancer types will help to understand various aspects of BRCA carcinogenesis. Besides OV, other cancer types include BLCA, COADREAD,  Here the p-values are all less than 0.0001.</p><p>GBM, HNSC, KIRC, LUAD and UCEC (Suppl. Table <ref type="table">S1</ref>).</p><p>In total, we discover 38 different genes in all the eight significant gene sets (Suppl. Figure <ref type="figure" target="#fig_2">S2</ref>). These genes are involved in many important signaling pathways (Suppl. Figure <ref type="figure" target="#fig_3">S3</ref>) and relate to diverse cancers (such as prostate cancer, endometrial cancer, pancreatic cancer, lung cancer, glioma, colorectal cancer, etc) (searched by DAVID <ref type="bibr" target="#b44">[45]</ref>). It is known that cancer is a very complex disease. We integrate prior pathway knowledge and all the common driver gene sets of BRCA with the eight cancer types to explore more details about BRCA carcinogenesis (Fig. <ref type="figure" target="#fig_5">5</ref>). Compared to Fig. <ref type="figure" target="#fig_4">4</ref>, we find some new paths and more genes involving in the important hallmarks of cancer in Fig. <ref type="figure" target="#fig_5">5</ref>, such as [IFNA6-cytokineR/JAK-PI3K-Akt signaling pathway-TP53-Fas-CASP8] leading to apoptosis, [ARID1A-NF1-KRAS-MAPK signaling pathway] leading to proliferation, [GATA3-MAPK14] leading to cell survival, etc.</p><p>We note that, based on the common driver gene sets of BRCA with multiple cancer types, we can get distinct new discoveries versus previous work. For example, the authors in <ref type="bibr" target="#b27">[28]</ref> identified 127 significantly mutated genes (SMGs) from diverse signaling and enzymatic processes, and calculated the most frequently mutated genes in the pan-cancer cohort for each cancer type. Especially, for BRCA they obtained eight genes (TP53, PIK3CA, MAP3K1, MAP2K4, GATA3, AKT1, CDH1, CBFB), seven of which belong to our 38 genes except CBFB. On one hand, we find more genes involved in the cellular processes that the above eight genes relating to: transcription factor/regulator (CTCF), genome integrity (ATM, BRCA2), MAPK signaling (KRAS, NF1), PI(3)K signaling (PTEN, PIK3R1). On the other hand, we detect several genes involved in other important biological processes in cancer: histone modifier (ARID1A, PBRM1, KDM6A), RTK signaling (FGFR2, FGFR3), cell cycle (CDKN1B). This indicates that these biological processes may also contribute to the carcinogenesis of BRCA. More importantly, we identify some other genes that are not included in the 127 selected genes in <ref type="bibr" target="#b27">[28]</ref>, but they play also crucial roles, such as CASP8, IFNA6, ERBB2, TNXB, NOTCH2 (Suppl. Figure <ref type="figure" target="#fig_3">S3</ref>). For example, CASP8 is involved in the programmed cell death induced by Fas and various apoptotic stimuli, and there are many studies relating to its biological functions <ref type="bibr" target="#b45">[46]</ref>, <ref type="bibr" target="#b46">[47]</ref>, <ref type="bibr" target="#b47">[48]</ref>; NOTCH2 plays a role in a variety of developmental processes by controlling cell fate decisions, and has close relationship with BRCA progression <ref type="bibr" target="#b48">[49]</ref>, <ref type="bibr" target="#b49">[50]</ref>; IFNA6 belongs to the family of interferon, although it has not been well studied, this kind of immune-associated genes may be worth paying great attention for immunotherapy of cancers <ref type="bibr" target="#b50">[51]</ref>.</p><p>Note that BLCA has common significant driver gene sets with all the other 10 cancer types (Suppl. Table <ref type="table">S1</ref>). For BRCA stated above, some genes frequently appear in many common gene sets (Suppl. Figure <ref type="figure" target="#fig_2">S2</ref>). But for BLCA, the common gene sets are not necessarily the same, such as those with BRCA (Suppl. Table <ref type="table" target="#tab_0">S2</ref>), COADREAD (Suppl. Table <ref type="table">S3</ref>), GBM (Suppl. Table <ref type="table" target="#tab_2">S4</ref>) and LUSC (Suppl. Table <ref type="table" target="#tab_3">S5</ref>). For example, we identify two different sets of genes for BRCA and COADREAD, whereas their functional annotations are quite similar (Suppl. Figure <ref type="figure" target="#fig_4">S4</ref>). All these are closely related to cancer generation and progression. Furthermore, we also investigate the common mutated driver gene sets among multiple cancer types. For example, we find that BRCA, OV, LUAD and GBM have common significant gene sets with K = 4 to 10 (Table <ref type="table">3</ref>), which relate to the mutations of genes TP53, PIK3CA, KRAS, MAP3K1, EP300, PIK3R1, TNXB, KDM6A, LPA and deletion of gene IFNA6. As an example, we show the heat map of the alterations of the gene sets in these four cancer types for K = 4 (Fig. <ref type="figure" target="#fig_6">6</ref>). These gene alterations are approximately mutually exclusive in all the four cancer types. Compared to the situation of only considering BRCA and OV (Table <ref type="table">1</ref>), it covers three new genes. Besides IFNA6 stated above, two others are EP300 and KDM6A. EP300 interacting with TP53 is a transcriptional coactivator to mediate many transcriptional events including DNA repair <ref type="bibr" target="#b51">[52]</ref>. It also functions as a histone acetyltransferase to regulate transcription via chromatin remodeling. Gene KDM6A is associated with chromatin organization and transcriptional misregulation in cancer <ref type="bibr" target="#b52">[53]</ref>. Indeed, this investigation can help one to reveal common characteristics among diverse cancers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mutated driver gene sets specific to one cancer or multiple</head><p>TABLE 3 Significant common driver gene sets among BRCA, OV, LUAD and GBM K Common pathway </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>cancer types</head><p>We apply SpeMDP to the mutation data without common driver genes and identify several significant BRCA specific driver gene sets relative to OV with K = 3, 4, 9, 10 (Table <ref type="table" target="#tab_2">4</ref>). These gene sets relate to the mutations of GATA3, CDH1, AKT1, CTCF and amplifications of ERBB2, WHSC1L1, CCND1, PLK1, RFPL4A, DDAH1, many of which have been suggested to be closely related with breast cancer initiation and progression by a number of studies <ref type="bibr" target="#b53">[54]</ref>, <ref type="bibr" target="#b54">[55]</ref>, <ref type="bibr" target="#b55">[56]</ref>, <ref type="bibr" target="#b56">[57]</ref>. For example, GATA3 plays a specific role in the differentiation of breast luminal epithelial cells, and has particular diagnostic utility in the setting of triple-negative breast carcinomas <ref type="bibr" target="#b57">[58]</ref>; the tumor suppressor CDH1 has been shown to be a potential drug target in breast cancer <ref type="bibr" target="#b53">[54]</ref>; and epigenetic silencing of HOXA10 by CTCF in breast cancer cells is related to tumorigenesis <ref type="bibr" target="#b54">[55]</ref>. Similarly, we also identify significant OV specific driver gene sets relative to BRCA with K = 2 to 10 (Table <ref type="table" target="#tab_2">4</ref>), and significant BRCA and OV specific driver pathways relative to the liquid cancer LAML with K = 9, 10 (Suppl. Table <ref type="table">S6</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The liquid cancer LAML has significant common or specific driver gene sets compared to solid cancer types</head><p>LAML is the only liquid cancer in the current study. Interestingly, it has some common driver gene sets with solid cancers. Specifically, by using ComMDP we identify LAML has a significant common driver gene set with COADREAD, GBM and BLCA for K = 5, which includes deletion of IFNA6, and mutations of TP53, IDH1, WT1, SDK1.</p><p>More importantly, LAML is expected to have some specific mutation patterns. We investigate LAML specific driver pathways relative to other 10 solid cancers, and discover significant driver gene sets with K = 2 to 10 except K = 5 (Table <ref type="table" target="#tab_3">5</ref>). These gene alterations include mutations of FLT3, IDH2, NRAS, IDH1, RUNX1, NPM1, TET2, KIT, amplifications of MLL, IGSF5 and deletions of TP53, GNAQ. We show the heat map of the alterations of the gene sets in all the 11 cancer types for K = 10 (Fig. <ref type="figure" target="#fig_8">7</ref>) and see that the alterations display significant mutual exclusivity in LAML, but not in other ten cancer types. Most of these identified genes have been previously reported to be related to LAML <ref type="bibr" target="#b58">[59]</ref>. For example, eight genes of them are involved with six functional categories associated with LAML carcinogenesis (Fig. <ref type="figure" target="#fig_7">8</ref>). Many large-scale studies have confirmed that FLT3 can activate mutations in LAML occurrence and disease progression and thus plays an important role in the pathogenesis of LAML <ref type="bibr" target="#b58">[59]</ref>, <ref type="bibr" target="#b59">[60]</ref>; NPM1 is thought to be involved in several processes including centrosome duplication, cell proliferation and regulation of the ARF/TP53 pathway and its mutations are associated with LAML supported by various studies <ref type="bibr" target="#b60">[61]</ref>, <ref type="bibr" target="#b61">[62]</ref>, <ref type="bibr" target="#b62">[63]</ref>; KIT confers unfavorable prognosis for LAML patients <ref type="bibr" target="#b58">[59]</ref>.</p><p>Moreover, we can predict the potential implication of GNAQ with LAML based on its appearance in the LAML specific driver gene set even with very low mutation frequency in LAML (2/164). GNAQ has been considered as one  of uveal melanoma driver genes <ref type="bibr" target="#b63">[64]</ref>, and a prognostic factor for mucosal melanoma <ref type="bibr" target="#b64">[65]</ref>. Another study <ref type="bibr" target="#b65">[66]</ref> indicates that variations of GNAQ tend to occur in childhood LAML patients. On the other hand, mutational-driven comparison with other cancer types showed that uveal melanoma is very similar to pediatric cancers, characterized by very few somatic insults and, possibly, important epigenetic changes <ref type="bibr" target="#b63">[64]</ref>. Thus, we suggest that GNAQ might be a candidate driver gene for childhood LAML patients and its function in LAML carcinogenesis and progression worth further exploration.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">DISCUSSION</head><p>In this study, we develop ComMDP and SpeMDP to identify cancer common and specific mutated driver gene sets among two or multiple cancer types, respectively. We first apply them to a set of simulated data with diverse mutation rates and pathway sizes to demonstrate their effectiveness. We further apply them to real biological data from TCGA, and obtain a set of cancer common and specific gene sets which are involved in several key biological processes or signaling pathways. This suggests that the identified common or specific driver gene sets may play crucial roles and worth to be further explored. Applications of ComMDP and SpeMDP to real data show their advantages over both gene-centric frequencybased approaches and individual driver gene set based approaches. For example, we identified TNXB, LPA, FGFR2, CASP8, NOTCH2 for BRCA, all of which are mutated with very low frequency (less than five mutations in 466 patients), but have critical biological functions in carcinogenesis of BRCA. All these genes cannot be discovered by the genecentric frequency-based approaches <ref type="bibr" target="#b27">[28]</ref>. We also find that some of the identified important common genes (Table <ref type="table">1</ref>) cannot be detected by the driver gene set identification approaches for individual cancer types <ref type="bibr" target="#b18">[19]</ref>. Moreover, the individual cancer type approaches can only discover a small part of the common pathway for each cancer type (Fig. <ref type="figure" target="#fig_4">4</ref>), whereas ComMDP can integrate information from different cancers and give a more biologically reasonable common driver pathway. Furthermore, in the specific driver gene sets of LAML relative to solid cancer types by SpeMDP, GNAQ (with only two mutations in 164 LAML patients) has showed potential implication with LAML carcinogenesis and progression, but it cannot be detected by gene-centric approaches.</p><p>We obtain the common driver gene sets of all pairs of the 11 cancer types with K = 2 to 10 (Suppl. Table <ref type="table">S1</ref>), and note that the significance of common driver gene sets has no transitivity. For example, there are significant common driver gene sets between LAML and COADREAD as well as LAML and LUAD for K = 3 to 10 (Suppl. Table <ref type="table">S7</ref> and <ref type="table">S8</ref>). But there are no significant ones between COADREAD and LUAD for K = 2 to 10. In contrast, there are no significant common gene sets between GBM and HNSC as well as HNSC and OV for K = 2 to 10, but there are significant ones between GBM and OV for K = 3 to 10 (Suppl. Table <ref type="table">S9</ref>).</p><p>In this study, to identify common driver gene sets, we first select the genes which have mutations in all the examined cancer types for further analysis. In fact, this model can be generalized to include the genes which have no mutations in some of the considered cancer types. We may add some constrains to ensure that the number of non-mutation cancer types is not more than a preassigned number for any considered gene. Moreover, it can also be used to investigate the commonalities and specificities among different subtypes within a certain cancer. We expect that our methods can provide crucial information for understanding the molecular mechanism of cancer generation and progression.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">AVAILABILITY</head><p>The methods are implemented in the MATLAB code and are available upon request. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig.1. Schematic illustration of the key idea of this study. (a) Obtain the mutation matrix from the sequencing data (referring to somatic mutations, copy number alterations (CNAs) and DNA methylation aberrations)<ref type="bibr" target="#b17">[18]</ref>. (b) Identify the common and specific driver gene sets using ComMDP and SpeMDP.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><figDesc>gene mutation rate in M</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. The results of simulation study. Accuracy of the common driver gene set discovery: (a) for K =2 to 10 with a constant mutation rate and (b) for fixed K = 9 in which the embedded nine gene sets (I = 9) have decreasing mutation rates. (c) Accuracy of the specific driver gene set discovery for K =2 to 10 with a constant mutation rate. (d) Illustration of the situation for specific driver gene set discovery: (1) two kinds of exclusive gene sets corresponding to a common driver pathway, so it cannot be found; (2) exclusive (red) versus nonexclusive (brown) gene sets can be found; (3) exclusive (red) versus random (brown) gene sets can be found. Numbers of correctly identified specific driver gene sets for ten runs with K = 6 and I = 9: (e) both kinds of gene sets have decreasing mutation rates and (f) one has increasing and the other has decreasing mutation rates. (g) Numbers of correctly identified specific driver gene sets for ten runs about multiple cancer types with K = 6 and I = 9.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. ComMDP and SpeMDP can exactly identify the embedded common driver gene sets (rectangle) and specific driver gene sets (dotted rectangles), respectively. The BLP of MDPFinder [19] can identify the individual driver gene sets in each dataset (ellipses).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. (A) Known KEGG pathway knowledge in cancer. (B) A common mutated pathway model for BRCA and OV initiation and progression. It is inferred based on the identified common gene sets and their participant pathway knowledge. The gene AKT1 relating to LPA with the PI3K-Akt signaling pathway does not appear in the identified common gene sets. (C) Only local parts of the common mutated pathway in (B) can be found by the individual cancer type approach BLP: (a) BRCA (up for 2 ≤ K ≤ 6, below for 7 ≤ K ≤ 10), (b) OV.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Hypothetical driver pathways for BRCA carcinogenesis and progression. It is inferred based on the common driver gene sets between BRCA and other eight cancer types. The dotted arrows denote indirect effects, and a line represent a known interaction between them or co-occurrence in a known signaling pathway. The ComMDP discovered genes are in red.</figDesc><graphic coords="8,108.00,43.68,396.00,297.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. The heat map of the alterations in the common driver gene set (TP53, PIK3CA, IFNA6, KRAS) among the four cancer types including BRCA, OV, LUAD and GBM.</figDesc><graphic coords="9,82.90,239.45,169.56,261.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. Specific driver pathways or biological processes of LAML relative to the 10 solid cancer types. (a) Mutations in FLT3 confer a proliferative advantage through the RAS-RAF, JAK-STAT, and PI3K-AKT signaling pathways. (b) Mutations in NPM1 result in the aberrant cytoplasmic localization of NPM1 and NPM1-interacting proteins. (c) Deletions of tumor suppressor genes, such as TP53, lead to transcriptional deregulation and impaired degradation through MDM2 and PTEN. (d) DNMT3A and TET2 mutations, as well as IDH1 and IDH2 mutations, can lead to the deregulation of DNA methylation. (e) Mutations in myeloid transcription factors such as RUNX1 and transcription factor fusions by chromosomal rearrangements lead to transcriptional deregulation and impaired hematopoietic differentiation. (f) Mutations of genes involved in the epigenetic homeostasis of cells, such as mutations of ASXL1 and EZH2, lead to deregulation of chromatin modification as well as MLL-MLLT3 gene fusion, which can impair other methyltransferases. Note: the genes in purple represent they appear in the identified specific driver gene sets. (Referring to [59], [67])</figDesc><graphic coords="11,118.80,43.68,374.40,280.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. The heat map of the alterations in the LAML specific driver gene set (FLT3, IDH2, IGSF5, MLL, RUNX1, NPM1, TP53, KIT, TET2, GNAQ) relative to other ten cancer types including BLCA, BRCA, COADREAD, GBM, HNSC, KIRC, LUAD, LUSC, OV and UCEC.</figDesc><graphic coords="14,83.99,409.39,162.42,263.12" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>TABLE 2</head><label>2</label><figDesc>Significant individual driver gene sets in BRCA and OV</figDesc><table><row><cell>K</cell><cell>Driver pathway in BRCA</cell><cell>Driver pathway in OV</cell></row><row><cell>2</cell><cell>TP53, PIK3CA</cell><cell>TP53, KRAS</cell></row><row><cell>3</cell><cell>TP53, PIK3CA, GATA3</cell><cell>TP53, KRAS, IDI2</cell></row><row><cell>4</cell><cell>TP53, PIK3CA, GATA3, CDH1</cell><cell>TP53, KRAS, FGFR2, PIGV</cell></row><row><cell>5</cell><cell>TP53, PIK3CA, GATA3, CDH1, CTCF</cell><cell>TP53, KRAS, IDI2, PIGV, BRAF</cell></row><row><cell>6</cell><cell>TP53, PIK3CA, GATA3, CDH1, CTCF, MACROD2</cell><cell>TP53, KRAS, IDI2, BRAF, LPA, EGFR</cell></row><row><cell>7</cell><cell>TP53, GATA3, CDH1, MACROD2, AKT1, MAP3K1, MAP2K4</cell><cell>TP53, KRAS, IDI2, BRAF, PIGV, EGFR, C4orf45</cell></row><row><cell>8</cell><cell>TP53, GATA3, CDH1, MACROD2, AKT1, MAP3K1, MAP2K4, PIK3R1</cell><cell>TP53, KRAS, FGFR2, C4orf45, EPHA3, PPID, ETFDH, FNIP2</cell></row><row><cell>9</cell><cell>TP53, GATA3, CDH1, MACROD2, AKT1, MAP3K1, MAP2K4, PIK3R1,</cell><cell>TP53, KRAS, FGFR2, PIGV, EGFR, C4orf45, EPHA3, PPID,</cell></row><row><cell></cell><cell>POLD4</cell><cell>FNIP2</cell></row><row><cell>10</cell><cell>TP53, GATA3, CDH1, MACROD2, AKT1, MAP3K1, MAP2K4, PIK3R1,</cell><cell>TP53, KRAS, IDI2, BRAF, LPA, C4orf45, EPHA3,PPID,</cell></row><row><cell></cell><cell>POLD4, ARID1A</cell><cell>ETFDH, FNIP2</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>TABLE 4</head><label>4</label><figDesc>BRCA and OV specific mutated driver gene sets relative to each other and q denote the p-values of the gene set in BRCA relative to OV (BRCA/OV) or vice versa (OV/BRCA), respectively. P represents the overall significance. Here the identified gene set is significant means that p and P are both less than 0.05, but q is larger than 0.05.</figDesc><table><row><cell>Type</cell><cell>K</cell><cell>Specific pathway</cell></row></table><note><p>p</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>TABLE 5</head><label>5</label><figDesc>LAML specific mutated driver gene sets relative to BRCA, HNSC, KIRC, LUSC, BLCA, GBM, LUAD, COADREAD, OV and UCEC • • • , q10 denote the p-values of the gene set in LAML, BRCA, HNSC, KIRC, LUSC, BLCA, GBM, LUAD, COADREAD, OV and UCEC, respectively. P represents the overall significance. For each K, p and P are less than 0.05, but q1, • • • , q10 are all larger than 0.05.</figDesc><table><row><cell cols="2">K Specific pathway</cell><cell>p</cell><cell>q1, • • • , q10</cell><cell>P</cell></row><row><cell>2</cell><cell>FLT3, IDH2</cell><cell>0.0150</cell><cell cols="2">1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0170</cell></row><row><cell></cell><cell></cell><cell></cell><cell>1.0000, 0.9520, 0.9890, 1.0000, 1.0000</cell></row><row><cell>3</cell><cell>FLT3, IDH2, NRAS</cell><cell cols="3">&lt; 0.0001 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0010</cell></row><row><cell></cell><cell></cell><cell></cell><cell>1.0000, 0.9220, 0.7220, 0.9960, 0.8160</cell></row><row><cell>4</cell><cell>FLT3, IDH2,</cell><cell>0.0020</cell><cell cols="2">1.0000, 1.0000, 1.0000, 1.0000, 0.9480, 0.0020</cell></row><row><cell></cell><cell>NRAS, IDH1</cell><cell></cell><cell>0.9340, 0.8970, 0.5450, 0.9960, 0.8450</cell></row><row><cell>6</cell><cell>FLT3, MLL, IGSF5,</cell><cell>0.0180</cell><cell cols="2">0.5110, 1.0000, 1.0000, 1.0000, 1.0000, 0.0140</cell></row><row><cell></cell><cell>RUNX1, NPM1, TP53</cell><cell></cell><cell>1.0000, 0.9920, 0.9830, 0.9840, 0.9640</cell></row><row><cell>7</cell><cell>FLT3, IDH2, IGSF5,</cell><cell>0.0430</cell><cell cols="2">0.4720, 0.9940, 0.9930, 1.0000, 0.9630, 0.0240</cell></row><row><cell></cell><cell>RUNX1, NPM1, TP53, TET2</cell><cell></cell><cell>1.0000, 0.9930, 0.9930, 0.9800, 0.9410</cell></row><row><cell>8</cell><cell>FLT3, IDH2, IGSF5, MLL,</cell><cell>0.0050</cell><cell cols="2">0.5020, 0.9950, 1.0000, 1.0000, 1.0000, 0.0050</cell></row><row><cell></cell><cell>RUNX1, NPM1, TP53, KIT</cell><cell></cell><cell>1.0000, 0.9630, 0.8860, 0.9640, 0.9870</cell></row><row><cell>9</cell><cell>FLT3, IDH2, IGSF5, MLL,</cell><cell>0.0130</cell><cell cols="2">0.4890, 0.9900, 0.9960, 1.0000, 0.9710, 0.0050</cell></row><row><cell></cell><cell>RUNX1, NPM1, TP53, KIT, TET2</cell><cell></cell><cell>1.0000, 0.9650, 1.0000, 0.9680, 0.9950</cell></row><row><cell cols="3">10 FLT3, IDH2, IGSF5, MLL, GNAQ, 0.0090</cell><cell cols="2">0.3820, 0.9780, 0.9980, 1.0000, 0.9750, 0.0030</cell></row><row><cell></cell><cell>RUNX1, NPM1, TP53, KIT, TET2</cell><cell></cell><cell>1.0000, 0.9790, 1.0000, 0.9740, 0.9880</cell></row><row><cell>p, q1,</cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head n="7">ACKNOWLEDGEMENTS</head><p>We would like to thank <rs type="person">Dr. Yong Wang</rs> from the <rs type="funder">Academy of Mathematics and Systems Science, CAS</rs> for his constructive comment.</p></div>
+<div><head n="8">FUNDING</head><p>This work was supported by the <rs type="funder">National Natural Science Foundation of China</rs> [No. <rs type="grantNumber">61379092</rs>, <rs type="grantNumber">61422309</rs>, <rs type="grantNumber">61621003</rs> and <rs type="grantNumber">11661141019</rs>]; the <rs type="programName">Strategic Priority Research Program</rs> of the <rs type="funder">Chinese Academy of Sciences (CAS)</rs> [<rs type="grantNumber">XDB13040600</rs>], the <rs type="programName">Outstanding Young Scientist Program</rs> of <rs type="funder">CAS, CAS Frontier Science Research Key Project for Top Young Scientist</rs> [No. <rs type="grantNumber">QYZDB-SSW-SYS008</rs>], and the <rs type="funder">Key Laboratory of Random Complex Structures and Data Science, CAS</rs> [No. <rs type="grantNumber">2008DP173182</rs>].</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_jsDaKf8">
+					<idno type="grant-number">61379092</idno>
+				</org>
+				<org type="funding" xml:id="_XVQWeuD">
+					<idno type="grant-number">61422309</idno>
+				</org>
+				<org type="funding" xml:id="_QrQaW2J">
+					<idno type="grant-number">61621003</idno>
+				</org>
+				<org type="funding" xml:id="_5aBNXZ8">
+					<idno type="grant-number">11661141019</idno>
+					<orgName type="program" subtype="full">Strategic Priority Research Program</orgName>
+				</org>
+				<org type="funding" xml:id="_H9gXZzK">
+					<idno type="grant-number">XDB13040600</idno>
+					<orgName type="program" subtype="full">Outstanding Young Scientist Program</orgName>
+				</org>
+				<org type="funding" xml:id="_BGSSN7Z">
+					<idno type="grant-number">QYZDB-SSW-SYS008</idno>
+				</org>
+				<org type="funding" xml:id="_mx5B8yZ">
+					<idno type="grant-number">2008DP173182</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">SUPPLEMENTARY DATA</head><p>Supplementary Data are available at NAR Online.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Comprehensive genomic characterization defines human glioblastoma genes and core pathways</title>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">455</biblScope>
+			<biblScope unit="page" from="1061" to="1068" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">International network of cancer genome projects</title>
+		<author>
+			<orgName type="collaboration">International Cancer Genome Consortium.</orgName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">464</biblScope>
+			<biblScope unit="page" from="993" to="998" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Caponigro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Stransky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Margolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lehár</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Kryukov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sonkin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">483</biblScope>
+			<biblScope unit="page" from="603" to="607" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Discovery of multi-dimensional modules by integrative analysis of cancer genomic data</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">W</forename><surname>Laird</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">J</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="9379" to="9391" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Patterns of somatic mutation in human cancer genomes</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Greenman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Stephens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Dalgliesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hunter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bignell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Teague</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stevens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">446</biblScope>
+			<biblScope unit="page" from="153" to="158" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The cancer genome</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Stratton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Futreal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">458</biblScope>
+			<biblScope unit="page" from="719" to="724" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Assessing the significance of chromosomal aberrations in cancer: methodology and application to glioma</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beroukhim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Nghiemphu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Barretina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hsueh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Linhart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Vivanco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Alexander</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. Natl. Acad. Sci</title>
+		<meeting>Natl. Acad. Sci</meeting>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="page" from="20007" to="20012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Cancer genes and the pathways they control</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Med</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="789" to="799" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Somatic mutations affect key pathways in lung adenocarcinoma</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Getz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Wheeler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Mardis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Mclellan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cibulskis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sougnez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Greulich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Muzny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Morgan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">455</biblScope>
+			<biblScope unit="page" from="1069" to="1075" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Core signaling pathways in human pancreatic cancers revealed by global genomic analyses</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Parsons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C H</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Leary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Angenendt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mankoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kamiyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jimeno</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">321</biblScope>
+			<biblScope unit="page" from="1801" to="1806" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Mutual exclusivity analysis identifies oncogenic network modules</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ciriello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cerami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Schultz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="398" to="406" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Patient-oriented gene set analysis for cancer mutation data</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Boca</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W</forename><surname>Kinzler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">E</forename><surname>Velculescu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Vogelstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Parmigiani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="page" from="11" to="R112" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Detecting cancer gene networks characterized by recurrent genomic alterations in a population</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Efroni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ben-Hamo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Edmonson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Greenblum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Schaefer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Buetow</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="page" from="6" to="e14437" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The hallmarks of cancer</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="57" to="70" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Hallmarks of cancer: the next generation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hanahan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Weinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="646" to="674" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Combinatorial patterns of somatic gene mutations in cancer</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Yeang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mccormick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Levine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">FASEB J</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="2605" to="2622" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The discovery of mutated driver pathways in cancer: models and algorithms</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TCBB.2016.2640963</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE/ACM Trans Comput Biol Bioinform</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">De novo discovery of mutated driver pathways in cancer</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vandin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Upfal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Raphael</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Res</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="375" to="385" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Efficient methods for identifying mutated driver pathways in cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="2940" to="2947" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Identification of mutated core cancer modules by integrating somatic mutation, copy number variation, and gene expression data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Syst. Biol</title>
+		<imprint>
+			<biblScope unit="page" from="7" to="S11" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Discovering functional modules by identifying recurrent and mutually exclusive mutational patterns in tumors</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Settle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">P</forename><surname>Sulman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Aldape</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Milosavljevic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Med. Genomics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">34</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A map of human cancer signaling</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jaramillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>O'connor-Mccourt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Syst. Biol</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">152</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Identification of networks of co-occurring, tumor-related DNA copy number changes using a genome-wide scoring approach</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Klijn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Reinders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wessels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jonkers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput. Biol</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">1000631</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Simultaneous identification of multiple driver pathways in cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D M</forename><surname>Leiserson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Blokh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sharan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Raphael</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput. Biol</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">1003054</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Discovery of cooccurring driver pathways in cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">271</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">An information theoretic method to identify combinations of genomic alterations that promote glioblastoma</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Melamed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Iavarone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rabadan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Mol. Cell Biol</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="203" to="213" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">A modelling approach to explain mutually exclusive and co-occurring genetic alterations in bladder tumorigenesis</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Remy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rebouissou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chaouiya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zinovyev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Radvanyi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Calzone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="4042" to="4052" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Mutational landscape and significance across 12 major cancer types</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kandoth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Mclellan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vandin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Mcmichael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Wyczalkowski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">502</biblScope>
+			<biblScope unit="page" from="333" to="339" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">The Cancer Genome Atlas Pan-Cancer analysis project</title>
+		<author>
+			<persName><forename type="first">The</forename><surname>Cancer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Genome Atlas Research</forename><surname>Network</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="1113" to="1120" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Emerging landscape of oncogenic signatures across human cancers</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ciriello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Aksoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Senbabaoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Schultz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sander</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="1127" to="1133" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Toward a systematic understanding of cancers: a survey of the pan-cancer study</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Genet</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">194</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Network-based stratification of tumor mutations</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hofree</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ideker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="1108" to="1115" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Tumor characterization and stratification by integrated molecular profiles reveals essential pan-cancer features</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Genomics</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">503</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Pan-cancer network analysis identifies combinations of rare somatic mutations across pathways and protein complexes</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D M</forename><surname>Leiserson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Vandin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">T</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Dobson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Eldridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Papoutsaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mclellan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Genet</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="106" to="114" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">MEMCover: Integrated analysis of mutual exclusivity and functional network reveals dysregulated pathways across multiple cancer types</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">A</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">Y</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Przytycka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="284" to="292" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Modeling mutual exclusivity of cancer mutations</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Szczurek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Beerenwinkel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS Comput. Biol</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">1003503</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Comparative serum proteome analysis of human lymph node negative/positive invasive ductal carcinoma of the breast and benign breast disease controls via label-free semiquantitative shotgun technology</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">X</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">OMICS</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="291" to="300" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Identification of differentially expressed genes using an annealing control primer system in stage III serous ovarian carcinoma</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Hwan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Bae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">A</forename><surname>Shick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Cancer</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">576</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Roles of LPA receptor signaling in breast cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Rev. Mol. Diagn</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="1103" to="1111" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">FGFR2 risk SNPs confer breast cancer risk by augmenting oestrogen responsiveness</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Castro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>De Santiago</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Fletcher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Halim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Prathalingam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Ponder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">B</forename><surname>Meyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Carcinogenesis</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="page" from="741" to="750" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Lysophosphatidic acid signaling in ovarian cancer</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jesionowska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cecerska-Heryc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Matoszka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Dolegowska</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Recept. Signal Transduct. Res</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="578" to="584" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Inhibition of FGFR2 and FGFR1 increases cisplatin sensitivity in ovarian cancer</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Backen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Clamp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Rushton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dive</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hodgkinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mcvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kitchener</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">C</forename><surname>Jayson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Biol. Ther</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="495" to="504" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">ErbB-2 nuclear function in breast cancer growth, metastasis, and resistance to therapy</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Elizalde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">I</forename><surname>Cordo Russo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Chervo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Schillaci</surname></persName>
+		</author>
+		<idno>pii: ERC-16-0360</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Endocr. Relat. Cancer</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A review of HER2-targeted therapy in breast and ovarian cancer: lessons from antiquity -CLEOPATRA and PENELOPE</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hodeib</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Serna-Gallegos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>Tewari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Future Oncol</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="3113" to="3131" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Systematic and integrative analysis of large gene lists using DAVID Bioinformatics Resources</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Sherman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Lempicki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Protoc</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="44" to="57" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Caspase 8 expression may determine the survival of women with ovarian cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hernandez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Annunziata</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell Death Dis</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<date type="published" when="2016">2016. 2045</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Novel polymorphisms in caspase-8 are associated with breast cancer risk in the California Teachers Study</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ziogas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Desai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bessonova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Garner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Neuhausen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Cancer</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">14</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">New insights into the regulation of innate immunity by caspase-8</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Sagulenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">E</forename><surname>Lawlor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Vince</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arthritis Res. Ther</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">4</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Radiation driven epithelialmesenchymal transition is mediated by Notch signaling in breast cancer</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kaushik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Suh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Yoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">G</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<idno type="DOI">10.18632/oncotarget.10802</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+	<note>Epub ahead of print</note>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Notch2 activation is protective against anticancer effects of zerumbone in human breast cancercells</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sehrawat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sakao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">V</forename><surname>Singh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Breast Cancer Res. Treat</title>
+		<imprint>
+			<biblScope unit="volume">146</biblScope>
+			<biblScope unit="page" from="543" to="555" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Phase I trial of sorafenib in combination with interferon-alpha in Japanese patients with unresectable or metastatic renal cell carcinoma</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Niwakawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hashine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Yamaguchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fujii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hamamoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Fukino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tanigawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sumiyoshi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Invest. New Drugs</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="1046" to="1054" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Transcription coactivator p300 binds PCNA and may have a role in DNA repair synthesis</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">O</forename><surname>Hassa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Imhof</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">O</forename><surname>Hottiger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">410</biblScope>
+			<biblScope unit="page" from="387" to="391" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subedee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bloushtain-Qimron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Savova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Krzystanek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Marusyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Tabassum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Flacker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Somatic Cell Fusions Reveal Extensive Heterogeneity in Basal-like Breast Cancer. Cell Rep</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="1549" to="1563" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Clinicopathological significance and potential drug target of CDH1 in breast cancer: a metaanalysis and literature review</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Drug Des. Devel. Ther</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="5277" to="5285" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">CTCF negatively regulates HOXA10 expression in breast cancer cells</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mustafa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochem. Biophys. Res. Commun</title>
+		<imprint>
+			<biblScope unit="volume">467</biblScope>
+			<biblScope unit="page" from="828" to="834" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Regulation of ErbB2 localization and function in breast cancer cells by ERM proteins</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Asp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kvalvaag</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sandvig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pust</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oncotarget</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="25443" to="25460" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Amplification of WHSC1L1 regulates expression and estrogen-independent activation of ER in SUM-44 breast cancer cells and is associated with ER over-expression in breast cancer</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Irish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Mills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Turner-Ivey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">T</forename><surname>Guest</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rutkovsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dombkowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Kappler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hardiman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Ethier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Oncol</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="850" to="865" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">The role of GATA3 in breast carcinomas: a review</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Asch-Kendrick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cimino-Mathews</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Hum. Pathol</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="37" to="47" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Acute Myeloid Leukemia</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Döhner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Weisdorf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Bloomfield</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">N. Engl. J. Med</title>
+		<imprint>
+			<biblScope unit="volume">373</biblScope>
+			<biblScope unit="page" from="1136" to="1152" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">The impact of FLT3 internal tandem duplication mutant level, number, size, and interaction with NPM1 mutations in a large cohort of young adult patients with acute myeloid leukemia</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Gale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Green</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Allen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Mead</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Burnett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Linch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Blood</title>
+		<imprint>
+			<biblScope unit="volume">111</biblScope>
+			<biblScope unit="page" from="2776" to="2784" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+	<note>Medical Research Council Adult Leukaemia Working Party</note>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Prognostic impact of combined NPM1+/FLT3-genotype in patients with acute myeloid leukemia with intermediate risk cytogenetics stratified by age and treatment modalities</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hefazi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Siddiqui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Patnaik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wolanskyj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Alkhateeb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zblewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elliott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Hogan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Litzow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Al-Kali</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Leuk. Res</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="1207" to="1213" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Molecular subtypes of NPM1 mutations have different clinical profiles, specific patterns of accompanying molecular mutations and varying outcomes in intermediate risk acute myeloid leukemia</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Alpermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schnittger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Eder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Dicker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meggendorfer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Kern</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Schmid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Aul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Staib</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Wendtner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Haematologica</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="page" from="55" to="58" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Prognostic significance of NPM1 mutation-modulated microRNA-mRNA regulation in acute myeloid leukemia</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Chiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Tsai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">C</forename><surname>Chou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Y</forename><surname>Kuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">A</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">F</forename><surname>Tien</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Leukemia</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="274" to="284" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Comprehensive genetic landscape of uveal melanoma by whole-genome sequencing</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Royer-Bertrand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Torsello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rimoldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>El Zaoui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cisarova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pescini-Gobert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Raynaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zografos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schalenbourg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Speiser</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ajhg.2016.09.008</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Am. J. Hum. Genet</title>
+		<imprint>
+			<biblScope unit="issue">16</biblScope>
+			<biblScope unit="page" from="30388" to="30391" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">GNAQ and GNA11 mutations occur in 9.5% of mucosal melanoma and are associated with poor prognosis</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Sheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Si</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Lian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Eur. J. Cancer</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="page" from="156" to="163" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Parallel targeted next generation sequencing of childhood and adult acute myeloid leukemia patients reveals uniform genomic profile of the disease</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Marjanovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kostic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Stanic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Pejanovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Lucic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Karan-Djurasevic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Janic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dokmanovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jankovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">S</forename><surname>Vukovic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Tumour Biol</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+	<note>Epub ahead of print</note>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Genomic and epigenomic landscapes of adult de novo acute myeloid leukemia</title>
+	</analytic>
+	<monogr>
+		<title level="j">N. Engl. J. Med</title>
+		<imprint>
+			<biblScope unit="volume">368</biblScope>
+			<biblScope unit="page" from="2059" to="2074" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">VIRTUAL SCREENING AND LEAD OPTIMIZATION TO IDENTIFY NOVEL INHIBITORS FOR HDAC-8</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Maria</forename><surname>Antony</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Health and Life Sciences</orgName>
+								<orgName type="institution">Edinburgh Napier University</orgName>
+								<address>
+									<postCode>-EH10 5DT</postCode>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Dhivyan</forename><surname>Je</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Health and Life Sciences</orgName>
+								<orgName type="institution">Edinburgh Napier University</orgName>
+								<address>
+									<postCode>-EH10 5DT</postCode>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Anoop</forename><surname>Mn</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Health and Life Sciences</orgName>
+								<orgName type="institution">Edinburgh Napier University</orgName>
+								<address>
+									<postCode>-EH10 5DT</postCode>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">VIRTUAL SCREENING AND LEAD OPTIMIZATION TO IDENTIFY NOVEL INHIBITORS FOR HDAC-8</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">D87F4451F3495AD33DDF7C296C30A47D</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-09-28T13:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Histone deacetylase (HDAC) and Histone acetyl-transferase (HAT) are enzymes that influence transcription by selectively deacetylating or acetylating the ε-amino groups of lysine located near the amino termini of core histone proteins. Over expression of HDACs noted in many forms of cancers including leukemia and breast cancer. HDAC inhibitors have been shown to be potent inducers of growth arrest, differentiation, and/or apoptotic cell death. There is a growing interest in the development of histone deacetylase inhibitors as anti cancer agents. Three known ligands of HDAC-8 were taken and docked. The best scores were analyzed and structures similar to these ligands were downloaded using c@rol and corina databases and docked. Also large databases of small molecules were computationally screened using molecular docking for "hits" that can conformationally and chemically fit to the active site.</p><p>Molecules which got high scores for both GoldScore and ChemScore were selected and compared with the previous results. Those with best results were then taken for calculating H-bond interactions and close contacts. Bioactivity prediction of the best ranked ligands was done. Their physicochemical properties were also analyzed. Four new molecules were identified and suggested for further testing in the wet lab.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Bioinformatics involve the use of techniques including applied mathematics, informatics, statistics, computer science, artificial intelligence, chemistry, and biochemistry to solve biological problems usually on the molecular level. Major research efforts in the field include sequence alignment, gene finding, genome assembly, protein structure alignment, protein structure prediction, prediction of gene expression and protein-protein interactions, and the modeling of evolution.</p><p>Bioinformatics can influence significantly in solving the following types of problems:</p><p>1.</p><p>Prediction of 3-D structure based on linear genomic information, i.e., the study of structural genomics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.</head><p>Gene expression analysis, prediction of gene function and establishment of gene libraries (functional genomics).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.</head><p>The ability to use genome sequence to identify proteins and their functions, protein interactions, modifications and functions, i.e., the field of proteomics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.</head><p>Simulating metabolism from the biochemical functions of an organism.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.</head><p>Molecular modeling and molecular dynamics are the methods to predict structure from experimental data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.</head><p>Data obtained from functional genomics and proteomics could be used in drug designing and discovery.</p><p>With the near completion of the human genome sequencing, bioinformatics has established itself as an essential tool in target discovery and the insilico analysis of gene expression and gene function are now an integral part of it, facilitating the selection of the most relevant targets for a disease under study.</p><p>A bulk of techniques, both old and new, has recently matured into potent weapons in the war against disease. The need for ongoing development of new drugs needs no emphasis in the light of the current global situation of health and disease Drug discovery research relies heavily on bioinformatics to manage the databases of small molecules that are potential lead compounds, to search databases of protein structures for structure-based drug design methods, and to model the docking of compounds and their target proteins.</p><p>The need for ongoing development of new drugs needs to emphasis in light of the current global situation of health and disease. Traditionally, the process of drug development has revolved around a screening approach, as nobody knows which compound or approach could serve as a drug or therapy. Such almost blind screening approach is very time-consuming and laborious. The short coming of traditional drug discovery; as well as the allure of a more deterministic approach to combating disease has led to the concept of "Rational drug design"(Kuntz 1992).</p><p>Nobody could design a drug before knowing more about the disease or infectious process than past. For "rational" design, the first necessary step is the identification of a molecular target critical to a disease process or an infectious pathogen. Then the important prerequisite of "drug design" is the determination of the molecular structure of target, which makes sense of the word "rational". In fact, the validity of "rational" or "structure-based" drug discovery rests largely on a high-resolution target structure of sufficient molecule detail to allow selectivity in the screening of compounds.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">COMPUTER-AIDED DRUG DESIGN (CADD)</head><p>Computer-aided drug design (CADD), is also called computer-aided molecular design (CAMD), represents more recent applications of computer as tools in the drug design process. This field includes computer graphics, 3-D model of molecules (Molecular Modeling), protein structure prediction and analysis, molecular motion (Molecular dynamic simulation), molecular shape(conformational analysis), molecular property prediction, quantitative structure/property relationships (QSAR/QSPR), database search, quantum chemistry(for predicting structure properties and reactivity), computer assisted synthesis, protein/drug "docking" etc. the techniques provided by computational methods include computer graphics for visualization and the methodology of theoretical chemistry.</p><p>The development of new drugs with potential therapeutic applications is one of the most complex and difficult process in the pharmaceutical industry. Millions of dollars and man-hours are devoted to the discovery of new therapeutic agents. As, the activity of a drug is the result of a multitude of factors; rational drug design has been utopias for centuries. Computers have magnified the capability of scientists to collect, access, and analyze information, and even do "virtual" experiments. Recently</p><p>Computer-based drug design (CADD) has caused a "quiet explosion" in modern drug discovery. CADD can guide and assist the design of new therapeutic agents with desired properties by means of molecular modeling, theoretical calculation and prediction methods. The aim of using the computer for drug design is to analyze the interactions between the drug and its receptor site and to "design" molecules that give an optimal fit. The central assumption is that a good fit results from structural and chemical complementarities to the target receptor.</p><p>The steps involved are:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.1">TARGET IDENTIFICATION</head><p>This step aims to identify a biological drug target. This is typically a receptor, enzyme or ion channel that needs to be manipulated to prevent the development of a disease or alleviate symptoms. Drug usually act on either cellular or genetic chemicals in the body, known as targets, which are believed to be associated with disease. Scientists use a variety of techniques to identify and isolate a target and learn more about its functions and how these influence disease. Compounds are then identified that have various interactions with drug targets helpful in treatment of a specific disease. Thus, we concentrate our efforts on discovering or even inventing compounds that can alter the disease-causing mechanism, whether a single protein or a complex pathway of proteins, to bring it back into line with normal function.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.2">TARGET VALIDATION</head><p>To select targets most likely to be useful in the development of new treatments for disease, researchers analyze and compare each drug target to others based on their association with a specific disease and their ability to regulate biological and chemical compounds in the body. Tests are conducted to confirm that interactions with the drug target are associated with a desired change in the behavior of diseased cells.</p><p>Research scientists can then identify compounds that have an effect on the target selected.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.3">LEAD IDENTIFICATION</head><p>A lead compound or substance is one that believed to have potential to treat disease.</p><p>Laboratory scientists can compare known substance with new compounds to determine their likelihood of success. Leads are sometimes developed as collections, or libraries, of individual molecules that possess properties needed in a new drug.</p><p>The most important source of leads is "libraries" of molecule (e.g.) natural product libraries, peptide libraries, carbohydrates libraries, etc. "Virtual libraries" can be created by using combinatorial chemistry. Testing is then done on each of these molecules to confirm its effect on the drug target.</p><p>Some of the technologies used in the lead identification are:</p><p>1. Virtual screening 2. High throughput docking</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.3.1">VIRTUAL SCREENING</head><p>The dominant technique for the identification of new lead compounds in drug discovery is the physical screening of large libraries of chemicals against a biological target (high throughput screening). Virtual screening is an alternative approach is to computationally screen large libraries of chemicals for compounds that complement targets of known structure, and experimentally test those that are predicted to bind well. It access a large number of possible new ligands which can be purchased and tested. Virtual screening, or insilico screening, is a new approach attracting increasing levels of interest in the pharmaceutical industry as a productive and cost-effective technology in the search for novel lead compounds. Although the principles involvedthe computational analysis of chemical databases to identify compounds appropriate for a given biological receptor-have been pursued for several years in molecular modeling groups, the availability of inexpensive high-performance computing platforms has transformed the process so that increasingly complex and more accurate analyses can be performed on very detailed and relevant basis for prioritizing compounds for biological screening. Virtual screening offers a practical route to discovering new reagents and lead for pharmaceutical research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.3.2">HIGH THROUGHPUT DOCKING:</head><p>Docking is research technique for predicting whether one molecule will bind to another, usually a protein. Docking is a term used for computational schemes that attempt to find the best matching between two molecules: receptor and a ligand. If the geometry of the pair is complimentary and involves favorable biochemical interactions, the ligand will potentially bind the protein (receptor).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.4">LEAD OPTIMIZATION:</head><p>Lead optimization compares the properties of various lead compounds and provides information to select the compound or compounds with the greatest potential to be developed into safe and effective medicines. The candidate drugs with better therapeutic profiles are accessed for quality, taking into account factors such as the ease of synthesis and formulation. After this they are registered as an investigational new drug and submitted for clinical drug.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.5">TESTING OF THE ACTIVE COMPOUND (PRE-CLINICAL PHASE)</head><p>After optimizing the active compound, testing in the preclinical phase lab and animal testing is used to verify whether it is principally suited for use in the human body. To determine this, the researchers examine among other things how the compound is absorbed by the body, how it is excreted, and how it affects the organs.</p><p>In addition, they examine whether and in concentration it has a toxic or effect on the genetic makeup.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.6">CLINICAL TRIALS</head><p>If the active compound proves successful and also fulfils the legal requirements, it is then directly tested on human beings in three clinical phases:</p><p>Phase 1: Compatibility in health test subjects Phase 2: Determination of optimal doses Phase 3: Proof of effectiveness.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.7">APPROVAL PROCESS</head><p>If the medicine has made its way through all of the preceding phases, the process of getting approval from the authorities begins. The drug cannot be marketed until approval has been obtained.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Target identification</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>↓</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Target validation</head><p>Lead identification</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Lead optimization</head><p>Clinical trials</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">DRUG</head><p>Drug is defined as "a chemical substance used in the treatment, cure, prevention, or diagnosis of disease or used to otherwise enhance physical or mental well-being.</p><p>Drugs may be prescribed for a limited duration, or on a regular basis for chronic disorders.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3">TARGET</head><p>A drug target is a key molecule involved in a particular metabolic or signaling pathway that is specific to a disease condition or pathology, or to the infectivity or survival of a microbial pathogen. Drugs are used to stop the functioning of the pathway in the diseased state by causing a key molecule to stop functioning. Drugs may be designed that bind to the active region and inhibit this key molecule.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.4">LIGAND</head><p>A ligand is a molecule that is able to bind and form a complex with a biomolecule to serve a biological purpose. It is an effector molecule binding to a site on a target protein, by intermolecular forces such as ionic bonds, hydrogen bonds and Van der Waal forces. The docking (association) is usually reversible (dissociation). Actual irreversible covalent binding between a ligand and its target molecule is rare in biological systems.. Ligand binding to receptors alters the chemical conformation, i.e.</p><p>the three dimensional shape of the receptor protein. The conformational state of a receptor protein determines the functional state of a receptor. The tendency or strength of binding is called affinity. Ligands include substrates, inhibitors, activators, and neurotransmitters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.5">IC50</head><p>The IC 50 is a measure of drug effectiveness. It indicates how much of a particular drug or other substance (inhibitor) is needed to inhibit a given biological process by half. In other words, it is the half maximal (50%) inhibitory concentration (IC) of a substance (50% IC, or IC 50 ). It is commonly used as a measure of antagonist drug potency in pharmacological research. IC 50 represents the concentration of a drug that is required for 50% inhibition in vitro.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6">DOCKING</head><p>Docking is the process by which two molecules fit together in 3D space. Docking is a method which predicts the preferred orientation of one molecule to a second when bound to each other to form a stable complex. Docking is frequently used to predict the binding orientation of small molecule drug candidates to their protein targets in order to in turn predict the affinity and activity of the small molecule. Hence docking plays an important role in the rational design of drugs. Molecular docking may be defined as an optimization problem, which would describe the "best-fit" orientation of a ligand that binds to a particular protein of interest.</p><p>The focus of molecular docking is to computationally stimulate the molecular recognition process. The aim of molecular docking is to achieve an optimized conformation for both the protein and ligand and relative orientation between protein and ligand such that the free energy of the overall system is minimized.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6.1">APPROACHES TO MOLECULAR DOCKING</head><p>Two approaches are particularly popular within the molecular docking community.</p><p>One approach uses a matching technique that describes the protein and the ligand as complementary surfaces. The second approach simulates the actual docking process in which the ligand-protein pair wise interaction energies are calculated. Both approaches have significant advantages as well as some limitations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6.1.1">SHAPE COMPLEMENTARITY METHODS</head><p>Geometric matching/ shape compelementarity methods describe the protein and ligand as a set of features that make them dockable. These features may include molecular surface/ complementary surface descriptors. In this case, the receptor's molecular surface is described in terms of its solvent-accessible surface area and the ligand's molecular surface is described in terms of its matching surface description.</p><p>The complementarity between the two surfaces amounts to the shape matching description that may help finding the complementary pose of docking the target and the ligand molecules. Another approach is to describe the hydrophobic features of the protein using turns in the main-chain atoms. Yet another approach is to use a Fourier shape descriptor technique described in <ref type="bibr">[ref]</ref>. Whereas the shape complementarity based approaches are typically fast and robust, they cannot usually model the movements or dynamic changes in the ligand/ protein conformations accurately, although recent developments allow these methods to investigate ligand flexibility.</p><p>Shape complementarity methods can quickly scan through several thousand ligands in a matter of seconds and actually figure out whether they can bind at the protein's active site, and are usually scalable to even protein-protein interactions. They are also much more amenable to pharmacophore based approaches, since they use geometric descriptions of the ligands to find optimal binding.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6.1.2">SIMULATION PROCESSES</head><p>The simulation of the docking process as such is a much more complicated process.</p><p>In this approach, the protein and the ligand are separated by some physical distance, and the ligand finds its position into the protein's active site after a certain number of "moves" in its conformational space. The moves incorporate rigid body transformations such as translations and rotations, as well as internal changes to the ligand's structure including torsion angle rotations. Each of these moves in the conformation space of the ligand induces a total energetic cost of the system, and hence after every move the total energy of the system is calculated. The obvious advantage of the method is that it is more amenable to incorporating ligand flexibility into its modeling whereas shape complementarity techniques have to use some ingenious methods to incorporate flexibility in ligands. Another advantage is that the process is physically closer to what happens in reality, when the protein and ligand approach each other after molecular recognition. A clear disadvantage of this technique is that it takes longer time to evaluate the optimal pose of binding since they have to explore a rather large energy landscape. However grid-based techniques as well as fast optimization methods have significantly ameliorated these problems.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6.2">THE MECHANICS OF DOCKING</head><p>To perform a docking screen, the first requirement is a structure of the protein of interest. Usually the structure has been determined using a biophysical technique such as x-ray crystallography, or less often, NMR spectroscopy. This protein structure and a database of potential ligands serve as inputs to a docking program. The success of a docking program depends on two components: the search algorithm and the scoring function.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Ligand database Target Protein</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Molecular docking</head><p>Ligand docked into protein's active site</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.6.3">APPLICATIONS OF DOCKING</head><p>A binding interaction between a small molecule ligand and an enzyme protein may result in activation or inhibition of the enzyme. If the protein is a receptor, ligand binding may result in agonism or antagonism. Docking is most commonly used in the field of drug design-most drugs are small organic molecules, and docking may be applied to:</p><p>• Hit identification -docking combined with a scoring function can be used to quickly screen large databases of potential drugs insilico to identify molecules that are likely to bind to protein target of interest (see virtual screening).</p><p>• Lead optimization -docking can be used to predict in where and in which relative orientation a ligand binds to a protein (also referred to as the binding mode or pose). This information may in turn be used to design more potent and selective analogs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.7">REVERSE DOCKING</head><p>Ligand-protein docking has been developed and used in facilitating new drug discoveries. In this approach, docking single or multiple small molecules to a receptor site is attempted to find putative ligands. A number of studies have shown that docking algorithms are capable of finding ligands and binding conformations at a receptor site close to experimentally determined structures. These algorithms are expected to be equally applicable to the identification of multiple proteins to which a small molecule can bind or weakly bind. We introduce a ligand-protein inversedocking approach for finding potential protein targets of a small molecule by the computer-automated docking search of a protein cavity database. This database is developed from protein structures in the Protein Data Bank (PDB). Docking is conducted with a procedure involving multiple-conformer shape-matching alignment of a molecule to a cavity followed by molecular-mechanics torsion optimization and energy minimization on both the molecule and the protein residues at the binding region. Scoring is conducted by the evaluation of molecular-mechanics energy and, when applicable, by the further analysis of binding competitiveness against other ligands that bind to the same receptor site in at least one PDB entry. The application of this approach may facilitate the prediction of unknown and secondary therapeutic target proteins and those related to the side effects and toxicity of a drug or drug candidate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.8">THE SEARCH ALGORITHM</head><p>The search space consists of all possible orientations and conformations of the • Use a genetic algorithm to "evolve" new poses that are successively more and more likely to represent favorable binding interactions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.9">THE SCORING FUNCTION</head><p>The scoring function takes a pose as input and returns a number indicating the likelihood that the pose represents a favorable binding interaction.</p><p>Most scoring functions are physics-based molecular mechanics force fields that estimate the energy of the pose; a low (negative) energy indicates a stable system and thus a likely binding interaction. An alternative approach is to derive a statistical potential for interactions from a large database of protein-ligand complexes, such as the Protein Data Bank, and evaluate the fit of the pose according to this inferred potential.</p><p>There are a lot of structures from X-ray diffraction for complexes between proteins and high affinity ligands, but very few for low affinity ligands as these do not stay bound for long enough to be seen. Scoring functions trained with this data can dock high affinity ligands correctly, but they will also give plausible docked conformations for ligands that really are inactive. This gives a large number of false positive hits, i.e., ligands predicted to bind to the proteins that actually don't when placed together in a test tube.</p><p>One way to reduce the number of false positives is to recalculate the energy of the top-hit poses using a higher resolution (and therefore slow) technique like Generalized Born or Poisson-Boltzmann methods. However, typically the researcher will screen a database of tens to hundreds of thousands of compounds and test the top 60 or so in vitro, and to identify any true binders is still considered a success.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.10">G-BIND:</head><p>It represents the free energy of binding, Gbind. The G-bind value has to be low for a structure to be stable. ΔΔG = -RTlnK. Binding (free) energy refers to that change in (free) energy for the following reaction:</p><p>Protein (in water) + ligand (in water) ----&gt; protein-ligand complex (in water)</p><p>One factor that can strongly influence predicted free energy of binding is the ionization state of functional groups on the ligands and at the binding site at which calculations are performed. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.13">LOGS</head><p>The aqueous solubility of a compound is denoted as logs. It significantly affects its absorption and distribution characteristics. Typically, a low solubility goes along with a bad absorption and therefore the general aim is to avoid poorly soluble compounds.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.14">pKd:</head><p>The binding constant, pKd, is the negative logarithm of the inhibition constant Ki.</p><p>The inhibitor constant, Ki, is an indication of how potent an inhibitor is; it is the </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.16">DRUGLIKENESS</head><p>Druglikeness may be defined as a complex balance of various molecular properties and structure features which determine whether particular molecule is similar to the known drugs. These properties, mainly hydrophobicity, electronic distribution, hydrogen bonding characteristics, molecule size and flexibility and presence of various pharmacophoric features influence the behavior of molecule in a living organism, including bioavailability, transport properties, affinity to proteins, reactivity, toxicity, metabolic stability and many others.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.17">LIPINSKI'S RULE</head><p>Lipinski's Rule of Five is a rule of thumb to evaluate druglikeness. The rule states, that most "drug-like" molecules have logP &lt;= 5, molecular weight &lt;= 500, number of hydrogen bond acceptors &lt;= 10, and number of hydrogen bond donors &lt;= 5.</p><p>Molecules violating more than one of these rules may have problems with bioavailability. The rule is called "Rule of 5", because the border values are 5, 500, 2*5, and 5. The rule was formulated by Christopher A. Lipinski in 1997, based on the observation that most medication drugs are relatively small and lipophilic molecules.</p><p>The rule describes molecular properties important for a drug's pharmacokinetics in the human body, including their absorption, distribution, metabolism, and excretion ("ADME"). However, the rule does not predict if a compound is pharmacologically active. The modification of the molecular structure often leads to drugs with higher molecular weight, more rings, more rotatable bonds, and a higher lipophilicity  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.18.1">Classes of HDACs in higher eukaryotes</head><p>HDACs are classified in four classes depending on sequence identity and domain organization. By promoting the expression of apoptosis-related genes, it may lead to cancerous cells surviving at lower rates, thus slowing the progression of cancer. Trichostatin A is harmful by inhalation, in contact with skin and if swallowed irritating to eyes, respiratory system and skin. Trichostatin A may cause sensitization by skin contact.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.18.3">SUBEROYLANILIDE HYDROXAMIC ACID (SAHA)</head><p>Suberoylanilide hydroxamic acid (SAHA) is a novel histone deacetylase inhibitor with high potency in inducing differentiation of cultured murine erythroleukemia cells.</p><p>SAHA induces cell cycle arrest and apoptosis in human breast cancer cells. SAHA reduces glioma progression in the organotypic brain environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.18.4">SCRIPTAID</head><p>A novel histone deacetylase inhibitor, Scriptaid, enhances expression of functional estrogen receptor α (ER) in ER negative human breast cancer cells in combination with 5-aza 2′-deoxycytidine. The use of scriptaid resulted in a &gt;100-fold increase in histone acetylation (Fig. <ref type="figure" target="#fig_10">4</ref>) in cultured cells, which confirmed scriptaid as a HDAC inhibitor.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.18.5">OXAMFLATIN</head><p>Oxamflatin is a novel antitumor compound that inhibits mammalian histone deacetylase. Oxamflatin caused an elongated cell shape with filamentous protrusions as well as arrest of the cell cycle at the G1 phase in HeLa cells. These phenotypic changes of HeLa cells were apparently similar to those by trichostatin A (TSA), a specific inhibitor of histone deacetylase (HDAC). Oxamflatin, like TSA, inhibited intracellular HDAC activity, as a result of which marked amounts of acetylated histone </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AIM AND SCOPE</head><p>To identify novel potential ligands for HDAC-8 from a set of virtually screened molecules.</p><p>To calculate the drug likeness and IC50 of the novel potential ligands.</p><p>To optimize the novel potential ligands.</p><p>HDAC inhibitors have been shown to be potent inducers of growth arrest, differentiation, and/or apoptotic cell death. HDAC inhibitors also represent a relatively new group of targeted anticancer compounds, which are showing significant promise as agents with activity against a broad spectrum of neoplasms, at doses that are well tolerated by cancer patients. A number of small molecule inhibitors of HDAC, such as naturally occurring Trichostatin A (TSA), as well as synthetic compounds such as Suberoylanilide hydroxamic acid (SAHA), Scriptaid, Oxamflatin etc have been reported to induce differentiation of several cancer cell lines and suppress cell proliferation. But most of the inhibitors developed till date, including TSA and SAHA are derivatives of hydroxamic acid and are associated with poor pharmacokinetics and severe toxicity. They do not discriminate well among HDAC isozymes. Thus, there is a considerable interest in developing new non-hydroxamate HDAC inhibitors with few side effects. MATERIALS AND METHODS MATERIALS 3.1 PROTEIN DATA BANK (<ref type="url" target="http://www.rcsb.org">http://www.rcsb.org</ref>) The Protein Data Bank (PDB) is a repository for 3-D structural data of proteins and nucleic acids. These data typically obtained by X-ray crystallography or NMR spectroscopy and submitted by biologists and biochemists from around the world, are released into the public domain, and can be accessed for free. The database contained 39,051 released atomic coordinate entries (or "structures"), 35,767 of that proteins, the rest being nucleic acids, nucleic acid-protein complexes, and a few other molecules. About 5,000 new structures are released each year. Data are stored in the mmCIF format specifically developed for the purpose. The database stores information about the exact location of all atoms in a large biomolecule (although, usually without the hydrogen atoms, as their positions are more of a statistical estimate); if one is only interested in sequence data, i.e. the list of amino acids making up a particular protein or the list of nucleotides making up a particular nucleic acid, the much larger databases from Swiss-Prot and the International Nucleotide Sequence Database Collaboration should be used. The structural data can be used to visualize the biomolecules with appropriate software, such as VMD, RasMol, PyMOL, Jmol, MDL Chime, QuteMol, web browser VRML plugin or any web-based software designed to visualize and analyze the protein structures such as STING. A recent desktop software addition is Sirius. The RCSB PDB website also contains resources for education, structural genomics, and related software. 3.2 SWISS PDB VIEWER (<ref type="url" target="http://www.expasy.org/spdbv/">http://www.expasy.org/spdbv/</ref>) DeepView -Swiss-PdbViewer is an application that provides a user friendly interface allowing to analyze several proteins at the same time. The proteins can be superimposed in order to deduce structural alignments and compare their active sites or any other relevant parts. Amino acid mutations, H-bonds, angles and distances between atoms are easy to obtain. DeepView -Swiss-PdbViewer has been developed by Nicolas Guex (GlaxoSmithKline R&amp;D). Swiss-PdbViewer is tightly linked to SWISS-MODEL, an automated homology modeling server developed within the Swiss Institute of Bioinformatics (SIB) at the Structural Bioinformatics Group at the Biozentrum in Basel.</p><p>Working with these two programs greatly reduces the amount of work necessary to generate models, as it is possible to thread a protein primary sequence onto a 3D template and get an immediate feedback of how well the threaded protein will be accepted by the reference structure before submitting a request to build missing loops and refine side chain packing.</p><p>Swiss-PdbViewer can also read electron density maps, and provides various tools to build into the density. In addition, various modeling tools are integrated and command files for popular energy minimization packages can be generated. 3.4 ARGUSLAB (<ref type="url" target="http://www.planaria-software.com">http://www.planaria-software.com</ref>)</p><p>Arguslab is a free program for calculating the docking modes of small molecules into protein binding sites. Arguslab is a molecular modeling program for windows 95/98 system. It consists of a user interface that supports OpenGL graphics display of molecular structure and runs quantum mechanical calculations using the Argus compute server. Arguslab contains an interactive 3D molecules builder that allows the user to build and manipulate complex structures and a rich suite of computational methods, both quantum mechanical and molecular mechanical for calculating ground or excited states properties.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">PDB SUM (www.ebi.ac.uk/pdbsum)</head><p>PDB sum provides summaries and analyses all the structures in the PDB. Each</p><p>summary gives an at-a-glance overview of the contents of a PDB entry in the terms of resolution and R-factor, number of protein chains, ligands, metal ions, secondary structure, fold cartoons and ligand interactions, etc. This is vital, not only for visualizing the structures concealed in PDB file, but also for drawing together in a single resource information at the 1D (sequence), 2D (motif) and 3D (structure) levels.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6">CHEMSKETCH</head><p>Advanced Chemistry Development, Inc., (ACD/Labs) has developed such an interface, and has integrated it with every desktop software module they produce. To date, over 800,000 chemists have incorporated ACD/Labs' chemical drawing and graphics package, ACD/ChemSketch, into their daily routines. Academic institutions worldwide have adopted this software as an interactive teaching tool to simplify and convey chemistry concepts to their students, and publishing bodies such as Thieme, the publisher of Science of Synthesis, consider it to be "...supportive of the organic chemistry publisher's role, both in the construction of compounds and their basic analysis."</p><formula xml:id="formula_0">ACD</formula><p>/ChemSketch is an advanced chemical drawing tool and is the accepted interface for the industry's best NMR and molecular property predictions, nomenclature, and analytical data handling software. ACD/ChemSketch is also available as freeware, with functionalities that are highly competitive with other popular commercial software packages. The freeware contains tools for 2D structure cleaning, 3D optimization and viewing, InChI generation and conversion, drawing of polymers, organometallics, and Markush structurescapabilities that are not even included in some of the commercial packages from other software producers. Also included is an IUPAC systematic naming capability for molecules with fewer than 50 atoms and 3 rings. The capabilities of ACD/ChemSketch can be further extended and customized by programming. The commercial version of ACD/ChemSketch offers additional capabilities above and beyond the freeware offering. It includes a number of advanced features including a dictionary of more than 158,000 trivial, common, and trade names with their corresponding structures. It allows the user to view SDfiles, and search Microsoft Word or Adobe PDF reports, SDfiles, molfiles, and CambridgeSoft ChemDraw files by chemical structure, substructure, or structure similarity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7">CORINA</head><p>CORINA is a program for the fast and efficient generation of high-quality threedimensional molecular models.</p><p>Corina is a rule and data based program system, that automatically generated three dimensional atomic coordinates from the constitution of a molecule as expressed by a connection table or linear code, and which is powerful and reliable to convert large databases of several hundreds of compounds. Corina is applicable to the range of organic chemistry. Structures, which can be expressed in a valence bond notation can be processed. It does not provide any upper limit to the size of the ring system.</p><p>The program fully considers stereo chemical information and generates the defined stereo isomer. Corina processes structures containing atoms with up to six neighbors; thus, even metal complexes can be processed. It generates one low energy conformation for each input structure. For ring system consisting of up to nine atoms, multiple conformation can be generated-a useful feature for building flexible</p><p>3-D databases. The program automatically detects stereo centers (tetrahedral centers and Cis/Trans double bonds) and is able to generate all possible isomers. Duplicate isomers, such as meso compounds are identified and removed as well as geometrically strained configurations. Corina can process a variety of standard file format for structure input and output (e.g.: MDL SD/ RD FILE, SMILES, SYBYL MOLFILE and MOL2, PDB, Macro Model, Maestro or CIF). Corina delivers structures of high quality. The RMS deviation of corina built models from published X-Ray structures is among the best of all commercially available conversion programs. It is fast, robust and provides excellent conversion rate. Corina offers many features to influence the 3-D generation process. It provides an interface to the ligand docking program FlexX.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.8">PUBCHEM</head><p>PubChem is a database of chemical molecules. PubChem Substance: Search deposited chemical substance records using names, synonyms or keywords. Links to biological property information and depositor web sites are provided.</p><p>PubChem BioAssay: Search bioassay records using terms from the bioassay description, for example "cancer cell line". Links to active compounds and bioassay results are provided.</p><p>Structure Search: Search PubChem's Compound database using a chemical structure as the query. Structures may be sketched or specified by SMILES, MOL files, or other formats.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.9">C@ROL</head><p>C@ROL (Compound Access &amp; Retrieval On Line) is a web-based warehouse for chemical compounds. C@rol stores the 2D and 3D structures as well as multiple conformation of a molecule. It reads different file formats for chemical structure registration. C@rol exports structures and data in various file formats.</p><p>It has two major applications.</p><p>Chemical and pharmaceutical companies can merge the products offered by various suppliers into one system in order to simplify and speed up the retrieval and in-house ordering process of chemical compounds.</p><p>Suppliers of chemical compounds can present their products on the internet with full retrieval capabilities in a web-based application.</p><p>C@ROL provides various search capabilities including innovative similarity searches in its chemical databases. Thus, it makes it as easy as possible to find the best offer for your requirements. The WebLab Viewer provides numerous options for advanced protein and DNA visualization. Hydrogen bonds can also be displayed. The WebLab Viewer can create PDB and MOL files for exporting molecular information to other applications, VRML files for display in VRML-compliant browsers, and JPEG, GIF, and BMP files for use as graphics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.9.1">Features</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.11">VEGA ZZ</head><p>VEGA ZZ is the evolution of the well known VEGA OpenGL package and includes several new features and enhancements making your research jobs very easy. VEGA was originally developed to create a bridge between most of the molecular software packages only, but in the years, enhancing its features, it's evolved to a complete molecular modeling suite.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.11.1">3D Features:</head><p>Extreme OpenGL implementation for an incredible real-time rendering quality: lighting The total time spent docking a ligand obviously depends on the number of docking runs, so you can make GOLD go faster by reducing this number. However, it is useful to perform at least a few docking runs on each ligand. This increases the chances of getting the right answer. Also, if the same answer is found in several different docking runs, it is usually a strong indicator that the answer is correct.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.12.1">GOLD features:</head><p>A genetic algorithm (GA) for protein-ligand docking.</p><p>Full ligand flexibility.</p><p>Partial protein flexibility, including protein side chain and backbone flexibility for up to ten user-defined residues.</p><p>Energy functions partly based on conformational and non-bonded contact information from the CSD.</p><p>A choice of GoldScore, ChemScore or Astex Statistical Potential (ASP) scoring functions.</p><p>Extensive options for customizing or implementing new scoring functions through a Scoring Function Application Programming Interface, allowing users to modify the GOLD scoring-function mechanism in order to: implement their own scoring function or enhance existing scoring functions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Customize docking output.</head><p>A choice of GoldMine or SILVER for post-processing docking results.</p><p>Automatic consideration of cavity bound water molecules.</p><p>Improved handling and control of metal coordination geometries.</p><p>Options for generating diverse solutions, based on RMSD.</p><p>Automatic derivation of GA settings for particular ligands.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.13">SILVER</head><p>SILVER is a program included for use with GOLD and can be used to post-process docking results for large numbers of ligands. SILVER allows easy set-up and calculation of a variety of customizable descriptors (parameters that describe dockings) that quantify, amongst other things.</p><p>The hydrogen-bonding interactions that occur between protein and docked ligand.</p><p>The H-bond interactions that do not occur, e.g. a protein H-bond donor that is prevented from forming a hydrogen bond by a ligand hydrophobic group.</p><p>Other close contacts between protein and ligand.</p><p>The buried surface area of the ligand, or of certain types of atoms in the ligand (e.g. hydrophobic atoms).</p><p>Whether particular regions of the binding site are occupied by the ligand.</p><p>Simple properties such as the number of H-bonding ligand atoms, molecular weight of ligand, number of rotatable bonds.</p><p>Although not its primary purpose, SILVER also serves as a browser for visualizing docking results from GOLD.</p><p>3.14 Q-ALBUMIN Q-Albumin software takes a molecular structure and calculates HSA (Human Serum Albumin) binding constant by docking the molecule to both of the HSA active sites (Sudlow site I and Sudlow site II). Drug distribution within the body is determined mainly by free (unbound) concentration of drug in circulating plasma. The unbound fraction, in turn, depends on drug absorption by plasma proteins. Human Serum Albumin (HSA) is the most abundant blood plasma protein and is produced in the liver. Quantum Pharmaceuticals are the vendors of Q-Albumin software and is a commercially available one. 3.15 QUANTAMSOFTWARE QUANTUM is a drug discovery and computational chemistry tool firmly based on fast ab initio molecular, quantum and statistical physics methods. The implemented algorithms allow to conduct calculations in complicated chemical environments including ions and hetgroups, with full protein and the drug candidates flexibility accounted. The core of QUANTUM is a docking tool useful for chemical library screening and identifying compounds with strong binding affinity to a given disease target. QUANTUM employs quantum mechanics, thermodynamics, and an advanced continuous water model for solvation effects to calculate ligands binding affinities. This approach differs dramatically from scoring functions that are commonly used for binding affinity predictions. By including the entropy and aqueous electrostatics contributions in to the calculations directly, QUANTUM algorithms produce much more accurate and robust values of binding free energies.</p><p>Interaction of a ligand with a protein is characterized by the value of binding free energy. The free energy (F) is the thermodynamic quantity, that is directly related to experimentally measurable value of inhibition constant (IC50) and depends on electrostatic, quantum, aqueous solvation forces, as well as on statistical properties of interacting molecules.</p><p>QUAMTUM SOFTWARE is provided by Quantum pharmaceuticals and is a commercial one.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.16">METHODOLOGY</head><p>The X-ray crystallographic structure of Human HDAC-8 complexed with SAHA was retrieved from Protein Data Bank (PDB ID: 1T69). This structure was saved as a standard PDB file. The ligand and the receptor protein are separated and saved in two different files using Swiss PDB viewer. The Smiles formula of ligand was retrieved from PDB and used to generate the original three dimensional structure of the ligand. For this the free standing molecular building tool CORINA is used. The active site of the protein was defined as the residues within 4Å vicinity of the ligand molecule with the help of PDB viewer. Preparation of active site involved correcting the ionization states of key amino acid side chains, adding hydrogen and listing out all the atoms making the active site as a text file. For this Argus Lab was used. GOLD (Genetic Optimization for Ligand Docking), was used for protein-ligand docking.</p><p>GOLD (Genetic Optimization for Ligand Docking), was used for protein-ligand docking. The CORINA generated ligand structure was docked into the active site and the GoldScore was recorded. Default settings were chosen and GOLD was run under Standard mode.</p><p>For screening of chemical databases, library screening settings was selected.</p><p>Databases containing 3D structures of thousands of small molecules were downloaded in SDF format. The databases screened include CHEMBANK, KEGG, and NCTER which provided a total of around six thousand molecules.</p><p>Top ranking molecules from the best rank file were recorded. It was followed by strict visualization using Pymol and "hits" were selected. These molecules were then docked independently for GoldScore and then ChemScore. Molecules which got high scores for both GoldScore and ChemScore were selected. These selected structures were opened in chemsketch and functional groups were added to the ligands. These ligands were saved as pdb format. These ligands were then taken and again docked.</p><p>Molecules which got high scores for both GoldScore and ChemScore were selected and compared with the previous results. Those with best results were then taken for calculating H-bond interactions and close contacts in silver. Bioactivity prediction of the best ranked ligands was done using Quantum software. Their physicochemical properties were also analyzed in Q-albumin software. Ultimately the results obtained were analyzed to predict the best potential ligand for HDAC-8.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>RESULTS AND DISCUSSION</head><p>Table 4.1: Goldscore and chemscore of the known ligands NAME GOLDSCORE CHEMSCORE B3N 58.19 21.10 SHH 66.06 20.90 TSN 64.00 24.88 Table 4.2: Goldscore and chemscore results of kegg ligands Keg id Name Goldscore Chemscore C00124 Isopentenyl diphosphate; delta3-Isopentenyl diphosphate; delta3-Methyl-3butenyl diphosphate 60.79 6.77 C00341 Geranyl diphosphate 63.33 11.82 C00404 (Phosphate)n; (Phosphate)n+1; (Phosphate)n-1 70.55 6.69 C00536 Triphosphate; Tripolyphosphate 67.43 5.85 C00677 Deoxynucleoside triphosphate 83.87 5.59 C02569 Neryl diphosphate; Neryl pyrophosphate 64.59 11.56 C03190 (+)-Bornyldiphosphate 68.69 12.58 C03279 Inorganic triphosphate 68.43 6.67 C04093 poly-cis-Polyprenyl diphosphate 62.56 11.53 C05308 Linaloyl diphosphate 61.72 -C05470 Urocortisone 62.20 -C05806 Polyprenyl diphosphate 64.07 11.19 Table 4.3: Silver results of known ligands Name Close contact with protein residues H-bonds B3N TYR306:OH HIS180 TYR306 SHH HIS180:ND1 HIS180:CE1 Table 4.5: Druglikiness results of ligands taken from keg database. Keg id Name LogP Logs Lipinski's rule C00124 Isopentenyl diphosphate; delta3-Isopentenyl diphosphate; delta3-Methyl-3butenyl diphosphate 0.8 -1.0 true C00341 Geranyl diphosphate 1.5 -2.0 true C00404 (Phosphate)n; (Phosphate)n+1; (Phosphate)n-1 -0.7 0.7 true C00536 Triphosphate; Tripolyphosphate -0.7 0.7 true C00677 Deoxynucleoside triphosphate ---C02569 Neryl diphosphate; Neryl pyrophosphate 2.5 -3.2 true C03190 (+)-Bornyldiphosphate 2.2 -2.3 true C03279 Inorganic triphosphate ---C04093 poly-cis-Polyprenyl diphosphate 2.5 -3.2 true C05308 Linaloyl diphosphate ---C05470 Urocortisone 1.8 -3.5 true C05806 Polyprenyl diphosphate 2.5 -3.2 true Table 4.6: Properties of ligands taken from kegg database Keg id Name Mol.wt H-bond donor count H-bond acceptor count C00124 Isopentenyl diphosphate; delta3-Isopentenyl diphosphate; delta3-Methyl-3butenyl diphosphate 246.092102 g/mol 3 7 C00341 Geranyl diphosphate 314.209122 g/mol 3 7 C00404 (Phosphate)n; (Phosphate)n+1; (Phosphate)n-1 257.954983 g/mol 5 10 C00536 Triphosphate; Tripolyphosphate 257.954983 g/mol 5 10 C00677 Deoxynucleoside triphosphate 291.6865 g/mol 3 5 C02569 Neryl diphosphate; Neryl pyrophosphate 314.209122 g/mol 3 7 C03190 (+)-Bornyldiphosphate 314.209122 g/mol 3 7 C03279 Inorganic triphosphate 257.954983 g/mol 5 10 C04093 poly-cis-Polyprenyl diphosphate 314.209122 g/mol 3 7 C05308 Linaloyl diphosphate 314.209122 g/mol 3 7 C05470 Urocortisone 364.47578 g/mol 3 5 C05806 Polyprenyl diphosphate 314.209122 g/mol 3 7 Table 4.7: Ic50 results of ligands taken from kegg database Keg id Name Ic50 Gbind,KJ/ RMS C00124 Isopentenyl diphosphate; delta3-Isopentenyl diphosphate; delta3-Methyl-3butenyl diphosphate 9.13e-002 -6.05 120651.00 C00341 Geranyl diphosphate inf 2227.05 4.88 C00404 (Phosphate)n; (Phosphate)n+1; (Phosphate)n-1 2.91e-006 -32.22 1.88 C00536 Triphosphate; Tripolyphosphate 2.81e-006 -32.31 1.85 C00677 Deoxynucleoside triphosphate ---C02569 Neryl diphosphate; Neryl pyrophosphate 3.95e-004 -19.81 3.46 C03190 (+)-Bornyldiphosphate 4.09e-004 -19.72 4.53 C03279 Inorganic triphosphate ---C04093 poly-cis-Polyprenyl diphosphate 5.97e-004 -18.76 5.02 C05308 Linaloyl diphosphate ---C05470 Urocortisone 2.76e-001 -3.26 8.22 C05806 Polyprenyl diphosphate 4.87e-004 -19.28 5.09 Table 4.8: IC50 results of ligands Name Ic50 G bind,kj/ Rms,A 1.1.2130 3.10e+091 532.48 1.50 3.4.2130 1.73e+043 251.64 1.77 9.2.2130 8.96e+010 63.66 3.42 10.10.2130 4.45e+016 96.89 3.16 15.2.12645 1.12e+052 302.93 2.01 18.2.12645 4.80e+000 3.97 4.04 19.1.12645 inf 5619.91 3.21 23.6.2130 2.46e-002 -9.37 5.28 2130.5 2.01e+041 240.38 2.03 2137.1 1.28e-005 -28.48 1.09 3039.3 1.05e-003 -17.34 1.32 2-[[4-(dimethylamino)phenyl]sulfonyl]-1-[5-nitro-2-furyl]ethanone inf 15862.40 2.99 Table 4.9: Druglikeness results Name LogP Logs Lipinski's rule 1.1.2130 4.7 -5.4 true 3.4.2130 4.7 -5.4 true 9.2.2130 5.1 -5.7 false 10.10.2130 5.1 -5.7 false 15.2.12645 0.5 -1.7 true 18.2.12645 -0.2 -0.8 true 19.1.12645 -0.2 -1.0 true 23.6.2130 4.1 -4.8 true 2130.5 5.4 -5.5 false 2137.1 1.8 -2.9 false 3039.3 1.7 -5.2 true 12645.3 0.3 -1.3 True Table 4.11: Q-ALBUMIN RESULTS Name Albumin, pKd Site1, pKd Site2, pKd LogP Mol. weight H-bond acceptors H-bond Donors Rotatable Bonds Lipinski's rule 1.1.2130 N/A N/A N/A 4.6 485.2 4 0 8 Yes 3.4.2130 3.6 3.4 3.6 4.7 483.2 4 0 8 Yes 9.2.2130 4.3 2 4.3 5.6 481.2 3 0 9 No 10.10.2130 3.9 1.9 3.9 5.6 481.2 3 0 9 No 15.2.12645 4.9 3 4.9 1.6 354.4 8 1 13 Yes 18.2.12645 5.3 4.5 5.3 0.8 355.4 9 3 13 Yes 19.1.12645 3.9 3.9 3.3 1 355.4 9 2 13 Yes 23.6.2130 4.5 4.5 3.2 4.8 455.1 3 1 8 Yes Kegg374 6 4.9 6 -0.7 257.9 10 0 4 Yes Kegg491 6 4.9 6 -0.7 257.9 10 0 4 Yes Kegg2571 5.3 4.3 5.3 -0.7 257.9 10 0 4 Yes 12645.3 5.2 3.8 5.2 1.9 338.3 8 0 8 Yes 2137.1 3.2 2.3 3.2 5.4 439.1 2 0 7 No 2130.5 4.1 4.1 3.6 2.9 323.1 7 2 5 Yes 3039.3 4.5 4.1 4.5 1.1 391.4 6 6 11 No </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><figDesc>protein paired with the ligand. With present computing resources, it is impossible to exhaustively explore the search space-this would involve enumerating all possible distortions of each molecule (molecules are dynamic and exist in an ensemble of conformational states) and all possible rotational and translational orientations of the ligand relative to the protein at a given level of granularity. Most docking programs in use account for a flexible ligand, and several are attempting to model a flexible protein receptor. Each "snapshot" of the pair is referred to as a pose. There are many strategies for sampling the search space. Here are some examples: • Use a coarse-grained molecular dynamics simulation to propose energetically reasonable poses • Use a "linear combination" of multiple structures determined for the same protein to emulate receptor flexibility</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>1. 11</head><label>11</label><figDesc>RMS:RMS refers to the Root Mean Squared Distance between the initial and final position of the ligand. The overall root mean square9RMS) deviation expression of any target molecule composed of m atoms in the training set may be written as a function of the parameters and geometry.Rms=f(p1,p2,p3,……..,pm,x1,y1,z1,x2,y2,z2,….,xm,ym,zm) P1,p2,..,pm represent the complete set of force field parameters required for the molecular mechanics calculations of the structure. X1,y1,z1,….,xm,ym,zm are the optimized Cartesian coordinates1.12 LOG PThe logarithm of the ratio of the concentrations of the un-ionized solute in the solvents is called log P. Hydrophobicity is represented by LogP. Partition coefficient is the ratio of concentrations of a compound in the two phases of a mixture of two immiscible solvents at equilibrium. Hence it is a measure of differential solubility of the compound between these two solvents. Normally one of the solvents chosen is water while the second is hydrophobic such as octanol. Partition coefficients are useful in estimating the distribution of drugs within the body. Hydrophobic drugs with high partition coefficients are preferentially distributed to hydrophobic compartments such as lipid bilayers of cells while hydrophilic drugs (low partition coefficients) preferentially are found in hydrophilic compartments such as blood serum.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><figDesc>concentration required to produce half maximum inhibition Drug distribution within the body is determined mainly by free (unbound) concentration of drug in circulating plasma. The unbound fraction, in turn, depends on drug absorption by plasma proteins. Human Serum Albumin (HSA) is the most abundant blood plasma protein and is produced in the liver. HSA binding constants obtained by docking the molecule to both of the HSA active sites (Sudlow site I and Sudlow site II) are termed as Site1 pKd and site2 pKd respectively.1.15 ALBUMIN PKDDrug distribution within the body is determined mainly by free (unbound) concentration of drug in circulating plasma. The unbound fraction, in turn, depends on drug absorption by plasma proteins. Human Serum Albumin (HSA) is the most abundant blood plasma protein and is produced in the liver. HSA normally constitutes about 60% of human plasma protein. HSA concentrations in blood plasma range from 3.5 to 5.0g/l. It has been shown to shuttle a broad range of endogenous and exogenous ligands, including more than 70% of drugs.Binding of a drug to HSA results in an increased solubility in plasma, decreased toxicity, and /or protection against oxidation of the bound ligand. Binding can also have a significant impact on the pharmacokinetics of drugs. Q-Albumin software takes a molecular structure and calculates HSA binding constant by docking the molecule to both of the HSA active sites (Sudlow site I and Sudlow site II).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>1 .</head><label>1</label><figDesc>18 HDAC-8 AS AN ANTI CANCER TARGET Histone deacetylase (HDAC) and histone acetyltransferase (HAT) are enzymes that influence transcription by selectively deacetylating or acetylating the ε-amino groups of lysine located near the amino termini of core histone proteins. Chromatin acetylation correlates with transcriptional activity (euchromatin), whereas deacetylation correlates with gene silencing. HDACs are also involved in the reversible acetylation of non-histone proteins. Altered HDAC and/or HAT activities are present in many types of cancers. Mammalian HDACs have been classified into three classes. Class I (HDACs 1, 2, 3 &amp; 8; each of which contains a deacetylase domain exhibiting from 45% to 93% identity in amino acid sequence) are homologs of yeast RPD3 and localize to the nucleus. Class II (HDACs 4, 5, 6, 7, 9 &amp; 10) are homologs of yeast Hda1 and are found in both the nucleus and cytoplasm. The molecular weights of which are all about two fold larger than those of the class I members, and the deacetylase domains are present within the C-terminal regions, except that HDAC-6 contains two copies of the domain, one within each of the N-terminal and C-terminal regions. HDAC11 has properties of both class I and class II HDACs. Class III (Sirt1 -Sirt7) are homologs of yeast Sir2 and form a structurally distinct class of NAD-dependent enzymes found in both the nucleus and cytoplasm. Conserved from yeast to human, HDAC classes I and II are inhibited by trichostatin A (Prod. No. 380-068) and appear to use a divalent zinc-binding motif. The metal-coordinated active site activates an H2O molecule for direct targeting and hydrolysis of the acetyl group to form acetate. Acetylation of lysines in histones neutralizes the positive electric charge between the negatively charged DNA backbone and tips the balance towards relaxing the chromatin, while deacetylation would shift the balance back to condensing the chromatin and silencing gene expression. In a similar way PARP-1 adds to histones hundreds of negatively charged ADP-ribose units, which repel histones away from the negatively charged DNA backbone and thus induces chromatin relaxation to facilitate accession of DNA repair enzymes and gene expression. HDAC inhibitors represent a relatively new group of targeted anticancer compounds, which are showing significant promise as agents with activity against a broad spectrum of neoplasms, at doses that are well tolerated by cancer patients. A number of small molecule inhibitors of HDAC, such as naturally occurring Trichostatin A (TSA), as well as synthetic compounds such as Suberoylanilide hydroxamic acid (SAHA), Scriptaid, Oxamflatin etc have been reported to induce differentiation of several cancer cell lines and suppress cell proliferation. But most of the inhibitors developed till date, including TSA and SAHA are derivatives of hydroxamic acid and are associated with poor pharmacokinetics and severe toxicity. They do not discriminate well among HDAC isozymes. Thus, there is a considerable interest in developing new non-hydroxamate HDAC inhibitors with few side effects. Inhibitors of HDAC classes I and II emerge as potent anti-cancer agents. A proposed mechanism for the anti-tumor effects of HDAC inhibitors is that the accumulation of acetylated histones leads to activation (and repression) of the transcription of a selected number of genes whose expression causes inhibition of tumor cell growth and induction of apoptosis. Disruption of HDACs has been linked to a wide variety of human cancers. HDAC inhibitors have been shown to be potent inducers of growth arrest, differentiation, and/or apoptotic cell death. Some newly synthesized compounds are potentially effective agents for cancer therapy and, possibly, cancer chemoprevention.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure- 1 :</head><label>1</label><figDesc>Figure-1: Structure of HDAC-8 with SAHA (in blue).</figDesc><graphic coords="19,85.10,56.50,428.16,315.12" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><figDesc>an organic compound that serves as an antifungal antibiotic and selectively inhibits the mammalian histone deacetylase family of enzymes. TSA inhibits the eukaryotic cell cycle during the beginning of the growth stage. TSA can be used to alter gene expression by interfering with the removal of acetyl groups from histones and therefore altering the ability of DNA transcription factors to access the DNA molecules inside chromatin. Thus, TSA has some uses as an anti-cancer drug.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><figDesc>species accumulated. Oxamflatin induced the morphological changes of human cell lines characteristic of cells treated with TSA and other HDAC inhibitors during the experiments of in vitro cytotoxicity. Most of the inhibitors developed till date, including TSA and SAHA are derivatives of hydroxamic acid and are associated with poor pharmacokinetics and severe toxicity. They do not discriminate well among HDAC isozymes.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>3. 3 PYMOL</head><label>3</label><figDesc>(www.pymol.org) PyMOL is a user-sponsored molecular visualization system on an open-source foundation. It was created by Warren Lyford Delano and commercialized by Delano Scientific LLC, which is a private software company dedicated to creating useful tools that become universally accessible to scientific and educational communities. It is well suited to producing high quality 3D images of small molecules and biological macromolecules such as proteins. PYMOL is one of few open source visualization tools available for use in structural biology. The Py portion of the software's name refers to the fact that it extends, and is extensible by, the Python programming language.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><figDesc>The system is maintained by the National Center for Biotechnology Information (NCBI), a component of the National Library of Medicine, which is part of the United States National Institutes of Health (NIH). PubChem can be accessed for free through a web user interface. PubChem contains substance descriptions and small molecules with fewer than 1000 atoms and 1000 bonds. PubChem contains its own online molecule editor with SMILES/SMARTS and InChI support that allows the import and export of all common chemical file formats to search for structures and fragments. Each hit provides information about synonyms, chemical properties, chemical structure including SMILES and InChI strings, bioactivity, and links to structurally related compounds and other NCBI databases like PubMed. PubChem also provides a fast chemical structure similarity search tool.PubChem Compound: Search unique chemical structures using names, synonyms or keywords. Links to available biological property information are provided for each compound.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>*</head><figDesc>Web-based graphical user interface. *Graphical input of compounds by molecule editor. *Various rapid search methods for chemical structures (Structure, substructure, similarity, transformation, and 3D pharmacophore searches). *Search methods for chemical names and properties (IUPAC name, CAS registry number, molecular formula, molecular weight, etc.) *Focusing the hits on a given synthesis problem or on a specific biological activity. *Various output formats for chemical structures. *Optional 3D visualization. *Integrated email functionality *Loading of databases of your choice *Administration capabilities, e.g. user management 3.10 WL VIEWERLITE The WebLab Viewer is an innovative software tool for examining the 3D structure of molecular models, and for communicating the resulting information with colleagues. With the WebLab Viewer, a molecule can be viewed as a wireframe, a stick model, a ball and stick model, or a space-filling model. The model can be rotated, translated, or scaled to any particular viewpoint. Distances, angles, torsions, and stereochemistry can be easily measured; these variables are instantly updated whenever the local geometry is modified. You can color or label atoms to emphasize different attributes. he WebLab Viewer reads all of the most popular molecular file formats. In addition, you can paste molecules from popular 2D drawing packages such as ISIS Draw or ChemDraw into the Viewer. Molecules drawn in 2D in ISIS Draw or ChemDraw are converted to the proper 3D geometry automatically when brought into the WebLab Viewer. We can add or remove hydrogens and determine the R/S stereochemistry for chiral atoms.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>( 4</head><label>4</label><figDesc>customizable light sources + ambient light), alpha blending, hardware anti-aliasing, material management, 3D backgrounds. Stereo view (shutter or anaglyphic glasses). Hardware and software offline rendering. 3D molecule view: wireframe with multivector bonds, CPK, ball &amp; stick, stick, trace and tube. All representations can be mixed thanks to the selection tool. Atom labels. Enhanced atom coloring methods. Atom selection &amp; picking. 3D surface: dotted, mesh, solid, solid transparent. Thanks to the Hyper Drive technology, the calculation is very fast. The surfaces can be colored by atom, residue, chain, segment, molecule, surface ID and property. The color gradient used in the property coloring mode can be customized by the user defining the number and the type of colors. Multiple surface management. All 3D objects can be managed with mouse, joystick and dials. 3D interactive monitors calculated in real time (distance, angle, torsion and angle between two planes). Simulation trajectory visualization and animation. Snapshot, hardware and software image rendering with the capability to create images bigger than the monitor size. The software rendering includes an anti-aliasing algorithm with user-selectable 4x or 16x super sampling. The supported output formats are: BMP, GIF 256 colors, JPEG, PCX, PNG, PNM, RAW, SGI, TGA and TIFF.Vector graphic rendering engine. It's possible to export the view in PostScript, Encapsulated PostScript, PDF, LaTex, POV-Ray and VRML 2.0 formats.3.12 GENETIC OPTIMIZATION LIGAND DOCKING (GOLD)GOLD (Genetic Optimization for Ligand Docking) is a genetic algorithm for docking flexible ligands into protein binding sites. GOLD is an automated ligand docking program that uses a genetic algorithm to explore the full range of ligand conformational flexibility with partial flexibility of the protein, and satisfies the fundamental requirement that the ligand must displace loosely bound water on binding. Numerous enhancements and modifications have been applied to the original technique resulting in a substantial increase in the reliability and the applicability of the algorithm. The advanced algorithm has been tested on a dataset of 100 complexes extracted from the Brookhaven Protein Data Bank. When used to</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>HIS180Fig: 1 :Fig: 2 :FigFig: 4 :Fig: 5 :Fig: 6 :Fig: 7 :Fig: 8 :Fig: 9 :Fig: 10 :Fig: 11 :Fig: 12 :</head><label>12456789101112</label><figDesc>Fig: 1: Isopentenyl diphosphate; delta3-Isopentenyl diphosphate; delta3-Methyl-3-butenyl diphosphate (kegg c00124)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Fig: 13 :Fig: 14 :Fig: 15 :Fig: 16 :</head><label>13141516</label><figDesc>Fig: 13: 12645 within the active site of SHH</figDesc><graphic coords="52,85.10,349.30,454.80,333.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="39,85.10,48.82,432.48,284.64" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="39,85.10,362.26,454.56,306.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="40,85.10,48.82,442.56,289.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="40,85.10,372.58,454.56,288.96" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="41,85.10,48.82,431.04,289.44" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="41,85.10,365.38,431.04,291.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="42,85.10,40.18,442.56,298.08" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="44,85.10,375.46,454.56,306.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="53,85.10,41.86,467.04,306.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><graphic coords="53,85.10,381.46,467.04,297.84" type="bitmap" /></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>dock the ligand back into the binding site, GOLD achieved a 71% success rate in identifying the experimental binding mode.</p><p>GOLD provides all the functionality required for docking ligands into protein binding sites from prepared input files. GOLD will likely be used in conjunction with a modeling program since you will be required to create and edit starting models, e.g. add all hydrogen atoms, including those necessary for defining the correct ionization and tautomeric states of the residues. Commonly used molecular modeling environments include: SYBYL (<ref type="url" target="http://www.tripos.com/">http://www.tripos.com/</ref>)</p><p>Insight II or Cerius2 (<ref type="url" target="http://www.accelrys.com/">http://www.accelrys.com/</ref>).</p><p>Predicting how a small molecule will bind to a protein is difficult, and no program can guarantee success. The next best thing is to measure as accurately as possible the reliability of the program, i.e. the chance that it will make a successful prediction in a given instance. For that reason, GOLD has been tested on a large number of complexes extracted from the Protein Data Bank. The overall conclusion of these tests was that the top-ranked GOLD solution was correct in 70-80% of cases.</p><p>GOLD offers a choice of scoring functions, GoldScore, ChemScore and User Defined Score which allows users to modify an existing function or implement their own scoring function. With respect to using the GoldScore or ChemScore functions one may give a successful prediction where the other fails, but their overall success rates are about the same.</p><p>Different values of the genetic algorithm parameters may be used to control the balance between the speed of GOLD and the reliability of its predictions. GOLD will only produce reliable results if it is used properly and correct atom typing for both protein and ligand is particularly important.</p><p>GOLD may be used in serial or parallel modes.</p><p>GOLD will dock each ligand several times starting each time from a different random population of ligand orientations. The results of the different docking runs are ranked by fitness score.</p><p>The number of dockings to be performed on each ligand is set when the ligand file is defined.</p><p>By default the number of dockings to be performed on each ligand is 10. The computational experiment undertaken has resulted in the identification of a few small molecules, which docked well in to the active site of the target. Careful visual inspection of the top ranked molecules (hits) yielded a list of four small molecules.</p><p>These four molecules yielded high goldscore and chemscore value, which indicates the stability of the structure. When further analyses were done using ic50, druglikeness, albumin pkd, the results were found to lie within an optimum range. The docked poses, along with their corresponding GoldScore and ChemScore are given.</p><p>These molecules are suggested to be interesting candidates for further testing in the laboratory.  In this study the active site of HDAC-8 is defined as the residues which are 4</p><p>Å vicinity of the ligand. Large databases of small molecules were computationally screened using molecular docking for "hits" that can conformationally and chemically fit to the active site.</p><p>The study has identified four putative small molecular inhibitors that might bind well to the active site of the target molecule chosen for the study (HDAC-8). These molecules, predicted to "dock" well into the active site of human HDAC-8 should be considered as "interesting" molecules that need to be further tested in the laboratory.</p><p>Finally, this purely insilico study strongly underscores the importance of computational approaches in drug discovery, supplementing classical methods, thus saving enormous amount of time and money.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">10: Goldscore and chemscore results Name Goldscore Chemscore</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Flexible ligand docking using a genetic algorithm</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Oshiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Kuntz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Scott Dixon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computer-Aided Molecular Design</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="113" to="130" />
+			<date type="published" when="1995-04-02">2 April, 1995</date>
+			<pubPlace>Number</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Empirical Scoring Functions. I. The Development of a Fast, Fully Empirical Scoring Function to Estimate the Binding Affinity of Ligands in Receptor Complexes</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Eldridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">W</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Auton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Paolini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">P</forename><surname>Mee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computer-Aided Molecular Design</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="425" to="445" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The Development of a Simple Empirical Scoring Function to Estimate the Binding Constant for a Protein-Ligand Complex of Known Three-Dimensional Structure</title>
+		<author>
+			<persName><forename type="first">H-J</forename><surname>Boehm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computer-Aided Molecular Design</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="243" to="256" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A General and Fast Scoring Function for Protein-Ligand Interactions: A Simplified Potential Approach</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Muegge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Martin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Medicinal Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="791" to="804" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Knowledge Based Scoring Function to Predict Protein-Ligand Interactions</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gohlke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hendlich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Klebe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Molecular Biology</title>
+		<imprint>
+			<biblScope unit="volume">295</biblScope>
+			<biblScope unit="page" from="337" to="356" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Histone deacetylase inhibitors: a novel target of anticancer therapy (review)</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kouraklis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Theocharis</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006-02">2006 Feb</date>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="489" to="494" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Fiona</forename><surname>Mclaughlin1</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">B</forename><surname>La Thangue</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biochemical Pharmacology</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1139" to="1144" />
+			<date type="published" when="2004-09-15">15 September 2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Docking and scoring in virtual screening for drug discovery: methods and applications</title>
+		<author>
+			<persName><surname>Douglas B Kitchen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">nature</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Shin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">K</forename><surname>Chie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Ha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">I</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Kao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Histone Deacetylase Inhibitor-Mediated Radiosensitization of Human Cancer Cells: Class Differences and the Potential Influence of p53</title>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="940" to="949" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Histone Deacetylase 7 Silencing Alters Endothelial Cell Migration, a Key Step in</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mottet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bellahcene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pirotte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Waltregny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Deroanne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Lamour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lidereau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Castronovo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Angiogenesis Circ. Res</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1237" to="1246" />
+			<date type="published" when="2007-12-07">December 7, 2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">G</forename><surname>Garcia-Manero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bees-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ferrajoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cortes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Phase 1 study of the histone deacetylase inhibitor vorinostat (suberoylanilide hydroxamic acid [SAHA]) in patients with advanced leukemias and myelodysplastic syndromes Blood</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wierda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Faderl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Koller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Morris</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Rosner</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008-02-01">February 1, 2008</date>
+			<biblScope unit="volume">111</biblScope>
+			<biblScope unit="page" from="1060" to="1066" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Mechanisms of Resistance to Histone Deacetylase Inhibitors and Their Therapeutic Implications</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">R</forename><surname>Fantin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">M</forename><surname>Richon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Cancer Res</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page" from="7237" to="7242" />
+			<date type="published" when="2007-12-15">December 15. 2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Suberoylanilide hydroxamic acid (SAHA) has potent anti-glioma properties in vitro, ex vivo and in vivo</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">Y</forename><surname>Eyüpoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Hahnen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Buslei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>Siebzehnrübl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">E</forename><surname>Savaskan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lüders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tränkle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Fahlbusch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Blümcke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Neurochem</title>
+		<imprint>
+			<biblScope unit="volume">93</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="992" to="999" />
+			<date type="published" when="2005-05">2005 May</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Hong</forename><forename type="middle">B</forename><surname>Anthony E Dear</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Penelope</forename><forename type="middle">A</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patrick</forename><surname>Mayes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">;</forename><forename type="middle">P</forename><surname>Perlmutter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">)</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Org Biomol Chem. Conformational analogues of Oxamflatin as histone deacetylase inhibitors</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="3778" to="3784" />
+			<date type="published" when="2006-10-21">2006 Oct 21</date>
+			<pubPlace>Prahran, 3181, Australia</pubPlace>
+		</imprint>
+		<respStmt>
+			<orgName>Australian Centre for Blood Diseases, Department of Medicine, Monash University, 6th floor Barnet Tower</orgName>
+		</respStmt>
+	</monogr>
+	<note>Commercial Rd</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Improved proteinligand docking using GOLD</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Verdonk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Hartshorn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">W</forename><surname>Murray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Taylor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proteins</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="609" to="623" />
+			<date type="published" when="2003-09-01">2003 Sep 1</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">1. Drug target validation and identification of secondary drug target effects using DNA microarrays</title>
+		<idno type="DOI">10.1038/3282</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Medicine</title>
+		<editor>
+			<persName><forename type="first">Matthew</forename><forename type="middle">J</forename><surname>Marton1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Joseph</forename><forename type="middle">L</forename><surname>Derisi2</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Holly</forename><forename type="middle">A</forename><surname>Bennett1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">R</forename><surname>Vishwanath</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Iyer2</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Christopher</forename><forename type="middle">J</forename><surname>Meyer1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Roland</forename><surname>Roberts1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Julja</forename><surname>Stoughton1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">David</forename><surname>Burchard1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Hongyue</forename><surname>Slade1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Douglas</forename><forename type="middle">E</forename><surname>Dai1</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Leland</forename><forename type="middle">H</forename><surname>Bassett</surname><genName>Jr</genName></persName>
+		</editor>
+		<editor>
+			<persName><surname>Hartwell3</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">O</forename><surname>Patrick</surname></persName>
+		</editor>
+		<editor>
+			<persName><surname>Brown2</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">H</forename><surname>Stephen</surname></persName>
+		</editor>
+		<editor>
+			<persName><surname>Friend</surname></persName>
+		</editor>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="1293" to="1301" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Drug-target interactions: only the first step in the commitment to a programmed cell death?</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dive</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Hickman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Br J Cancer</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="192" to="196" />
+			<date type="published" when="1991-07">1991 Jul</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
