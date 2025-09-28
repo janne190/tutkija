@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from collections import namedtuple
 from typing import Any, cast
 
 import pandas as pd
@@ -27,58 +28,158 @@ class Chunk(BaseModel):
     source: str = "tei"
 
 
-def _get_page_map(tree: etree._ElementTree) -> list[tuple[int, int]]:
+# Helper types for clarity
+SectionSpan = namedtuple(
+    "SectionSpan", ["section_id", "abs_start", "abs_end", "text", "label"]
+)
+PageBreak = namedtuple("PageBreak", ["abs_offset", "page_no"])
+
+
+def _normalize_whitespace(text: str) -> str:
+    """Normalizes whitespace: replaces multiple spaces/newlines with a single space."""
+    return " ".join(text.split()).strip()
+
+
+def _flatten_tei(
+    tree: etree._ElementTree, include_front: bool
+) -> tuple[str, list[SectionSpan], list[PageBreak]]:
     """
-    Extracts page break information from TEI XML.
-    Returns a list of (offset, page_number) tuples.
+    Flattens a TEI XML tree into a single string, extracts sections, and page breaks
+    with global offsets.
     """
     ns = {"tei": "http://www.tei-c.org/ns/1.0"}
-    page_map: list[tuple[int, int]] = []
-    current_offset = 0
+    full_text_parts: list[str] = []
+    sections: list[SectionSpan] = []
+    page_breaks: list[PageBreak] = []
+    abs_cursor = 0
 
+    # Process front matter
+    if include_front:
+        front_element = tree.find(".//tei:front", namespaces=ns)
+        if front_element is not None:
+            title = _normalize_whitespace(
+                " ".join(front_element.xpath(".//tei:title/text()", namespaces=ns))
+            )
+            abstract = _normalize_whitespace(
+                " ".join(front_element.xpath(".//tei:abstract//text()", namespaces=ns))
+            )
+            front_text = f"{title}\n\n{abstract}".strip()
+            if front_text:
+                normalized_front_text = _normalize_whitespace(front_text)
+                sections.append(
+                    SectionSpan(
+                        "front",
+                        abs_cursor,
+                        abs_cursor + len(normalized_front_text),
+                        normalized_front_text,
+                        "Front Matter",
+                    )
+                )
+                full_text_parts.append(normalized_front_text)
+                abs_cursor += len(normalized_front_text)
+                if abs_cursor > 0:
+                    full_text_parts.append(" ")  # Add a space between sections
+                    abs_cursor += 1
+
+    # Process body divisions
+    body_divs = tree.xpath(".//tei:body/tei:div", namespaces=ns)
+    for i, div in enumerate(body_divs):
+        # Extract page breaks within this div
+        for pb_element in div.xpath(".//tei:pb", namespaces=ns):
+            page_num = pb_element.get("n")
+            if page_num and page_num.isdigit():
+                # Calculate offset relative to the current full_text_parts length
+                pb_offset_in_full_text = abs_cursor + len(
+                    _normalize_whitespace(
+                        " ".join(
+                            div.xpath(
+                                f".//text()[preceding::tei:pb[@n='{page_num}']]",
+                                namespaces=ns,
+                            )
+                        )
+                    )
+                )
+                page_breaks.append(PageBreak(pb_offset_in_full_text, int(page_num)))
+
+        heading_element = div.find("tei:head", namespaces=ns)
+        heading = (
+            heading_element.text if heading_element is not None else f"Section {i+1}"
+        )
+
+        # Strip elements that should not be part of the chunk text
+        etree.strip_elements(div, "{http://www.tei-c.org/ns/1.0}ref", with_tail=False)
+        etree.strip_elements(
+            div, "{http://www.tei-c.org/ns/1.0}figure", with_tail=False
+        )
+
+        section_raw_text = " ".join(div.xpath(".//text()"))
+        normalized_section_text = _normalize_whitespace(section_raw_text)
+
+        if normalized_section_text:
+            sections.append(
+                SectionSpan(
+                    f"body_div_{i}",
+                    abs_cursor,
+                    abs_cursor + len(normalized_section_text),
+                    normalized_section_text,
+                    heading,
+                )
+            )
+            full_text_parts.append(normalized_section_text)
+            abs_cursor += len(normalized_section_text)
+            if i < len(body_divs) - 1:
+                full_text_parts.append(" ")  # Add a space between sections
+                abs_cursor += 1
+
+    # Re-collect page breaks from the entire tree after stripping elements
+    # This ensures page breaks are correctly positioned relative to the final full_text
+    page_breaks = []
+    current_offset_for_pb = 0
     for element in tree.iter():
         if element.tag == "{http://www.tei-c.org/ns/1.0}pb":
             page_num = element.get("n")
             if page_num and page_num.isdigit():
-                page_map.append((current_offset, int(page_num)))
+                page_breaks.append(PageBreak(current_offset_for_pb, int(page_num)))
         if element.text:
-            current_offset += len(element.text)
+            current_offset_for_pb += len(_normalize_whitespace(element.text))
         if element.tail:
-            current_offset += len(element.tail)
-    return page_map
+            current_offset_for_pb += len(_normalize_whitespace(element.tail))
+
+    full_text = "".join(full_text_parts).strip()
+    return full_text, sections, sorted(page_breaks, key=lambda x: x.abs_offset)
 
 
 def _get_page_range(
-    start_offset: int, end_offset: int, page_map: list[tuple[int, int]]
+    start_offset: int, end_offset: int, page_breaks: list[PageBreak]
 ) -> tuple[int | None, int | None]:
-    """Determines the page range for a given text offset range."""
+    """Determines the page range for a given text offset range using global page breaks."""
     start_page: int | None = None
     end_page: int | None = None
 
-    if not page_map:
+    if not page_breaks:
         return None, None
 
     # Find start page
-    for i in range(len(page_map)):
-        pb_offset, page_num = page_map[i]
+    for i in range(len(page_breaks)):
+        pb_offset, page_num = page_breaks[i]
         if start_offset >= pb_offset:
             start_page = page_num
         else:
             break
-    if (
-        start_page is None and page_map
-    ):  # If chunk starts before first pb, assume page 1
-        start_page = page_map[0][1] if page_map[0][1] == 1 else None
+    # If chunk starts before the first page break, assume it's on the first page
+    if start_page is None and page_breaks:
+        start_page = page_breaks[0].page_no if page_breaks[0].page_no == 1 else None
 
     # Find end page
-    for i in range(len(page_map)):
-        pb_offset, page_num = page_map[i]
-        if end_offset >= pb_offset:
+    for i in range(len(page_breaks)):
+        pb_offset, page_num = page_breaks[i]
+        if end_offset > pb_offset:  # Use > for end_offset to include content on the page
             end_page = page_num
         else:
             break
-    if end_page is None and page_map:  # If chunk ends before first pb, assume page 1
-        end_page = page_map[0][1] if page_map[0][1] == 1 else None
+    # If chunk ends before the first page break, assume it's on the first page
+    if end_page is None and page_breaks:
+        end_page = page_breaks[0].page_no if page_breaks[0].page_no == 1 else None
 
     return start_page, end_page
 
@@ -89,7 +190,7 @@ def _chunk_from_text_file(
     overlap: int,
     min_tokens: int,
     min_chars: int,
-    page_map: list[tuple[int, int]] | None = None,
+    page_breaks: list[PageBreak] | None = None,
 ) -> list[Chunk]:
     """Luo chunkit suoraan tekstitiedostosta fallbackina."""
     txt_path_str = row.get("parsed_txt_path")
@@ -117,6 +218,8 @@ def _chunk_from_text_file(
             min_tokens=min_tokens,
             min_chars=min_chars,
             source="text",
+            abs_base=0,  # For text files, the base offset is 0
+            page_breaks=page_breaks,
         )
     except IOError:
         return []
@@ -150,82 +253,40 @@ def chunk_document(
 
     paper_id = row.get("id", tei_path.stem)
     chunks: list[Chunk] = []
-    page_map: list[tuple[int, int]] = []
 
     try:
         tree = etree.parse(str(tei_path))
-        ns = {"tei": "http://www.tei-c.org/ns/1.0"}
-        page_map = _get_page_map(tree)
+        full_text, sections, page_breaks = _flatten_tei(tree, include_front)
 
-        # 1. Käsittele 'front' (otsikko ja abstrakti)
-        front_element = tree.find(".//tei:front", namespaces=ns)
-        if front_element is not None:
-            title = " ".join(front_element.xpath(".//tei:title/text()", namespaces=ns))
-            abstract = " ".join(
-                front_element.xpath(".//tei:abstract//text()", namespaces=ns)
+        for section in sections:
+            effective_min_tokens = (
+                0 if section.section_id == "front" and include_front else min_tokens
             )
-            front_text = f"{title}\n\n{abstract}".strip()
-            if front_text:
-                effective_min_tokens = 0 if include_front else min_tokens
-                chunks.extend(
-                    _create_chunks_for_section(
-                        text=front_text,
-                        paper_id=paper_id,
-                        section_id="front",
-                        section_title="Front Matter",
-                        file_path=str(tei_path),
-                        max_tokens=max_tokens,
-                        overlap=overlap,
-                        min_tokens=effective_min_tokens,
-                        min_chars=min_chars,
-                        page_map=page_map,
-                    )
+            chunks.extend(
+                _create_chunks_for_section(
+                    text=section.text,
+                    paper_id=paper_id,
+                    section_id=section.section_id,
+                    section_title=section.label,
+                    file_path=str(tei_path),
+                    max_tokens=max_tokens,
+                    overlap=overlap,
+                    min_tokens=effective_min_tokens,
+                    min_chars=min_chars,
+                    abs_base=section.abs_start,
+                    page_breaks=page_breaks,
                 )
-
-        # 2. Käsittele 'body/div' (luvut ja alaluvut)
-        body_divs = tree.xpath(".//tei:body/tei:div", namespaces=ns)
-        if body_divs:
-            for i, div in enumerate(body_divs):
-                heading_element = div.find("tei:head", namespaces=ns)
-                heading = (
-                    heading_element.text
-                    if heading_element is not None
-                    else f"Section {i+1}"
-                )
-
-                etree.strip_elements(
-                    div, "{http://www.tei-c.org/ns/1.0}ref", with_tail=False
-                )
-                etree.strip_elements(
-                    div, "{http://www.tei-c.org/ns/1.0}figure", with_tail=False
-                )
-
-                section_text = " ".join(div.xpath(".//text()")).strip()
-                if section_text:
-                    chunks.extend(
-                        _create_chunks_for_section(
-                            text=section_text,
-                            paper_id=paper_id,
-                            section_id=f"body_div_{i}",
-                            section_title=heading,
-                            file_path=str(tei_path),
-                            max_tokens=max_tokens,
-                            overlap=overlap,
-                            min_tokens=min_tokens,
-                            min_chars=min_chars,
-                            page_map=page_map,
-                        )
-                    )
+            )
 
         if not chunks and use_text_txt:
             return _chunk_from_text_file(
-                row, max_tokens, overlap, min_tokens, min_chars, page_map
+                row, max_tokens, overlap, min_tokens, min_chars, page_breaks
             )
 
     except (etree.XMLSyntaxError, IOError):
         if use_text_txt:
             return _chunk_from_text_file(
-                row, max_tokens, overlap, min_tokens, min_chars, page_map
+                row, max_tokens, overlap, min_tokens, min_chars
             )
         return []
 
@@ -243,7 +304,8 @@ def _create_chunks_for_section(
     min_tokens: int,
     min_chars: int,
     source: str = "tei",
-    page_map: list[tuple[int, int]] | None = None,
+    abs_base: int = 0,  # New parameter for global base offset
+    page_breaks: list[PageBreak] | None = None,
 ) -> list[Chunk]:
     """Paloittele yhden osion teksti pienemmiksi chunkeiksi."""
     if not text or len(text) < min_chars:
@@ -272,13 +334,21 @@ def _create_chunks_for_section(
         chunk_text = enc.decode(chunk_tokens)
         unique_chunk_id = f"{paper_id}-{section_id}-{chunk_id_counter}"
 
-        # Estimate page range for the chunk
-        chunk_start_offset = text.find(
-            chunk_text
-        )  # This is a simplification, might not be exact for sub-chunks
-        chunk_end_offset = chunk_start_offset + len(chunk_text)
+        # Calculate global offsets for the chunk
+        # We need to find the start and end character index of chunk_text within the original 'text'
+        # This is more robust than text.find() if the text has been normalized
+        local_chunk_start = text.find(chunk_text)
+        if local_chunk_start == -1: # Fallback if find fails due to normalization differences
+            local_chunk_start = 0
+            # This might lead to less accurate page numbers, but prevents crashes
+            # A more robust solution would involve token-to-char mapping
+        local_chunk_end = local_chunk_start + len(chunk_text)
+
+        global_chunk_start_offset = abs_base + local_chunk_start
+        global_chunk_end_offset = abs_base + local_chunk_end
+
         page_start, page_end = _get_page_range(
-            chunk_start_offset, chunk_end_offset, page_map or []
+            global_chunk_start_offset, global_chunk_end_offset, page_breaks or []
         )
 
         chunks.append(

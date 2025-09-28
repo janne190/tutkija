@@ -1,9 +1,11 @@
+import numpy as np
 import pandas as pd
 import pytest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from src.la_pkg.rag.index import build_index
 from src.la_pkg.rag.qa import retrieve
+from chromadb.utils import embedding_functions
 
 
 # Fixture for a temporary ChromaDB directory
@@ -40,6 +42,28 @@ def dummy_chunks_df():
         "source": ["tei", "tei", "tei", "tei", "tei"],
     }
     return pd.DataFrame(data)
+
+
+# Mock embedding function for deterministic tests
+class MockEmbeddingFunction(embedding_functions.EmbeddingFunction):
+    def __call__(self, texts: list[str]) -> list[list[float]]:
+        # Return a fixed vector based on the index of the text
+        # This makes vector search deterministic
+        embeddings = []
+        for i, text in enumerate(texts):
+            # Create a simple, distinct embedding for each text
+            embedding = [float((i + j) % 7) for j in range(128)]  # Example dim 128
+            embeddings.append(embedding)
+        return embeddings
+
+
+@pytest.fixture(autouse=True)
+def mock_embedding_function():
+    with patch(
+        "chromadb.utils.embedding_functions.GoogleGenerativeAiEmbeddingFunction",
+        new=MockEmbeddingFunction,
+    ) as mock_embed_func:
+        yield mock_embed_func
 
 
 # Fixture for building a test index
@@ -148,3 +172,52 @@ def test_retrieve_no_api_key_raises_error(test_index):
     with patch("os.getenv", return_value=None):  # Simulate missing API key
         with pytest.raises(RuntimeError, match="Missing GEMINI_API_KEY/GOOGLE_API_KEY"):
             retrieve(question, index_dir, k, chunks_df, embed_model, embed_provider)
+
+
+@pytest.mark.rag
+def test_retrieve_bm25_only_hits_when_vector_fails(temp_chroma_dir, dummy_chunks_df):
+    index_dir, chunks_df = temp_chroma_dir, dummy_chunks_df
+    question = "genomic screening"  # This should hit paper1 and paper3 via BM25
+    k = 2
+    embed_model = "text-embedding-004"
+    embed_provider = "google"
+
+    # Build index with mock embedding function
+    chunks_path = index_dir / "chunks.parquet"
+    dummy_chunks_df.to_parquet(chunks_path, index=False)
+    with patch(
+        "os.getenv",
+        side_effect=lambda x: "dummy_api_key"
+        if x in ["GEMINI_API_KEY", "GOOGLE_API_KEY"]
+        else None,
+    ):
+        build_index(
+            chunks_path=chunks_path,
+            index_dir=index_dir,
+            embed_provider="google",
+            embed_model=embed_model,
+            batch_size=2,
+        )
+
+    # Mock the ChromaDB collection.query to return no vector results
+    with patch("chromadb.api.models.Collection.Collection.query") as mock_query:
+        mock_query.return_value = {
+            "ids": [[]],
+            "embeddings": None,
+            "documents": [[]],
+            "metadatas": [[]],
+            "distances": [[]],
+        }
+
+        retrieved = retrieve(
+            question, index_dir, k, chunks_df, embed_model, embed_provider
+        )
+
+        assert len(retrieved) > 0, "Expected BM25 hits even if vector search fails"
+        assert len(retrieved) <= k
+
+        retrieved_paper_ids = {chunk["paper_id"] for chunk in retrieved}
+        # "genomic screening" is in paper1 and paper3
+        assert "paper1" in retrieved_paper_ids
+        assert "paper3" in retrieved_paper_ids
+        assert "paper2" not in retrieved_paper_ids

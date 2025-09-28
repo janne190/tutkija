@@ -937,6 +937,18 @@ def qa_cli(
         help="Polku, johon QA-tulokset tallennetaan",
         show_default=True,
     ),
+    chunks_path: Optional[Path] = typer.Option(
+        None,
+        "--chunks-path",
+        help="Polku chunk-tiedostoon (oletus: index_dir/../chunks.parquet)",
+        show_default=False,
+    ),
+    audit_path: Optional[Path] = typer.Option(
+        None,
+        "--audit-path",
+        help="Polku audit-lokiin (oletus: index_dir/../logs/qa_audit.csv)",
+        show_default=False,
+    ),
 ) -> None:
     """Hae vastaus kysymykseen RAG-mallilla."""
     from .rag.qa import run_qa
@@ -949,6 +961,8 @@ def qa_cli(
             llm_provider=llm_provider,
             llm_model=llm_model,
             out_path=out,
+            chunks_path=chunks_path,
+            audit_path=audit_path,
         )
     except FileNotFoundError as e:
         typer.secho(str(e), fg=typer.colors.RED)

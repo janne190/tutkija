@@ -76,6 +76,7 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
     index_dir, chunks_df = test_qa_index
     out_path = tmp_path / "qa_output.jsonl"
     audit_path = tmp_path / "qa_audit.csv"
+    chunks_path = tmp_path / "chunks_qa.parquet" # Explicitly define chunks_path for run_qa
 
     question = "What are the key findings and methods?"
     k = 2  # Initial k, expecting guardrail to trigger
@@ -158,13 +159,20 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
     with patch(
         "os.getenv",
         side_effect=lambda x: "dummy_api_key"
-        if x in ["GEMINI_API_KEY", "GOOGLE_API_KEY"]
+        if x in ["GEMINI_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]
         else None,
     ), patch("google.generativeai.GenerativeModel") as mock_generative_model, patch(
         "src.la_pkg.rag.qa.retrieve"
-    ) as mock_retrieve:
+    ) as mock_retrieve, patch(
+        "src.la_pkg.rag.qa.MockOpenAIModel"
+    ) as mock_openai_model: # Patch the MockOpenAIModel
         # Configure mock_generative_model to return different responses for initial and retry calls
         mock_generative_model.return_value.generate_content.side_effect = [
+            mock_llm_response_initial,
+            mock_llm_response_retry,
+        ]
+        # Configure mock_openai_model to return different responses for initial and retry calls
+        mock_openai_model.return_value.generate_content.side_effect = [
             mock_llm_response_initial,
             mock_llm_response_retry,
         ]
@@ -245,9 +253,11 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
             question=question,
             index_dir=index_dir,
             k=k,
-            llm_provider="google",
-            llm_model="gemini-1.5-flash",
+            llm_provider="openai", # Test with openai provider
+            llm_model="gpt-4o-mini",
             out_path=out_path,
+            chunks_path=chunks_path,
+            audit_path=audit_path,
         )
 
     assert out_path.exists()
@@ -278,4 +288,4 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
     assert audit_df["retry_k"].iloc[0] == k + 4
     assert (
         audit_df["final_sources_used"].iloc[0] == 3
-    )  # After retry, should have 3 sources
+    ) # After retry, should have 3 sources

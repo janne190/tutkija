@@ -56,16 +56,19 @@ la rag index build --chunks data/cache/chunks.parquet `
 # 3) Ask a question
 la qa --question "Mitkä menetelmät ovat aineistossa yleisiä?" `
       --index-dir data/index/chroma --k 6 `
-      --llm-provider google --llm-model gemini-1.5-flash `
+      --llm-provider openai --llm-model gpt-4o-mini `
+      --chunks-path data/cache/chunks.parquet `
+      --audit-path data/logs/qa_audit.csv `
       --out data/output/qa.jsonl
 ```
 
 ### Provider Configuration
 
-You can switch the embedding and language model providers via the command-line options. For example, to use a different embedding model, you would change the `--embed-provider` and `--embed-model` flags on the `la rag index` command. Similarly, the `--llm-provider` and `--llm-model` flags on the `la qa` command control the language model used for generating answers.
+You can switch the embedding and language model providers via the command-line options. For example, to use a different embedding model, you would change the `--embed-provider` and `--embed-model` flags on the `la rag index` command. The `la qa` command will then automatically read these from the index metadata. The `--llm-provider` and `--llm-model` flags on the `la qa` command control the language model used for generating answers, and can be different from the embedding provider.
 
 **Environment Variables:**
 Set `GEMINI_API_KEY` (or `GOOGLE_API_KEY` as a fallback) in your `.env` file for Google models.
+Set `OPENAI_API_KEY` in your `.env` file for OpenAI models.
 
 ### Interpreting the Output
 

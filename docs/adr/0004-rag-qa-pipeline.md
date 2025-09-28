@@ -27,7 +27,7 @@ We will implement a RAG and QA pipeline with the following key components and de
     *   **Front Matter:** `--include-front` forces chunking of `front` even if below `min_tokens`.
     *   **Minimums:** `--min-tokens` and `--min-chars` control minimum chunk size.
     *   **Metadata:** `paper_id`, `section_id`, `section_title`, `chunk_id`, `text`, `n_tokens`, `page_start`, `page_end`, `file_path`, `source` (either "tei" or "text").
-    *   **Page Numbers:** Extracted from `tei:pb/@n` or estimated from text offsets. If missing, `null`.
+    *   **Page Numbers:** Extracted from `tei:pb/@n` with **global offsets** calculated from the flattened document text. If missing, `null`.
     *   **Exclusions:** `back` section (references) will be excluded from indexing.
     *   **Zero Chunks:** If no chunks are generated, an empty Parquet file with the correct schema is written to prevent crashes.
 4.  **Vector Database + Hybrid Search:**
@@ -35,7 +35,7 @@ We will implement a RAG and QA pipeline with the following key components and de
     *   **Embeddings:** `EMBED_PROVIDER=google`, `EMBED_MODEL=text-embedding-004`.
     *   **API Key:** Reads `GEMINI_API_KEY` or `GOOGLE_API_KEY` from `.env`.
     *   **Index Build:** CLI command `la rag index build`.
-    *   **Hybrid Retrieval:** Combines BM25 (top-N candidates) and vector search (Chroma top-K candidates). The union of `chunk_id`s from both methods is retrieved from Chroma, and then re-ranked (currently, Chroma's distance is used for final top-K selection from the combined set).
+    *   **Hybrid Retrieval:** Combines BM25 (top-N candidates) and vector search (Chroma top-K candidates). The union of `chunk_id`s from both methods is retrieved from Chroma. A blended scoring mechanism is applied: `score = w_vec*(-rank_vec) + w_bm25*(-rank_bm25)`, where `rank_vec` and `rank_bm25` are 0-based ranks from vector and BM25 searches respectively, and `w_vec` (e.g., 1.0) and `w_bm25` (e.g., 0.5) are configurable weights. The final top-K chunks are selected based on this blended score.
     *   **Chroma `ids`:** Set to `chunk_id` (string).
     *   **Metadata in Chroma:** `chunk_id`, `paper_id`, `section`, `page_start`, `page_end` are preserved.
 5.  **PaperQA2-like QA:**
