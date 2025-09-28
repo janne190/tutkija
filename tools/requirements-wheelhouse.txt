@@ -1,0 +1,19 @@
+# runtime
+pandas>=2.0,<2.3
+pyarrow>=14,<17
+httpx>=0.27,<0.28
+defusedxml>=0.7,<0.8
+lxml>=4.9,<5.0 ; platform_system != 'Windows'
+
+# dev / tests
+pytest>=8,<9
+pytest-mock>=3.12,<4
+respx>=0.21,<0.22
+ruff>=0.4,<0.6
+mypy>=1.8,<1.11
+
+# build-backend + tools (ettei pip yritä PyPIin)
+pip>=23,<25
+setuptools>=68,<75
+wheel>=0.41,<0.45
+build>=1.0,<2.0

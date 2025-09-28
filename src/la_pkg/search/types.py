@@ -52,6 +52,9 @@ class Paper(BaseModel):
     url: str | None = None
     source: str
     score: float | None = None
+    pdf_path: str | None = None
+    pdf_license: str | None = None
+    has_fulltext: bool = False
     # Hidden fields that don't appear in serialization and are optional
     language: str | None = Field(default=None, exclude=True)
     type: str | None = Field(default=None, exclude=True)
@@ -71,7 +74,7 @@ class Paper(BaseModel):
 
         data = super().model_dump(exclude=exclude, **kwargs)
         # Convert None values to empty strings for string fields
-        for key in ["doi", "url", "venue", "abstract"]:
+        for key in ["doi", "url", "venue", "abstract", "pdf_path", "pdf_license"]:
             if key in data and data[key] is None:
                 data[key] = ""
         return data

@@ -13,7 +13,15 @@ use_asreview = true
 recall_target = 0.9
 
 [pdf]
+dir = "data/pdfs"
+audit_log = "data/logs/pdf_audit.csv"
+timeout_s = 30
+retries = 2
+throttle_ms = 200
 grobid_url = "http://localhost:8070"
+
+[unpaywall]
+email = ""
 
 [rag]
 vector_store = "chroma"
