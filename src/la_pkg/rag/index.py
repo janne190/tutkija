@@ -21,6 +21,7 @@ class IndexMeta(BaseModel):
     vector_dim: int
     embed_provider: str
     embed_model: str
+    chunks_path: str # New field to store the path to the chunks file
 
 
 def build_index(
@@ -110,6 +111,7 @@ def build_index(
         vector_dim=vector_dim,
         embed_provider=embed_provider,
         embed_model=embed_model,
+        chunks_path=str(chunks_path), # Store chunks_path as a string
     )
     meta_path = index_dir / "index_meta.json"
     with meta_path.open("w", encoding="utf-8") as f:

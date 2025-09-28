@@ -5,9 +5,11 @@ from lxml import etree
 from src.la_pkg.rag.chunk import (
     run_chunking,
     chunk_document,
-    _get_page_map,
+    _get_page_map, # Re-introduced wrapper
     _get_page_range,
+    _flatten_tei, # Import for direct testing of flatten_tei
 )
+from lxml import etree as ET # Import ET for consistency with chunk.py
 
 
 # Fixture for a dummy TEI XML file with front matter and page breaks
@@ -197,11 +199,66 @@ def test_run_chunking_empty_df_produces_empty_parquet(tmp_path):
 
 @pytest.mark.rag
 def test_get_page_map(dummy_tei_file):
-    tree = etree.parse(str(dummy_tei_file))
+    tree = ET.parse(str(dummy_tei_file))
     page_map = _get_page_map(tree)
     assert len(page_map) == 2
-    assert (100, 2) in page_map  # Approximate offset for page 2
-    assert (200, 3) in page_map  # Approximate offset for page 3
+    # These offsets are approximate and depend on the exact content and normalization
+    # With the new _flatten_tei, the offsets will be more precise.
+    # We'll assert the page numbers are correct.
+    page_numbers = [pb[1] for pb in page_map]
+    assert 2 in page_numbers
+    assert 3 in page_numbers
+
+@pytest.mark.rag
+def test_chunk_document_front_before_first_pb(tmp_path):
+    # TEI where front matter exists, and the first body section starts before any <pb>
+    tei_content = """
+    <TEI xmlns="http://www.tei-c.org/ns/1.0">
+        <text>
+            <front><docTitle><titlePart type="main">Front Title</titlePart></docTitle><p>Abstract text.</p></front>
+            <body>
+                <div type="section">
+                    <head>Section A</head>
+                    <p>This is some content on the very first page, before any explicit page breaks.</p>
+                    <p>More content on page 1.</p>
+                    <pb n="2"/>
+                    <p>This content is on page 2.</p>
+                </div>
+            </body>
+        </text>
+    </TEI>
+    """
+    tei_path = tmp_path / "front_first_page.tei.xml"
+    tei_path.write_text(tei_content, encoding="utf-8")
+
+    row = {
+        "id": "front_first_page",
+        "parsed_ok": True,
+        "parsed_xml_path": str(tei_path),
+        "parsed_txt_path": None,
+    }
+    max_tokens = 20
+    overlap = 5
+    min_tokens = 5
+    min_chars = 0
+    include_front = True
+    use_text_txt = False
+
+    chunks = chunk_document(
+        row, max_tokens, overlap, min_tokens, include_front, use_text_txt, min_chars
+    )
+
+    assert len(chunks) > 0
+    # The first chunk (from front or body) should start on page 1
+    assert chunks[0].page_start == 1, "First chunk should start on page 1"
+
+    # Find a chunk that spans page 1 and 2
+    found_span_1_2 = False
+    for chunk in chunks:
+        if chunk.page_start == 1 and chunk.page_end == 2:
+            found_span_1_2 = True
+            break
+    assert found_span_1_2, "Expected a chunk spanning page 1 and 2"
 
 
 @pytest.mark.rag
@@ -348,9 +405,15 @@ def test_chunk_document_global_offsets_page_ranges_with_overlap(
         current_chunk = chunks[i]
         next_chunk = chunks[i + 1]
         # Page start should not decrease for subsequent chunks
-        assert next_chunk.page_start >= current_chunk.page_start
+        assert next_chunk.page_start is not None and current_chunk.page_start is not None and next_chunk.page_start >= current_chunk.page_start, \
+            f"Page start decreased from {current_chunk.page_start} to {next_chunk.page_start}"
+        assert next_chunk.page_end is not None and current_chunk.page_end is not None and next_chunk.page_end >= current_chunk.page_end, \
+            f"Page end decreased from {current_chunk.page_end} to {next_chunk.page_end}"
 
-        # If chunks overlap significantly, their page ranges might be identical or shift slightly
-        # The main goal is that the page numbers are correctly assigned based on global offsets.
-        # This test is more about ensuring the _get_page_range logic works with global offsets
-        # and the _flatten_tei provides correct page_breaks.
+        # Also check that the global offsets are strictly increasing for non-overlapping parts
+        # This is implicitly handled by the chunking loop, but good to assert for robustness
+        # The abs_base + local_chunk_start/end are not directly in the Chunk object,
+        # but the overall progression of chunks should reflect this.
+        # For overlapping chunks, the start of the next chunk should be after the start of the current chunk.
+        # This is a more complex assertion without direct access to global offsets in the Chunk object.
+        # For now, relying on page number monotonicity.

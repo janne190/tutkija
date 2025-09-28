@@ -11,6 +11,7 @@ import pandas as pd
 import tiktoken
 from lxml import etree
 from pydantic import BaseModel
+from lxml import etree as ET # Use ET for etree to avoid conflict with _get_page_map parameter
 
 
 class Chunk(BaseModel):
@@ -40,12 +41,21 @@ def _normalize_whitespace(text: str) -> str:
     return " ".join(text.split()).strip()
 
 
+def _get_page_map(tree: ET._ElementTree) -> list[tuple[int, int]]:
+    """
+    Palauttaa listan (abs_offset, page_no). Säilyttää taaksepäin-yhteensopivuuden.
+    """
+    # _flatten_tei expects the root element, not the entire tree
+    full_text, sections, page_breaks = _flatten_tei(tree.getroot(), include_front=True) # Assuming include_front=True for page map
+    return [(pb.abs_offset, pb.page_no) for pb in page_breaks]
+
+
 def _flatten_tei(
-    tree: etree._ElementTree, include_front: bool
+    root: ET._Element, include_front: bool
 ) -> tuple[str, list[SectionSpan], list[PageBreak]]:
     """
     Flattens a TEI XML tree into a single string, extracts sections, and page breaks
-    with global offsets.
+    with global offsets in a single pass.
     """
     ns = {"tei": "http://www.tei-c.org/ns/1.0"}
     full_text_parts: list[str] = []
@@ -53,53 +63,50 @@ def _flatten_tei(
     page_breaks: list[PageBreak] = []
     abs_cursor = 0
 
+    def emit(text: str):
+        nonlocal abs_cursor
+        normalized_text = _normalize_whitespace(text)
+        if normalized_text:
+            full_text_parts.append(normalized_text)
+            abs_cursor += len(normalized_text)
+
     # Process front matter
     if include_front:
-        front_element = tree.find(".//tei:front", namespaces=ns)
+        front_element = root.find(".//tei:front", namespaces=ns)
         if front_element is not None:
-            title = _normalize_whitespace(
-                " ".join(front_element.xpath(".//tei:title/text()", namespaces=ns))
-            )
-            abstract = _normalize_whitespace(
-                " ".join(front_element.xpath(".//tei:abstract//text()", namespaces=ns))
+            title = " ".join(front_element.xpath(".//tei:title/text()", namespaces=ns))
+            abstract = " ".join(
+                front_element.xpath(".//tei:abstract//text()", namespaces=ns)
             )
             front_text = f"{title}\n\n{abstract}".strip()
             if front_text:
-                normalized_front_text = _normalize_whitespace(front_text)
+                start_offset = abs_cursor
+                emit(front_text)
                 sections.append(
                     SectionSpan(
                         "front",
+                        start_offset,
                         abs_cursor,
-                        abs_cursor + len(normalized_front_text),
-                        normalized_front_text,
+                        _normalize_whitespace(front_text),
                         "Front Matter",
                     )
                 )
-                full_text_parts.append(normalized_front_text)
-                abs_cursor += len(normalized_front_text)
                 if abs_cursor > 0:
-                    full_text_parts.append(" ")  # Add a space between sections
-                    abs_cursor += 1
+                    emit(" ") # Add a space between sections
 
     # Process body divisions
-    body_divs = tree.xpath(".//tei:body/tei:div", namespaces=ns)
+    body_divs = root.xpath(".//tei:body/tei:div", namespaces=ns)
     for i, div in enumerate(body_divs):
-        # Extract page breaks within this div
-        for pb_element in div.xpath(".//tei:pb", namespaces=ns):
-            page_num = pb_element.get("n")
-            if page_num and page_num.isdigit():
-                # Calculate offset relative to the current full_text_parts length
-                pb_offset_in_full_text = abs_cursor + len(
-                    _normalize_whitespace(
-                        " ".join(
-                            div.xpath(
-                                f".//text()[preceding::tei:pb[@n='{page_num}']]",
-                                namespaces=ns,
-                            )
-                        )
-                    )
-                )
-                page_breaks.append(PageBreak(pb_offset_in_full_text, int(page_num)))
+        # Record page breaks encountered during traversal
+        for element in div.iter():
+            if element.tag == "{http://www.tei-c.org/ns/1.0}pb":
+                page_num = element.get("n")
+                if page_num and page_num.isdigit():
+                    page_breaks.append(PageBreak(abs_cursor, int(page_num)))
+            if element.text:
+                emit(element.text)
+            if element.tail:
+                emit(element.tail)
 
         heading_element = div.find("tei:head", namespaces=ns)
         heading = (
@@ -116,34 +123,19 @@ def _flatten_tei(
         normalized_section_text = _normalize_whitespace(section_raw_text)
 
         if normalized_section_text:
+            start_offset = abs_cursor
+            emit(normalized_section_text)
             sections.append(
                 SectionSpan(
                     f"body_div_{i}",
+                    start_offset,
                     abs_cursor,
-                    abs_cursor + len(normalized_section_text),
                     normalized_section_text,
                     heading,
                 )
             )
-            full_text_parts.append(normalized_section_text)
-            abs_cursor += len(normalized_section_text)
             if i < len(body_divs) - 1:
-                full_text_parts.append(" ")  # Add a space between sections
-                abs_cursor += 1
-
-    # Re-collect page breaks from the entire tree after stripping elements
-    # This ensures page breaks are correctly positioned relative to the final full_text
-    page_breaks = []
-    current_offset_for_pb = 0
-    for element in tree.iter():
-        if element.tag == "{http://www.tei-c.org/ns/1.0}pb":
-            page_num = element.get("n")
-            if page_num and page_num.isdigit():
-                page_breaks.append(PageBreak(current_offset_for_pb, int(page_num)))
-        if element.text:
-            current_offset_for_pb += len(_normalize_whitespace(element.text))
-        if element.tail:
-            current_offset_for_pb += len(_normalize_whitespace(element.tail))
+                emit(" ") # Add a space between sections
 
     full_text = "".join(full_text_parts).strip()
     return full_text, sections, sorted(page_breaks, key=lambda x: x.abs_offset)
@@ -321,6 +313,17 @@ def _create_chunks_for_section(
     chunk_id_counter = 0
     start_token_idx = 0
 
+    # Pre-calculate character start positions for each word in the normalized text
+    words = _normalize_whitespace(text).split()
+    char_starts = []
+    current_char_offset = 0
+    for i, word in enumerate(words):
+        if i > 0:
+            current_char_offset += 1  # Account for the single space between words
+        char_starts.append(current_char_offset)
+        current_char_offset += len(word)
+    joined_text = " ".join(words) # This is the normalized text we'll use for char offsets
+
     while start_token_idx < len(tokens):
         end_token_idx = start_token_idx + max_tokens
         chunk_tokens = tokens[start_token_idx:end_token_idx]
@@ -334,15 +337,30 @@ def _create_chunks_for_section(
         chunk_text = enc.decode(chunk_tokens)
         unique_chunk_id = f"{paper_id}-{section_id}-{chunk_id_counter}"
 
-        # Calculate global offsets for the chunk
-        # We need to find the start and end character index of chunk_text within the original 'text'
-        # This is more robust than text.find() if the text has been normalized
-        local_chunk_start = text.find(chunk_text)
-        if local_chunk_start == -1: # Fallback if find fails due to normalization differences
+        # Find the character offsets for the chunk_text within the normalized section text
+        # This is more robust than text.find() for sub-chunks and normalization differences
+        # We need to find the token indices of the chunk_text within the original tokens
+        # Then map those token indices to character offsets using the pre-calculated char_starts
+        
+        # A more robust way to get local_chunk_start/end without text.find()
+        # is to re-tokenize the chunk_text and find its position in the original tokens.
+        # However, given the current tokenization approach, a simpler method is to
+        # find the character span of the decoded chunk_text within the *normalized* section text.
+        # This assumes that `enc.decode(chunk_tokens)` produces text that is a substring
+        # of `_normalize_whitespace(text)`.
+
+        # For now, we'll use a simplified approach that relies on the decoded chunk_text
+        # being a direct substring of the normalized section text.
+        # A more advanced solution would involve token-to-character mapping during tokenization.
+        
+        # Fallback to 0,0 if chunk_text is not found in joined_text (should not happen with proper normalization)
+        local_chunk_start = joined_text.find(chunk_text)
+        if local_chunk_start == -1:
             local_chunk_start = 0
-            # This might lead to less accurate page numbers, but prevents crashes
-            # A more robust solution would involve token-to-char mapping
-        local_chunk_end = local_chunk_start + len(chunk_text)
+            local_chunk_end = len(chunk_text)
+        else:
+            local_chunk_end = local_chunk_start + len(chunk_text)
+
 
         global_chunk_start_offset = abs_base + local_chunk_start
         global_chunk_end_offset = abs_base + local_chunk_end

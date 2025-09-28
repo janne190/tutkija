@@ -52,8 +52,9 @@ def dummy_chunks_df_qa():
 # Fixture for building a test index for QA
 @pytest.fixture
 def test_qa_index(temp_chroma_dir, dummy_chunks_df_qa):
-    chunks_path = temp_chroma_dir / "chunks_qa.parquet"
-    dummy_chunks_df_qa.to_parquet(chunks_path, index=False)
+    # Create a dummy chunks.parquet file in the temp_chroma_dir
+    chunks_path_in_index_dir = temp_chroma_dir / "chunks.parquet"
+    dummy_chunks_df_qa.to_parquet(chunks_path_in_index_dir, index=False)
 
     with patch(
         "os.getenv",
@@ -62,7 +63,7 @@ def test_qa_index(temp_chroma_dir, dummy_chunks_df_qa):
         else None,
     ):
         build_index(
-            chunks_path=chunks_path,
+            chunks_path=chunks_path_in_index_dir, # Use the path within temp_chroma_dir
             index_dir=temp_chroma_dir,
             embed_provider="google",
             embed_model="text-embedding-004",
@@ -76,7 +77,8 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
     index_dir, chunks_df = test_qa_index
     out_path = tmp_path / "qa_output.jsonl"
     audit_path = tmp_path / "qa_audit.csv"
-    chunks_path = tmp_path / "chunks_qa.parquet" # Explicitly define chunks_path for run_qa
+    # chunks_path is now resolved by run_qa's internal logic, no need to pass explicitly
+    # chunks_path = tmp_path / "chunks_qa.parquet"
 
     question = "What are the key findings and methods?"
     k = 2  # Initial k, expecting guardrail to trigger

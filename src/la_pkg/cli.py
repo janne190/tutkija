@@ -940,13 +940,13 @@ def qa_cli(
     chunks_path: Optional[Path] = typer.Option(
         None,
         "--chunks-path",
-        help="Polku chunk-tiedostoon (oletus: index_dir/../chunks.parquet)",
+        help="Polku chunk-tiedostoon (oletus: argumentti > index_meta.json > data/cache/chunks.parquet)",
         show_default=False,
     ),
     audit_path: Optional[Path] = typer.Option(
         None,
         "--audit-path",
-        help="Polku audit-lokiin (oletus: index_dir/../logs/qa_audit.csv)",
+        help="Polku audit-lokiin (oletus: argumentti > index_dir/../logs/qa_audit.csv)",
         show_default=False,
     ),
 ) -> None:

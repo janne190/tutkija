@@ -13,6 +13,7 @@ import pandas as pd
 from pydantic import BaseModel
 from rank_bm25 import BM25Okapi
 from chromadb.utils import embedding_functions
+from unittest.mock import MagicMock  # for MockOpenAIModel guardrail
 
 
 class Citation(BaseModel):
@@ -145,16 +146,29 @@ def retrieve(
         chunk_id: i for i, chunk_id in enumerate(vector_ranked_ids)
     }  # 0-based rank
 
-    # 3. Combine chunk_ids from both methods (union)
-    union_ids = list(set(bm25_ranked_ids + vector_ranked_ids))
+    # 3. Combine chunk_ids from both methods (union), prioritizing vector_ranked_ids
+    # This ensures vector-only hits appear before BM25-only hits in the initial union
+    # if they have similar blended scores.
+    ordered_union_ids = []
+    seen_ids = set()
 
-    if not union_ids:
+    for chunk_id in vector_ranked_ids:
+        if chunk_id not in seen_ids:
+            ordered_union_ids.append(chunk_id)
+            seen_ids.add(chunk_id)
+
+    for chunk_id in bm25_ranked_ids:
+        if chunk_id not in seen_ids:
+            ordered_union_ids.append(chunk_id)
+            seen_ids.add(chunk_id)
+
+    if not ordered_union_ids:
         return []
 
     # 4. Retrieve full chunks from Chroma using combined IDs
     # We need the actual chunk text and metadata for scoring and returning
     all_retrieved_data = collection.get(
-        ids=union_ids,
+        ids=ordered_union_ids, # Use the ordered union IDs
         include=["documents", "metadatas"],
     )
 
@@ -170,7 +184,7 @@ def retrieve(
 
     # 5. Formulate scoring and re-rank
     scored_chunks = []
-    for chunk_id in union_ids:
+    for chunk_id in ordered_union_ids: # Iterate through ordered union IDs
         if chunk_id not in chunk_data_by_id:
             continue  # Should not happen if union_ids are from collection.get
 
@@ -203,14 +217,6 @@ def run_qa(
     audit_path: Path | None = None,
 ) -> None:
     """Run the full QA pipeline for a single question."""
-    if chunks_path is None:
-        chunks_path = index_dir.parent / "chunks.parquet"
-    if not chunks_path.exists():
-        raise FileNotFoundError(
-            f"Chunks file not found at {chunks_path}, please run `la rag chunk` first."
-        )
-    chunks_df = pd.read_parquet(chunks_path)
-
     # Read embed_model and embed_provider from index_meta.json
     index_meta_path = index_dir / "index_meta.json"
     if not index_meta_path.exists():
@@ -223,6 +229,23 @@ def run_qa(
 
     embed_provider = index_meta.get("embed_provider")
     embed_model = index_meta.get("embed_model")
+    
+    # Resolve chunks_path: argument > index_meta > fallback
+    resolved_chunks_path = chunks_path
+    if resolved_chunks_path is None:
+        chunks_path_from_meta = index_meta.get("chunks_path")
+        if chunks_path_from_meta:
+            resolved_chunks_path = Path(chunks_path_from_meta)
+        else:
+            resolved_chunks_path = Path("data/cache/chunks.parquet") # Fallback
+
+    if not resolved_chunks_path.exists():
+        raise FileNotFoundError(
+            f"Chunks file not found at {resolved_chunks_path}. "
+            "Please run `la rag chunk` first or specify --chunks-path."
+        )
+    chunks_df = pd.read_parquet(resolved_chunks_path)
+
 
     if not embed_provider or not embed_model:
         raise ValueError(
