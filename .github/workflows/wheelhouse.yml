@@ -1,0 +1,49 @@
+name: Wheelhouse
+
+on:
+  workflow_dispatch:
+    inputs:
+      pyver:
+        description: "CPython version"
+        required: true
+        default: "3.11"
+
+jobs:
+  build-wheelhouse:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ["win_amd64", "manylinux2014_x86_64"]
+        impl: ["cp"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ github.event.inputs.pyver }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ github.event.inputs.pyver }}
+
+      - name: Prepare wheelhouse directory
+        run: mkdir -p wheelhouse
+
+      - name: Download wheels for target platform
+        run: |
+          PYVER_NODOT=$(python - <<'PY'
+          import sys
+          version = "${{ github.event.inputs.pyver }}".split(".")
+          print(f"{version[0]}{version[1]}")
+          PY
+          )
+          pip download --only-binary=:all: \
+            --platform ${{ matrix.platform }} \
+            --implementation ${{ matrix.impl }} \
+            --python-version $PYVER_NODOT \
+            -r tools/requirements-wheelhouse.txt \
+            -d wheelhouse
+
+      - name: Upload wheelhouse artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheelhouse-${{ matrix.platform }}-py${{ github.event.inputs.pyver }}
+          path: wheelhouse/
+          if-no-files-found: error

@@ -27,3 +27,6 @@ Thumbs.db
 
 # dotenv
 .env
+
+# Wheelhouse artifacts
+wheelhouse/

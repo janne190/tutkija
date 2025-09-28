@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from pathlib import Path
 from typing import Iterable, Optional, Any, Mapping, cast
@@ -405,6 +406,166 @@ def screen(
         f"seeds={stats['seeds_count']} "
         f"fallback={stats['fallback']} "
         f"rules={json.dumps(rule_counts)}"
+    )
+
+
+@app.command(name="pdf")
+def fetch_pdfs(
+    input_path: Path = typer.Option(
+        Path("data/cache/merged.parquet"),
+        "--in",
+        help="Syöte Parquet tiedosto, tyypillisesti la search-all tulos",
+        show_default=True,
+    ),
+    output_path: Path = typer.Option(
+        Path("data/cache/with_pdfs.parquet"),
+        "--out",
+        help="Tulos Parquet polku PDF-metatiedoilla",
+        show_default=True,
+    ),
+    pdf_dir: Path = typer.Option(
+        Path("data/pdfs"),
+        "--pdf-dir",
+        help="Hakemisto johon PDF-tiedostot tallennetaan",
+        show_default=True,
+    ),
+    audit_log: Path = typer.Option(
+        Path("data/logs/pdf_audit.csv"),
+        "--log",
+        help="CSV audit-loki joka sisältää lataustulokset",
+        show_default=True,
+    ),
+    mailto: str = typer.Option(
+        "",
+        "--mailto",
+        help="Unpaywall email parametri (asetetaan myös UNPAYWALL_EMAIL ympäristömuuttujasta)",
+    ),
+    timeout: int = typer.Option(
+        30,
+        "--timeout",
+        help="HTTP aikakatkaisu sekunneissa",
+        show_default=True,
+    ),
+    retries: int = typer.Option(
+        2,
+        "--retries",
+        help="Kuinka monta uudelleenyritystä",
+        show_default=True,
+    ),
+    throttle: int = typer.Option(
+        200,
+        "--throttle",
+        help="Viive millisekunteina pyyntöjen välillä",
+        show_default=True,
+    ),
+) -> None:
+    """Lataa PDF:t arXivista, PMC:stä ja Unpaywallista."""
+
+    if not input_path.exists():
+        typer.secho(f"Syöte puuttuu: {input_path}", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    from .pdf.download import download_all
+
+    df = pd.read_parquet(input_path)
+    result = download_all(
+        df,
+        pdf_dir,
+        audit_log,
+        timeout_s=timeout,
+        retries=retries,
+        throttle_ms=throttle,
+        unpaywall_email=mailto or os.environ.get("UNPAYWALL_EMAIL", ""),
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    result.to_parquet(output_path, index=False)
+
+    fetched = int(result["has_fulltext"].sum()) if "has_fulltext" in result else 0
+    typer.echo(
+        "PDF fetch OK | "
+        f"downloaded={fetched} "
+        f"total={len(result)} "
+        f"out={output_path} "
+        f"audit={audit_log}"
+    )
+
+
+@app.command(name="parse")
+def parse_pdfs(
+    input_path: Path = typer.Option(
+        Path("data/cache/with_pdfs.parquet"),
+        "--in",
+        help="Syöte Parquet tiedosto PDF-polkujen kanssa",
+        show_default=True,
+    ),
+    output_path: Path = typer.Option(
+        Path("data/cache/parsed.parquet"),
+        "--out",
+        help="Tulos Parquet polku jonne parse-metadata kirjoitetaan",
+        show_default=True,
+    ),
+    parsed_dir: Path = typer.Option(
+        Path("data/parsed"),
+        "--parsed-dir",
+        help="Hakemisto jonne TEI ja tekstit tallennetaan",
+        show_default=True,
+    ),
+    grobid_url: str = typer.Option(
+        "http://localhost:8070",
+        "--grobid-url",
+        help="GROBID-palvelun base URL",
+        show_default=True,
+    ),
+    err_log: Path = typer.Option(
+        Path("data/logs/parse_errors.csv"),
+        "--err-log",
+        help="CSV polku parse-virheille",
+        show_default=True,
+    ),
+    sample: int | None = typer.Option(
+        None,
+        "--sample",
+        help="Prosessoi vain ensimmäiset N riviä (debug)",
+    ),
+) -> None:
+    """Jäsennä ladatut PDF:t GROBID-palvelulla."""
+
+    if not input_path.exists():
+        typer.secho(f"Syöte puuttuu: {input_path}", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    from .parse.run import parse_all
+
+    df = pd.read_parquet(input_path)
+    result = parse_all(
+        df,
+        parsed_dir,
+        grobid_url,
+        err_log,
+        sample=sample,
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    result.to_parquet(output_path, index=False)
+
+    if sample is None:
+        processed_indices = result.index
+    else:
+        processed_indices = result.index[: max(sample, 0)]
+    processed_count = len(processed_indices)
+    processed_display = processed_count if sample is not None else len(result)
+    success = (
+        int(result.loc[processed_indices, "parsed_ok"].sum())
+        if processed_count and "parsed_ok" in result
+        else 0
+    )
+    typer.echo(
+        "Parse OK | "
+        f"parsed={success} "
+        f"processed={processed_display} "
+        f"out={output_path} "
+        f"errors={err_log}"
     )
 
 

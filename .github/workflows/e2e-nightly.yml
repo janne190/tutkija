@@ -6,6 +6,13 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
+    services:
+      grobid:
+        image: ghcr.io/kermitt2/grobid:latest
+        ports:
+          - "8070:8070"
+    env:
+      UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,8 +24,7 @@ jobs:
         run: |
           uv venv
           . .venv/bin/activate
-          uv pip install -e .
-          uv pip install ruff mypy pytest
+          uv pip install -e ".[dev,parse]"
       - name: Smoke, la hello
         run: |
           . .venv/bin/activate
@@ -31,6 +37,18 @@ jobs:
           set -euo pipefail
           . .venv/bin/activate
           la search-all --topic "genomic screening cancer" --out data/cache/merged.parquet
+
+      - name: Live pdf fetch
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la pdf --in data/cache/merged.parquet --out data/cache/with_pdfs.parquet --pdf-dir data/pdfs --log data/logs/pdf_audit.csv --mailto "$UNPAYWALL_EMAIL" --timeout 30 --retries 2 --throttle 200
+
+      - name: Live parse smoke
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          la parse --in data/cache/with_pdfs.parquet --out data/cache/parsed.parquet --parsed-dir data/parsed --grobid-url http://localhost:8070 --err-log data/logs/parse_errors.csv --sample 20
 
       - name: Live screen smoke
         run: |
@@ -88,4 +106,26 @@ if not out_path.exists():
     raise SystemExit(f'out_path ei osoita tiedostoon: {out_path}')
 
 print('screen_log viimeinen rivi OK', last)
+PY
+
+      - name: Validate pdf/parse outcomes
+        run: |
+          set -euo pipefail
+          . .venv/bin/activate
+          python - <<'PY'
+import pandas as pd
+
+pdf_frame = pd.read_parquet('data/cache/with_pdfs.parquet')
+parsed_frame = pd.read_parquet('data/cache/parsed.parquet')
+
+pdf_ok = int(pdf_frame.get('has_fulltext', pd.Series(dtype=int)).sum())
+parsed_ok = int(parsed_frame.get('parsed_ok', pd.Series(dtype=int)).sum())
+
+print('PDF ok:', pdf_ok, '/', len(pdf_frame))
+print('Parsed ok:', parsed_ok, '/', len(parsed_frame))
+
+if len(parsed_frame) > 0:
+    ratio = parsed_ok / len(parsed_frame)
+    if ratio < 0.8:
+        raise SystemExit(f'parsed_ok ratio too low: {ratio:.2f}')
 PY
