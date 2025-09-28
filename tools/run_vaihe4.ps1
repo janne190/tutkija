@@ -5,6 +5,7 @@
 [CmdletBinding()]
 param(
   [switch]$SkipDiscover,
+  [int]$Limit = 20,
   [string]$MetadataPath = "data/cache/merged.parquet",
   [string]$SeedCsv = "tools/seed_urls.csv",
   [string]$PdfIndex = "data/cache/pdf_index.parquet",
@@ -102,8 +103,8 @@ if (-not $SkipDiscover) {
   if (-not (Test-Path $MetadataPath) -and -not (Test-Path $SeedCsv)) {
     Write-Warn "Neither metadata parquet ($MetadataPath) nor seed CSV ($SeedCsv) found; skipping discovery."
   } else {
-    $discoverArgs = @('pdf', 'discover', '--out', $PdfIndex, '--seed-csv', $SeedCsv, '--in', $MetadataPath)
-    Invoke-La @discoverArgs
+    $discoverArgs = @('--out', $PdfIndex, '--seed-csv', $SeedCsv, '--in', $MetadataPath, '--limit', $Limit)
+    Invoke-La 'pdf' 'discover' @discoverArgs
     Write-Ok "PDF index written to $PdfIndex"
   }
 } else {

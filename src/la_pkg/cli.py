@@ -451,6 +451,12 @@ def discover_pdfs(
         help="Kirjoitettava PDF-indeksi Parquet muodossa",
         show_default=True,
     ),
+    limit: int | None = typer.Option(
+        None,
+        "--limit",
+        min=1,
+        help="Rajaa käsiteltävien rivien määrää",
+    ),
 ) -> None:
     """Perusta PDF-indeksi ja rikasta se tarjoajatiedoilla."""
 
@@ -472,6 +478,9 @@ def discover_pdfs(
         raise typer.Exit(code=1)
 
     frame = frame.copy()
+    if limit is not None:
+        frame = frame.iloc[:limit].copy()
+
     if "source" not in frame.columns:
         frame["source"] = source_kind
     else:

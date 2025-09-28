@@ -100,6 +100,76 @@ def test_pdf_discover_seed_fallback(tmp_path: Path) -> None:
     assert frame.loc[0, "pdf_discovery_source"] == "seeds"
 
 
+def test_pdf_discover_limit_truncates_metadata(tmp_path: Path) -> None:
+    runner = CliRunner()
+    records = [
+        {
+            "id": f"oa-{idx}",
+            "title": f"Article {idx}",
+            "url": f"https://arxiv.org/abs/2101.0000{idx}",
+            "doi": f"10.1/demo{idx}",
+            "source": "openalex",
+        }
+        for idx in range(4)
+    ]
+    in_path = tmp_path / "merged.parquet"
+    pd.DataFrame(records).to_parquet(in_path, index=False)
+    out_path = tmp_path / "pdf_index.parquet"
+
+    cli_result = runner.invoke(
+        cli_module.app,
+        [
+            "pdf",
+            "discover",
+            "--in",
+            str(in_path),
+            "--out",
+            str(out_path),
+            "--limit",
+            "2",
+        ],
+    )
+
+    assert cli_result.exit_code == 0, cli_result.output
+    frame = pd.read_parquet(out_path)
+    assert len(frame) == 2
+    assert frame["id"].tolist() == ["oa-0", "oa-1"]
+
+
+def test_pdf_discover_limit_truncates_seed_source(tmp_path: Path) -> None:
+    runner = CliRunner()
+    seed_csv = tmp_path / "seed_urls.csv"
+    rows = [
+        "title,url,doi",
+        "First seed,https://arxiv.org/abs/1234.5678,10.9/demo1",
+        "Second seed,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7654321/,",
+    ]
+    seed_csv.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    out_path = tmp_path / "pdf_index.parquet"
+
+    cli_result = runner.invoke(
+        cli_module.app,
+        [
+            "pdf",
+            "discover",
+            "--in",
+            str(tmp_path / "missing.parquet"),
+            "--seed-csv",
+            str(seed_csv),
+            "--out",
+            str(out_path),
+            "--limit",
+            "1",
+        ],
+    )
+
+    assert cli_result.exit_code == 0, cli_result.output
+    frame = pd.read_parquet(out_path)
+    assert len(frame) == 1
+    assert frame.loc[0, "title"] == "First seed"
+    assert frame.loc[0, "pdf_discovery_source"] == "seeds"
+
+
 def test_pdf_download_updates_index(tmp_path: Path, monkeypatch) -> None:
     runner = CliRunner()
     index_path = tmp_path / "pdf_index.parquet"
