@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
-from src.la_pkg.runner.schemas import NodeMetrics, RunState
+from la_pkg.runner.schemas import NodeMetrics, RunState
 
 
 class BudgetTracker:
@@ -41,9 +41,9 @@ class BudgetTracker:
         metrics.token_count = token_count
         return metrics
 
-    def update_run_state(self, state: RunState, node_name: str, llm_cost_usd: float = 0.0, token_count: int = 0) -> RunState:
+    def update_run_state(self, state: RunState, node_name: str, llm_cost_usd: float = 0.0, token_count: int = 0, status: str = "success", error_message: Optional[str] = None) -> RunState:
         """Updates the overall run state with node metrics and budget info."""
-        metrics = self.end_node(node_name, llm_cost_usd=llm_cost_usd, token_count=token_count)
+        metrics = self.end_node(node_name, llm_cost_usd=llm_cost_usd, token_count=token_count, status=status, error_message=error_message)
         state.metrics.append(metrics)
         state.total_llm_cost_usd += metrics.llm_cost_usd
         state.total_duration_s += metrics.duration_s

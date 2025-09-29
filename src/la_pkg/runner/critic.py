@@ -5,9 +5,9 @@
 import json
 import pandas as pd
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Optional, Tuple
 
-from src.la_pkg.runner.schemas import CriticReport, RunState, Patch
+from la_pkg.runner.schemas import CriticReport, RunState, Patch
 
 
 class CriticAgent:
@@ -28,8 +28,16 @@ class CriticAgent:
             question = qa_entry.get("question", "N/A")
             citations = qa_entry.get("citations", [])
             unique_paper_ids = set()
-            for citation in citations:
-                unique_paper_ids.add(citation.get("paper_id"))
+            # Use "sources_used" if available, otherwise aggregate from "claims" -> "citations"
+            if "sources_used" in qa_entry and qa_entry["sources_used"]:
+                unique_paper_ids.update(qa_entry["sources_used"])
+            else:
+                claims = qa_entry.get("claims", [])
+                for claim in claims:
+                    citations = claim.get("citations", [])
+                    for citation in citations:
+                        if citation.get("paper_id"):
+                            unique_paper_ids.add(citation.get("paper_id"))
 
             if len(unique_paper_ids) < self.config.require_sources:
                 findings.append(
@@ -80,12 +88,24 @@ class CriticAgent:
         return findings
 
     def _check_rule_3_chunk_references(
-        self, qa_results: List[Dict[str, Any]], chunk_metadata: Dict[str, Any]
+        self, qa_results: List[Dict[str, Any]], index_meta: Dict[str, Any]
     ) -> List[str]:
         """
         Rule 3: Citations refer to an indexed chunk (chunk_id found), and page range intersects chunk's page interval.
         """
         findings = []
+        chunks_path = index_meta.get("chunks_path")
+        if not chunks_path or not Path(chunks_path).exists():
+            findings.append("WARNING: Chunks parquet path not found in index metadata or file does not exist. Skipping chunk reference check.")
+            return findings
+
+        try:
+            chunks_df = pd.read_parquet(chunks_path)
+            chunk_metadata = {row["chunk_id"]: row for _, row in chunks_df.iterrows()}
+        except Exception as e:
+            findings.append(f"ERROR: Failed to load chunks from {chunks_path}: {e}. Skipping chunk reference check.")
+            return findings
+
         for qa_entry in qa_results:
             claims = qa_entry.get("claims", [])
             for claim in claims:
@@ -94,29 +114,48 @@ class CriticAgent:
                     chunk_id = citation.get("chunk_id")
                     page_start = citation.get("page_start")
                     page_end = citation.get("page_end")
+                    paper_id = citation.get("paper_id")
 
-                    if chunk_id not in chunk_metadata:
-                        findings.append(
-                            f"FAIL: Citation for chunk_id '{chunk_id}' in claim '{claim.get('text', 'N/A')}' "
-                            f"does not refer to an existing indexed chunk."
-                        )
-                        continue
+                    if chunk_id:
+                        if chunk_id not in chunk_metadata:
+                            findings.append(
+                                f"FAIL: Citation for chunk_id '{chunk_id}' in claim '{claim.get('text', 'N/A')}' "
+                                f"does not refer to an existing indexed chunk."
+                            )
+                            continue
 
-                    chunk_pages = chunk_metadata[chunk_id].get("page_interval")  # Assuming this format
-                    if not chunk_pages:
-                        findings.append(
-                            f"WARNING: Chunk '{chunk_id}' is missing page interval metadata."
-                        )
-                        continue
+                        chunk_row = chunk_metadata[chunk_id]
+                        chunk_page_start = chunk_row.get("page_start")
+                        chunk_page_end = chunk_row.get("page_end")
 
-                    # Check for intersection
-                    if not (
-                        max(page_start, chunk_pages[0]) <= min(page_end, chunk_pages[1])
-                    ):
-                        findings.append(
-                            f"FAIL: Citation for chunk_id '{chunk_id}' (pages {page_start}-{page_end}) "
-                            f"in claim '{claim.get('text', 'N/A')}' does not intersect with chunk's page interval {chunk_pages}."
-                        )
+                        if chunk_page_start is None or chunk_page_end is None:
+                            findings.append(
+                                f"WARNING: Chunk '{chunk_id}' is missing page interval metadata."
+                            )
+                            continue
+
+                        # Check for intersection
+                        if not (
+                            max(page_start, chunk_page_start) <= min(page_end, chunk_page_end)
+                        ):
+                            findings.append(
+                                f"FAIL: Citation for chunk_id '{chunk_id}' (pages {page_start}-{page_end}) "
+                                f"in claim '{claim.get('text', 'N/A')}' does not intersect with chunk's page interval ({chunk_page_start}-{chunk_page_end})."
+                            )
+                    else:
+                        # Fallback: if chunk_id is missing, validate paper_id + page_start/page_end
+                        if paper_id and page_start is not None and page_end is not None:
+                            # This check is already covered by _check_rule_2_citations_and_pages
+                            # We can add a warning here if we want to enforce chunk_id presence
+                            findings.append(
+                                f"WARNING: Citation for paper '{paper_id}' (pages {page_start}-{page_end}) "
+                                f"in claim '{claim.get('text', 'N/A')}' is missing 'chunk_id'. "
+                                f"Falling back to paper_id + page range validation."
+                            )
+                        else:
+                            findings.append(
+                                f"FAIL: Citation in claim '{claim.get('text', 'N/A')}' is missing 'chunk_id', 'paper_id', or page range."
+                            )
         return findings
 
     def _check_rule_4_link_format(self, report_qmd_content: str) -> List[str]:
@@ -142,15 +181,15 @@ class CriticAgent:
             return None
 
         original_content = report_qmd_path.read_text()
-        new_content = original_content  # Placeholder for modified content
-
         # In a real scenario, you'd parse the report, apply corrections based on findings,
         # and then generate a diff. For this example, we'll just add a comment.
         correction_comment = "\n<!-- Critic suggested corrections based on findings: -->\n" + "\n".join(
             [f"<!-- - {f} -->" for f in findings]
         )
-        new_content += correction_comment
+        new_content = original_content + correction_comment
 
+        # Generate a temporary patch file
+        patch_file_path = report_qmd_path.with_suffix(".patch")
         # This is a very basic diff. A proper diff utility would be needed.
         diff_content = f"""--- a/{report_qmd_path.name}
 +++ b/{report_qmd_path.name}
@@ -158,6 +197,7 @@ class CriticAgent:
 {original_content}
 {correction_comment}
 """
+        patch_file_path.write_text(diff_content)
         return Patch(original_file=report_qmd_path, patch_content=diff_content)
 
     def run_criticism(
@@ -188,10 +228,10 @@ class CriticAgent:
         else:
             findings.append(f"ERROR: Parsed index file not found: {parsed_index_path}")
 
-        chunk_metadata = {}
+        index_meta = {}
         if index_meta_path.exists():
             with open(index_meta_path, "r") as f:
-                chunk_metadata = json.load(f)
+                index_meta = json.load(f)
         else:
             findings.append(f"ERROR: Index metadata file not found: {index_meta_path}")
 
@@ -206,30 +246,32 @@ class CriticAgent:
             findings.extend(self._check_rule_1_sources(qa_results))
             if not parsed_index_df.empty:
                 findings.extend(self._check_rule_2_citations_and_pages(qa_results, parsed_index_df))
-            if chunk_metadata:
-                findings.extend(self._check_rule_3_chunk_references(qa_results, chunk_metadata))
+            if index_meta:
+                findings.extend(self._check_rule_3_chunk_references(qa_results, index_meta))
         if report_qmd_content:
             findings.extend(self._check_rule_4_link_format(report_qmd_content))
 
         # Determine overall status
         overall_status = "pass"
-        if any("FAIL" in f for f in findings):
+        if any("FAIL" in f for f in f for f in findings):
             overall_status = "fail"
         elif any("WARNING" in f for f in findings):
             overall_status = "pass_with_warnings"
 
         # Generate patch (simplified)
-        patch = None
+        patch_file_path = None
         if overall_status != "pass":
-            patch = self._generate_patch(report_qmd_path, findings)
-            if patch:
-                correction_suggestions.append(f"Apply patch file: {patch.original_file.name}.patch")
+            patch_obj = self._generate_patch(report_qmd_path, findings)
+            if patch_obj:
+                patch_file_path = report_qmd_path.with_suffix(".patch")
+                patch_file_path.write_text(patch_obj.patch_content)
+                correction_suggestions.append(f"Apply patch file: {patch_file_path.name}")
 
         return CriticReport(
             overall_status=overall_status,
             findings=findings,
             correction_suggestions=correction_suggestions,
-            patch_file=patch.original_file.with_suffix(".patch") if patch else None,
+            patch_file=patch_file_path,
             qa_audit_file=qa_results_path.with_suffix(".csv"),  # Placeholder for actual audit CSV
         )
 
@@ -259,7 +301,7 @@ def critic_node(state: RunState) -> RunState:
 
         # Save critic report
         critic_report_path = Path(state.plan["critic_report_path"])
-        critic_report_path.write_text(critic_report.json(indent=2))
+        critic_report_path.write_text(critic_report.model_dump_json(indent=2))
 
         # Save patch if generated
         if critic_report.patch_file and critic_report.patch_file.exists():

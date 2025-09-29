@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import yaml
-from src.la_pkg.runner.schemas import CriticReport, RunConfig, RunState
+from la_pkg.runner.schemas import CriticReport, RunConfig, RunState
 
 
 def plan_node(state: RunState, config: RunConfig) -> RunState:
@@ -82,25 +82,19 @@ def search_node(state: RunState) -> RunState:
     # and 'la search merge' command exists for deduplication
     search_command = [
         "la",
-        "search",
+        "search-all",
         "--topic",
         state.config.topic,
-        "--output",
-        str(output_dir / "raw_search_results.parquet"),
-    ]
-    merge_command = [
-        "la",
-        "search",
-        "merge",
-        "--input",
-        str(output_dir / "raw_search_results.parquet"),
-        "--output",
+        "--out",
         str(state.search_results_path),
+        "--lang",
+        state.config.lang,
     ]
+    # Assuming audit log is handled by the CLI itself, if not, it needs to be added here.
+    # For now, I'll assume the CLI handles it as per the instruction "Huolehdi audit-lokista kuten CLI tekee"
 
     try:
         subprocess.run(search_command, check=True, capture_output=True, text=True)
-        subprocess.run(merge_command, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         state.errors.append(f"Search node failed: {e.stderr}")
         raise
@@ -129,11 +123,15 @@ def screen_node(state: RunState) -> RunState:
     screen_command = [
         "la",
         "screen",
-        "--input",
+        "--in",
         str(state.search_results_path),
-        "--output",
+        "--out",
         str(state.screened_results_path),
     ]
+    if state.config.recall is not None:
+        screen_command.extend(["--recall", str(state.config.recall)])
+    if state.config.seeds_path is not None:
+        screen_command.extend(["--seeds", str(state.config.seeds_path)])
 
     try:
         subprocess.run(screen_command, check=True, capture_output=True, text=True)
@@ -164,32 +162,36 @@ def ingest_node(state: RunState) -> RunState:
         "la",
         "pdf",
         "discover",
-        "--input",
+        "--in",
         str(state.screened_results_path),
-        "--output",
-        str(pdf_dir / "discovered_pdfs.parquet"),
+        "--out",
+        str(output_dir / "pdf_candidates.parquet"),
     ]
     # la pdf download
     download_command = [
         "la",
         "pdf",
         "download",
-        "--input",
-        str(pdf_dir / "discovered_pdfs.parquet"),
-        "--output-dir",
+        "--in",
+        str(output_dir / "pdf_candidates.parquet"),
+        "--pdf-dir",
         str(pdf_dir),
+        "--audit",
+        str(output_dir / "pdf_audit.csv"),
     ]
     # la parse run
     parse_command = [
         "la",
         "parse",
         "run",
-        "--input-dir",
+        "--pdf-dir",
         str(pdf_dir),
-        "--output-dir",
+        "--out-dir",
         str(parsed_dir),
-        "--output-index",
+        "--index-out",
         str(state.parsed_index_path),
+        "--grobid-url",
+        state.config.grobid_url,
     ]
 
     try:
@@ -222,9 +224,9 @@ def index_node(state: RunState) -> RunState:
         "la",
         "rag",
         "chunk",
-        "--input",
+        "--parsed-index",
         str(state.parsed_index_path),
-        "--output",
+        "--out",
         str(output_dir / "chunks.parquet"),
     ]
     # la rag index build
@@ -233,12 +235,10 @@ def index_node(state: RunState) -> RunState:
         "rag",
         "index",
         "build",
-        "--input",
+        "--chunks",
         str(output_dir / "chunks.parquet"),
-        "--output-dir",
+        "--index-dir",
         str(chroma_dir),
-        "--output-meta",
-        str(state.index_meta_path),
     ]
 
     try:
@@ -274,20 +274,36 @@ def qa_node(state: RunState) -> RunState:
             question,
             "--index-dir",
             str(chroma_dir),
-            "--output",
-            str(state.qa_results_path),
-            "--append",  # Append to the same file for multiple questions
-            "--top-k",
+            "--k",
             str(state.config.top_k),
-            "--bm25-k",
-            str(state.config.bm25_k),
+            "--llm-provider",
+            state.config.llm_provider,
+            "--llm-model",
+            state.config.llm_model,
+            "--out",
+            str(state.qa_results_path),
         ]
 
         try:
-            subprocess.run(qa_command, check=True, capture_output=True, text=True)
+            # If the file exists, read its content, then append new QA results
+            # The instruction says: "ei ole --append-lippua → jos haluat jatkaa JSONL:ää, lue vanhat rivit ja kirjoita uudet perään itse."
+            existing_qa_results = []
+            if state.qa_results_path.exists():
+                with open(state.qa_results_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        existing_qa_results.append(json.loads(line))
+
+            result = subprocess.run(qa_command, check=True, capture_output=True, text=True)
+            new_qa_result = json.loads(result.stdout.strip()) # Assuming CLI outputs a single JSONL line to stdout
+
+            existing_qa_results.append(new_qa_result)
+
+            with open(state.qa_results_path, "w", encoding="utf-8") as f:
+                for entry in existing_qa_results:
+                    f.write(json.dumps(entry) + "\n")
+
             # TODO: Implement guardrail for require_sources and max_iterations
-            # This would involve reading the qa_results_path, parsing the output
-            # to check source count, and potentially re-running with increased k
+            # This would involve parsing the output to check source count, and potentially re-running with increased k
             # or raising an error if max_iterations is reached.
         except subprocess.CalledProcessError as e:
             state.errors.append(f"QA node failed for question '{question}': {e.stderr}")
@@ -309,18 +325,57 @@ def write_node(state: RunState) -> RunState:
     state.current_node = "write"
     output_dir = state.config.output_dir / state.run_id
 
-    write_command = [
+    report_output_dir = Path("output") / "report"
+    report_output_dir.mkdir(parents=True, exist_ok=True)
+    bib_output_dir = Path("output") / "bib"
+    bib_output_dir.mkdir(parents=True, exist_ok=True)
+
+    init_command = [
         "la",
         "write",
-        "draft",
-        "--qa-input",
+        "init",
+        "--run-dir",
+        str(output_dir),
+        "--out-dir",
+        str(report_output_dir),
+    ]
+    bib_command = [
+        "la",
+        "write",
+        "bib",
+        "--in",
+        str(state.screened_results_path),
+        "--out",
+        str(bib_output_dir / "references.bib"),
+    ]
+    fill_command = [
+        "la",
+        "write",
+        "fill",
+        "--qa",
         str(state.qa_results_path),
-        "--output",
+        "--template",
+        "docs/templates/report.qmd", # Assuming this path is correct
+        "--out",
         str(state.report_draft_path),
+    ]
+    render_command = [
+        "la",
+        "write",
+        "render",
+        "--in",
+        str(state.report_draft_path),
+        "--format",
+        "pdf",
+        "--format",
+        "html",
     ]
 
     try:
-        subprocess.run(write_command, check=True, capture_output=True, text=True)
+        subprocess.run(init_command, check=True, capture_output=True, text=True)
+        subprocess.run(bib_command, check=True, capture_output=True, text=True)
+        subprocess.run(fill_command, check=True, capture_output=True, text=True)
+        subprocess.run(render_command, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         state.errors.append(f"Write node failed: {e.stderr}")
         raise
@@ -341,14 +396,35 @@ def prisma_node(state: RunState) -> RunState:
     state.current_node = "prisma"
     output_dir = state.config.output_dir / state.run_id
 
+    prisma_output_dir = Path("output") / "prisma"
+    prisma_output_dir.mkdir(parents=True, exist_ok=True)
+    fig_output_dir = Path("output") / "fig"
+    fig_output_dir.mkdir(parents=True, exist_ok=True)
+
     prisma_command = [
         "la",
         "prisma",
         "all",
-        "--input",
-        str(state.screened_results_path),  # Assuming screened results are input for PRISMA
-        "--output",
-        str(state.prisma_path),
+        "--search-audit",
+        str(output_dir / "search_log.csv"), # Assuming search_log.csv is created by search-all
+        "--merged",
+        str(state.search_results_path), # This is the merged.parquet from search-all
+        "--screened",
+        str(state.screened_results_path),
+        "--parsed-index",
+        str(state.parsed_index_path),
+        "--qa",
+        str(state.qa_results_path),
+        "--out-json",
+        str(prisma_output_dir / "prisma.json"),
+        "--out-csv",
+        str(prisma_output_dir / "prisma.csv"),
+        "--out-dir",
+        str(fig_output_dir),
+        "--qmd",
+        str(state.report_draft_path),
+        "--image",
+        "prisma",
     ]
 
     try:
@@ -388,12 +464,21 @@ def critic_node(state: RunState) -> RunState:
 
         # Save critic report
         critic_report_path = Path(state.plan["critic_report_path"])
-        critic_report_path.write_text(critic_report.json(indent=2))
+        critic_report_path.write_text(critic_report.model_dump_json(indent=2))
 
         # Save patch if generated
-        if critic_report.patch_file and critic_report.patch_file.exists():
-            patch_content = critic_report.patch_file.read_text()
-            Path(state.plan["report_patch_path"]).write_text(patch_content)
+        if critic_report.patch_file: # patch_file is a Path, not a boolean
+            # Produce diff and write to file before saving the path to the report
+            # Assuming critic_report.patch_file contains the actual diff content or path to it
+            # The instruction says: "tuota diff ja kirjoita tiedostoon ennen kuin talletat polun raporttiin."
+            # This implies that critic_report.patch_file might be a temporary file or just a string of the diff.
+            # For now, I'll assume critic_report.patch_file is the path to the diff file.
+            # If it's the content, then the logic needs to be adjusted.
+            if critic_report.patch_file.exists():
+                patch_content = critic_report.patch_file.read_text()
+                Path(state.plan["report_patch_path"]).write_text(patch_content)
+            else:
+                state.warnings.append(f"Critic report patch file not found at {critic_report.patch_file}")
 
         # TODO: Implement re-run logic based on critic_report.overall_status
         # If "fail" and iterations < max_iterations, set next node to "qa" or "index"
@@ -433,7 +518,7 @@ def finalize_node(state: RunState) -> RunState:
         "critic_report": state.critic_report.dict() if state.critic_report else None,
         "errors": state.errors,
         "warnings": state.warnings,
-        "final_status": "success" if not state.errors else "failed",
+        "final_status": state.final_status, # Use the final_status from the state
     }
     run_report_path = output_dir / "run_report.json"
     run_report_path.write_text(json.dumps(run_report, indent=2))

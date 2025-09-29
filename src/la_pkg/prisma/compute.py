@@ -5,7 +5,7 @@ import json
 import logging
 import pandas as pd
 from pathlib import Path
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 
 from .schema import PrismaCounts, IdentificationCounts
 
@@ -24,8 +24,22 @@ def compute_counts(
     """
     # 1. Identified
     search_audit_df = pd.read_csv(search_audit_path)
-    identified_total = int(search_audit_df['n_found'].sum())
-    by_source = search_audit_df.groupby('source')['n_found'].sum().to_dict()
+    
+    # Determine which column to use for identified counts (found or n_found)
+    count_column = None
+    if 'found' in search_audit_df.columns:
+        count_column = 'found'
+    elif 'n_found' in search_audit_df.columns:
+        count_column = 'n_found'
+    else:
+        logger.warning(f"Neither 'found' nor 'n_found' column found in {search_audit_path}. Identified counts will be 0.")
+        identified_total = 0
+        by_source = {}
+    
+    if count_column:
+        identified_total = int(search_audit_df[count_column].sum())
+        by_source = search_audit_df.groupby('source')[count_column].sum().to_dict()
+    
     identification_counts = IdentificationCounts(total=identified_total, by_source=by_source)
 
     # 2. Duplicates

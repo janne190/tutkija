@@ -21,8 +21,9 @@ class RunConfig(BaseModel):
     """Configuration for a single research run."""
 
     topic: str = Field(..., description="The research topic.")
-    provider: Provider = Field(Provider.gemini, description="LLM provider to use.")
-    model: str = Field("gemini-1.5-pro", description="LLM model to use.")
+    lang: str = Field("en", description="Language for search queries.") # Added lang field
+    llm_provider: Provider = Field(Provider.gemini, description="LLM provider to use.") # Renamed provider to llm_provider
+    llm_model: str = Field("gemini-1.5-pro", description="LLM model to use.") # Renamed model to llm_model
     budget_usd: float = Field(3.0, description="Maximum USD budget for LLM calls.")
     max_iterations: int = Field(2, description="Maximum iterations for critic feedback loop.")
     top_k: int = Field(6, description="Top K results for retrieval.")
@@ -35,6 +36,17 @@ class RunConfig(BaseModel):
     output_dir: Path = Field(
         ..., description="Directory to store run artifacts. Will be created if it doesn't exist."
     )
+    grobid_url: HttpUrl = Field("http://localhost:8070", description="URL for the Grobid service.") # Added grobid_url
+    recall: Optional[float] = Field(None, description="Recall value for screening.") # Added recall
+    seeds_path: Optional[Path] = Field(None, description="Path to a CSV file with seed papers for screening.") # Added seeds_path
+    skip_search: bool = Field(False, description="Skip the search node.")
+    skip_screen: bool = Field(False, description="Skip the screen node.")
+    skip_ingest: bool = Field(False, description="Skip the ingest node.")
+    skip_index: bool = Field(False, description="Skip the index node.")
+    skip_qa: bool = Field(False, description="Skip the QA node.")
+    skip_write: bool = Field(False, description="Skip the write node.")
+    skip_prisma: bool = Field(False, description="Skip the PRISMA node.")
+    skip_critic: bool = Field(False, description="Skip the critic node.")
 
 
 class NodeMetrics(BaseModel):
@@ -95,3 +107,4 @@ class RunState(BaseModel):
     warnings: List[str] = Field(default_factory=list)
     # For LangGraph, this might be more complex, e.g., a dict of node outputs
     node_outputs: Dict[str, Any] = Field(default_factory=dict)
+    final_status: str = "pending" # Added final_status

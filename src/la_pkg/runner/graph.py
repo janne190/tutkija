@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-from typing import Callable, Dict, List, Literal, Tuple
+from typing import Callable, Dict, List, Literal, Optional, Tuple
 
-from src.la_pkg.runner.budget import BudgetTracker
-from src.la_pkg.runner.nodes import (
+from la_pkg.runner.budget import BudgetTracker
+from la_pkg.runner.nodes import (
     critic_node,
     finalize_node,
     index_node,
@@ -17,7 +17,7 @@ from src.la_pkg.runner.nodes import (
     search_node,
     write_node,
 )
-from src.la_pkg.runner.schemas import RunConfig, RunState
+from la_pkg.runner.schemas import RunConfig, RunState
 
 
 class DAGRunner:
@@ -63,7 +63,7 @@ class DAGRunner:
                 state = self.nodes[node_name](state, self.config)
             else:
                 state = self.nodes[node_name](state)
-            state = self.budget_tracker.update_run_state(state, node_name)
+            state = self.budget_tracker.update_run_state(state, node_name, status="success")
         except Exception as e:
             state = self.budget_tracker.update_run_state(state, node_name, status="failed", error_message=str(e))
             state.errors.append(f"Node '{node_name}' failed: {e}")
@@ -79,11 +79,47 @@ class DAGRunner:
         current_node = "plan"
 
         while current_node:
+            # Check skip flags
+            if current_node == "search" and self.config.skip_search:
+                state.warnings.append("Skipping search node as requested.")
+                current_node = "screen"
+                continue
+            if current_node == "screen" and self.config.skip_screen:
+                state.warnings.append("Skipping screen node as requested.")
+                current_node = "ingest"
+                continue
+            if current_node == "ingest" and self.config.skip_ingest:
+                state.warnings.append("Skipping ingest node as requested.")
+                current_node = "index"
+                continue
+            if current_node == "index" and self.config.skip_index:
+                state.warnings.append("Skipping index node as requested.")
+                current_node = "qa"
+                continue
+            if current_node == "qa" and self.config.skip_qa:
+                state.warnings.append("Skipping QA node as requested.")
+                current_node = "write"
+                continue
+            if current_node == "write" and self.config.skip_write:
+                state.warnings.append("Skipping write node as requested.")
+                current_node = "prisma"
+                continue
+            if current_node == "prisma" and self.config.skip_prisma:
+                state.warnings.append("Skipping PRISMA node as requested.")
+                current_node = "critic"
+                continue
+            if current_node == "critic" and self.config.skip_critic:
+                state.warnings.append("Skipping critic node as requested.")
+                current_node = "finalize"
+                continue
+
             if not self.budget_tracker.check_budget(state):
                 state.errors.append("Run stopped: Budget exceeded.")
+                state.final_status = "failed"
                 break
             if not self.budget_tracker.check_iterations(state):
                 state.errors.append("Run stopped: Maximum iterations reached.")
+                state.final_status = "failed"
                 break
 
             try:
@@ -91,6 +127,7 @@ class DAGRunner:
             except Exception:
                 # If a node fails, we stop the execution for this simplified DAG runner
                 state.errors.append(f"Pipeline stopped due to failure in node: {current_node}")
+                state.final_status = "failed" # Set final_status on early exit
                 break
 
             if current_node == "critic" and state.critic_report and state.critic_report.overall_status == "fail":
@@ -102,6 +139,7 @@ class DAGRunner:
                     current_node = "qa"  # Or "index" if deeper changes are needed
                 else:
                     state.errors.append("Critic failed and max iterations reached. Stopping.")
+                    state.final_status = "failed"
                     current_node = None  # Stop the loop
             else:
                 next_nodes = self.graph.get(current_node)

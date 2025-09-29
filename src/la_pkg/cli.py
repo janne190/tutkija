@@ -22,6 +22,7 @@ from .prisma.render import render_prisma_python, render_prisma_r
 from .prisma.attach import attach_to_qmd
 from .runner.graph import DAGRunner
 from .runner.schemas import RunConfig, Provider, RunState
+import yaml # Added yaml for questions parsing
 
 
 # Load environment variables from .env file
@@ -159,7 +160,9 @@ def search(
     frame = pd.DataFrame([paper.model_dump() for paper in result.papers])
     frame.to_parquet(out, index=False)
 
-    append_audit_log(result.metrics, output_path=out)
+    # The audit log path should be data/cache/search_log.csv as per the instructions for prisma_node
+    audit_log_path = Path("data/cache/search_log.csv")
+    append_audit_log(result.metrics, output_path=audit_log_path)
 
     typer.echo(
         "OpenAlex search OK | "
@@ -217,7 +220,7 @@ def search_all(
 
     from .search.arxiv import query_arxiv
     from .search.merge import merge_and_filter
-    from .search.openalex import query_openalex
+    from .search.openalex import OpenAlexSearchResult, append_audit_log, query_openalex
     from .search.pubmed import query_pubmed
 
     oa_result = query_openalex(chosen_topic, limit=limit, language=language)
@@ -227,6 +230,10 @@ def search_all(
     merged_df, stats = merge_and_filter(oa_result.papers, pubmed_papers, arxiv_papers)
     out.parent.mkdir(parents=True, exist_ok=True)
     merged_df.to_parquet(out, index=False)
+
+    # The audit log path should be data/cache/search_log.csv as per the instructions for prisma_node
+    audit_log_path = Path("data/cache/search_log.csv")
+    append_audit_log(oa_result.metrics, output_path=audit_log_path) # Append OpenAlex metrics to search_log.csv
 
     if save_single:
         _write_source_parquet(
@@ -1106,10 +1113,10 @@ def write_fill(
 
 @write_app.command(name="render")
 def write_render(
-    dir_path: Path = typer.Option(
+    in_path: Path = typer.Option(
         ...,
-        "--dir",
-        help="Directory containing the Quarto report.",
+        "--in",
+        help="Path to the Quarto report file (e.g., report.qmd).",
     ),
     formats: str = typer.Option(
         "html,pdf",
@@ -1122,8 +1129,13 @@ def write_render(
 
     format_list = [f.strip() for f in formats.split(",")]
     try:
-        render_report(dir_path, format_list)
-        typer.secho(f"Report rendered successfully in: {dir_path}", fg=typer.colors.GREEN)
+        # The render_report function expects the directory containing the QMD file
+        # and the QMD file name itself.
+        # Assuming in_path is the full path to the .qmd file
+        report_dir = in_path.parent
+        report_name = in_path.name
+        render_report(report_dir, format_list, report_name)
+        typer.secho(f"Report rendered successfully in: {report_dir}", fg=typer.colors.GREEN)
     except (FileNotFoundError, RuntimeError) as e:
         typer.secho(str(e), fg=typer.colors.RED)
         raise typer.Exit(1)
@@ -1331,7 +1343,7 @@ def prisma_attach(
 @prisma_app.command(name="all")
 def prisma_all(
     search_audit: Path = typer.Option(
-        Path("data/logs/search_audit.csv"),
+        Path("data/cache/search_log.csv"), # Updated default path
         "--search-audit",
         help="Path to the search audit CSV file.",
         show_default=True,
@@ -1361,13 +1373,13 @@ def prisma_all(
         show_default=True,
     ),
     out_json: Path = typer.Option(
-        Path("data/cache/prisma_counts.json"),
+        Path("output/prisma/prisma.json"), # Updated default path
         "--out-json",
         help="Path to the output JSON file for PRISMA counts.",
         show_default=True,
     ),
     out_csv: Path = typer.Option(
-        Path("data/cache/prisma_counts.csv"),
+        Path("output/prisma/prisma.csv"), # Updated default path
         "--out-csv",
         help="Path to the output CSV file for PRISMA counts.",
         show_default=True,
@@ -1385,7 +1397,7 @@ def prisma_all(
         show_default=True,
     ),
     out_dir: Path = typer.Option(
-        Path("output/report"),
+        Path("output/fig"), # Updated default path
         "--out-dir",
         help="Directory to save the rendered diagram.",
         show_default=True,
@@ -1408,10 +1420,10 @@ def prisma_all(
         help="Path to the Quarto markdown file.",
         show_default=True,
     ),
-    image: Path = typer.Option(
-        Path("output/report/prisma.svg"),
+    image: str = typer.Option( # Changed type to str as per instruction
+        "prisma", # Changed default value to "prisma"
         "--image",
-        help="Path to the PRISMA image file (SVG or PNG).",
+        help="Base name for the PRISMA image file (e.g., 'prisma' for prisma.svg, prisma.png).",
         show_default=True,
     ),
 ) -> None:
@@ -1459,7 +1471,9 @@ def prisma_all(
 
         # 3. Attach
         typer.secho("Attaching PRISMA diagram to report...", fg=typer.colors.BLUE)
-        attach_to_qmd(qmd_path=qmd, image_path=image)
+        # Construct the image path based on the image base name and first format
+        image_path_to_attach = out_dir / f"{image}.{format_list[0]}"
+        attach_to_qmd(qmd_path=qmd, image_path=image_path_to_attach)
         typer.secho("PRISMA attach OK.", fg=typer.colors.GREEN)
 
         typer.secho("PRISMA all pipeline completed successfully.", fg=typer.colors.GREEN)
@@ -1478,11 +1492,12 @@ def prisma_all(
 @run_app.command(name="start")
 def run_cli(
     topic: str = typer.Option(..., "--topic", help="The research topic."),
-    provider: Provider = typer.Option(
-        Provider.gemini, "--provider", help="LLM provider to use."
+    lang: str = typer.Option("en", "--lang", help="Language for search queries."), # Added lang
+    llm_provider: Provider = typer.Option( # Renamed provider to llm_provider
+        Provider.gemini, "--llm-provider", help="LLM provider to use."
     ),
-    model: str = typer.Option(
-        "gemini-1.5-pro", "--model", help="LLM model to use."
+    llm_model: str = typer.Option( # Renamed model to llm_model
+        "gemini-1.5-pro", "--llm-model", help="LLM model to use."
     ),
     budget_usd: float = typer.Option(
         3.0, "--budget", help="Maximum USD budget for LLM calls."
@@ -1492,7 +1507,7 @@ def run_cli(
     ),
     top_k: int = typer.Option(6, "--top-k", help="Top K results for retrieval."),
     bm25_k: int = typer.Option(20, "--bm25-k", help="BM25 K value for retrieval."),
-    questions: Optional[Path] = typer.Option(
+    questions: Optional[str] = typer.Option( # Changed type to str
         None,
         "--questions",
         help="Path to a questions.yaml file, or a comma-separated list of questions.",
@@ -1508,6 +1523,15 @@ def run_cli(
         "--output-dir",
         help="Directory to store run artifacts.",
     ),
+    grobid_url: str = typer.Option( # Added grobid_url
+        "http://localhost:8070", "--grobid-url", help="URL for the Grobid service."
+    ),
+    recall: Optional[float] = typer.Option( # Added recall
+        None, "--recall", help="Recall value for screening."
+    ),
+    seeds_path: Optional[Path] = typer.Option( # Added seeds_path
+        None, "--seeds-path", help="Path to a CSV file with seed papers for screening."
+    ),
     skip_search: bool = typer.Option(False, "--skip-search", help="Skip search node."),
     skip_screen: bool = typer.Option(False, "--skip-screen", help="Skip screen node."),
     skip_ingest: bool = typer.Option(False, "--skip-ingest", help="Skip ingest node."),
@@ -1521,22 +1545,40 @@ def run_cli(
     ),
 ) -> None:
     """Run the full research pipeline."""
+    
+    questions_list: Optional[List[str]] = None
+    if questions:
+        questions_path = Path(questions)
+        if questions_path.is_file():
+            with open(questions_path, "r", encoding="utf-8") as f:
+                questions_list = yaml.safe_load(f)
+        else:
+            questions_list = [q.strip() for q in questions.split(",") if q.strip()]
+
     run_config = RunConfig(
         topic=topic,
-        provider=provider,
-        model=model,
+        lang=lang, # Added lang
+        llm_provider=llm_provider, # Renamed
+        llm_model=llm_model, # Renamed
         budget_usd=budget_usd,
         max_iterations=max_iterations,
         top_k=top_k,
         bm25_k=bm25_k,
-        questions=(
-            list(questions.read_text().splitlines())
-            if questions and questions.is_file()
-            else (questions.name.split(",") if questions else None)
-        ),
+        questions=questions_list, # Updated questions parsing
         require_sources=require_sources,
         enforce_pages=enforce_pages,
         output_dir=output_dir,
+        grobid_url=grobid_url, # Added grobid_url
+        recall=recall, # Added recall
+        seeds_path=seeds_path, # Added seeds_path
+        skip_search=skip_search,
+        skip_screen=skip_screen,
+        skip_ingest=skip_ingest,
+        skip_index=skip_index,
+        skip_qa=skip_qa,
+        skip_write=skip_write,
+        skip_prisma=skip_prisma,
+        skip_critic=skip_critic,
     )
 
     initial_state: Optional[RunState] = None
