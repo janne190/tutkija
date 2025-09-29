@@ -31,7 +31,7 @@ class Chunk(BaseModel):
 
 # Helper types for clarity
 SectionSpan = namedtuple(
-    "SectionSpan", ["section_id", "abs_start", "abs_end", "text", "label"]
+    "SectionSpan", ["section_id", "abs_start", "abs_end", "label"]
 )
 PageBreak = namedtuple("PageBreak", ["abs_offset", "page_no"])
 
@@ -41,13 +41,13 @@ def _normalize_whitespace(text: str) -> str:
     return " ".join(text.split()).strip()
 
 
-def _get_page_map(tree: ET._ElementTree) -> list[tuple[int, int]]:
+def _get_page_map(tree: ET._ElementTree) -> list[PageBreak]:
     """
     Palauttaa listan (abs_offset, page_no). Säilyttää taaksepäin-yhteensopivuuden.
     """
     # _flatten_tei expects the root element, not the entire tree
-    full_text, sections, page_breaks = _flatten_tei(tree.getroot(), include_front=True) # Assuming include_front=True for page map
-    return [(pb.abs_offset, pb.page_no) for pb in page_breaks]
+    full_text, sections, page_breaks = _flatten_tei(tree.getroot(), include_front=True)
+    return page_breaks
 
 
 def _flatten_tei(
@@ -63,79 +63,88 @@ def _flatten_tei(
     page_breaks: list[PageBreak] = []
     abs_cursor = 0
 
-    def emit(text: str):
+    def emit(s: str):
         nonlocal abs_cursor
-        normalized_text = _normalize_whitespace(text)
-        if normalized_text:
-            full_text_parts.append(normalized_text)
-            abs_cursor += len(normalized_text)
+        s = _normalize_whitespace(s)
+        if not s:
+            return
+
+        if full_text_parts and not full_text_parts[-1].endswith(" "):
+            full_text_parts.append(" ")
+            abs_cursor += 1
+        
+        full_text_parts.append(s)
+        abs_cursor += len(s)
 
     # Process front matter
     if include_front:
-        front_element = root.find(".//tei:front", namespaces=ns)
-        if front_element is not None:
-            title = " ".join(front_element.xpath(".//tei:title/text()", namespaces=ns))
-            abstract = " ".join(
-                front_element.xpath(".//tei:abstract//text()", namespaces=ns)
-            )
-            front_text = f"{title}\n\n{abstract}".strip()
-            if front_text:
-                start_offset = abs_cursor
-                emit(front_text)
+        front = root.find("tei:front", ns)
+        if front is not None:
+            section_start = abs_cursor
+            
+            # Capture text by tracking the state of full_text_parts
+            start_parts_len = len(full_text_parts)
+            
+            for node in front.iter():
+                if node.tag == f"{{{ns['tei']}}}pb":
+                    n = node.get("n")
+                    if n and n.isdigit():
+                        page_breaks.append(PageBreak(abs_cursor, int(n)))
+                if node.text:
+                    emit(node.text)
+                if node.tail:
+                    emit(node.tail)
+
+            section_end = abs_cursor
+            
+            if section_end > section_start: # Check if any text was emitted for this section
                 sections.append(
                     SectionSpan(
                         "front",
-                        start_offset,
-                        abs_cursor,
-                        _normalize_whitespace(front_text),
+                        section_start,
+                        section_end,
                         "Front Matter",
                     )
                 )
-                if abs_cursor > 0:
-                    emit(" ") # Add a space between sections
 
     # Process body divisions
-    body_divs = root.xpath(".//tei:body/tei:div", namespaces=ns)
-    for i, div in enumerate(body_divs):
-        # Record page breaks encountered during traversal
-        for element in div.iter():
-            if element.tag == "{http://www.tei-c.org/ns/1.0}pb":
-                page_num = element.get("n")
-                if page_num and page_num.isdigit():
-                    page_breaks.append(PageBreak(abs_cursor, int(page_num)))
-            if element.text:
-                emit(element.text)
-            if element.tail:
-                emit(element.tail)
-
-        heading_element = div.find("tei:head", namespaces=ns)
-        heading = (
-            heading_element.text if heading_element is not None else f"Section {i+1}"
-        )
-
-        # Strip elements that should not be part of the chunk text
-        etree.strip_elements(div, "{http://www.tei-c.org/ns/1.0}ref", with_tail=False)
-        etree.strip_elements(
-            div, "{http://www.tei-c.org/ns/1.0}figure", with_tail=False
-        )
-
-        section_raw_text = " ".join(div.xpath(".//text()"))
-        normalized_section_text = _normalize_whitespace(section_raw_text)
-
-        if normalized_section_text:
-            start_offset = abs_cursor
-            emit(normalized_section_text)
-            sections.append(
-                SectionSpan(
-                    f"body_div_{i}",
-                    start_offset,
-                    abs_cursor,
-                    normalized_section_text,
-                    heading,
-                )
+    body = root.find("tei:body", ns)
+    if body is not None:
+        # Find only direct children divs to avoid processing nested divs twice
+        for i, div in enumerate(body.findall("tei:div", ns)):
+            section_start = abs_cursor
+            
+            heading_element = div.find("tei:head", ns)
+            heading = (
+                _normalize_whitespace(heading_element.text)
+                if heading_element is not None and heading_element.text
+                else f"Section {i+1}"
             )
-            if i < len(body_divs) - 1:
-                emit(" ") # Add a space between sections
+
+            start_parts_len = len(full_text_parts)
+
+            # Iterate within the div
+            for node in div.iter():
+                if node.tag == f"{{{ns['tei']}}}pb":
+                    n = node.get("n")
+                    if n and n.isdigit():
+                        page_breaks.append(PageBreak(abs_cursor, int(n)))
+                if node.text:
+                    emit(node.text)
+                if node.tail:
+                    emit(node.tail)
+
+            section_end = abs_cursor
+            
+            if section_end > section_start: # Check if any text was emitted for this section
+                sections.append(
+                    SectionSpan(
+                        f"body_div_{i}",
+                        section_start,
+                        section_end,
+                        heading,
+                    )
+                )
 
     full_text = "".join(full_text_parts).strip()
     return full_text, sections, sorted(page_breaks, key=lambda x: x.abs_offset)
@@ -200,7 +209,9 @@ def _chunk_from_text_file(
             return []
 
         return _create_chunks_for_section(
-            text=text,
+            full_document_text=text,
+            section_abs_start=0,
+            section_abs_end=len(text),
             paper_id=paper_id,
             section_id="full_text",
             section_title="Full Text",
@@ -248,7 +259,7 @@ def chunk_document(
 
     try:
         tree = etree.parse(str(tei_path))
-        full_text, sections, page_breaks = _flatten_tei(tree, include_front)
+        full_text, sections, page_breaks = _flatten_tei(tree.getroot(), include_front)
 
         for section in sections:
             effective_min_tokens = (
@@ -256,7 +267,9 @@ def chunk_document(
             )
             chunks.extend(
                 _create_chunks_for_section(
-                    text=section.text,
+                    full_document_text=full_text,
+                    section_abs_start=section.abs_start,
+                    section_abs_end=section.abs_end,
                     paper_id=paper_id,
                     section_id=section.section_id,
                     section_title=section.label,
@@ -286,7 +299,9 @@ def chunk_document(
 
 
 def _create_chunks_for_section(
-    text: str,
+    full_document_text: str,
+    section_abs_start: int,
+    section_abs_end: int,
     paper_id: str,
     section_id: str,
     section_title: str,
@@ -296,10 +311,13 @@ def _create_chunks_for_section(
     min_tokens: int,
     min_chars: int,
     source: str = "tei",
-    abs_base: int = 0,  # New parameter for global base offset
+    abs_base: int = 0,  # This is now redundant, as section_abs_start is the base
     page_breaks: list[PageBreak] | None = None,
 ) -> list[Chunk]:
     """Paloittele yhden osion teksti pienemmiksi chunkeiksi."""
+    # Extract the section's text from the full document text
+    text = full_document_text[section_abs_start:section_abs_end]
+
     if not text or len(text) < min_chars:
         return []
 
@@ -309,61 +327,42 @@ def _create_chunks_for_section(
     if len(tokens) < min_tokens:
         return []
 
+    # Create a token-to-character map to replace str.find()
+    decoded_tokens = [enc.decode([t]) for t in tokens]
+    char_starts: list[int] = []
+    current_char_offset = 0
+    # Reconstruct the text with a single space between tokens to map offsets
+    for i, token_str in enumerate(decoded_tokens):
+        char_starts.append(current_char_offset)
+        current_char_offset += len(token_str)
+        if i < len(decoded_tokens) - 1:
+            current_char_offset += 1  # Account for the single space separator
+
     chunks: list[Chunk] = []
     chunk_id_counter = 0
     start_token_idx = 0
 
-    # Pre-calculate character start positions for each word in the normalized text
-    words = _normalize_whitespace(text).split()
-    char_starts = []
-    current_char_offset = 0
-    for i, word in enumerate(words):
-        if i > 0:
-            current_char_offset += 1  # Account for the single space between words
-        char_starts.append(current_char_offset)
-        current_char_offset += len(word)
-    joined_text = " ".join(words) # This is the normalized text we'll use for char offsets
-
     while start_token_idx < len(tokens):
-        end_token_idx = start_token_idx + max_tokens
+        end_token_idx = min(start_token_idx + max_tokens, len(tokens))
         chunk_tokens = tokens[start_token_idx:end_token_idx]
 
-        is_last_chunk = end_token_idx >= len(tokens)
-        if not chunks and is_last_chunk and len(chunk_tokens) < min_tokens:
-            pass
-        elif len(chunk_tokens) < min_tokens:
-            break
+        if len(chunk_tokens) < min_tokens:
+            # If it's the first and only chunk, keep it if it meets min_chars.
+            # Otherwise, if it's a small trailing chunk, discard it.
+            if chunks or len(text) < min_chars:
+                break
 
         chunk_text = enc.decode(chunk_tokens)
         unique_chunk_id = f"{paper_id}-{section_id}-{chunk_id_counter}"
 
-        # Find the character offsets for the chunk_text within the normalized section text
-        # This is more robust than text.find() for sub-chunks and normalization differences
-        # We need to find the token indices of the chunk_text within the original tokens
-        # Then map those token indices to character offsets using the pre-calculated char_starts
-        
-        # A more robust way to get local_chunk_start/end without text.find()
-        # is to re-tokenize the chunk_text and find its position in the original tokens.
-        # However, given the current tokenization approach, a simpler method is to
-        # find the character span of the decoded chunk_text within the *normalized* section text.
-        # This assumes that `enc.decode(chunk_tokens)` produces text that is a substring
-        # of `_normalize_whitespace(text)`.
+        # Calculate offsets using the token->char map
+        local_start = char_starts[start_token_idx]
+        # The end offset is the start of the last token plus its length
+        last_token_idx = end_token_idx - 1
+        local_end = char_starts[last_token_idx] + len(decoded_tokens[last_token_idx])
 
-        # For now, we'll use a simplified approach that relies on the decoded chunk_text
-        # being a direct substring of the normalized section text.
-        # A more advanced solution would involve token-to-character mapping during tokenization.
-        
-        # Fallback to 0,0 if chunk_text is not found in joined_text (should not happen with proper normalization)
-        local_chunk_start = joined_text.find(chunk_text)
-        if local_chunk_start == -1:
-            local_chunk_start = 0
-            local_chunk_end = len(chunk_text)
-        else:
-            local_chunk_end = local_chunk_start + len(chunk_text)
-
-
-        global_chunk_start_offset = abs_base + local_chunk_start
-        global_chunk_end_offset = abs_base + local_chunk_end
+        global_chunk_start_offset = section_abs_start + local_start
+        global_chunk_end_offset = section_abs_start + local_end
 
         page_start, page_end = _get_page_range(
             global_chunk_start_offset, global_chunk_end_offset, page_breaks or []

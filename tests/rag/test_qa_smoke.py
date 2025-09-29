@@ -72,13 +72,14 @@ def test_qa_index(temp_chroma_dir, dummy_chunks_df_qa):
     return temp_chroma_dir, dummy_chunks_df_qa
 
 
-@pytest.mark.rag
-def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
+@pytest.mark.rag_smoke
+@pytest.mark.parametrize("llm_provider", ["google", "openai"])
+def test_qa_smoke_structured_output_and_guardrail(
+    test_qa_index, tmp_path, llm_provider
+):
     index_dir, chunks_df = test_qa_index
-    out_path = tmp_path / "qa_output.jsonl"
-    audit_path = tmp_path / "qa_audit.csv"
-    # chunks_path is now resolved by run_qa's internal logic, no need to pass explicitly
-    # chunks_path = tmp_path / "chunks_qa.parquet"
+    out_path = tmp_path / f"qa_output_{llm_provider}.jsonl"
+    audit_path = tmp_path / f"qa_audit_{llm_provider}.csv"
 
     question = "What are the key findings and methods?"
     k = 2  # Initial k, expecting guardrail to trigger
@@ -163,21 +164,21 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
         side_effect=lambda x: "dummy_api_key"
         if x in ["GEMINI_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]
         else None,
-    ), patch("google.generativeai.GenerativeModel") as mock_generative_model, patch(
-        "src.la_pkg.rag.qa.retrieve"
-    ) as mock_retrieve, patch(
+    ), patch("src.la_pkg.rag.qa.retrieve") as mock_retrieve, patch(
+        "google.generativeai.GenerativeModel"
+    ) as mock_generative_model, patch(
         "src.la_pkg.rag.qa.MockOpenAIModel"
-    ) as mock_openai_model: # Patch the MockOpenAIModel
-        # Configure mock_generative_model to return different responses for initial and retry calls
-        mock_generative_model.return_value.generate_content.side_effect = [
-            mock_llm_response_initial,
-            mock_llm_response_retry,
-        ]
-        # Configure mock_openai_model to return different responses for initial and retry calls
-        mock_openai_model.return_value.generate_content.side_effect = [
-            mock_llm_response_initial,
-            mock_llm_response_retry,
-        ]
+    ) as mock_openai_model:
+        if llm_provider == "google":
+            mock_generative_model.return_value.generate_content.side_effect = [
+                mock_llm_response_initial,
+                mock_llm_response_retry,
+            ]
+        elif llm_provider == "openai":
+            mock_openai_model.return_value.generate_content.side_effect = [
+                mock_llm_response_initial,
+                mock_llm_response_retry,
+            ]
 
         # Mock retrieve to return chunks that allow for the desired citations
         mock_retrieve.side_effect = [
@@ -255,10 +256,10 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
             question=question,
             index_dir=index_dir,
             k=k,
-            llm_provider="openai", # Test with openai provider
-            llm_model="gpt-4o-mini",
+            llm_provider=llm_provider,
+            llm_model="mock-model",  # Use a generic model name for mock
             out_path=out_path,
-            chunks_path=chunks_path,
+            # chunks_path is resolved internally, no need to pass
             audit_path=audit_path,
         )
 
@@ -290,4 +291,4 @@ def test_qa_smoke_structured_output_and_guardrail(test_qa_index, tmp_path):
     assert audit_df["retry_k"].iloc[0] == k + 4
     assert (
         audit_df["final_sources_used"].iloc[0] == 3
-    ) # After retry, should have 3 sources
+    )  # After retry, should have 3 sources

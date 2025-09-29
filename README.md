@@ -57,14 +57,89 @@ la rag index build --chunks data/cache/chunks.parquet `
 la qa --question "Mitkä menetelmät ovat aineistossa yleisiä?" `
       --index-dir data/index/chroma --k 6 `
       --llm-provider openai --llm-model gpt-4o-mini `
-      --chunks-path data/cache/chunks.parquet `
       --audit-path data/logs/qa_audit.csv `
       --out data/output/qa.jsonl
+```
+
+## Writing and Rendering
+
+The project includes a pipeline for generating a final report in Quarto (`.qmd`) format, including BibTeX references and rendered outputs (HTML, PDF).
+
+```powershell
+# 1) Initialize a new report scaffold
+la write init --out output/report `
+              --style docs/styles/apa.csl `
+              --title "My Awesome Review" `
+              --authors "Doe, John; Smith, Jane"
+
+# 2) Collect references and generate a BibTeX file
+la write bib --in data/cache/parsed_index.parquet `
+             --qa data/qa/qa.jsonl `
+             --out output/report/references.bib
+
+# 3) Fill the QMD template with claims and method summaries
+la write fill --qmd output/report/report.qmd `
+              --qa data/qa/qa.jsonl `
+              --logs-dir data/logs `
+              --out output/report/report.qmd
+
+# 4) Render the report to HTML and PDF (requires Quarto installation)
+la write render --dir output/report --format html,pdf
+
+# 5) (Optional) Check for broken links in the bibliography
+la write check --bib output/report/references.bib `
+               --log-path data/logs/linkcheck_failures.csv
+```
+
+## PRISMA 2020 Diagram
+
+The project includes a pipeline for generating and attaching a PRISMA 2020 flow diagram to the report.
+
+```powershell
+# 1) Compute PRISMA counts
+la prisma compute `
+  --search-audit data/logs/search_audit.csv `
+  --merged data/cache/merged.parquet `
+  --screened data/cache/screened.parquet `
+  --parsed-index data/cache/parsed_index.parquet `
+  --qa data/qa/qa.jsonl `
+  --out-json data/cache/prisma_counts.json `
+  --out-csv data/cache/prisma_counts.csv
+
+# 2) Render the diagram (Python engine)
+la prisma render `
+  --counts data/cache/prisma_counts.json `
+  --out-dir output/report `
+  --engine python `
+  --formats svg,png
+
+# 3) Attach the diagram to the report
+la prisma attach `
+  --qmd output/report/report.qmd `
+  --image output/report/prisma.svg
+
+# 4) Run the full pipeline (compute -> render -> attach)
+la prisma all --engine python
 ```
 
 ### Provider Configuration
 
 You can switch the embedding and language model providers via the command-line options. For example, to use a different embedding model, you would change the `--embed-provider` and `--embed-model` flags on the `la rag index` command. The `la qa` command will then automatically read these from the index metadata. The `--llm-provider` and `--llm-model` flags on the `la qa` command control the language model used for generating answers, and can be different from the embedding provider.
+
+**`chunks.parquet` path resolution for `la qa`:**
+The `la qa` command resolves the `chunks.parquet` path with the following priority:
+1. Explicitly provided `--chunks-path` argument.
+2. `chunks_path` stored in `index_meta.json` (created by `la rag index build`).
+3. Fallback to `data/cache/chunks.parquet`.
+
+**LLM provider vs. Embedding provider:**
+The `la qa` command uses the `embed_provider` and `embed_model` stored in the `index_meta.json` for retrieval. The `--llm-provider` and `--llm-model` arguments for `la qa` specify the model used for generating the answer, which can be different from the embedding model.
+
+**OpenAI Stub:**
+For offline smoke testing, the OpenAI provider is currently stubbed (`src/la_pkg/rag/qa.py::MockOpenAIModel`) to return a valid JSON response with at least two distinct sources, without requiring an actual API call. This allows `la qa --llm-provider openai` to run successfully offline.
+
+**Index meta:**
+The `la rag index build` command now always writes `index_meta.json` even for empty `chunks.parquet` files, ensuring it contains `embed_provider`, `embed_model`, and `chunks_path`.
 
 **Environment Variables:**
 Set `GEMINI_API_KEY` (or `GOOGLE_API_KEY` as a fallback) in your `.env` file for Google models.
@@ -152,6 +227,9 @@ The PDF, Unpaywall and GROBID interactions are fully mocked in unit tests. Mark 
 Running `la search` appends a row to `data\cache\search_log.csv`. `la search-all` writes the merged Parquet plus an audit row in `data\cache\merge_log.csv` so you can track sources, duplicates and counts per topic. `la screen` records `screened.parquet` and a corresponding `screen_log.csv` entry containing the PRISMA-style tallies, engine metadata, random seed, fallback used and resolved output path. Seeds must be provided as a comma-separated list (e.g. `--seeds "doi:10.1038/... , pmid:12345 , id:W1111"`).
 
 Tutkija ships with a scikit-learn baseline (TF-IDF + logistic regression) and an optional ASReview integration. Install the latter with `pip install tutkija[asreview]` or `pipx install asreview`. When gold labels are present the classifier chooses the smallest probability threshold that reaches the requested recall. Without gold labels the engine falls back to seed-similarity scoring (TF-IDF + cosine) or, if no seeds are provided, assigns a uniform probability of 0.5 so every record can continue through manual review.
+
+**Index meta:**
+The `la rag index build` command now always writes `index_meta.json` even for empty `chunks.parquet` files, ensuring it contains `embed_provider`, `embed_model`, and `chunks_path`.
 
 ## CLI metrics
 The multisource command reports the same statistics that land in the merge log. These guard-rails help keep the dataset healthy when the pipeline evolves.

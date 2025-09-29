@@ -42,9 +42,10 @@ def build_index(
         meta = IndexMeta(
             n_docs=0,
             n_chunks=0,
-            vector_dim=0,  # Placeholder
+            vector_dim=0,
             embed_provider=embed_provider,
             embed_model=embed_model,
+            chunks_path=str(chunks_path),
         )
         meta_path = index_dir / "index_meta.json"
         meta_path.parent.mkdir(parents=True, exist_ok=True)

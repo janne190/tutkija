@@ -17,6 +17,12 @@ from dotenv import load_dotenv  # Import load_dotenv
 from .pdf.fetchers import arxiv_pdf_url, pmc_pdf_url
 from .screening import apply_rules, score_and_label
 from .search.types import Paper
+from .prisma.compute import compute_counts, validate_counts, write_counts_json_csv
+from .prisma.render import render_prisma_python, render_prisma_r
+from .prisma.attach import attach_to_qmd
+from .runner.graph import DAGRunner
+from .runner.schemas import RunConfig, Provider, RunState
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,11 +31,16 @@ app = typer.Typer(add_completion=False, no_args_is_help=True)
 pdf_app = typer.Typer(add_completion=False, no_args_is_help=True)
 parse_app = typer.Typer(add_completion=False, no_args_is_help=True)
 rag_app = typer.Typer(add_completion=False, no_args_is_help=True)
+write_app = typer.Typer(add_completion=False, no_args_is_help=True)
+prisma_app = typer.Typer(add_completion=False, no_args_is_help=True)
+run_app = typer.Typer(add_completion=False, no_args_is_help=True) # New typer for run command
 
 app.add_typer(pdf_app, name="pdf")
 app.add_typer(parse_app, name="parse")
 app.add_typer(rag_app, name="rag")
-
+app.add_typer(write_app, name="write")
+app.add_typer(prisma_app, name="prisma")
+app.add_typer(run_app, name="run") # Add run_app to main app
 
 @app.callback()
 def main() -> None:
@@ -940,7 +951,7 @@ def qa_cli(
     chunks_path: Optional[Path] = typer.Option(
         None,
         "--chunks-path",
-        help="Polku chunk-tiedostoon (oletus: argumentti > index_meta.json > data/cache/chunks.parquet)",
+        help="Polku chunk-tiedostoon (prioriteetti: argumentti > index_meta.json -> data/cache/chunks.parquet)",
         show_default=False,
     ),
     audit_path: Optional[Path] = typer.Option(
@@ -970,6 +981,587 @@ def qa_cli(
     except Exception as e:
         typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
         raise typer.Exit(1)
+
+
+@write_app.command(name="init")
+def write_init(
+    out: Path = typer.Option(
+        ...,
+        "--out",
+        help="Directory to initialize the report in.",
+    ),
+    style: Path = typer.Option(
+        ...,
+        "--style",
+        help="Path to the CSL style file.",
+    ),
+    title: str = typer.Option(
+        "Review title",
+        "--title",
+        help="The title of the report.",
+    ),
+    authors: str = typer.Option(
+        ...,
+        "--authors",
+        help="A semicolon-separated list of authors (e.g., 'Lastname, First; Second, Third').",
+    ),
+) -> None:
+    """Initialize a new report scaffold."""
+    from .write.scaffold import create_report_scaffold
+
+    author_list = [author.strip() for author in authors.split(";") if author.strip()]
+    if not author_list:
+        typer.secho("Authors cannot be empty.", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+    try:
+        create_report_scaffold(out, title, author_list, style)
+        typer.secho(f"Report scaffold created at: {out}", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@write_app.command(name="bib")
+def write_bib(
+    in_path: Path = typer.Option(
+        ...,
+        "--in",
+        help="Path to the input parquet file (e.g., parsed_index.parquet).",
+    ),
+    qa_path: Path = typer.Option(
+        ...,
+        "--qa",
+        help="Path to the QA JSONL file.",
+    ),
+    out_path: Path = typer.Option(
+        ...,
+        "--out",
+        help="Path to the output BibTeX file (e.g., references.bib).",
+    ),
+    missing_log_path: Path = typer.Option(
+        Path("data/logs/bib_missing.csv"),
+        "--missing-log",
+        help="Path to the log file for missing BibTeX entries.",
+    ),
+) -> None:
+    """Generate a BibTeX file from DOIs and PMIDs."""
+    from .write.refs import collect_and_write_references
+
+    try:
+        collect_and_write_references(in_path, qa_path, out_path, missing_log_path)
+        typer.secho(f"BibTeX file created at: {out_path}", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@write_app.command(name="fill")
+def write_fill(
+    qmd_path: Path = typer.Option(
+        ...,
+        "--qmd",
+        help="Path to the QMD report file.",
+    ),
+    qa_path: Path = typer.Option(
+        ...,
+        "--qa",
+        help="Path to the QA JSONL file.",
+    ),
+    logs_dir: Path = typer.Option(
+        ...,
+        "--logs-dir",
+        help="Directory containing the log files.",
+    ),
+    out_path: Path = typer.Option(
+        ...,
+        "--out",
+        help="Path to the output QMD file.",
+    ),
+    parsed_index_path: Path = typer.Option(
+        Path("data/cache/parsed_index.parquet"),
+        "--parsed-index-path",
+        help="Path to the parsed index parquet file.",
+    ),
+) -> None:
+    """Fill the QMD template with data from QA and logs."""
+    from .write.compose import fill_qmd_template
+
+    try:
+        fill_qmd_template(qmd_path, qa_path, logs_dir, parsed_index_path, out_path)
+        typer.secho(f"QMD file filled and saved to: {out_path}", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@write_app.command(name="render")
+def write_render(
+    dir_path: Path = typer.Option(
+        ...,
+        "--dir",
+        help="Directory containing the Quarto report.",
+    ),
+    formats: str = typer.Option(
+        "html,pdf",
+        "--format",
+        help="Comma-separated list of output formats (e.g., html,pdf).",
+    ),
+) -> None:
+    """Render the Quarto report."""
+    from .write.render import render_report
+
+    format_list = [f.strip() for f in formats.split(",")]
+    try:
+        render_report(dir_path, format_list)
+        typer.secho(f"Report rendered successfully in: {dir_path}", fg=typer.colors.GREEN)
+    except (FileNotFoundError, RuntimeError) as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@write_app.command(name="check")
+def write_check(
+    bib_path: Path = typer.Option(
+        ...,
+        "--bib",
+        help="Path to the BibTeX file to check.",
+    ),
+    log_path: Path = typer.Option(
+        Path("data/logs/linkcheck_failures.csv"),
+        "--log-path",
+        help="Path to the output log file for link check results.",
+    ),
+) -> None:
+    """Run quality checks on the report files (e.g., link checking)."""
+    from .write.linkcheck import run_linkcheck
+
+    try:
+        run_linkcheck(bib_path, log_path)
+        typer.secho(f"Link check complete. Log saved to: {log_path}", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@prisma_app.command(name="compute")
+def prisma_compute(
+    search_audit: Path = typer.Option(
+        Path("data/logs/search_audit.csv"),
+        "--search-audit",
+        help="Path to the search audit CSV file.",
+        show_default=True,
+    ),
+    merged: Path = typer.Option(
+        Path("data/cache/merged.parquet"),
+        "--merged",
+        help="Path to the merged Parquet file.",
+        show_default=True,
+    ),
+    screened: Optional[Path] = typer.Option(
+        None,
+        "--screened",
+        help="Path to the screened Parquet file (optional).",
+        show_default=True,
+    ),
+    parsed_index: Optional[Path] = typer.Option(
+        None,
+        "--parsed-index",
+        help="Path to the parsed index Parquet file (optional).",
+        show_default=True,
+    ),
+    qa: Optional[Path] = typer.Option(
+        None,
+        "--qa",
+        help="Path to the QA JSONL file (optional).",
+        show_default=True,
+    ),
+    out_json: Path = typer.Option(
+        Path("data/cache/prisma_counts.json"),
+        "--out-json",
+        help="Path to the output JSON file for PRISMA counts.",
+        show_default=True,
+    ),
+    out_csv: Path = typer.Option(
+        Path("data/cache/prisma_counts.csv"),
+        "--out-csv",
+        help="Path to the output CSV file for PRISMA counts.",
+        show_default=True,
+    ),
+    strict: bool = typer.Option(
+        False,
+        "--strict",
+        help="Exit with error if validation fails (otherwise warn).",
+        is_flag=True,
+    ),
+    validation_log: Path = typer.Option(
+        Path("data/logs/prisma_validation.csv"),
+        "--validation-log",
+        help="Path to the validation log CSV file.",
+        show_default=True,
+    ),
+) -> None:
+    """Compute PRISMA 2020 counts from pipeline artifacts."""
+    try:
+        counts = compute_counts(
+            search_audit_path=search_audit,
+            merged_path=merged,
+            screened_path=screened,
+            parsed_index_path=parsed_index,
+            qa_path=qa,
+        )
+        issues = validate_counts(counts)
+        
+        if issues:
+            validation_log.parent.mkdir(parents=True, exist_ok=True)
+            pd.DataFrame(issues).to_csv(validation_log, index=False)
+            for issue in issues:
+                msg = f"Validation {issue['status']}: {issue['rule']} - {issue['details']}"
+                if issue['status'] == "FAIL":
+                    typer.secho(msg, fg=typer.colors.RED)
+                else:
+                    typer.secho(msg, fg=typer.colors.YELLOW)
+            if strict and any(issue['status'] == "FAIL" for issue in issues):
+                raise typer.Exit(code=1)
+        else:
+            typer.secho("PRISMA counts validated successfully.", fg=typer.colors.GREEN)
+
+        write_counts_json_csv(counts, out_json, out_csv)
+        typer.secho("PRISMA compute OK.", fg=typer.colors.GREEN)
+
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@prisma_app.command(name="render")
+def prisma_render(
+    counts: Path = typer.Option(
+        Path("data/cache/prisma_counts.json"),
+        "--counts",
+        help="Path to the PRISMA counts JSON file.",
+        show_default=True,
+    ),
+    out_dir: Path = typer.Option(
+        Path("output/report"),
+        "--out-dir",
+        help="Directory to save the rendered diagram.",
+        show_default=True,
+    ),
+    engine: str = typer.Option(
+        "python",
+        "--engine",
+        help="Rendering engine to use (python or r).",
+        show_default=True,
+    ),
+    formats: str = typer.Option(
+        "svg,png",
+        "--formats",
+        help="Comma-separated list of output formats (svg,png).",
+        show_default=True,
+    ),
+) -> None:
+    """Render the PRISMA 2020 diagram."""
+    try:
+        format_list = tuple(f.strip() for f in formats.split(','))
+        if engine.lower() == "python":
+            render_prisma_python(counts_path=counts, out_dir=out_dir, formats=format_list)
+        elif engine.lower() == "r":
+            render_prisma_r(counts_path=counts, out_dir=out_dir)
+        else:
+            typer.secho(f"Unknown rendering engine: {engine}. Use 'python' or 'r'.", fg=typer.colors.RED)
+            raise typer.Exit(code=1)
+        typer.secho("PRISMA render OK.", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except RuntimeError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@prisma_app.command(name="attach")
+def prisma_attach(
+    qmd: Path = typer.Option(
+        Path("output/report/report.qmd"),
+        "--qmd",
+        help="Path to the Quarto markdown file.",
+        show_default=True,
+    ),
+    image: Path = typer.Option(
+        Path("output/report/prisma.svg"),
+        "--image",
+        help="Path to the PRISMA image file (SVG or PNG).",
+        show_default=True,
+    ),
+) -> None:
+    """Attach the PRISMA diagram to a Quarto markdown report."""
+    try:
+        attach_to_qmd(qmd_path=qmd, image_path=image)
+        typer.secho("PRISMA attach OK.", fg=typer.colors.GREEN)
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@prisma_app.command(name="all")
+def prisma_all(
+    search_audit: Path = typer.Option(
+        Path("data/logs/search_audit.csv"),
+        "--search-audit",
+        help="Path to the search audit CSV file.",
+        show_default=True,
+    ),
+    merged: Path = typer.Option(
+        Path("data/cache/merged.parquet"),
+        "--merged",
+        help="Path to the merged Parquet file.",
+        show_default=True,
+    ),
+    screened: Optional[Path] = typer.Option(
+        None,
+        "--screened",
+        help="Path to the screened Parquet file (optional).",
+        show_default=True,
+    ),
+    parsed_index: Optional[Path] = typer.Option(
+        None,
+        "--parsed-index",
+        help="Path to the parsed index Parquet file (optional).",
+        show_default=True,
+    ),
+    qa: Optional[Path] = typer.Option(
+        None,
+        "--qa",
+        help="Path to the QA JSONL file (optional).",
+        show_default=True,
+    ),
+    out_json: Path = typer.Option(
+        Path("data/cache/prisma_counts.json"),
+        "--out-json",
+        help="Path to the output JSON file for PRISMA counts.",
+        show_default=True,
+    ),
+    out_csv: Path = typer.Option(
+        Path("data/cache/prisma_counts.csv"),
+        "--out-csv",
+        help="Path to the output CSV file for PRISMA counts.",
+        show_default=True,
+    ),
+    strict: bool = typer.Option(
+        False,
+        "--strict",
+        help="Exit with error if validation fails (otherwise warn).",
+        is_flag=True,
+    ),
+    validation_log: Path = typer.Option(
+        Path("data/logs/prisma_validation.csv"),
+        "--validation-log",
+        help="Path to the validation log CSV file.",
+        show_default=True,
+    ),
+    out_dir: Path = typer.Option(
+        Path("output/report"),
+        "--out-dir",
+        help="Directory to save the rendered diagram.",
+        show_default=True,
+    ),
+    engine: str = typer.Option(
+        "python",
+        "--engine",
+        help="Rendering engine to use (python or r).",
+        show_default=True,
+    ),
+    formats: str = typer.Option(
+        "svg,png",
+        "--formats",
+        help="Comma-separated list of output formats (svg,png).",
+        show_default=True,
+    ),
+    qmd: Path = typer.Option(
+        Path("output/report/report.qmd"),
+        "--qmd",
+        help="Path to the Quarto markdown file.",
+        show_default=True,
+    ),
+    image: Path = typer.Option(
+        Path("output/report/prisma.svg"),
+        "--image",
+        help="Path to the PRISMA image file (SVG or PNG).",
+        show_default=True,
+    ),
+) -> None:
+    """Run the full PRISMA 2020 diagram generation pipeline (compute -> render -> attach)."""
+    try:
+        # 1. Compute
+        typer.secho("Computing PRISMA counts...", fg=typer.colors.BLUE)
+        counts = compute_counts(
+            search_audit_path=search_audit,
+            merged_path=merged,
+            screened_path=screened,
+            parsed_index_path=parsed_index,
+            qa_path=qa,
+        )
+        issues = validate_counts(counts)
+        
+        if issues:
+            validation_log.parent.mkdir(parents=True, exist_ok=True)
+            pd.DataFrame(issues).to_csv(validation_log, index=False)
+            for issue in issues:
+                msg = f"Validation {issue['status']}: {issue['rule']} - {issue['details']}"
+                if issue['status'] == "FAIL":
+                    typer.secho(msg, fg=typer.colors.RED)
+                else:
+                    typer.secho(msg, fg=typer.colors.YELLOW)
+            if strict and any(issue['status'] == "FAIL" for issue in issues):
+                raise typer.Exit(code=1)
+        else:
+            typer.secho("PRISMA counts validated successfully.", fg=typer.colors.GREEN)
+
+        write_counts_json_csv(counts, out_json, out_csv)
+        typer.secho("PRISMA compute OK.", fg=typer.colors.GREEN)
+
+        # 2. Render
+        typer.secho("Rendering PRISMA diagram...", fg=typer.colors.BLUE)
+        format_list = tuple(f.strip() for f in formats.split(','))
+        if engine.lower() == "python":
+            render_prisma_python(counts_path=out_json, out_dir=out_dir, formats=format_list)
+        elif engine.lower() == "r":
+            render_prisma_r(counts_path=out_json, out_dir=out_dir)
+        else:
+            typer.secho(f"Unknown rendering engine: {engine}. Use 'python' or 'r'.", fg=typer.colors.RED)
+            raise typer.Exit(code=1)
+        typer.secho("PRISMA render OK.", fg=typer.colors.GREEN)
+
+        # 3. Attach
+        typer.secho("Attaching PRISMA diagram to report...", fg=typer.colors.BLUE)
+        attach_to_qmd(qmd_path=qmd, image_path=image)
+        typer.secho("PRISMA attach OK.", fg=typer.colors.GREEN)
+
+        typer.secho("PRISMA all pipeline completed successfully.", fg=typer.colors.GREEN)
+
+    except FileNotFoundError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except RuntimeError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.secho(f"An unexpected error occurred: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+
+@run_app.command(name="start")
+def run_cli(
+    topic: str = typer.Option(..., "--topic", help="The research topic."),
+    provider: Provider = typer.Option(
+        Provider.gemini, "--provider", help="LLM provider to use."
+    ),
+    model: str = typer.Option(
+        "gemini-1.5-pro", "--model", help="LLM model to use."
+    ),
+    budget_usd: float = typer.Option(
+        3.0, "--budget", help="Maximum USD budget for LLM calls."
+    ),
+    max_iterations: int = typer.Option(
+        2, "--max-iter", help="Maximum iterations for critic feedback loop."
+    ),
+    top_k: int = typer.Option(6, "--top-k", help="Top K results for retrieval."),
+    bm25_k: int = typer.Option(20, "--bm25-k", help="BM25 K value for retrieval."),
+    questions: Optional[Path] = typer.Option(
+        None,
+        "--questions",
+        help="Path to a questions.yaml file, or a comma-separated list of questions.",
+    ),
+    require_sources: int = typer.Option(
+        2, "--require-sources", help="Minimum unique sources required per answer."
+    ),
+    enforce_pages: bool = typer.Option(
+        True, "--enforce-pages", help="Enforce page number validation for citations."
+    ),
+    output_dir: Path = typer.Option(
+        Path(f"data/runs/{time.strftime('%Y%m%d-%H%M%S')}"),
+        "--output-dir",
+        help="Directory to store run artifacts.",
+    ),
+    skip_search: bool = typer.Option(False, "--skip-search", help="Skip search node."),
+    skip_screen: bool = typer.Option(False, "--skip-screen", help="Skip screen node."),
+    skip_ingest: bool = typer.Option(False, "--skip-ingest", help="Skip ingest node."),
+    skip_index: bool = typer.Option(False, "--skip-index", help="Skip index node."),
+    skip_qa: bool = typer.Option(False, "--skip-qa", help="Skip QA node."),
+    skip_write: bool = typer.Option(False, "--skip-write", help="Skip write node."),
+    skip_prisma: bool = typer.Option(False, "--skip-prisma", help="Skip prisma node."),
+    skip_critic: bool = typer.Option(False, "--skip-critic", help="Skip critic node."),
+    resume: Optional[Path] = typer.Option(
+        None, "--resume", help="Resume a suspended run from a given run directory."
+    ),
+) -> None:
+    """Run the full research pipeline."""
+    run_config = RunConfig(
+        topic=topic,
+        provider=provider,
+        model=model,
+        budget_usd=budget_usd,
+        max_iterations=max_iterations,
+        top_k=top_k,
+        bm25_k=bm25_k,
+        questions=(
+            list(questions.read_text().splitlines())
+            if questions and questions.is_file()
+            else (questions.name.split(",") if questions else None)
+        ),
+        require_sources=require_sources,
+        enforce_pages=enforce_pages,
+        output_dir=output_dir,
+    )
+
+    initial_state: Optional[RunState] = None
+    if resume:
+        # TODO: Implement state loading from resume directory
+        typer.secho(f"Resuming run from {resume} is not yet implemented.", fg=typer.colors.YELLOW)
+        raise typer.Exit(code=1)
+
+    runner = DAGRunner(run_config)
+    final_state = runner.run(initial_state=initial_state)
+
+    typer.echo("\n--- Run Summary ---")
+    typer.echo(f"Run ID: {final_state.run_id}")
+    typer.echo(f"Total LLM Cost: ${final_state.total_llm_cost_usd:.4f}")
+    typer.echo(f"Total Duration: {final_state.total_duration_s:.2f} seconds")
+    typer.echo(f"Final Status: {final_state.final_status}")
+    if final_state.errors:
+        typer.secho("Errors encountered:", fg=typer.colors.RED)
+        for error in final_state.errors:
+            typer.secho(f"- {error}", fg=typer.colors.RED)
+    if final_state.warnings:
+        typer.secho("Warnings encountered:", fg=typer.colors.YELLOW)
+        for warning in final_state.warnings:
+            typer.secho(f"- {warning}", fg=typer.colors.YELLOW)
+    typer.secho(f"Full report available at: {final_state.config.output_dir / final_state.run_id}", fg=typer.colors.GREEN)
 
 
 if __name__ == "__main__":

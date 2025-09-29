@@ -221,3 +221,56 @@ def test_retrieve_bm25_only_hits_when_vector_fails(temp_chroma_dir, dummy_chunks
         assert "paper1" in retrieved_paper_ids
         assert "paper3" in retrieved_paper_ids
         assert "paper2" not in retrieved_paper_ids
+
+
+@pytest.mark.rag
+def test_build_index_empty_chunks_file_regression(tmp_path):
+    # Create an empty chunks.parquet file
+    empty_chunks_path = tmp_path / "empty_chunks_for_index.parquet"
+    empty_df = pd.DataFrame(
+        columns=[
+            "paper_id",
+            "section_id",
+            "section_title",
+            "chunk_id",
+            "text",
+            "n_tokens",
+            "page_start",
+            "page_end",
+            "file_path",
+            "source",
+        ]
+    )
+    empty_df.to_parquet(empty_chunks_path, index=False)
+
+    index_dir = tmp_path / "empty_index_db"
+    index_dir.mkdir()
+
+    # Build index with the empty chunks file
+    with patch(
+        "os.getenv",
+        side_effect=lambda x: "dummy_api_key"
+        if x in ["GEMINI_API_KEY", "GOOGLE_API_KEY"]
+        else None,
+    ):
+        build_index(
+            chunks_path=empty_chunks_path,
+            index_dir=index_dir,
+            embed_provider="google",
+            embed_model="text-embedding-004",
+            batch_size=2,
+        )
+
+    # Assert index_meta.json exists and contains correct info
+    meta_path = index_dir / "index_meta.json"
+    assert meta_path.exists()
+
+    with open(meta_path, "r", encoding="utf-8") as f:
+        meta = json.load(f)
+
+    assert meta["n_docs"] == 0
+    assert meta["n_chunks"] == 0
+    assert meta["vector_dim"] == 0
+    assert meta["embed_provider"] == "google"
+    assert meta["embed_model"] == "text-embedding-004"
+    assert meta["chunks_path"] == str(empty_chunks_path)

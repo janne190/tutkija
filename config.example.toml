@@ -31,3 +31,14 @@ chunk_overlap = 200
 [report]
 engine = "quarto"
 csl = "vancouver.csl"
+
+[run]
+provider = "gemini"
+model = "text-embedding-004|gemini-1.5-pro"
+budget_usd = 3.0
+max_iterations = 2
+top_k = 6
+bm25_k = 20
+questions = ["Mikä on...?", "Miten ...?"]
+require_sources = 2
+enforce_pages = true
